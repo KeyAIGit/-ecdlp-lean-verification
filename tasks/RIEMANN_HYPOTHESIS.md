@@ -82,6 +82,15 @@ carried the original. Nothing was run; `MD-1`..`MD-6` remain outstanding, so no
 probe is authorized by any of this. No barrier row changed and no ledger row was
 added. By this dated decision the single ACTIVE slot moves to `RH-014`.
 
+Decision update: 2026-08-08 (third). `RH-014` completed with a NULL RESULT, the
+outcome its exit criteria named as likely and acceptable: all 107 declarations
+of `Mathlib/Analysis/Complex/ValueDistribution/` were read at the pin, not one
+names ζ or ξ, and the `S1-GLOBAL-ZEROS` cost therefore **stands as written**. No
+barrier row was edited; the dated addendum records the measurement and the
+adversarial correction applied during it. By this dated decision the single
+ACTIVE slot moves to `RH-015`, applying the accepted editorial fixes to the two
+upstream contracts.
+
 The exact Lean target is the already-pinned Mathlib declaration
 `_root_.RiemannHypothesis`. Do not create a competing definition.
 
@@ -947,7 +956,9 @@ recorded.
 
 ID: `RH-014`
 
-Status: **ACTIVE 2026-08-08 — measurement only; no Lean, no promotion, no route**
+Status: **COMPLETE 2026-08-08 — measured; the row's cost STANDS and no barrier
+row was edited. Null result, which the exit criteria named as the likely and
+acceptable outcome**
 
 Kind: reconnaissance
 
@@ -992,6 +1003,51 @@ pinned statements discharge the row's listed exit items for ζ or ξ specificall
 Generic counting machinery for arbitrary meromorphic functions lowers the cost
 of a future exit and retires no row — the same rule that governs every package
 on the `analysis-generic` shelf.
+
+## RH-015: apply the accepted editorial fixes to the two upstream contracts
+
+ID: `RH-015`
+
+Status: **ACTIVE 2026-08-08 — editorial only; no statement may change**
+
+Kind: contract maintenance
+
+Activation basis (2026-08-08): `RH-014` completed with a null result — the
+`S1-GLOBAL-ZEROS` cost stands and no barrier row was edited. The slot moves to
+the one piece of accepted work that is fully specified and currently blocking a
+drafter.
+
+Both `ARG_PRINCIPLE_CONTRACT.md` and `WEIERSTRASS_FACTORS_CONTRACT.md` took
+stage-one acceptance on 2026-08-08 (merged PR #323, records in
+`notes/reviews/`), with **zero blocking findings from six reviewers** and **no
+lens asking for a signature change**. Those records deliberately enumerated the
+41 editorial fixes without applying them, so that the record and the object it
+accepts would not move together. Applying them is this task.
+
+Why it is worth a slot rather than being left to whoever drafts next: two of the
+argument-principle findings **re-price the package**, and in the direction that
+misleads. `A1` is registered as the HIGH-severity gate and described as the
+package's single genuinely new move, while a pinned lemma the contract never
+cites appears to leave a one-step delta; and the `|R|` sign-flip the contract
+calls absent at the pin already exists. A drafter reading the unfixed contract
+would prepare for the wrong difficulty.
+
+Exit criteria:
+
+- every enumerated fix is applied or explicitly declined with a reason recorded
+  in the acceptance record; silence is not an outcome;
+- **no public signature changes.** No lens asked for one. If applying a fix
+  turns out to require a signature change, that fix STOPS and the surface
+  returns to contract review — it does not proceed under this task;
+- the two cost-reducing findings are **confirmed against the pin before being
+  applied**, since they were single-lens findings with no adversarial verifier,
+  and a wrong "this is cheaper than you thought" invites a drafter to skip
+  preparation. If confirmation fails, the finding is recorded as withdrawn;
+- the `0 < R` soundness finding is applied as a package-wide statement, not a
+  `W1`-local one;
+- each acceptance record gains a dated line recording which fixes landed;
+- no drafts-lane file is created by this task, no ledger row is added, no
+  barrier row changes, and no route is selected.
 
 ## RH-005: bounded computation policy
 

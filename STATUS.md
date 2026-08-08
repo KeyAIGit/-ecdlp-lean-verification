@@ -71,7 +71,7 @@ frontier-map status (adversarially-verified upgrades in `data/corpus_coverage_ov
 
 ## Portfolio priority and domain bottlenecks
 The primary new-science priority is **Riemann Hypothesis Stage 0, task
-`RH-014`**: re-verify the `S1-GLOBAL-ZEROS` cost against the value-distribution directory (queue status: `ACTIVE 2026-08-08 — measurement only; no Lean, no promotion, no route`). This is an
+`RH-015`**: apply the accepted editorial fixes to the two upstream contracts (queue status: `ACTIVE 2026-08-08 — editorial only; no statement may change`). This is an
 exploratory specification and route-audit program, not a proof candidate or progress on
 the conjecture itself. Its authority is `tasks/RIEMANN_HYPOTHESIS.md`; ECDLP evidence
 and authorizations do not transfer to it.
