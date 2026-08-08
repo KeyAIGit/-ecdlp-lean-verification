@@ -622,8 +622,13 @@ theorem image_one_sub_conj_of_symm {K : Set ℂ}
 
 /-!
 End of the 23-signature surface (N2-D1..D6: 6; N2-D7: 2; N1.1 = N2-D8: 1;
-N2-D9: 1; N1.2-N1.5: 4; N1.6-N1.8: 6; N1.9: 3). No `def`, no `sorry`, no
-`admit`, no `axiom`, no new instance. Neutrality re-checked at drafting: no
+N2-D9: 1; N1.2-N1.5: 4; N1.6-N1.8: 6; N1.9: 3). No `def`, no proof
+placeholder of either spelling, no `axiom`, no new instance. (The two
+placeholder keywords are deliberately not written out here: the CI
+no-incomplete-proof gate is a case-insensitive textual grep over built
+`*.lean` files, so a comment ASSERTING their absence is itself a hit. This
+promotion's first CI round failed on exactly that, as the multiplicity
+promotion's had before it.) Neutrality re-checked at drafting: no
 `closedBall`, `sphere`, `ball`, `‖·‖`, `.im`, `.re`, strip, box, or interval
 appears in any SIGNATURE above (shapes occur only inside the N2-d fallback
 comment, licensed as proof-internal by the neutrality rule). Promotion of

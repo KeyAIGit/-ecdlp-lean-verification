@@ -96,3 +96,40 @@ Once and only once the exact merged head passes every gate: what exists is
 twenty-three statements about the topology of the ξ zero set and about divisor
 sums over arbitrary compacts. This proves, disproves, advances, and evidences
 **nothing about the truth of the Riemann Hypothesis**, in either direction.
+
+## Kernel round 1 (rejected) — the gate, not the kernel
+
+The first CI run of this promotion (PR #320) never reached `lake build`. It was
+stopped by the fast textual no-incomplete-proof gate:
+
+```
+ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:625:
+  N2-D9: 1; N1.2-N1.5: 4; N1.6-N1.8: 6; N1.9: 3). No `def`, no `sorry`, no
+##[error]Found 'sorry' in a built Lean file - a proof is incomplete
+```
+
+The gate is `grep -rniI --include='*.lean' … 'sorry'` over the built base. The
+hit is the closing claim-boundary comment of the module, which ASSERTS the
+absence of a proof placeholder and therefore contains the word. No proof is
+incomplete; the file has never had a placeholder in it.
+
+**This is the second time this exact failure has occurred in this repository** —
+the multiplicity promotion (`RH-010`) hit it in the same way and was fixed the
+same way. That it recurred is the interesting part, so two things are recorded
+rather than just the fix:
+
+1. The comment is reworded to describe the two placeholder keywords without
+   writing either of them, and now says explicitly why. A comment that names
+   what it forbids is, under a case-insensitive textual gate, indistinguishable
+   from the thing it forbids.
+2. The reason it was not caught locally is that the pre-push check ran an
+   *approximation* of the gate rather than the gate. An earlier textual scan in
+   this session used a hand-rolled regex over `sorry|admit|axiom`, produced a
+   long list of prose hits in unrelated files, and was set aside as "cruder
+   than the repo's gate" — which was true, and exactly backwards as a reason to
+   ignore it. The pre-push routine now runs the workflow's own grep verbatim,
+   including its `--exclude` flags, so the local result and the CI result are
+   the same command.
+
+Nothing about the statements or the proofs changed. The 23 signatures were
+re-verified character-identical afterwards.
