@@ -1,0 +1,212 @@
+# Weierstrass elementary factors contract acceptance record (upstream pool item 2)
+
+Date: 2026-08-08
+
+Status: **FINAL — stage-one independent statement-surface acceptance.**
+Reviewed object: `domains/riemann-hypothesis/WEIERSTRASS_FACTORS_CONTRACT.md`.
+Statement surface: the elementary-factor / genus / canonical-product surface, W1-W12.
+
+## The decision, stated first
+
+**ACCEPTED at stage one, with editorial fixes, zero blocking findings.**
+Three independent lenses — mathematical truth, pin fidelity, claim boundary —
+each returned ACCEPT_WITH_EDITORIAL_FIXES with **no blocking item**, and
+**no lens proposed a change to any public signature**. Between them they raised
+24 non-blocking findings, enumerated in full below.
+
+What this record does and does not do. It is the citable acceptance object for
+the statement surface, and under the two-stage gate its existence unlocks exactly
+one thing: the drafts-lane transcription `domains/riemann-hypothesis/drafts/WeierstrassFactors.lean`. It carries **no
+kernel verdict**; no declaration in the contract has been elaborated and no `lake
+build` has been run against any of it. The kernel's verdict is delivered only by a
+separate stage-two promotion change. Acceptance never implies promotion.
+
+## Verification standing of the findings below — read before acting on any of them
+
+Each finding below is the work of **one** lens. The three lenses ran
+independently and did not cross-check each other, and **no adversarial verifier
+was run against any individual finding**. That is a weaker evidentiary standard
+than the hazard-sweep findings recorded elsewhere in `notes/reviews/`, where
+every proposed repair was put to a separate agent instructed to refute it.
+
+Consequences a reader must carry:
+
+- A finding here is a **claim with a locator**, not a verified fact. Where a
+  finding says a pinned lemma exists, the locator was read by its author and by
+  nobody else. Re-open it before relying on it.
+- The verdict is nevertheless sound at the level it operates: three lenses
+  independently found **nothing blocking** and **no lens asked for a signature
+  change**. Agreement on the absence of a defect across three independent
+  readings is the evidence for the ACCEPT; it is not evidence for the precise
+  content of any single finding.
+- The cost-reducing findings in particular deserve confirmation before they are
+  used to re-price the package, because a wrong "this is cheaper than you think"
+  is more damaging than a wrong "this is harder than you think": it invites a
+  drafter to skip preparation.
+
+## Findings that change how the package should be planned
+
+No blocking finding from any lens. The pin-fidelity lens returned thirteen
+non-blocking items — by some distance the largest crop of any contract reviewed
+in this programme — concentrated in the `W12` proof skeleton and in `§0`'s
+quoted interface. That density is itself the useful signal: it says the
+statement surface is sound while the PROOF PLAN is the least-verified part of
+this contract, which is exactly the opposite of where the risk register puts it.
+
+Read the thirteen before drafting. A drafter who trusts the `W12` skeleton's
+`Finset` product paragraph, or the `analyticOrderAt` quote in `§0`, will lose a
+CI round to each.
+
+## All findings, by lens
+
+### Lens: mathematical truth: is each public signature true exactly as written at the pin? hunt for missing hypotheses, wrong quantifier scope, off-by-one, secretly vacuous hypotheses, and junk-value traps (x/0 = 0, log 0 = 0, tprod of a non-multipliable family = 1, nat — ACCEPT_WITH_EDITORIAL_FIXES, 0 blocking, 5 non-blocking
+
+What was checked: I read the entire contract (1649 lines) including Annexes A, B, C, then attempted a counterexample to each of the 28 public signatures and verified every load-bearing pinned signature by opening the file at the pin (`git -C /workspace/leanprover-community/mathlib4 rev-parse HEAD` = fabf563a7c95a166b8d7b6efca11c8b4dc9d911f, re-confirmed this session).
+
+POSITIVELY VERIFIED TRUE (I re-derived the mathematics, including the degenerate cases):
+- W1 (4 sigs). `E_p 0 = 1` (every summand carries `0 ^ (k+1)`, `exp 0 = 1`); `E_0 z = 1 - z` (empty `range 0` sum); `E_{p+1} z = E_p z * exp (z^(p+1)/(p+1))` — index checked: `range (p+1)` splits off exactly the `k = p` term `z^(p+1)/(p+1)`, no off-by-one. Denominator `(↑k + 1 : ℂ)` is never 0, so the definition carries no division junk.
+- W3 (2 sigs). `exp` never vanishes (Complex.exp_ne_zero, Analysis/Complex/Exponential.lean:160 — read), so the zero 
+
+**Not checked, and why** (load-bearing — do not read absence of a finding here as a clean bill): 1. NO KERNEL. Nothing was elaborated; `lake build`/`lake env lean` were not run and no Lean toolchain exists here. Every judgment above is about mathematical content and pinned source text, never about whether Lean accepts anything. In particular I did not and could not check any of the defeq/elaboration claims the plan rests on: that dot notation resolves `HasProdLocallyUniformlyOn.differentiableOn` through the def (S1W-DIFF); that `weierstrassProduct p (a ∘ (↑))` is `rfl`-equal to the tail lambda (S1W-SPLIT); that `Pi.mul` matches `fun z ↦ F z * T z` for `analyticOrderAt_mul` (S1W-PI/S1W-ORD); the `▸`-chain in W5 (S1W-LOG); whether `fun_prop` sees through the `Finset.sum` inside `exp` (S1W-2); or the `tprod_fintype`/`Set.Finite.toFinset` instance plumbing in capstone step 2. Those are the whole of S1W-ORD's residual cost and none of them is inside my lens.
+
+2. I did not verify §1.3's C
+
+1. **§0, the `analyticOrderAt` quote (contract §0 block, line ~231 of the contract); and §1.5 together with W12's fifth signature `analyticOrderAt_weierstrassProduct** — The §0 quote gives only the header `noncomputable def analyticOrderAt (f : 𝕜 → E) (z₀ : 𝕜) : ℕ∞` and silently drops the body. At the pin (Mathlib/Analysis/Analytic/Order.lean:47–52) the body is `if hf : AnalyticAt 𝕜 f z₀ then (if h : ∀ᶠ z in 𝓝 z₀, f z = 0 then ⊤ else ↑…) else 0`, and the file's own docstring at :46 says "If `f` isn't analytic at `z₀`, then `analyticOrderAt f z₀` returns a junk value of `0`." The non-analytic junk value is 0, NOT ⊤. Consequently the `_ne_top` companion certifies nothing about non-degeneracy on its own: any function that fails to be analytic at `w` also satisfies `analyticOrderAt _ w ≠ ⊤`. §1.5's claim that it "makes the `⊤` case stated away honestly" / "makes the non-degeneracy explicit rather than burying it in `untop₀` junk" over-reads the lemma. (The capstone is unaffected: it proves the value equals `Nat.card`, which already carries both analyticity and finiteness, and `_ne_top` follows from it by `WithTop.natCast_ne_top`, Mathlib/Algebra/Order/Monoid/Unbundled/WithTop.lean:298 — verified.)
+
+   *Fix:* Quote the junk branch (`else 0`) in the §0 `analyticOrderAt` block with its Order.lean:47–52 locator, and rewrite the §1.5 sentence to say that `analyticOrderAt_weierstrassProduct_ne_top` is a corollary of the capstone kept for API convenience, carrying no independent non-degeneracy content — because the junk value for a non-analytic function is 0, `≠ ⊤` alone never rules out junk.
+
+2. **§1.2 third bullet ("`ι` is an arbitrary type … nothing in this package can even express an enumeration of zeta zeros"), Claim boundary item 2, and Annex B attac** — `hane` and `hsum` together FORCE `ι` to be countable. Under `hane`, `‖a i‖ > 0` for every `i`, hence `‖a i‖⁻¹ ^ (p+1) > 0` for every `i`; a summable ℝ-valued family whose every term is strictly positive has countable index type. So on every non-vacuous instance of the hypothesis pair, `ι` is countable and an injection `ι → ℕ` exists. Nothing in the statement surface becomes false, and no signature introduces, requires, or produces an enumeration — but the rhetorical "nothing in this package can even *express* an enumeration" is stronger than the mathematics supports, and Annex B's "None found" should be qualified with this derived (not assumed) countability.
+
+   *Fix:* Add one sentence to §1.2 and to Annex B attack front 4: `hane + hsum` imply `ι` is countable as a *consequence*, not an instance assumption; the accurate boundary claim is the one already in Claim boundary 2 — "no statement introduces, requires, or produces an enumeration, ordering, or counting of anything" — which remains exactly true. Drop or soften "cannot even express".
+
+3. **W12, third signature `analyticOrderAt_finsetProd {ι : Type*} (s : Finset ι) {f : ι → ℂ → ℂ} {z₀ : ℂ} …`** — The signature re-binds `{ι : Type*}`, which §1.2 already declares as a section variable (`variable {ι : Type*} {p : ℕ} {a : ι → ℂ}`) that the surrounding W7–W12 signatures all rely on. Shadowing a section variable inside one declaration of the same block is at best confusing and is the kind of thing that changes which variables get auto-included. Not a truth defect — the statement is true for any type — but it is the only signature in the package whose binder collides with the shared block.
+
+   *Fix:* Rename the local index type in `analyticOrderAt_finsetProd` (e.g. `{κ : Type*} (s : Finset κ) {f : κ → ℂ → ℂ}`), or state this one `[GEN]` lemma in a separate `section` ahead of the §1.2 variable block, since it is the one signature that is not about the family `a`.
+
+4. **W12 proof skeleton, "*Finset product*" paragraph and "*Capstone*" step 3 ("`F` analytic: finite product of W2 factors"); W12 "Pinned dependencies" list; the §Ca** — Analyticity of the head finite product `F = fun z ↦ ∏ i ∈ hS.toFinset, E_p (z / a i)` at `w` is a load-bearing input to `analyticOrderAt_mul` in capstone step 3 and to the induction in `analyticOrderAt_finsetProd`, but the skeleton names it only as "`AnalyticAt.finsetProd`-style closure". `AnalyticAt.finsetProd` has ZERO hits at the pin (grepped over Mathlib/Analysis/Analytic/ and Mathlib/Analysis/Calculus/). The pinned lemma that actually delivers it is `Finset.analyticAt_prod` — Mathlib/Analysis/Analytic/Constructions.lean:1081, `@[fun_prop] theorem Finset.analyticAt_prod {α : Type*} {A : Type*} [NormedCommRing A] [NormedAlgebra 𝕜 A] {f : α → E → A} {c : E} (N : Finset α) (h : ∀ n ∈ N, AnalyticAt 𝕜 (f n) c) : AnalyticAt 𝕜 (∏ n ∈ N, f n) c` (both instances hold for 𝕜 = A = ℂ, and it already targets the Pi-product form `∏ n ∈ N, f n`, pre-solving part of S1W-PI). It is absent from the W12 dependency table and from the collision scan. It IS reachable from the declared preamble: `Mathlib.Analysis.Analytic.Order` transitively imports `Mathlib.Analysis.Analytic.Constructions` (import clo
+
+   *Fix:* Replace "`AnalyticAt.finsetProd`-style closure" with `Finset.analyticAt_prod` (Analysis/Analytic/Constructions.lean:1081) in both the `analyticOrderAt_finsetProd` induction step and capstone step 3, add the row to W12's pinned-dependency table and the main dependency table, and note that its `∏ n ∈ N, f n` form matches the Pi-product shape `analyticOrderAt_mul` consumes.
+
+5. **§1.2 (`hane` rationale), death condition 6, and the `hane` hypothesis on W8, W9, W10** — The contract keeps `hane` on every product statement but does not say where it is actually load-bearing. Precise map, checked this session: `hane` is ESSENTIAL in W7 (both signatures), W11, and W12's capstone — e.g. take any `a` with `a i₀ = 0` and `w = z = 0`; then `weierstrassProduct p a 0 = ∏' i, weierstrassFactor p (0 / a i) = ∏' i, weierstrassFactor p 0 = ∏' i, 1 = 1 ≠ 0`, while `∃ i, a i = 0` holds and `Nat.card {i | a i = 0} ≥ 1`, so W11 and the capstone are outright FALSE without it; and `{i | a i = 0}` can be infinite while `hsum` holds (all terms `‖0‖⁻¹ ^ (p+1) = 0`), falsifying `finite_setOf_apply_eq` and `eventually_cofinite_le_norm`. By contrast `hane` is PROVABLY REDUNDANT in W8, W9, and W10 (all three signatures): when `a i = 0` the factor is `weierstrassFactor p 0 = 1` identically, both sides of the majorant bound are 0 (`‖a i‖⁻¹ ^ (p+1) = 0`), and W10's own hypothesis `∀ i, a i ≠ w` already supplies what is needed at `w = 0`. Leaving this unstated risks a stage-two prover "strengthening" W8–W10 by dropping `hane` — which would be exactly the junk-powered generality d
+
+   *Fix:* Add the load-bearing map to §1.2: essential in W7/W11/W12 (with the `a i₀ = 0`, `w = 0` counterexample spelled out), deliberately retained but redundant in W8/W9/W10 for statement uniformity. Cross-reference it from death condition 6 so the rule reads as a policy about W8–W10 specifically, not a vague prohibition.
+
+
+### Lens: pin fidelity — ACCEPT_WITH_EDITORIAL_FIXES, 0 blocking, 13 non-blocking
+
+What was checked: Pin re-confirmed: `git -C /workspace/leanprover-community/mathlib4 log -1` = fabf563a7c95a166b8d7b6efca11c8b4dc9d911f ("chore: bump toolchain to v4.31.0 (#40633)"), clean tree. I opened and read every locator in §0, §2, the pinned-API-dependencies table, Annex A, Annex B (including its "remaining fallback names spot-checked" paragraph) and Annex C, and checked line number, signature text, binder explicitness, `private`/`protected`, enclosing namespace span, and enclosing `section`/`variable` instance context.
+
+VERIFIED EXACT (line, shape, and binder explicitness all match the contract): LogBounds.lean:68 `noncomputable def logTaylor` (`noncomputable` on :67 — Annex A item 1 correct, pool's "plain def" is the error), :75 `logTaylor_succ`, :142 `norm_log_sub_logTaylor_le`, :231 `norm_log_one_sub_inv_add_logTaylor_neg_le` (character-for-character as quoted; its own proof at :233-:236 does p
+
+**Not checked, and why** (load-bearing — do not read absence of a finding here as a clean bill): 1. **Nothing was elaborated.** There is no Lean toolchain in this container; I ran no `lake build`, no `lake env lean`, no `#check`. Every judgement above about whether a tactic will or will not fire — including all three failure-class findings — is a source-shape judgement from reading the pinned text, not a kernel result. A `gcongr` I predict will fail could succeed via a `@[gcongr]` lemma I did not enumerate, and the `▸` I predict may misfire could elaborate correctly.
+
+2. **Three `@[to_additive]`-generated names have no source line to open, so I could not read their declarations.** I read the multiplicative originals and the attributes: `Multipliable.subtype` (Group.lean:300, `@[to_additive]` on :299), `Multipliable.tendsto_cofinite_one` (:365, `@[to_additive]` with docstring on :363-:364), `Finset.prod_range_succ'` (Algebra/BigOperators/Group/Finset/Basic.lean:533). `Summable.tendst
+
+1. **§2 W12, *Finset product* paragraph of the proof skeleton (contract ~line 1052): "step case `analyticOrderAt_mul` with `AnalyticAt.finsetProd`-style closure"** — `AnalyticAt.finsetProd` does not exist at the pin. `grep -rn 'AnalyticAt\.finsetProd|AnalyticAt\.prod\b|AnalyticAt\.fun_finsetProd'` over all of Mathlib returns exactly one hit — `AnalyticAt.prod` at Analysis/Analytic/Constructions.lean:338 — which is the *pair* product `fun x ↦ (f x, g x) : E → F × G`, not a `Finset` product. `grep -rn finsetProd Mathlib/Analysis/Analytic/` returns nothing. This also falsifies Annex B's method claim that "hard greps were run for ... every fallback lemma name in the proof skeletons".
+
+   *Fix:* Replace with the pinned names, both read this session: `Finset.analyticAt_prod` — Analysis/Analytic/Constructions.lean:1081, `theorem Finset.analyticAt_prod {α : Type*} {A : Type*} [NormedCommRing A] [NormedAlgebra 𝕜 A] {f : α → E → A} {c : E} (N : Finset α) (h : ∀ n ∈ N, AnalyticAt 𝕜 (f n) c) : AnalyticAt 𝕜 (∏ n ∈ N, f n) c` (`@[fun_prop]`; `N` explicit, `f`/`c` implicit); and `Finset.analyticAt_fun_prod` — :1073, same binders, concluding `AnalyticAt 𝕜 (fun z ↦ ∏ n ∈ N, f n z) c`. Add both to the W12 pinned-dependency table and to the Annex B fallback-name spot-check list.
+
+2. **§2 W12 `[GEN]` signature `analyticOrderAt_finsetProd` (contract ~lines 1007-1009), and capstone steps 2→4** — The `[GEN]` lemma is stated only in the Pi form `analyticOrderAt (∏ i ∈ s, f i) z₀ = ∑ i ∈ s, analyticOrderAt (f i) z₀`, but its use site is the lambda `F = fun z ↦ ∏ i ∈ hS.toFinset, weierstrassFactor p (z / a i)`. The pin's own convention is to ship BOTH forms at exactly this seam: `meromorphicOrderAt_prod` (Analysis/Meromorphic/Order.lean:437) is paired with `meromorphicOrderAt_fun_prod` (:456, whose proof is `convert! meromorphicOrderAt_prod hf; exact (Finset.prod_apply _ s f).symm`), and `Finset.analyticAt_prod` (:1081) with `Finset.analyticAt_fun_prod` (:1073). Leaving the `_fun_` form out puts the `Finset.prod_apply`/`Pi.mul` seam (S1W-PI) back inside the already-HIGH S1W-ORD, at exactly the place the pin chose to close it.
+
+   *Fix:* Add a 29th signature `analyticOrderAt_fun_finsetProd ... : analyticOrderAt (fun z ↦ ∏ i ∈ s, f i z) z₀ = ∑ i ∈ s, analyticOrderAt (f i) z₀`, mirroring Meromorphic/Order.lean:456, and update the "exactly 28 public signatures" count in the header and §1 accordingly.
+
+3. **§0, quote-comment on `Multipliable.tprod_mul_tprod_compl` (contract lines 210-218) and Annex C item C1 (line 1598)** — Annex C1 amends the quote to record the omitted section variable `[T2Space α]` (Topology/Algebra/InfiniteSum/Basic.lean:696) and says the section structure was walked. It missed a second one: :752 also sits inside `section ContinuousMul` (:711 open, :769 close) whose `variable [ContinuousMul α]` is at :713, so the real ambient instance set for :752 is `[CommMonoid α] [TopologicalSpace α] [T2Space α] [ContinuousMul α]`. Both are instances for ℂ, so there is zero statement impact — but §0 claims to quote "the load-bearing interface verbatim" and C1 claims T2 was the only omission.
+
+   *Fix:* Extend the C1 comment: "...omitted `variable [T2Space α]` (:696) and `variable [ContinuousMul α]` (`section ContinuousMul` :711-:769, declared :713). Both discharged for α = ℂ by instance; no statement impact." Note also that `HasProd.mul_compl` (:379) is likewise under `variable [ContinuousMul α]` (declared Basic.lean:319, inside `section HasProd` :36-:430), so C1's "needs no T2" is right but is not "needs nothing".
+
+4. **§2 W1 "Pinned dependencies (W1)" (contract lines 440-442)** — "`Complex.exp_zero`, `Complex.exp_add` (`Analysis/Complex/Exponential.lean`, namespace `Complex`, :347–:509)" attaches the wrong namespace block. At the pin `exp_zero` is at :95 and `exp_add` at :109, both inside the `namespace Complex` block :90–:198 (`namespace Complex` / `end Complex` pairs in that file: 35/70, 90/198, 347/509, 704/711). :347–:509 is the block holding `norm_exp_sub_one_le` (:439). W3 cites :90–:198 correctly for `exp_ne_zero` (:160), so the contract contradicts itself.
+
+   *Fix:* Change to "namespace `Complex`, :90–:198; `exp_zero` :95, `exp_add` :109". Name resolution is unaffected (both blocks are `Complex`), so this is a locator correction only.
+
+5. **Header, name-collision scan (contract lines 120-127)** — "The only case-insensitive \"weierstrass\" hits at the pin are `PowerSeries.IsWeierstrassFactorization*` in `RingTheory/PowerSeries/WeierstrassPreparation.lean`" is false as literally written. `grep -rnil --include=*.lean weierstrass Mathlib` returns 42 files; `WeierstrassCurve` alone has 353 occurrences across AlgebraicGeometry/EllipticCurve; `Topology/ContinuousMap/StoneWeierstrass.lean` and `Topology/ContinuousMap/Weierstrass.lean` exist; and `section Weierstrass` sits at Analysis/Complex/LocallyUniformLimit.lean:111–:164 — a file this contract itself depends on. The claim IS true for the search string `weierstrassfactor` (only WeierstrassPreparation.lean matches, verified).
+
+   *Fix:* Change the quoted search string from "weierstrass" to "weierstrassFactor", and add a sentence noting `WeierstrassCurve`, `StoneWeierstrass`, and `section Weierstrass` (LocallyUniformLimit.lean:111) as unrelated case-insensitive hits that the narrower scan deliberately excludes. The nine declared names really do have zero hits — I re-ran all nine and confirmed 0.
+
+6. **§2 W8 proof skeleton, step 3 (contract lines 761-765) — failure class (A)** — Unregistered `gcongr` shape mismatch. The majorant is `u i := 4 / (p+1) * (R ^ (p+1) * ‖a i‖⁻¹ ^ (p+1))` and the chain is `‖E_p (x / a i) - 1‖ ≤ 4/(p+1) * ‖x / a i‖^(p+1) ≤ u i` closed by "`norm_div`, `div_pow`, `gcongr`". After `norm_div` and `div_pow` the left inner term is `‖x‖^(p+1) / ‖a i‖^(p+1)` (an `HDiv` node) while the right inner term is `R^(p+1) * ‖a i‖⁻¹^(p+1)` (an `HMul` node). `gcongr` matches the two sides structurally; it will not relate a `/` node to a `*` node, so the two sides have different `*`/`/` node shapes and the call fails exactly as today's class-(A) CI failures did. S1W-RAD (LOW) covers only the `R/(2R+1) ≤ 1/2` and `R ≥ 0` arithmetic, not this.
+
+   *Fix:* Either state the majorant as `u i := 4 / (p+1) * (R ^ (p+1) / ‖a i‖ ^ (p+1))` so both sides are `c * (A / B)`, or insert an explicit normalization (`simp only [div_eq_mul_inv, ← inv_pow]` or `rw [← div_pow]`) before `gcongr`. Add the note to S1W-RAD or open a sibling obligation.
+
+7. **§2 W6 proof skeleton, step 5 (contract lines 653-654) — failure class (A)** — "Assemble: `‖E_p z - 1‖ = ‖exp L - 1‖ ≤ 2 * ‖L‖ ≤ 2 * (‖z‖^(p+1) * 2 / (p+1)) = 4 / (p+1) * ‖z‖^(p+1)` — `gcongr` + `ring_nf`" reads as if one `gcongr` may span from `2 * ‖L‖` to `4 / (p+1) * ‖z‖^(p+1)`. Those two expressions have different `*` / `/` node structure, so a single `gcongr` is a class-(A) failure. Only the middle step `2 * ‖L‖ ≤ 2 * (…)` is `gcongr`-shaped.
+
+   *Fix:* Spell the ordering out: `calc` with `gcongr` applied only to `2 * ‖L‖ ≤ 2 * (‖z‖^(p+1) * 2 / (p+1))`, then a separate `ring_nf`/`field_simp` step (with `(p+1 : ℝ) ≠ 0`) for the closing equality. Fold into S1W-EST.
+
+8. **§2 W5 proof skeleton (contract lines 588-595) — failure class (C)** — `Complex.log_inv _ (Complex.slitPlane_arg_ne_pi ((sub_eq_add_neg 1 z) ▸ Complex.mem_slitPlane_of_norm_lt_one ((norm_neg z).symm ▸ hz)))`. The outer `▸` is fed into `slitPlane_arg_ne_pi` whose binder is implicit — verified at Analysis/SpecialFunctions/Complex/Arg.lean:544, `lemma slitPlane_arg_ne_pi {z : ℂ} (hz : z ∈ slitPlane) : z.arg ≠ Real.pi`. The expected type of the argument is therefore the bare metavariable-headed `?z ∈ slitPlane`. With `h : 1 - z = 1 + -z` and `e : 1 + -z ∈ slitPlane`, `▸` may simply unify `?z := 1 + -z` and leave the type unrewritten, yielding `(1 + -z).arg ≠ π`; `Complex.log_inv` (Log.lean:137, `x` **explicit**) then produces `log (1 + -z)⁻¹ = -log (1 + -z)`, which does not occur syntactically in `h` and the `rw ... at h` fails. Note the pin's own proof of :231 (LogBounds.lean:233-235) sidesteps this by rewriting the goal with `sub_eq_add_neg` FIRST and only then applying `log_inv`; only the inner `(norm_neg z).symm ▸ hz` is precedented there. S1W-LOG (MEDIUM) registers the risk and already carries a ▸-free fallback.
+
+   *Fix:* Promote S1W-LOG's fallback to the primary skeleton: `have hsp : (1 : ℂ) - z ∈ Complex.slitPlane := by rw [sub_eq_add_neg]; exact Complex.mem_slitPlane_of_norm_lt_one (by rwa [norm_neg])` then `rw [Complex.log_inv _ (Complex.slitPlane_arg_ne_pi hsp), logTaylor_neg_eq] at h`. Keep the ▸ chain only as a note that it mirrors the pin's text.
+
+9. **§2 W12 capstone step 4 (contract lines 1066-1072)** — The skeleton builds `hS.toFinset` from `haveI := hS.fintype` (i.e. `Set.Finite.toFinset`) but cites `Set.ncard_eq_toFinset_card'` — read at Data/Set/Card.lean:649, `theorem ncard_eq_toFinset_card' (s : Set α) [Fintype s] : s.ncard = s.toFinset.card`, which is about the `Fintype`-based `Set.toFinset`, not `Set.Finite.toFinset`. The lemma that matches `hS.toFinset` verbatim is the unprimed `Set.ncard_eq_toFinset_card` at :644, `(s : Set α) (hs : s.Finite := by toFinite_tac) : s.ncard = hs.toFinset.card`. `Nat.card_coe_set_eq` (:642, `@[simp] theorem _root_.Nat.card_coe_set_eq (s : Set α) : Nat.card s = s.ncard := rfl`) is cited correctly.
+
+   *Fix:* Cite `Set.ncard_eq_toFinset_card` (Data/Set/Card.lean:644) for the `hS.toFinset` route, and keep :649 as the alternative for the `haveI := hS.fintype; Set.toFinset` route. Correcting this removes one `Set.Finite.toFinset_eq_toFinset` step from the already-HIGH S1W-ORD.
+
+10. **§1.3 (contract line 311) and §2 W8 "Pinned dependencies (W8)" (contract lines 787-791)** — `sineTerm_bound_aux` is `private` at the pin — Analysis/SpecialFunctions/Trigonometric/Cotangent.lean:105 reads `private lemma sineTerm_bound_aux (hZ : IsCompact Z) : ∃ u : ℕ → ℝ, Summable u ∧ ∀ j z, z ∈ Z → ‖sineTerm z j‖ ≤ u j`. It is unusable from outside that file. The contract lists it twice without the marker, the second time under a heading literally named "Pinned dependencies (W8)", where a stage-two builder could try to `exact` it.
+
+   *Fix:* Annotate both sites: "`sineTerm_bound_aux` (:105, **`private` — pattern only, not importable**)". The contract's own text already says steps 2-3 *replace* it, so no statement or dependency changes; this is a mislabeled heading. The other seven Cotangent anchors (:78 `noncomputable abbrev sineTerm`, :80 `sineTerm_ne_zero` with `hx : x ∈ ℂ_ℤ`, :94, :99, :118, :125 with `hZ2 : Z ⊆ ℂ_ℤ`, :132 on `ℂ_ℤ`) are all line-exact and public.
+
+11. **§2 W1 "Denominator convention" (contract lines 435-436) and obligation S1W-4a** — "`(k + 1 : ℂ)` is the `ℕ`-cast of `k + 1 ≥ 1`" states the wrong elaborated shape. In `∑ k ∈ Finset.range p, z ^ (k + 1) / (k + 1)` at type ℂ, the denominator elaborates as `(↑k + 1 : ℂ)`, not `((k + 1 : ℕ) : ℂ)`. The pinned `Complex.logTaylor` (LogBounds.lean:68, verified: `noncomputable` modifier on :67, `def` on :68, `∑ j ∈ Finset.range n, (-1) ^ (j + 1) * z ^ j / j`) uses `/ (↑j : ℂ)`, so after the `Finset.sum_range_succ'` reindex W4 must additionally bridge `↑(k+1)` to `↑k + 1`. S1W-4a names the sign bookkeeping (`(-1)^(k+2)`, `(-z)^(k+1)`) but not this cast mismatch.
+
+   *Fix:* Correct the sentence to "`(↑k + 1 : ℂ)` (a cast of `k` plus one, not a cast of `k+1`); nonzero for every `k : ℕ`", and add "plus a `Nat.cast_succ`/`push_cast` bridge between `↑(k+1)` (from `logTaylor`) and `↑k + 1` (from the def)" to S1W-4a.
+
+12. **§2 W4 obligation S1W-4a (contract line 566) and Annex B item 2 fallback list (contract line 1474)** — Two stale/off-by-one locators. (i) W4 still says `logTaylor_succ` is in the "LogBounds.lean:73 region"; it is at :75 (verified: `lemma logTaylor_succ (n : ℕ) : logTaylor (n + 1) = logTaylor n + (fun z : ℂ ↦ (-1) ^ (n + 1) * z ^ n / n)`). Annex B records the correction but did not apply it at the edit site. (ii) Annex B cites the pool's "plain `def`" error at `UPSTREAM_POOL.md:301`; :301 is the `|---|---|` table separator, the row carrying the claim is :302. The companion citation `UPSTREAM_POOL.md:848` is correct.
+
+   *Fix:* Change "`:73` region" to ":75" in S1W-4a, and "UPSTREAM_POOL.md:301" to ":302" in Annex B.
+
+13. **§0 comment on the DedekindEta precedent (contract lines 191-196) and the dependencies table row "Product-differentiable template | DedekindEta.lean:89–95"** — Minor range slippage. The precedent lemma `differentiableOn_tprod_one_sub_pow` spans NumberTheory/ModularForms/DedekindEta.lean:88 (docstring) to :93; :94 is blank and :95 opens the *next* lemma's docstring. Annex B item 2a's correction of the chain site to :91 is exactly right (verified: :91 is `multipliableLocallyUniformlyOn_one_sub_pow.hasProdLocallyUniformlyOn.differentiableOn`, :92-:93 the `.of_forall` continuation).
+
+   *Fix:* Change the two ":89–95" range citations to ":88–:93".
+
+
+### Lens: boundary: claim boundary — ACCEPT_WITH_EDITORIAL_FIXES, 0 blocking, 6 non-blocking
+
+What was checked: Read the full contract, 1649 lines, including §0 interface, §1 design decisions, all twelve statement blocks W1–W12, the dependencies table, the obligation register, the deferred items, §Claim boundary, §Death conditions, and Annexes A, B, C.
+
+BARRIER-ROW EFFECT. Opened `domains/riemann-hypothesis/MATHLIB_CAPABILITY_MAP.md` and read the severity table (`:383-392`) and every addendum (`:540-656`). Checked each of the contract's four barrier citations against the file: `S1-GLOBAL-ZEROS` at `:387` (blocks column does name "canonical product" — accurate); `S1-GROWTH` at `:388` (accurate, and claim-boundary item 3's "row unchanged" is correct — no growth order, no `maxModulus`, no vertical bound appears in any of the 28 signatures or any skeleton); `S1-MULTIPLICITY` at `:386` (the cited row does read OPEN, but the row is stale — see nonblocking 2). The contract makes no closure, narrowing, re
+
+**Not checked, and why** (load-bearing — do not read absence of a finding here as a clean bill): MATHLIB PIN — NOT OPENED AT ALL. I did not open `/workspace/leanprover-community/mathlib4` and did not verify a single locator, signature, namespace span, implicit/explicit argument, `private` status, or absence claim. That means every `[PIN]` tag, the entire §0 quoted interface, the 38-row dependencies table, Annex A's three corrections, Annex B's "47 spot-checked locators … zero phantom citations", and Annex C's "~40 locators re-verified" are all UNVERIFIED BY ME. That is the Mathlib-fidelity lens's territory, and my ACCEPT carries no weight on it: if a load-bearing locator is wrong, death condition 10 fires independently of anything I found.
+
+PROVABILITY. No kernel exists here; nothing was elaborated. I did not and could not check that any of W1–W12 is provable, that the S1W-ORD capstone assembly closes, or that the severity ratings are calibrated. My reading of §1.4's central re-deri
+
+1. **Line 30–31 ("Working name"), plus §Death conditions (:1260–1290), which contains no packaging condition** — The package is domain-neutral by its own repeated statement (":57–59 Repo prerequisites: **none.** … the package is generic and must remain promotable (in principle) as Mathlib-upstream material without dragging repo symbols"), yet the contract never names its destination shelf: "Working name: `WeierstrassFactors.lean` (drafts lane; eventual module path is a stage-two decision)." The repository has a hardcoded rule for exactly this class. `VERIFIED_RESEARCHOS.md:22-27`: "`MB-`, `HK-`, `PL-`, `TC-` and `GO-` → `analysis-generic` (the domain-neutral analysis shelf; rows must cite files under `ResearchOS/Analysis/`, and nothing on that shelf is owned by, or counts toward, any conjecture program)", enforced by `scripts/gen_researchos_registry.py` `PREFIX_DOMAINS` (:46-53) and `DOMAIN_SUBTREES` (:60-62). All four accepted sibling generic contracts needed their promotion records to state this explicitly — e.g. `ResearchOS/Analysis/ThreeCircles.lean:37-40`: "Module placement: `ResearchOS/Analysis/`, deliberately NOT `ResearchOS/AnalyticNumberTheory/RiemannHypothesis/`. The surface is domain
+
+   *Fix:* Amend line 30–31 to: "Working name: `WeierstrassFactors.lean` (drafts lane). Destination shelf at stage two is `ResearchOS/Analysis/` with a new `analysis-generic` ledger prefix registered in `scripts/gen_researchos_registry.py` `PREFIX_DOMAINS`/`DOMAIN_SUBTREES` — NOT `ResearchOS/AnalyticNumberTheory/RiemannHypothesis/` and NOT an `RH-` prefix, per `VERIFIED_RESEARCHOS.md:22-27` and the `ThreeCircles.lean:37-40` precedent." Add death condition 11: "Filing this package under the RH subtree, or ledgering any of its rows with an `RH-` prefix. The surface is domain-neutral; the analysis-generic shelf is owned by no conjecture program."
+
+2. **§Claim boundary item 4, line 1249** — "`S1-GLOBAL-ZEROS` (`:387`, blocked-need \"canonical product\") and `S1-MULTIPLICITY` (`:386`) remain OPEN and are not re-scoped by this document." The `S1-MULTIPLICITY` half is refuted by merged evidence that predates this draft. `MATHLIB_CAPABILITY_MAP.md:626` — "## Addendum 2026-08-07 (sixth): barriers `S1-MULTIPLICITY` and `S1-CONJ` CLOSED" — and `:638` "This closes `S1-MULTIPLICITY`" (merged PR #313, `2a20629`); the RH queue's current dated decision agrees at `tasks/RIEMANN_HYPOTHESIS.md:42-45` ("This closes `S1-MULTIPLICITY`"). The severity-table row the contract cites (`:386`) is itself stale relative to its own file's addendum. The direction of the error is conservative (it understates repository progress rather than claiming credit), so it is not an over-claim — but a stage-one acceptance record would ratify a barrier status contradicted by a merged closure, which is exactly the S2 class the lane's own standard names: "a status refuted by merged evidence" (`notes/reviews/RH_LANE_CLAIMS_AUDIT_2026_08_07.md`, severity table).
+
+   *Fix:* Replace with: "`S1-GLOBAL-ZEROS` (`:387`, whose *blocks* column names \"canonical product\") and `S1-GROWTH` (`:388`) remain OPEN and are not re-scoped by this document. (`S1-MULTIPLICITY` was CLOSED 2026-08-07 by merged PR #313 — `MATHLIB_CAPABILITY_MAP.md:626-643`, `tasks/RIEMANN_HYPOTHESIS.md:42-45`; the severity-table row at `:386` is stale relative to that addendum. This package bears on neither.)"
+
+3. **Status header lines 3–7; Annex C heading (:1504) and verdict (:1520); Annex C item 3 (:1556-1558); obligation register row S1W-ORD (:1191); §"What the obligatio** — The contract asserts a registered obligation "RESOLVED" and a proof cost re-priced downward, for a proof that has never been elaborated. Verbatim: line 5-6 "v1.2 folds in the two independent scout reports recorded in Annex C, which RESOLVE the registered product-lemma obligation by sketch and re-price S1W-ORD"; :1520 "### Verdict on the registered main obligation: **RESOLVED BY SKETCH**"; :1556-1558 "No new mathematics remains — the residual cost is seam work, honestly re-priced in the register: **days of seam work, not the pool's \"weeks\"**"; :1191 "days of seam work (both scouts independently), not the pool's Tier-4 \"weeks\"". Two halves are being carried by one word. The missing-lemma half IS genuinely settled by reading (a whole-tree absence check is a checkable negative). The computation half is a sketch, and "No new mathematics remains" is a judgment about an unelaborated proof stated as an established fact — while the same register keeps S1W-ORD at HIGH, "the hardest single proof in the package". This is the contract's only claim that outruns its evidence; it is self-qualifi
+
+   *Fix:* Split the verdict. Header: "…which retire the missing-lemma half of the registered obligation by a whole-tree absence check, and reduce the computation half to a located assembly sketch (UNVERIFIED — no kernel)." Annex C heading/verdict: "**MISSING-LEMMA HALF RETIRED; COMPUTATION HALF REDUCED TO A LOCATED SKETCH, UNVERIFIED**". Replace "No new mathematics remains" with "No step of the sketch is known to require new mathematics; whether the assembly closes is a kernel question no reading can settle." Re-price as an estimate, not a finding: "estimated days rather than the pool's weeks — an unverified estimate, and S1W-ORD stays HIGH precisely because it is unverified."
+
+4. **W7 (:686-693) read against §Claim boundary item 4 (:1245-1250)** — W7's hypothesis `hsum : Summable fun i ↦ ‖a i‖⁻¹ ^ (p + 1)` and its consequences (`eventually_cofinite_le_norm`, `finite_setOf_apply_eq`) have the same shape as two named items in the `S1-GLOBAL-ZEROS` exit-evidence column (`MATHLIB_CAPABILITY_MAP.md:387`: "finite divisor sums, weighted summability, …"). The contract's blanket "no barrier closes" disclaimer covers this, but it never says the specific thing that makes it inventory-only: the summability is ASSUMED about a generic family, and the package proves no summability fact about the zeta zero set, with or without multiplicity, and names no height cutoff (the row distinguishes Li's `|ρ| ≤ T` from Weil's `|Im ρ| < T`). A later reader wanting to claim partial progress would reach for W7 first.
+
+   *Fix:* Add to claim boundary item 4: "In particular, `hsum` is a HYPOTHESIS on a generic family, not evidence. W7 establishes no weighted-summability fact about the zeros of any specific function, produces no divisor sum, and fixes no height cutoff — neither `|ρ| ≤ T` (Li) nor `|Im ρ| < T` (Weil). The `S1-GLOBAL-ZEROS` exit-evidence column is untouched item by item."
+
+5. **§Claim boundary item 6 (:1253-1254)** — "**No route.** This is an offered stage-one artifact in the sense of the RH queue; it does not select, advance, or imply a proof route." Accurate as to selection — I found no fixed cutoff, contour, normalization, or test-function class anywhere in the surface (see `checked`). But the cost-lowering effect is asymmetric across the three parked routes: `MATHLIB_CAPABILITY_MAP.md:387` lists canonical products as blocking "Li sums, canonical product, explicit formula" (Routes A and C), and the package is inert for Route B (Nyman–Beurling/Báez-Duarte, whose blocked-need row `S2-NYMAN` at `:392` names nothing product-shaped). Stating flat neutrality without naming the asymmetry invites two opposite later misreadings: that the package is equally relevant to all three, or that its relevance to A/C is itself route progress.
+
+   *Fix:* Extend item 6: "…does not select, advance, or imply a proof route. Its cost-lowering effect is nonetheless asymmetric and is stated here rather than left to be discovered: canonical products are named at `MATHLIB_CAPABILITY_MAP.md:387` as blocked for Li sums and the explicit formula (Routes A and C) and are irrelevant to Route B (`S2-NYMAN`, `:392`). Lowering the cost of an exit for two of three parked routes is inventory, not selection, and must never be cited as route progress (`MULTIPLICITY_CONTRACT.md` finding A4 regime; death condition 9)."
+
+6. **Annex C preamble (:1504-1518) and item 3 (:1552-1558)** — "Two independent scout reports … were returned against the pin … and are folded in here"; "**confirmed by both scouts independently**"; "Both scouts independently produced the same four-move sketch". No record path is cited for either report, and no corresponding artifact exists under `notes/reviews/` (I listed the directory; there is no Weierstrass or scout record). "Two independent" is therefore an unauditable appeal to corroboration, and it is doing rhetorical work in the re-pricing ("days of seam work (both scouts independently)", :1191). The annex's actually load-bearing content is the updater's own re-verification, which it states plainly at :1510-1513.
+
+   *Fix:* Either file the two reports and cite their paths, or restate the attribution: "Two model-drafted scout passes were run; neither is a filed artifact and neither carries independent authority. Everything asserted below rests on this updater's own re-verification against the pin (~40 locators, zero mismatches). Where the text says 'both scouts', read 'two drafting passes agreed' — corroboration between untrusted drafters is not evidence." (Consistent with `CLAUDE.md`: "Every model is a drafter only".)
+
+
+## Status of the editorial fixes
+
+The findings above are **enumerated here and NOT yet applied to the contract
+text**. That is deliberate and is recorded rather than glossed: applying several
+dozen edits to a contract of this length is its own change, and doing it inside
+an acceptance record would make the record and the object it accepts move
+together, which defeats the point of having a citable acceptance object.
+
+The accepted thing is therefore precisely the statement surface as it stands
+today. Any later application of these fixes must not touch a public signature —
+no lens asked for one — and if any proposed fix turns out to require a signature
+change, that returns the surface to contract review rather than proceeding.
+
+## Claim boundary
+
+This record is a review step with no kernel content. The package it accepts
+closes no barrier, advances no barrier, and partially closes no barrier; it
+selects no route; and it provides no evidence for or against the Riemann
+Hypothesis in either direction. `RH-002`'s three `PARK` dispositions remain
+CONFIRMED. This record adds no ledger row and no queue entry of any status.
