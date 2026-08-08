@@ -16,8 +16,9 @@ promotion change. Any review verdict recorded below is static reading, never
 CI evidence.
 
 Authority for this lane is the RH queue `../../../tasks/RIEMANN_HYPOTHESIS.md`,
-whose current dated decision keeps `RH-002` as the sole ACTIVE task with no
-route selected; `repo/ECDLP_DECISION_SUBSTRATE.json` governs the ECDLP lane and
+whose current dated decision keeps `RH-012` as the sole ACTIVE task with no
+route selected (`RH-002` closed 2026-08-07 with all three dispositions
+CONFIRMED); `repo/ECDLP_DECISION_SUBSTRATE.json` governs the ECDLP lane and
 is not the authority here. A draft in this directory is an offered artifact
 prepared for later independent review — never an active task, and never
 authorization to work a route.
@@ -28,7 +29,7 @@ authorization to work a route.
 | `RiemannXi.lean` | `../XI_PACKAGE_CONTRACT.md` (X1-X11, twelve declarations, no `sorry`; imports the built bridge explicitly and is synchronized with the RH-007 built module from its first import onward) | kernel-verified through the synchronized built counterpart in merged PR #304 (`afdae08`): the first full build exposed the X11 composition-call risk, `DifferentiableAt.fun_comp' z` was synchronized into contract, draft, and built module, and the repaired head passed the full build plus both axiom audits; statements and claim boundaries are unchanged |
 | `RiemannConj.lean` | `../CONJ_SYMMETRY_CONTRACT.md` (Z1-Z9, sixteen declarations, no `sorry`; imports the built bridge and the built xi module explicitly and is synchronized with the RH-008 built module from its first import onward) | statement surface accepted in merged PR #301 (`7bf13ab`, including the corrected F1 sign); re-reviewed under three independent lenses before promotion, then kernel-verified through the synchronized built counterpart promoted in merged PR #307 (`c277b86`), which is on `main` and imported from `ResearchOS.lean`; statements and claim boundaries are unchanged |
 | `RiemannMult.lean` | `../MULTIPLICITY_CONTRACT.md` (M1-M17, thirty-four declarations, no `sorry`; imports the built bridge, xi, and conjugation modules, all merged; synchronized with the RH-010 built module from its first import onward) | statement surface accepted 2026-08-07 (RH-009, `notes/reviews/RH009_MULT_CONTRACT_ACCEPTANCE_2026_08_07.md`, ACCEPT WITH APPLIED EDITORIAL FIXES, zero blocking); pre-kernel hardening pass walked all 34 proofs against the pin (zero WILL-FAIL verdicts, comment-only fallback upgrades, statements byte-frozen); the kernel verdict is delivered by CI on the RH-010 promotion change and is not claimed here |
-| `MellinBound.lean` | `../MELLIN_BOUND_CONTRACT.md` (MB1-MB4, five declarations, no `sorry`; generic Mellin norm bounds, zero repo prerequisites) | reviewed 2026-08-07: statements verified character-identical by mechanical diff; every invoked API grep-verified at the pin; all nine registered obligations carried as inline fallbacks; verdict `LIKELY_ELABORATES` with zero fixes needed — the kernel verdict awaits a separate promotion change |
+| `MellinBound.lean` | `../MELLIN_BOUND_CONTRACT.md` (MB1-MB4, five declarations, no `sorry`; generic Mellin norm bounds, zero repo prerequisites; synchronized with the built module `ResearchOS/Analysis/MellinBound.lean` from its first import onward) | statement surface accepted 2026-08-07 (`notes/reviews/MELLIN_ACCEPTANCE_2026_08_07.md`, ACCEPT WITH APPLIED EDITORIAL FIXES, zero blocking); draft reviewed the same day: statements character-identical by mechanical diff, every invoked API grep-verified at the pin, all nine registered obligations carried as inline fallbacks, verdict `LIKELY_ELABORATES` with zero fixes needed; promoted to the built surface under `notes/reviews/MELLIN_PROMOTION_2026_08_07.md` — the kernel verdict is delivered by CI on that promotion change and is not claimed here. The package is generic analysis: it closes no barrier and bears on no conjecture, so it is filed on the domain-neutral `ResearchOS/Analysis/` shelf rather than in the RH subtree |
 | `HarnackDisc.lean` | `../HARNACK_CONTRACT.md` (H1-H5, five declarations, no `sorry`; Harnack double inequality from the pinned Poisson representation) | reviewed 2026-08-07: statements character-identical; the root-level-vs-namespace mean-value trap the contract audit found is correctly handled in the draft; verdict `LIKELY_ELABORATES` with zero fixes needed — kernel verdict awaits a separate promotion change |
 | `PolyLiouville.lean` | `../POLY_LIOUVILLE_CONTRACT.md` (L1-L5, five declarations, no `sorry`; polynomial-growth Liouville via the pinned n-indexed Cauchy estimate) | reviewed 2026-08-07: statements character-identical by mechanical diff; all eleven registered obligations carried as inline fallbacks including the HasSum/SummationFilter seam; verdict PASS with one comment-only locator fix — kernel verdict awaits a separate promotion change |
 | `ThreeCircles.lean` | `../THREE_CIRCLES_CONTRACT.md` (TC1-TC11, one def and ten theorems, no `sorry`; annulus log-convexity via exp transport of the pinned three-lines endpoint form) | reviewed 2026-08-07: all eleven signatures character-identical; every claimed locator confirmed by reading the tree; verdict PASS with the file byte-unchanged — kernel verdict awaits a separate promotion change |
@@ -47,4 +48,9 @@ package has satisfied both its RH-006 source gate and its explicit independent
 statement acceptance. Its separate built promotion completed in PR #304 with
 the exact synchronized body, ledger coverage, full build, and both axiom
 audits green. The conjugation package took its statement acceptance in PR #301
-and its separate built promotion in PR #307 (`c277b86`), now on `main`.
+and its separate built promotion in PR #307 (`c277b86`), now on `main`. The
+Mellin norm-bound package took its statement acceptance and its separate built
+promotion the same way; because it is generic analysis with zero repo
+prerequisites, its built copy lives on the domain-neutral shelf
+`ResearchOS/Analysis/MellinBound.lean` and its rows carry the `MB-` prefix, so
+no RH-lane count moves and no barrier row changes.

@@ -45,6 +45,10 @@ CI elaborates it standalone and validates the output with
 #print axioms meromorphicOn_riemannZeta_strip
 #print axioms meromorphicOrderAt_riemannXi_ne_top
 #print axioms meromorphicOrderAt_riemannZeta_ne_top_of_mem_strip
+#print axioms norm_mellin_le
+#print axioms norm_mellin_le_add_of_re_mem_Icc
+#print axioms norm_mellin_le_of_norm_le
+#print axioms norm_mellin_le_of_re_le
 #print axioms one_notMem_riemannZetaZeros
 #print axioms riemannHypothesis_iff_riemannXi_zeros_re_eq_half
 #print axioms riemannHypothesis_iff_zero_free_gt_half
@@ -91,3 +95,4 @@ CI elaborates it standalone and validates the output with
 #print axioms riemannZeta_ne_zero_of_re_le_zero
 #print axioms riemannZeta_one_sub_eq_zero_iff
 #print axioms riemannZeta_zero_mem_critical_strip
+#print axioms setIntegral_rpow_mul_mono_exponent

@@ -7,8 +7,8 @@
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1085,
-  "distinct_qualified_names": 1085,
+  "declaration_count": 1090,
+  "distinct_qualified_names": 1090,
   "verified_md_citations": 677,
   "unresolved_references": [],
   "resolution_exemptions": [
@@ -17309,6 +17309,34 @@
       "file": "Ecdlp/Proved/NormEDSIsElliptic.lean",
       "line": 555
     },
+    "norm_mellin_le": {
+      "name": "norm_mellin_le",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/MellinBound.lean",
+      "line": 86
+    },
+    "norm_mellin_le_add_of_re_mem_Icc": {
+      "name": "norm_mellin_le_add_of_re_mem_Icc",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/MellinBound.lean",
+      "line": 224
+    },
+    "norm_mellin_le_of_norm_le": {
+      "name": "norm_mellin_le_of_norm_le",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/MellinBound.lean",
+      "line": 125
+    },
+    "norm_mellin_le_of_re_le": {
+      "name": "norm_mellin_le_of_re_le",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/MellinBound.lean",
+      "line": 200
+    },
     "of": {
       "name": "of",
       "namespace": "",
@@ -17665,6 +17693,13 @@
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
       "line": 104
+    },
+    "setIntegral_rpow_mul_mono_exponent": {
+      "name": "setIntegral_rpow_mul_mono_exponent",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/MellinBound.lean",
+      "line": 169
     },
     "tying": {
       "name": "tying",

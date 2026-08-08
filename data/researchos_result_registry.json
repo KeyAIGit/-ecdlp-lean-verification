@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "source": "VERIFIED_RESEARCHOS.md + built public ResearchOS source (audit harnesses excluded by exact path)",
-  "ledger_rows": 81,
+  "ledger_rows": 86,
   "ledger_declarations": [
     "AnalyticAt.conj_conj",
     "Gammaℝ_conj",
@@ -39,6 +39,10 @@
     "meromorphicOn_riemannZeta_strip",
     "meromorphicOrderAt_riemannXi_ne_top",
     "meromorphicOrderAt_riemannZeta_ne_top_of_mem_strip",
+    "norm_mellin_le",
+    "norm_mellin_le_add_of_re_mem_Icc",
+    "norm_mellin_le_of_norm_le",
+    "norm_mellin_le_of_re_le",
     "one_notMem_riemannZetaZeros",
     "riemannHypothesis_iff_riemannXi_zeros_re_eq_half",
     "riemannHypothesis_iff_zero_free_gt_half",
@@ -84,7 +88,8 @@
     "riemannZeta_ne_zero_of_re_eq_zero",
     "riemannZeta_ne_zero_of_re_le_zero",
     "riemannZeta_one_sub_eq_zero_iff",
-    "riemannZeta_zero_mem_critical_strip"
+    "riemannZeta_zero_mem_critical_strip",
+    "setIntegral_rpow_mul_mono_exponent"
   ],
   "axiom_base": {
     "AnalyticAt.conj_conj": "standard",
@@ -123,6 +128,10 @@
     "meromorphicOn_riemannZeta_strip": "standard",
     "meromorphicOrderAt_riemannXi_ne_top": "standard",
     "meromorphicOrderAt_riemannZeta_ne_top_of_mem_strip": "standard",
+    "norm_mellin_le": "standard",
+    "norm_mellin_le_add_of_re_mem_Icc": "standard",
+    "norm_mellin_le_of_norm_le": "standard",
+    "norm_mellin_le_of_re_le": "standard",
     "one_notMem_riemannZetaZeros": "standard",
     "riemannHypothesis_iff_riemannXi_zeros_re_eq_half": "standard",
     "riemannHypothesis_iff_zero_free_gt_half": "standard",
@@ -168,7 +177,8 @@
     "riemannZeta_ne_zero_of_re_eq_zero": "standard",
     "riemannZeta_ne_zero_of_re_le_zero": "standard",
     "riemannZeta_one_sub_eq_zero_iff": "standard",
-    "riemannZeta_zero_mem_critical_strip": "standard"
+    "riemannZeta_zero_mem_critical_strip": "standard",
+    "setIntegral_rpow_mul_mono_exponent": "standard"
   },
   "ledger_entries": [
     {
@@ -1224,6 +1234,71 @@
       "axiom_base": "standard",
       "method": "Mathlib",
       "status": "proved"
+    },
+    {
+      "claim_id": "MB-1",
+      "domain": "analysis-generic",
+      "declarations": [
+        "norm_mellin_le"
+      ],
+      "files": [
+        "ResearchOS/Analysis/MellinBound.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "MB-2",
+      "domain": "analysis-generic",
+      "declarations": [
+        "norm_mellin_le_of_norm_le"
+      ],
+      "files": [
+        "ResearchOS/Analysis/MellinBound.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "MB-3A",
+      "domain": "analysis-generic",
+      "declarations": [
+        "setIntegral_rpow_mul_mono_exponent"
+      ],
+      "files": [
+        "ResearchOS/Analysis/MellinBound.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "MB-3B",
+      "domain": "analysis-generic",
+      "declarations": [
+        "norm_mellin_le_of_re_le"
+      ],
+      "files": [
+        "ResearchOS/Analysis/MellinBound.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "MB-4",
+      "domain": "analysis-generic",
+      "declarations": [
+        "norm_mellin_le_add_of_re_mem_Icc"
+      ],
+      "files": [
+        "ResearchOS/Analysis/MellinBound.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
     }
   ],
   "declarations": {
@@ -1442,6 +1517,30 @@
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
       "line": 823,
       "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean:823@sha256:9d6323be464e"
+    },
+    "norm_mellin_le": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/MellinBound.lean",
+      "line": 86,
+      "anchor": "ResearchOS/Analysis/MellinBound.lean:86@sha256:de5fc22de233"
+    },
+    "norm_mellin_le_add_of_re_mem_Icc": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/MellinBound.lean",
+      "line": 224,
+      "anchor": "ResearchOS/Analysis/MellinBound.lean:224@sha256:c58d6cfbf969"
+    },
+    "norm_mellin_le_of_norm_le": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/MellinBound.lean",
+      "line": 125,
+      "anchor": "ResearchOS/Analysis/MellinBound.lean:125@sha256:5a0218e7cb04"
+    },
+    "norm_mellin_le_of_re_le": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/MellinBound.lean",
+      "line": 200,
+      "anchor": "ResearchOS/Analysis/MellinBound.lean:200@sha256:900d2dd14ab7"
     },
     "one_notMem_riemannZetaZeros": {
       "kind": "theorem",
@@ -1718,6 +1817,12 @@
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean",
       "line": 104,
       "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean:104@sha256:07a12f9ec473"
+    },
+    "setIntegral_rpow_mul_mono_exponent": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/MellinBound.lean",
+      "line": 169,
+      "anchor": "ResearchOS/Analysis/MellinBound.lean:169@sha256:0195dec37073"
     }
   }
 }

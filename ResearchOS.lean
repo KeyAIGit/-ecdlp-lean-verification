@@ -4,6 +4,10 @@
 -- machine-checked evidence that the Research OS pipeline is not ECC-only.
 import ResearchOS.NumberTheory.Elementary
 import ResearchOS.NumberTheory.MoreFacts
+-- Domain-neutral analysis shelf: generic lemmas with zero repo prerequisites, owned by
+-- no conjecture program. Listed before the RH chain because nothing in that chain (or
+-- anywhere else) depends on it today.
+import ResearchOS.Analysis.MellinBound
 import ResearchOS.AnalyticNumberTheory.RiemannHypothesis.TargetBridge
 import ResearchOS.AnalyticNumberTheory.RiemannHypothesis.Xi
 import ResearchOS.AnalyticNumberTheory.RiemannHypothesis.Conj

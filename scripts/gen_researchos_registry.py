@@ -46,11 +46,16 @@ AUDIT_EXEMPT = {"ResearchOS/LedgerAxiomAudit.lean"}
 PREFIX_DOMAINS = {
     "nt-": "number-theory-elementary",
     "RH-": "riemann-hypothesis",
+    "MB-": "analysis-generic",
 }
 # Rows of this domain must cite files under this subtree
-# (domains/riemann-hypothesis/README.md:70-71).
+# (domains/riemann-hypothesis/README.md:70-71). The `analysis-generic` entry
+# is the same discipline applied in reverse: domain-neutral lemmas may not be
+# filed inside a conjecture program's subtree, where they would read as that
+# program's content.
 DOMAIN_SUBTREES = {
     "riemann-hypothesis": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/",
+    "analysis-generic": "ResearchOS/Analysis/",
 }
 ALLOWED_AXIOM_BASES = {"standard", "standard+native_decide"}
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")

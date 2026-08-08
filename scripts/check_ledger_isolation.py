@@ -42,7 +42,11 @@ AUDIT_WHITELIST = {
     "Ecdlp/LedgerAxiomAudit.lean",
     "ResearchOS/LedgerAxiomAudit.lean",
 }
-RESEARCHOS_LANE_DOMAINS = {"number-theory-elementary", "riemann-hypothesis"}
+RESEARCHOS_LANE_DOMAINS = {
+    "number-theory-elementary",
+    "riemann-hypothesis",
+    "analysis-generic",
+}
 ALLOWED_RESEARCHOS_METRICS = {
     "VERIFIED_RESEARCHOS.md",
     "data/researchos_result_registry.json",
