@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "source": "VERIFIED_RESEARCHOS.md + built public ResearchOS source (audit harnesses excluded by exact path)",
-  "ledger_rows": 116,
+  "ledger_rows": 139,
   "ledger_declarations": [
     "AnalyticAt.conj_conj",
     "Complex.exists_affine_of_norm_le_pow_one",
@@ -22,6 +22,7 @@
     "InnerProductSpace.HarmonicOnNhd.harnack",
     "InnerProductSpace.HarmonicOnNhd.harnack_half",
     "InnerProductSpace.HarmonicOnNhd.pos_of_pos_center",
+    "IsCompact.inter_riemannXi_zeroSet_finite",
     "ResearchOS.NumberTheory.carmichael_1105_factorization",
     "ResearchOS.NumberTheory.carmichael_1105_not_prime",
     "ResearchOS.NumberTheory.carmichael_1729_factorization",
@@ -50,13 +51,23 @@
     "analyticOrderAt_riemannZeta_one_sub",
     "analyticOrderAt_riemannZeta_one_sub_conj",
     "bddAbove_image_norm_sphere",
+    "compl_riemannXi_zeroSet_mem_codiscrete",
     "completedRiemannZeta_conj",
     "completedRiemannZeta₀_conj",
     "continuousOn_poissonKernel",
+    "countable_riemannXi_divisor_support",
+    "countable_riemannXi_zeroSet",
     "differentiable_riemannXi",
     "exists_exp_eq_of_norm_eq",
     "exp_mem_annulus_of_mem_verticalClosedStrip",
     "exp_mem_annulus_of_mem_verticalStrip",
+    "image_conj_of_symm",
+    "image_one_sub_conj_of_symm",
+    "image_one_sub_of_symm",
+    "isClosed_riemannXi_divisor_support",
+    "isClosed_riemannXi_zeroSet",
+    "isDiscrete_riemannXi_divisor_support",
+    "isDiscrete_riemannXi_zeroSet",
     "le_sSupNormCircle",
     "meromorphicOn_riemannXi",
     "meromorphicOn_riemannZeta_strip",
@@ -81,6 +92,17 @@
     "riemannXi_conj",
     "riemannXi_divisor_apply",
     "riemannXi_divisor_conj",
+    "riemannXi_divisor_finsum_mem_comp_conj",
+    "riemannXi_divisor_finsum_mem_comp_one_sub",
+    "riemannXi_divisor_finsum_mem_comp_one_sub_conj",
+    "riemannXi_divisor_finsum_mem_eq_sum",
+    "riemannXi_divisor_finsum_mem_image_conj",
+    "riemannXi_divisor_finsum_mem_image_one_sub",
+    "riemannXi_divisor_finsum_mem_image_one_sub_conj",
+    "riemannXi_divisor_finsum_mem_mono",
+    "riemannXi_divisor_finsum_mem_nonneg",
+    "riemannXi_divisor_finsum_mem_toNat",
+    "riemannXi_divisor_inter_support_finite",
     "riemannXi_divisor_nonneg",
     "riemannXi_divisor_one_sub",
     "riemannXi_divisor_one_sub_conj",
@@ -119,7 +141,8 @@
     "sSupNormCircle",
     "sSupNormCircle_le_interp",
     "sSupNormCircle_nonneg",
-    "setIntegral_rpow_mul_mono_exponent"
+    "setIntegral_rpow_mul_mono_exponent",
+    "tendsto_riemannXi_zeroSet_cofinite_cocompact"
   ],
   "axiom_base": {
     "AnalyticAt.conj_conj": "standard",
@@ -141,6 +164,7 @@
     "InnerProductSpace.HarmonicOnNhd.harnack": "standard",
     "InnerProductSpace.HarmonicOnNhd.harnack_half": "standard",
     "InnerProductSpace.HarmonicOnNhd.pos_of_pos_center": "standard",
+    "IsCompact.inter_riemannXi_zeroSet_finite": "standard",
     "ResearchOS.NumberTheory.carmichael_1105_factorization": "standard",
     "ResearchOS.NumberTheory.carmichael_1105_not_prime": "standard",
     "ResearchOS.NumberTheory.carmichael_1729_factorization": "standard",
@@ -169,13 +193,23 @@
     "analyticOrderAt_riemannZeta_one_sub": "standard",
     "analyticOrderAt_riemannZeta_one_sub_conj": "standard",
     "bddAbove_image_norm_sphere": "standard",
+    "compl_riemannXi_zeroSet_mem_codiscrete": "standard",
     "completedRiemannZeta_conj": "standard",
     "completedRiemannZeta₀_conj": "standard",
     "continuousOn_poissonKernel": "standard",
+    "countable_riemannXi_divisor_support": "standard",
+    "countable_riemannXi_zeroSet": "standard",
     "differentiable_riemannXi": "standard",
     "exists_exp_eq_of_norm_eq": "standard",
     "exp_mem_annulus_of_mem_verticalClosedStrip": "standard",
     "exp_mem_annulus_of_mem_verticalStrip": "standard",
+    "image_conj_of_symm": "standard",
+    "image_one_sub_conj_of_symm": "standard",
+    "image_one_sub_of_symm": "standard",
+    "isClosed_riemannXi_divisor_support": "standard",
+    "isClosed_riemannXi_zeroSet": "standard",
+    "isDiscrete_riemannXi_divisor_support": "standard",
+    "isDiscrete_riemannXi_zeroSet": "standard",
     "le_sSupNormCircle": "standard",
     "meromorphicOn_riemannXi": "standard",
     "meromorphicOn_riemannZeta_strip": "standard",
@@ -200,6 +234,17 @@
     "riemannXi_conj": "standard",
     "riemannXi_divisor_apply": "standard",
     "riemannXi_divisor_conj": "standard",
+    "riemannXi_divisor_finsum_mem_comp_conj": "standard",
+    "riemannXi_divisor_finsum_mem_comp_one_sub": "standard",
+    "riemannXi_divisor_finsum_mem_comp_one_sub_conj": "standard",
+    "riemannXi_divisor_finsum_mem_eq_sum": "standard",
+    "riemannXi_divisor_finsum_mem_image_conj": "standard",
+    "riemannXi_divisor_finsum_mem_image_one_sub": "standard",
+    "riemannXi_divisor_finsum_mem_image_one_sub_conj": "standard",
+    "riemannXi_divisor_finsum_mem_mono": "standard",
+    "riemannXi_divisor_finsum_mem_nonneg": "standard",
+    "riemannXi_divisor_finsum_mem_toNat": "standard",
+    "riemannXi_divisor_inter_support_finite": "standard",
     "riemannXi_divisor_nonneg": "standard",
     "riemannXi_divisor_one_sub": "standard",
     "riemannXi_divisor_one_sub_conj": "standard",
@@ -238,7 +283,8 @@
     "sSupNormCircle": "standard",
     "sSupNormCircle_le_interp": "standard",
     "sSupNormCircle_nonneg": "standard",
-    "setIntegral_rpow_mul_mono_exponent": "standard"
+    "setIntegral_rpow_mul_mono_exponent": "standard",
+    "tendsto_riemannXi_zeroSet_cofinite_cocompact": "standard"
   },
   "ledger_entries": [
     {
@@ -1749,6 +1795,305 @@
       "axiom_base": "standard",
       "method": "Mathlib",
       "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-D1",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "compl_riemannXi_zeroSet_mem_codiscrete"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-D2",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "isClosed_riemannXi_zeroSet"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-D3",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "isDiscrete_riemannXi_zeroSet"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-D4",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "IsCompact.inter_riemannXi_zeroSet_finite"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-D5",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "countable_riemannXi_zeroSet"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-D6",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "tendsto_riemannXi_zeroSet_cofinite_cocompact"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-D7A",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "isDiscrete_riemannXi_divisor_support"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-D7B",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "isClosed_riemannXi_divisor_support"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-D8",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannXi_divisor_inter_support_finite"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-D9",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "countable_riemannXi_divisor_support"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-N12",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannXi_divisor_finsum_mem_eq_sum"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-N13",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannXi_divisor_finsum_mem_nonneg"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-N14",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannXi_divisor_finsum_mem_toNat"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-N15",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannXi_divisor_finsum_mem_mono"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-N16C",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannXi_divisor_finsum_mem_comp_one_sub"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-N16I",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannXi_divisor_finsum_mem_image_one_sub"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-N17C",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannXi_divisor_finsum_mem_comp_conj"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-N17I",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannXi_divisor_finsum_mem_image_conj"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-N18C",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannXi_divisor_finsum_mem_comp_one_sub_conj"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-N18I",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "riemannXi_divisor_finsum_mem_image_one_sub_conj"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-N19A",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "image_one_sub_of_symm"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-N19B",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "image_conj_of_symm"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "RH-SLICE-N19C",
+      "domain": "riemann-hypothesis",
+      "declarations": [
+        "image_one_sub_conj_of_symm"
+      ],
+      "files": [
+        "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
     }
   ],
   "declarations": {
@@ -1865,6 +2210,12 @@
       "file": "ResearchOS/Analysis/HarnackDisc.lean",
       "line": 359,
       "anchor": "ResearchOS/Analysis/HarnackDisc.lean:359@sha256:56d420436a46"
+    },
+    "IsCompact.inter_riemannXi_zeroSet_finite": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 163,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:163@sha256:b475c7985cdb"
     },
     "ResearchOS.NumberTheory.carmichael_1105_factorization": {
       "kind": "theorem",
@@ -2034,6 +2385,12 @@
       "line": 111,
       "anchor": "ResearchOS/Analysis/ThreeCircles.lean:111@sha256:c6a199c6debe"
     },
+    "compl_riemannXi_zeroSet_mem_codiscrete": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 108,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:108@sha256:dd8acf189edc"
+    },
     "completedRiemannZeta_conj": {
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
@@ -2051,6 +2408,18 @@
       "file": "ResearchOS/Analysis/HarnackDisc.lean",
       "line": 128,
       "anchor": "ResearchOS/Analysis/HarnackDisc.lean:128@sha256:e85ec3318bec"
+    },
+    "countable_riemannXi_divisor_support": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 340,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:340@sha256:d7dfc046cf07"
+    },
+    "countable_riemannXi_zeroSet": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 179,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:179@sha256:87d1dd112805"
     },
     "differentiable_riemannXi": {
       "kind": "theorem",
@@ -2075,6 +2444,48 @@
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
       "line": 160,
       "anchor": "ResearchOS/Analysis/ThreeCircles.lean:160@sha256:f6948ecf350f"
+    },
+    "image_conj_of_symm": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 601,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:601@sha256:b95a1dc24194"
+    },
+    "image_one_sub_conj_of_symm": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 611,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:611@sha256:64ed4a0b6f6c"
+    },
+    "image_one_sub_of_symm": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 581,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:581@sha256:4a33cbba4f29"
+    },
+    "isClosed_riemannXi_divisor_support": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 256,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:256@sha256:5f8e2db65f84"
+    },
+    "isClosed_riemannXi_zeroSet": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 139,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:139@sha256:b3c5386ff60d"
+    },
+    "isDiscrete_riemannXi_divisor_support": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 243,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:243@sha256:9dec677f059f"
+    },
+    "isDiscrete_riemannXi_zeroSet": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 148,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:148@sha256:5331e4a28941"
     },
     "le_sSupNormCircle": {
       "kind": "lemma",
@@ -2219,6 +2630,72 @@
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
       "line": 634,
       "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean:634@sha256:4c508baec75b"
+    },
+    "riemannXi_divisor_finsum_mem_comp_conj": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 504,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:504@sha256:951727c205bf"
+    },
+    "riemannXi_divisor_finsum_mem_comp_one_sub": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 470,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:470@sha256:d180238598f9"
+    },
+    "riemannXi_divisor_finsum_mem_comp_one_sub_conj": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 541,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:541@sha256:bfc701dfedd1"
+    },
+    "riemannXi_divisor_finsum_mem_eq_sum": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 363,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:363@sha256:6ae1df1da568"
+    },
+    "riemannXi_divisor_finsum_mem_image_conj": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 513,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:513@sha256:749afbf23db4"
+    },
+    "riemannXi_divisor_finsum_mem_image_one_sub": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 481,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:481@sha256:3f1211ded907"
+    },
+    "riemannXi_divisor_finsum_mem_image_one_sub_conj": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 550,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:550@sha256:6dd38fc3f709"
+    },
+    "riemannXi_divisor_finsum_mem_mono": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 425,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:425@sha256:a528711b8dd4"
+    },
+    "riemannXi_divisor_finsum_mem_nonneg": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 387,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:387@sha256:27c80c95f0a9"
+    },
+    "riemannXi_divisor_finsum_mem_toNat": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 412,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:412@sha256:099a9bba6aae"
+    },
+    "riemannXi_divisor_inter_support_finite": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 278,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:278@sha256:b71009184e47"
     },
     "riemannXi_divisor_nonneg": {
       "kind": "theorem",
@@ -2453,6 +2930,12 @@
       "file": "ResearchOS/Analysis/MellinBound.lean",
       "line": 169,
       "anchor": "ResearchOS/Analysis/MellinBound.lean:169@sha256:0195dec37073"
+    },
+    "tendsto_riemannXi_zeroSet_cofinite_cocompact": {
+      "kind": "theorem",
+      "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
+      "line": 216,
+      "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:216@sha256:30b70f1677c3"
     }
   }
 }
