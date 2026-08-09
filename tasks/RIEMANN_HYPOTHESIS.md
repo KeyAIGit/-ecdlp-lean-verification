@@ -151,6 +151,23 @@ No barrier or route changes. By this dated decision the single ACTIVE slot
 moves to `RH-020`, the separate built promotion whose exact-head CI is the sole
 judge.
 
+Decision update: 2026-08-09 (fourth). `RH-020` completed through merged
+PR #336 (`6db802d`). The repaired exact PR head `411c208` passed the full
+Lean build, no-incomplete-proof and lane-isolation gates, complete inverse
+coverage, and both axiom audits; its tree
+`8dff0ed8184c5f1ae60862332acdcbf675bf2a8e` is exactly the tree of the
+merged commit. The kernel accepted all 28 W1–W12 declarations after seven
+proof-only repair rounds, with the accepted statement surface unchanged at
+`5c1bbe331f63ae63bb31c88d80e2af6442562091a1996f799e132d254d62d735`.
+The `WF-` ledger has 28 rows; the generated ResearchOS registry has 172 rows
+and 173 declarations, and the combined declaration registry has 1176
+declarations. No route or barrier moves: the package is generic analysis,
+`S1-GLOBAL-ZEROS` and `S1-GROWTH` remain OPEN, and every RH route remains
+PARKED. By this dated decision the single ACTIVE slot moves to `RH-021`,
+independent acceptance of a contract for simplicity of the negative-even
+trivial zeros. This activates contract review only, not drafting, promotion,
+or route execution.
+
 The exact Lean target is the already-pinned Mathlib declaration
 `_root_.RiemannHypothesis`. Do not create a competing definition.
 
@@ -1357,8 +1374,8 @@ barrier row moved.
 
 ID: `RH-020`
 
-Status: **ACTIVE 2026-08-09 — separate built promotion; exact-head kernel CI
-is the sole judge**
+Status: **COMPLETE 2026-08-09 — merged PR #336; full build and both axiom
+audits green on the exact merged tree**
 
 Kind: theorem promotion
 
@@ -1398,6 +1415,92 @@ Recorded in advance: the most likely first kernel failures are W4's reindex and
 cast normal form, W8's locally uniform product inference, and W12's
 Pi/subtype/cardinality coercions. Kernel rejection is a proof-repair round, not
 permission to weaken the accepted statement.
+
+Outcome (2026-08-09): the first promotion head passed all registry,
+inverse-coverage, generated-audit, isolation, fixpoint and no-incomplete-proof
+gates but failed the full build in the new module. Rounds R1–R7 repaired proof
+elaboration in W4–W12 without changing any name, binder, hypothesis,
+conclusion, import, trust assumption, or resource limit. The final built file
+has SHA-256
+`3e23e296a5525c727d264f9c77f8b8b8a41363adb9c62a25b143835919e3c06c`,
+the synchronized draft has SHA-256
+`b3b75cffedbcb0c6a2092ceef259ef07d33642506c89d3d12e4937f8cb229a7f`,
+and their shared import-to-EOF SHA-256 is
+`fb020769fb57a4f6ef5c5765283593a8f15375c612a552d1746a451ecd90daa4`.
+Merged PR #336 has commit `6db802d` and tree
+`8dff0ed8184c5f1ae60862332acdcbf675bf2a8e`, byte-identical to the repaired
+head that passed the full build and both axiom audits. The 28 `WF-` rows are
+inverse-complete on the standard axiom base. This closes only the promotion
+task. It closes no RH barrier, advances no RH barrier, and partially closes no
+RH barrier.
+
+## RH-021: accept the trivial-zero simplicity contract
+
+ID: `RH-021`
+
+Status: **ACTIVE 2026-08-09 — contract and independent acceptance only; no Lean draft or promotion authorized**
+
+Kind: contract / independent acceptance
+
+Activation basis (2026-08-09): the dated milestone feasibility sweep ranks
+the C11 trivial-zero-simplicity package first among route-neutral next
+theorems, estimates 3–6 days, and calls it the smallest genuine zeta statement
+reachable on that horizon. The feasibility sweep identifies this all-n theorem
+as the natural follow-up to finding A7, which removed the unpinned
+n=0 simplicity assertion from the multiplicity contract. RH-020 frees the
+queue slot but is not a load-bearing dependency of C11; the feasibility record
+instead points to the pinned Mathlib identities and the already-built
+multiplicity interfaces.
+
+Required output:
+
+- a new
+  `domains/riemann-hypothesis/TRIVIAL_ZERO_SIMPLICITY_CONTRACT.md` freezing a
+  small exact public surface, including the mandatory capstone
+
+  ```lean
+  (n : ℕ) :
+    analyticOrderAt riemannZeta (-2 * (n + 1)) = 1
+  ```
+
+  with every name, binder, hypothesis and conclusion written explicitly;
+- an independent dated acceptance record
+  `notes/reviews/RH021_TRIVIAL_ZERO_SIMPLICITY_ACCEPTANCE_2026_08_09.md`
+  that checks the complete statement surface, pinned APIs and mathematical
+  mechanism, and returns ACCEPT or REJECT/BLOCK rather than weakening the
+  capstone;
+- exact source/API evidence for the neighbourhood functional equation, the
+  simple cosine zero, analytic and nonzero cofactors, local-order transport
+  through `s ↦ 1 - s`, and exclusion of every junk-value branch of
+  `analyticOrderAt`.
+
+Exit criteria:
+
+- the review derives a neighbourhood `EventuallyEq` from the available
+  functional equation rather than treating a pointwise equality as local
+  identity;
+- the cosine factor is proved to have analytic order one at the relevant
+  point, while the constant, complex-power, Gamma and zeta cofactors are
+  proved analytic and nonzero there;
+- transport through `s ↦ 1 - s` is checked against the built
+  `analyticOrderAt_comp_const_sub` interface, including its
+  beta-redex-sensitive normal form;
+- totalized zeta and `analyticOrderAt` conventions are audited so that no
+  junk value is used as evidence;
+- this task adds no Lean draft, built module, import, ledger row, registry
+  entry or kernel claim. Drafting and promotion, if accepted, remain separate
+  later tasks;
+- the claim boundary is only local analytic order one at the negative-even
+  trivial zeros. It says nothing about simplicity of nontrivial zeros or xi,
+  global nontrivial-zero enumeration or counting, growth, Hadamard
+  factorization, cutoffs, route selection, or RH. `S1-GLOBAL-ZEROS` and
+  `S1-GROWTH` remain OPEN and all routes remain PARKED.
+
+Death condition: if the capstone needs an added assumption, weakened
+conclusion, changed point, or an unpinned/external theorem in place of a
+complete pinned derivation, record REJECT/BLOCK and return to contract design.
+Do not substitute the already-known nonvanishing-away-from-trivial-zeros fact,
+and do not rewrite the historical M4 package boundary.
 
 ## RH-005: bounded computation policy
 
