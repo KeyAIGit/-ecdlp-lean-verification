@@ -1569,13 +1569,52 @@ hane hsum w` (W7); `haveI := hS.fintype`.
    s.ncard = hs.toFinset.card` (:644) is about `Set.Finite.toFinset` — which is
    exactly what this skeleton builds, from `hS : S.Finite`; whereas
    `theorem ncard_eq_toFinset_card' (s : Set α) [Fintype s] : s.ncard =
-   s.toFinset.card` (:649) is about the `Fintype`-based `Set.toFinset`. Citing
-   :649 for an `hS.toFinset` term forces a gratuitous
-   `Set.Finite.toFinset_eq_toFinset` hop; citing :644 removes that step from
-   the already-HIGH S1W-ORD. Keep :649 only as the alternative for a
-   `haveI := hS.fintype; Set.toFinset` route. `Nat.card_coe_set_eq` (:642,
+   s.toFinset.card` (:649) is about the `Fintype`-based `Set.toFinset`.
+   `Nat.card_coe_set_eq` (:642,
    `@[simp] theorem _root_.Nat.card_coe_set_eq (s : Set α) : Nat.card s =
    s.ncard := rfl`) was cited correctly and is unchanged.
+
+   **The 2026-08-08 rationale for that swap is refuted (2026-08-09); the
+   citation stands, the reasoning does not.** It claimed that citing :644
+   "removes" a `Set.Finite.toFinset_eq_toFinset` hop from S1W-ORD. It relocates
+   it. Three reasons, all against this skeleton's own text:
+
+   - This skeleton is *already* on the `Fintype` route. Step 2 uses
+     `tprod_fintype`, which needs `Fintype ↥S`, which is why
+     `haveI := hS.fintype` sits in the capstone's opening line. The
+     "alternative route" the old text relegated to a footnote is the route in
+     force one step earlier.
+   - `tprod_fintype` produces `∏ b : ↥S, …`, i.e. `Finset.univ` over the
+     subtype — not a `toFinset` term at all. The lemma that lands on a
+     `Finset ι` is `Finset.prod_set_coe (s : Set ι) [Fintype s] :
+     (∏ i : s, f i) = ∏ i ∈ s.toFinset, f i`
+     (`Algebra/BigOperators/Group/Finset/Basic.lean:469`), whose output is
+     `s.toFinset` — the **primed** :649's subject. That lemma is the
+     "attach/`toFinset` bookkeeping" hand-wave in step 2 and appears nowhere
+     else in this contract; it belongs in the dependency table.
+   - `haveI` (not `letI`) is what makes the hop unavoidable in either
+     direction. `Set.Finite.toFinset h` is definitionally
+     `@Set.toFinset _ _ h.fintype`, but `haveI` introduces an **opaque** fvar
+     instance, so `S.toFinset` and `hS.toFinset` are not `rfl`-equal and closing
+     the gap needs `Subsingleton.elim` — i.e. exactly
+     `Set.Finite.toFinset_eq_toFinset`, which does exist under that name at
+     `Data/Set/Finite/Basic.lean:78`. **Changing the opening line to
+     `letI := hS.fintype` deletes the hop for real**; a citation swap cannot.
+
+   **A shorter chain exists that needs neither lemma, and it is the one to
+   prefer.** With the `Fintype` instance already in scope,
+   `∑ i : ↥S, 1 = Fintype.card ↥S` goes to `S.ncard` by
+   `Set.fintypeCard_eq_ncard` (`Data/Set/Card.lean:655`, `@[simp]`) and then to
+   `Nat.card ↥S` by `Nat.card_coe_set_eq` (:642, `@[simp]`, `rfl`). Both are
+   `@[simp]`, so `simp` closes the card chain outright and no `Finset ι` ever
+   appears. Keep :644 and :649 as explicit fallbacks. :655 is absent from the
+   dependency table and belongs there.
+
+   One further trap in :644 that the skeleton must not walk into: its
+   finiteness argument is an autoparam, `(hs : s.Finite := by toFinite_tac)`.
+   Writing `Set.ncard_eq_toFinset_card S` with the argument omitted fires
+   `toFinite_tac`, which cannot discharge `{i | a i = w}.Finite`. Pass `hS`
+   explicitly.
 5. `analyticOrderAt T w = 0` by Order.lean:133 with `T w ≠ 0` (W10 third
    signature applied to the subfamily, whose members all have `a i ≠ w` by
    construction).
@@ -1603,6 +1642,46 @@ the phantom `AnalyticAt.finsetProd`; `Set.ncard_eq_toFinset_card` —
 Data/Set/Card.lean:644 (the `Set.Finite.toFinset` form; :649 is the
 `Fintype`/`Set.toFinset` alternative) and `Nat.card_coe_set_eq` — :642;
 W2, W3, W7, W10.
+
+**Added 2026-08-09** — four pinned names the capstone's own steps use or should
+prefer, none of which was listed:
+
+- `Set.fintypeCard_eq_ncard` — `Data/Set/Card.lean:655`, `@[simp]`,
+  `Fintype.card s = s.ncard`. With :642 it closes the whole card chain by
+  `simp`, so step 4 need touch neither :644 nor :649. This is now the preferred
+  route.
+- `Finset.prod_set_coe` — `Algebra/BigOperators/Group/Finset/Basic.lean:469`,
+  `(s : Set ι) [Fintype s] : (∏ i : s, f i) = ∏ i ∈ s.toFinset, f i`. This is
+  the lemma step 2's "attach/`toFinset` bookkeeping" actually needs; it lands on
+  the `Fintype`-based `s.toFinset`, which is why the :644-vs-:649 argument above
+  had the seam in the wrong place.
+- `Set.Finite.toFinset_eq_toFinset` — `Data/Set/Finite/Basic.lean:78`,
+  `{s : Set α} [Fintype s] (h : s.Finite) : h.toFinset = s.toFinset`. Needed
+  whenever the two `toFinset`s meet under `haveI`; unnecessary under `letI`.
+- `analyticAt_finprod` — `Analysis/Analytic/Constructions.lean:1113`,
+  `@[fun_prop]` on :1112, root-level (**not** in the `Finset` namespace),
+  hypothesis `∀ a` and conclusion on `∏ᶠ n, f n`. An alternative to step 3 that
+  skips the `Set.Finite.toFinset` machinery entirely; the pin's own proof of it
+  (:1116–:1119) shows the `finprod_eq_prod` / `Finset.analyticAt_prod` pattern.
+
+The `Finset`-product analyticity family is eight lemmas, not two —
+Constructions.lean :1051, :1065, :1073, :1081, :1088, :1094, :1100, :1106 —
+covering `AnalyticWithinAt`, `AnalyticAt`, `AnalyticOn` and `AnalyticOnNhd` in
+Pi and `_fun_` form. `Finset.analyticOnNhd_prod` (:1106) is the natural partner
+for W9, which already lands in `AnalyticOnNhd` via
+`Complex.analyticOnNhd_univ_iff_differentiable`.
+
+Two precision notes on the 2026-08-08 additions. :1073 does not re-bind
+`{α : Type*}` — it inherits `α` from the file-level `variable` at :31, so the
+two are not textually "the same binders" even though the effective binder sets
+match. And neither quote shows the ambient
+`{𝕜} [NontriviallyNormedField 𝕜] {E} [NormedAddCommGroup E] [NormedSpace 𝕜 E]`
+from :32–:33, all discharged by instance for ℂ. Also note the binder asymmetry
+across the seam: `Finset.analyticAt_prod` takes `(N : Finset α)` **explicit**,
+while `meromorphicOrderAt_prod` takes `{s : Finset ι}` **implicit**. The `[GEN]`
+lemma follows the analytic side; a `_fun_` twin mirrored from
+Meromorphic/Order.lean:456 would import the implicit convention and clash with
+its own Pi-form sibling.
 
 **Meromorphic-carrier fallback route (Annex B item 1, pinned):**
 `meromorphicOrderAt_prod` — Meromorphic/Order.lean:437;
@@ -1673,6 +1752,27 @@ of S1W-GEN is thus locator-complete end to end.
   the direct induction misbehaves; `meromorphicOrderAt_prod`'s own proof
   (`Finset.induction` + binary `meromorphicOrderAt_mul` + `MeromorphicAt.prod`)
   is the in-tree template for the direct induction as well.
+
+  **The transfer route is not free — priced 2026-08-09.**
+  `AnalyticAt.meromorphicOrderAt_eq` (Order.lean:279, verified: the declaration
+  is on :279 and its statement on :280) reads
+  `meromorphicOrderAt f x = (analyticOrderAt f x).map (↑)`, so the transfer
+  lands in `WithTop ℤ`, not `ℕ∞`. Recovering the `ℕ∞` equation needs
+  injectivity of that map plus its commutation with `Finset.sum`. Modest work,
+  but real, and it is not what "derivation by transfer" sounds like. Keep the
+  route as a fallback, not as a cheaper primary.
+
+  **The gap the `[GEN]` lemma fills is genuine, re-checked at master.** No
+  `analyticOrderAt` Finset-product lemma exists anywhere in pinned Mathlib —
+  `grep` for `analyticOrder` intersected with any product token returns zero
+  lines across the whole tree, and all 54 `analyticOrder*` declarations live in
+  the single file `Analysis/Analytic/Order.lean`, whose multiplicative family
+  stops at binary `mul` and `pow`. That file also adopts no `_fun_` convention
+  at all (`@[to_fun]` has zero hits in it), which is why finding 2's phrase "the
+  pin ships both forms at exactly this seam" is locatively wrong even though its
+  inference from four neighbouring files is sound. Two months of upstream work
+  since the pin have not closed the gap either — see
+  `UPSTREAM_DUPLICATION_CHECK_2026_08_09.md`.
 
 - **S1W-SHADOW** (LOW, opened 2026-08-08): `analyticOrderAt_finsetProd` is the
   only signature in the package whose binder collides with the shared block.
@@ -2073,6 +2173,8 @@ by named signatures, not assumed:
   arbitrary `w` against the fiber complement. The Cotangent-dodge description
   in §1.3 re-verified line-exact: `sineTerm` :78, `sineTerm_ne_zero` :80 (`hx
   : x ∈ ℂ_ℤ`), :94, :99, :105, :118, :125 (`hZ2 : Z ⊆ ℂ_ℤ`), :132 (on `ℂ_ℤ`)
+  — quotations only; `ℂ_ℤ` is `local notation` (Cotangent.lean:34) and is
+  unwritable outside its own file, see §1.3
   all correct.
 
 ### Attack front 3 — local-order additivity across the product
