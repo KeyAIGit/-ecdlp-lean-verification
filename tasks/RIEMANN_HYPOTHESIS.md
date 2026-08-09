@@ -1246,10 +1246,11 @@ Exit criteria:
   the `hane` map needs three different witnesses, and that "provably redundant"
   in `W8`–`W10` is a truth claim whose proof route does not survive the
   deletion;
-- the upstream duplication check is recorded honestly: nothing on the topic has
-  landed in Mathlib since the pin, the nine declared names still have zero hits
-  at current master, seven of the eight dependency files have moved — and the
-  in-flight PR queue is unreachable from this session, so the gap
+- the upstream duplication check is recorded honestly: no relevantly named new
+  module was found, the nine declared names have zero hits in the eight
+  dependency files at current master, and seven of those eight files have moved.
+  This is scoped evidence, not a whole-tree semantic duplication audit; the
+  in-flight PR queue was unreachable from the session, so the gap
   `UPSTREAM_POOL_V2` names is HALF closed and must be described that way;
 - no barrier row changes. This is documentation; it proves nothing.
 
