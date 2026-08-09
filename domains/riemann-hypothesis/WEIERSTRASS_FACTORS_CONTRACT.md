@@ -5,8 +5,9 @@ red-team re-verification recorded in Annex B; v1.2 folds in the two drafting
 passes recorded in Annex C, which retire the missing-lemma half of the
 registered product-lemma obligation by a whole-tree absence check, and reduce
 the computation half to a located assembly sketch (UNVERIFIED — no kernel);
-S1W-ORD is re-priced as an estimate, not a finding) — non-built review artifact, offered for STAGE ONE
-(INDEPENDENT CONTRACT ACCEPTANCE) ONLY. NOT Lean-checked.** No declaration below
+S1W-ORD is re-priced as an estimate, not a finding) — ACCEPTED AT STAGE ONE
+2026-08-08; RH-015/RH-018 corrections applied through merged PRs #327, #330,
+and #333; non-built and NOT Lean-checked.** No declaration below
 has been elaborated; no `lake build` has been run against any of it. Under the one
 invariant, the Lean kernel via CI is the sole judge of every statement in this
 contract, and this document carries no kernel verdict of any kind.
@@ -24,9 +25,10 @@ evidence of anything about this draft.**
 
 **Lane authority.** The RH queue (`tasks/RIEMANN_HYPOTHESIS.md`, decision update
 2026-08-07 at `:14`) — not `repo/ECDLP_DECISION_SUBSTRATE.json`, which governs
-the ECDLP lane — is the authority for this lane. This document is an **offered
-artifact**, not an active task, not a queue slot, and not authorization to work
-a route. It closes **no barrier**, selects **no route**, and makes **no claim
+the ECDLP lane — is the authority for this lane. This document is an **accepted
+stage-one contract**. `RH-019` authorizes only its drafts-lane transcription and
+static review; it does not authorize built promotion or work on a proof route.
+The contract closes **no barrier**, selects **no route**, and makes **no claim
 about the truth of the Riemann Hypothesis**.
 
 **Editorial-fix pass (2026-08-08, `RH-015`).** This document has been updated in
@@ -2063,8 +2065,9 @@ unchanged by this note; what changes is where a reader should look first.
    item.
 5. **No RH-truth claim.** Nothing here is evidence about the location of any
    zero of any specific function.
-6. **No route.** This is an offered stage-one artifact in the sense of the RH
-   queue; it does not select, advance, or imply a proof route. Its
+6. **No route.** This is an accepted, non-built stage-one contract in the sense
+   of the RH queue; `RH-019` authorizes only transcription and static review.
+   It does not select, advance, or imply a proof route. Its
    cost-lowering effect is nonetheless **asymmetric**, and that is stated here
    rather than left to be discovered: canonical products are named at
    `MATHLIB_CAPABILITY_MAP.md:387` as blocking "Li sums, canonical product,

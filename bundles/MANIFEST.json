@@ -11,13 +11,13 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 18269
+        "bytes": 18266
       },
       {
         "path": "domains/riemann-hypothesis/README.md",
         "reason": "active RH Stage 0 boundary, exact target, evidence rules, and repository isolation",
         "exists": true,
-        "bytes": 5952
+        "bytes": 4069
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
@@ -149,7 +149,7 @@
         "path": "tasks/RIEMANN_HYPOTHESIS.md",
         "reason": "active RH foundation-audit contracts, route gates, and hard stop rules",
         "exists": true,
-        "bytes": 67778
+        "bytes": 71454
       },
       {
         "path": "tasks/ECDLP_RESEARCH.md",
@@ -181,13 +181,13 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 18269
+        "bytes": 18266
       },
       {
         "path": "domains/riemann-hypothesis/README.md",
         "reason": "active RH Stage 0 boundary, exact target, evidence rules, and repository isolation",
         "exists": true,
-        "bytes": 5952
+        "bytes": 4069
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
@@ -319,7 +319,7 @@
         "path": "tasks/RIEMANN_HYPOTHESIS.md",
         "reason": "active RH foundation-audit contracts, route gates, and hard stop rules",
         "exists": true,
-        "bytes": 67778
+        "bytes": 71454
       },
       {
         "path": "tasks/ECDLP_RESEARCH.md",
@@ -567,13 +567,13 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 18269
+        "bytes": 18266
       },
       {
         "path": "domains/riemann-hypothesis/README.md",
         "reason": "active RH Stage 0 boundary, exact target, evidence rules, and repository isolation",
         "exists": true,
-        "bytes": 5952
+        "bytes": 4069
       },
       {
         "path": "repo/ECDLP_DECISION_SUBSTRATE.json",
@@ -705,7 +705,7 @@
         "path": "tasks/RIEMANN_HYPOTHESIS.md",
         "reason": "active RH foundation-audit contracts, route gates, and hard stop rules",
         "exists": true,
-        "bytes": 67778
+        "bytes": 71454
       },
       {
         "path": "tasks/ECDLP_RESEARCH.md",
