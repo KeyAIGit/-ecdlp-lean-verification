@@ -15,11 +15,13 @@ check them until a promoted copy is placed under a lake target by a separate
 promotion change. Any review verdict recorded below is static reading, never
 CI evidence.
 
-Authority for this lane is the RH queue `../../../tasks/RIEMANN_HYPOTHESIS.md`,
-whose current dated decision keeps `RH-012` as the sole ACTIVE task with no
-route selected (`RH-002` closed 2026-08-07 with all three dispositions
-CONFIRMED); `repo/ECDLP_DECISION_SUBSTRATE.json` governs the ECDLP lane and
-is not the authority here. A draft in this directory is an offered artifact
+Authority for this lane is the RH queue `../../../tasks/RIEMANN_HYPOTHESIS.md`.
+**Read the ACTIVE task there rather than trusting a task ID written here** —
+the slot moves, and an earlier version of this paragraph named `RH-012` long
+after that task had completed. What does not move: no route is selected, and
+`RH-002` closed 2026-08-07 with all three dispositions CONFIRMED.
+`repo/ECDLP_DECISION_SUBSTRATE.json` governs the ECDLP lane and is not the
+authority here. A draft in this directory is an offered artifact
 prepared for later independent review — never an active task, and never
 authorization to work a route.
 
