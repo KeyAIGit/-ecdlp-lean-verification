@@ -55,8 +55,9 @@ to the scouting method.**
 `UPSTREAM_DUPLICATION_CHECK_2026_08_09.md` records its first run against the
 Weierstrass package. It compares current Mathlib `master` to the pin through
 `raw.githubusercontent.com` — nine `curl`s, no credential of any kind — and
-answers "has this LANDED upstream?" completely, at module, file and declaration
-granularity. For that package the answer was a clean no.
+checks new module names plus the package's eight dependency files. It found no
+collision in that scope. It is not a whole-tree semantic duplication audit and
+does not exclude equivalent declarations elsewhere in current `master`.
 
 It does **not** answer "is someone proving this right now?", which is the
 question that actually caught Poisson–Jensen. The session's GitHub credential is

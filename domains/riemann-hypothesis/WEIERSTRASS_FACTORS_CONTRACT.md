@@ -69,9 +69,9 @@ canonical product over a summable-power zero family at **fixed finite genus
 `p`**, analyticity of the limit, and — the point of this contract — the **zero
 set and local analytic order of the product**, stated on **all of ℂ**, with no
 domain restriction. It contains **no** zeta or xi symbol, **no** zero
-enumeration, **no** counting function, **no** growth theorem (`S1-GROWTH` is
-untouched), **no** genus-selection/Hadamard existence theorem, and **no** claim
-of progress on RH.
+enumeration, **no zeta-specific or global-zero counting function**, **no**
+growth theorem (`S1-GROWTH` is untouched), **no** genus-selection/Hadamard
+existence theorem, and **no** claim of progress on RH.
 
 Pinned Mathlib: `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f` (v4.31.0), verified
 this session via `git -C /workspace/leanprover-community/mathlib4 rev-parse
@@ -115,9 +115,11 @@ theorem. This is deliberate: the package is generic and must remain promotable
   of RH is produced, and no barrier row changes.
 - **Claim boundary.** Every statement W1–W12 is over generic data
   (`p : ℕ`, `a : ι → ℂ` with `ι` an arbitrary type). Nothing consumes or
-  mentions `riemannZeta`, `riemannXi`, any zero enumeration, any counting
-  function, or any growth bound. Generic pinned-Mathlib machinery lowers the
-  cost of a barrier exit but **never retires a row**
+  mentions `riemannZeta`, `riemannXi`, any zero enumeration, any zeta-specific
+  or global-zero counting function, or any growth bound. W12's finite-fiber
+  `Nat.card` is a local multiplicity, not such a global count. Generic
+  pinned-Mathlib machinery lowers the cost of a barrier exit but **never
+  retires a row**
   (`MULTIPLICITY_CONTRACT.md` finding A4 regime); in particular
   `S1-GLOBAL-ZEROS` (whose blocked-need column names "canonical product") and
   `S1-GROWTH` (`MATHLIB_CAPABILITY_MAP.md:387-388`) remain exactly as open
@@ -168,12 +170,12 @@ plus four more occurrences in `NumberTheory/Height/EllipticCurve.lean`;
 `analyticOrderAt` at :1021; and `Analysis/Complex/LocallyUniformLimit.lean` — a
 file this contract depends on — carries a `section Weierstrass` at :111–:164.
 The narrower scan deliberately excludes all of these as unrelated; the nine
-declared names are the claim, and they are clean — re-run at the pin
-**and at current Mathlib master on 2026-08-09**, zero hits both times. The
-master-side run, together with a module-level and file-level duplication check,
-is recorded in `UPSTREAM_DUPLICATION_CHECK_2026_08_09.md`; note in particular
-that it establishes what has LANDED upstream and explicitly does **not** cover
-the in-flight PR queue, which is unreachable from the session that ran it.
+declared names are the claim, and they are clean across the whole pinned tree.
+At current Mathlib master on 2026-08-09 the same names had zero hits in the
+eight dependency files. That scoped master-side run plus a new-module-name
+scan is recorded in `UPSTREAM_DUPLICATION_CHECK_2026_08_09.md`; it does not
+establish whole-tree semantic duplication freedom and does **not** cover the
+in-flight PR queue, which was unreachable from the session that ran it.
 
 *Count corrected 2026-08-09.* This paragraph previously said "353 times across
 `AlgebraicGeometry/EllipticCurve`". That figure is not producible for that
@@ -379,14 +381,15 @@ variable {ι : Type*} {p : ℕ} {a : ι → ℂ}
   pair, `ι` is countable and an injection `ι → ℕ` exists. Nothing in the
   statement surface becomes false and no signature is affected; what must be
   dropped is only the rhetoric. The accurate boundary claim is the one already
-  in claim boundary 2 — **no statement introduces, requires, or produces an
-  enumeration, ordering, or counting of anything** — and that remains exactly
-  true: derived countability is not an enumeration, and no proof or statement
-  here constructs one. Note also that `Countable` is a `Prop` whose field is an
-  existence claim (`Data/Countable/Defs.lean:40`); extracting an actual
-  injection needs `Classical.choice`, so "an injection exists" and "the package
-  can express an enumeration" are different statements and only the first is
-  derivable here.
+  in claim boundary 2: **no statement introduces or requires an enumeration or
+  ordering, and no statement produces a global zero count.** W12's fourth
+  signature records only the finite cardinality of one fiber, as a local
+  multiplicity. Derived countability is not an enumeration, and no proof or
+  statement here constructs one. Note also that `Countable` is a `Prop` whose
+  field is an existence claim (`Data/Countable/Defs.lean:40`); extracting an
+  actual injection needs `Classical.choice`, so "an injection exists" and "the
+  package can express an enumeration" are different statements and only the
+  first is derivable here.
 
   **Sharper, and this is the form to carry (2026-08-09).** The consequence is
   not merely that `ι` is countable — it is that over an **uncountable** index
@@ -1847,7 +1850,8 @@ of S1W-GEN is thus locator-complete end to end.
   but real, and it is not what "derivation by transfer" sounds like. Keep the
   route as a fallback, not as a cheaper primary.
 
-  **The gap the `[GEN]` lemma fills is genuine, re-checked at master.** No
+  **The gap the `[GEN]` lemma fills is genuine at the pin; the master check is
+  scoped.** No
   `analyticOrderAt` Finset-product lemma exists anywhere in pinned Mathlib —
   `grep` for `analyticOrder` intersected with any product token returns zero
   lines across the whole tree, and all 54 `analyticOrder*` declarations live in
@@ -1855,8 +1859,9 @@ of S1W-GEN is thus locator-complete end to end.
   stops at binary `mul` and `pow`. That file also adopts no `_fun_` convention
   at all (`@[to_fun]` has zero hits in it), which is why finding 2's phrase "the
   pin ships both forms at exactly this seam" is locatively wrong even though its
-  inference from four neighbouring files is sound. Two months of upstream work
-  since the pin have not closed the gap either — see
+  inference from four neighbouring files is sound. Current master's
+  `Analysis/Analytic/Order.lean` still contains no product counterpart, but the
+  recorded check does not exclude an equivalent declaration elsewhere — see
   `UPSTREAM_DUPLICATION_CHECK_2026_08_09.md`.
 
 - **S1W-SHADOW** (LOW, opened 2026-08-08): `analyticOrderAt_finsetProd` is the
@@ -2015,9 +2020,12 @@ unchanged by this note; what changes is where a reader should look first.
    arbitrary `p : ℕ` and `a : ι → ℂ` over an arbitrary type `ι`. The package
    consumes **nothing zeta-specific**: no `riemannZeta`, no `riemannXi`, no
    repo-local theorem, no nontrivial-zero fact, no functional equation.
-2. **No enumeration.** No statement introduces, requires, or produces an
-   enumeration, ordering, or counting of anything — least of all of zeta
-   zeros. `ι` carries no `Countable`/`Encodable` instance anywhere.
+2. **No zero enumeration or global zero count.** No statement introduces or
+   requires an enumeration or ordering. W12's fourth signature does produce
+   `Nat.card {i | a i = w}`: the cardinality of one finite fiber of an
+   arbitrary family, used as a local multiplicity. It does not count the global
+   zero set of a function, and least of all the zeros of zeta. `ι` carries no
+   `Countable`/`Encodable` instance anywhere.
 3. **`S1-GROWTH` untouched.** No growth order, no `maxModulus`, no vertical
    or order-one bound, no Hadamard-type genus selection appears in any
    signature or any skeleton (`MATHLIB_CAPABILITY_MAP.md:388` row unchanged).
@@ -2101,8 +2109,12 @@ Stop, split, or return to stage one if any of the following occurs:
    forbidden edit — a stage-two prover who "strengthens" those seven
    signatures by deleting `hane` trips this condition. In **W7, W11 and the
    W12 capstone** `hane` is not redundant at all: without it those statements
-   are false, with `a i₀ = 0` and `w = z = 0` as the witness. This condition is
-   a policy about W8–W10 specifically, not a vague prohibition.
+   are false, but the counterexamples are deliberately different, as §1.2
+   records — an infinite zero fiber for W7, a single zero for W11, and a finite
+   nonempty zero fiber for the W12 capstone. Collapsing them into one witness is
+   itself an error: an infinite fiber has `Nat.card = 0` and does not refute the
+   capstone. This condition is a policy about W8–W10 specifically, not a vague
+   prohibition.
 7. A `⊤`-valued escape in W12: if the capstone can only be closed by weakening
    to `untop₀`/`ℤ` and losing the `≠ ⊤` fact, stop — the `ℕ∞` statement is
    the honest one (§1.5).
@@ -2311,9 +2323,10 @@ paragraph dismisses as "unrelated, not consumed", which remains true: it is not
 consumed, it is merely *implied*). Accordingly the draft's rhetorical claim
 that "nothing in this package can even *express* an enumeration of zeta zeros"
 has been dropped from §1.2 as stronger than the mathematics supports. The
-accurate boundary claim — claim boundary item 2, "no statement introduces,
-requires, or produces an enumeration, ordering, or counting of anything" —
-is unaffected and remains exactly true.
+accurate boundary claim — claim boundary item 2, "no statement introduces or
+requires an enumeration or ordering, and no statement produces a global zero
+count; W12's fourth signature records only a finite-fiber local multiplicity"
+— is unaffected and remains exactly true.
 
 ### Item 2 — locator defects found and fixed in place
 
