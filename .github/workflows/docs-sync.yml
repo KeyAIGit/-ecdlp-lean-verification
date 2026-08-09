@@ -73,6 +73,7 @@ on:
       - 'explore.html'
       - 'pilot.html'
       - 'assets/**'
+      - 'bundles/**'
   pull_request:
     paths:
       - 'README.md'
@@ -102,6 +103,7 @@ on:
       - 'explore.html'
       - 'pilot.html'
       - 'assets/**'
+      - 'bundles/**'
   workflow_dispatch:
 
 permissions:
