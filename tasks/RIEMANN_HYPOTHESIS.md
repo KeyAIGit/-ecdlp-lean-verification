@@ -126,6 +126,22 @@ its `W6` skeleton, as applied, cannot close. Drafting from a contract in that
 state would spend kernel rounds discovering what a reader can already be told.
 This repeats the `RH-015` → `RH-016` order deliberately.
 
+Decision update: 2026-08-09 (second of the day). `RH-018` completed through
+merged PR #330. All 28 Weierstrass signatures were verified byte-identical by
+digest at every step, so the statement surface never moved and the accepted
+object is intact. The three false mechanisms are rewritten against
+implementation source, the `W6` skeleton that could not close now closes, and
+the first upstream duplication check is on record as HALF closed.
+
+The task also produced a result about itself worth carrying: its own repairs
+were put to an adversarial verifier before merge, and **one was refuted — the
+very claim its author had already flagged as under-specified.** A stated doubt
+is not a repair. Two more were incomplete, and a final locator sweep caught a
+slip of the same class the preceding commit had just fixed, two bullets away.
+By this dated decision the single ACTIVE slot moves to `RH-019`, the
+drafts-lane transcription that the 2026-08-08 acceptance unlocked and that
+`RH-018` has now made safe to attempt.
+
 The exact Lean target is the already-pinned Mathlib declaration
 `_root_.RiemannHypothesis`. Do not create a competing definition.
 
@@ -1197,7 +1213,8 @@ hypothesis, and this one survived only until the next round tested it.
 
 ID: `RH-018`
 
-Status: **ACTIVE 2026-08-09 — documentation only; no statement moves**
+Status: **COMPLETE 2026-08-09 — merged PR #330; 28/28 signatures
+byte-identical, no barrier row moved**
 
 Kind: contract repair
 
@@ -1257,6 +1274,91 @@ Recorded in advance: the temptation here is to soften a wrong explanation into a
 vague one. A vague explanation is worse, because a wrong one can be refuted.
 Each rewrite must name the mechanism that actually fires and the file and line
 that decides it.
+
+Outcome (2026-08-09), against its own exit criteria. The 28 signatures are
+byte-identical before and after, digest-verified at every commit — the surface
+never moved. The three refuted mechanisms are rewritten naming the file and
+line that decides each, not softened. The `W6` `calc` gained the pre-combined
+`hL2` it needed and both `W8` routes gained the `‖x‖ ≤ R` step; `ℂ_ℤ` is flagged
+at every non-statement site; the `WeierstrassCurve` count is corrected; the
+acceptance record's finding-12(ii) self-contradiction is resolved in the lens
+body; `§1.2` carries the contradictory-over-uncountable, three-witness and
+route-breaking corrections; the upstream duplication check is on record as HALF
+closed. No barrier row changed.
+
+The instruction recorded in advance — "the temptation is to soften a wrong
+explanation into a vague one" — turned out to name the wrong risk. Nothing was
+softened. What happened instead is that a *new* wrong explanation was written
+while replacing an old one, and it was caught only because the repairs were put
+to an adversarial verifier before merge. The refuted claim was the one already
+flagged as under-specified in its own text, which is the finding worth keeping:
+**a doubt stated in prose does not repair a document, because the paragraph
+still reads as settled to whoever builds from it.** The same pass also caught a
+locator slip of the exact class the immediately preceding commit had fixed, two
+bullets away — a checker that runs once is a checker that has not run.
+
+## RH-019: transcribe the Weierstrass package into the drafts lane
+
+ID: `RH-019`
+
+Status: **ACTIVE 2026-08-09 — drafting only; the kernel does not see this**
+
+Kind: draft
+
+Activation basis (2026-08-09): `RH-018` completed through merged PR #330. The
+2026-08-08 acceptance unlocked exactly one thing — the drafts-lane
+transcription `domains/riemann-hypothesis/drafts/WeierstrassFactors.lean` — and
+`RH-018` made the contract safe to draft from. Both preconditions now hold.
+
+Twenty-eight signatures across W1–W12, the largest package attempted here. For
+scale: the argument-principle package was five declarations and took three
+kernel rounds, all of them inside its single hardest declaration.
+
+Exit criteria:
+
+- all 28 signatures character-identical to the contract, checked by the same
+  digest tool `RH-018` used, and the count stays **28** — the contract
+  deliberately declines the 29th `_fun_` signature, and adding one is a
+  statement change that stops the task and returns the surface to contract
+  review;
+- the draft is **not** built and **not** imported from `ResearchOS.lean`; it
+  carries no kernel claim of any kind, and the no-`sorry` gate must stay
+  irrelevant to it because nothing in it is compiled;
+- two independent review lenses, as for `RH-016`;
+- no barrier row changes.
+
+**Read before drafting, in this order.** The contract is now correct, but three
+of its explanations were false until 2026-08-09 and the reasoning that replaced
+them repays being understood rather than skimmed:
+
+1. `notes/reviews/WEIERSTRASS_FINDINGS_VERIFICATION_2026_08_09.md`, including
+   its addendum — the addendum records the `RH-018` repairs being themselves
+   refuted, and is the shortest available list of the ways this contract has
+   been wrong.
+2. The `W6` mechanism note. A bare `gcongr` there does not refuse; it emits the
+   false goal `2 ≤ 4/(p+1)` and reports success.
+3. The `W12` capstone's card-chain paragraph, and specifically its instruction
+   to **pick one route in step 2 and make step 4 match it**. The two routes are
+   incompatible and the contract now says so.
+
+Standing hazards, each already paid for somewhere in this programme:
+
+- prefer `gcongr <template with ?_>` over a bare `gcongr` at every seam — a
+  template turns a silently discarded subgoal into a hard error at the seam;
+- name every intermediate with a closed type before using it. Both
+  `ArgPrinciple` repairs and the `W6` `hinv`/`hL2` requirement are the same
+  lesson: a metavariable that never exists cannot be solved wrongly;
+- do not write `ℂ_ℤ`;
+- do not drop `hane` from W8–W10 even though the statements are true without it;
+- `‖a i‖⁻¹ ^ (p+1)` is anti-simp-normal — `simp only`, never plain `simp`,
+  anywhere near the majorant.
+
+Recorded in advance, so that a rejection reads as a round rather than a
+surprise: `W12` is the capstone and carries the package's only HIGH obligation
+(`S1W-ORD`); `W8`'s locally-uniform convergence argument is the longest; and the
+`W4` cast bridge is the likeliest cheap failure. If the pattern of the last four
+packages holds, nearly every error will fall in one or two declarations named
+here in advance and the rest will pass untouched.
 
 ## RH-005: bounded computation policy
 
