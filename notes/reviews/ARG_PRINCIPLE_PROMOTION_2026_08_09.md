@@ -79,3 +79,52 @@ untouched. The capability-map effect is inventory only; the map is not edited.
 No route is selected. This promotion provides **no evidence for or against the
 Riemann Hypothesis** in either direction. The RH queue's ACTIVE task is not this
 one, and this record adds no queue entry.
+
+## Kernel round 1 (rejected) — two errors, both in A2, both predicted
+
+The record above said, before the verdict, that `A2` was the declaration most
+likely to be rejected. It was: both errors landed there and nowhere else, and
+the other four declarations drew none.
+
+**1. `:549` — `unsolved goals` after the finprod-to-Finset rewrite.** The goal
+left standing was
+
+```
+⊢ (fun a => ∏ c ∈ s, ((fun x => x - c) ^ D c) a)
+    = fun y => ∏ u ∈ s, (y - u) ^ D u
+```
+
+so only the POINTWISE POWER application remained. The draft's comment predicted
+this residue would close "because `Pi.pow_apply` is a `rfl` lemma", and that is
+true — `Pi.pow_apply` (Algebra/Notation/Pi/Defs.lean:136) is `rfl` and is
+generic over the `Pow` instance at :133, so it does cover this ℤ exponent. What
+the comment missed is that `rw`'s trailing auto-`rfl` runs at REDUCIBLE
+transparency and will not unfold the Pi power under a binder. An explicit `rfl`
+tactic runs at default transparency and does.
+
+Repaired with `first | rfl | (funext y; simp [Finset.prod_apply, Pi.pow_apply])`,
+which keeps the drafter's recorded fallback as the second arm instead of
+replacing it. The combinator matters for the same reason `field_simp <;> ring`
+did in `W1`: neither arm can die with "no goals" if the other would have
+sufficed.
+
+**2. `:665` — `fun_prop` unable to prove `AnalyticAt ?m.1468 (HSub.hSub z) u`.**
+Two things went wrong, and the second is caused by the first. The scalar FIELD
+was an unassigned metavariable, because nothing in the expected type fixed it
+before the tactic ran; Lean said so directly — "Failed to infer `?m.1468` when
+applying `analyticAt_const`". With the field unknown the elaborator also
+mis-associated the arguments and went hunting for `(z - ·)` analytic at `u`
+instead of `(· - u)` analytic at `z`, which is why the reported goal looks
+transposed.
+
+Repaired by `show AnalyticAt ℂ (fun y : ℂ => y - u) z` before `fun_prop`, which
+pins the field, the function shape and the point together. This is the same
+hazard the drafter identified as its own risk #4 and hoisted at two other sites
+— it simply missed this one. The drafter's recorded fallback
+(`analyticAt_id.fun_sub analyticAt_const`) is also valid: `AnalyticAt.sub`
+carries `@[to_fun]` at Constructions.lean:186, so `fun_sub` exists. The `show`
+route was preferred because it fixes the CAUSE (the free metavariable) rather
+than routing around it, and so protects the site against a future refactor.
+
+No statement moved: 5 of 5 re-verified character-identical against the contract
+afterwards, and every shifted ledger anchor kept its `sha256` digest.

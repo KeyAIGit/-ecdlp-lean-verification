@@ -548,6 +548,20 @@ theorem Complex.circleIntegral_logDeriv_eq_divisor_sum
         = fun y : ℂ => ∏ u ∈ h₃f.toFinset,
             (y - u) ^ MeromorphicOn.divisor f (Metric.closedBall c R) u := by
     rw [finprod_eq_prod_of_mulSupport_subset _ hmulsupp, Finset.prod_fn]
+    first
+    | rfl
+    | (funext y; simp [Finset.prod_apply, Pi.pow_apply])
+    -- KERNEL ROUND 1 (PR #329) rejected this step with `unsolved goals`: after the
+    -- rewrite the goal is
+    --   (fun a => ∏ c ∈ s, ((fun x => x - c) ^ D c) a) = fun y => ∏ u ∈ s, (y - u) ^ D u
+    -- i.e. only the POINTWISE POWER application remains. `Pi.pow_apply`
+    -- (Algebra/Notation/Pi/Defs.lean:136) is `rfl` and is generic over the `Pow`
+    -- instance at :133, so it covers this ℤ exponent — but `rw`'s trailing auto-rfl
+    -- runs at REDUCIBLE transparency and will not unfold the Pi power under a
+    -- binder. An explicit `rfl` tactic runs at default transparency and does. The
+    -- `first` combinator keeps the drafter's recorded fallback as the second arm
+    -- rather than replacing it, so if the defeq route ever stops working the simp
+    -- route still fires and neither arm can die with "no goals".
     -- `finprod_eq_prod_of_mulSupport_subset` — Algebra/BigOperators/Finprod.lean:354 (:353 is the `@[to_additive]` attribute line);
     -- `Finset.prod_fn : ∏ c ∈ s, g c = fun a ↦ ∏ c ∈ s, g c a` —
     -- Algebra/BigOperators/Pi.lean:51 (the "unapplied" analogue of
@@ -662,7 +676,20 @@ theorem Complex.circleIntegral_logDeriv_eq_divisor_sum
     have hdiff : ∀ u ∈ h₃f.toFinset, DifferentiableAt ℂ
         (fun y : ℂ => (y - u) ^ MeromorphicOn.divisor f (Metric.closedBall c R) u) z :=
       fun u hu =>
-        (AnalyticAt.fun_zpow (by fun_prop) (hsphne z hz u hu)).differentiableAt
+        (AnalyticAt.fun_zpow
+          (by show AnalyticAt ℂ (fun y : ℂ => y - u) z; fun_prop)
+          (hsphne z hz u hu)).differentiableAt
+      -- KERNEL ROUND 1 (PR #329) rejected the bare `(by fun_prop)` here:
+      --   `fun_prop` was unable to prove `AnalyticAt ?m.1468 (HSub.hSub z) u`
+      --   Failed to infer `(?m.1468 : Type ?u.694)` when applying `analyticAt_const`
+      -- Two things went wrong and the second is caused by the first. The SCALAR
+      -- FIELD was an unassigned metavariable `?m.1468`, because nothing in the
+      -- expected type had fixed it before the tactic ran; with the field unknown
+      -- the elaborator also mis-associated the arguments and went looking for
+      -- `(z - ·)` analytic at `u` instead of `(· - u)` analytic at `z`. The `show`
+      -- pins the field AND the function shape AND the point before `fun_prop`
+      -- starts, so neither failure can recur. This is the same hazard class the
+      -- drafter hoisted at two other sites and missed here.
       -- `AnalyticAt.fun_zpow` is the `@[to_fun]` twin (attribute
       -- Constructions.lean:928) of `AnalyticAt.zpow` (:929), whose hypotheses
       -- are `(h₁f : AnalyticAt 𝕜 f z) (h₂f : f z ≠ 0)`.
