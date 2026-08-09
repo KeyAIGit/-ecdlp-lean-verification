@@ -51,6 +51,22 @@ is "the worst possible use of this pool" — as its reason for rejecting a
 different candidate — and then proposed exactly that. **Add an upstream-PR check
 to the scouting method.**
 
+**Update 2026-08-09 — the check now exists and is HALF of what this asked for.**
+`UPSTREAM_DUPLICATION_CHECK_2026_08_09.md` records its first run against the
+Weierstrass package. It compares current Mathlib `master` to the pin through
+`raw.githubusercontent.com` — nine `curl`s, no credential of any kind — and
+checks new module names plus the package's eight dependency files. It found no
+collision in that scope. It is not a whole-tree semantic duplication audit and
+does not exclude equivalent declarations elsewhere in current `master`.
+
+It does **not** answer "is someone proving this right now?", which is the
+question that actually caught Poisson–Jensen. The session's GitHub credential is
+scoped to this repository, so every REST and Search read of
+`leanprover-community/mathlib4` returns 403; anonymous git reads and raw file
+reads are served, and neither exposes pull requests. Treat the scouting method
+as improved, not fixed: a candidate can still be duplicated work in flight, and
+nothing available here will say so.
+
 Negative results from the same search, and therefore safe: no open PR matching
 Montel, normal family, Rouché, Hurwitz, Casorati, Mellin, Phragmén, harmonic
 Liouville, or Harnack.

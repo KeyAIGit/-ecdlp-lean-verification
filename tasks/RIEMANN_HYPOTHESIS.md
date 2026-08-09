@@ -110,6 +110,22 @@ lenses with six findings applied. The kernel has NOT seen it. By this dated
 decision the single ACTIVE slot moves to `RH-017`, the stage-two promotion that
 asks the kernel.
 
+Decision update: 2026-08-09. `RH-017` completed through merged PR #329. The
+kernel accepted all five declarations on the third round; the axiom audit
+reports 145 results on the allowed base with no `sorryAx`, no custom axiom and
+nothing using `native_decide`; the full battery was re-run on the exact merged
+head `16027ed` and the generators are at a fixpoint there. No barrier row moved
+and `S1-GLOBAL-ZEROS` stays OPEN, as the entry required.
+
+The slot does NOT move to Weierstrass drafting, which is what the 2026-08-08
+acceptance unlocked. It moves to `RH-018`, repairing the Weierstrass contract
+first, because
+`notes/reviews/WEIERSTRASS_FINDINGS_VERIFICATION_2026_08_09.md` established that
+three of that contract's applied explanations are mechanically false and that
+its `W6` skeleton, as applied, cannot close. Drafting from a contract in that
+state would spend kernel rounds discovering what a reader can already be told.
+This repeats the `RH-015` → `RH-016` order deliberately.
+
 The exact Lean target is the already-pinned Mathlib declaration
 `_root_.RiemannHypothesis`. Do not create a competing definition.
 
@@ -1127,8 +1143,8 @@ promotion change, not to this one.
 
 ID: `RH-017`
 
-Status: **ACTIVE 2026-08-09 — stage-two promotion; the kernel via CI is the sole
-judge**
+Status: **COMPLETE 2026-08-09 — kernel-checked through merged PR #329; five
+declarations accepted, no barrier row moved**
 
 Kind: theorem
 
@@ -1157,6 +1173,91 @@ Expectation recorded in advance, so that a rejection is read as a round and not
 as a surprise: the drafter named `A2` — roughly 330 lines with several
 higher-order unification points — as the declaration most likely to be rejected,
 and wrote its inline fallbacks most densely for that reason.
+
+Outcome (2026-08-09), against those criteria one by one. Everything landed in
+one change and inverse coverage holds. The battery was re-run on the EXACT
+merged head `16027ed` — fourteen gates, both registry `--check` passes, the CI
+no-`sorry` grep verbatim — all green, with the generators at a fixpoint so no
+artifact is stale. No statement moved at any point: the five signature digests
+are identical across all three rounds, so every repair was proof-only and the
+surface never returned to contract review. The drafts mirror is byte-identical
+from the first `import`. No barrier row changed.
+
+The prediction held exactly: **every error in all three rounds was in `A2`, and
+the other four declarations drew none.** What the prediction did not cover is
+that round 1's own post-mortem was wrong. It read a free scalar-field
+metavariable as the cause of a transposed goal and repaired both with one
+`show`; round 2 showed the two are independent, because the transposition is
+assigned by first-order approximation while the SECOND argument elaborates,
+before the postponed tactic block is entered. The lesson worth keeping is not
+about `zpow`: a diagnosis written from a single failing round is itself a
+hypothesis, and this one survived only until the next round tested it.
+
+## RH-018: apply the re-verification corrections to the Weierstrass contract
+
+ID: `RH-018`
+
+Status: **ACTIVE 2026-08-09 — documentation only; no statement moves**
+
+Kind: contract repair
+
+Activation basis (2026-08-09): `RH-017` completed through merged PR #329, so the
+queue's single ACTIVE slot is free. It moves here rather than to the Weierstrass
+drafting that the 2026-08-08 acceptance unlocked, because
+`notes/reviews/WEIERSTRASS_FINDINGS_VERIFICATION_2026_08_09.md` established that
+**three of the thirteen pin-fidelity findings state a false mechanism, and their
+reasoning is already copied into the contract** — at exactly the three sites the
+findings existed to protect. The same re-verification found that the applied
+`W6` fix does not close, so the contract currently ships a skeleton that cannot
+work. That alone forces this task ahead of drafting.
+
+Exit criteria:
+
+- the 28 public signatures are byte-identical before and after, verified by
+  digest. This task may not move the statement surface; a signature change stops
+  it and returns the surface to contract review;
+- the three refuted mechanisms are rewritten to say what actually happens, not
+  merely softened:
+  - `W6` — both sides are `HMul` at arity 6, the shape gate passes, and
+    `mul_le_mul` splits the goal into `2 ≤ 4/(p+1)`, false for every `p ≥ 2`,
+    with both side conditions discharged. The hazard is a silent wrong answer,
+    not a refusal;
+  - `W8` — the normalization stays mandatory and its justification strengthens
+    (the `@[gcongr]` attribute rejects differing-head lemmas at declaration
+    time, so no bridge can ever exist), but the symptom is "unsolved goals", and
+    the `rw [← div_pow]` alternative must be struck: it swaps one mismatch for
+    another;
+  - `W5` / `S1W-LOG` — the `▸` misfire does not exist; `elabSubst` is forced by
+    `tryPostponeIfHasMVars?` into the branch that rewrites the hypothesis
+    forward and yields the wanted type. The `▸`-free skeleton stays; the
+    obligation's severity is re-priced;
+- the `W6` `calc` gains the pre-combined `have` it needs, or a fourth line;
+- both `W8` routes gain the `‖x‖ ≤ R` step they bottom out at and that the
+  skeleton never derives from `K ⊆ closedBall 0 R`;
+- every `ℂ_ℤ` occurrence is marked unwritable outside its defining file
+  (`local notation`, Cotangent.lean:34) — five sites, two of them inside anchors
+  a lens certified as clean;
+- the `WeierstrassCurve` occurrence count at contract line 161 is corrected or
+  removed;
+- the acceptance record's self-contradiction on finding 12(ii) is resolved in
+  the lens body, not only in the disposition section;
+- `§1.2` records that `hane + hsum` are CONTRADICTORY over an uncountable index
+  (so those signatures are vacuous there, not merely countably indexed), that
+  the `hane` map needs three different witnesses, and that "provably redundant"
+  in `W8`–`W10` is a truth claim whose proof route does not survive the
+  deletion;
+- the upstream duplication check is recorded honestly: no relevantly named new
+  module was found, the nine declared names have zero hits in the eight
+  dependency files at current master, and seven of those eight files have moved.
+  This is scoped evidence, not a whole-tree semantic duplication audit; the
+  in-flight PR queue was unreachable from the session, so the gap
+  `UPSTREAM_POOL_V2` names is HALF closed and must be described that way;
+- no barrier row changes. This is documentation; it proves nothing.
+
+Recorded in advance: the temptation here is to soften a wrong explanation into a
+vague one. A vague explanation is worse, because a wrong one can be refuted.
+Each rewrite must name the mechanism that actually fires and the file and line
+that decides it.
 
 ## RH-005: bounded computation policy
 
