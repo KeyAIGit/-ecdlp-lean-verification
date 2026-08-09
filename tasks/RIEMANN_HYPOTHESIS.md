@@ -140,6 +140,17 @@ By this dated decision the single ACTIVE slot moves to `RH-019`, drafts-lane
 transcription and static review only. Kernel promotion, if the draft survives,
 is a separate later task.
 
+Decision update: 2026-08-09 (third). `RH-019` completes in this change: the
+non-built `WeierstrassFactors.lean` draft contains exactly the accepted 28
+W1–W12 declarations with complete proof-shaped bodies, and two independent
+static lenses accepted the exact final file with zero blocking findings. The
+review record is `WEIERSTRASS_DRAFT_REVIEW_2026_08_09.md`; the file SHA-256 is
+`fe34390369b02dc0eea9f318ba60f971ff1fc6e170634ecdacbda9823160a810`.
+Nothing in the drafts lane was elaborated, so this is not a kernel verdict.
+No barrier or route changes. By this dated decision the single ACTIVE slot
+moves to `RH-020`, the separate built promotion whose exact-head CI is the sole
+judge.
+
 The exact Lean target is the already-pinned Mathlib declaration
 `_root_.RiemannHypothesis`. Do not create a competing definition.
 
@@ -1289,8 +1300,8 @@ statement, ledger entry, or barrier row changed.
 
 ID: `RH-019`
 
-Status: **ACTIVE 2026-08-09 — drafts lane and static review only; no kernel
-verdict**
+Status: **COMPLETE 2026-08-09 — 28/28 exact declarations, two static lenses,
+no kernel verdict**
 
 Kind: draft
 
@@ -1325,6 +1336,68 @@ Recorded in advance: W12 carries the sole HIGH obligation (`S1W-ORD`), W8 has
 the longest locally-uniform convergence argument, and W4's cast bridge is the
 likeliest cheap elaboration failure. These are review priorities, not excuses
 to weaken a statement.
+
+Outcome (2026-08-09): the draft landed in the task change as a 28-declaration,
+non-built transcription with complete proof-shaped bodies and no `sorry`,
+`admit`, custom `axiom`, `unsafe`, or hidden fallback assumption. The statement
+lens found 28/28 character-exact matches, no extra 29th `_fun_` declaration,
+and a reproducible normalized-surface hash
+`5c1bbe331f63ae63bb31c88d80e2af6442562091a1996f799e132d254d62d735`.
+The historical `414948…` digest has no preserved serialization algorithm and is
+not claimed reproduced by this task. The mathematics/API lens reviewed every
+body at exact final file SHA-256
+`fe34390369b02dc0eea9f318ba60f971ff1fc6e170634ecdacbda9823160a810`:
+zero soundness blockers and zero required patches. W12 reaches `Nat.card` only
+after proving the one fiber finite, so it remains a local multiplicity. The
+file is outside all Lake targets; CI on this change is not a Lean verdict.
+`S1-GLOBAL-ZEROS` and `S1-GROWTH` remain OPEN, all routes remain PARKED, and no
+barrier row moved.
+
+## RH-020: promote the Weierstrass package to the analysis shelf
+
+ID: `RH-020`
+
+Status: **ACTIVE 2026-08-09 — separate built promotion; exact-head kernel CI
+is the sole judge**
+
+Kind: theorem promotion
+
+Activation basis (2026-08-09): `RH-019` completed the accepted non-built draft
+and two independent static reviews. This task asks the kernel about that exact
+surface. It does not authorize a statement change, a proof route, or any
+zeta-specific specialization.
+
+Exit criteria:
+
+- one promotion change adds
+  `ResearchOS/Analysis/WeierstrassFactors.lean`, imports it from
+  `ResearchOS.lean`, registers a new `WF-` prefix in the existing
+  `analysis-generic` lane, adds one ledger row for each of the 28 public
+  declarations, regenerates both registry/audit surfaces, and records the
+  promotion review; inverse coverage must be complete in the same tree;
+- the built module and the reviewed draft remain character-identical from the
+  first `import` through the final declaration except for an explicitly
+  reviewed header. The declaration count stays 28 and the deliberately omitted
+  `analyticOrderAt_fun_finsetProd` is not introduced;
+- every statement remains character-identical to the accepted W1–W12 contract.
+  A changed binder, hypothesis, conclusion, name, or domain stops promotion and
+  returns the surface to contract review. A proof-only kernel repair must be
+  synchronized back into the draft and re-reviewed on its exact hash;
+- the exact PR head passes isolated elaboration of the new module, full
+  `lake build`, no-incomplete-proof and lane-isolation gates, inverse ledger
+  coverage, and both axiom audits with no `sorryAx`, custom axiom, or unreviewed
+  trust extension;
+- the package stays on the domain-neutral `ResearchOS/Analysis/` shelf. It
+  remains generic fixed-finite-genus analysis: no ζ/ξ zero enumeration, global
+  zero count, growth theorem, genus selection, Hadamard existence, route
+  selection, barrier closure, or progress on RH;
+- `S1-GLOBAL-ZEROS` and `S1-GROWTH` remain OPEN, every RH route remains PARKED,
+  and no barrier row moves.
+
+Recorded in advance: the most likely first kernel failures are W4's reindex and
+cast normal form, W8's locally uniform product inference, and W12's
+Pi/subtype/cardinality coercions. Kernel rejection is a proof-repair round, not
+permission to weaken the accepted statement.
 
 ## RH-005: bounded computation policy
 
