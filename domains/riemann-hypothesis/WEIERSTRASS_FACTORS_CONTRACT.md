@@ -1683,8 +1683,8 @@ hane hsum w` (W7); `haveI := hS.fintype`.
      **`simp` does not close the chain**: `Set.Finite.card_toFinset`
      (`Data/Set/Finite/Basic.lean:813`), `Set.ncard_eq_toFinset_card` (:644) and
      `Set.Finite.toFinset_eq_toFinset` (`Finite/Basic.lean:78`) are all
-     non-simp, and `Set.toFinite_toFinset` (:82) matches only the literal proof
-     term `s.toFinite`. **Pick one route in step 2 and make step 4 match it.**
+     non-simp, and `Set.toFinite_toFinset` (:83, `@[simp]` on :82) matches only
+     the literal proof term `s.toFinite`. **Pick one route in step 2 and make step 4 match it.**
      Boasting that "no `Finset ι` ever appears" while step 2 was amended to
      route through `Finset.prod_set_coe` — whose output is a `Finset ι` — was
      the contradiction.
