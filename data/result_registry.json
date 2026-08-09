@@ -7,8 +7,8 @@
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1148,
-  "distinct_qualified_names": 1148,
+  "declaration_count": 1176,
+  "distinct_qualified_names": 1176,
   "verified_md_citations": 677,
   "unresolved_references": [],
   "resolution_exemptions": [
@@ -17232,6 +17232,27 @@
       "file": "Ecdlp/Proved/QuadrupleMultiplicationYFormula.lean",
       "line": 12
     },
+    "analyticAt_tprod_compl": {
+      "name": "analyticAt_tprod_compl",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 344
+    },
+    "analyticAt_weierstrassFactor": {
+      "name": "analyticAt_weierstrassFactor",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 53
+    },
+    "analyticAt_weierstrassProduct": {
+      "name": "analyticAt_weierstrassProduct",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 315
+    },
     "analyticOnNhd_riemannXi": {
       "name": "analyticOnNhd_riemannXi",
       "namespace": "",
@@ -17259,6 +17280,13 @@
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
       "line": 357
+    },
+    "analyticOrderAt_finsetProd": {
+      "name": "analyticOrderAt_finsetProd",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 441
     },
     "analyticOrderAt_riemannXi_conj": {
       "name": "analyticOrderAt_riemannXi_conj",
@@ -17336,6 +17364,34 @@
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
       "line": 310
+    },
+    "analyticOrderAt_weierstrassFactor_div": {
+      "name": "analyticOrderAt_weierstrassFactor_div",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 420
+    },
+    "analyticOrderAt_weierstrassFactor_one": {
+      "name": "analyticOrderAt_weierstrassFactor_one",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 399
+    },
+    "analyticOrderAt_weierstrassProduct": {
+      "name": "analyticOrderAt_weierstrassProduct",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 467
+    },
+    "analyticOrderAt_weierstrassProduct_ne_top": {
+      "name": "analyticOrderAt_weierstrassProduct_ne_top",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 533
     },
     "bddAbove_image_norm_sphere": {
       "name": "bddAbove_image_norm_sphere",
@@ -17435,6 +17491,27 @@
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean",
       "line": 46
     },
+    "differentiable_weierstrassFactor": {
+      "name": "differentiable_weierstrassFactor",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 48
+    },
+    "differentiable_weierstrassProduct": {
+      "name": "differentiable_weierstrassProduct",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 301
+    },
+    "eventually_cofinite_le_norm": {
+      "name": "eventually_cofinite_le_norm",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 172
+    },
     "exists_exp_eq_of_norm_eq": {
       "name": "exists_exp_eq_of_norm_eq",
       "namespace": "",
@@ -17456,6 +17533,13 @@
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
       "line": 160
     },
+    "finite_setOf_apply_eq": {
+      "name": "finite_setOf_apply_eq",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 194
+    },
     "fires": {
       "name": "fires",
       "namespace": "",
@@ -17469,6 +17553,13 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/DivisionResultantTransport.lean",
       "line": 21
+    },
+    "hasProdLocallyUniformlyOn_weierstrassProduct": {
+      "name": "hasProdLocallyUniformlyOn_weierstrassProduct",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 236
     },
     "image_conj_of_symm": {
       "name": "image_conj_of_symm",
@@ -17525,6 +17616,13 @@
       "kind": "lemma",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
       "line": 125
+    },
+    "logTaylor_neg_eq": {
+      "name": "logTaylor_neg_eq",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 73
     },
     "meromorphicOn_riemannXi": {
       "name": "meromorphicOn_riemannXi",
@@ -17603,6 +17701,13 @@
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
       "line": 421
     },
+    "norm_log_one_sub_add_sum_le": {
+      "name": "norm_log_one_sub_add_sum_le",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 108
+    },
     "norm_mellin_le": {
       "name": "norm_mellin_le",
       "namespace": "",
@@ -17630,6 +17735,13 @@
       "kind": "theorem",
       "file": "ResearchOS/Analysis/MellinBound.lean",
       "line": 200
+    },
+    "norm_weierstrassFactor_sub_one_le": {
+      "name": "norm_weierstrassFactor_sub_one_le",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 123
     },
     "of": {
       "name": "of",
@@ -18100,6 +18212,13 @@
       "file": "ResearchOS/Analysis/MellinBound.lean",
       "line": 169
     },
+    "summable_norm_weierstrassFactor_sub_one": {
+      "name": "summable_norm_weierstrassFactor_sub_one",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 210
+    },
     "tendsto_riemannXi_zeroSet_cofinite_cocompact": {
       "name": "tendsto_riemannXi_zeroSet_cofinite_cocompact",
       "namespace": "",
@@ -18113,6 +18232,83 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/TwoTorsionPoint.lean",
       "line": 16
+    },
+    "weierstrassFactor": {
+      "name": "weierstrassFactor",
+      "namespace": "",
+      "kind": "def",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 31
+    },
+    "weierstrassFactor_apply_zero": {
+      "name": "weierstrassFactor_apply_zero",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 34
+    },
+    "weierstrassFactor_eq_exp": {
+      "name": "weierstrassFactor_eq_exp",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 97
+    },
+    "weierstrassFactor_eq_zero_iff": {
+      "name": "weierstrassFactor_eq_zero_iff",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 60
+    },
+    "weierstrassFactor_genus_zero": {
+      "name": "weierstrassFactor_genus_zero",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 37
+    },
+    "weierstrassFactor_ne_zero": {
+      "name": "weierstrassFactor_ne_zero",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 65
+    },
+    "weierstrassFactor_succ": {
+      "name": "weierstrassFactor_succ",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 40
+    },
+    "weierstrassProduct": {
+      "name": "weierstrassProduct",
+      "namespace": "",
+      "kind": "def",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 168
+    },
+    "weierstrassProduct_eq_tprod_mul_tprod_compl": {
+      "name": "weierstrassProduct_eq_tprod_mul_tprod_compl",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 327
+    },
+    "weierstrassProduct_eq_zero_iff": {
+      "name": "weierstrassProduct_eq_zero_iff",
+      "namespace": "",
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 374
+    },
+    "weierstrassProduct_ne_zero_of_forall_ne": {
+      "name": "weierstrassProduct_ne_zero_of_forall_ne",
+      "namespace": "",
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 355
     }
   }
 }

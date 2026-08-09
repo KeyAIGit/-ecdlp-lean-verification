@@ -1,18 +1,13 @@
 /-
-NON-BUILT DRAFT — generic Weierstrass elementary factors and canonical products,
-W1–W12.
+BUILT ANALYSIS MODULE — generic Weierstrass elementary factors and canonical
+products, W1–W12.
 
-This file transcribes the stage-one accepted surface in
-`domains/riemann-hypothesis/WEIERSTRASS_FACTORS_CONTRACT.md` under RH-019.
-It is deliberately outside every Lake target and is not imported by
-`ResearchOS.lean`.  Repository CI therefore does not elaborate it, and this
-file carries no kernel verdict.  A built promotion, if later authorized, is a
-separate task.
-
-The package is generic: it concerns a fixed finite genus and an arbitrary
-family in `ℂ`.  It contains no zeta or xi input, supplies no global zero count
-or growth theorem, selects no route, and moves no barrier.  In the capstone,
-`Nat.card` is only the multiplicity of one finite fibre.
+Promoted under RH-020 from the independently reviewed draft and accepted
+contract.  The package concerns a fixed finite genus and an arbitrary family
+in ℂ.  It contains no zeta or xi specialization, global zero count, growth
+theorem, genus selection, Hadamard existence, route selection, or barrier
+movement.  In the capstone, Nat.card is only one finite fibre's local
+multiplicity.
 
 Pinned Mathlib: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (v4.31.0).
 -/

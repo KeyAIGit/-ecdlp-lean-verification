@@ -52,6 +52,7 @@ PREFIX_DOMAINS = {
     "TC-": "analysis-generic",
     "GO-": "analysis-generic",
     "AP-": "analysis-generic",
+    "WF-": "analysis-generic",
 }
 # Rows of this domain must cite files under this subtree
 # (domains/riemann-hypothesis/README.md:70-71). The `analysis-generic` entry

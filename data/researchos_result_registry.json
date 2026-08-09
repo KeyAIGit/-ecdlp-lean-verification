@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "source": "VERIFIED_RESEARCHOS.md + built public ResearchOS source (audit harnesses excluded by exact path)",
-  "ledger_rows": 144,
+  "ledger_rows": 172,
   "ledger_declarations": [
     "AnalyticAt.conj_conj",
     "AnalyticAt.eventuallyEq_of_codiscreteWithin",
@@ -39,10 +39,14 @@
     "ResearchOS.NumberTheory.prime_10007",
     "ResearchOS.NumberTheory.prime_10009",
     "ResearchOS.NumberTheory.prime_2017",
+    "analyticAt_tprod_compl",
+    "analyticAt_weierstrassFactor",
+    "analyticAt_weierstrassProduct",
     "analyticOnNhd_riemannXi",
     "analyticOnNhd_riemannZeta_strip",
     "analyticOrderAt_comp_const_sub",
     "analyticOrderAt_conj_conj",
+    "analyticOrderAt_finsetProd",
     "analyticOrderAt_riemannXi_conj",
     "analyticOrderAt_riemannXi_eq_riemannZeta",
     "analyticOrderAt_riemannXi_fourfold",
@@ -54,6 +58,10 @@
     "analyticOrderAt_riemannZeta_ne_top_of_mem_strip",
     "analyticOrderAt_riemannZeta_one_sub",
     "analyticOrderAt_riemannZeta_one_sub_conj",
+    "analyticOrderAt_weierstrassFactor_div",
+    "analyticOrderAt_weierstrassFactor_one",
+    "analyticOrderAt_weierstrassProduct",
+    "analyticOrderAt_weierstrassProduct_ne_top",
     "bddAbove_image_norm_sphere",
     "circleIntegral.integral_sub_inv_of_notMem_closedBall",
     "compl_riemannXi_zeroSet_mem_codiscrete",
@@ -63,9 +71,14 @@
     "countable_riemannXi_divisor_support",
     "countable_riemannXi_zeroSet",
     "differentiable_riemannXi",
+    "differentiable_weierstrassFactor",
+    "differentiable_weierstrassProduct",
+    "eventually_cofinite_le_norm",
     "exists_exp_eq_of_norm_eq",
     "exp_mem_annulus_of_mem_verticalClosedStrip",
     "exp_mem_annulus_of_mem_verticalStrip",
+    "finite_setOf_apply_eq",
+    "hasProdLocallyUniformlyOn_weierstrassProduct",
     "image_conj_of_symm",
     "image_one_sub_conj_of_symm",
     "image_one_sub_of_symm",
@@ -74,6 +87,7 @@
     "isDiscrete_riemannXi_divisor_support",
     "isDiscrete_riemannXi_zeroSet",
     "le_sSupNormCircle",
+    "logTaylor_neg_eq",
     "meromorphicOn_riemannXi",
     "meromorphicOn_riemannZeta_strip",
     "meromorphicOrderAt_riemannXi_ne_top",
@@ -81,10 +95,12 @@
     "norm_le_interp_of_norm_eq",
     "norm_le_interp_of_norm_eq'",
     "norm_le_of_mem_annulus",
+    "norm_log_one_sub_add_sum_le",
     "norm_mellin_le",
     "norm_mellin_le_add_of_re_mem_Icc",
     "norm_mellin_le_of_norm_le",
     "norm_mellin_le_of_re_le",
+    "norm_weierstrassFactor_sub_one_le",
     "one_notMem_riemannZetaZeros",
     "poissonKernel_mem_Icc",
     "riemannHypothesis_iff_riemannXi_zeros_re_eq_half",
@@ -147,7 +163,19 @@
     "sSupNormCircle_le_interp",
     "sSupNormCircle_nonneg",
     "setIntegral_rpow_mul_mono_exponent",
-    "tendsto_riemannXi_zeroSet_cofinite_cocompact"
+    "summable_norm_weierstrassFactor_sub_one",
+    "tendsto_riemannXi_zeroSet_cofinite_cocompact",
+    "weierstrassFactor",
+    "weierstrassFactor_apply_zero",
+    "weierstrassFactor_eq_exp",
+    "weierstrassFactor_eq_zero_iff",
+    "weierstrassFactor_genus_zero",
+    "weierstrassFactor_ne_zero",
+    "weierstrassFactor_succ",
+    "weierstrassProduct",
+    "weierstrassProduct_eq_tprod_mul_tprod_compl",
+    "weierstrassProduct_eq_zero_iff",
+    "weierstrassProduct_ne_zero_of_forall_ne"
   ],
   "axiom_base": {
     "AnalyticAt.conj_conj": "standard",
@@ -186,10 +214,14 @@
     "ResearchOS.NumberTheory.prime_10007": "standard",
     "ResearchOS.NumberTheory.prime_10009": "standard",
     "ResearchOS.NumberTheory.prime_2017": "standard",
+    "analyticAt_tprod_compl": "standard",
+    "analyticAt_weierstrassFactor": "standard",
+    "analyticAt_weierstrassProduct": "standard",
     "analyticOnNhd_riemannXi": "standard",
     "analyticOnNhd_riemannZeta_strip": "standard",
     "analyticOrderAt_comp_const_sub": "standard",
     "analyticOrderAt_conj_conj": "standard",
+    "analyticOrderAt_finsetProd": "standard",
     "analyticOrderAt_riemannXi_conj": "standard",
     "analyticOrderAt_riemannXi_eq_riemannZeta": "standard",
     "analyticOrderAt_riemannXi_fourfold": "standard",
@@ -201,6 +233,10 @@
     "analyticOrderAt_riemannZeta_ne_top_of_mem_strip": "standard",
     "analyticOrderAt_riemannZeta_one_sub": "standard",
     "analyticOrderAt_riemannZeta_one_sub_conj": "standard",
+    "analyticOrderAt_weierstrassFactor_div": "standard",
+    "analyticOrderAt_weierstrassFactor_one": "standard",
+    "analyticOrderAt_weierstrassProduct": "standard",
+    "analyticOrderAt_weierstrassProduct_ne_top": "standard",
     "bddAbove_image_norm_sphere": "standard",
     "circleIntegral.integral_sub_inv_of_notMem_closedBall": "standard",
     "compl_riemannXi_zeroSet_mem_codiscrete": "standard",
@@ -210,9 +246,14 @@
     "countable_riemannXi_divisor_support": "standard",
     "countable_riemannXi_zeroSet": "standard",
     "differentiable_riemannXi": "standard",
+    "differentiable_weierstrassFactor": "standard",
+    "differentiable_weierstrassProduct": "standard",
+    "eventually_cofinite_le_norm": "standard",
     "exists_exp_eq_of_norm_eq": "standard",
     "exp_mem_annulus_of_mem_verticalClosedStrip": "standard",
     "exp_mem_annulus_of_mem_verticalStrip": "standard",
+    "finite_setOf_apply_eq": "standard",
+    "hasProdLocallyUniformlyOn_weierstrassProduct": "standard",
     "image_conj_of_symm": "standard",
     "image_one_sub_conj_of_symm": "standard",
     "image_one_sub_of_symm": "standard",
@@ -221,6 +262,7 @@
     "isDiscrete_riemannXi_divisor_support": "standard",
     "isDiscrete_riemannXi_zeroSet": "standard",
     "le_sSupNormCircle": "standard",
+    "logTaylor_neg_eq": "standard",
     "meromorphicOn_riemannXi": "standard",
     "meromorphicOn_riemannZeta_strip": "standard",
     "meromorphicOrderAt_riemannXi_ne_top": "standard",
@@ -228,10 +270,12 @@
     "norm_le_interp_of_norm_eq": "standard",
     "norm_le_interp_of_norm_eq'": "standard",
     "norm_le_of_mem_annulus": "standard",
+    "norm_log_one_sub_add_sum_le": "standard",
     "norm_mellin_le": "standard",
     "norm_mellin_le_add_of_re_mem_Icc": "standard",
     "norm_mellin_le_of_norm_le": "standard",
     "norm_mellin_le_of_re_le": "standard",
+    "norm_weierstrassFactor_sub_one_le": "standard",
     "one_notMem_riemannZetaZeros": "standard",
     "poissonKernel_mem_Icc": "standard",
     "riemannHypothesis_iff_riemannXi_zeros_re_eq_half": "standard",
@@ -294,7 +338,19 @@
     "sSupNormCircle_le_interp": "standard",
     "sSupNormCircle_nonneg": "standard",
     "setIntegral_rpow_mul_mono_exponent": "standard",
-    "tendsto_riemannXi_zeroSet_cofinite_cocompact": "standard"
+    "summable_norm_weierstrassFactor_sub_one": "standard",
+    "tendsto_riemannXi_zeroSet_cofinite_cocompact": "standard",
+    "weierstrassFactor": "standard",
+    "weierstrassFactor_apply_zero": "standard",
+    "weierstrassFactor_eq_exp": "standard",
+    "weierstrassFactor_eq_zero_iff": "standard",
+    "weierstrassFactor_genus_zero": "standard",
+    "weierstrassFactor_ne_zero": "standard",
+    "weierstrassFactor_succ": "standard",
+    "weierstrassProduct": "standard",
+    "weierstrassProduct_eq_tprod_mul_tprod_compl": "standard",
+    "weierstrassProduct_eq_zero_iff": "standard",
+    "weierstrassProduct_ne_zero_of_forall_ne": "standard"
   },
   "ledger_entries": [
     {
@@ -2169,6 +2225,370 @@
       "axiom_base": "standard",
       "method": "Mathlib",
       "status": "proved"
+    },
+    {
+      "claim_id": "WF-W1A",
+      "domain": "analysis-generic",
+      "declarations": [
+        "weierstrassFactor"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W1B",
+      "domain": "analysis-generic",
+      "declarations": [
+        "weierstrassFactor_apply_zero"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W1C",
+      "domain": "analysis-generic",
+      "declarations": [
+        "weierstrassFactor_genus_zero"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W1D",
+      "domain": "analysis-generic",
+      "declarations": [
+        "weierstrassFactor_succ"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W2A",
+      "domain": "analysis-generic",
+      "declarations": [
+        "differentiable_weierstrassFactor"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W2B",
+      "domain": "analysis-generic",
+      "declarations": [
+        "analyticAt_weierstrassFactor"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W3A",
+      "domain": "analysis-generic",
+      "declarations": [
+        "weierstrassFactor_eq_zero_iff"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W3B",
+      "domain": "analysis-generic",
+      "declarations": [
+        "weierstrassFactor_ne_zero"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W4A",
+      "domain": "analysis-generic",
+      "declarations": [
+        "logTaylor_neg_eq"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W4B",
+      "domain": "analysis-generic",
+      "declarations": [
+        "weierstrassFactor_eq_exp"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W5",
+      "domain": "analysis-generic",
+      "declarations": [
+        "norm_log_one_sub_add_sum_le"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W6",
+      "domain": "analysis-generic",
+      "declarations": [
+        "norm_weierstrassFactor_sub_one_le"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W7A",
+      "domain": "analysis-generic",
+      "declarations": [
+        "weierstrassProduct"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W7B",
+      "domain": "analysis-generic",
+      "declarations": [
+        "eventually_cofinite_le_norm"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W7C",
+      "domain": "analysis-generic",
+      "declarations": [
+        "finite_setOf_apply_eq"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W8A",
+      "domain": "analysis-generic",
+      "declarations": [
+        "summable_norm_weierstrassFactor_sub_one"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W8B",
+      "domain": "analysis-generic",
+      "declarations": [
+        "hasProdLocallyUniformlyOn_weierstrassProduct"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W9A",
+      "domain": "analysis-generic",
+      "declarations": [
+        "differentiable_weierstrassProduct"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W9B",
+      "domain": "analysis-generic",
+      "declarations": [
+        "analyticAt_weierstrassProduct"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W10A",
+      "domain": "analysis-generic",
+      "declarations": [
+        "weierstrassProduct_eq_tprod_mul_tprod_compl"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W10B",
+      "domain": "analysis-generic",
+      "declarations": [
+        "analyticAt_tprod_compl"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W10C",
+      "domain": "analysis-generic",
+      "declarations": [
+        "weierstrassProduct_ne_zero_of_forall_ne"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W11",
+      "domain": "analysis-generic",
+      "declarations": [
+        "weierstrassProduct_eq_zero_iff"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W12A",
+      "domain": "analysis-generic",
+      "declarations": [
+        "analyticOrderAt_weierstrassFactor_one"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W12B",
+      "domain": "analysis-generic",
+      "declarations": [
+        "analyticOrderAt_weierstrassFactor_div"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W12C",
+      "domain": "analysis-generic",
+      "declarations": [
+        "analyticOrderAt_finsetProd"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W12D",
+      "domain": "analysis-generic",
+      "declarations": [
+        "analyticOrderAt_weierstrassProduct"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "WF-W12E",
+      "domain": "analysis-generic",
+      "declarations": [
+        "analyticOrderAt_weierstrassProduct_ne_top"
+      ],
+      "files": [
+        "ResearchOS/Analysis/WeierstrassFactors.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
     }
   ],
   "declarations": {
@@ -2388,6 +2808,24 @@
       "line": 22,
       "anchor": "ResearchOS/NumberTheory/Elementary.lean:22@sha256:ec11f2f4623e"
     },
+    "analyticAt_tprod_compl": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 344,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:344@sha256:55e3dc090d2a"
+    },
+    "analyticAt_weierstrassFactor": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 53,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:53@sha256:7313eae2d05b"
+    },
+    "analyticAt_weierstrassProduct": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 315,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:315@sha256:9f4ebe455ed4"
+    },
     "analyticOnNhd_riemannXi": {
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
@@ -2411,6 +2849,12 @@
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
       "line": 357,
       "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean:357@sha256:2657acd4419d"
+    },
+    "analyticOrderAt_finsetProd": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 441,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:441@sha256:104b8605a53a"
     },
     "analyticOrderAt_riemannXi_conj": {
       "kind": "theorem",
@@ -2478,6 +2922,30 @@
       "line": 310,
       "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean:310@sha256:16d1703ec399"
     },
+    "analyticOrderAt_weierstrassFactor_div": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 420,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:420@sha256:5775affa8545"
+    },
+    "analyticOrderAt_weierstrassFactor_one": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 399,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:399@sha256:73967aeaaaee"
+    },
+    "analyticOrderAt_weierstrassProduct": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 467,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:467@sha256:96d63bdc6bf8"
+    },
+    "analyticOrderAt_weierstrassProduct_ne_top": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 533,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:533@sha256:a33c11ec7779"
+    },
     "bddAbove_image_norm_sphere": {
       "kind": "lemma",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
@@ -2532,6 +3000,24 @@
       "line": 46,
       "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Xi.lean:46@sha256:be8d508e1a10"
     },
+    "differentiable_weierstrassFactor": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 48,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:48@sha256:629f31bc6481"
+    },
+    "differentiable_weierstrassProduct": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 301,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:301@sha256:b554b5152240"
+    },
+    "eventually_cofinite_le_norm": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 172,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:172@sha256:21fbc4f78a99"
+    },
     "exists_exp_eq_of_norm_eq": {
       "kind": "lemma",
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
@@ -2549,6 +3035,18 @@
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
       "line": 160,
       "anchor": "ResearchOS/Analysis/ThreeCircles.lean:160@sha256:f6948ecf350f"
+    },
+    "finite_setOf_apply_eq": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 194,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:194@sha256:e72721070efb"
+    },
+    "hasProdLocallyUniformlyOn_weierstrassProduct": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 236,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:236@sha256:a49b1894542f"
     },
     "image_conj_of_symm": {
       "kind": "theorem",
@@ -2598,6 +3096,12 @@
       "line": 125,
       "anchor": "ResearchOS/Analysis/ThreeCircles.lean:125@sha256:bfad7494c6b0"
     },
+    "logTaylor_neg_eq": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 73,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:73@sha256:666173a251e5"
+    },
     "meromorphicOn_riemannXi": {
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Mult.lean",
@@ -2640,6 +3144,12 @@
       "line": 421,
       "anchor": "ResearchOS/Analysis/ThreeCircles.lean:421@sha256:298bb5bd1889"
     },
+    "norm_log_one_sub_add_sum_le": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 108,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:108@sha256:d853ea3ef771"
+    },
     "norm_mellin_le": {
       "kind": "theorem",
       "file": "ResearchOS/Analysis/MellinBound.lean",
@@ -2663,6 +3173,12 @@
       "file": "ResearchOS/Analysis/MellinBound.lean",
       "line": 200,
       "anchor": "ResearchOS/Analysis/MellinBound.lean:200@sha256:900d2dd14ab7"
+    },
+    "norm_weierstrassFactor_sub_one_le": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 123,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:123@sha256:f48328df4df2"
     },
     "one_notMem_riemannZetaZeros": {
       "kind": "theorem",
@@ -3036,11 +3552,83 @@
       "line": 169,
       "anchor": "ResearchOS/Analysis/MellinBound.lean:169@sha256:0195dec37073"
     },
+    "summable_norm_weierstrassFactor_sub_one": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 210,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:210@sha256:121039b371f1"
+    },
     "tendsto_riemannXi_zeroSet_cofinite_cocompact": {
       "kind": "theorem",
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean",
       "line": 216,
       "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/ZeroSetSlice.lean:216@sha256:30b70f1677c3"
+    },
+    "weierstrassFactor": {
+      "kind": "def",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 31,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:31@sha256:e2ca9c469bfb"
+    },
+    "weierstrassFactor_apply_zero": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 34,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:34@sha256:a216ce0ad5e2"
+    },
+    "weierstrassFactor_eq_exp": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 97,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:97@sha256:f4911d7c1c91"
+    },
+    "weierstrassFactor_eq_zero_iff": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 60,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:60@sha256:777899e5352f"
+    },
+    "weierstrassFactor_genus_zero": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 37,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:37@sha256:81e4005e4c3f"
+    },
+    "weierstrassFactor_ne_zero": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 65,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:65@sha256:973322ef8624"
+    },
+    "weierstrassFactor_succ": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 40,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:40@sha256:cb0d4ba7f4f3"
+    },
+    "weierstrassProduct": {
+      "kind": "def",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 168,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:168@sha256:d8a00705cd45"
+    },
+    "weierstrassProduct_eq_tprod_mul_tprod_compl": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 327,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:327@sha256:355d5cc2b7f4"
+    },
+    "weierstrassProduct_eq_zero_iff": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 374,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:374@sha256:ef3ffc3872d1"
+    },
+    "weierstrassProduct_ne_zero_of_forall_ne": {
+      "kind": "lemma",
+      "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
+      "line": 355,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:355@sha256:426ecf4c5c37"
     }
   }
 }
