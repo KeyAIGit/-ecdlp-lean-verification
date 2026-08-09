@@ -1,11 +1,15 @@
 {
   "schema_version": 1,
   "source": "VERIFIED_RESEARCHOS.md + built public ResearchOS source (audit harnesses excluded by exact path)",
-  "ledger_rows": 139,
+  "ledger_rows": 144,
   "ledger_declarations": [
     "AnalyticAt.conj_conj",
+    "AnalyticAt.eventuallyEq_of_codiscreteWithin",
+    "Complex.circleIntegral_logDeriv_eq_divisor_sum",
+    "Complex.circleIntegral_logDeriv_eq_zero_iff",
     "Complex.exists_affine_of_norm_le_pow_one",
     "Complex.exists_const_forall_eq_of_norm_le",
+    "Complex.exists_nat_circleIntegral_logDeriv_eq",
     "Complex.exists_polynomial_of_norm_le_pow",
     "Complex.growthOrder",
     "Complex.growthOrder_const",
@@ -51,6 +55,7 @@
     "analyticOrderAt_riemannZeta_one_sub",
     "analyticOrderAt_riemannZeta_one_sub_conj",
     "bddAbove_image_norm_sphere",
+    "circleIntegral.integral_sub_inv_of_notMem_closedBall",
     "compl_riemannXi_zeroSet_mem_codiscrete",
     "completedRiemannZeta_conj",
     "completedRiemannZeta₀_conj",
@@ -146,8 +151,12 @@
   ],
   "axiom_base": {
     "AnalyticAt.conj_conj": "standard",
+    "AnalyticAt.eventuallyEq_of_codiscreteWithin": "standard",
+    "Complex.circleIntegral_logDeriv_eq_divisor_sum": "standard",
+    "Complex.circleIntegral_logDeriv_eq_zero_iff": "standard",
     "Complex.exists_affine_of_norm_le_pow_one": "standard",
     "Complex.exists_const_forall_eq_of_norm_le": "standard",
+    "Complex.exists_nat_circleIntegral_logDeriv_eq": "standard",
     "Complex.exists_polynomial_of_norm_le_pow": "standard",
     "Complex.growthOrder": "standard",
     "Complex.growthOrder_const": "standard",
@@ -193,6 +202,7 @@
     "analyticOrderAt_riemannZeta_one_sub": "standard",
     "analyticOrderAt_riemannZeta_one_sub_conj": "standard",
     "bddAbove_image_norm_sphere": "standard",
+    "circleIntegral.integral_sub_inv_of_notMem_closedBall": "standard",
     "compl_riemannXi_zeroSet_mem_codiscrete": "standard",
     "completedRiemannZeta_conj": "standard",
     "completedRiemannZeta₀_conj": "standard",
@@ -2094,6 +2104,71 @@
       "axiom_base": "standard",
       "method": "Mathlib",
       "status": "proved"
+    },
+    {
+      "claim_id": "AP-W1",
+      "domain": "analysis-generic",
+      "declarations": [
+        "circleIntegral.integral_sub_inv_of_notMem_closedBall"
+      ],
+      "files": [
+        "ResearchOS/Analysis/ArgPrinciple.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "AP-A1",
+      "domain": "analysis-generic",
+      "declarations": [
+        "AnalyticAt.eventuallyEq_of_codiscreteWithin"
+      ],
+      "files": [
+        "ResearchOS/Analysis/ArgPrinciple.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "AP-A2",
+      "domain": "analysis-generic",
+      "declarations": [
+        "Complex.circleIntegral_logDeriv_eq_divisor_sum"
+      ],
+      "files": [
+        "ResearchOS/Analysis/ArgPrinciple.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "AP-A3",
+      "domain": "analysis-generic",
+      "declarations": [
+        "Complex.circleIntegral_logDeriv_eq_zero_iff"
+      ],
+      "files": [
+        "ResearchOS/Analysis/ArgPrinciple.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
+    },
+    {
+      "claim_id": "AP-A4",
+      "domain": "analysis-generic",
+      "declarations": [
+        "Complex.exists_nat_circleIntegral_logDeriv_eq"
+      ],
+      "files": [
+        "ResearchOS/Analysis/ArgPrinciple.lean"
+      ],
+      "axiom_base": "standard",
+      "method": "Mathlib",
+      "status": "proved"
     }
   ],
   "declarations": {
@@ -2102,6 +2177,24 @@
       "file": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean",
       "line": 336,
       "anchor": "ResearchOS/AnalyticNumberTheory/RiemannHypothesis/Conj.lean:336@sha256:d32b6bc721d6"
+    },
+    "AnalyticAt.eventuallyEq_of_codiscreteWithin": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/ArgPrinciple.lean",
+      "line": 310,
+      "anchor": "ResearchOS/Analysis/ArgPrinciple.lean:310@sha256:8ca41be3c4b2"
+    },
+    "Complex.circleIntegral_logDeriv_eq_divisor_sum": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/ArgPrinciple.lean",
+      "line": 385,
+      "anchor": "ResearchOS/Analysis/ArgPrinciple.lean:385@sha256:d6820396409d"
+    },
+    "Complex.circleIntegral_logDeriv_eq_zero_iff": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/ArgPrinciple.lean",
+      "line": 831,
+      "anchor": "ResearchOS/Analysis/ArgPrinciple.lean:831@sha256:4a9adf7c34ea"
     },
     "Complex.exists_affine_of_norm_le_pow_one": {
       "kind": "theorem",
@@ -2114,6 +2207,12 @@
       "file": "ResearchOS/Analysis/PolyLiouville.lean",
       "line": 328,
       "anchor": "ResearchOS/Analysis/PolyLiouville.lean:328@sha256:812a380e99f8"
+    },
+    "Complex.exists_nat_circleIntegral_logDeriv_eq": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/ArgPrinciple.lean",
+      "line": 928,
+      "anchor": "ResearchOS/Analysis/ArgPrinciple.lean:928@sha256:ee4bcbbc4810"
     },
     "Complex.exists_polynomial_of_norm_le_pow": {
       "kind": "theorem",
@@ -2384,6 +2483,12 @@
       "file": "ResearchOS/Analysis/ThreeCircles.lean",
       "line": 111,
       "anchor": "ResearchOS/Analysis/ThreeCircles.lean:111@sha256:c6a199c6debe"
+    },
+    "circleIntegral.integral_sub_inv_of_notMem_closedBall": {
+      "kind": "theorem",
+      "file": "ResearchOS/Analysis/ArgPrinciple.lean",
+      "line": 171,
+      "anchor": "ResearchOS/Analysis/ArgPrinciple.lean:171@sha256:3931afe8cd3f"
     },
     "compl_riemannXi_zeroSet_mem_codiscrete": {
       "kind": "theorem",

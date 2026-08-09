@@ -11,7 +11,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 18263
+        "bytes": 18275
       },
       {
         "path": "domains/riemann-hypothesis/README.md",
@@ -149,7 +149,7 @@
         "path": "tasks/RIEMANN_HYPOTHESIS.md",
         "reason": "active RH foundation-audit contracts, route gates, and hard stop rules",
         "exists": true,
-        "bytes": 59618
+        "bytes": 61712
       },
       {
         "path": "tasks/ECDLP_RESEARCH.md",
@@ -181,7 +181,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 18263
+        "bytes": 18275
       },
       {
         "path": "domains/riemann-hypothesis/README.md",
@@ -319,7 +319,7 @@
         "path": "tasks/RIEMANN_HYPOTHESIS.md",
         "reason": "active RH foundation-audit contracts, route gates, and hard stop rules",
         "exists": true,
-        "bytes": 59618
+        "bytes": 61712
       },
       {
         "path": "tasks/ECDLP_RESEARCH.md",
@@ -567,7 +567,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 18263
+        "bytes": 18275
       },
       {
         "path": "domains/riemann-hypothesis/README.md",
@@ -705,7 +705,7 @@
         "path": "tasks/RIEMANN_HYPOTHESIS.md",
         "reason": "active RH foundation-audit contracts, route gates, and hard stop rules",
         "exists": true,
-        "bytes": 59618
+        "bytes": 61712
       },
       {
         "path": "tasks/ECDLP_RESEARCH.md",

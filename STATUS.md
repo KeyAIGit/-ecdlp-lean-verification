@@ -71,7 +71,7 @@ frontier-map status (adversarially-verified upgrades in `data/corpus_coverage_ov
 
 ## Portfolio priority and domain bottlenecks
 The primary new-science priority is **Riemann Hypothesis Stage 0, task
-`RH-016`**: draft the circle-only argument-principle package (queue status: `ACTIVE 2026-08-08 — drafts lane only; nothing built, nothing promoted`). This is an
+`RH-017`**: promote the argument-principle package to the built surface (queue status: `ACTIVE 2026-08-09 — stage-two promotion; the kernel via CI is the sole`). This is an
 exploratory specification and route-audit program, not a proof candidate or progress on
 the conjecture itself. Its authority is `tasks/RIEMANN_HYPOTHESIS.md`; ECDLP evidence
 and authorizations do not transfer to it.
