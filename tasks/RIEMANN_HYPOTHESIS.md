@@ -126,6 +126,20 @@ its `W6` skeleton, as applied, cannot close. Drafting from a contract in that
 state would spend kernel rounds discovering what a reader can already be told.
 This repeats the `RH-015` → `RH-016` order deliberately.
 
+Decision update: 2026-08-09 (second). `RH-018` completed through merged PR
+#330 and corrective PR #333. The accepted 28-declaration surface never moved:
+the statement-block digest remains
+`4149484c52db2c30972ba1455e791706724fd740e8f5dc97886947ad26f93d38`.
+PR #330 applied the mechanism and skeleton corrections; adversarial review then
+found three documentation-boundary defects in that merged result, and PR #333
+corrected them without touching a statement: the W7/W11/W12 counterexamples
+now use the required distinct fibers, W12's `Nat.card` is described only as a
+finite-fiber local multiplicity, and the upstream search is recorded as scoped
+evidence rather than an exhaustive no-duplication claim. No barrier row moved.
+By this dated decision the single ACTIVE slot moves to `RH-019`, drafts-lane
+transcription and static review only. Kernel promotion, if the draft survives,
+is a separate later task.
+
 The exact Lean target is the already-pinned Mathlib declaration
 `_root_.RiemannHypothesis`. Do not create a competing definition.
 
@@ -1197,7 +1211,8 @@ hypothesis, and this one survived only until the next round tested it.
 
 ID: `RH-018`
 
-Status: **ACTIVE 2026-08-09 — documentation only; no statement moves**
+Status: **COMPLETE 2026-08-09 — merged PRs #330 and #333; 28/28
+signatures byte-identical, no barrier row moved**
 
 Kind: contract repair
 
@@ -1258,6 +1273,58 @@ Recorded in advance: the temptation here is to soften a wrong explanation into a
 vague one. A vague explanation is worse, because a wrong one can be refuted.
 Each rewrite must name the mechanism that actually fires and the file and line
 that decides it.
+
+Outcome (2026-08-09): every exit item was completed across PR #330 and its
+corrective follow-up #333. The 28 signatures stayed byte-identical at digest
+`4149484c52db2c30972ba1455e791706724fd740e8f5dc97886947ad26f93d38`.
+The three refuted mechanisms, the W6/W8 skeleton gaps, the inaccessible local
+notation, the occurrence count, and the acceptance-record contradiction were
+repaired. The final adversarial pass also replaced the false single-witness
+summary with the three required zero-fiber cases, distinguished W12's local
+finite-fiber cardinality from global zero counting, and narrowed the upstream
+duplication note to the search it actually performed. No Lean source, public
+statement, ledger entry, or barrier row changed.
+
+## RH-019: transcribe the Weierstrass package into the drafts lane
+
+ID: `RH-019`
+
+Status: **ACTIVE 2026-08-09 — drafts lane and static review only; no kernel
+verdict**
+
+Kind: draft
+
+Activation basis (2026-08-09): `RH-018` completed through merged PRs #330 and
+#333. The accepted contract is therefore safe to transcribe, but not yet safe
+to promote. This task creates only
+`domains/riemann-hypothesis/drafts/WeierstrassFactors.lean` and its review
+record; a built module belongs to a separate later task.
+
+Exit criteria:
+
+- exactly 28 public declarations W1–W12, with every signature
+  character-identical to the accepted contract and the statement digest
+  checked explicitly; adding the deliberately omitted 29th `_fun_` declaration
+  or changing a binder, hypothesis, or conclusion stops the task and returns
+  it to contract review;
+- complete proof-shaped bodies with no `sorry`, `admit`, custom `axiom`,
+  `unsafe`, or hidden fallback assumption, while the file remains outside all
+  Lake targets and is not imported by `ResearchOS.lean`;
+- two independent static review lenses cover statement identity, pinned API
+  plausibility, mathematics, and dependency order. Green repository CI on this
+  non-built draft is explicitly not a Lean kernel verdict;
+- the claim boundary remains generic fixed-finite-genus elementary factors and
+  canonical products over arbitrary `p` and `a`. W12's `Nat.card` is only a
+  finite-fiber local multiplicity. The task claims no ζ/ξ zero enumeration,
+  global zero count, growth theorem, genus selection, Hadamard existence,
+  route selection, barrier closure, or progress on RH;
+- `S1-GLOBAL-ZEROS` and `S1-GROWTH` remain OPEN, every RH route remains PARKED,
+  and no barrier row moves.
+
+Recorded in advance: W12 carries the sole HIGH obligation (`S1W-ORD`), W8 has
+the longest locally-uniform convergence argument, and W4's cast bridge is the
+likeliest cheap elaboration failure. These are review priorities, not excuses
+to weaken a statement.
 
 ## RH-005: bounded computation policy
 

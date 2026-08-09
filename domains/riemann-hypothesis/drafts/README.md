@@ -72,9 +72,10 @@ and `ResearchOS/Analysis/GrowthOrder.lean` on that same shelf, rows under the
 `TC-` and `GO-` prefixes of the same `analysis-generic` lane, again with no
 RH-lane count moved, no barrier row changed, and no queue entry added.
 
-None of these promotions closes, advances, or partially closes a barrier; all
-are inventory only and supply no evidence for or against the Riemann Hypothesis
-in either direction — `RH-012` remains the sole ACTIVE task. `S1-GROWTH` in
+None of these generic-analysis promotions closes, advances, or partially closes
+a barrier; all are inventory only and supply no evidence for or against the
+Riemann Hypothesis in either direction. The live ACTIVE task is deliberately
+not repeated here; read `../../../tasks/RIEMANN_HYPOTHESIS.md`. `S1-GROWTH` in
 particular is untouched by every one of them, including the growth-order
 package, whose name is the closest any of this comes to that barrier and which
 promotes a definition rather than a theorem about ζ or ξ.

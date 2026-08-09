@@ -1,13 +1,10 @@
 # Riemann Hypothesis research track
 
-Status: **exploratory; Stage 0 evidence package assembled. RH-001, RH-002,
-RH-003, RH-004, RH-006, RH-007, and RH-008 are closed; the RH-002 independent
-disposition review completed 2026-08-07 with all three retained `PARK`
-dispositions CONFIRMED
-(`notes/reviews/RH002_DISPOSITION_REVIEW_2026_08_07.md`). RH-009 —
-acceptance-only review of the multiplicity/divisor statement surface, no built
-module and no kernel verdict — is the sole ACTIVE task; RH-010 is BLOCKED on
-it. No route is selected and no route execution is authorized.**
+Status: **exploratory; Stage 0 evidence package assembled. The live task and its
+status are owned exclusively by `tasks/RIEMANN_HYPOTHESIS.md`; this domain
+overview intentionally does not duplicate a task ID that will go stale. No
+route is selected, no route execution is authorized, and the repository claims
+no proof candidate or progress on RH itself.**
 
 Priority date: 2026-08-04
 
@@ -41,39 +38,15 @@ Stage 0 is a foundation and specification audit:
 
 The detailed source, claim, route, and evidence map is in `corpus.md`.
 
-Stage 0 execution state (updated 2026-08-07): items 1-3 are complete — the exact
-target is frozen and the pinned audit has been independently replayed with
-0 mismatches (`notes/reviews/RH001_INDEPENDENT_REPLAY_2026_08_05.md`). The
-source contracts are accepted after a 59-row replay: 57 rows were confirmed
-and 2 were amended, leaving 0 open source discrepancies (`RH-006`).
-The admitted routes were adversarially compared (`ROUTE_TRIAGE.md`:
-`PARK`/`PARK`/`PARK`, no route selected); the independent disposition review
-completed 2026-08-07 and **CONFIRMED** all three `PARK` dispositions
-(`notes/reviews/RH002_DISPOSITION_REVIEW_2026_08_07.md`), with second-agent
-replay of the load-bearing `[D]` desk-citation locators remaining an
-outstanding finality gate tracked in `ROUTE_TRIAGE.md`. The full Route A and
-Route B success bars would imply RH;
-for Route C, no known published mechanism meets the all-heights
-individual-zero-exclusion bar, and meeting that full bar would imply RH.
-Item 6 resolved to the foundation path: the route-neutral target bridge from
-`TARGET_BRIDGE_CONTRACT.md` is kernel-checked in the repo-local
-`ResearchOS/AnalyticNumberTheory/RiemannHypothesis/TargetBridge.lean` module
-(PR #299, `288d65b`), closing `S1-TARGET` without making any claim about the
-truth of RH. `S0-TRUST` was closed by PR #298 (`d6e146fa`). The
-source-contract prerequisite is now satisfied; independent acceptance of the
-xi contract is also complete
-(`notes/reviews/RH007_XI_CONTRACT_ACCEPTANCE_2026_08_06.md`). The accepted
-surface was promoted in PR #304 (`afdae08`) as twelve built declarations with
-ledger, registry, full-build, and axiom-audit coverage, closing `S1-XI`.
-X11 discharges only local analytic-order transport; `S1-MULTIPLICITY` remains
-open because no built divisor or complete multiplicity-preserving symmetry
-package exists (a non-built statement surface is under acceptance-only review
-as `RH-009`, with no kernel verdict). The conjugation package was promoted in
-PR #307 (`c277b86`) as sixteen built declarations with ledger, registry,
-full-build, and axiom-audit coverage; it supplies the conjugation leg and
-pointwise order transport only, so `S1-CONJ` remains open on divisor
-invariance under `ρ ↦ 1 − conj ρ`. The remaining foundation packages stay
-explicit preconditions, and no claim about RH's truth changes.
+The live Stage 0 execution state is intentionally not duplicated here. The
+current task and authorization boundary live in
+`tasks/RIEMANN_HYPOTHESIS.md`; barrier truth lives in `BARRIERS.md` together
+with `MATHLIB_CAPABILITY_MAP.md`. Stable historical facts are recorded in
+their dated evidence: the target is pinned, the source replay dispositioned
+59/59 rows, and the independent route review confirmed `PARK`/`PARK`/`PARK`
+with no route selected. Later kernel-checked foundation packages remain formal
+infrastructure; their exact barrier effects are recorded in `BARRIERS.md`, and
+none constitutes a proof candidate or progress on RH itself.
 
 ## Evidence boundary
 
