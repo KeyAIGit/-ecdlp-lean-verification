@@ -103,6 +103,13 @@ convenience, and an editor found a counterexample showing `A4` is FALSE at
 decision the single ACTIVE slot moves to `RH-016`, the drafts-lane
 transcription the argument-principle acceptance unlocks.
 
+Decision update: 2026-08-09. `RH-016` completed through merged PR #328: the
+argument-principle draft exists in the drafts lane, five signatures
+character-identical to the corrected contract, reviewed under two independent
+lenses with six findings applied. The kernel has NOT seen it. By this dated
+decision the single ACTIVE slot moves to `RH-017`, the stage-two promotion that
+asks the kernel.
+
 The exact Lean target is the already-pinned Mathlib declaration
 `_root_.RiemannHypothesis`. Do not create a competing definition.
 
@@ -1066,7 +1073,8 @@ Exit criteria:
 
 ID: `RH-016`
 
-Status: **ACTIVE 2026-08-08 — drafts lane only; nothing built, nothing promoted**
+Status: **COMPLETE 2026-08-08 — draft written and independently reviewed;
+merged PR #328. The kernel did not check it — that is RH-017's business**
 
 Kind: theorem
 
@@ -1114,6 +1122,41 @@ quantifies over an arbitrary meromorphic `f` and mentions no ζ or ξ — so its
 built home would be the domain-neutral `ResearchOS/Analysis/` shelf under its
 own ledger prefix, not the RH subtree. That placement decision belongs to the
 promotion change, not to this one.
+
+## RH-017: promote the argument-principle package to the built surface
+
+ID: `RH-017`
+
+Status: **ACTIVE 2026-08-09 — stage-two promotion; the kernel via CI is the sole
+judge**
+
+Kind: theorem
+
+Activation basis (2026-08-09): `RH-016` completed — the draft exists, its five
+signatures are character-identical to the corrected contract, and two
+independent lenses reviewed it. Under the two-stage gate the kernel verdict
+comes only from a separate promotion change, and this is that change.
+
+Exit criteria:
+
+- the built module, its `AP-*` ledger rows, the regenerated registries and
+  axiom audit, and the promotion record all land in ONE change, or inverse
+  coverage fails CI;
+- the full battery passes on the EXACT merged head: `lake build`, the
+  no-incomplete-proof gate, inverse ledger coverage, and both axiom audits;
+- a statement change at any point stops the task and returns the surface to
+  contract review — a proof-only repair does not;
+- the drafts-lane mirror stays byte-identical to the built module from the
+  first `import`;
+- on green merge this closes no barrier and changes no barrier row. In
+  particular `S1-GLOBAL-ZEROS` stays OPEN: `A2` sums the divisor of an
+  ARBITRARY `f` over an arbitrary open disc, names no ζ or ξ, and chooses no
+  truncation family, so it does not touch that row's exit items.
+
+Expectation recorded in advance, so that a rejection is read as a round and not
+as a surprise: the drafter named `A2` — roughly 330 lines with several
+higher-order unification points — as the declaration most likely to be rejected,
+and wrote its inline fallbacks most densely for that reason.
 
 ## RH-005: bounded computation policy
 

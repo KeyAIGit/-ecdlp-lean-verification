@@ -1,55 +1,70 @@
 /-
-NON-BUILT DRAFT — circle-only argument-principle package (UPSTREAM pool Form A),
-W1 and A1-A4.
+Built circle-only argument-principle package: promotion of the independently
+accepted W1, A1-A4 statement surface in
+`domains/riemann-hypothesis/ARG_PRINCIPLE_CONTRACT.md` (acceptance record:
+`notes/reviews/ARG_PRINCIPLE_ACCEPTANCE_2026_08_08.md`; promotion record:
+`notes/reviews/ARG_PRINCIPLE_PROMOTION_2026_08_09.md`).
 
-STATUS: THIS FILE CARRIES NO KERNEL VERDICT OF ANY KIND. It is the drafts-lane
-Lean draft of `domains/riemann-hypothesis/ARG_PRINCIPLE_CONTRACT.md` (DRAFT v1.2,
-2026-08-09; statement surface independently accepted at stage one on 2026-08-08,
-record `notes/reviews/ARG_PRINCIPLE_ACCEPTANCE_2026_08_08.md`, zero blocking
-findings; corrections applied under `RH-015`). Written under `RH-016`.
+Five declarations. W1 evaluates the contour integral of `(z - w)⁻¹` over a
+circle when `w` lies outside the closed disc, giving zero. A1 upgrades agreement
+off a codiscrete set to agreement on a neighbourhood, at a point of
+accumulation. A2 is the deliverable: for `f` analytic on a closed disc and
+nonvanishing on its boundary circle, the contour integral of the logarithmic
+derivative equals `2πi` times the divisor sum over the open disc — the argument
+principle in the one form the pin supports without a winding-number theory. A3
+is its vanishing criterion, and A4 records that the integral is `2πi` times a
+natural number.
 
-It is NOT part of any lake target — `lakefile.toml` declares
-`defaultTargets = ["Ecdlp", "ResearchOS"]` and nothing under `domains/` is built.
-It is outside the CI no-incomplete-proof gate's scan surface (`.github/workflows/ci.yml`
-scans `Ecdlp/` excluding `Targets/`) and outside every registry. **CI DOES NOT
-ELABORATE THIS FILE. The Lean kernel has NOT checked a single declaration below,
-and no green CI run on `RH-016` is evidence of anything whatsoever about this
-file.** The kernel's verdict is delivered only by a separate stage-two promotion
-change that places a copy under a lake target (contract §Two-stage gate); that
-change has not been made and is not authorized by this one.
+State: this package is GENERIC complex analysis over pinned Mathlib, with zero
+repository prerequisites — it imports no repo module. It mentions no zeta
+function, no xi, no `completedRiemannZeta₀`, no `LSeries`, no critical strip;
+every statement quantifies over an arbitrary `f`. It closes NO barrier row of
+`domains/riemann-hypothesis/MATHLIB_CAPABILITY_MAP.md` and no `S1-*` item.
 
-Because nothing here has been elaborated, every step whose elaboration is
-uncertain carries an inline `-- FALLBACK:` comment giving exact alternative
-tactic text for the stage-two implementer. Those notes are the load-bearing
-deliverable of a file that cannot be tested.
+`S1-GLOBAL-ZEROS` deserves an explicit sentence, since a divisor sum is the
+closest any of this comes to a counting statement. That row asks for global
+enumeration and counting FOR ζ OR ξ, with route-specific truncations among its
+exit items. A2 sums the divisor of an arbitrary `f` over an arbitrary open disc,
+names no particular function, and chooses no truncation family. The row is
+therefore OPEN and untouched — not closed, not advanced, not partially closed —
+and the same holds for every other barrier. The capability-map effect is
+INVENTORY ONLY: generic machinery lowers the cost of a future exit and never
+retires a row. This package proves, disproves, advances, and evidences nothing
+about the Riemann Hypothesis in either direction, and selects no route.
 
-Statement surface: W1, A1, A2, A3, A4 — exactly 5 public signatures, zero `def`s,
-each CHARACTER-IDENTICAL to its contract `lean` block from the `theorem` keyword
-through the `:=` that opens the proof. Complete proof bodies throughout: no
-proof placeholder of any spelling — none of the incomplete-proof tactics appears
-anywhere below, in any form — and no new axiom (contract death condition 1).
+`0 < R` IS LOAD-BEARING FOR TRUTH in A2, A3 and A4, not a convenience. At
+`R = -1` the closed ball, the sphere and the open ball are all empty, so every
+hypothesis is vacuous and the divisor sum is `0`, while the contour integral is
+not: `∮ z in C(0,-1), 1/z = 2πi ≠ 0`. A4 fails too — with `f = z⁻¹` the integral
+is `-2πi`, and `∃ n : ℕ` forbids a negative count. Each of the three statements
+carries that refutation in its docstring. This is recorded here because the
+acceptance record had judged A4's `0 < R` to be mere convenience, and an editor
+under `RH-015` found the counterexample that shows otherwise.
 
-`0 < R` IS LOAD-BEARING FOR TRUTH in A2, A3 and A4 and is not relaxed anywhere
-below. `RH-015` established all three are FALSE at `R = -1`: with `f = id`,
-`c = 0`, `R = -1` the hypotheses are vacuous (`closedBall 0 (-1) = ∅`,
-`sphere 0 (-1) = ∅`) while the contour integral is `2πI ≠ 0`; and for A4 the
-witness `f = fun z => z⁻¹` forces `n = -1 ∉ ℕ`. See contract §5.2 and death
-condition 8(b). W1 is stated on `|R|` and is uniform in the sign of `R`; that
-split with A2-A4 is deliberate (contract §2, under A2).
+Module placement: `ResearchOS/Analysis/`, deliberately NOT
+`ResearchOS/AnalyticNumberTheory/RiemannHypothesis/`. The surface is
+domain-neutral, so filing it under the RH subtree would present generic
+machinery as RH-lane content; these rows are `AP-*` rows of the domain-neutral
+`analysis-generic` lane, the same shelf as the `MB-`, `PL-`, `HK-`, `TC-` and
+`GO-` rows already there.
 
-The package is generic complex analysis: it quantifies over an arbitrary
-`f : ℂ → ℂ` (A1 over `f g : 𝕜 → E`) and mentions no ζ, no ξ, no L-function, no
-critical strip. It closes no barrier row, advances no barrier row, partially
-closes no barrier row (capability-map effect INVENTORY ONLY), selects no route,
-and carries no claim about the truth of the Riemann Hypothesis in either
-direction. No repo theorem is a prerequisite of anything below; every import is
-pinned Mathlib.
+Kernel verdict: delivered by CI on this promotion change, never by this header.
+`lake build` compiles the module, the no-incomplete-proof gate scans it, the
+regenerated `ResearchOS/LedgerAxiomAudit.lean` + `check_axioms.py` enforce the
+per-row `standard` axiom base, and `gen_researchos_registry.py --check` enforces
+inverse coverage. If any gate is red, no row is counted.
 
-Pinned Mathlib: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (v4.31.0), toolchain
-`leanprover/lean4:v4.31.0` — re-verified this session via
-`git -C /workspace/leanprover-community/mathlib4 rev-parse HEAD`. Every Mathlib
-lemma invoked below was opened at that tree this session and its `file:line`
-is recorded inline next to the use (paths relative to the `Mathlib/` root).
+Honest expectation, recorded before the verdict rather than after: the drafter
+flagged A2 as ~330 lines of assembly with several higher-order unification
+points and named it the declaration most likely to need a repair round. Its
+inline `FALLBACK` notes are densest for that reason. A rejection there is an
+ordinary round, not a surprise.
+
+All five public declarations are ledgered as `AP-*` rows in
+`VERIFIED_RESEARCHOS.md` and audited through the generated
+`ResearchOS/LedgerAxiomAudit.lean` with axiom base `standard`.
+
+Pinned Mathlib: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (v4.31.0).
 -/
 import Mathlib.MeasureTheory.Integral.CircleIntegral   -- ∮ (:385/:389), integral_congr :425,
                                                        -- integral_add :451, integral_fun_sum :461,

@@ -10,8 +10,12 @@ CI elaborates it standalone and validates the output with
 -/
 
 #print axioms AnalyticAt.conj_conj
+#print axioms AnalyticAt.eventuallyEq_of_codiscreteWithin
+#print axioms Complex.circleIntegral_logDeriv_eq_divisor_sum
+#print axioms Complex.circleIntegral_logDeriv_eq_zero_iff
 #print axioms Complex.exists_affine_of_norm_le_pow_one
 #print axioms Complex.exists_const_forall_eq_of_norm_le
+#print axioms Complex.exists_nat_circleIntegral_logDeriv_eq
 #print axioms Complex.exists_polynomial_of_norm_le_pow
 #print axioms Complex.growthOrder
 #print axioms Complex.growthOrder_const
@@ -57,6 +61,7 @@ CI elaborates it standalone and validates the output with
 #print axioms analyticOrderAt_riemannZeta_one_sub
 #print axioms analyticOrderAt_riemannZeta_one_sub_conj
 #print axioms bddAbove_image_norm_sphere
+#print axioms circleIntegral.integral_sub_inv_of_notMem_closedBall
 #print axioms compl_riemannXi_zeroSet_mem_codiscrete
 #print axioms completedRiemannZeta_conj
 #print axioms completedRiemannZeta₀_conj
