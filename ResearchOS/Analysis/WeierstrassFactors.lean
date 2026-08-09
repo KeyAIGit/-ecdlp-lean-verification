@@ -73,8 +73,8 @@ Pure algebra; this is the whole seam between W6 and the pinned log bound. -/
 lemma logTaylor_neg_eq (p : ℕ) (z : ℂ) :
     Complex.logTaylor (p + 1) (-z) = -∑ k ∈ Finset.range p, z ^ (k + 1) / (k + 1) := by
   simp only [Complex.logTaylor, Finset.sum_range_succ']
-  simp only [Nat.zero_add, pow_one, Nat.cast_zero, div_zero, zero_add,
-    Finset.sum_neg_distrib]
+  simp only [pow_one, Nat.cast_zero, div_zero, zero_add, add_zero]
+  rw [← Finset.sum_neg_distrib]
   apply Finset.sum_congr rfl
   intro k hk
   have hsign :
@@ -113,7 +113,12 @@ theorem norm_log_one_sub_add_sum_le (p : ℕ) {z : ℂ} (hz : ‖z‖ < 1) :
     rw [sub_eq_add_neg]
     exact Complex.mem_slitPlane_of_norm_lt_one (by rwa [norm_neg])
   rw [Complex.log_inv _ (Complex.slitPlane_arg_ne_pi hsp), logTaylor_neg_eq] at h
-  simpa [← neg_add, norm_neg] using h
+  have heq :
+      -Complex.log (1 - z) + -∑ k ∈ Finset.range p, z ^ (k + 1) / (k + 1) =
+        -(Complex.log (1 - z) + ∑ k ∈ Finset.range p, z ^ (k + 1) / (k + 1)) := by
+    ring
+  rw [heq, norm_neg] at h
+  exact h
 
 /-! ## W6. A uniform elementary-factor estimate on the half-disc -/
 
@@ -145,8 +150,8 @@ theorem norm_weierstrassFactor_sub_one_le {p : ℕ} {z : ℂ} (hz : ‖z‖ ≤ 
       (mul_le_mul_of_nonneg_left hinv (pow_nonneg (norm_nonneg z) _)) (by positivity)
   have hzleone : ‖z‖ ≤ 1 := hz.trans (by norm_num)
   have hpow : ‖z‖ ^ (p + 1) ≤ ‖z‖ :=
-    pow_le_self (norm_nonneg z) hzleone (by omega)
-  have hpone : (1 : ℝ) ≤ p + 1 := by positivity
+    pow_le_of_le_one (norm_nonneg z) hzleone (by omega)
+  have hpone : (1 : ℝ) ≤ p + 1 := by norm_num
   have hmajor : ‖z‖ ^ (p + 1) * 2 / (p + 1) ≤ 1 := by
     rw [div_le_iff₀ (by positivity : (0 : ℝ) < p + 1)]
     nlinarith
@@ -248,7 +253,11 @@ theorem hasProdLocallyUniformlyOn_weierstrassProduct (hane : ∀ i, a i ≠ 0)
       ((Metric.mem_closedBall.mp (hKr hx)).trans (by dsimp [R]; exact le_max_left r 0))
   let u : ι → ℝ := fun i => 4 / (p + 1) * (R ^ (p + 1) / ‖a i‖ ^ (p + 1))
   have hu : Summable u := by
-    have hscaled := (hsum.mul_left (R ^ (p + 1))).mul_left (4 / (p + 1))
+    have hRscaled : Summable fun i => R ^ (p + 1) * ‖a i‖⁻¹ ^ (p + 1) :=
+      hsum.mul_left (R ^ (p + 1))
+    have hscaled :
+        Summable fun i => 4 / (p + 1) * (R ^ (p + 1) * ‖a i‖⁻¹ ^ (p + 1)) :=
+      hRscaled.mul_left ((4 : ℝ) / (p + 1))
     simpa only [u, div_eq_mul_inv, ← inv_pow, mul_assoc] using hscaled
   have htail :
       ∀ᶠ i in Filter.cofinite, ∀ x ∈ K,
@@ -277,13 +286,19 @@ theorem hasProdLocallyUniformlyOn_weierstrassProduct (hane : ∀ i, a i ≠ 0)
   have hraw :
       HasProdUniformlyOn
         (fun i x => 1 + (weierstrassFactor p (x / a i) - 1))
-        (fun x => ∏' i, (1 + (weierstrassFactor p (x / a i) - 1))) K :=
-    hu.hasProdUniformlyOn_one_add hK htail (fun i => by fun_prop)
+        (fun x => ∏' i, (1 + (weierstrassFactor p (x / a i) - 1))) K := by
+    apply hu.hasProdUniformlyOn_one_add hK htail
+    intro i
+    have hc : Continuous (fun x : ℂ => weierstrassFactor p (x / a i)) := by
+      simpa only [Function.comp_def] using
+        (differentiable_weierstrassFactor p).continuous.comp
+          (by fun_prop : Continuous fun x : ℂ => x / a i)
+    exact (hc.sub continuous_const).continuousOn
   have hfamily :
       ∀ᶠ s : Finset ι in atTop,
         K.EqOn
-          (∏ i ∈ s, fun x => 1 + (weierstrassFactor p (x / a i) - 1))
-          (∏ i ∈ s, fun x => weierstrassFactor p (x / a i)) := by
+          (fun x => s.prod fun i => 1 + (weierstrassFactor p (x / a i) - 1))
+          (fun x => s.prod fun i => weierstrassFactor p (x / a i)) := by
     filter_upwards with s
     intro x hx
     simp
@@ -330,14 +345,23 @@ theorem weierstrassProduct_eq_tprod_mul_tprod_compl (hane : ∀ i, a i ≠ 0)
       = (∏' i : S, weierstrassFactor p (z / a i))
           * ∏' i : ↥Sᶜ, weierstrassFactor p (z / a i) := by
   have hnorm := summable_norm_weierstrassFactor_sub_one hane hsum z
-  have hS : Multipliable (fun i : S => weierstrassFactor p (z / a i)) := by
-    simpa only [add_sub_cancel_left] using
-      multipliable_one_add_of_summable (hnorm.subtype (· ∈ S))
-  have hSc : Multipliable (fun i : ↥Sᶜ => weierstrassFactor p (z / a i)) := by
-    simpa only [add_sub_cancel_left] using
-      multipliable_one_add_of_summable (hnorm.subtype (· ∈ Sᶜ))
-  simpa only [weierstrassProduct] using
-    (Multipliable.tprod_mul_tprod_compl hS hSc).symm
+  have hS : Multipliable
+      ((fun i => weierstrassFactor p (z / a i)) ∘ ((↑) : S → ι)) := by
+    refine Multipliable.congr
+      (g := (fun i => weierstrassFactor p (z / a i)) ∘ ((↑) : S → ι))
+      (multipliable_one_add_of_summable (hnorm.subtype (· ∈ S))) ?_
+    intro i
+    simp only [Function.comp_apply, ← add_sub_assoc, add_sub_cancel_left]
+  have hSc : Multipliable
+      ((fun i => weierstrassFactor p (z / a i)) ∘ ((↑) : ↥Sᶜ → ι)) := by
+    refine Multipliable.congr
+      (g := (fun i => weierstrassFactor p (z / a i)) ∘ ((↑) : ↥Sᶜ → ι))
+      (multipliable_one_add_of_summable (hnorm.subtype (· ∈ Sᶜ))) ?_
+    intro i
+    simp only [Function.comp_apply, ← add_sub_assoc, add_sub_cancel_left]
+  unfold weierstrassProduct
+  exact (Multipliable.tprod_mul_tprod_compl
+    (f := fun i => weierstrassFactor p (z / a i)) (s := S) hS hSc).symm
 
 /-- The complement tail is an entire function of `z` — a subfamily instantiation
 of W9, not a new convergence argument. -/
@@ -347,8 +371,8 @@ lemma analyticAt_tprod_compl (hane : ∀ i, a i ≠ 0)
   have hane' : ∀ i : ↥Sᶜ, a i ≠ 0 := fun i => hane i
   have hsum' : Summable fun i : ↥Sᶜ => ‖a i‖⁻¹ ^ (p + 1) :=
     hsum.subtype (· ∈ Sᶜ)
-  simpa only [weierstrassProduct] using
-    (analyticAt_weierstrassProduct (p := p) (a := fun i : ↥Sᶜ => a i) hane' hsum' z)
+  change AnalyticAt ℂ (weierstrassProduct p (fun i : ↥Sᶜ => a i)) z
+  exact analyticAt_weierstrassProduct hane' hsum' z
 
 /-- If no zero sits at `w`, the whole product is nonzero at `w`. Applied to the
 complement of the fiber, this is the tail-nonvanishing input to W12. -/
@@ -358,13 +382,13 @@ lemma weierstrassProduct_ne_zero_of_forall_ne (hane : ∀ i, a i ≠ 0)
   have hnorm := summable_norm_weierstrassFactor_sub_one hane hsum w
   have hfac : ∀ i, 1 + (weierstrassFactor p (w / a i) - 1) ≠ 0 := by
     intro i
-    simp only [add_sub_cancel_left]
+    rw [← add_sub_assoc, add_sub_cancel_left]
     apply weierstrassFactor_ne_zero
     intro hi
     have hwa : w = a i := (div_eq_one_iff_eq (hane i)).mp hi
     exact h i hwa.symm
   have ht := tprod_one_add_ne_zero_of_summable hfac hnorm
-  simpa only [weierstrassProduct, add_sub_cancel_left] using ht
+  simpa only [weierstrassProduct, ← add_sub_assoc, add_sub_cancel_left] using ht
 
 /-! ## W11. Exact zero set -/
 
@@ -378,7 +402,7 @@ theorem weierstrassProduct_eq_zero_iff (hane : ∀ i, a i ≠ 0)
   constructor
   · intro hz
     by_contra hnone
-    push_neg at hnone
+    push Not at hnone
     exact (weierstrassProduct_ne_zero_of_forall_ne hane hsum hnone) hz
   · rintro ⟨i, rfl⟩
     rw [weierstrassProduct_eq_tprod_mul_tprod_compl hane hsum ({i} : Set ι) (a i)]
@@ -411,7 +435,7 @@ lemma analyticOrderAt_weierstrassFactor_one (p : ℕ) :
       norm_num
   have hright : analyticOrderAt g 1 = 0 := by
     apply hg.analyticOrderAt_eq_zero.mpr
-    exact Complex.exp_ne_zero
+    exact Complex.exp_ne_zero _
   rw [show weierstrassFactor p = (fun z : ℂ => 1 - z) * g by rfl,
     analyticOrderAt_mul hf hg, hleft, hright]
   simp
@@ -422,7 +446,7 @@ lemma analyticOrderAt_weierstrassFactor_div {p : ℕ} {c : ℂ} (hc : c ≠ 0) :
   have hg : AnalyticAt ℂ (fun z : ℂ => z / c) c := by fun_prop
   have hg' : deriv (fun z : ℂ => z / c) c ≠ 0 := by
     rw [deriv_div_const]
-    simpa [hc]
+    simp [hc]
   have hcomp := analyticOrderAt_comp_of_deriv_ne_zero
     (f := weierstrassFactor p) hg hg'
   simpa [Function.comp_def, div_self hc, analyticOrderAt_weierstrassFactor_one p] using hcomp
@@ -445,7 +469,7 @@ lemma analyticOrderAt_finsetProd {ι : Type*} (s : Finset ι) {f : ι → ℂ �
   revert hf
   refine Finset.induction_on s ?_ ?_
   · intro hf
-    have hone : AnalyticAt ℂ (1 : ℂ → ℂ) z₀ := by fun_prop
+    have hone : AnalyticAt ℂ (1 : ℂ → ℂ) z₀ := analyticAt_const
     simpa using hone.analyticOrderAt_eq_zero.mpr (one_ne_zero : (1 : ℂ) ≠ 0)
   · intro i s his ih hf
     have hfi : AnalyticAt ℂ (f i) z₀ := hf i (Finset.mem_insert_self i s)
@@ -482,7 +506,12 @@ theorem analyticOrderAt_weierstrassProduct (hane : ∀ i, a i ≠ 0)
   have hfactorAnalytic : ∀ i : S, AnalyticAt ℂ (f i) w := by
     intro i
     dsimp [f]
-    exact (analyticAt_weierstrassFactor p (w / a i)).comp w (by fun_prop)
+    have hdiv : AnalyticAt ℂ (fun z : ℂ => z / a i) w := by
+      simpa only [id_eq] using
+        (analyticAt_id (𝕜 := ℂ) (z := w)).div_const (c := a i)
+    simpa only [Function.comp_def] using
+      AnalyticAt.comp (f := fun z : ℂ => z / a i) (x := w)
+        (analyticAt_weierstrassFactor p (w / a i)) hdiv
   have hFa : AnalyticAt ℂ F w := by
     dsimp [F]
     exact Finset.analyticAt_prod Finset.univ

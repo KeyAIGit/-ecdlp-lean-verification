@@ -44,11 +44,43 @@ rewritten.
 The built module has a promotion-specific leading header. From its first
 `import` through the final declaration it is byte-identical to the repaired
 draft. The shared suffix SHA-256 is
-`f96f0377cf412701fdac8f1bd954f84a6042f85c23e6c2895a5a5994ccd18a87`.
+`fb020769fb57a4f6ef5c5765283593a8f15375c612a552d1746a451ecd90daa4`.
 
 Any proof-only kernel repair must be applied to both copies and recorded here.
 A changed name, binder, hypothesis or conclusion stops promotion and returns
 the surface to contract review.
+
+## Kernel repair rounds
+
+The first exact promotion head, `9fb8f9e7fbee19acc94244f98e4ae3f53a850532`,
+passed the registry, inverse-coverage, generated-audit, lane-isolation,
+fixpoint, and no-incomplete-proof gates, but failed the full build in this
+module. The axiom audits were consequently skipped on that head. The
+diagnostics were proof-elaboration failures, not counterexamples to a frozen
+statement:
+
+- W4 needed the finite-sum negation and trailing-zero normal forms made
+  explicit;
+- W5 and W6 needed bounded simplification and the pinned power inequality;
+- W7 and W8 needed typed scalar summability, explicit continuity, and the
+  exact partial-product `EqOn` shape;
+- W10 needed direct subtype summability and multipliability proofs to avoid a
+  deterministic `whnf` heartbeat blow-up;
+- W11 and W12 needed explicit nonvanishing, constant-analyticity, and
+  composition arguments. Two missing-W10 errors were downstream cascades.
+
+Rounds R1--R7 changed proof bodies only and were synchronized into both source
+copies. No resource-limit override was added. The final built file has
+SHA-256
+`3e23e296a5525c727d264f9c77f8b8b8a41363adb9c62a25b143835919e3c06c`
+and Git blob `b0c724c137cc1218d3dae8a80ef89691df9beee0`; the final draft
+has SHA-256
+`b3b75cffedbcb0c6a2092ceef259ef07d33642506c89d3d12e4937f8cb229a7f`
+and Git blob `9f4a45093323b10457b09d90d948976243bf697d`. Both exact files
+compile independently with Lean 4.31.0 and pinned Mathlib
+`fabf563a7c95a166b8d7b6efca11c8b4dc9d911f` at the default heartbeat
+limit, with exit code zero and empty output. Independent replay confirms the
+28 statement records still have normalized SHA-256 `5c1bbe33…`.
 
 ## Review priorities before the kernel verdict
 
@@ -93,6 +125,7 @@ barriers.
 
 Static replay on the assembled local tree confirms suffix identity, 28 public
 declarations, fresh statement anchors, complete intended ledger coverage,
-absence of the omitted 29th declaration, and a clean whitespace diff.
-Isolated elaboration, the full build and both axiom audits are pending the
-kernel round and must not be inferred from this record.
+absence of the omitted 29th declaration, and a clean whitespace diff. Exact
+isolated elaboration of both the built and draft copies is green after R7.
+The full build and both axiom audits remain pending on the repaired exact PR
+head and must not be inferred from the local isolated result.

@@ -2811,8 +2811,8 @@
     "analyticAt_tprod_compl": {
       "kind": "lemma",
       "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
-      "line": 344,
-      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:344@sha256:55e3dc090d2a"
+      "line": 368,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:368@sha256:55e3dc090d2a"
     },
     "analyticAt_weierstrassFactor": {
       "kind": "lemma",
@@ -2823,8 +2823,8 @@
     "analyticAt_weierstrassProduct": {
       "kind": "lemma",
       "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
-      "line": 315,
-      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:315@sha256:9f4ebe455ed4"
+      "line": 330,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:330@sha256:9f4ebe455ed4"
     },
     "analyticOnNhd_riemannXi": {
       "kind": "theorem",
@@ -2853,8 +2853,8 @@
     "analyticOrderAt_finsetProd": {
       "kind": "lemma",
       "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
-      "line": 441,
-      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:441@sha256:104b8605a53a"
+      "line": 465,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:465@sha256:104b8605a53a"
     },
     "analyticOrderAt_riemannXi_conj": {
       "kind": "theorem",
@@ -2925,26 +2925,26 @@
     "analyticOrderAt_weierstrassFactor_div": {
       "kind": "lemma",
       "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
-      "line": 420,
-      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:420@sha256:5775affa8545"
+      "line": 444,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:444@sha256:5775affa8545"
     },
     "analyticOrderAt_weierstrassFactor_one": {
       "kind": "lemma",
       "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
-      "line": 399,
-      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:399@sha256:73967aeaaaee"
+      "line": 423,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:423@sha256:73967aeaaaee"
     },
     "analyticOrderAt_weierstrassProduct": {
       "kind": "theorem",
       "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
-      "line": 467,
-      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:467@sha256:96d63bdc6bf8"
+      "line": 491,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:491@sha256:96d63bdc6bf8"
     },
     "analyticOrderAt_weierstrassProduct_ne_top": {
       "kind": "lemma",
       "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
-      "line": 533,
-      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:533@sha256:a33c11ec7779"
+      "line": 562,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:562@sha256:a33c11ec7779"
     },
     "bddAbove_image_norm_sphere": {
       "kind": "lemma",
@@ -3009,14 +3009,14 @@
     "differentiable_weierstrassProduct": {
       "kind": "theorem",
       "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
-      "line": 301,
-      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:301@sha256:b554b5152240"
+      "line": 316,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:316@sha256:b554b5152240"
     },
     "eventually_cofinite_le_norm": {
       "kind": "lemma",
       "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
-      "line": 172,
-      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:172@sha256:21fbc4f78a99"
+      "line": 177,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:177@sha256:21fbc4f78a99"
     },
     "exists_exp_eq_of_norm_eq": {
       "kind": "lemma",
@@ -3039,14 +3039,14 @@
     "finite_setOf_apply_eq": {
       "kind": "lemma",
       "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
-      "line": 194,
-      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:194@sha256:e72721070efb"
+      "line": 199,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:199@sha256:e72721070efb"
     },
     "hasProdLocallyUniformlyOn_weierstrassProduct": {
       "kind": "theorem",
       "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
-      "line": 236,
-      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:236@sha256:a49b1894542f"
+      "line": 241,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:241@sha256:a49b1894542f"
     },
     "image_conj_of_symm": {
       "kind": "theorem",
@@ -3177,8 +3177,8 @@
     "norm_weierstrassFactor_sub_one_le": {
       "kind": "theorem",
       "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
-      "line": 123,
-      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:123@sha256:f48328df4df2"
+      "line": 128,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:128@sha256:f48328df4df2"
     },
     "one_notMem_riemannZetaZeros": {
       "kind": "theorem",
@@ -3555,8 +3555,8 @@
     "summable_norm_weierstrassFactor_sub_one": {
       "kind": "lemma",
       "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
-      "line": 210,
-      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:210@sha256:121039b371f1"
+      "line": 215,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:215@sha256:121039b371f1"
     },
     "tendsto_riemannXi_zeroSet_cofinite_cocompact": {
       "kind": "theorem",
@@ -3609,26 +3609,26 @@
     "weierstrassProduct": {
       "kind": "def",
       "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
-      "line": 168,
-      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:168@sha256:d8a00705cd45"
+      "line": 173,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:173@sha256:d8a00705cd45"
     },
     "weierstrassProduct_eq_tprod_mul_tprod_compl": {
       "kind": "theorem",
       "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
-      "line": 327,
-      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:327@sha256:355d5cc2b7f4"
+      "line": 342,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:342@sha256:355d5cc2b7f4"
     },
     "weierstrassProduct_eq_zero_iff": {
       "kind": "theorem",
       "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
-      "line": 374,
-      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:374@sha256:ef3ffc3872d1"
+      "line": 398,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:398@sha256:ef3ffc3872d1"
     },
     "weierstrassProduct_ne_zero_of_forall_ne": {
       "kind": "lemma",
       "file": "ResearchOS/Analysis/WeierstrassFactors.lean",
-      "line": 355,
-      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:355@sha256:426ecf4c5c37"
+      "line": 379,
+      "anchor": "ResearchOS/Analysis/WeierstrassFactors.lean:379@sha256:426ecf4c5c37"
     }
   }
 }
