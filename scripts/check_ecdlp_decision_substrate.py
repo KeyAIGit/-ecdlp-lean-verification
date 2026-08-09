@@ -1856,12 +1856,17 @@ def validate() -> list[str]:
         problems.append("maintenance cycle must not promote a route")
     if maintenance.get("historical_outcomes_mutable") is not False:
         problems.append("maintenance cycle must preserve historical outcomes")
-    if (
-        "Current ECDLP decision: formulate and review, but do not execute,"
-        not in next_tasks_text
+    if not all(
+        binding in next_tasks_text
+        for binding in (
+            "Current ECDLP decision: `TASK-029` is terminal.",
+            "The operational queue returns to non-executable `TASK-008`",
+            "no new scientific execution is selected",
+        )
     ):
         problems.append(
-            "tasks/NEXT.md must expose the exact authorized ECDLP task"
+            "tasks/NEXT.md must expose the terminal proposal review and "
+            "non-executable maintenance intake"
         )
     for binding in (
         BOUNDED_AUTHORIZATION_ID,

@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.1",
+  "review_id": "HGR-M16-002-CRYPTANALYSIS",
+  "proposal_id": "HGP-M16-SOLVER-SLOPE-002",
+  "proposal_sha256": "2a6a66ec80240380458d670c354e1131ea5d728e8dd55545e7b02e01eb887b07",
+  "reviewed_on": "2026-08-09",
+  "reviewer_id": "keyai-task029-cryptanalysis-review",
+  "reviewer_role": "cryptanalysis_skeptic",
+  "source_independence": "shared_context",
+  "reviewer_provenance": {
+    "family": "shared-context-agentic-review",
+    "version": "2026-08-09",
+    "session_id": "task029-hgr-m16-002-cryptanalysis-20260809-b9c2e58b4905",
+    "context_sha256": "befc137bd4fef93f98387aa5e8cc9b42899cc2b094e85f06e6e334333e11ba47",
+    "prompt_sha256": "4bb8bb4a0452a3945b2cace8b37725cf45bf29a7c6ff5cbe8b10840b981ce7cb",
+    "blind_to_other_reviews": true
+  },
+  "verdict": "block",
+  "blocker_codes": [
+    "duplicate_or_reencoding",
+    "missing_cost_changing_bridge",
+    "proxy_not_decisive",
+    "semantic_reencoding_risk"
+  ],
+  "summary": "Block. TASK-028 fixes the literal map L(x)=1-x^564522 and the direct 64-coordinate, 65-equation arity-16 System (4), but its repository recovery completion is only a one-way sound acceptance filter: direct-System-(4) recovery completeness, missed components, multiplicities, and the recovery distribution remain unproved. Pointwise equivalence with a quadratic circuit does not establish equality of ideals, saturation, multiplicities, solving degree, fill-in, memory, or runtime, and the frozen recursive projective presentation likewise supplies no direct-system solver-cost equivalence; transferring a solver advantage among these presentations would therefore be a semantic reencoding. The only source-grounded cost expression, P(p,16)+(16!*p/D^15)T(E,16,L)+D^omega, leaves T open and does not bound complete recovery, independent-relation yield and rank, sparse linear algebra, preprocessing, storage, or a common-unit equal-success comparison, so no complete B(p)=o(p^(1/2)) causal bridge exists. TASK-027's exact 283527 liftable x values and 94509 liftable GLV x-orbits are structural census facts, not usable factor-log columns, a relation-yield law, rank evidence, or solver evidence; its at-most-24-bit regime is explicitly inapplicable to M16 exponent inference, so those proxies cannot decide the slope claim. Finally, the proposal and mechanism design declare the seven-field mechanism identity unchanged from HGP-M16-SOLVER-SLOPE-001, novelty false, and no new cost-changing premise. The package is therefore a duplicate or reencoding rather than a cryptanalytically testable successor, and zero compute and zero retention are the supported disposition.",
+  "evidence_inputs": [
+    "experiments/engine/proposals/HGP-M16-SOLVER-SLOPE-002.json",
+    "experiments/engine/pkc_smooth_m16_solver_slope_v2/PROPOSAL_CONTEXT.md",
+    "experiments/engine/pkc_smooth_m16_solver_slope_v2/MECHANISM_DESIGN.md",
+    "experiments/engine/pkc_smooth_m16_solver_slope_v2/VALIDATOR_DESIGN.md",
+    "experiments/engine/pkc_smooth_m16_regime_assurance_desk/artifact.json",
+    "data/source_claim_extracts/petit_kosters_messeng2016_task028.json",
+    "experiments/engine/pkc_smooth_m16_source_faithful_mechanism/artifact.json"
+  ]
+}

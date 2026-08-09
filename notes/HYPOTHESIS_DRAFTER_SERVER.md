@@ -14,19 +14,24 @@ The drafter has two explicit lanes:
   evidence-file hashes, and the matching
   `repo/ECDLP_DECISION_SUBSTRATE.json` mode and research object.
   Seeds that already have a submitted proposal are skipped unless a local caller
-  explicitly requests a replay. The current research decision admits formulation
+  explicitly requests a replay. The pinned decision mode admits formulation
   only of `HYP-M16-SOLVER-SLOPE-001`; this reviewed drafter policy maps that
   object to scoped seed `HGS-3266E42A729C`. The exact M16 factor-base census,
   versioned source-faithful mechanism binding, and adversarial recovery-scope
   correction changed that cell's scientific identity. Existing proposal
   `HGP-M16-SOLVER-SLOPE-001` remains immutable through authenticated legacy
-  alias `HGS-DC5FF2FC9E71`, but the alias is now historical-only and blocked by
-  `stale_seed_snapshot`; it is not counted as a proposal for the current seed.
-  The default typed-evidence request count is therefore one. The new request is
-  non-executable and unauthorized, and it cannot clear any scientific gate. The
-  parked auxiliary-curve seed is not silently drafted. A zero-request dispatch
-  records `skipped_no_eligible_seed`, provisions no provider secret, and makes
-  no provider call. Submitted seeds may be included only in a local dry
+  alias `HGS-DC5FF2FC9E71`, but the alias is historical-only and blocked by
+  `stale_seed_snapshot`. Current-seed proposal
+  `HGP-M16-SOLVER-SLOPE-002`, canonical SHA-256
+  `2a6a66ec80240380458d670c354e1131ea5d728e8dd55545e7b02e01eb887b07`,
+  is submitted and hard rejected with zero quality clearance, zero retention,
+  and no authorization. With `skip_submitted_seeds_by_default` preserved, the
+  default typed-evidence request count is now zero. The admission remains for
+  deterministic audit and explicit local dry replay; it does not reopen the
+  hard-rejected proposal or select scientific execution. The parked
+  auxiliary-curve seed is not silently drafted. A zero-request dispatch records
+  `skipped_no_eligible_seed`, provisions no provider secret, and makes no
+  provider call. Submitted seeds may be included only in a local dry
   request-plan replay with `--include-submitted`; live mode rejects that flag.
 - `brainstorm_queue` reads bounded representatives from the broad structural
   map. It carries no source assurance. Its fragments must cite zero source-claim
