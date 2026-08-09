@@ -14,13 +14,14 @@ Canonical start order:
 
 ## Active tasks
 
-Execution lock for the `post-task026-decision-review` phase: no experiment is
-executable or receives compute. `TASK-026` has reached its independently
-validated terminal state and its singleton authorization is consumed. The
-only admitted successor work is formulation and review of a source-faithful,
-non-executable `HYP-M16-SOLVER-SLOPE-001` proposal; execution still requires
-a separate dated authorization. The ML qualification contracts, `TASK-013`,
-and `TASK-008` remain maintenance/intake references.
+Execution lock for the `post-task029-maintenance-intake` phase: no experiment
+is executable or receives compute. `TASK-029` formulated and reviewed the
+current-seed `HYP-M16-SOLVER-SLOPE-001` proposal; the proposal is hard rejected
+with zero quality clearance, zero retention, and no authorization or route
+effect. No new scientific execution is selected. The operational queue returns
+to `TASK-008` maintenance/evidence intake. The ML qualification contracts and
+`TASK-013` remain maintenance references. Any future scientific execution
+requires a new reviewed candidate and a separate dated authorization.
 
 ### ML-P0 qualification under TASK-013
 
@@ -265,7 +266,7 @@ How to verify:
 
 ### TASK-008 - Maintain evidence-gated candidate intake
 
-Status: maintenance_non_executable_during_task026
+Status: active_maintenance_evidence_intake_non_executable
 Kind: research | data | ops
 Hypothesis: none; intake evaluates proposals before hypothesis promotion
 Why it matters: New progress must enter through source-pinned mathematical
@@ -1951,3 +1952,82 @@ How to verify:
 - `sha256sum -c experiments/engine/pkc_smooth_m16_source_faithful_mechanism/artifact.sha256`
 - typed-evidence, claim-level, scientific-semantic, generated-fixpoint,
   no-sorry, axiom-audit, docs-sync, and full CI gates
+
+### TASK-029 - Formulate and review the current-seed M16 solver-slope proposal
+
+Status: completed_reviewed_hard_rejected_zero_retention
+Kind: hypothesis proposal | adversarial review | desk closeout
+Hypothesis: `HYP-M16-SOLVER-SLOPE-001`
+Seed: `HGS-3266E42A729C`
+Proposal: `HGP-M16-SOLVER-SLOPE-002`
+Canonical proposal SHA-256:
+`2a6a66ec80240380458d670c354e1131ea5d728e8dd55545e7b02e01eb887b07`
+Route state: `R-PETIT-COMPOSED-MAPS` remains `open_parked`
+Authorization: none
+Compute: zero; no solver, experiment, target work, or parameter sweep
+Quality clearance: none
+Retention: zero
+Route effect: none
+Outcome: `hard_rejected`
+
+Why it matters: TASK-028 produced the current typed seed and exact source input,
+but it did not supply a generalized-root algorithm or complete cost bridge.
+TASK-029 tests whether the same scientific mechanism can now clear proposal
+intake without renaming an old premise or converting a design specification
+into evidence.
+
+Recorded result:
+- The proposal resolves the current seed identity and keeps the same seven-field
+  mechanism identity and exact premise fingerprint as immutable proposal
+  `HGP-M16-SOLVER-SLOPE-001`. Deterministic intake therefore records
+  `duplicate_mechanism_signature`, `duplicate_or_reencoding`, and
+  `semantic_reencoding_risk`; the proposal also states that it is not new to
+  the repository or reviewed corpus.
+- All four mechanism assurance bindings remain `specified_unproved`.
+  Direct-System-(4) recovery completeness, exceptional-locus coverage, and the
+  transfer from pointwise circuit equivalence to ideal or solving equivalence
+  remain unproved, so `missing_exact_mechanism` is terminal for this proposal.
+- The source formula still contains unresolved `T(E,16,L)`. Generalized-root
+  solving, preprocessing, recovery, rank, sparse linear algebra, memory, and a
+  common-unit equal-success comparison remain unpriced. Review therefore
+  records `missing_cost_changing_bridge`,
+  `hidden_or_unpriced_precomputation`, and `proxy_not_decisive`.
+- The validator is design-only and supplies no executable independent path,
+  raw-artifact implementation, fault-injection attestation, or path, artifact,
+  and source-independence evidence. Review records
+  `missing_independent_validator_plan` and
+  `review_independence_unestablished`.
+- All five required review roles are present and every verdict is `block`;
+  source independence remains shared-context only. The final Engine blocker
+  set is `adversarial_review_blocked`, `duplicate_mechanism_signature`,
+  `duplicate_or_reencoding`, `hidden_or_unpriced_precomputation`,
+  `missing_cost_changing_bridge`, `missing_exact_mechanism`,
+  `missing_independent_validator_plan`, `novelty_scope_overclaimed`,
+  `proxy_not_decisive`, `review_independence_unestablished`, and
+  `semantic_reencoding_risk`. This is a correct scoped abstention and
+  zero-retention result, not a falsification of the full M16 mechanism or a
+  native scientific outcome.
+
+Decision boundary:
+- Do not execute a solver, allocate compute, compile a candidate, run an exact
+  target, or reuse the consumed TASK-026 authorization.
+- Do not infer relation independence, recovery completeness, rank, solving
+  complexity, an asymptotic improvement, or a secp256k1 attack.
+- Keep the M16 typed cell open on its exact complete-cost uncertainty, the
+  route parked, selected attack route null, and every promotion gate closed.
+- A successor proposal requires genuinely new source-grounded evidence or a
+  new cost-changing premise. Renaming or re-encoding this proposal is not a
+  successor.
+
+Next operational state:
+- Return to `TASK-008` maintenance/evidence intake.
+- Select no new scientific execution by default.
+- Preserve the submitted proposal and reviews as durable negative intake
+  evidence; default drafter dispatch skips the submitted seed.
+
+How to verify:
+- proposal and five review records satisfy the Research Engine schemas;
+- `python3 scripts/build_research_engine_state.py --check`;
+- `python3 scripts/check_research_engine.py`;
+- `python3 scripts/test_research_engine.py`;
+- docs-sync, generated-fixpoint, scientific-semantic, and full CI gates.

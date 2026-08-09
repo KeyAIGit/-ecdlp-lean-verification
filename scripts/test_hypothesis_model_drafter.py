@@ -599,18 +599,16 @@ class HypothesisModelDrafterTests(unittest.TestCase):
         self.assertIsNone(batch["errors"][0]["error_body"])
         self.assertFalse(batch["errors"][0]["error_body_truncated"])
 
-    def test_typed_evidence_is_default_and_refreshes_stale_seed(self) -> None:
+    def test_typed_evidence_default_skips_submitted_current_seed(self) -> None:
         packets = build_request_packets(
             self.policy,
             self.engine_state,
             limit=10,
             typed_evidence_state=self.typed_evidence_state,
         )
-        self.assertEqual(1, len(packets))
-        self.assertEqual("HGS-3266E42A729C", packets[0]["seed_id"])
-        self.assertEqual([], packets[0]["existing_proposal_ids"])
+        self.assertEqual([], packets)
 
-    def test_historical_proposal_is_not_compatible_with_current_seed(self) -> None:
+    def test_include_submitted_replays_current_seed(self) -> None:
         packets = build_request_packets(
             self.policy,
             self.engine_state,
@@ -623,7 +621,10 @@ class HypothesisModelDrafterTests(unittest.TestCase):
         self.assertEqual("typed_evidence", packet["lane"])
         self.assertTrue(packet["input_provenance_bound"])
         self.assertEqual("HGS-3266E42A729C", packet["seed_id"])
-        self.assertEqual([], packet["existing_proposal_ids"])
+        self.assertEqual(
+            ["HGP-M16-SOLVER-SLOPE-002"],
+            packet["existing_proposal_ids"],
+        )
         self.assertTrue(packet["allowed_evidence_claim_ids"])
         self.assertTrue(packet["evidence_manifest"])
         self.assertEqual("none", packet["authorization"])

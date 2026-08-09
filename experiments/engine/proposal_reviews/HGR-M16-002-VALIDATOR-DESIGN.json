@@ -1,0 +1,33 @@
+{
+  "schema_version": "0.1",
+  "review_id": "HGR-M16-002-VALIDATOR-DESIGN",
+  "proposal_id": "HGP-M16-SOLVER-SLOPE-002",
+  "proposal_sha256": "2a6a66ec80240380458d670c354e1131ea5d728e8dd55545e7b02e01eb887b07",
+  "reviewed_on": "2026-08-09",
+  "reviewer_id": "keyai-task029-validator-review",
+  "reviewer_role": "validator_design",
+  "source_independence": "shared_context",
+  "reviewer_provenance": {
+    "family": "shared-context-agentic-review",
+    "version": "2026-08-09",
+    "session_id": "task029-validator-review-20260809-v1",
+    "context_sha256": "49bf7a754923421c7426fec46369019c5a9c20b4c6f5b8e94bc2a0db7dec6296",
+    "prompt_sha256": "9aff44a9dfa8bb5bbad15fc7086aae662b3fea4a40e36a4aa61d14c68ce587ef",
+    "blind_to_other_reviews": true
+  },
+  "verdict": "block",
+  "blocker_codes": [
+    "missing_cost_changing_bridge",
+    "missing_exact_mechanism",
+    "missing_independent_validator_plan"
+  ],
+  "summary": "The validator note states useful future replay requirements, primitive-record obligations, and failure conditions, but the frozen package remains design-only and supplies no executable independently authored validator, implemented raw-artifact schema, fault-injection attestation, or path/artifact/source-independence evidence. TASK-027 establishes that the current at-most-24-bit regime is inapplicable and cannot authorize a solver run; TASK-028 supplies a source-faithful system map and a derived sound acceptance filter but leaves complete recovery, exceptional-locus orchestration, generalized-root cost, rank, sparse linear algebra, and the common-unit baseline unresolved. Consequently an independent validator cannot yet recompute a decisive claim or certify relation/recovery equivalence, so the proposal is blocked without authorizing compute or retention.",
+  "evidence_inputs": [
+    "experiments/engine/proposals/HGP-M16-SOLVER-SLOPE-002.json",
+    "experiments/engine/pkc_smooth_m16_solver_slope_v2/PROPOSAL_CONTEXT.md",
+    "experiments/engine/pkc_smooth_m16_solver_slope_v2/MECHANISM_DESIGN.md",
+    "experiments/engine/pkc_smooth_m16_solver_slope_v2/VALIDATOR_DESIGN.md",
+    "experiments/engine/pkc_smooth_m16_regime_assurance_desk/artifact.json",
+    "experiments/engine/pkc_smooth_m16_source_faithful_mechanism/artifact.json"
+  ]
+}

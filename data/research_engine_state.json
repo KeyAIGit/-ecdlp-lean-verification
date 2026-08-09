@@ -60,7 +60,7 @@
     "outcome_events": 9,
     "candidate_proposals": 6,
     "generated_hypothesis_seeds": 2,
-    "submitted_hypothesis_proposals": 1,
+    "submitted_hypothesis_proposals": 2,
     "quality_cleared_hypothesis_proposals": 0,
     "retained_hypothesis_drafts": 0,
     "typed_evidence_cells": 8,
@@ -1261,8 +1261,8 @@
       "generation_policy_sha256": "a753b9991261ffbd684da4a7d132cbbaba5b94e1a568f6776192bd5f19293880",
       "typed_evidence_state_sha256": "c63f2355626f141d01b8f228bfe49df80af984e5d76cd6be0821514402d33c3a",
       "research_claim_state_sha256": "24ba13ca696b3affdd28acc7058a2d921e244dc37a39d39593c260eedf78bd38",
-      "proposals_sha256": "581cf3109a9f2bfdaeacf895664e816ab22f0f47a72140385dab1c69d04d0a34",
-      "reviews_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      "proposals_sha256": "9fdfac0dc49a6879b09eda5cf3e0d178be26ff9bebf81385195a8150d07cf1b9",
+      "reviews_sha256": "c192d5d3b290b6fad50d600c14bc194af150005cff6595e2b65330f49ff37b12"
     },
     "trust_boundary": {
       "creative_output": "A generated seed or proposer-authored mechanism is untrusted research input. It may be novel, mistaken, duplicated, or merely a renamed representation.",
@@ -1272,8 +1272,8 @@
     },
     "counts": {
       "generated_seeds": 2,
-      "submitted_proposals": 1,
-      "adversarial_reviews": 0,
+      "submitted_proposals": 2,
+      "adversarial_reviews": 5,
       "quality_cleared_proposals": 0,
       "retained_hypothesis_drafts": 0,
       "typed_evidence_cells": 8,
@@ -1724,18 +1724,78 @@
         "review_independence": "not_reviewed",
         "blockers": [
           "adversarial_review_incomplete",
+          "duplicate_mechanism_signature",
+          "duplicate_or_reencoding",
           "missing_exact_mechanism",
           "review_independence_unestablished",
+          "semantic_reencoding_risk",
           "stale_seed_snapshot"
+        ],
+        "disposition": "hard_rejected",
+        "authorization": "none"
+      },
+      {
+        "proposal_id": "HGP-M16-SOLVER-SLOPE-002",
+        "seed_id": "HGS-3266E42A729C",
+        "cell_id": "CELL-M-PKC-SMOOTH-M16",
+        "route_id": "R-PETIT-COMPOSED-MAPS",
+        "title": "HYP-M16-SOLVER-SLOPE-001: current-seed desk abstention for an unchanged mechanism",
+        "proposal_sha256": "2a6a66ec80240380458d670c354e1131ea5d728e8dd55545e7b02e01eb887b07",
+        "seed_resolution": "current_scoped_identity",
+        "review_roles_present": [
+          "algebra",
+          "cost_model",
+          "cryptanalysis_skeptic",
+          "prior_art",
+          "validator_design"
+        ],
+        "review_independence": "cross_family_attested_not_mechanically_proved",
+        "blockers": [
+          "adversarial_review_blocked",
+          "duplicate_mechanism_signature",
+          "duplicate_or_reencoding",
+          "hidden_or_unpriced_precomputation",
+          "missing_cost_changing_bridge",
+          "missing_exact_mechanism",
+          "missing_independent_validator_plan",
+          "novelty_scope_overclaimed",
+          "proxy_not_decisive",
+          "review_independence_unestablished",
+          "semantic_reencoding_risk"
         ],
         "disposition": "hard_rejected",
         "authorization": "none"
       }
     ],
     "collision_groups": {
-      "premise_fingerprints": [],
-      "mechanism_signatures": [],
-      "near_duplicate_pairs": []
+      "premise_fingerprints": [
+        {
+          "fingerprint": "7469c8d28e54bdc746d34d495c7e2c8c210dc906f09954595dff79580c0637ec",
+          "proposal_ids": [
+            "HGP-M16-SOLVER-SLOPE-001",
+            "HGP-M16-SOLVER-SLOPE-002"
+          ]
+        }
+      ],
+      "mechanism_signatures": [
+        {
+          "signature": "d4da48358d6f555fd4e4058272008c9f46fc84bfebd92867fa7f5cb51413defc",
+          "proposal_ids": [
+            "HGP-M16-SOLVER-SLOPE-001",
+            "HGP-M16-SOLVER-SLOPE-002"
+          ]
+        }
+      ],
+      "near_duplicate_pairs": [
+        {
+          "proposal_ids": [
+            "HGP-M16-SOLVER-SLOPE-001",
+            "HGP-M16-SOLVER-SLOPE-002"
+          ],
+          "lexical_similarity": 1.0,
+          "disposition": "semantic_reencoding_review_required"
+        }
+      ]
     },
     "portfolio_overflow": {
       "triggered": false,

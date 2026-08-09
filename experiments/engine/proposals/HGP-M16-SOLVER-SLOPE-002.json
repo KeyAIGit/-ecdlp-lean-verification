@@ -1,0 +1,394 @@
+{
+  "schema_version": "0.1",
+  "proposal_id": "HGP-M16-SOLVER-SLOPE-002",
+  "seed_id": "HGS-3266E42A729C",
+  "cell_id": "CELL-M-PKC-SMOOTH-M16",
+  "typed_evidence_digest": "602d93c115099c81f02b8a8ac531e33036e6988d5d3ddf2ec257b1118e5cd75d",
+  "created_on": "2026-08-09",
+  "proposer_id": "keyai-task029-proposal-cycle",
+  "route_id": "R-PETIT-COMPOSED-MAPS",
+  "threat_model": "classical-single-target-plain",
+  "title": "HYP-M16-SOLVER-SLOPE-001: current-seed desk abstention for an unchanged mechanism",
+  "hypothesis_statement": "Conditional on a future exact source-faithful recovery theorem, a safe regime with identified relation yield, and a complete common-unit cost bridge, the published arity-16 composed-subgroup relation system could be tested for a causal reduction in generalized-root solving work that survives rank, sparse linear algebra, and equal-success single-target accounting. TASK-028 supplies the exact input and a sound acceptance filter but none of those missing conditions, so this proposal requests no compute and makes no scaling claim.",
+  "new_premise": "With one fixed synthetic DLP target Q and fresh committed relation points R_j = [alpha_j]G + [beta_j]Q, the source-composed arity-16 membership circuit retains a growing sparse-elimination advantage in expected work per attempted system over separated literal, multiplicative-coset, root-histogram, and randomized-DAG controls; after exact signed recovery and rank, that advantage also survives complete single-target cost.",
+  "premise_counterfactual": "If the unchanged composed-subgroup mechanism has no new cost-changing premise, then duplicate screening rejects this submission; independently, if pointwise circuit equivalence does not transfer solver complexity, direct-system recovery remains incomplete, or complete work retains square-root growth, the proposed slope advantage has no supported cost bridge.",
+  "premise_fingerprint": "7469c8d28e54bdc746d34d495c7e2c8c210dc906f09954595dff79580c0637ec",
+  "mechanism_identity": {
+    "transformation_class": "source-faithful-m16-composed-membership-s3",
+    "information_source_class": "multiplicative-subgroup-membership-circuit",
+    "target_semantics_class": "fixed-q-varying-committed-relation-points",
+    "recovery_class": "signed-base-field-relation-replay",
+    "changed_cost_term": "per-attempt-solver-and-complete-single-target-slope",
+    "precomputation_class": "fully-priced-attack-setup-family-search-separated",
+    "amortization_class": "none-single-target"
+  },
+  "mechanism_signature": "d4da48358d6f555fd4e4058272008c9f46fc84bfebd92867fa7f5cb51413defc",
+  "mechanism_contract": {
+    "source_objects": [
+      "direct source System (4) with 64 factor coordinates and 65 equation members at arity sixteen",
+      "literal composed map L4 o L3 o L2 o L1 = 1 - x^564522",
+      "one fixed synthetic Q with fresh committed alpha_j, beta_j, and nonidentity R_j"
+    ],
+    "target_objects": [
+      "independently verified signed relation rows retaining alpha_j and beta_j",
+      "a complete single-target cost ledger through recovery, rank, and sparse linear algebra"
+    ],
+    "transformation": {
+      "kind": "source_faithful_composed_membership_recursive_s3",
+      "exact_map": "Fix Q = [z]G. For attempt j commit alpha_j, beta_j and nonidentity R_j = [alpha_j]G + [beta_j]Q. Constrain each of sixteen leaves by the literal four-stage map x^2, x^3, x^7, 1-x^13441 and couple their first coordinates through target-specialized S17. Accept only an independently checked signed relation, normalize the target coefficient to -1, retain the row (c_1j,...,c_Uj,-beta_j) with right-hand side alpha_j, replay rank, and verify [z]G = Q.",
+      "domain": "A future separately authorized safe synthetic cofactor-one prime-order toy family, exact source-chain systems, fixed Q, fresh committed relation points, a complete exceptional policy, exact yield and recovery accounting, and matched controls. The current at-most-24-bit policy scope is desk-only for M16 exponent inference.",
+      "codomain": "Validated signed relation and rejection records plus a complete common-unit setup, solving, recovery, rank, linear-algebra, and verification ledger. No such records or ledger are produced here."
+    },
+    "fixed_target_semantics": {
+      "target_slot": "Q is the single fixed synthetic DLP target; each source system contains the attempt-specific nonidentity relation point R_j.",
+      "target_action": "Commit Q once and commit alpha_j, beta_j, and R_j before solver randomness. Classify R_j = O outside the affine specialization. Preserve Q and the coefficient stream across within-curve controls; cross-family controls preserve scalar semantics but use their own curve points.",
+      "same_target_preserved": true
+    },
+    "exceptional_locus": {
+      "definition": "Identity relation targets, infinity slots, invalid projective pairs, failed base-field lifts, extension-only intermediates, repeated or tangent fibers, conditional regular-locus failures, duplicate relations, and rank-deficient rows.",
+      "treatment": "unresolved"
+    },
+    "orbit_stabilizer": {
+      "acting_group": "The exact order-three GLV coordinate action is available only as a constant-factor structural ablation.",
+      "stabilizer": "TASK-027 records exact public-parameter orbit counts, but no quotient is treated as a factor-log column without additional relation semantics.",
+      "orbit_size_law": "Orbit size is three and independent of the field-size exponent, so it cannot supply the proposed cost-changing lever."
+    },
+    "relation_semantics": {
+      "source_relation": "A candidate is retained only when independently recovered signed factor-base points and the committed R_j satisfy sum_i epsilon_i P_i + epsilon_R R_j = O; normalize the complete relation to target coefficient -1.",
+      "target_relation": "The normalized row verifies sum_i c_ij*lambda_i - beta_j*z = alpha_j modulo q, rank is recomputed over Z/qZ, and a recovered z must satisfy [z]G = Q.",
+      "equivalence_status": "specified_unproved"
+    },
+    "recovery_map": {
+      "forward": "Record the literal 64-coordinate and 65-equation source system, committed target data, solver trace, every raw assignment, field lifts, signs, multiplicities, exceptional dispositions, and cost receipts.",
+      "inverse": "Independently lift every finite leaf, replay signs and multiplicities, require the target-bound group relation, normalize target sign, retain alpha_j and beta_j, aggregate duplicates, verify the row, replay rank and sparse linear algebra, and verify [z]G = Q.",
+      "excluded_components": [
+        "identity targets outside the affine specialization",
+        "invalid or extension-only assignments",
+        "unrecovered exceptional components",
+        "candidates failing independent group replay"
+      ],
+      "spurious_solution_policy": "Reject and classify every assignment that fails the literal source equations, base-field lift, exceptional policy, signed target-bound group replay, or row verification. Passing this filter proves soundness only; complete direct-System-(4) recovery remains unproved."
+    },
+    "implementation_identity": {
+      "implementation_path": "experiments/engine/pkc_smooth_m16_solver_slope_v2/MECHANISM_DESIGN.md",
+      "sha256": "b7ffccc9de109cd369aa410c1e2aa8f5d652345f3a4180a544a105ce71db093b"
+    },
+    "cost_changing_mechanism": {
+      "quantity": "Expected complete equal-success single-target primitive-operation work, with the unresolved generalized-root term separated from recovery, rank, and sparse linear algebra.",
+      "causal_bridge": "The unchanged conjecture attributes a growing sparse-elimination advantage to the composed subgroup presentation. TASK-028 proves neither ideal equivalence for a quadratic circuit nor a generalized-root cost bound, so the causal bridge is only specified and is not evidence-backed.",
+      "growth_law": "A future distinct proposal would need exact control-matched upper bounds below 7/16 for per-attempt work and below 1/2 for complete work. No eligible ladder or bound is supplied here.",
+      "non_orbit_lever": "Any claimed lever would have to arise from the multiplicative-subgroup representation after complete recovery, not the finite GLV orbit."
+    },
+    "source_ids": [
+      "amadori_pintore_sala2018",
+      "petit_kosters_messeng2016"
+    ],
+    "assurance_bindings": {
+      "relation_equivalence": {
+        "assurance": "specified_unproved",
+        "evidence_id": null,
+        "claim_sha256": null
+      },
+      "exceptional_locus": {
+        "assurance": "specified_unproved",
+        "evidence_id": null,
+        "claim_sha256": null
+      },
+      "recovery_map": {
+        "assurance": "specified_unproved",
+        "evidence_id": null,
+        "claim_sha256": null
+      },
+      "cost_changing_bridge": {
+        "assurance": "specified_unproved",
+        "evidence_id": null,
+        "claim_sha256": null
+      }
+    }
+  },
+  "prediction_contract": {
+    "metric": {
+      "name": "unavailable_complete_cost_slope_margin",
+      "unit": "conditional slope margin in log2 primitive-operation work per size bit",
+      "recomputation": "No current metric may be computed. A future authorized proposal would report 7/16-U95(s_attempt), 1/2-U95(s_total), and -U95(s_source-s_control) for every frozen control only after exact direct-system recovery, an identified source regime, immutable implementations, and a common operation ledger exist."
+    },
+    "matched_baseline": {
+      "baseline_id": "UNIMPLEMENTED-DESIGN-ONLY-source-system4-literal-chain-and-matched-plain-controls",
+      "implementation_digest": "3fa4dda90613fa7440874b09bbe356ce4c47516d94e282799b76ecaeeb409668",
+      "matching_variables": [
+        "within_curve_p_E_q_G_Q",
+        "committed_alpha_beta_R_stream",
+        "literal_source_system_identity",
+        "solver_and_monomial_order",
+        "equal_success_probability",
+        "primitive_operation_accounting",
+        "resource_cap"
+      ]
+    },
+    "tested_sizes": [
+      12,
+      15,
+      18,
+      21,
+      24
+    ],
+    "expected_direction": "increase",
+    "minimum_material_effect": 0.015625,
+    "decision_threshold": {
+      "operator": "ge",
+      "value": 0.015625
+    },
+    "stop_rule": {
+      "condition": "Non-executable sentinel: stop at proposal review with zero compute. The listed at-most-24-bit sizes are inapplicable to M16 exponent inference. Any experiment requires a distinct dated proposal, regime, implementation set, validator, and immutable cap.",
+      "maximum_instances": 1
+    },
+    "falsifying_outcomes": [
+      "the mechanism duplicates an existing structured identity without a new causal premise",
+      "pointwise circuit equivalence does not provide an exact solver-cost bridge",
+      "complete recovery, rank, or sparse linear algebra erases any local representation effect",
+      "complete equal-success work retains square-root growth",
+      "no policy-compliant regime can identify the claimed M16 slope"
+    ]
+  },
+  "cost_contract": {
+    "online": {
+      "cpu_hours": 0,
+      "gpu_hours": 0
+    },
+    "offline": {
+      "cpu_hours": 0,
+      "gpu_hours": 0
+    },
+    "wall_time_hours": 0,
+    "peak_memory_gb": 0,
+    "storage_gb": 0,
+    "workers": 1,
+    "money_usd": 0,
+    "implementation_hours": 0,
+    "reviewer_hours": 0,
+    "preprocessing": {
+      "included_in_totals": true,
+      "description": "Any future adversarial ledger must charge factor-base construction, literal-map representation, solver preprocessing, every attempted system including failures and timeouts, complete recovery, rank, sparse linear algebra, and verification after public p,E,G,Q are fixed. This proposal authorizes none of that work."
+    },
+    "amortization": {
+      "class": "none_single_target",
+      "target_count": 1,
+      "per_target_cost_included": true
+    },
+    "success_probability": 0.5,
+    "shared_setup": {
+      "setup_id": null,
+      "hours": 0,
+      "expected_reuse": 1
+    }
+  },
+  "validator_contract": {
+    "status": "design_only_unverified",
+    "raw_artifact_format": {
+      "media_type": "application/json",
+      "schema_id": "unimplemented-pkc-m16-direct-system4-complete-cost-v2"
+    },
+    "recomputed_decisive_claim": {
+      "claim_id": "unimplemented-m16-direct-system4-recovery-and-complete-cost",
+      "procedure": "A future validator would reconstruct the literal 64-coordinate, 65-equation source systems, fixed-Q and varying-R_j commitments, all exceptional and identity branches, signed target-bound recovery, rows, rank, sparse linear algebra, candidate z verification, complete operation receipts, matched controls, and conditional slope margins from primitive records."
+    },
+    "implementation": {
+      "path": "experiments/engine/pkc_smooth_m16_solver_slope_v2/VALIDATOR_DESIGN.md",
+      "sha256": "d236505e1d28ad3f4e9c4547de1ecfd980eb7e2019515c998576d9dc6182b3c1"
+    },
+    "prohibited_producer_fields": [
+      "claimed_outcome",
+      "claimed_exponent",
+      "claimed_relation",
+      "claimed_rank",
+      "claimed_speedup"
+    ],
+    "independence": {
+      "path_independent": false,
+      "artifact_independent": false,
+      "source_independent": false,
+      "producer_identity": "unimplemented-m16-direct-system4-producer",
+      "validator_identity": "unimplemented-independent-m16-direct-system4-validator",
+      "same_model": null,
+      "same_session": null,
+      "shared_context": null
+    },
+    "independence_evidence": {
+      "path": {
+        "status": "planned",
+        "evidence_id": null,
+        "sha256": null
+      },
+      "artifact": {
+        "status": "planned",
+        "evidence_id": null,
+        "sha256": null
+      },
+      "source": {
+        "status": "planned",
+        "evidence_id": null,
+        "sha256": null
+      }
+    },
+    "source_review_requirements": [
+      "one digest-bound cryptanalysis-skeptic review independent of the proposer process",
+      "one digest-bound prior-art review independent of the proposer process",
+      "one independent validator fault-injection attestation before any execution"
+    ]
+  },
+  "novelty_scope": {
+    "new_to_repository": false,
+    "new_to_reviewed_corpus": false,
+    "global_novelty": "unverified",
+    "rationale": "The mechanism identity and premise already occur in immutable proposal HGP-M16-SOLVER-SLOPE-001 and overlap the cited literature. TASK-028 updates source fidelity and the sound-acceptance boundary but supplies no new cost-changing mechanism. Duplicate and novelty rejection are therefore appropriate."
+  },
+  "nearest_prior_art": [
+    {
+      "source_id": "petit_kosters_messeng2016",
+      "primary": true,
+      "reference": "Petit, Kosters, and Messeng, Algebraic Approaches for the Elliptic Curve Discrete Logarithm Problem over Prime Fields, PKC 2016",
+      "locator": "Algorithm 1 and Sections 3.1-3.3, especially System (4), the p-minus-one map, and the partial cost formula",
+      "overlap": "The source defines the composed factor base, fixed DLP target with fresh sampled relation points, exact direct relation-system shape, heuristic relation yield, and partial cost formula used here.",
+      "difference": "This repository adds only a target-bound sound acceptance filter and explicit complete-cost requirements. It does not add the generalized-root algorithm, recovery-completeness theorem, or cost-changing bound left open by the source.",
+      "evidence_file": "data/source_claim_extracts/petit_kosters_messeng2016.json"
+    },
+    {
+      "source_id": "amadori_pintore_sala2018",
+      "primary": true,
+      "reference": "Amadori, Pintore, and Sala, On the Discrete Logarithm Problem for Prime-Field Elliptic Curves, 2018",
+      "locator": "Sections 3-4, including the unproved comparison of system-solving terms",
+      "overlap": "The paper studies a related prime-field summation-polynomial pipeline and reports small toy systems while leaving the decisive single-system cost poorly understood.",
+      "difference": "The current submission refuses to transfer a toy or representation observation into a complete M16 slope claim without exact direct-system recovery and equal-success cost accounting.",
+      "evidence_file": "data/source_claim_extracts/amadori_pintore_sala2018.json"
+    }
+  ],
+  "exact_mechanism": {
+    "map": "For sixteen leaves apply the literal source chain x^2, x^3, x^7, 1-x^13441 and the target-specialized direct S17 equation for a committed nonidentity R_j = [alpha_j]G + [beta_j]Q; independently verify and normalize a signed target-bound relation before constructing a row for rank and z recovery.",
+    "domain": "A future safe synthetic cofactor-one prime-order toy family with fixed Q, varying committed nonidentity R_j, literal source systems, complete exceptional semantics, exact yield and recovery, matched controls, and no production target. No such executable domain is frozen here.",
+    "codomain": "Independently verified relation, rank, linear-algebra, and candidate-key records plus a complete equal-success single-target work ledger. No output is produced in this cycle.",
+    "relation_semantics": "Normalize an independently checked relation sum_i epsilon_i P_i + epsilon_R R_j = O to target coefficient -1, yielding sum_i c_ij*lambda_i - beta_j*z = alpha_j modulo q. Polynomial satisfaction without group replay is rejected.",
+    "fixed_target_semantics": "Q is fixed once; alpha_j, beta_j, and R_j are committed per attempt before solver randomness. Identity R_j is outside the displayed affine system and requires a separate frozen disposition.",
+    "exceptional_locus": "Existing formal work classifies a recursive projective presentation and proves conditional affine reductions, but direct-System-(4) recovery completeness, regular-locus coverage, and its cost remain unproved.",
+    "recovery_map": "Lift leaves, preserve signs and multiplicities, independently verify the target-bound relation, normalize the row, aggregate duplicates, retain alpha_j and beta_j, replay rank and sparse linear algebra, and verify [z]G = Q. This complete inverse is specified but not proved or implemented.",
+    "implementation_identity": "The mechanism digest binds a design note only. No producer, direct-System-(4) solver, baseline executable, input generator, recovery implementation, or runtime validator exists; the authorized compute budget is zero."
+  },
+  "non_generic_information_source": "The proposed mechanism uses explicit prime-field coordinates, the multiplicative-subgroup chain defining 1-x^564522, and the target-specialized Semaev polynomial system, none of which is available through a classical black-box group oracle.",
+  "null_model": "Once literal-chain identity, root and lift counts, sparse topology, ordering, coefficient streams, timeouts, recovery, rank, and complete single-target work are controlled, the composed presentation has no uniquely growing advantage over matched plain representations or generic square-root work.",
+  "competing_mechanism": "Any local effect may arise from representation size, monomial ordering, generic sparse-DAG topology, root/lift histogram, repetition, conditional regular-locus filtering, or the finite GLV orbit rather than a cost-changing multiplicative-subgroup mechanism.",
+  "cost_bridge": {
+    "baseline": "The complete comparison would use Pollard rho at the same group order, fixed Q, 50 percent end-to-end success, and one frozen primitive-operation unit, plus matched plain relation representations sharing all feasible within-curve inputs.",
+    "changed_term": "The only source-grounded symbolic expression is P(p,16)+(16!*p/D^15)T(E,16,L)+D^omega. TASK-028 leaves T, complete recovery, rank, sparse linear algebra, and common-unit total work unresolved, so no changed complete-cost term is established.",
+    "online_cost": "A future ledger must include every attempted system, failure and timeout, direct-system solving, base-field recovery and rejection, signed row normalization, rank, sparse linear algebra, candidate z recovery, and [z]G = Q verification. No online work is authorized here.",
+    "offline_cost": "A future single-target ledger must include factor-base construction, the literal four-stage map representation, polynomial and solver preprocessing, reusable matrices, exceptional-branch orchestration, recovery tables, and validator setup after public p,E,G,Q are fixed.",
+    "memory_cost": "A future ledger must record polynomial and monomial inventories, matrix rows, columns, nonzeros and fill, solver and sparse-linear-algebra peak memory, retained relations, validator memory, and storage. No bound is currently known.",
+    "parallelism": "Any successor must report aggregate worker work and critical-path time under an immutable worker cap and may claim no free parallel speedup.",
+    "precomputation": "All attack setup after the public curve and fixed Q are known must be hashed and charged in full for the single target; experimental family search must be reported separately and cannot hide adversarial work.",
+    "amortization_scope": "No multi-target, wallet, nonce, preprocessing-oracle, or reusable-setup amortization is credited; target_count remains one.",
+    "scaling_claim": "No scaling claim is made. The at-most-24-bit regime is inapplicable to M16 exponent inference, and no exact bound below p^(7/16) per attempt or p^(1/2) end to end is available."
+  },
+  "falsifiable_prediction": "Only a future distinct and authorized proposal could test whether independently replayed complete work has an upper slope below one half and a source-minus-every-control slope below zero in an identified M16 regime. This submission predicts no executable outcome and instead exposes duplicate identity and missing cost assurance as death criteria.",
+  "matched_baseline": "A future comparison must share within each curve block p,E,q,G,Q, the full committed alpha_j,beta_j,R_j stream, literal source-system identity where applicable, solver order and seed, timeout rules, primitive-operation accounting, success probability, workers, and immutable cap. No matched executable baseline exists here.",
+  "stop_condition": "Stop at digest-bound proposal review with zero compute. Retain nothing if duplicate identity, false novelty, specified-unproved relation or recovery assurance, absent generalized-root bound, or the inapplicable policy regime remains. A successor requires a new dated decision and a genuinely new premise.",
+  "outcome_matrix": {
+    "supported": "Unavailable in this cycle. A future authorized toy-only successor could use SUPPORTED_TOY_ONLY only after exact replay, complete recovery, and all preregistered causal and complete-cost margins pass.",
+    "falsified": "A future adequately powered equivalence test may use FALSIFIED/KNOWN_REPRESENTATION_EFFECT if matched controls reproduce the effect; proposal-level duplicate rejection is not an empirical falsification.",
+    "bounded_negative": "Use at desk review for the scoped proposal only if it supplies no new premise or exact complete-cost bridge; do not infer that the entire M16 mathematical route is false.",
+    "inapplicable": "The current at-most-24-bit execution regime is inapplicable to M16 exponent inference. This does not classify a larger unfrozen regime or the route as a whole.",
+    "inconclusive": "Use for any otherwise valid future authorized result whose exact intervals, recovery, rank, or causal controls remain underpowered or incomplete.",
+    "resource_exhausted": "Unavailable without a separate dated authorization and immutable cap; this proposal has zero compute."
+  },
+  "validator_plan": {
+    "decisive_claim": "Independently recompute direct-System-(4) source identity, fixed-Q and varying-R_j semantics, complete signed recovery, rank, sparse linear algebra, candidate z, full common-unit work, and every causal-control comparison.",
+    "raw_artifacts": "Future primitive records must include curves, Q, alpha_j,beta_j,R_j commitments, literal source systems, exceptional branches, solver traces including failures and timeouts, raw assignments, lifts, signs, rows, rank and linear-algebra transcripts, candidate verification, operation vectors, memory, storage, and hashes.",
+    "independent_method": "Use separately authored field, curve, recovery, matrix, and accounting code without importing producer transformations or summaries; treat all solver output as adversarial. No independent implementation exists here.",
+    "failure_labels": "Precedence for a future run: INVALID_IMPLEMENTATION with no scientific outcome; INAPPLICABLE; RESOURCE_EXHAUSTED; INCONCLUSIVE/ARTIFACT; FALSIFIED/KNOWN_REPRESENTATION_EFFECT; SUPPORTED/SUPPORTED_TOY_ONLY; BOUNDED_NEGATIVE; otherwise INCONCLUSIVE."
+  },
+  "toy_scope": {
+    "curve_family": "synthetic cofactor-one prime-order toy curves at no more than 24 bits for desk applicability and method design only; this scope cannot support M16 exponent inference and authorizes no run",
+    "max_field_bits": 24,
+    "forbidden_targets": [
+      "secp256k1",
+      "wallet keys",
+      "third-party public keys",
+      "real assets"
+    ]
+  },
+  "claim_boundary": "This is a current-seed, design-only, zero-compute desk abstention. It records the exact TASK-028 input and sound-acceptance boundary, admits that the mechanism and premise duplicate an immutable submission, and supplies no complete recovery theorem, generalized-root bound, solver result, relation-yield or rank result, scaling law, complexity improvement, target computation, route move, retention, authorization, or novelty claim.",
+  "evidence_inputs": [
+    "data/source_claim_extracts/amadori_pintore_sala2018.json",
+    "data/source_claim_extracts/petit_kosters_messeng2016.json",
+    "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json",
+    "experiments/engine/pkc_smooth_m16_fixed_target_yield/RESULTS.md",
+    "experiments/engine/pkc_smooth_m16_infinity_propagation/artifact.json",
+    "experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json",
+    "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json"
+  ],
+  "evidence_manifest": [
+    {
+      "path": "data/source_claim_extracts/amadori_pintore_sala2018.json",
+      "sha256": "2be52f00616042670952c70186f2d3f5de0bb70612fb1ddb481403765f19cf1a",
+      "relation": "bounds",
+      "locator": "Primary-source extract for the related one-system variant, its unproved solver-term comparison, toy-size boundary, and non-sub-square-root conclusion.",
+      "source_id": "amadori_pintore_sala2018",
+      "primary": true
+    },
+    {
+      "path": "data/source_claim_extracts/petit_kosters_messeng2016.json",
+      "sha256": "f8839553f6935ed5cd331369cc13d91124373750c757b28eeca3ee773835f14f",
+      "relation": "supports",
+      "locator": "Protected-anchor primary-source extract for the smooth-subgroup factor base, heuristic relation yield, balance condition, and explicit complete-cost boundary.",
+      "source_id": "petit_kosters_messeng2016",
+      "primary": true
+    },
+    {
+      "path": "experiments/engine/pkc_smooth_m16_exceptional_fibers/artifact.json",
+      "sha256": "578db732807a452e26de03dcd338d62c25a7d90490a62bbf427b1f96c3a869cf",
+      "relation": "bounds",
+      "locator": "Protected-anchor recovery dispositions, base-field lift types, local transitions, and exceptional-fiber semantics that a future implementation must preserve.",
+      "source_id": "petit_kosters_messeng2016",
+      "primary": false
+    },
+    {
+      "path": "experiments/engine/pkc_smooth_m16_fixed_target_yield/RESULTS.md",
+      "sha256": "f7562cf4c6010b71ab35046b6682850921313e3721197f51a50b0ea1c050fbaa",
+      "relation": "bounds",
+      "locator": "Protected-anchor TASK-026 terminal known-local-simplification result and boundary that its residual sampler is not a source-faithful factor-base or solver experiment.",
+      "source_id": "petit_kosters_messeng2016",
+      "primary": false
+    },
+    {
+      "path": "experiments/engine/pkc_smooth_m16_infinity_propagation/artifact.json",
+      "sha256": "9330603ba1f0af9ee4902c263200709e2ec6f8c50d8d7eaab3b55bcba78e388f",
+      "relation": "bounds",
+      "locator": "Kernel-bound recursive-projective infinity propagation and conditional affine reduction, including explicit nonclaims for genericity, recovery, rank, solving, and complete cost.",
+      "source_id": "petit_kosters_messeng2016",
+      "primary": false
+    },
+    {
+      "path": "experiments/engine/pkc_smooth_m16_semantic_bridge/artifact.json",
+      "sha256": "963eea60097807ae0aa66a5d881b0c34bf0497ade53ed4d37d38861a73887c19",
+      "relation": "bounds",
+      "locator": "Protected-anchor base-field lift, sign, identity-prefix, extension-only, and target-bound recovery obligations for the recursive relation presentation.",
+      "source_id": "petit_kosters_messeng2016",
+      "primary": false
+    },
+    {
+      "path": "experiments/engine/pkc_smooth_m16_symbolic_desk/artifact.json",
+      "sha256": "59596c3c59f5389c49742ba4a26d500445557ee6398d6aaad63c7995a93242f7",
+      "relation": "supports",
+      "locator": "Protected-anchor exact public-parameter representation counts, membership circuit, usable-lift formula, and warnings against treating representation counts as solver bounds.",
+      "source_id": "petit_kosters_messeng2016",
+      "primary": false
+    }
+  ],
+  "provenance": {
+    "generation_method": "hybrid",
+    "generator": "keyai-governed-research-process",
+    "generator_family": "keyai-desk-proposal-cycle",
+    "generator_version": "task-029-v1",
+    "session_id": "task-029-current-seed-proposal-20260809",
+    "context_sha256": "ca2772a5b286432111f8eefcda2dcb5ab0c10660b3684cbf18ec6f671508b688",
+    "source_commit": "bc2f04a71d168b34bce3d68c1d7cef33b4af9e4e",
+    "prompt_sha256": "65afebf21f73061ce2eee547a9cd74a5f20aa313f827419cdf7fdad3cbc65dac"
+  }
+}

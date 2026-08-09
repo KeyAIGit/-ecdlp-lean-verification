@@ -1,0 +1,36 @@
+{
+  "schema_version": "0.1",
+  "review_id": "HGR-M16-002-PRIOR-ART",
+  "proposal_id": "HGP-M16-SOLVER-SLOPE-002",
+  "proposal_sha256": "2a6a66ec80240380458d670c354e1131ea5d728e8dd55545e7b02e01eb887b07",
+  "reviewed_on": "2026-08-09",
+  "reviewer_id": "keyai-task029-prior-art-review",
+  "reviewer_role": "prior_art",
+  "source_independence": "shared_context",
+  "reviewer_provenance": {
+    "family": "shared-context-agentic-review",
+    "version": "2026-08-09",
+    "session_id": "task029-hgr-m16-002-prior-art-20260809-b9c2e58b4905",
+    "context_sha256": "bbfed485f59088db3f033338d2bfa4f604893a309eb156b0ae12eaa2a7f3369f",
+    "prompt_sha256": "12a4b78215fcd5cfbedc7314ebf0ba55e93fff3a07f59f770fd916d29fe44082",
+    "blind_to_other_reviews": true
+  },
+  "verdict": "block",
+  "blocker_codes": [
+    "duplicate_or_reencoding",
+    "semantic_reencoding_risk",
+    "novelty_scope_overclaimed"
+  ],
+  "summary": "Block on prior art and novelty scope. The Petit-Kosters-Messeng source already supplies the multiplicative-subgroup composed map, fixed-Q relation sampling through R = aP + bQ, direct System (4), heuristic relation yield, and the partial cost expression while leaving the decisive generalized-root term open. The Amadori-Pintore-Sala source independently overlaps the one-system summation-polynomial relation strategy and likewise leaves its solver-term comparison unproved without a sub-square-root conclusion. TASK-027 adds an exact factor-base census and finite orbit counts; TASK-028 adds exact source specialization and a derived target-bound sound acceptance filter. Neither contribution changes the algorithmic mechanism, proves complete recovery, nor supplies a new cost-changing solver bound. The proposal and design also state that the mechanism identity is unchanged from HGP-M16-SOLVER-SLOPE-001 and that it is new to neither the repository nor the reviewed corpus. Its proposed sparse-elimination premise is therefore a duplicate or semantic re-encoding rather than a novel mechanism. The proposal truthfully disclaims global novelty, but it cannot satisfy the required repository/corpus novelty scope, so the policy blocker novelty_scope_overclaimed applies. Primary-source full-text extracts and precise locators are present; no missing-primary-source blocker is assigned.",
+  "evidence_inputs": [
+    "experiments/engine/proposals/HGP-M16-SOLVER-SLOPE-002.json",
+    "experiments/engine/pkc_smooth_m16_solver_slope_v2/MECHANISM_DESIGN.md",
+    "experiments/engine/pkc_smooth_m16_solver_slope_v2/VALIDATOR_DESIGN.md",
+    "experiments/engine/pkc_smooth_m16_solver_slope_v2/PROPOSAL_CONTEXT.md",
+    "data/source_claim_extracts/amadori_pintore_sala2018.json",
+    "data/source_claim_extracts/petit_kosters_messeng2016.json",
+    "data/source_claim_extracts/petit_kosters_messeng2016_task028.json",
+    "experiments/engine/pkc_smooth_m16_regime_assurance_desk/artifact.json",
+    "experiments/engine/pkc_smooth_m16_source_faithful_mechanism/artifact.json"
+  ]
+}

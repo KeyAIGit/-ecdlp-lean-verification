@@ -33,10 +33,14 @@ For the RH lane, read `domains/riemann-hypothesis/README.md` and
 Stage 0 audit until `RH-001` exits and route triage explicitly selects a
 successor.
 
-Current ECDLP decision: formulate and review, but do not execute,
-`HYP-M16-SOLVER-SLOPE-001`. The published M16 map and System (4) input are
-now specified, while generalized-root solving and complete equal-success cost
-remain unresolved. `TASK-026` completed once under
+Current ECDLP decision: `TASK-029` is terminal. Current-seed proposal
+`HGP-M16-SOLVER-SLOPE-002` was reviewed and hard rejected with zero quality
+clearance, zero retention, zero compute, no authorization, and no route effect.
+The operational queue returns to non-executable `TASK-008`
+maintenance/evidence intake; no new scientific execution is selected. The
+published M16 map and System (4) input remain specified, while generalized-root
+solving and complete equal-success cost remain unresolved. `TASK-026` completed
+once under
 `AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01`; independent replay recorded
 `REO-2026-07-31-001` with terminal
 `CLASSIFY_AS_KNOWN_LOCAL_SIMPLIFICATION`. The authorization is consumed and
@@ -44,8 +48,9 @@ permits no rerun. Its completed parent hypothesis is
 `HYP-M16-FIXED-TARGET-YIELD-001`.
 
 `TASK-010` is accepted at
-`85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. `TASK-008` remains the parked
-proposal-intake lane. TASK-025 itself created no authorization; the later
+`85f85d4ca0b9dba323bfdd05ce8750d6db4732ac`. `TASK-008` is the active
+non-executable maintenance/evidence-intake lane. TASK-025 itself created no
+authorization; the later
 HYP-SELECT-002 singleton was consumed by TASK-026.
 `R-PETIT-COMPOSED-MAPS` remains `open_parked`; `R-GLV-SEMAEV` is also
 unchanged and parked because the orbit-closed arm is only a matched
@@ -137,12 +142,19 @@ Current scientific activation order:
     separate handling. Complete direct-System-(4) recovery, generalized-root
     solving, rank, recovery distribution, sparse linear algebra, and complete
     equal-success cost remain unresolved.
-17. Only a source-grounded, non-executable `HYP-M16-SOLVER-SLOPE-001` draft for
-    current seed `HGS-3266E42A729C` may now be written and reviewed. Any solver,
-    exact-target work, route promotion,
-    different candidate, or follow-on experiment requires a new review and
-    separate dated authorization. A scoped blocker or abstention is correct if
-    no exact cost-changing proposal can be supplied.
+17. The only admitted successor after TASK-028 was formulation and review of a
+    source-grounded, non-executable `HYP-M16-SOLVER-SLOPE-001` draft for current
+    seed `HGS-3266E42A729C`. A scoped blocker or abstention was the required
+    result if no exact cost-changing proposal could be supplied.
+18. `TASK-029` is complete: proposal `HGP-M16-SOLVER-SLOPE-002`, canonical
+    SHA-256 `2a6a66ec80240380458d670c354e1131ea5d728e8dd55545e7b02e01eb887b07`,
+    was adversarially reviewed and hard rejected. Its mechanism and premise
+    duplicate the immutable historical submission; exact mechanism assurance,
+    the complete cost bridge, priced preprocessing, a decisive baseline, and
+    independent validator/review evidence remain missing. Quality clearance,
+    retention, compute, authorization, scientific outcome, route effect, and
+    promotion are all zero. The operational queue returns to `TASK-008`
+    maintenance/evidence intake with no new scientific execution selected.
 
 These entries freeze further engine-schema expansion by default. The consumed
 TASK-026 authorization permits no rerun, solver, route promotion, exact-target

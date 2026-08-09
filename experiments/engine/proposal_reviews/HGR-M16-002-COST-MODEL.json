@@ -1,0 +1,33 @@
+{
+  "schema_version": "0.1",
+  "review_id": "HGR-M16-002-COST-MODEL",
+  "proposal_id": "HGP-M16-SOLVER-SLOPE-002",
+  "proposal_sha256": "2a6a66ec80240380458d670c354e1131ea5d728e8dd55545e7b02e01eb887b07",
+  "reviewed_on": "2026-08-09",
+  "reviewer_id": "keyai-task029-cost-review",
+  "reviewer_role": "cost_model",
+  "source_independence": "shared_context",
+  "reviewer_provenance": {
+    "family": "shared-context-agentic-review",
+    "version": "2026-08-09",
+    "session_id": "task029-cost-model-blind-20260809-6f9c2d17",
+    "context_sha256": "31cdb166704e3a6ca19f9bab1a29eda8b149a4ef1cad321151da29223287510e",
+    "prompt_sha256": "318cbf9c4215ee5204f7c335e537bf8f4d18b388a3e909ed28fa4b23c6240568",
+    "blind_to_other_reviews": true
+  },
+  "verdict": "block",
+  "blocker_codes": [
+    "missing_cost_changing_bridge",
+    "hidden_or_unpriced_precomputation",
+    "proxy_not_decisive"
+  ],
+  "summary": "Block at desk review. The exact source formula still contains the unresolved generalized-root term T(E,16,L), and neither the proposal nor TASK-027/028 supplies a solving-degree, fill, memory, recovery, rank, sparse-linear-algebra, or common-unit equal-success bound that changes complete single-target cost. The proposal correctly says that all attack setup after the public target is known must be charged, but factor-base construction, source-system and solver preprocessing, exceptional-complement orchestration, recovery infrastructure, reusable matrices, storage, and validator setup remain wholly unpriced; a prose inclusion rule and zero current compute budget are not a quantitative precomputation ledger. Finally, the stated sparse-elimination advantage and conditional slope margins are not decisive observables because no executable direct-System-(4) baseline, assured recovery map, policy-eligible M16 scaling regime, or primitive-operation accounting exists. TASK-027's exact lift and orbit census changes no exponent, while TASK-028 explicitly leaves solver and complete cost unknown. This is an honest scoped abstention, not a cost-cleared proposal, and it must retain zero compute and zero route effect.",
+  "evidence_inputs": [
+    "experiments/engine/proposals/HGP-M16-SOLVER-SLOPE-002.json",
+    "experiments/engine/pkc_smooth_m16_solver_slope_v2/PROPOSAL_CONTEXT.md",
+    "experiments/engine/pkc_smooth_m16_solver_slope_v2/MECHANISM_DESIGN.md",
+    "experiments/engine/pkc_smooth_m16_solver_slope_v2/VALIDATOR_DESIGN.md",
+    "experiments/engine/pkc_smooth_m16_regime_assurance_desk/artifact.json",
+    "experiments/engine/pkc_smooth_m16_source_faithful_mechanism/artifact.json"
+  ]
+}

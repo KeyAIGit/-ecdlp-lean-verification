@@ -1,0 +1,33 @@
+{
+  "schema_version": "0.1",
+  "review_id": "HGR-M16-002-ALGEBRA",
+  "proposal_id": "HGP-M16-SOLVER-SLOPE-002",
+  "proposal_sha256": "2a6a66ec80240380458d670c354e1131ea5d728e8dd55545e7b02e01eb887b07",
+  "reviewed_on": "2026-08-09",
+  "reviewer_id": "keyai-task029-algebra-review",
+  "reviewer_role": "algebra",
+  "source_independence": "shared_context",
+  "reviewer_provenance": {
+    "family": "shared-context-agentic-review",
+    "version": "2026-08-09",
+    "session_id": "task029-algebra-blind-20260809-b9c2e58b",
+    "context_sha256": "be62d34952f265b4877c8309caabcf3574a9efc00962dc25ce3df8df57fc694f",
+    "prompt_sha256": "9ba06576c360d90d417a12e4738291c01696339f6bbf25174665558109a5281e",
+    "blind_to_other_reviews": true
+  },
+  "verdict": "block",
+  "blocker_codes": [
+    "missing_exact_mechanism",
+    "semantic_reencoding_risk"
+  ],
+  "summary": "The literal composition L4 o L3 o L2 o L1 = 1 - x^564522 and the 64-coordinate, 65-equation direct System (4) count are consistent with the TASK-028 certificate. The proposal nevertheless lacks an assured algebraic mechanism: all four assurance bindings remain specified_unproved; pointwise equivalence of the literal chain and a quadratic circuit establishes neither equality of ideals or saturations nor preservation of multiplicities, solving degree, fill-in, or solver complexity; and the target-bound group check proves soundness only for accepted candidates, not complete recovery of direct-System-(4) solutions or exhaustive exceptional-locus coverage. TASK-028 improves source fidelity but deliberately leaves the premise and seven-field mechanism identity unchanged, so presenting this package as a new cost-changing mechanism would be semantic re-encoding. The algebraic disposition is block, scoped abstention, zero retention, and zero compute.",
+  "evidence_inputs": [
+    "experiments/engine/proposals/HGP-M16-SOLVER-SLOPE-002.json",
+    "experiments/engine/pkc_smooth_m16_solver_slope_v2/MECHANISM_DESIGN.md",
+    "experiments/engine/pkc_smooth_m16_solver_slope_v2/VALIDATOR_DESIGN.md",
+    "experiments/engine/pkc_smooth_m16_source_faithful_mechanism/artifact.json",
+    "experiments/engine/pkc_smooth_m16_regime_assurance_desk/artifact.json",
+    "data/source_claim_extracts/petit_kosters_messeng2016_task028.json",
+    "tasks/ECDLP_RESEARCH.md"
+  ]
+}
