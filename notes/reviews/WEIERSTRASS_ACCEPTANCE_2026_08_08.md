@@ -150,6 +150,24 @@ VERIFIED EXACT (line, shape, and binder explicitness all match the contract): Lo
 
    *Fix:* Change "`:73` region" to ":75" in S1W-4a, and "UPSTREAM_POOL.md:301" to ":302" in Annex B.
 
+   **DO NOT APPLY THE SECOND HALF — WITHDRAWN.** Annotation added 2026-08-09 at
+   the lens body, because until now the withdrawal lived only in the
+   disposition section below and this paragraph contradicted it. `:300` is the
+   `|---|---|` separator and `:301` **is** the row carrying the claim; the
+   contract's existing `:301` citation is correct, and applying the proposed
+   fix would introduce an off-by-one where none exists. Re-confirmed 2026-08-09
+   by an independent verifier, which also established the file has not been
+   touched since 2026-08-06 — so this finding was wrong when written, not made
+   stale by later edits. The first half (`:73` → `:75`) is correct and was
+   applied.
+
+   Also unremarked by this finding, and worth carrying: the pool row it
+   litigates is *substantively* wrong too, not just possibly mis-cited.
+   `Complex.logTaylor` **is** `noncomputable def` — `noncomputable` sits on
+   LogBounds.lean:67 and `def` on :68 — so the pool's "plain `def`, not
+   `noncomputable def`" is backwards. Finding 11 has this right; finding 12
+   argued only about the line number and never checked the claim on that line.
+
 13. **§0 comment on the DedekindEta precedent (contract lines 191-196) and the dependencies table row "Product-differentiable template | DedekindEta.lean:89–95"** — Minor range slippage. The precedent lemma `differentiableOn_tprod_one_sub_pow` spans NumberTheory/ModularForms/DedekindEta.lean:88 (docstring) to :93; :94 is blank and :95 opens the *next* lemma's docstring. Annex B item 2a's correction of the chain site to :91 is exactly right (verified: :91 is `multipliableLocallyUniformlyOn_one_sub_pow.hasProdLocallyUniformlyOn.differentiableOn`, :92-:93 the `.of_forall` continuation).
 
    *Fix:* Change the two ":89–95" range citations to ":88–:93".
