@@ -1802,10 +1802,12 @@ Files that must not be edited:
 - Lean theorem sources
 - route definitions or promotion gates during execution
 How to verify:
-- `python3 experiments/engine/pkc_smooth_m16_fixed_target_yield/run.py --check-authorization`
-- `python3 experiments/engine/pkc_smooth_m16_fixed_target_yield/validate.py --authorization`
+- `python3 experiments/engine/pkc_smooth_m16_fixed_target_yield/replay_completed.py`
 - `python3 experiments/engine/pkc_smooth_m16_fixed_target_yield/test_validate.py`
-- after execution, independent full replay plus `sha256sum -c artifact.sha256`
+- `(cd experiments/engine/pkc_smooth_m16_fixed_target_yield && sha256sum -c artifact.sha256)`
+- `run.py --check-authorization` and `validate.py --authorization` are
+  historical pre-execution checks and intentionally fail closed after the
+  singleton authorization is consumed.
 - decision-substrate, scientific-semantic, generated-fixpoint, artifact,
   branch-inventory, and full CI gates
 
