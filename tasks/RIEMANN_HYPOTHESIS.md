@@ -91,6 +91,18 @@ adversarial correction applied during it. By this dated decision the single
 ACTIVE slot moves to `RH-015`, applying the accepted editorial fixes to the two
 upstream contracts.
 
+Decision update: 2026-08-08 (fourth). `RH-015` completed: 40 editorial fixes
+applied across the two accepted contracts, 3 withdrawn on inspection, and 5
+stopped at the signature boundary — four renames and one convention change that
+would each have edited a public signature, which the task forbids because the
+stage-one acceptance is valid only for the surface as it stands. A mechanical
+check confirms no signature moved. One finding was corrected in the opposite
+direction: the acceptance record had judged `A4`'s `0 < R` to be mere
+convenience, and an editor found a counterexample showing `A4` is FALSE at
+`R = -1` too, so the negative-radius trap is package-wide. By this dated
+decision the single ACTIVE slot moves to `RH-016`, the drafts-lane
+transcription the argument-principle acceptance unlocks.
+
 The exact Lean target is the already-pinned Mathlib declaration
 `_root_.RiemannHypothesis`. Do not create a competing definition.
 
@@ -1008,7 +1020,8 @@ on the `analysis-generic` shelf.
 
 ID: `RH-015`
 
-Status: **ACTIVE 2026-08-08 — editorial only; no statement may change**
+Status: **COMPLETE 2026-08-08 — 40 fixes applied, 3 withdrawn, 5 stopped at the
+signature boundary; no public signature moved, verified mechanically**
 
 Kind: contract maintenance
 
@@ -1048,6 +1061,59 @@ Exit criteria:
 - each acceptance record gains a dated line recording which fixes landed;
 - no drafts-lane file is created by this task, no ledger row is added, no
   barrier row changes, and no route is selected.
+
+## RH-016: draft the circle-only argument-principle package
+
+ID: `RH-016`
+
+Status: **ACTIVE 2026-08-08 — drafts lane only; nothing built, nothing promoted**
+
+Kind: theorem
+
+Activation basis (2026-08-08): `RH-015` completed — the two accepted contracts
+carry their editorial fixes and no public signature moved. Under the two-stage
+gate, a stage-one acceptance record unlocks exactly one thing: the drafts-lane
+transcription. `ARG_PRINCIPLE_CONTRACT.md` now has both its acceptance record
+(merged PR #323) and its corrections, so that transcription is the next step and
+it is fully specified.
+
+The argument-principle package is chosen over Weierstrass because `RH-015`
+established that the two contracts are in different states of readiness.
+Weierstrass drew thirteen pin-lens findings concentrated in the `W12` proof
+skeleton — its statement surface is sound while its PROOF PLAN is the
+least-verified part of the contract, which is the opposite of where its risk
+register puts the difficulty. Drafting it now would be drafting against a plan
+nobody has checked. The argument principle has the reverse profile: its
+difficulty was mis-registered as HIGH at `A1`, `RH-015` re-priced it against the
+pin, and the corrected contract now names where the real work is
+(`S1AP-LOGD` is the sole remaining HIGH).
+
+Exit criteria:
+
+- a drafts-lane file `domains/riemann-hypothesis/drafts/ArgPrinciple.lean`
+  implementing `W1` and `A1`-`A4`, five signatures, each CHARACTER-IDENTICAL to
+  the corrected contract — verified mechanically, not by eye;
+- complete proof bodies throughout: no proof placeholder of any spelling, and no
+  new axiom;
+- the file stays outside every lake target, so the Lean kernel does NOT check it
+  and no CI run on this task is evidence about it. The kernel verdict comes only
+  from a separate stage-two promotion change;
+- every Mathlib lemma invoked is opened at the pin and its locator recorded
+  inline, including the `A1` chain `RH-015` verified
+  (`Meromorphic/IsolatedZeros.lean:99`, `Analytic/IsolatedZeros.lean:141`,
+  `Meromorphic/Basic.lean:40`, `Normed/Field/Basic.lean:242`);
+- the `0 < R` soundness note is honoured: no proof may quietly relax it, since
+  `RH-015` established that `A2`, `A3` AND `A4` are all FALSE at `R < 0`;
+- an independent adversarial review of the draft before it is offered for
+  promotion;
+- no ledger row, no barrier row change, no route selected, and no claim about
+  the truth of the Riemann Hypothesis.
+
+Note on where this lands if it is ever promoted: the package is generic — it
+quantifies over an arbitrary meromorphic `f` and mentions no ζ or ξ — so its
+built home would be the domain-neutral `ResearchOS/Analysis/` shelf under its
+own ledger prefix, not the RH subtree. That placement decision belongs to the
+promotion change, not to this one.
 
 ## RH-005: bounded computation policy
 

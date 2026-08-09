@@ -1,15 +1,31 @@
-# Circle-only argument principle contract (UPSTREAM / Form A): draft v1.1
+# Circle-only argument principle contract (UPSTREAM / Form A): draft v1.2
 
-Status: **DRAFT v1.1 (2026-08-07) — non-built review artifact, offered for STAGE ONE
-(INDEPENDENT CONTRACT ACCEPTANCE) ONLY. NOT Lean-checked.** No declaration below
-has been elaborated; no `lake build` has been run against any of it. Under the one
-invariant, the Lean kernel via CI is the sole judge of every statement in this
-contract, and this document carries no kernel verdict of any kind. v1.1 folds in
+Status: **DRAFT v1.2 (2026-08-09) — non-built review artifact, ACCEPTED AT STAGE ONE
+(INDEPENDENT CONTRACT ACCEPTANCE) on 2026-08-08. NOT Lean-checked.** No declaration
+below has been elaborated; no `lake build` has been run against any of it. Under the
+one invariant, the Lean kernel via CI is the sole judge of every statement in this
+contract, and this document carries no kernel verdict of any kind. v1.1 folded in
 the independent red-team audit of 2026-08-07 (Annex A: every `file:line` citation
 re-verified at the pin; five corrections applied in place, none touching any of
 the five public signatures; the four commissioned attack seams — boundary
 nonvanishing, log-derivative integrability, divisor-sum finiteness, hidden
 winding machinery — all held).
+
+**v1.2 (2026-08-09, RH-015) applies the editorial fixes enumerated by the
+stage-one acceptance record `notes/reviews/ARG_PRINCIPLE_ACCEPTANCE_2026_08_08.md`
+(three lenses, zero blocking findings, no lens asking for a signature change).
+All five public signatures are BYTE-IDENTICAL to v1.0 and v1.1** — the acceptance
+is only valid for the surface as it stands, so a signature edit here would
+silently invalidate the acceptance it implements. What changed in v1.2 is prose,
+locators, obligation severities, proof skeletons, deferred-item text, the claim
+boundary, and the death conditions. Two of the applied fixes materially re-price
+the package and both were re-confirmed against the pin before being applied
+(§0 and §5.4): **A1 is no longer the package's hard step** (S1AP-BRIDGE
+downgraded HIGH → LOW), and the `|R|` sign-flip previously reported as absent at
+the pin **exists as mathematics** via `Real.circleAverage_abs_radius`. Two
+enumerated fixes were **declined**, both recorded with reasons in §5.4: a
+proposed rename of A1 and a proposed rename of W1 are signature changes, and
+this pass does not make those.
 
 **Two-stage gate (same discipline as `MULTIPLICITY_CONTRACT.md`, restated in full
 at the end of this file).** Stage one is *independent contract acceptance*: a
@@ -17,13 +33,22 @@ review of the statement surface W1, A1–A4 only. It produces **no built module,
 ledger row, no registry or axiom-audit entry, and no kernel verdict**. Stage two
 is a **separate built promotion PR** whose verdict is delivered by CI. An
 acceptance PR must not carry a promotion. The drafts-lane working file proposed
-below (`drafts/ArgPrinciple.lean`) lies outside every lake target
+below (`domains/riemann-hypothesis/drafts/ArgPrinciple.lean` — spelled in full
+here because **there is no top-level `drafts/` directory in this repository**;
+the drafts lane is `domains/riemann-hypothesis/drafts/`, which currently holds
+eleven files. The bare `drafts/…` shorthand used later in this document is
+inherited verbatim from `MULTIPLICITY_CONTRACT.md:17` and is the sibling
+contracts' abbreviation, not a path. A stage-two author must create the file
+under the full path; a file at a top-level `drafts/` would still be outside
+every lake target, so the CI-scope argument below survives either reading, but
+the file would be in the wrong lane) lies outside every lake target
 (`lakefile.toml:2` declares `defaultTargets = ["Ecdlp", "ResearchOS"]`; the CI
 build and no-incomplete-proof scan boundaries are as recorded at
 `MULTIPLICITY_CONTRACT.md:17–23`), so **no green CI run on an acceptance PR is
 evidence of anything about the draft.**
 
-Working name: `drafts/ArgPrinciple.lean` (drafts lane; no module target). If it
+Working name: `domains/riemann-hypothesis/drafts/ArgPrinciple.lean` (drafts
+lane; no module target). If it
 is ever pursued as a Mathlib upstream PR instead, the pool's proposed home is
 `Mathlib/Analysis/Complex/ArgumentPrinciple.lean` (`UPSTREAM_POOL.md` §7); that
 choice is a maintainer negotiation and is not made here.
@@ -38,9 +63,11 @@ Scope: **route-neutral generic complex analysis**, drawn from the upstream pool
 free-standing freebie flagged at §9). Every statement quantifies over an
 arbitrary function `f : ℂ → ℂ` (A1 over `f g : 𝕜 → E`) with hypotheses on that
 function alone. **No statement mentions `riemannZeta`, `riemannXi`, an
-L-function, a critical strip, or any route.** This contract closes **no
-barrier** of `MATHLIB_CAPABILITY_MAP.md`, selects and unparks **no route**, and
-produces **no information about the truth of the Riemann Hypothesis.** The RH
+L-function, a critical strip, or any route.** This contract **closes no barrier,
+advances no barrier, and partially closes no barrier** of
+`MATHLIB_CAPABILITY_MAP.md` — its capability-map effect is **INVENTORY ONLY** —
+selects and unparks **no route**, bears on **no conjecture**, and provides **no
+evidence for or against the Riemann Hypothesis** in either direction. The RH
 queue (`tasks/RIEMANN_HYPOTHESIS.md`) remains the sole authority for that lane;
 this document is an offered artifact, not an active task, and not authorization
 to work anything.
@@ -59,9 +86,12 @@ the two pool claims this contract was asked to re-verify, one of which needed a
   §7.1, §7.4, §9 rank 6): **re-verified**. Every ingredient of the §7.3 table
   that this contract consumes was re-read at the pin this session and appears
   with exact `file:line` in §0. The pool's "hardest step" call (the
-  codiscreteness bridge) survives re-examination and is isolated here as its
-  own statement (A1) with a fully-named lemma chain — see obligation
-  **S1AP-BRIDGE**.
+  codiscreteness bridge) is isolated here as its own statement (A1) — but that
+  call **does not survive re-examination and is retracted in v1.2**: the
+  meromorphic form of exactly this bridge is already pinned
+  (`MeromorphicAt.eventuallyEq_nhdsNE_of_eventuallyEq_codiscreteWithin`,
+  Meromorphic/IsolatedZeros.lean:99), and A1 is a short corollary of it. See
+  §5.4 finding 1 and obligation **S1AP-BRIDGE**, downgraded to LOW.
 - **The docstring-flagged gap dischargeable via the pinned Cauchy theorem**:
   **re-verified with a correction.** The gap is real: the module docstring of
   `Mathlib/MeasureTheory/Integral/CircleIntegral.lean` (lines 54–56) says of
@@ -91,12 +121,22 @@ the two pool claims this contract was asked to re-verify, one of which needed a
   *theorem*, never a hypothesis (pool caveat §7.5, honored). The engine is
   `MeromorphicOn.extract_zeros_poles` (FactorizedRational.lean:291): `f` agrees
   codiscretely with `(∏ᶠ u, (· - u) ^ divisor u) • g`, `g` analytic and
-  nonvanishing. The single genuinely new move (A1) upgrades that codiscrete
-  agreement to a `𝓝 x`-eventual equality at every accumulation point, via the
-  pinned chain `mem_codiscreteWithin_accPt` (DiscreteSubset.lean:217) →
-  `accPt_sup` (ClusterPt.lean:190) → `accPt_iff_frequently_nhdsNE`
-  (ClusterPt.lean:217) → `AnalyticAt.frequently_eq_iff_eventually_eq`
-  (IsolatedZeros.lean:141). From there `deriv f / f` is computed pointwise on
+  nonvanishing. A1 upgrades that codiscrete agreement to a `𝓝 x`-eventual
+  equality at every accumulation point. **A1 is not a new move.** Mathlib
+  already proves the meromorphic, punctured form of precisely this bridge —
+  `MeromorphicAt.eventuallyEq_nhdsNE_of_eventuallyEq_codiscreteWithin`
+  (Meromorphic/IsolatedZeros.lean:99), whose four hypotheses are A1's four
+  hypotheses with the strictly weaker `MeromorphicAt` in place of `AnalyticAt`,
+  and whose section variables (:24–:27) are A1's binder context verbatim. The
+  only delta is punctured → unpunctured: feed the pinned lemma through
+  `AnalyticAt.meromorphicAt` (Meromorphic/Basic.lean:40), take `.frequently`
+  (legitimate because `NormedField.nhdsNE_neBot`, Normed/Field/Basic.lean:242,
+  is an `@[instance]` for `[NontriviallyNormedField 𝕜]` — exactly A1's
+  typeclass, so no manual `NeBot` argument is needed), and close with
+  `AnalyticAt.frequently_eq_iff_eventually_eq` (Analytic/IsolatedZeros.lean:141).
+  That is a three-line term proof; see A1's skeleton and S1AP-BRIDGE (LOW).
+  **The genuinely un-pinned content of this package is A2's assembly, not A1.**
+  From there `deriv f / f` is computed pointwise on
   the sphere by the `logDeriv` calculus (LogDeriv.lean:37/:54/:73/:87), the
   circle integral splits by `circleIntegral.integral_fun_sum`
   (CircleIntegral.lean:461), the zero terms each give `2πI`
@@ -106,8 +146,11 @@ the two pool claims this contract was asked to re-verify, one of which needed a
   interface: the circle integral of the logarithmic derivative equals `2πI`
   times the divisor sum (A2); a zero-detector (A3: integral vanishes iff no
   zeros in the ball); and quantization (A4: the integral lies in
-  `2πI · ℕ`). Plus W1, a few-line library-gap closure independent of the rest.
-  No information about the truth of RH is produced.
+  `2πI · ℕ`). Plus W1, a self-contained library-gap closure independent of the
+  rest (few-line via Cauchy for `0 ≤ R`; the uniform-sign statement adopted here
+  costs more than "a few lines" on either recorded route — the log-primitive
+  route carries S1AP-W1a/W1b and the Cauchy+flip route carries S1AP-W1e, see
+  §2 W1 and §5.2). No information about the truth of RH is produced.
 - **Claim boundary.** All five statements are intended as unconditional
   consequences of pinned Mathlib theorems only — **no repo theorem is a
   prerequisite of any statement** (the repo's built `Mult.lean` is cited below
@@ -142,8 +185,23 @@ all five proposed names — `integral_sub_inv_of_notMem_closedBall`,
 `eventuallyEq_of_codiscreteWithin`, `circleIntegral_logDeriv_eq_divisor_sum`,
 `circleIntegral_logDeriv_eq_zero_iff`, `exists_nat_circleIntegral_logDeriv_eq` —
 and zero hits for any `argument principle` / `windingNumber` development
-(consistent with `UPSTREAM_POOL.md` §0 row 6). A repo-side scan of
-`drafts/` shows no `ArgPrinciple.lean`.
+(consistent with `UPSTREAM_POOL.md` §0 row 6). A repo-side scan shows no
+`ArgPrinciple.lean` anywhere in the repository; the drafts lane is
+`domains/riemann-hypothesis/drafts/` (eleven files: HarnackDisc, MellinBound,
+PolyLiouville, README, RiemannConj, RiemannGrowthOrder, RiemannMult,
+RiemannTargetBridge, RiemannXi, ThreeCircles, ZeroSetSlice).
+
+**What this scan does NOT establish, and the v1.2 correction that forced the
+caveat.** A name-collision scan greps the five PROPOSED NAMES. It cannot detect
+a **semantic duplicate living under a different name**, and in this package it
+did not: `MeromorphicAt.eventuallyEq_nhdsNE_of_eventuallyEq_codiscreteWithin`
+(Meromorphic/IsolatedZeros.lean:99) is the pinned meromorphic form of A1 and
+shares no name fragment with `eventuallyEq_of_codiscreteWithin`, so the scan
+reported zero hits while the mathematics was already in the library. Zero name
+hits therefore means "the proposed identifiers are free", never "the statement
+is new". Whoever offers any of these upstream owes a separate SEMANTIC search
+(by statement shape and by neighbouring-file reading, not by name) before
+claiming novelty to a maintainer.
 
 ---
 
@@ -177,10 +235,57 @@ theorem integral_sub_zpow_of_undef {n : ℤ} {c w : ℂ} {R : ℝ} (hn : n < 0)
 theorem integral_sub_zpow_of_ne {n : ℤ} (hn : n ≠ -1) (c w : ℂ) (R : ℝ) : … = 0 -- :566
 theorem integral_sub_inv_of_mem_ball {c w : ℂ} {R : ℝ} (hw : w ∈ ball c R) :
     (∮ z in C(c, R), (z - w)⁻¹) = 2 * π * I                                   -- :699
+def circleIntegral (f : ℂ → E) (c : ℂ) (R : ℝ) : E :=
+    ∫ θ : ℝ in 0..2 * π, deriv (circleMap c R) θ • f (circleMap c R θ)        -- :385
+    -- notation ∮ z in C(c, R), … at :389; documented as ∮_{|z-c|=|R|} at :16/:60
+@[simp] theorem integral_radius_zero (f : ℂ → E) (c : ℂ) : (∮ z in C(c, 0), f z) = 0 -- :422
+theorem circleMap_neg_radius {r x : ℝ} {c : ℂ} :
+    circleMap c (-r) x = circleMap c r (x + π)                                -- :162
+theorem circleIntegral_congr_codiscreteWithin {c : ℂ} {R : ℝ} {f₁ f₂ : ℂ → ℂ}
+    (hf : f₁ =ᶠ[codiscreteWithin (sphere c |R|)] f₂) (hR : R ≠ 0) :
+    (∮ z in C(c, R), f₁ z) = (∮ z in C(c, R), f₂ z)                           -- :430
+    -- ← inside the :419 block, so the full name is
+    --   circleIntegral.circleIntegral_congr_codiscreteWithin (Annex A, F1).
+    -- NOTE (v1.2): unlike integral_congr (:425, `hR : 0 ≤ R`), :430 carries only
+    -- `R ≠ 0`, so it is the congruence lemma that survives NEGATIVE radii. That
+    -- matters for the W1 Cauchy+flip route below (S1AP-W1e).
 -- namespace circleIntegral spans :419-:584 (containing :425-:566) and reopens at :696
 -- for :699 (both block boundaries read this session — Annex A, F1); all names above
--- except CircleIntegrable/deriv_circleMap/circleIntegrable* are circleIntegral.*
--- (ContinuousOn.circleIntegrable is a root-level dot name).
+-- except CircleIntegrable/deriv_circleMap/circleIntegrable*/circleIntegral/
+-- circleMap_neg_radius are circleIntegral.* (ContinuousOn.circleIntegrable is a
+-- root-level dot name).
+-- ABSENCE, re-verified this pass by grepping `neg_radius|abs_radius` over the whole
+-- file: CircleIntegral.lean contains NO ∮-level sign-flip lemma. The only radius-sign
+-- lemmas here are circleMap_neg_radius (:162, pointwise on the parametrization) and
+-- circleIntegrable_neg_radius (:292, integrand-level). See the CircleAverage block
+-- below for where the ∮-level flip actually comes from.
+
+-- MeasureTheory/Integral/CircleAverage.lean  ← ADDED v1.2. THE `|R|` FLIP LIVES HERE.
+-- namespace Real spans :42-:382, so every name below is Real.circleAverage*.
+-- Section variables at :36-:40: {E} [NormedAddCommGroup E] [NormedSpace ℝ E] … and
+-- {f f₁ f₂ : ℂ → E} {c : ℂ} {R : ℝ}; the def carries `variable (f c R) in`, so f, c, R
+-- are EXPLICIT on `circleAverage` itself.
+noncomputable def circleAverage : E :=
+    (2 * π)⁻¹ • ∫ θ in 0..2 * π, f (circleMap c R θ)                          -- :54
+lemma circleAverage_eq_integral_add (η : ℝ) :
+    circleAverage f c R = (2 * π)⁻¹ • ∫ θ in 0..2 * π, f (circleMap c R (θ + η)) -- :117
+@[simp] theorem circleAverage_neg_radius :
+    circleAverage f c (-R) = circleAverage f c R                              -- :129
+@[simp] theorem circleAverage_abs_radius :
+    circleAverage f c |R| = circleAverage f c R                               -- :135
+theorem circleAverage_eq_circleIntegral {F : Type*} [NormedAddCommGroup F]
+    [NormedSpace ℂ F] {f : ℂ → F} (h : R ≠ 0) :
+    circleAverage f c R = (2 * π * I)⁻¹ • (∮ z in C(c, R), (z - c)⁻¹ • f z)   -- :96
+-- READ :135 AND :96 TOGETHER. :135 is the sign flip, already proved, `@[simp]`.
+-- :96 is the only bridge at the pin between circleAverage and circleIntegral, and it
+-- inserts a `(z - c)⁻¹ •` weight; recovering a bare ∮ from it means running :96 at the
+-- weighted integrand `fun z ↦ (z - c) • g z` and cancelling the weight along the path
+-- (legitimate: c ∉ sphere c |R| for R ≠ 0). That cancellation cannot use :425
+-- (`0 ≤ R`) precisely in the sign case the flip exists to handle; use :430 (`R ≠ 0`)
+-- or unfold. Hence the v1.2 wording: the flip is PRESENT AS MATHEMATICS and ABSENT AS
+-- A NAMED ∮ LEMMA, and its derivation is short but not free — see DEFERRED-AP4 and
+-- obligation S1AP-W1e. The v1.1 claim that the flip "does not exist at the pin" is
+-- withdrawn as misleading.
 
 -- Analysis/Complex/CauchyIntegral.lean
 theorem circleIntegral_eq_zero_of_differentiable_on_off_countable {R : ℝ} (h0 : 0 ≤ R)
@@ -188,10 +293,23 @@ theorem circleIntegral_eq_zero_of_differentiable_on_off_countable {R : ℝ} (h0 
 theorem _root_.DiffContOnCl.circleIntegral_eq_zero {R : ℝ} (h0 : 0 ≤ R) {f : ℂ → E}
     {c : ℂ} (hc : DiffContOnCl ℂ f (ball c R)) : ∮ z in C(c, R), f z = 0      -- :459
 
--- Analysis/Meromorphic/Divisor.lean  (namespace MeromorphicOn spans :28-:468; naming
--- trap as recorded at MULTIPLICITY_CONTRACT.md §1 — :68/:71/:177 AND :91/:104 need the
--- MeromorphicOn. prefix; only :83 below is declared _root_. At use sites, dot notation
--- on an `hf : MeromorphicOn …` argument discharges :91/:104. — Annex A, F2)
+-- Analysis/Meromorphic/Divisor.lean  (namespace MeromorphicOn spans :28-:468, re-derived
+-- this pass; naming trap as recorded at MULTIPLICITY_CONTRACT.md §1. THE TRAP HAS TWO
+-- SIDES AND THE v1.1 NOTE BLURRED THEM (acceptance record, pin lens finding 4):
+--   * :68 / :91 / :104 take a `MeromorphicOn` hypothesis. Dot notation on an
+--     `hf : MeromorphicOn …` argument RESOLVES all three (`hf.divisor_apply`,
+--     `hf.divisor_support_finite_of_subset`, `hf.divisor_ball_support_finite`).
+--   * :71 (`AnalyticOnNhd.divisor_apply`) and :177 (`AnalyticOnNhd.divisor_nonneg`)
+--     take an `AnalyticOnNhd` hypothesis but SIT INSIDE `namespace MeromorphicOn`
+--     with no `_root_`. Dot notation on an `AnalyticOnNhd` hypothesis does NOT
+--     resolve them — it looks for a root-level `AnalyticOnNhd.divisor_apply`, which
+--     does not exist. The fully-qualified `MeromorphicOn.AnalyticOnNhd.divisor_apply`
+--     / `MeromorphicOn.AnalyticOnNhd.divisor_nonneg` is MANDATORY. Built precedent,
+--     kernel-checked on main: repo:ResearchOS/AnalyticNumberTheory/RiemannHypothesis/
+--     Mult.lean:390 and :412 write exactly those two fully-qualified names.
+--   * only :83 is `_root_`-escaped.
+-- A2 steps 5 and 11, A3 and A4 all consume :71/:177, so this is the side that bites.
+-- §3 point 1 states it correctly; this note now matches. — Annex A F2, extended v1.2)
 noncomputable def divisor (f : 𝕜 → E) (U : Set 𝕜) :
     Function.locallyFinsuppWithin U ℤ                                         -- :39 (TOTAL)
 lemma divisor_apply {f : 𝕜 → E} (hf : MeromorphicOn f U) (hz : z ∈ U) :
@@ -208,7 +326,12 @@ theorem AnalyticOnNhd.divisor_nonneg {f : 𝕜 → E} (hf : AnalyticOnNhd 𝕜 f
     0 ≤ MeromorphicOn.divisor f U                                             -- :177
 
 -- Analysis/Meromorphic/FactorizedRational.lean (no IsOpen hypothesis anywhere:
--- section variables at :35-38 are only 𝕜, E, U : Set 𝕜)
+-- section variables at :35-38 are only 𝕜, E, U : Set 𝕜.
+-- DOCSTRING WARNING (acceptance record, truth lens finding 5, re-read this pass):
+-- the docstring of :291 at :285-:290 begins "If `f` is meromorphic on an OPEN set
+-- `U`, …". The binders carry no `IsOpen` and THE BINDERS GOVERN, so the use here
+-- with `U := closedBall c R` is legal. A stage-two implementer will meet that
+-- docstring and must not stall on it or conclude the use is illegitimate.)
 lemma Function.FactorizedRational.mulSupport (d : 𝕜 → ℤ) :
     (fun u ↦ (· - u) ^ d u).mulSupport = d.support                            -- :52
 lemma Function.FactorizedRational.finprod_eq_fun {d : 𝕜 → ℤ} (h : d.HasFiniteSupport) :
@@ -248,6 +371,46 @@ theorem AnalyticAt.frequently_zero_iff_eventually_zero {f : 𝕜 → E} {w : �
 theorem AnalyticAt.frequently_eq_iff_eventually_eq (hf : AnalyticAt 𝕜 f z₀)
     (hg : AnalyticAt 𝕜 g z₀) :
     (∃ᶠ z in 𝓝[≠] z₀, f z = g z) ↔ ∀ᶠ z in 𝓝 z₀, f z = g z                    -- :141
+-- (namespace AnalyticAt :120-:203, re-derived; :136 and :141 both inside it)
+
+-- Analysis/Meromorphic/IsolatedZeros.lean  ← ADDED v1.2. THIS IS A1, ALREADY PROVED
+-- AT THE PIN IN ITS MEROMORPHIC, PUNCTURED FORM. The v1.1 contract never cited this
+-- file; that omission is what let A1 be priced as the package's HIGH-severity gate.
+-- namespace MeromorphicAt spans :31-:130. Section variables at :24-:27 read
+--   {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+--   {E : Type*} [NormedAddCommGroup E] [NormedSpace 𝕜 E]
+--   {U : Set 𝕜} {x : 𝕜} {f g : 𝕜 → E}
+-- which is A1's binder context verbatim (A1 orders {f g}/{U}/{x} differently; all
+-- four are implicit, so the contexts are the same context).
+theorem eventuallyEq_nhdsNE_of_eventuallyEq_codiscreteWithin (hf : MeromorphicAt f x)
+    (hg : MeromorphicAt g x) (h₁x : x ∈ U) (h₂x : AccPt x (𝓟 U))
+    (h : f =ᶠ[codiscreteWithin U] g) :
+    f =ᶠ[𝓝[≠] x] g                                                            -- :99
+--   ^ NOTE THE SHAPE DIFFERENCE THAT IS THE WHOLE DELTA TO A1: this concludes in the
+--     PUNCTURED filter 𝓝[≠] x; A1 concludes in the UNPUNCTURED 𝓝 x. Hypotheses are
+--     identical up to AnalyticAt ⇒ MeromorphicAt (strictly weaker here, so free).
+theorem eventuallyEq_zero_nhdsNE_of_eventuallyEq_zero_codiscreteWithin
+    (hf : MeromorphicAt f x) (h₁x : x ∈ U) (h₂x : AccPt x (𝓟 U))
+    (h : f =ᶠ[codiscreteWithin U] 0) : f =ᶠ[𝓝[≠] x] 0                         -- :59
+theorem frequently_eq_iff_eventuallyEq (hf : MeromorphicAt f x)
+    (hg : MeromorphicAt g x) :
+    (∃ᶠ z in 𝓝[≠] x, f z = g z) ↔ f =ᶠ[𝓝[≠] x] g                              -- :88
+theorem eventuallyEq_nhdsNE_of_eventuallyEq_codiscreteWithin_preperfect
+    (hf : MeromorphicAt f x) (hg : MeromorphicAt g x) (hx : x ∈ U)
+    (hU : Preperfect U) (h : f =ᶠ[codiscreteWithin U] g) : f =ᶠ[𝓝[≠] x] g     -- :109
+theorem eventually_nhdsSet_eventuallyEq_codiscreteWithin (hf : MeromorphicOn f U)
+    (hg : MeromorphicOn g U) (hU : Preperfect U) (h : f =ᶠ[codiscreteWithin U] g) :
+    ∀ᶠ x in 𝓝ˢ U, f =ᶠ[𝓝[≠] x] g                                              -- :118
+
+-- The two remaining ingredients of A1's three-line discharge (ADDED v1.2)
+@[fun_prop] lemma AnalyticAt.meromorphicAt {f : 𝕜 → E} {x : 𝕜} (hf : AnalyticAt 𝕜 f x) :
+    MeromorphicAt f x            -- Analysis/Meromorphic/Basic.lean:40 (root level)
+@[instance] theorem nhdsNE_neBot (x : α) : NeBot (𝓝[≠] x)
+    -- Analysis/Normed/Field/Basic.lean:242, inside `namespace NormedField` (:193-),
+    -- section `Nontrivially` with `variable (α) [NontriviallyNormedField α]` and
+    -- `variable {α}` re-hiding α at :239. IT IS AN INSTANCE and its typeclass is
+    -- exactly A1's, so `Filter.Eventually.frequently` (Order/Filter/Basic.lean:756,
+    -- `[NeBot f]`) fires on 𝓝[≠] x with NO manual NeBot argument in A1's proof.
 
 -- Topology/DiscreteSubset.lean
 def Filter.codiscreteWithin (S : Set X) : Filter X := ⨆ x ∈ S, 𝓝[S \ {x}] x   -- :201
@@ -266,9 +429,17 @@ theorem mem_closure_iff_nhdsWithin_neBot : x ∈ closure s ↔ NeBot (𝓝[s] x)
 -- Analysis/Calculus/LogDeriv.lean, Analysis/Calculus/Deriv/Basic.lean
 def logDeriv (f : 𝕜 → 𝕜')                                                     -- LogDeriv:34
 theorem logDeriv_apply (f : 𝕜 → 𝕜') (x : 𝕜) : logDeriv f x = deriv f x / f x := rfl -- :37
-theorem logDeriv_mul … (hf : f x ≠ 0) (hg : g x ≠ 0) …                        -- :54
-theorem logDeriv_prod {ι} {s : Finset ι} {f : ι → 𝕜 → 𝕜'} {x : 𝕜}
-    (hf : ∀ i ∈ s, f i x ≠ 0) …                                               -- :73
+-- :54 AND :73 ARE QUOTED IN FULL (v1.2, acceptance record pin lens finding 1). The
+-- v1.1 elisions here hid an EXPLICIT POSITIONAL argument and two DifferentiableAt
+-- binders; every other elision in this §0 hides only implicits. `(x : 𝕜)` is
+-- EXPLICIT in logDeriv_mul and PRECEDES hf, so a call written `logDeriv_mul hφ hg …`
+-- is wrong by one argument.
+theorem logDeriv_mul {f g : 𝕜 → 𝕜'} (x : 𝕜) (hf : f x ≠ 0) (hg : g x ≠ 0)
+    (hdf : DifferentiableAt 𝕜 f x) (hdg : DifferentiableAt 𝕜 g x) :
+      logDeriv (fun z => f z * g z) x = logDeriv f x + logDeriv g x           -- :54-:56
+theorem logDeriv_prod {ι : Type*} {s : Finset ι} {f : ι → 𝕜 → 𝕜'} {x : 𝕜}
+    (hf : ∀ i ∈ s, f i x ≠ 0) (hd : ∀ i ∈ s, DifferentiableAt 𝕜 (f i) x) :
+    logDeriv (∏ i ∈ s, f i ·) x = ∑ i ∈ s, logDeriv (f i) x                   -- :73-:75
 lemma logDeriv_fun_zpow {f : 𝕜 → 𝕜'} {x : 𝕜} (hdf : DifferentiableAt 𝕜 f x) (n : ℤ) :
     logDeriv (f · ^ n) x = n * logDeriv f x                                   -- :87
 theorem Filter.EventuallyEq.deriv_eq (hL : f₁ =ᶠ[𝓝 x] f) : deriv f₁ x = deriv f x -- Deriv/Basic:647
@@ -306,6 +477,73 @@ theorem finprod_eq_prod_of_mulSupport_subset (f : α → M) {s : Finset α}
 def Complex.slitPlane : Set ℂ := {z | 0 < z.re ∨ z.im ≠ 0}   -- Analysis/Complex/Basic.lean:634
 lemma Complex.hasDerivAt_log {z : ℂ} (hz : z ∈ slitPlane) : HasDerivAt log z⁻¹ z
     -- Analysis/SpecialFunctions/Complex/LogDeriv.lean:37 (namespace Complex opens :27)
+
+-- W1 skeleton auxiliaries — ADDED v1.2 (acceptance record, pin lens finding 3: these
+-- were consumed by S1AP-W1a/W1b prose with no file:line, contrary to the house rule
+-- Annex A F3 enforced for EventuallyEq.eq_of_nhds). All five opened this pass; two of
+-- them are load-bearing EXPLICITNESS facts the skeleton silently got right.
+@[bound] theorem Complex.abs_re_le_norm (z : ℂ) : |z.re| ≤ ‖z‖
+    -- Analysis/Complex/Norm.lean:38, inside `namespace Complex` (:22-:389).
+    -- HOMONYM WARNING: RCLike.abs_re_le_norm (z : K) : |re z| ≤ ‖z‖ lives at
+    -- Analysis/RCLike/Basic.lean:690 (namespace RCLike :94-:766). With `open Complex`
+    -- active the intended one resolves, but write `Complex.abs_re_le_norm` if it stutters.
+theorem HasDerivAt.comp (hh₂ : HasDerivAt h₂ h₂' (h x)) (hh : HasDerivAt h h' x) :
+    HasDerivAt (h₂ ∘ h) (h₂' * h') x
+    -- Analysis/Calculus/Deriv/Comp.lean:258, with `x` EXPLICIT — re-declared by the
+    -- trailing `(x)` of the variable block at :71, whose comment at :67-:68 says
+    -- "we put x explicit to help the elaborator". THIS IS WHAT MAKES the skeleton's
+    -- `.comp z (…)` correct. Note the conclusion is a `Function.comp`, not a lambda.
+theorem hasDerivAt_id : HasDerivAt id 1 x
+    -- Analysis/Calculus/Deriv/Basic.lean:681, under `variable (s x L)` at :673, so `x`
+    -- is EXPLICIT and `hasDerivAt_id z` is correct as written.
+alias ⟨_, HasDerivAt.sub_const⟩ := hasDerivAt_sub_const_iff
+    -- Analysis/Calculus/Deriv/Add.lean:403, an alias of
+    -- `@[simp] theorem hasDerivAt_sub_const_iff (c : F) : HasDerivAt (f · - c) f' x ↔
+    --  HasDerivAt f f' x` (:400). So `.sub_const w` produces the `(· - w)` LAMBDA
+    -- shape, which is what the composition in W1's skeleton must be matched against.
+theorem HasDerivAt.div_const (hc : HasDerivAt c c' x) (d : 𝕜') : …
+    -- Analysis/Calculus/Deriv/Mul.lean:558 (and HasDerivAt.mul_const at :305, the
+    -- S1AP-W1a fallback).
+
+-- Pi-level pointwise seams — ADDED v1.2 (pin lens finding 3 could not open a
+-- declaration site for `Pi.smul_apply`; here it is, and its non-primed status
+-- explained). Both live in `namespace Pi`, Algebra/Notation/Pi/Defs.lean:29-:165.
+@[to_additive (attr := simp)]
+lemma Pi.mul_apply (f g : ∀ i, M i) (i : ι) : (f * g) i = f i * g i := rfl    -- :70
+lemma Pi.pow_apply (f : ∀ i, M i) (a : α) (i : ι) : (f ^ a) i = f i ^ a := rfl -- :136
+    -- ← `Pi.smul_apply` IS THE `to_additive` TWIN OF :136, generated by the attribute
+    --   line at :135 (`@[to_additive (attr := simp, to_additive) (reorder := 5 6)
+    --   smul_apply]`). It therefore has NO declaration line of its own, which is why a
+    --   grep for `theorem Pi.smul_apply` finds nothing. The DEPENDENT primed variant
+    --   `Pi.smul_apply'` at Algebra/Group/Action/Pi.lean:41 is a different lemma; the
+    --   non-dependent `Pi.smul_apply` is the one S1AP-SMUL wants.
+
+-- Cast / order plumbing consumed by A2 step 11, A3 and A4 — ADDED v1.2 (pin lens
+-- finding 3: A3/A4 cited these as "core big-operators/order API" with no locator).
+@[simp, norm_cast] lemma Int.cast_sum [AddCommGroupWithOne R] (s : Finset ι) (f : ι → ℤ) :
+    ↑(∑ x ∈ s, f x : ℤ) = ∑ x ∈ s, (f x : R)
+    -- Algebra/BigOperators/Ring/Finset.lean:377, inside `namespace Int` :348-:386.
+@[simp] lemma Int.cast_eq_zero {n : ℤ} : (n : α) = 0 ↔ n = 0
+    -- Data/Int/Cast/Lemmas.lean:57, under `variable [AddGroupWithOne α] [CharZero α]`
+    -- (:49/:55), inside `namespace Int` :34-:125. ℂ is CharZero, so A3's chain closes.
+@[to_additive sum_nonneg] theorem Finset.one_le_prod' (h : ∀ i ∈ s, 1 ≤ f i) : 1 ≤ ∏ i ∈ s, f i
+    -- Algebra/Order/BigOperators/Group/Finset.lean:120 (attribute line :119), inside
+    -- `namespace Finset` :32-:602. `Finset.sum_nonneg (h : ∀ i ∈ s, 0 ≤ f i) :
+    -- 0 ≤ ∑ i ∈ s, f i` is the to_additive twin named on that attribute line and has
+    -- no declaration line of its own — same situation as Pi.smul_apply above.
+-- `Int.toNat_of_nonneg` (A4): NO LOCATOR IS GIVEN, DELIBERATELY. It is used 33 times
+-- inside Mathlib at the pin but DECLARED NOWHERE UNDER `Mathlib/` — it is a Lean-core
+-- `Int` lemma. The house rule is that a locator must be read before it is written, and
+-- there is no `Mathlib/` file:line to read. A stage-two drafter should confirm the name
+-- and argument order at elaboration time rather than trusting a citation here.
+
+-- Empty-region lemmas behind the negative-radius soundness witness (§5.2) — ADDED v1.2.
+-- All three inside `namespace Metric`, Topology/MetricSpace/Pseudo/Defs.lean:361-:941.
+theorem ball_eq_empty : ball x ε = ∅ ↔ ε ≤ 0                                  -- :387
+@[simp] theorem sphere_eq_empty_of_neg (hε : ε < 0) : sphere x ε = ∅          -- :442
+@[simp] theorem closedBall_eq_empty : closedBall x ε = ∅ ↔ ε < 0              -- :468
+theorem deriv_inv : deriv (fun x => x⁻¹) x = -(x ^ 2)⁻¹
+    -- Analysis/Calculus/Deriv/Inv.lean:66 — used only by the A4 witness in §5.2.
 
 -- Scalars
 theorem Real.pi_ne_zero : π ≠ 0        -- Analysis/SpecialFunctions/Trigonometric/Basic.lean:165
@@ -394,13 +632,38 @@ is *false* at `R < 0`, by the pinned `circleIntegral.integral_sub_center_inv`
 (CircleIntegral.lean:532). The `|R|` form matches the file's own convention for
 its integrability lemmas (`sphere c |R|` at :557, :538).
 
+**Mandatory docstring on the built declaration (v1.2, acceptance record truth
+lens finding 4).** The proposed name records `notMem_closedBall` but not that
+the ball is `closedBall c |R|` rather than `closedBall c R`, and this document
+elevates exactly that `R`-vs-`|R|` confusion to a death condition (8) and to the
+one correction it made to the pool. A consumer who applies the lemma by name,
+reading `closedBall c R`, is the precise failure mode being guarded against.
+Mathlib's own `integral_sub_zpow_of_undef` (:557) has the same silent `|R|`, so
+the name is convention-conformant — but that convention is what produced the
+pool's defect. **A stage-two build of W1 must therefore carry a docstring
+stating that the excluded region is `Metric.closedBall c |R|`, the closed disc
+of GEOMETRIC radius `|R|`, and cross-referencing §5.2.** The alternative repair
+the acceptance record offered — renaming to `..._of_notMem_closedBall_abs` or
+`..._of_abs_lt_dist` — is a **change to a public signature** and is therefore
+**not made in this pass**; see §5.4. If a future reviewer prefers the rename, it
+returns the surface to contract review rather than being applied editorially.
+
 #### Proof skeleton (primitive route — uniform in the sign of `R`)
 
 ```lean
   -- w outside the closed |R|-ball: |R| < dist w c, so c ≠ w and z ≠ w on the sphere
   have hcw : c - w ≠ 0 := sub_ne_zero.2 (by
     intro h; exact hw (by simp [h, Metric.mem_closedBall, abs_nonneg]))
-  apply circleIntegral.integral_eq_zero_of_hasDerivWithinAt'   -- :538, sphere c |R|, any R
+  -- v1.2: `refine … (f := …) ?_`, NOT a bare `apply`. The primitive `f` in :538 is an
+  -- implicit argument that does NOT occur in the conclusion, so a bare `apply` opens a
+  -- metavariable ?f in the context before `intro z hz` and only closes it at the final
+  -- `exact hd.hasDerivWithinAt` — the same shape as confirmed failure class (B), a
+  -- lemma applied with its intermediate object left undetermined. It should succeed
+  -- here (the assignment has no dependence on z), but pinning the primitive up front
+  -- is free and a wasted CI round is not. (Acceptance record, pin lens finding 5;
+  -- recorded under S1AP-W1a.)
+  refine circleIntegral.integral_eq_zero_of_hasDerivWithinAt'
+    (f := fun u : ℂ => Complex.log ((u - w) / (c - w))) ?_   -- :538, sphere c |R|, any R
   intro z hz
   -- the primitive: F z = Complex.log ((z - w) / (c - w));
   -- (z - w)/(c - w) = 1 + (z - c)/(c - w) with ‖(z - c)/(c - w)‖ = |R|/dist c w < 1,
@@ -419,18 +682,52 @@ its integrability lemmas (`sphere c |R|` at :557, :538).
   exact hd.hasDerivWithinAt
 ```
 
-*Alternative route (Cauchy, `0 ≤ R` only — the route the docstring itself
-anticipates and the pool cited).* For `0 ≤ R`:
-`fun z => (z - w)⁻¹` is `DiffContOnCl ℂ · (ball c R)` (differentiable wherever
-`z ≠ w`, and `w ∉ closedBall c R = closure (ball c R)` for `R > 0` via
-`closure_ball` RCLike/Real.lean:59; `R = 0` by
-`circleIntegral.integral_radius_zero`), so
+*Recorded alternative route: Cauchy + the `|R|` flip. Uniform in the sign of `R`.*
+For `0 ≤ R`, `fun z => (z - w)⁻¹` is `DiffContOnCl ℂ · (ball c R)`
+(differentiable wherever `z ≠ w`, and `w ∉ closedBall c R = closure (ball c R)`
+for `R > 0` via `closure_ball` RCLike/Real.lean:59; `R = 0` by
+`circleIntegral.integral_radius_zero`, :422), so
 `DiffContOnCl.circleIntegral_eq_zero` (CauchyIntegral.lean:459, `h0 : 0 ≤ R`)
-closes it. For `R < 0` this route needs an `∮`-level sign-flip lemma
-(`∮ … C(c,R) = ∮ … C(c,|R|)`) that **does not exist at the pin** — only the
-integrand-level `circleIntegrable_neg_radius` (:292) does, whose proof pattern
-(periodic shift by `π`, :292–:296) is the template if the reparametrization
-lemma is ever wanted. That is exactly why the primitive route is primary.
+closes it. For `R < 0` this route needs an `∮`-level sign flip
+`∮ … C(c,R) = ∮ … C(c,|R|)`, after which `0 ≤ |R|` and Cauchy applies verbatim
+(the hypothesis `w ∉ closedBall c |R|` is already stated at `|R|`, so nothing
+else moves).
+
+**Status of that flip, corrected in v1.2 (acceptance record, truth lens finding
+2).** v1.1 said the flip "does not exist at the pin". That sentence is literally
+true of a NAMED `∮` lemma — re-verified this pass by grepping
+`neg_radius|abs_radius` over the whole of CircleIntegral.lean, which yields only
+`circleMap_neg_radius` (:162) and the integrand-level
+`circleIntegrable_neg_radius` (:292) — but it is **misleading in effect and is
+withdrawn**, because it invites a drafter to abandon the Cauchy route when the
+mathematics is already in the library one file over:
+
+- `Real.circleAverage_abs_radius : circleAverage f c |R| = circleAverage f c R`
+  (CircleAverage.lean:135, `@[simp]`) IS the flip, proved, on
+  `circleAverage_neg_radius` (:129) / `circleAverage_eq_integral_add` (:117) /
+  `circleMap_neg_radius` (CircleIntegral.lean:162);
+- `Real.circleAverage_eq_circleIntegral` (:96, `h : R ≠ 0`) is the bridge to `∮`.
+
+**Honest cost, which the finding's "~3 lines" understates and this contract does
+not repeat.** The bridge at :96 carries a `(z - c)⁻¹ •` weight, so recovering a
+bare `∮` means applying it at the weighted integrand `fun z ↦ (z - c) • g z` at
+both radii and cancelling the weight along the path. The cancellation is sound
+(`c ∉ sphere c |R|` for `R ≠ 0`) but it cannot be done with
+`circleIntegral.integral_congr` (:425), whose `0 ≤ R` excludes exactly the sign
+case the flip exists for; use `circleIntegral.circleIntegral_congr_codiscreteWithin`
+(:430, hypothesis `R ≠ 0`) or unfold `circleIntegral`. Add the `R = 0` split
+(:422) and the `smul`/`mul` seam and it is a short, real derivation, not three
+lines. It is registered as **S1AP-W1e** (MEDIUM).
+
+**Which route is primary.** Both are recorded in full and **the log-primitive
+route stays primary**; the acceptance record's proposal to promote Cauchy+flip
+to primary and retire S1AP-W1a/W1b/W1c is **partially declined** (§5.4). The
+existence half of that finding is confirmed and applied above. The cost half is
+not: promoting Cauchy+flip does not retire two MEDIUM obligations, it substitutes
+S1AP-W1e for them, and demoting W1a/W1b would tell a drafter to skip preparing
+work that is still on the critical path of whichever route is chosen. The choice
+between the two is a stage-two implementation decision to be made with the
+elaborator in hand, and both are costed here so that it can be.
 
 #### Pinned dependencies (W1)
 
@@ -441,23 +738,59 @@ lemma is ever wanted. That is exactly why the primitive route is primary.
 `Complex.slitPlane` — Analysis/Complex/Basic.lean:634;
 `closure_ball` — RCLike/Real.lean:59 (alternative route);
 `DiffContOnCl.circleIntegral_eq_zero` — CauchyIntegral.lean:459 (alternative
-route); `circleIntegrable_neg_radius` — CircleIntegral.lean:292 (pattern only).
+route); `circleIntegral.integral_radius_zero` — CircleIntegral.lean:422
+(alternative route, `R = 0` case); `circleIntegrable_neg_radius` —
+CircleIntegral.lean:292 (pattern only);
+`Real.circleAverage_abs_radius` — CircleAverage.lean:135, with
+`circleAverage_neg_radius` :129, `circleAverage_eq_integral_add` :117,
+`circleAverage_eq_circleIntegral` :96 and
+`circleIntegral.circleIntegral_congr_codiscreteWithin` :430 (alternative route,
+`R < 0` case — all added v1.2);
+`Complex.abs_re_le_norm` — Analysis/Complex/Norm.lean:38;
+`HasDerivAt.comp` — Deriv/Comp.lean:258 (`x` explicit);
+`hasDerivAt_id` — Deriv/Basic.lean:681 (`x` explicit);
+`HasDerivAt.sub_const` — Deriv/Add.lean:403 (alias of :400);
+`HasDerivAt.div_const` — Deriv/Mul.lean:558 (`HasDerivAt.mul_const` :305 for the
+fallback) — the last five added v1.2, previously named in the obligations below
+with no locator.
 
 #### Obligations (W1)
 
 - **S1AP-W1a** (MEDIUM). The chain-rule arithmetic
   `((z-w)/(c-w))⁻¹ * (c-w)⁻¹ = (z-w)⁻¹` under `hcw` and `z ≠ w`; `HasDerivAt.comp`
-  associates the composition as `log ∘ (affine)`, and the affine derivative is
-  produced by `((hasDerivAt_id z).sub_const w).div_const (c - w)`. Fallback:
+  (Deriv/Comp.lean:258, `x` explicit — this is what makes the skeleton's `.comp z (…)`
+  correct) associates the composition as `log ∘ (affine)`, and the affine derivative is
+  produced by `((hasDerivAt_id z).sub_const w).div_const (c - w)` (Deriv/Basic.lean:681
+  with `x` explicit; Deriv/Add.lean:403; Deriv/Mul.lean:558). Two shape seams to expect:
+  `.sub_const` yields the `(· - w)` lambda spelling and `.comp` concludes in
+  `Function.comp`, while the skeleton displays `fun u : ℂ => Complex.log ((u - w) /
+  (c - w))` — defeq, not syntactically equal, so a `show` may be needed. Fallback:
   differentiate `fun u => Complex.log ((u - w) * (c - w)⁻¹)` instead
-  (`.mul_const`), or split `Complex.log` of a quotient is *not* needed — only
-  the derivative is, so no `log_div` branch analysis arises.
+  (`.mul_const`, Deriv/Mul.lean:305), or split `Complex.log` of a quotient is *not*
+  needed — only the derivative is, so no `log_div` branch analysis arises.
+  Also recorded here (v1.2, pin lens finding 5): apply :538 as
+  `refine … (f := fun u : ℂ => Complex.log ((u - w) / (c - w))) ?_`, never a bare
+  `apply`, so the implicit primitive is pinned before `intro z hz`.
 - **S1AP-W1b** (MEDIUM). The slitPlane membership: from
   `‖z - c‖ = |R| < dist w c` derive `0 < ((z - w)/(c - w)).re` by writing the
   quotient as `1 + (z - c)/(c - w)` and using `|re q| ≤ ‖q‖`
-  (`Complex.abs_re_le_norm`). Pure norm arithmetic; fallback is a direct
+  (`Complex.abs_re_le_norm`, Analysis/Complex/Norm.lean:38 — beware the RCLike
+  homonym at RCLike/Basic.lean:690). Pure norm arithmetic; fallback is a direct
   `Complex.ext`-free estimate `re (1 + q) = 1 + re q ≥ 1 - ‖q‖`.
 - **S1AP-W1c** (LOW). `z ≠ w` for `z ∈ sphere c |R|`: `dist z c = |R| < dist w c`.
+- **S1AP-W1e** (MEDIUM, added v1.2). The `∮`-level radius flip
+  `∮ … C(c,R) = ∮ … C(c,|R|)`, needed only if the Cauchy alternative route is taken.
+  It is NOT a named lemma at the pin but IS derivable there: run
+  `Real.circleAverage_eq_circleIntegral` (CircleAverage.lean:96, `R ≠ 0`) at the
+  weighted integrand `fun z ↦ (z - c) • g z` for both `R` and `|R|`, cancel the
+  `(z - c)⁻¹ •` weight along the path (`c ∉ sphere c |R|` for `R ≠ 0`) using
+  `circleIntegral.circleIntegral_congr_codiscreteWithin` (:430, `R ≠ 0`) — **not**
+  `integral_congr` (:425), whose `0 ≤ R` excludes the case at issue — apply
+  `Real.circleAverage_abs_radius` (:135), and dispatch `R = 0` by
+  `circleIntegral.integral_radius_zero` (:422). Seams: the `smul`/`mul`
+  identification at `E = ℂ` (as in S1AP-SMUL) and the `R = 0` split. Fallback:
+  reconstruct the flip directly from `circleMap_neg_radius` (:162) plus 2π-periodicity,
+  copying the proof pattern of `circleIntegrable_neg_radius` (:292–:296).
 - **S1AP-W1d** (LOW, informational). If this is ever offered upstream, the
   maintainers may prefer the `0 ≤ R` + Cauchy form to match PR #10000's framing;
   both routes are recorded so the statement shape can follow review.
@@ -479,9 +812,35 @@ theorem AnalyticAt.eventuallyEq_of_codiscreteWithin
     f =ᶠ[𝓝 x] g
 ```
 
-This is the pool's named hardest step ("codiscrete agreement ⇒ pointwise
-`deriv f / f` on the sphere", §7.4) isolated into one generic statement. Its
-consequences at `x` — value equality (`Filter.EventuallyEq.eq_of_nhds`,
+**A1 IS A SHORT COROLLARY OF A PINNED LEMMA. Re-priced in v1.2; read this before
+planning any work on it.** v1.1 called A1 "the single genuinely new move" and
+"the pool's named hardest step", and registered `S1AP-BRIDGE` as HIGH gating
+A2–A4. **Both descriptions are withdrawn and the severity is now LOW.** Mathlib
+proves the meromorphic, punctured form of exactly this bridge:
+
+```lean
+-- Mathlib/Analysis/Meromorphic/IsolatedZeros.lean:99, namespace MeromorphicAt (:31-:130)
+theorem eventuallyEq_nhdsNE_of_eventuallyEq_codiscreteWithin (hf : MeromorphicAt f x)
+    (hg : MeromorphicAt g x) (h₁x : x ∈ U) (h₂x : AccPt x (𝓟 U))
+    (h : f =ᶠ[codiscreteWithin U] g) :
+    f =ᶠ[𝓝[≠] x] g
+```
+
+Its four hypotheses are A1's four hypotheses with `MeromorphicAt` in place of
+`AnalyticAt` — strictly weaker, hence free — and its section variables (:24–:27)
+are A1's binder context verbatim. **The only delta is the filter: :99 concludes
+in the PUNCTURED `𝓝[≠] x`, A1 in the UNPUNCTURED `𝓝 x`.** That gap is closed by
+one round trip through the analytic identity principle, and the punctured →
+unpunctured step needs no manual `NeBot` argument because
+`NormedField.nhdsNE_neBot` (Normed/Field/Basic.lean:242) is an `@[instance]`
+stated for `[NontriviallyNormedField α]`, which is precisely A1's typeclass.
+
+A1's own contribution is therefore the `AnalyticAt`-flavoured unpunctured
+packaging — worth stating, since A2 consumes the unpunctured form at sphere
+points, but not a research step and not a gate. **The genuinely un-pinned
+content of this package is A2's assembly.**
+
+Its consequences at `x` — value equality (`Filter.EventuallyEq.eq_of_nhds`,
 Topology/Neighborhoods.lean:153 — locator added, Annex A F3) and derivative
 equality (`Filter.EventuallyEq.deriv_eq`, Deriv/Basic.lean:647) — are consumed
 inline in A2 and are not separate public statements.
@@ -489,6 +848,26 @@ inline in A2 and are not separate public statements.
 #### Proof skeleton
 
 ```lean
+  -- v1.2 primary route: three lines, term-mode, from the pinned meromorphic bridge.
+  -- 1. AnalyticAt ⇒ MeromorphicAt on both sides: AnalyticAt.meromorphicAt
+  --    (Meromorphic/Basic.lean:40).
+  -- 2. MeromorphicAt.eventuallyEq_nhdsNE_of_eventuallyEq_codiscreteWithin
+  --    (Meromorphic/IsolatedZeros.lean:99) with hxU, hacc, h gives f =ᶠ[𝓝[≠] x] g.
+  -- 3. `.frequently` turns that into ∃ᶠ z in 𝓝[≠] x, f z = g z. The [NeBot (𝓝[≠] x)]
+  --    that Filter.Eventually.frequently (Order/Filter/Basic.lean:756) demands is
+  --    supplied by instance search from NormedField.nhdsNE_neBot
+  --    (Normed/Field/Basic.lean:242, @[instance], [NontriviallyNormedField 𝕜]).
+  -- 4. (hf.frequently_eq_iff_eventually_eq hg).mp (Analytic/IsolatedZeros.lean:141)
+  --    upgrades it to ∀ᶠ z in 𝓝 x, f z = g z, which is the goal.
+  --
+  -- i.e. the whole proof is
+  --   (hf.frequently_eq_iff_eventually_eq hg).mp
+  --     ((hf.meromorphicAt.eventuallyEq_nhdsNE_of_eventuallyEq_codiscreteWithin
+  --         hg.meromorphicAt hxU hacc h).frequently)
+  -- modulo whatever `EventuallyEq`-vs-`∀ᶠ … =` unfolding the elaborator wants.
+
+  -- RECORDED FALLBACK (the v1.1 primary route — kept in full, since nothing here has
+  -- been elaborated and the route above could stumble on an unfolding):
   -- 1. Split U along the agreement set S := {z | f z = g z}.
   --    h : S ∈ codiscreteWithin U; mem_codiscreteWithin_accPt (DiscreteSubset.lean:217)
   --    at x ∈ U gives  ¬ AccPt x (𝓟 (U \ S)).
@@ -503,29 +882,55 @@ inline in A2 and are not separate public statements.
 
 #### Pinned dependencies (A1)
 
-`mem_codiscreteWithin_accPt` — Topology/DiscreteSubset.lean:217 (and the
-`codiscreteWithin` def at :201, `mem_codiscreteWithin` at :203 as fallback);
-`accPt_sup` — Topology/ClusterPt.lean:190;
-`accPt_iff_frequently_nhdsNE` — Topology/ClusterPt.lean:217;
+Primary route (all added v1.2):
+`MeromorphicAt.eventuallyEq_nhdsNE_of_eventuallyEq_codiscreteWithin` —
+Analysis/Meromorphic/IsolatedZeros.lean:99 (verbatim signature quoted in §0; the
+zero-valued form at :59, the identity principle at :88 and the `Preperfect`
+variants at :109/:118 are the neighbouring family);
+`AnalyticAt.meromorphicAt` — Analysis/Meromorphic/Basic.lean:40;
+`NormedField.nhdsNE_neBot` — Analysis/Normed/Field/Basic.lean:242 (`@[instance]`);
+`Filter.Eventually.frequently` — Order/Filter/Basic.lean:756;
 `AnalyticAt.frequently_eq_iff_eventually_eq` —
 Analysis/Analytic/IsolatedZeros.lean:141 (verbatim signature quoted in §0).
 
+Fallback route: `mem_codiscreteWithin_accPt` — Topology/DiscreteSubset.lean:217
+(and the `codiscreteWithin` def at :201, `mem_codiscreteWithin` at :203 as
+fallback); `accPt_sup` — Topology/ClusterPt.lean:190;
+`accPt_iff_frequently_nhdsNE` — Topology/ClusterPt.lean:217.
+
 #### Obligations (A1)
 
-- **S1AP-BRIDGE** (**HIGH**). The whole statement. Every link is a named pinned
-  lemma, but the filter algebra between them (EventuallyEq as set membership;
-  `𝓟`-monotonicity through the `(U ∩ S) ∪ (U \ S)` split; `AccPt` unfolding
-  conventions) is exactly the kind of glue where elaboration time is lost. This
-  is the contract's riskiest item and it gates A2–A4. Fallbacks, in order:
-  (i) replace step 2 by `AccPt.mono` (ClusterPt.lean:230, pinned — Annex A F5)
-  through `U ⊆ (U ∩ S) ∪ (U \ S)` with `sup_principal`; (ii) work from
+- **S1AP-BRIDGE** (**LOW** — downgraded from HIGH in v1.2). The punctured →
+  unpunctured step. Discharge, in two lines: `.frequently` on the conclusion of
+  Meromorphic/IsolatedZeros.lean:99 (fed by `AnalyticAt.meromorphicAt`, Basic:40),
+  then `AnalyticAt.frequently_eq_iff_eventually_eq` (Analytic/IsolatedZeros.lean:141).
+  The `NeBot (𝓝[≠] x)` instance is `NormedField.nhdsNE_neBot` (Normed/Field/Basic.lean:242)
+  and needs no argument. **This obligation no longer gates A2–A4**; the v1.1
+  claim that it did was the consequence of not citing :99. Residual risk is
+  ordinary elaboration friction: whether `f =ᶠ[𝓝[≠] x] g` unfolds to
+  `∀ᶠ z in 𝓝[≠] x, f z = g z` where `.frequently` wants it, and whether the
+  `Filter`/`Topology` namespaces are open enough for `𝓝[≠]` to parse under the
+  proposed preamble. Fallbacks, in order: (i) the full v1.1 filter-algebra route
+  displayed above, whose every link is also pinned; (ii) within that route,
+  replace step 2 by `AccPt.mono` (ClusterPt.lean:230, pinned — Annex A F5)
+  through `U ⊆ (U ∩ S) ∪ (U \ S)` with `sup_principal`; (iii) work from
   `mem_codiscreteWithin` (:203) directly: `Disjoint (𝓝[≠] x) (𝓟 (U \ S))` plus
   `NeBot (𝓝[≠] x ⊓ 𝓟 U)` forces `NeBot (𝓝[≠] x ⊓ 𝓟 (U ∩ S))` by
-  `inf_sup_left`-type lattice reasoning in `Filter`; (iii) if the generic form
+  `inf_sup_left`-type lattice reasoning in `Filter`; (iv) if the generic form
   resists, specialize A1 to `𝕜 = ℂ`, `U = closedBall c R` and inline it into
   A2 — the generic statement is then dropped, A2–A4 survive unchanged, and the
   drop is recorded. **Do not** weaken A2 by *assuming* the factorization
   pointwise (death condition 6).
+- **S1AP-A1b** (LOW, informational, added v1.2). A1 is a near-duplicate of pinned
+  material under a different name, which the name-only collision scan could not
+  see. If any of this is offered upstream, expect a maintainer to ask why A1 is not
+  simply stated as a two-line `AnalyticAt` corollary in
+  `Mathlib/Analysis/Meromorphic/IsolatedZeros.lean` next to :99, and be ready to
+  either agree or justify the separate home. This is a review-negotiation item, not
+  a proof risk. The acceptance record additionally proposed **renaming** A1 to match
+  the pinned family (e.g. `AnalyticAt.eventuallyEq_nhds_of_eventuallyEq_codiscreteWithin`);
+  a declaration name is part of a public signature, so **that rename is NOT made in
+  this pass** and would return the surface to contract review (§5.4).
 - **S1AP-A1a** (LOW). `AccPt` at the intended call sites exists: for
   `x ∈ sphere c R ⊆ closedBall c R`, `R > 0`,
   `x ∈ closedBall c R = closure (ball c R)` (`closure_ball`, RCLike/Real.lean:59)
@@ -557,6 +962,39 @@ statement reads without the `logDeriv` abbreviation. The divisor sum is a
 finsum over the `FunLike` coercion of `MeromorphicOn.divisor f (ball c R) :
 Function.locallyFinsuppWithin (ball c R) ℤ` — finite support is a *theorem*
 (`divisor_ball_support_finite`, Divisor.lean:104), never a hypothesis (D5).
+
+**`hR : 0 < R` IS REQUIRED FOR TRUTH, NOT FOR CONVENIENCE (v1.2, acceptance
+record truth lens finding 3).** This is the package-wide statement of the
+negative-radius trap; v1.1 framed the trap as W1-specific and that framing is
+wrong. Weakening `0 < R` to `0 ≤ R`, to `R ≠ 0`, or to nothing makes **A2
+false**, by a witness entirely inside the pin:
+
+> Take `f = id`, `c = 0`, `R = -1`. Then `closedBall (0:ℂ) (-1) = ∅`
+> (`Metric.closedBall_eq_empty`, Pseudo/Defs.lean:468) so `hf` holds vacuously;
+> `sphere (0:ℂ) (-1) = ∅` (`Metric.sphere_eq_empty_of_neg`, :442) so `hf₀` holds
+> vacuously; `ball (0:ℂ) (-1) = ∅` (`Metric.ball_eq_empty`, :387) so
+> `MeromorphicOn.divisor f (ball 0 (-1))` is identically `0` — its `toFun` guards
+> on `z ∈ U` (Divisor.lean:39–:41) — and the RHS is `2πI · 0 = 0`. But the LHS is
+> `∮ z in C(0,-1), (z - 0)⁻¹ = 2 * π * I ≠ 0`, by the pinned
+> `circleIntegral.integral_sub_center_inv` (CircleIntegral.lean:532, whose
+> hypothesis is exactly `R ≠ 0`). `0 = 2πI` is false.
+
+This is the same witness §5.2 already runs against the pool's W1 premise-form.
+The trap is **package-wide**: see the identical notes under A3 and A4, §5.2, and
+death condition 8.
+
+*Why the split with W1's `|R|` is deliberate and not an oversight.* W1 is stated
+on `|R|` and A2–A4 on `0 < R`, whereas the pin's own family here (`:538`, `:557`,
+JensenFormula.lean:307) uses `R ≠ 0` with `|R|` throughout. The split is kept
+because the two statements are doing different jobs: W1 closes a documented
+library gap and should therefore be as general as the pinned API around it
+(uniform in the sign of `R`), while A2–A4 assert an equality between an integral
+and a count over `ball c R`, where the negative-radius branch is not merely
+awkward but **empty on one side and nonzero on the other**. Adopting `R ≠ 0` +
+`|R|` for A2–A4 would require restating the divisor sum over `ball c |R|` and the
+hypotheses over `closedBall c |R|`/`sphere c |R|` — a change to three public
+signatures, which this pass does not make (§5.4). A future reviewer who prefers
+the uniform convention should raise it as a contract-review item.
 
 #### Proof skeleton
 
@@ -637,15 +1075,36 @@ Convex.lean:71 + PathConnected.lean:93; ProperSpace.lean:40–42.
   seams in one rewrite chain: finprod→`Finset.prod` (with the `mulSupport`
   identification :52 and `Function.HasFiniteSupport` = `support.Finite` by
   `rfl`, FiniteSupport/Defs.lean:28), `logDeriv_mul`'s side conditions
-  (including its differentiability binders as displayed at :54–58),
-  `logDeriv_prod`'s per-factor nonvanishing, and `logDeriv_fun_zpow`'s
-  `(f · ^ n)` lambda shape versus the `(· - u) ^ D u` factor shape. Fallback:
+  (including its differentiability binders as displayed at :54–:56 — **and note
+  that its first argument `(x : 𝕜)` is EXPLICIT and precedes `hf`**, see the
+  verbatim quote now in §0), `logDeriv_prod`'s per-factor nonvanishing, and
+  `logDeriv_fun_zpow`'s `(f · ^ n)` lambda shape versus the `(· - u) ^ D u`
+  factor shape.
+
+  **Lambda shapes at all three levels, not just the innermost (v1.2, acceptance
+  record pin lens finding 2).** v1.1 recorded the lambda hazard only for
+  `logDeriv_fun_zpow`. It is present one level up as well, and step 7 walks into
+  it: at the pin `logDeriv_mul` concludes on `logDeriv (fun z => f z * g z) x`
+  (:56) and `logDeriv_prod` on `logDeriv (∏ i ∈ s, f i ·) x` (:75) — both LAMBDA
+  spellings — while step 7 computes with `logDeriv (φ * g) z`, a **Pi-level
+  product of two functions**. These are defeq but not syntactically equal, so
+  `rw` will not fire on them and `exact` needs a `show`. Discharge: `Pi.mul_apply`
+  (Algebra/Notation/Pi/Defs.lean:70, `@[simp]`, `namespace Pi` :29–:165) or an
+  explicit `show`, applied at each of the three shapes — `logDeriv_mul` :56,
+  `logDeriv_prod` :75, `logDeriv_fun_zpow` :87 — alongside the `Pi.smul_apply`
+  already recorded under S1AP-SMUL (that one is the `to_additive` twin of
+  `Pi.pow_apply`, Notation/Pi/Defs.lean:136, and has no declaration line of its
+  own; see the §0 note). Not a soundness problem, an unrecorded seam of exactly
+  the kind this register exists for. Fallback:
   prove the expansion by `Finset.induction` on `h₃f.toFinset` using
   `FactorizedRational.extractFactor` (:107) instead of `logDeriv_prod` — the
   pool's route (b), re-proving less of `extract_zeros_poles` than the pool
   feared because only the sphere-side identity is needed.
-- **S1AP-BRIDGE** (**HIGH**, shared with A1). Step 6 consumes A1; if A1 falls to
-  its fallback (iii), step 6 inlines it.
+- **S1AP-BRIDGE** (**LOW**, shared with A1 — downgraded from HIGH in v1.2).
+  Step 6 consumes A1, which is now a short corollary of
+  Meromorphic/IsolatedZeros.lean:99 rather than the package's gate; if A1 falls to
+  its fallback (iv), step 6 inlines it. **S1AP-LOGD is now the package's only HIGH
+  obligation**, and it lives in A2's step 7, not in A1.
 - **S1AP-FIN** (MEDIUM). Step 2, the `≠ ⊤` supply: three carrier hops
   (`ℕ∞`-order at a sphere point, preconnected propagation, `WithTop ℤ` via
   `.map (↑)`). Mirrors the S1M-FIN discharge pattern of the built `Mult.lean`
@@ -691,6 +1150,13 @@ theorem Complex.circleIntegral_logDeriv_eq_zero_iff
     (hf₀ : ∀ z ∈ Metric.sphere c R, f z ≠ 0) :
     (∮ z in C(c, R), deriv f z / f z) = 0 ↔ ∀ z ∈ Metric.ball c R, f z ≠ 0
 ```
+
+**`hR : 0 < R` IS REQUIRED FOR TRUTH HERE TOO (v1.2).** The A2 witness refutes A3
+directly: with `f = id`, `c = 0`, `R = -1` both hypotheses are vacuous
+(`closedBall 0 (-1) = ∅`, `sphere 0 (-1) = ∅`), the right side is vacuously TRUE
+(`ball 0 (-1) = ∅`, so "no zero in the ball" holds), and the left side is FALSE
+(`∮ z in C(0,-1), (z-0)⁻¹ = 2πI ≠ 0` by CircleIntegral.lean:532). An `iff` with a
+false left and a true right is false. See the fuller statement under A2, and §5.2.
 
 #### Proof skeleton
 
@@ -739,6 +1205,29 @@ theorem Complex.exists_nat_circleIntegral_logDeriv_eq
     ∃ n : ℕ, (∮ z in C(c, R), deriv f z / f z) = 2 * Real.pi * Complex.I * (n : ℂ)
 ```
 
+**`hR : 0 < R` IS REQUIRED FOR TRUTH HERE TOO (v1.2 — and this sharpens the
+acceptance record, which guessed the opposite).** The acceptance record's truth
+lens tried the `f = id` and `f = (·)²` witnesses against A4, found `n = 1` and
+`n = 2` respectively, and concluded that "A4's `0 < R` is convenience". **That
+conclusion is wrong and is corrected here.** Those witnesses fail only because
+they produce a *positive* count; A4's `∃ n : ℕ` also forbids a *negative* one,
+and with the hypotheses vacuous at `R < 0` the function `f` is completely
+arbitrary — nothing forces it to be analytic, so a pole is admissible:
+
+> Take `f = fun z : ℂ => z⁻¹`, `c = 0`, `R = -1`. As above, `closedBall 0 (-1)`
+> and `sphere 0 (-1)` are empty, so `hf` and `hf₀` hold vacuously. On the contour
+> every point has `‖z‖ = 1`, so `z ≠ 0`, and there `deriv f z / f z =
+> (-(z^2)⁻¹)/(z⁻¹) = -(z - 0)⁻¹` (`deriv_inv`, Deriv/Inv.lean:66). Hence the LHS
+> is `-(2 * π * I)`, by `circleIntegral.integral_const_mul` (:527) and
+> `circleIntegral.integral_sub_center_inv` (:532). Since `2πI ≠ 0`, solving
+> `2πI · (n:ℂ) = -2πI` needs `n = -1`, which is not a natural number. No `n : ℕ`
+> exists, so **A4 is FALSE at `R = -1`**.
+
+So `0 < R` is soundness-load-bearing in all three of A2, A3 and A4, and the trap
+is package-wide without exception. (Note what does the work: `0 < R` is what
+makes `hf₀` non-vacuous, and `hf₀` on a nonempty sphere is what forces `f` to be
+genuinely analytic and nonvanishing on the contour.)
+
 #### Proof skeleton
 
 ```lean
@@ -749,8 +1238,20 @@ theorem Complex.exists_nat_circleIntegral_logDeriv_eq
 
 #### Pinned dependencies (A4)
 
-A2; Divisor.lean:104/:177; Finprod.lean:354 (twin); `Finset.sum_nonneg`,
-`Int.toNat_of_nonneg` (core big-operators/order API, same files as A3's).
+A2; Divisor.lean:104/:177 (consumed as
+`MeromorphicOn.AnalyticOnNhd.divisor_nonneg`, fully qualified — see the §0
+namespace note); Finprod.lean:354 (twin);
+`Finset.sum_nonneg` — Algebra/Order/BigOperators/Group/Finset.lean:120, the
+`to_additive` twin named on the attribute line at :119 over
+`Finset.one_le_prod'`, inside `namespace Finset` :32–:602 (locator added v1.2;
+v1.1 cited it as "core big-operators/order API, same files as A3's", which is a
+locator-free hand-wave and is what pin lens finding 3 objected to);
+`Int.cast_sum` — Algebra/BigOperators/Ring/Finset.lean:377;
+`Int.toNat_of_nonneg` — **no locator is offered, deliberately.** It is used 33
+times inside Mathlib at the pin but is DECLARED NOWHERE under `Mathlib/`; it is a
+Lean-core `Int` lemma. Under this document's own rule a locator must be read
+before it is written, and there is no `Mathlib/` file to read. A stage-two
+drafter must confirm the exact name and argument order at elaboration time.
 
 #### Obligations (A4)
 
@@ -809,20 +1310,26 @@ a future, separately authorized, queue-governed contract.
 
 ## Obligation register
 
+Severities re-priced in v1.2 where the acceptance record's findings, re-confirmed
+at the pin, required it. **The package now has exactly one HIGH obligation, and
+it is S1AP-LOGD in A2's step 7 — not A1.**
+
 | ID | Statement | Severity | Content | Fallback recorded |
 |---|---|---|---|---|
-| **S1AP-BRIDGE** | A1 (gates A2–A4) | **HIGH** | codiscrete→`𝓝 x` upgrade: filter algebra between four named pinned lemmas (DiscreteSubset:217, ClusterPt:190/:217, IsolatedZeros:141) | yes (three routes, incl. inlining a ℂ-special case into A2) |
-| **S1AP-LOGD** | A2 | **HIGH** | `logDeriv (φ * g)` expansion on the sphere: finprod→Finset seam, `logDeriv_mul/prod/fun_zpow` side conditions, lambda shapes | yes (induction via `extractFactor` :107 — pool route (b), sphere-side only) |
+| **S1AP-LOGD** | A2 | **HIGH** | `logDeriv (φ * g)` expansion on the sphere: finprod→Finset seam, `logDeriv_mul/prod/fun_zpow` side conditions, the explicit `(x : 𝕜)` of :54, lambda shapes at all three levels (:56/:75/:87) | yes (induction via `extractFactor` :107 — pool route (b), sphere-side only; `Pi.mul_apply`/`show` for the shapes) |
+| S1AP-BRIDGE | A1 (**no longer gates A2–A4**) | LOW *(was HIGH; v1.2)* | punctured→unpunctured only: `.frequently` on Meromorphic/IsolatedZeros:99 (via AnalyticAt.meromorphicAt, Basic:40; `NeBot` by instance, Normed/Field/Basic:242) then Analytic/IsolatedZeros:141 | yes (four routes, incl. the full v1.1 filter-algebra proof and inlining a ℂ-special case into A2) |
 | S1AP-FIN | A2 | MEDIUM | `≠ ⊤` supply on the compact: Order:133 → :624 → Meromorphic/Order:279 + ENat:526; subtype binders | yes (Mult.lean S1M-FIN pattern) |
 | S1AP-INT | A2 | MEDIUM | `integral_congr` EqOn shape + integrability before `integral_add`/`integral_fun_sum` | yes (unfold to `intervalIntegral.integral_finsetSum`, :461 proof copyable) |
 | S1AP-SUPP | A2 | MEDIUM | support ⊆ ball and support ⊆ zeros; orientation of NormalForm:578 | yes (pointwise via :71 + :133/:137, bypassing :578 in A2) |
-| S1AP-W1a | W1 | MEDIUM | chain-rule constant arithmetic for the log primitive | yes (`mul_const` variant) |
-| S1AP-W1b | W1 | MEDIUM | slitPlane membership from the norm bound | yes (direct re-estimate) |
+| S1AP-W1a | W1 | MEDIUM | chain-rule constant arithmetic for the log primitive (Comp:258 / Basic:681 / Add:403 / Mul:558, all with the explicitness noted); also: apply :538 by `refine … (f := …) ?_`, never a bare `apply` | yes (`mul_const` variant, Mul:305) |
+| S1AP-W1b | W1 | MEDIUM | slitPlane membership from the norm bound (`Complex.abs_re_le_norm`, Complex/Norm:38) | yes (direct re-estimate) |
+| S1AP-W1e | W1 | MEDIUM *(new, v1.2)* | the `∮`-level absolute-radius flip needed only by the Cauchy alternative route: derivable from CircleAverage:96 + :135 via :430 and :422, but not a named lemma at the pin | yes (reconstruct from `circleMap_neg_radius` :162 + periodicity, pattern at :292–:296) |
 | S1AP-A3a | A3 | MEDIUM | `2πI·(n:ℂ) = 0 → n = 0` cast chain; ball-carrier `≠ ⊤` restriction | yes |
 | S1AP-SEAM | A2 | LOW | CB-vs-ball divisor pointwise equality (Divisor:68 twice) | yes |
 | S1AP-SMUL | A2 | LOW | `φ • g` vs `φ * g`: smul_eq_mul (Action/Defs:74, rfl) via Pi.smul_apply — Annex A F4 | yes (`show`/rewrite) |
 | S1AP-CAST | A2 | LOW | `ℤ→ℂ` cast through the Finset sum | yes (`push_cast`) |
 | S1AP-A1a | A1/A2 | LOW | `AccPt` at sphere points via `closure_ball` + ClusterPt:261 | yes |
+| S1AP-A1b | A1 | LOW *(new, v1.2; informational)* | A1 is a semantic near-duplicate of Meromorphic/IsolatedZeros:99 under a different name; upstream will ask why it is not stated there | n/a (review-negotiation item) |
 | S1AP-W1c | W1 | LOW | `z ≠ w` on the sphere | yes |
 | S1AP-W1d | W1 | LOW | (informational) upstream may prefer the `0 ≤ R` Cauchy form | n/a |
 | S1AP-A3b | A3 | LOW | `to_additive` name resolution at Finset:164 | yes |
@@ -845,13 +1352,35 @@ review.
 - **DEFERRED-AP3** — the weighted/locating form `∮ g·f'/f` (D3: needs a Cauchy
   integral formula step this draft does not open).
 - **DEFERRED-AP4** — an `∮`-level negative-radius reparametrization lemma
-  (`∮ … C(c,R) = ∮ … C(c,|R|)`); pattern at CircleIntegral.lean:292–296. Not
-  needed by W1's primary route.
+  (`∮ … C(c,R) = ∮ … C(c,|R|)`). **Restated in v1.2.** It is **absent as a named
+  `∮` lemma** — re-verified this pass by grepping `neg_radius|abs_radius` over
+  the whole of CircleIntegral.lean, which finds only `circleMap_neg_radius`
+  (:162) and the integrand-level `circleIntegrable_neg_radius` (:292). It is
+  **NOT absent as mathematics**: `Real.circleAverage_abs_radius`
+  (CircleAverage.lean:135, `@[simp]`) already performs the flip, and
+  `Real.circleAverage_eq_circleIntegral` (:96) bridges to `∮`. The v1.1 phrasing
+  "does not exist at the pin" is withdrawn as misleading. Deriving the named `∮`
+  form is short but not free — it must insert and cancel the `(z - c)⁻¹ •` weight
+  of :96 and cannot use `integral_congr` (:425, `0 ≤ R`) to do it, which is why
+  it is costed as **S1AP-W1e** (MEDIUM) rather than as "~3 lines". Not needed by
+  W1's primary (log-primitive) route; needed by the recorded Cauchy alternative.
+  Reconstruction pattern, if a general lemma is ever wanted:
+  CircleIntegral.lean:292–:296.
 - **DEFERRED-AP5** — the meromorphic-case argument principle (poles counted
   negatively; the pool's `MeromorphicOn.circleIntegral_logDeriv` sketch). The
   factorization engine (:291) already covers it, but the sphere-side `logDeriv`
-  expansion gains a pole-factor case split, and the analytic case is the one
-  with consumers in sight. A future delta, not a redesign.
+  expansion gains a pole-factor case split. A future delta, not a redesign.
+  *(v1.2, acceptance record claim-boundary finding 4: v1.1 ended this item with
+  "and the analytic case is the one with consumers in sight" — the only sentence
+  in the document asserting a downstream consumer, and it named none. In a
+  document whose whole licence is route-neutrality, an unnamed "consumers in
+  sight" invites the reader to supply one, and the natural supply inside
+  `domains/riemann-hypothesis/` is an entire function, i.e. ξ — which is exactly
+  the analytic-vs-meromorphic split the sentence turned on. The clause is
+  deleted. For the record, the consumers actually in view are internal and
+  route-neutral: DEFERRED-AP2, DEFERRED-AP3, and a possible upstream Mathlib
+  submission. Nothing in this package has a ζ/ξ consumer, and supplying one is
+  death condition 4.)*
 
 ---
 
@@ -859,15 +1388,35 @@ review.
 
 - **This contract is an unbuilt statement surface.** Stage-one acceptance
   changes no barrier row, closes no queue task, and carries no kernel verdict.
-- **No barrier is closed by building it either.** The barriers of
+- **No barrier is closed by building it either. It closes no barrier, advances
+  no barrier, and partially closes no barrier of `MATHLIB_CAPABILITY_MAP.md` —
+  its capability-map effect is INVENTORY ONLY.** Generic machinery lowers the
+  cost of a future exit; it never retires a row. *(v1.2, acceptance record
+  claim-boundary finding 2: v1.1 negated only the word "closes", leaving
+  "advances", "partially closes" and "inventory only" to implication. The repo
+  has a settled formula for exactly this situation and this contract now uses it
+  verbatim — `domains/riemann-hypothesis/drafts/README.md:33` for HarnackDisc and
+  `:34` for PolyLiouville, with the equivalent statement carried in the built
+  headers, e.g. `ResearchOS/Analysis/HarnackDisc.lean:23–:30`.)* The barriers of
   `MATHLIB_CAPABILITY_MAP.md` are scoped to this repository's ζ/ξ layer; W1,
   A1–A4 quantify over arbitrary functions and mention no ζ, ξ, L-function, or
-  strip. Generic machinery lowers the *cost* of some future exit; it never
-  retires a row (the finding-A4 discipline of `MULTIPLICITY_CONTRACT.md`,
-  inherited here verbatim). In particular this is **not** progress on
-  `S1-GLOBAL-ZEROS`, whose row concerns zero *enumeration* for specific
-  functions — A2's divisor sum is an integer attached to one disc, not an
-  enumeration, an ordering, or a counting function `N(T)`.
+  strip. This is the finding-A4 discipline of `MULTIPLICITY_CONTRACT.md`,
+  inherited here verbatim.
+- **In particular, `S1-GLOBAL-ZEROS` is untouched and stays OPEN — but not for
+  the reason v1.1 gave.** *(v1.2, acceptance record claim-boundary finding 1.
+  v1.1 said that row "concerns zero *enumeration* for specific functions". It
+  does not, and a reader checking the row would have found the paraphrase does
+  not match it. The row, re-read this pass at `MATHLIB_CAPABILITY_MAP.md:387`,
+  blocks on "no global enumeration, symmetric truncation, convergence, or
+  counting API", and its exit-evidence column **leads with "finite divisor
+  sums"** — and A2–A4 are finite divisor sums. The paraphrase is replaced by the
+  row's real content and the real reason.)* A2–A4 sum a divisor over one disc,
+  but of an **arbitrary `f`**, whereas the row is scoped to this repository's
+  ζ/ξ layer and additionally requires symmetric truncation, weighted
+  summability, star convergence of `Σ 1/ρ`, and the source-matched `|ρ| ≤ T`
+  (Li) / `|Im ρ| < T` (Weil) limits with multiplicity. None of those is supplied
+  here and none is approached. The row is untouched and stays OPEN; the effect is
+  inventory only.
 - **No route is selected, advanced, or implied.** The RH queue
   (`tasks/RIEMANN_HYPOTHESIS.md`) is the lane authority;
   `repo/ECDLP_DECISION_SUBSTRATE.json` governs the ECDLP lane and currently
@@ -875,6 +1424,27 @@ review.
   document requests none.
 - **No RH-truth claim.** Nothing here proves, disproves, or supplies evidence
   about the Riemann Hypothesis, and no consequence of W1/A1–A4 does either.
+- **Shape neutrality** *(added v1.2, acceptance record claim-boundary finding
+  5)*. The route-neutrality argument above is lexical — no statement names ζ, ξ,
+  an L-function, a strip, or a route — and lexical grounds do not by themselves
+  answer a challenge about region SHAPE. The whole surface is disc-only: A2–A4
+  count over `Metric.ball c R` with the contour `C(c, R)`, and the repo treats
+  shape as a route-selection vector to be checked, not assumed (RH-011 required
+  "the no-cutoff-shape neutrality property re-verified mechanically",
+  `tasks/RIEMANN_HYPOTHESIS.md:844`; the ZERO_SET_SLICE surface is parameterized
+  by "an arbitrary compact `K`, with no cutoff shape anywhere, because choosing a
+  cutoff shape is a route selection and all routes remain PARKED", `:831–:832`).
+  **The disc is not a cutoff choice in the RH-011 sense here**, for two
+  independent reasons: no statement in this package truncates the zero set of any
+  named function — the statements quantify over an arbitrary `f`, so there is
+  nothing for a shape to select over — and the disc is **forced by the pin**,
+  where `circleIntegral` is the only contour API present and general contours are
+  Form B (death condition 5). The asymmetry is recorded rather than hidden:
+  nothing here supplies a strip- or rectangle-shaped count, and the
+  route-neutral compact-`K` form at the ξ level already exists separately in
+  `ZERO_SET_SLICE_CONTRACT.md`. Anyone who later reads the disc as the Li-side
+  `|ρ| ≤ T` shape should note that reading requires an instantiation at ξ, which
+  is death condition 4.
 - **Upstream intent is optional and unowned.** If any part is offered to
   Mathlib, the timeline and design authority are Mathlib's
   (`UPSTREAM_POOL.md` §11.2); this contract binds only the repo-side drafts
@@ -912,10 +1482,22 @@ Stop and re-plan — do **not** patch around — if any of the following occurs.
    `logCounting`, `N(T)`, or growth order of an entire function have no
    business in any of the five proofs; if one appears, the proof has drifted
    into a different pool item.
-8. **W1 is restated with the unsigned-radius hypothesis.**
+8. **The negative-radius trap is reopened anywhere in the package.** This is
+   **package-wide, not W1-local** (corrected in v1.2; §5.2 and the notes under
+   A2, A3, A4). Two forms:
+   (a) **W1 is restated with the unsigned-radius hypothesis.**
    `w ∉ Metric.closedBall c R` is a **false** premise-form at `R < 0` (§5.2,
    with a pinned counterexample witness); any draft carrying it must not
    proceed to elaboration.
+   (b) **`hR : 0 < R` is weakened in A2, A3 or A4** — to `0 ≤ R`, to `R ≠ 0`, or
+   dropped. All three statements become **FALSE**, not merely awkward, and each
+   has a pinned witness: `f = id, c = 0, R = -1` refutes A2 and A3, and
+   `f = (·)⁻¹, c = 0, R = -1` refutes A4. At `R < 0` the closed ball, the sphere
+   and the ball are all empty, so `hf` and `hf₀` are vacuous, the divisor sum is
+   `0`, and `f` is entirely unconstrained — while the contour `C(c, R)` is the
+   perfectly good circle of geometric radius `|R|` and the integral is whatever
+   that unconstrained `f` makes it. `0 < R` is what makes `hf₀` bite. Any draft
+   that relaxes it must not proceed to elaboration.
 9. **A barrier row or this contract is used as work authorization.** The RH
    queue is the authority; an accepted contract is a design, not a task.
 
@@ -940,10 +1522,15 @@ Stop and re-plan — do **not** patch around — if any of the following occurs.
   `namespace circleIntegral` block, so the full name is
   `circleIntegral.circleIntegral_congr_codiscreteWithin` — Annex A, F1).
 - The pool's "hardest step" identification (codiscrete → pointwise on the
-  sphere) is confirmed as the right risk locus; this contract adds the finding
-  that every link of a discharge chain is individually pinned and named
-  (DiscreteSubset:217, ClusterPt:190/:217/:261, IsolatedZeros:141,
-  Deriv/Basic:647), which is why Form A is offered at contract level at all.
+  sphere) was called "confirmed as the right risk locus" in v1.1. **That
+  confirmation is RETRACTED in v1.2 and moves to §5.3.** The codiscrete bridge is
+  not the risk locus: its meromorphic, punctured form is a pinned theorem
+  (Meromorphic/IsolatedZeros.lean:99), so A1 is a short corollary and
+  `S1AP-BRIDGE` is LOW. v1.1 did establish, correctly, that every link of an
+  independent discharge chain is individually pinned and named
+  (DiscreteSubset:217, ClusterPt:190/:217/:261, Analytic/IsolatedZeros:141,
+  Deriv/Basic:647) — that chain survives as A1's recorded fallback. The package's
+  real risk locus is A2's step 7, `S1AP-LOGD`.
 
 ### 5.2 Correction to the pool (one defect found and fixed here)
 
@@ -954,11 +1541,44 @@ Stop and re-plan — do **not** patch around — if any of the following occurs.
 `circleIntegral.integral_sub_center_inv` (CircleIntegral.lean:532, hypothesis
 only `R ≠ 0`) evaluates the integral to `2 * π * I ≠ 0`. The circle `C(c, R)`
 has geometric radius `|R|`, and the file's own integrability lemmas are stated
-on `sphere c |R|` (:538, :557). W1 therefore carries `w ∉ Metric.closedBall c
-|R|`. Consequently the pool's "few-line addition via the Cauchy theorem" is
+on `sphere c |R|` (:538, :557). W1 therefore carries the hypothesis
+`w ∉ Metric.closedBall c |R|`. Consequently the pool's "few-line addition via
+the Cauchy theorem" is
 accurate for `0 ≤ R` only; the uniform statement uses the primitive route
-(:538 + slitPlane log), which the docstring itself notes is possible. Neither
-reading changes the difficulty class; the signature had to change.
+(:538 + slitPlane log), which the docstring itself notes is possible — or the
+Cauchy route plus the `|R|` flip, which v1.2 records in full as a costed
+alternative (S1AP-W1e) after correcting the v1.1 claim that the flip is absent at
+the pin. Neither reading changes the difficulty class; the signature had to
+change.
+
+**The trap is PACKAGE-WIDE, not W1-local (v1.2).** v1.1 recorded this witness
+only against W1's premise-form. The same `R = -1` geometry refutes A2, A3 and A4
+if their `hR : 0 < R` is weakened, because at `R < 0` **every region in the
+statement is empty while the contour is not**:
+
+| object at `R = -1`, `c = 0` | value | pinned lemma |
+|---|---|---|
+| `Metric.closedBall 0 (-1)` | `∅` | `closedBall_eq_empty`, Pseudo/Defs.lean:468 |
+| `Metric.sphere 0 (-1)` | `∅` | `sphere_eq_empty_of_neg`, :442 |
+| `Metric.ball 0 (-1)` | `∅` | `ball_eq_empty`, :387 |
+| the contour `C(0, -1)` | the circle of geometric radius `1` | `circleIntegral` def, CircleIntegral.lean:385 |
+
+So `hf` and `hf₀` are vacuous, the divisor finsum is `0`, and `f` is entirely
+unconstrained — which is the whole problem, since the integral is then whatever
+that unconstrained `f` makes it:
+
+- **A2 and A3.** `f = id`: LHS `∮ z in C(0,-1), (z-0)⁻¹ = 2πI ≠ 0` (:532,
+  hypothesis exactly `R ≠ 0`) against A2's RHS `2πI·0 = 0`, and against A3's
+  vacuously-true right-hand side.
+- **A4.** `f = fun z => z⁻¹`: on the contour `‖z‖ = 1` so `z ≠ 0`, and there
+  `deriv f z / f z = (-(z^2)⁻¹)/(z⁻¹) = -(z-0)⁻¹` (`deriv_inv`, Deriv/Inv.lean:66),
+  giving LHS `-(2πI)` by :527 and :532. `2πI·(n:ℂ) = -2πI` has no solution with
+  `n : ℕ`. *(The acceptance record judged A4's `0 < R` to be mere convenience,
+  having tried only `f = id` and `f = (·)²`, which produce nonnegative counts.
+  That judgement is corrected here: `∃ n : ℕ` forbids negative counts too, and at
+  `R < 0` nothing stops `f` from having a pole.)*
+
+Death condition 8 is extended accordingly.
 
 ### 5.3 Not verified, and stated as such
 
@@ -970,6 +1590,129 @@ is inherited from the pool, not re-verified. The two `sorry` markers inside
 W1's skeleton are stage-one display holes in a non-built document, not
 proposed build content; a built PR containing them would violate death
 condition 1 and the one invariant.
+
+Retracted in v1.2 and listed here so it is not quoted from v1.1: the claim that
+the codiscreteness bridge is this package's hardest step, and the claim that the
+`∮`-level `|R|` flip does not exist at the pin. Both were inherited or asserted
+without the counter-evidence being looked for, and both are corrected in §5.4.
+
+### 5.4 v1.2 editorial pass (RH-015, 2026-08-09) — what was applied and what was not
+
+This section records the application of the editorial fixes enumerated by
+`notes/reviews/ARG_PRINCIPLE_ACCEPTANCE_2026_08_08.md` (stage-one acceptance,
+three lenses, zero blocking findings, no lens asking for a signature change).
+
+**Method.** That record states in terms that its findings are *claims with
+locators*, produced by one lens each with no adversarial verifier, and that
+cost-reducing findings in particular must be confirmed before use. Accordingly
+every locator written or corrected in v1.2 was **re-opened at the pin
+`fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`** (re-confirmed by
+`git -C /workspace/leanprover-community/mathlib4 rev-parse HEAD`) and its
+signature text read, and the two re-pricing findings were re-derived from the
+source rather than accepted on report. Nothing was elaborated; there is still no
+Lean toolchain here and no statement is known to typecheck.
+
+**The two re-pricing findings, both CONFIRMED at the pin, one with its cost
+estimate corrected.**
+
+1. *A1 is not the hard step.* CONFIRMED.
+   `MeromorphicAt.eventuallyEq_nhdsNE_of_eventuallyEq_codiscreteWithin` reads at
+   Meromorphic/IsolatedZeros.lean:99 as quoted in §0, inside `namespace
+   MeromorphicAt` (:31–:130), with section variables at :24–:27 identical to A1's
+   binder context. Its conclusion is punctured (`𝓝[≠] x`) where A1's is
+   unpunctured (`𝓝 x`) — the shape difference is the entire delta — and the
+   bridge across it is `AnalyticAt.meromorphicAt` (Meromorphic/Basic.lean:40) +
+   `Filter.Eventually.frequently` (Order/Filter/Basic.lean:756, whose `[NeBot f]`
+   is discharged by the `@[instance]` `NormedField.nhdsNE_neBot`,
+   Normed/Field/Basic.lean:242, stated for `[NontriviallyNormedField α]` = A1's
+   typeclass) + `AnalyticAt.frequently_eq_iff_eventually_eq`
+   (Analytic/IsolatedZeros.lean:141). **Applied:** locators into §0; `S1AP-BRIDGE`
+   HIGH → LOW and no longer gating; the "single genuinely new move" and "the
+   pool's named hardest step" prose rewritten in §Candidate fields, §Grounding,
+   §2 A1 and §5.1; the two-line discharge recorded as A1's primary skeleton with
+   the v1.1 filter-algebra proof kept as fallback; the name-collision scan's
+   limitation stated where the scan is.
+2. *The `|R|` flip.* CONFIRMED as to existence; **cost estimate not confirmed.**
+   `Real.circleAverage_abs_radius` is at CircleAverage.lean:135, `@[simp]`,
+   inside `namespace Real` (:42–:382), on `circleAverage_neg_radius` (:129) and
+   `circleAverage_eq_integral_add` (:117); and a full grep of
+   `neg_radius|abs_radius` over CircleIntegral.lean confirms no `∮`-level flip is
+   named there. **Applied:** the CircleAverage locators into §0; the v1.1 "does
+   not exist at the pin" claim replaced by the accurate present-as-mathematics /
+   absent-as-a-named-lemma statement, in W1's alternative-route paragraph and in
+   DEFERRED-AP4; the Cauchy+flip route written out in full with its ingredients.
+   **Partially declined:** the finding's "~3 lines" and its proposal to promote
+   Cauchy+flip to primary and *retire* `S1AP-W1a`/`W1b`/`W1c`. The only bridge at
+   the pin from `circleAverage` to `circleIntegral`
+   (`circleAverage_eq_circleIntegral`, :96) carries a `(z - c)⁻¹ •` weight, and
+   cancelling that weight cannot use `circleIntegral.integral_congr` (:425)
+   because its `0 ≤ R` excludes precisely the negative-radius case the flip
+   exists for; the derivation therefore needs :430 (or an unfold), a `smul`/`mul`
+   step and an `R = 0` split. Promoting the route substitutes a new MEDIUM
+   obligation (**S1AP-W1e**, added) for two existing ones rather than retiring
+   them, so the log-primitive route stays primary and W1a/W1b/W1c stay live.
+   Demoting them on an unconfirmed cost claim is exactly the "invites a drafter
+   to skip preparation" failure the acceptance record warned about.
+
+**The soundness finding, applied package-wide and SHARPENED.** `0 < R` is
+required for TRUTH in A2, A3 **and A4**, and death condition 8 now says so. The
+acceptance record judged A4's `0 < R` to be convenience after trying `f = id` and
+`f = (·)²`; that is corrected in §5.2 with `f = (·)⁻¹`, `c = 0`, `R = -1`, which
+gives `∮ = -2πI` and leaves `∃ n : ℕ` unsatisfiable. All four empty-region
+lemmas and `deriv_inv` behind these witnesses are now in §0.
+
+**The remaining fixes, all applied:** the FactorizedRational "open set" docstring
+warning (span corrected to :285–:290); the verbatim `logDeriv_mul` :54–:56 and
+`logDeriv_prod` :73–:75 quotes, whose v1.1 elisions hid an explicit positional
+argument; the three-level lambda-shape hazard in `S1AP-LOGD` with
+`Pi.mul_apply`/`Pi.smul_apply` resolved to real declaration sites; the
+locator-free auxiliaries of the W1 and A3/A4 dependency lines; the rewritten
+Divisor.lean namespace note, which v1.1 stated in a way that inverted the risk;
+the `refine … (f := …) ?_` in W1's skeleton; the full
+`domains/riemann-hypothesis/drafts/` path; the `S1-GLOBAL-ZEROS` paraphrase
+replaced by the row's real text at `MATHLIB_CAPABILITY_MAP.md:387`; the settled
+closes/advances/partially-closes/inventory-only formula; the stage-two shelf and
+prefix; the unnamed "consumers in sight" clause of DEFERRED-AP5, deleted; the
+shape-neutrality statement; and the W1 effort claim in §Expected information
+gain.
+
+**Locator corrections made while applying, relative to the acceptance record's
+own citations** (each re-read this pass): the FactorizedRational docstring is at
+:285–:290, not :284–:290; `logDeriv_mul` spans :54–:56 with its proof at :57;
+the shape-neutrality precedent in the RH queue is at
+`tasks/RIEMANN_HYPOTHESIS.md:831–:832` and `:844`, not `:790–:792`;
+`PREFIX_DOMAINS` is at `scripts/gen_researchos_registry.py:46–:54` with
+`DOMAIN_SUBTREES` at `:60–:63` and the governing comment at `:56–:59`;
+`Real.circleAverage_eq_circleIntegral` is at CircleAverage.lean:96;
+`Pi.smul_apply` and `Finset.sum_nonneg` have **no declaration lines** — they are
+`to_additive` twins generated at Notation/Pi/Defs.lean:135 and
+Order/BigOperators/Group/Finset.lean:119 respectively; and `Int.toNat_of_nonneg`
+has **no `Mathlib/` declaration site at all**, so no locator is given for it.
+
+**NOT DONE, because each requires a public signature change.** Two enumerated
+fixes stop here rather than proceed. Under the two-stage gate the acceptance is
+valid only for the surface as it stands, so applying either would silently
+invalidate the acceptance it claims to implement; both return the surface to
+contract review if a reviewer still wants them.
+
+- *Rename A1* to match the pinned family, e.g.
+  `AnalyticAt.eventuallyEq_nhds_of_eventuallyEq_codiscreteWithin` (acceptance
+  record, truth lens finding 1). A declaration name is part of its signature. The
+  substance of the finding — that A1 is a corollary, not a new move — is applied
+  in full; only the rename is withheld. Recorded as S1AP-A1b.
+- *Rename W1* to `..._of_notMem_closedBall_abs` or `..._of_abs_lt_dist`
+  (acceptance record, truth lens finding 4). Same reason. The finding offered a
+  second, non-signature repair — require a docstring on the built declaration
+  stating the ball is `closedBall c |R|` — and **that one is applied**, under W1's
+  statement.
+- Related, and also withheld: adopting the pin's `R ≠ 0` + `|R|` convention across
+  A2–A4 (truth lens finding 3's second half) would restate three conclusions and
+  six hypotheses. The finding's alternative — one sentence justifying the
+  deliberate split — **is applied**, under A2.
+
+**Standing of v1.2.** This pass carries **no kernel verdict**, adds no ledger
+row, creates no drafts-lane file, changes no barrier row, and selects no route.
+All five public signatures are byte-identical to v1.0 and v1.1.
 
 ---
 
@@ -995,10 +1738,41 @@ means every built theorem is fully proved; no `sorry`, no new axioms —
 axiom base `standard`). An acceptance PR must not carry a promotion, and a
 promotion must not cite this document as its authorization.
 
+**Destination shelf and ledger lane, named here so the promotion PR does not
+have to guess (added v1.2, acceptance record claim-boundary finding 3).** *This
+package is domain-neutral.* Its built form belongs on the domain-neutral shelf
+`ResearchOS/Analysis/ArgPrinciple.lean`, **NOT** under
+`ResearchOS/AnalyticNumberTheory/RiemannHypothesis/`. Three repo facts make that
+placement mandatory rather than stylistic:
+
+1. The ledger prefix map is a **closed machine whitelist**, not a convention:
+   `scripts/gen_researchos_registry.py:46–:54` (`PREFIX_DOMAINS`) maps exactly
+   `nt-`, `RH-`, `MB-`, `HK-`, `PL-`, `TC-`, `GO-` and nothing else, and
+   `DOMAIN_SUBTREES` at `:60–:63` forces `riemann-hypothesis` rows under
+   `ResearchOS/AnalyticNumberTheory/RiemannHypothesis/` and `analysis-generic`
+   rows under `ResearchOS/Analysis/`.
+2. The in-file comment at `:56–:59` states the rule this package falls under:
+   "domain-neutral lemmas may not be filed inside a conjecture program's subtree,
+   where they would read as that program's content." (`VERIFIED_RESEARCHOS.md:22–25`
+   restates it.)
+3. The drafts-lane promotion invariant at
+   `domains/riemann-hypothesis/drafts/README.md:40–:45` says a promoted draft
+   moves "only together with its `RH-*` ledger rows" — **and that `RH-*` default
+   does not apply here.** It is the RH-lane default; the four generic packages
+   already on the domain-neutral shelf (MellinBound, HarnackDisc, PolyLiouville,
+   ThreeCircles — `domains/riemann-hypothesis/drafts/README.md:32–:35`) each carry their own
+   `analysis-generic` prefix instead.
+
+So a stage-two promotion of this package needs **a newly registered prefix**
+(e.g. `AP-`) added to `PREFIX_DOMAINS` mapping to `analysis-generic`, in the same
+PR, following the MellinBound/Harnack/PolyLiouville/ThreeCircles pattern.
+Registering that prefix is part of the promotion change; **this document
+registers nothing and adds no ledger row of any status.**
+
 ### What current CI does and does not say about the draft
 
-`drafts/ArgPrinciple.lean`, if created, lies outside every lake target
-(`lakefile.toml:2`), exactly as recorded for the drafts lane at
+`domains/riemann-hypothesis/drafts/ArgPrinciple.lean`, if created, lies outside
+every lake target (`lakefile.toml:2`), exactly as recorded for the drafts lane at
 `MULTIPLICITY_CONTRACT.md:17–23`. No green CI run on a PR adding this contract
 or that draft file is evidence about any statement in either.
 
