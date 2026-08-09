@@ -659,28 +659,74 @@ theorem Complex.circleIntegral_logDeriv_eq_divisor_sum
       -- `zpow_ne_zero (n) (h : a ≠ 0) : a ^ n ≠ 0` —
       -- Algebra/GroupWithZero/Units/Basic.lean:412.
     have hdiff : ∀ u ∈ h₃f.toFinset, DifferentiableAt ℂ
-        (fun y : ℂ => (y - u) ^ MeromorphicOn.divisor f (Metric.closedBall c R) u) z :=
-      fun u hu =>
-        (AnalyticAt.fun_zpow
-          (by show AnalyticAt ℂ (fun y : ℂ => y - u) z; fun_prop)
-          (hsphne z hz u hu)).differentiableAt
-      -- KERNEL ROUND 1 (PR #329) rejected the bare `(by fun_prop)` here:
+        (fun y : ℂ => (y - u) ^ MeromorphicOn.divisor f (Metric.closedBall c R) u) z := by
+      intro u hu
+      have hbase : AnalyticAt ℂ (fun y : ℂ => y - u) z := by
+        first
+        | fun_prop
+        | exact analyticAt_id.fun_sub analyticAt_const
+      have hzp : AnalyticAt ℂ
+          (fun y : ℂ => (y - u) ^ MeromorphicOn.divisor f (Metric.closedBall c R) u) z :=
+        AnalyticAt.fun_zpow hbase (hsphne z hz u hu)
+      exact hzp.differentiableAt
+      -- KERNEL ROUNDS 1 AND 2 (PR #329) both rejected this site. Round 1 rejected
+      -- a bare `(by fun_prop)` as the first argument:
       --   `fun_prop` was unable to prove `AnalyticAt ?m.1468 (HSub.hSub z) u`
       --   Failed to infer `(?m.1468 : Type ?u.694)` when applying `analyticAt_const`
-      -- Two things went wrong and the second is caused by the first. The SCALAR
-      -- FIELD was an unassigned metavariable `?m.1468`, because nothing in the
-      -- expected type had fixed it before the tactic ran; with the field unknown
-      -- the elaborator also mis-associated the arguments and went looking for
-      -- `(z - ·)` analytic at `u` instead of `(· - u)` analytic at `z`. The `show`
-      -- pins the field AND the function shape AND the point before `fun_prop`
-      -- starts, so neither failure can recur. This is the same hazard class the
-      -- drafter hoisted at two other sites and missed here.
+      -- Round 2 rejected the repair `(by show AnalyticAt ℂ (fun y : ℂ => y - u) z;
+      -- fun_prop)` with the SAME target, now printed by the `show` itself:
+      --   'show' tactic failed, pattern `AnalyticAt ℂ (fun y => y - u) z`
+      --   is not definitionally equal to target `AnalyticAt ?m.1468 (HSub.hSub z) u`
+      --
+      -- The round-1 diagnosis had the causality backwards, and round 2 is what
+      -- disproved it. It read the unassigned scalar field as the cause and the
+      -- `(z - ·)`-at-`u` mis-association as its consequence; a `show` was
+      -- therefore expected to fix both at once. In fact the two are INDEPENDENT
+      -- and neither is caused by the other, which is why pinning the goal shape
+      -- could not help — the goal was already wrong before the tactic block ran.
+      --
+      -- Cause of the mis-association: `AnalyticAt.zpow` (Constructions.lean:929,
+      -- `@[to_fun]` on :928) takes `(h₂f : f z ≠ 0)`, and the argument supplied
+      -- is `hsphne z hz u hu : z - u ≠ 0`, i.e. `HSub.hSub z u ≠ 0`. Solving
+      -- `?f ?z =?= HSub.hSub z u` is higher-order; Lean's first-order
+      -- approximation takes the head-and-last-argument split `?f := HSub.hSub z`,
+      -- `?z := u`. That assignment is made while elaborating the SECOND argument,
+      -- before the postponed `by` block for the first argument ever runs, so the
+      -- tactic inherits an already-wrong goal that no `show` can re-open.
+      --
+      -- Cause of the free scalar field: `AnalyticAt 𝕜 f z` has `f : E → 𝕝`
+      -- (Constructions.lean:929), so `𝕜` is NOT determined by the type of `f` —
+      -- it is a separate base field with `[NormedSpace 𝕜 E]`. Only an expected
+      -- type can fix it, and dot notation `(…).differentiableAt` supplies none:
+      -- the `AnalyticAt.fun_zpow` application is elaborated first, on its own,
+      -- and only its RESULT meets the expected `DifferentiableAt ℂ …`.
+      --
+      -- The repair removes both causes by never letting either metavariable
+      -- exist. `hbase` carries a closed type, so `𝕜`, `f` and the point are all
+      -- fixed by the FIRST argument; `hzp` carries a closed type, so `n` is fixed
+      -- and the second argument is checked against the already-determined
+      -- `(fun y : ℂ => y - u) z ≠ 0`, which `hsphne z hz u hu` meets by beta.
+      -- This is the "name it before you use it" discipline the drafter applied at
+      -- `hdu` and `hinv` further down this same proof and skipped here. No line
+      -- numbers are cited for those two on purpose: this repair moves them.
+      --
       -- `AnalyticAt.fun_zpow` is the `@[to_fun]` twin (attribute
       -- Constructions.lean:928) of `AnalyticAt.zpow` (:929), whose hypotheses
-      -- are `(h₁f : AnalyticAt 𝕜 f z) (h₂f : f z ≠ 0)`.
-      -- FALLBACK if `fun_prop` cannot see `AnalyticAt ℂ (fun y => y - u) z`
-      -- — exact alternative text for the first argument:
-      --   (analyticAt_id.fun_sub analyticAt_const)
+      -- are `(h₁f : AnalyticAt 𝕜 f z) (h₂f : f z ≠ 0)` and whose `{n : ℤ}` is
+      -- implicit — read at the pin this round, not carried over from the draft.
+      --
+      -- The `first | fun_prop | exact …` on `hbase` is a hedge, not a hesitation:
+      -- both branches were verified at the pin before being written. `fun_prop`
+      -- should close it, because every rule it needs carries the attribute —
+      -- `analyticAt_id` (Linear.lean:156, `@[fun_prop]` on :155),
+      -- `analyticAt_const` (Constructions.lean:54, `@[fun_prop]` on :53), and
+      -- `AnalyticAt.fun_sub`, generated by `@[to_fun (attr := fun_prop)]` on
+      -- `AnalyticAt.sub` (Constructions.lean:186-:187). The second branch is not
+      -- a guess either: `analyticAt_id.fun_sub analyticAt_const` is the exact
+      -- text the pin itself uses for a `(· - z₀)` factor at
+      -- Meromorphic/Divisor.lean:458. A second alternative costs nothing when the
+      -- first succeeds — Lean elaborates it only if `fun_prop` has already failed
+      -- — and it costs a 20-minute CI round if omitted and needed.
     have hlogφ : logDeriv (∏ᶠ u,
           ((· - u) ^ MeromorphicOn.divisor f (Metric.closedBall c R) u : ℂ → ℂ)) z
         = ∑ u ∈ h₃f.toFinset,

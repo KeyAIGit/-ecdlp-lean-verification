@@ -128,3 +128,99 @@ than routing around it, and so protects the site against a future refactor.
 
 No statement moved: 5 of 5 re-verified character-identical against the contract
 afterwards, and every shifted ledger anchor kept its `sha256` digest.
+
+## Kernel round 2 (rejected) — one error, and it disproved the round-1 diagnosis
+
+Round 2 (`371de15`) cleared `:549` — the `finprod`-to-`Finset` residue closed
+exactly as the `first | rfl | (funext y; simp …)` repair predicted, and no new
+error appeared anywhere else. `docs-sync` passed. Both `build` jobs failed on a
+single error, at the *same site* as round 1's second error:
+
+```
+error: ResearchOS/Analysis/ArgPrinciple.lean:680:14: 'show' tactic failed, pattern
+  AnalyticAt ℂ (fun y => y - u) z
+is not definitionally equal to target
+  AnalyticAt ?m.1468 (HSub.hSub z) u
+```
+
+### The round-1 diagnosis was wrong, and this is what disproves it
+
+Round 1 recorded a causal chain: the scalar field `𝕜` was an unassigned
+metavariable, and *therefore* the elaborator mis-associated the arguments into
+`(z - ·)` at `u`. A `show` was expected to fix both at once by pinning the field.
+
+That chain does not exist. The two defects are independent, and round 2 proves
+it: the `show` ran, the field was still `?m.1468`, and the function and point
+were still `HSub.hSub z` and `u`. A `show` cannot re-open a goal whose shape was
+fixed before the tactic block was entered.
+
+**Why the arguments were mis-associated.** `AnalyticAt.zpow`
+(Constructions.lean:929, `@[to_fun]` on :928) takes `(h₂f : f z ≠ 0)`. The
+argument supplied is `hsphne z hz u hu : z - u ≠ 0`, that is
+`HSub.hSub z u ≠ 0`. Solving `?f ?z =?= HSub.hSub z u` is higher-order; Lean's
+first-order approximation splits it as `?f := HSub.hSub z`, `?z := u`. That
+assignment happens while the *second* argument elaborates — before the postponed
+`by` block for the first argument is ever entered. The tactic therefore inherits
+an already-wrong goal.
+
+**Why the field stayed free.** `AnalyticAt 𝕜 f z` has `f : E → 𝕝`, so `𝕜` is a
+separate base field carrying `[NormedSpace 𝕜 E]` and is not determined by the
+type of `f`. Only an expected type can fix it, and dot notation
+`(…).differentiableAt` supplies none: the `AnalyticAt.fun_zpow` application is
+elaborated on its own, and only its *result* meets the expected
+`DifferentiableAt ℂ …`.
+
+### The repair
+
+The `have`-chain that removes both causes by never letting either metavariable
+exist:
+
+```lean
+intro u hu
+have hbase : AnalyticAt ℂ (fun y : ℂ => y - u) z := by
+  first
+  | fun_prop
+  | exact analyticAt_id.fun_sub analyticAt_const
+have hzp : AnalyticAt ℂ
+    (fun y : ℂ => (y - u) ^ MeromorphicOn.divisor f (Metric.closedBall c R) u) z :=
+  AnalyticAt.fun_zpow hbase (hsphne z hz u hu)
+exact hzp.differentiableAt
+```
+
+`hbase` carries a closed type, so `𝕜`, the function and the point are all fixed
+by the FIRST argument; `hzp` carries a closed type, so `n` is fixed and the
+second argument is checked against the already-determined
+`(fun y : ℂ => y - u) z ≠ 0`, which `hsphne z hz u hu` meets by beta. This is the
+"name it before you use it" discipline the drafter applied at `hdu` and `hinv`
+further down the same proof.
+
+Both branches of the `first` were read at the pin before being written:
+`analyticAt_id` (Linear.lean:156, `@[fun_prop]` on :155), `analyticAt_const`
+(Constructions.lean:54, `@[fun_prop]` on :53), and `AnalyticAt.fun_sub` generated
+by `@[to_fun (attr := fun_prop)]` on `AnalyticAt.sub` (Constructions.lean:186).
+The fallback term is not a guess: `analyticAt_id.fun_sub analyticAt_const` is the
+exact text pinned Mathlib uses for a `(· - z₀)` factor at
+Meromorphic/Divisor.lean:458. A second alternative costs nothing when the first
+succeeds — Lean elaborates it only after `fun_prop` has already failed.
+
+### What is still unverified, stated plainly
+
+`Complex.circleIntegral_logDeriv_eq_divisor_sum` has never elaborated past this
+point in either round. Elaboration of a tactic proof stops at its first hard
+error, so **every line of A2 after the repaired site remains kernel-unchecked**,
+including the `logDeriv_prod` application, the `logDeriv_fun_zpow` rewrite, the
+integrability block, and the closing rewrite chain. A third round is an ordinary
+outcome, not a surprise. This is the standing rule that the round-2 note itself
+had to relearn: absence from an error list is acceptance only when the enclosing
+declaration elaborated to completion.
+
+### Statement surface
+
+Unchanged. All five public signatures re-verified against `371de15` by sha256
+digest of the signature text — `8ca41be3c4b2`, `d6820396409d`, `4a9adf7c34ea`,
+`ee4bcbbc4810`, `3931afe8cd3f`, each identical before and after. `git diff`
+confirms all three hunks fall inside the A2 proof body and that no
+declaration-opening line was added or removed. The drafts-lane mirror was
+re-synced and its body is byte-identical to the built module
+(`ef15bac59529ab3f`). Two ledger anchors shifted by 46 lines and both kept their
+digest, so the refresh matched by content and not by position.
