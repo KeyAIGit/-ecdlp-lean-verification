@@ -948,14 +948,36 @@ theorem norm_weierstrassFactor_sub_one_le {p : ℕ} {z : ℂ} (hz : ‖z‖ ≤ 
    not cosmetic; see the mechanism note below.
 
    ```lean
+   have hinv : (1 - ‖z‖)⁻¹ ≤ 2 := …          -- Inv.inv-headed; the shape matters
    have hL2 : ‖L‖ ≤ ‖z‖ ^ (p+1) * 2 / (p+1) := hL.trans (by gcongr)
    ```
 
    The inner goal is `‖z‖^(p+1) * (1-‖z‖)⁻¹ / (p+1) ≤ ‖z‖^(p+1) * 2 / (p+1)`.
-   Here `gcongr` genuinely applies: both sides are `HDiv` nodes, it descends
-   through `HMul`, and bottoms out at `(1-‖z‖)⁻¹ ≤ 2`, which is step 2 and is
-   closed by its forward discharger from the local context. Side goals
-   `0 ≤ ‖z‖^(p+1)` and `0 ≤ (p+1 : ℝ)` go to `positivity`.
+   `gcongr` descends the `HDiv` by `div_le_div_of_nonneg_right`
+   (`Algebra/Order/GroupWithZero/Basic.lean:1199`, one varying argument, so the
+   two-varying `div_le_div₀` at :1285 is never reached), then the `HMul` by
+   `mul_le_mul_of_nonneg_left` (`GroupWithZero/Defs.lean:226`; the
+   `@[gcongr high]` / `high - 1` monoid lemmas at
+   `Algebra/Order/Monoid/Unbundled/Basic.lean:70, :81, :209` are tried first and
+   fail `MulLeftMono ℝ` / `MulRightMono ℝ` synthesis). Side goals
+   `0 ≤ ‖z‖^(p+1)` and `0 ≤ (↑p+1 : ℝ)` go to `positivity`.
+
+   **Step 2 must be a NAMED `have`, and its type must be `Inv.inv`-headed**
+   (tightened 2026-08-09 after an adversarial verifier found this unstated).
+   The terminal goal is `(1 - ‖z‖)⁻¹ ≤ 2` and `gcongr`'s only closer for it is
+   the forward discharger, which iterates over **local-context fvars** and
+   assigns by `isDefEq` at REDUCIBLE transparency (`Core.lean:476`, :503–:509,
+   :471). Two ways to lose a round here, both silent:
+   - step 2 produced inline rather than bound — the discharger sees nothing, the
+     goal is pushed and discarded, `gcongr` reports progress, and the `by` block
+     fails with "unsolved goals";
+   - step 2 bound in the shape its own cited `div_le_iff₀` naturally yields,
+     `1 / (1 - ‖z‖) ≤ 2` — `HDiv`-headed against an `Inv.inv`-headed goal.
+     `one_div` is not reducible unfolding, so `assignIfDefEq` fails and you land
+     in the same state.
+
+   Prefer the template `by gcongr ‖z‖ ^ (p+1) * ?_ / (↑p+1)` so the seam is
+   named and a mismatch throws instead of vanishing.
 
 6. Assemble as an explicit `calc`:
 
@@ -968,7 +990,9 @@ theorem norm_weierstrassFactor_sub_one_le {p : ℕ} {z : ℂ} (hz : ‖z‖ ≤ 
    ```
 
    `mul_le_mul_of_nonneg_left (hbc : b ≤ c) (ha : 0 ≤ a) : a * b ≤ a * c` —
-   `Algebra/Order/GroupWithZero/Defs.lean:225`. A term is used rather than a
+   `Algebra/Order/GroupWithZero/Defs.lean:226` (`@[gcongr]` on :225; the
+   relation comes FIRST and the nonnegativity second — note the lemma's own
+   body applies the class field in the opposite order, which is the trap). A term is used rather than a
    tactic because the term cannot silently half-succeed. The registered
    alternative, if the term is ever inconvenient, is the TEMPLATE form
    `by gcongr 2 * ?_` — never a bare `gcongr`; see below for why the template
@@ -1129,9 +1153,11 @@ theorem hasProdLocallyUniformlyOn_weierstrassProduct (hane : ∀ i, a i ≠ 0)
 Compact-by-compact, the Cotangent pattern with the majorant swapped:
 
 1. `hasProdLocallyUniformlyOn_of_forall_compact isOpen_univ` (UniformOn.lean:196;
-   `[LocallyCompactSpace ℂ]` holds — ℂ is proper). Fix `K` compact,
-   `K ⊆ closedBall 0 R` with `R ≥ 0` (`IsCompact.isBounded` +
-   `Bornology.IsBounded.subset_closedBall`).
+   `[LocallyCompactSpace ℂ]` holds — ℂ is proper). Fix `K` compact and **bind
+   the radius and the inclusion by name** — step 3 consumes `hKR`, and the
+   2026-08-09 text referred to it before this line introduced it:
+   `obtain ⟨R, hR0, hKR⟩ : ∃ R ≥ 0, K ⊆ Metric.closedBall 0 R := …`
+   (`IsCompact.isBounded` + `Bornology.IsBounded.subset_closedBall`).
 2. Majorant `u i := 4 / (p+1) * (R ^ (p+1) * ‖a i‖⁻¹ ^ (p+1))`; summable from
    `hsum` by `Summable.mul_left`.
 3. Eventual bound: by W7 (`eventually_cofinite_le_norm … (2 * R + 1)`),
@@ -1181,10 +1207,13 @@ Compact-by-compact, the Cotangent pattern with the majorant swapped:
    **Both routes bottom out at `‖x‖ ≤ R`, which this skeleton never derives.**
    Whichever normalization is chosen, `gcongr` descends through the constant
    factor and the `pow`, and its terminal goal is `‖x‖ ≤ R`. Its only closer
-   there is the forward discharger, which does `exact`/`Eq.subst`+`rfl`/`symm`
-   over the local context (`Core.lean:464-495`) and nothing more. Step 1 supplies
-   `K ⊆ closedBall 0 R`, which is not that statement. Add the conversion
-   explicitly before the call:
+   there is the forward discharger (`Core.lean:464-509`), which iterates over
+   local-context fvars and closes by `exact` / `Eq.subst`+`rfl` / `symm`, plus
+   three further `@[gcongr_forward]` extensions at the pin — `le_of_lt`
+   (`Order/Basic.lean:195`), `AntisymmRel` (`Order/Antisymmetrization.lean:98`)
+   and `⊂ → ⊆` (`Order/RelClasses.lean:644`). None of them can manufacture
+   `‖x‖ ≤ R` from `K ⊆ closedBall 0 R`, which is all step 1 supplies. Add the
+   conversion explicitly before the call:
 
    ```lean
    have hxR : ‖x‖ ≤ R := mem_closedBall_zero_iff.mp (hKR hx)
@@ -1601,14 +1630,70 @@ hane hsum w` (W7); `haveI := hS.fintype`.
      `Data/Set/Finite/Basic.lean:78`. **Changing the opening line to
      `letI := hS.fintype` deletes the hop for real**; a citation swap cannot.
 
+     The `haveI`/`letI` distinction is Lean's own, not a folk belief:
+     `Lean/Elab/Binders.lean:957-961` shows both set `zeta := true` and differ
+     only in `nondep`, and `Lean/LocalContext.lean:59-61` says in as many words
+     that a `nondep := false` let-bound variable "is definitionally equal to its
+     value" while `nondep := true` gives "an opaque value". Under `letI` the two
+     `toFinset` terms become syntactically identical after zeta-delta, so
+     nothing has to reduce `Classical.choice` and
+     `Finite.fintype`'s `@[implicit_reducible]` (`Finite/Basic.lean:70`) cannot
+     block it.
+
+     Three caveats to carry with the `letI` advice, all verified 2026-08-09:
+     `Set.Finite.toFinset` (:75) is a plain semireducible `def`, so the defeq
+     needs **default** transparency — anything running `withReducible`, notably
+     `gcongr`'s forward discharger (`Core.lean:476`), will not see it;
+     `simp`'s `zetaDelta` defaults to **false**, so `simp` will not inline the
+     `letI` value without `(config := { zetaDelta := true })`, a `show`, or a
+     `rfl` step; and `letI` changes what `revert`/`generalize` see, since
+     `LocalContext.lean:64-73` deliberately treats nondep let-decls like
+     `cdecl`s and dependent ones differently.
+
    **A shorter chain exists that needs neither lemma, and it is the one to
    prefer.** With the `Fintype` instance already in scope,
    `∑ i : ↥S, 1 = Fintype.card ↥S` goes to `S.ncard` by
-   `Set.fintypeCard_eq_ncard` (`Data/Set/Card.lean:655`, `@[simp]`) and then to
-   `Nat.card ↥S` by `Nat.card_coe_set_eq` (:642, `@[simp]`, `rfl`). Both are
-   `@[simp]`, so `simp` closes the card chain outright and no `Finset ι` ever
-   appears. Keep :644 and :649 as explicit fallbacks. :655 is absent from the
-   dependency table and belongs there.
+   `Set.fintypeCard_eq_ncard` (`Data/Set/Card.lean:655`, `@[simp]`), and
+   `Nat.card_coe_set_eq` (:642, `@[simp]`, `rfl`) meets it there.
+
+   **Read the next three paragraphs before using that sentence.** A first
+   version of it, written 2026-08-09, said the chain "goes on to `Nat.card ↥S`"
+   and that "both are `@[simp]`, so `simp` closes the card chain outright". An
+   adversarial verifier refuted it the same day. It is corrected here rather
+   than deleted, because the route is real and useful once stated properly.
+
+   - **Direction.** `Nat.card_coe_set_eq` is `Nat.card ↥s = s.ncard`, so as a
+     `@[simp]` lemma it rewrites `Nat.card` **into** `ncard`. Nothing at the pin
+     rewrites `ncard` back. The chain does not continue to `Nat.card ↥S`; both
+     sides of the goal normalise INTO `S.ncard` and meet there. Invisible to
+     `simp`, fatal to any explicit `calc` or `rw` written the other way.
+   - **The head of the chain is three more lemmas, not zero.**
+     `∑ i : ↥S, 1 = Fintype.card ↥S` is done by none of the two cited: it needs
+     `Finset.sum_const` (`Algebra/BigOperators/Group/Finset/Basic.lean:629`,
+     `@[to_additive (attr := simp)]` on :628), then `nsmul_eq_mul`
+     (`Algebra/Ring/Defs.lean:188`, `@[simp]` — legal at `ℕ∞` only because
+     `CommSemiring` is derived at `Data/ENat/Basic.lean:44-50`) and `mul_one`,
+     then `Finset.card_univ` (`Data/Fintype/Card.lean:104`, `@[simp]`). Five
+     simp lemmas in total. The route is still `simp`-closable; the contract had
+     simply not shown it.
+   - **The route constrains step 2, and the earlier text contradicted itself.**
+     It works on the subtype shape `∑ i : ↥S, (1 : ℕ∞)`, i.e. only if step 2
+     stops at `tprod_fintype` and `Finset.prod_set_coe` is NOT applied. If step
+     2 keeps `Finset.prod_set_coe` and step 4 stays on `∑ i ∈ hS.toFinset, 1`,
+     **`simp` does not close the chain**: `Set.Finite.card_toFinset`
+     (`Data/Set/Finite/Basic.lean:813`), `Set.ncard_eq_toFinset_card` (:644) and
+     `Set.Finite.toFinset_eq_toFinset` (`Finite/Basic.lean:78`) are all
+     non-simp, and `Set.toFinite_toFinset` (:82) matches only the literal proof
+     term `s.toFinite`. **Pick one route in step 2 and make step 4 match it.**
+     Boasting that "no `Finset ι` ever appears" while step 2 was amended to
+     route through `Finset.prod_set_coe` — whose output is a `Finset ι` — was
+     the contradiction.
+
+   Also: the sum lives in `ℕ∞` (`analyticOrderAt : ℕ∞`,
+   `Analysis/Analytic/Order.lean:47`) while `Fintype.card ↥S : ℕ`, so the
+   equation carries a `Nat.cast` throughout. Keep :644 and :649 as explicit
+   fallbacks. :655 is absent from the dependency table and belongs there — note
+   its `s` is **explicit**, via `variable (s) in` at :653.
 
    One further trap in :644 that the skeleton must not walk into: its
    finiteness argument is an autoparam, `(hs : s.Finite := by toFinite_tac)`.

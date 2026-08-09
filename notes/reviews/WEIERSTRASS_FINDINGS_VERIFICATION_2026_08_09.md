@@ -237,3 +237,60 @@ says will fire could still fail on an instance path nobody enumerated.
 
 Pinned Mathlib: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (v4.31.0).
 Lean core read at tag v4.31.0, matching `lean-toolchain`.
+
+## Addendum — the same treatment, applied to this note's own repairs
+
+The `RH-018` edits written from this note were themselves put to an adversarial
+verifier before merge, on the reasoning that a correction is exactly as capable
+of being wrong as the thing it corrects — which is the lesson the `W6` case
+teaches, and the lesson the 2026-08-08 `WeierstrassCurve` count teaches, that
+number having entered the contract inside a finding's own recommended fix text.
+
+Five load-bearing claims were attacked. The result:
+
+| claim | verdict |
+|---|---|
+| `hL2 := hL.trans (by gcongr)` descends correctly | PARTIAL — descent right, terminal discharge unsecured |
+| `mul_le_mul_of_nonneg_left hL2 (by norm_num)` | PARTIAL — signature right, locator off by one |
+| the shorter `Set.fintypeCard_eq_ncard` card chain | **REFUTED** |
+| `haveI` opaque, `letI` deletes the hop | CONFIRMED |
+| `mem_closedBall_zero_iff` supplies `‖x‖ ≤ R` | CONFIRMED, two precision notes |
+
+**The refuted one was the claim its author had already flagged as
+under-specified**, which is worth recording as evidence that the flag was not
+enough: a stated doubt does not repair a document, and the paragraph shipped in
+a form that read as settled. Three separate defects were in it — the `@[simp]`
+direction runs *into* `ncard` and never back out, so the chain does not
+"continue" anywhere; the head of the chain needs three further simp lemmas the
+paragraph never named; and the route only works if step 2 stops at
+`tprod_fintype`, contradicting the `Finset.prod_set_coe` addition made in the
+same edit. The corrected text carries all three and now tells the drafter to
+pick one route in step 2 and make step 4 match it.
+
+The two PARTIALs mattered less but would each have cost a round. The `gcongr`
+terminal goal `(1 - ‖z‖)⁻¹ ≤ 2` is closed only from a **named** hypothesis whose
+type is `Inv.inv`-headed; the contract's step 2 was prose, and its own cited
+`div_le_iff₀` naturally produces the `HDiv`-headed `1 / (1 - ‖z‖) ≤ 2`, which
+the discharger cannot use at reducible transparency. And `hKR` was consumed in
+step 3 without ever being bound in step 1.
+
+Also corrected from the same report: the forward-discharger extension set is
+five, not two, so the phrase "and nothing more" was false; and
+`Algebra/Order/GroupWithZero/Defs.lean:225` is the `@[gcongr]` attribute line,
+the declaration being :226 — against this contract's own convention of citing
+the declaration and naming the attribute line separately.
+
+What survived is worth stating too, because an all-negative report would
+misrepresent the pass: the `gcongr` shape-gate analysis, the `2 ≤ 4/(p+1)`
+false-goal derivation with its lemma-priority reasoning, the "no diagnostic in
+the CI log" prediction, the impossibility of a bridging `@[gcongr]` lemma, the
+striking of `rw [← div_pow]`, and the whole `haveI`/`letI` argument including
+the `letI` remedy — all confirmed against source, several with the pin's own
+explanatory comments quoted back.
+
+Standing of the addendum: one verifier, instructed to refute, reading
+implementation source (Mathlib at the pin; Lean core at tag v4.31.0, matching
+`lean-toolchain`). No kernel ran. The one thing it marked genuinely undecidable
+from source is whether `positivity` discharges the two side goals in the
+concrete instantiations — the extensions exist, but extension dispatch is not a
+source-text fact.
