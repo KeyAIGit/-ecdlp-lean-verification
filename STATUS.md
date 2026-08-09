@@ -71,7 +71,7 @@ frontier-map status (adversarially-verified upgrades in `data/corpus_coverage_ov
 
 ## Portfolio priority and domain bottlenecks
 The primary new-science priority is **Riemann Hypothesis Stage 0, task
-`RH-021`**: accept the trivial-zero simplicity contract (queue status: `ACTIVE 2026-08-09 — contract and independent acceptance only; no Lean draft or promotion authorized`). This is an
+`RH-022`**: transcribe and statically review the trivial-zero-simplicity draft (queue status: `ACTIVE 2026-08-09 — drafts-lane transcription and independent static review only; no built promotion or kernel claim authorized`). This is an
 exploratory specification and route-audit program, not a proof candidate or progress on
 the conjecture itself. Its authority is `tasks/RIEMANN_HYPOTHESIS.md`; ECDLP evidence
 and authorizations do not transfer to it.

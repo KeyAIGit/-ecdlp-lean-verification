@@ -168,6 +168,23 @@ independent acceptance of a contract for simplicity of the negative-even
 trivial zeros. This activates contract review only, not drafting, promotion,
 or route execution.
 
+Decision update: 2026-08-09 (fifth). `RH-021` completes in this change. The
+three-lens panel accepts the exact four-theorem statement surface in
+`TRIVIAL_ZERO_SIMPLICITY_CONTRACT.md` with zero blocking findings after
+proof-plan/API corrections that changed no name, binder, hypothesis, point or
+conclusion. The final accepted contract has SHA-256
+`06b414de60a0e11c1bf4d15c867f10ce0f6d655f9d747dd74d495dcbc0232812`
+(Git blob `99bbcca8bafbdf63c7dd74f6817acb6bce66bf78`); the reproducibly extracted
+four-declaration surface has SHA-256
+`5dbc69c6443a383d562da35d37955b9001563e63c89227c9cf5e3ced90ff858f`.
+The acceptance record is
+`notes/reviews/RH021_TRIVIAL_ZERO_SIMPLICITY_ACCEPTANCE_2026_08_09.md`.
+This is statement-surface acceptance only: no Lean draft or kernel theorem
+exists, no route is selected and no barrier row moves. By this dated decision
+the single ACTIVE slot moves to `RH-022`, drafts-lane transcription and
+independent static review of exactly the accepted four signatures. Promotion,
+if the draft survives, remains a separate later task.
+
 The exact Lean target is the already-pinned Mathlib declaration
 `_root_.RiemannHypothesis`. Do not create a competing definition.
 
@@ -1438,7 +1455,23 @@ RH barrier.
 
 ID: `RH-021`
 
-Status: **ACTIVE 2026-08-09 — contract and independent acceptance only; no Lean draft or promotion authorized**
+Status: **COMPLETE 2026-08-09 — exact four-theorem contract accepted under three independent lenses; no Lean or kernel verdict**
+
+Closure evidence: final accepted contract SHA-256
+`06b414de60a0e11c1bf4d15c867f10ce0f6d655f9d747dd74d495dcbc0232812`
+(Git blob `99bbcca8bafbdf63c7dd74f6817acb6bce66bf78`), exact four-declaration
+surface SHA-256
+`5dbc69c6443a383d562da35d37955b9001563e63c89227c9cf5e3ced90ff858f`,
+and independent decision
+`notes/reviews/RH021_TRIVIAL_ZERO_SIMPLICITY_ACCEPTANCE_2026_08_09.md`:
+**ACCEPT WITH APPLIED PROOF-PLAN AND API FIXES**, zero blocking findings.
+The four accepted declarations are
+`riemannZeta_comp_one_sub_eventuallyEq_functionalEquation`,
+`analyticOrderAt_cos_pi_mul_div_two_at_two_mul_nat_add_three`,
+`analyticOrderAt_riemannZeta_comp_one_sub_at_two_mul_nat_add_three`, and
+`analyticOrderAt_riemannZeta_neg_two_mul_nat_add_one`. No Lean file was
+created; drafting and kernel promotion remain separate tasks. This closure
+changes no route or barrier.
 
 Kind: contract / independent acceptance
 
@@ -1501,6 +1534,64 @@ conclusion, changed point, or an unpinned/external theorem in place of a
 complete pinned derivation, record REJECT/BLOCK and return to contract design.
 Do not substitute the already-known nonvanishing-away-from-trivial-zeros fact,
 and do not rewrite the historical M4 package boundary.
+
+## RH-022: transcribe and statically review the trivial-zero-simplicity draft
+
+ID: `RH-022`
+
+Status: **ACTIVE 2026-08-09 — drafts-lane transcription and independent static review only; no built promotion or kernel claim authorized**
+
+Kind: draft / independent static review
+
+Activation basis (2026-08-09): `RH-021` accepted exactly four theorem
+signatures with zero blocking findings. This task may test whether complete
+proof-shaped Lean bodies can be assembled against the pinned APIs without
+changing that surface. It does not authorize promotion; a later `RH-023` may
+be proposed only after this draft closes cleanly.
+
+Required output:
+
+- one non-built
+  `domains/riemann-hypothesis/drafts/TrivialZeroSimplicity.lean` containing
+  exactly the four accepted root-level theorem signatures, in contract order,
+  with complete proof-shaped bodies;
+- character-for-character comparison of every name, binder, hypothesis, point
+  and conclusion against
+  `domains/riemann-hypothesis/TRIVIAL_ZERO_SIMPLICITY_CONTRACT.md`;
+- one independent dated static review record
+  `notes/reviews/RH022_TRIVIAL_ZERO_SIMPLICITY_DRAFT_REVIEW_2026_08_09.md`
+  covering mathematical soundness, pinned API fidelity, dependency order,
+  exceptional points, `analyticOrderAt` junk branches and claim scope;
+- exact final file hash, four-of-four surface hash and an explicit statement
+  that the draft remains outside every Lake target and has not received a
+  kernel verdict.
+
+Exit criteria:
+
+- exactly four public theorems and zero extra public definitions or helper
+  declarations; proof scaffolding stays private or inside theorem bodies;
+- zero `sorry`, `admit`, custom `axiom`, `unsafe`, `partial`,
+  `native_decide`, resource-limit override or unreviewed trust extension;
+- T1 constructs a genuine neighbourhood `EventuallyEq`; T2 retains the full
+  `π / 2` derivative factor; T3 proves every cofactor analytic and nonzero
+  before applying local-order laws; T4 reuses the built beta-safe affine
+  transport;
+- the independent review returns ACCEPT on the exact final draft hash with
+  all findings dispositioned and no signature drift;
+- no built `ResearchOS` module, root import, ledger row, registry entry,
+  axiom-audit entry, barrier edit or kernel claim is added in this task.
+
+Claim boundary: only a candidate formalization of local analytic order one at
+the negative-even trivial zeta zeros. No nontrivial-zero or xi simplicity,
+enumeration/counting, growth, Hadamard factorization, cutoff, route, barrier or
+RH claim. `S1-GLOBAL-ZEROS` and `S1-GROWTH` remain OPEN and all routes remain
+PARKED.
+
+Death condition: any required change to an accepted name, binder, hypothesis,
+point or conclusion stops drafting and returns the surface to contract review.
+An elaboration-shaped difficulty is recorded and repaired only in proof bodies;
+it is never permission to weaken the capstone. A later kernel promotion is a
+separate queue cycle and PR.
 
 ## RH-005: bounded computation policy
 
