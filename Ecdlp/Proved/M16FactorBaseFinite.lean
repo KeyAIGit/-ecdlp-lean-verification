@@ -36,7 +36,7 @@ private noncomputable def factorBaseXEquivRootsOfUnity :
   toFun x := rootsOfUnity.mkOfPowEq x.1 x.2
   invFun x :=
     ⟨(x.1 : ZMod Secp256k1.p), by
-      simpa only [map_pow, map_one] using
+      simpa only [Units.val_pow_eq_pow_val, Units.val_one] using
         congrArg (fun u : (ZMod Secp256k1.p)ˣ => (u : ZMod Secp256k1.p)) x.2⟩
   left_inv x := by
     apply Subtype.ext
