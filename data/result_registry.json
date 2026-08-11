@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 318,
-  "ledger_reference_count": 815,
-  "ledger_named_declarations": 790,
+  "ledger_rows": 319,
+  "ledger_reference_count": 822,
+  "ledger_named_declarations": 797,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1372,
-  "distinct_qualified_names": 1372,
-  "verified_md_citations": 790,
+  "declaration_count": 1384,
+  "distinct_qualified_names": 1384,
+  "verified_md_citations": 797,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -596,6 +596,13 @@
     "Ecdlp.GenericGroup.secp256k1_bsgs_steps_le",
     "Ecdlp.GenericGroup.secp256k1_generic_security",
     "Ecdlp.GenericGroup.two_pow_255_lt_secp256k1_n",
+    "Ecdlp.M16CancellationRootLowerBound.DirectRoot",
+    "Ecdlp.M16CancellationRootLowerBound.LiftableReducedRoot",
+    "Ecdlp.M16CancellationRootLowerBound.ReducedRoot",
+    "Ecdlp.M16CancellationRootLowerBound.cancellation_pair_root_lower_bounds",
+    "Ecdlp.M16CancellationRootLowerBound.exists_nonzero_target_root_lower_bounds",
+    "Ecdlp.M16CancellationRootLowerBound.exists_target_budget_lt_directRoot_card",
+    "Ecdlp.M16CancellationRootLowerBound.maxRelationTermBudget_lt_liftable_cancellation_family",
     "Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_relation",
     "Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_sum_add_target_eq_zero",
     "Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_sum_eq_target_or_neg",
@@ -11229,6 +11236,74 @@
           "line": 183
         }
       ]
+    },
+    {
+      "id": "ledger-318",
+      "claim": "Explicit cancellation-pair lower bounds for distinct direct M16 root outputs (fixing any signed liftable factor-base point `A` gives the nonidentity target `R = -(A+A)`. Seven arbitrary ordered factor-base choices are repeated in fixed labelled source-slot pairs and witnessed by points `B_i,-B_i`; the slot labels make the assignment map injective even when values repeat. Hence one target has at least `283527^7` fully liftable reduced roots and at least `564522^7` complete reduced roots, with the latter bound transported through the exact reduced/direct equivalence to literal sixteen-row System-(4) roots. An unconditional existential nonzero-target form is proved, as are comparisons placing the optimistic desk ceiling below the liftable family and the corresponding direct-root set. Honest scope: these are distinct output-cardinality and witness-backpointer facts only. Every added pair cancels tautologically, so the family proves no PFPO or solver-node charge, enumeration requirement, runtime or memory bound, relation usefulness/yield, independence or rank, recovery, sparse linear algebra, total cost, or ECDLP shortcut/lower bound. The module adds zero new `native_decide` owners; its conclusions transitively reuse existing secp256k1/factor-base certificates, the two liftable-census owners, and the base-field no-two-torsion chain, while the budget corollaries additionally reuse the existing `maxRelationTermBudget_lt_two_pow_115` arithmetic owner)",
+      "theorem_cell": "`Ecdlp.M16CancellationRootLowerBound.LiftableReducedRoot`, `ReducedRoot`, `DirectRoot`, `cancellation_pair_root_lower_bounds`, `exists_nonzero_target_root_lower_bounds`, `maxRelationTermBudget_lt_liftable_cancellation_family`, `exists_target_budget_lt_directRoot_card`",
+      "declared_files": [
+        "Ecdlp/Proved/M16CancellationRootLowerBound.lean"
+      ],
+      "method": "labelled finite-function injections + exact factor-base counts + point-sum semantics + reduced/direct root equivalence; zero new native owners, inherited certificate trust disclosed",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.M16CancellationRootLowerBound.LiftableReducedRoot",
+          "canonical_name": "Ecdlp.M16CancellationRootLowerBound.LiftableReducedRoot",
+          "resolution": "exact",
+          "kind": "abbrev",
+          "file": "Ecdlp/Proved/M16CancellationRootLowerBound.lean",
+          "line": 70
+        },
+        {
+          "cited": "Ecdlp.M16CancellationRootLowerBound.ReducedRoot",
+          "canonical_name": "Ecdlp.M16CancellationRootLowerBound.ReducedRoot",
+          "resolution": "exact",
+          "kind": "abbrev",
+          "file": "Ecdlp/Proved/M16CancellationRootLowerBound.lean",
+          "line": 75
+        },
+        {
+          "cited": "Ecdlp.M16CancellationRootLowerBound.DirectRoot",
+          "canonical_name": "Ecdlp.M16CancellationRootLowerBound.DirectRoot",
+          "resolution": "exact",
+          "kind": "abbrev",
+          "file": "Ecdlp/Proved/M16CancellationRootLowerBound.lean",
+          "line": 80
+        },
+        {
+          "cited": "Ecdlp.M16CancellationRootLowerBound.cancellation_pair_root_lower_bounds",
+          "canonical_name": "Ecdlp.M16CancellationRootLowerBound.cancellation_pair_root_lower_bounds",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationRootLowerBound.lean",
+          "line": 252
+        },
+        {
+          "cited": "Ecdlp.M16CancellationRootLowerBound.exists_nonzero_target_root_lower_bounds",
+          "canonical_name": "Ecdlp.M16CancellationRootLowerBound.exists_nonzero_target_root_lower_bounds",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationRootLowerBound.lean",
+          "line": 295
+        },
+        {
+          "cited": "Ecdlp.M16CancellationRootLowerBound.maxRelationTermBudget_lt_liftable_cancellation_family",
+          "canonical_name": "Ecdlp.M16CancellationRootLowerBound.maxRelationTermBudget_lt_liftable_cancellation_family",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationRootLowerBound.lean",
+          "line": 312
+        },
+        {
+          "cited": "Ecdlp.M16CancellationRootLowerBound.exists_target_budget_lt_directRoot_card",
+          "canonical_name": "Ecdlp.M16CancellationRootLowerBound.exists_target_budget_lt_directRoot_card",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationRootLowerBound.lean",
+          "line": 324
+        }
+      ]
     }
   ],
   "declarations": {
@@ -16502,6 +16577,90 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/Secp256k1GenericSecurity.lean",
       "line": 28
+    },
+    "Ecdlp.M16CancellationRootLowerBound.BarCurve": {
+      "name": "BarCurve",
+      "namespace": "Ecdlp.M16CancellationRootLowerBound",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16CancellationRootLowerBound.lean",
+      "line": 46
+    },
+    "Ecdlp.M16CancellationRootLowerBound.BarPoint": {
+      "name": "BarPoint",
+      "namespace": "Ecdlp.M16CancellationRootLowerBound",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16CancellationRootLowerBound.lean",
+      "line": 47
+    },
+    "Ecdlp.M16CancellationRootLowerBound.BasePoint": {
+      "name": "BasePoint",
+      "namespace": "Ecdlp.M16CancellationRootLowerBound",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16CancellationRootLowerBound.lean",
+      "line": 45
+    },
+    "Ecdlp.M16CancellationRootLowerBound.DirectRoot": {
+      "name": "DirectRoot",
+      "namespace": "Ecdlp.M16CancellationRootLowerBound",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16CancellationRootLowerBound.lean",
+      "line": 80
+    },
+    "Ecdlp.M16CancellationRootLowerBound.Fp": {
+      "name": "Fp",
+      "namespace": "Ecdlp.M16CancellationRootLowerBound",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16CancellationRootLowerBound.lean",
+      "line": 43
+    },
+    "Ecdlp.M16CancellationRootLowerBound.FpBar": {
+      "name": "FpBar",
+      "namespace": "Ecdlp.M16CancellationRootLowerBound",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16CancellationRootLowerBound.lean",
+      "line": 44
+    },
+    "Ecdlp.M16CancellationRootLowerBound.LiftableReducedRoot": {
+      "name": "LiftableReducedRoot",
+      "namespace": "Ecdlp.M16CancellationRootLowerBound",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16CancellationRootLowerBound.lean",
+      "line": 70
+    },
+    "Ecdlp.M16CancellationRootLowerBound.ReducedRoot": {
+      "name": "ReducedRoot",
+      "namespace": "Ecdlp.M16CancellationRootLowerBound",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16CancellationRootLowerBound.lean",
+      "line": 75
+    },
+    "Ecdlp.M16CancellationRootLowerBound.cancellation_pair_root_lower_bounds": {
+      "name": "cancellation_pair_root_lower_bounds",
+      "namespace": "Ecdlp.M16CancellationRootLowerBound",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationRootLowerBound.lean",
+      "line": 252
+    },
+    "Ecdlp.M16CancellationRootLowerBound.exists_nonzero_target_root_lower_bounds": {
+      "name": "exists_nonzero_target_root_lower_bounds",
+      "namespace": "Ecdlp.M16CancellationRootLowerBound",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationRootLowerBound.lean",
+      "line": 295
+    },
+    "Ecdlp.M16CancellationRootLowerBound.exists_target_budget_lt_directRoot_card": {
+      "name": "exists_target_budget_lt_directRoot_card",
+      "namespace": "Ecdlp.M16CancellationRootLowerBound",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationRootLowerBound.lean",
+      "line": 324
+    },
+    "Ecdlp.M16CancellationRootLowerBound.maxRelationTermBudget_lt_liftable_cancellation_family": {
+      "name": "maxRelationTermBudget_lt_liftable_cancellation_family",
+      "namespace": "Ecdlp.M16CancellationRootLowerBound",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationRootLowerBound.lean",
+      "line": 312
     },
     "Ecdlp.M16DirectPointSemantics.BarCurve": {
       "name": "BarCurve",

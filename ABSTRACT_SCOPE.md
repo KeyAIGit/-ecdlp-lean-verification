@@ -7,7 +7,7 @@
 
 ## Canonical accounting
 
-- **318 ledger rows / ~279 distinct kernel-verified results** (39 rows are
+- **319 ledger rows / ~280 distinct kernel-verified results** (39 rows are
   alternate-form / supporting restatements of an already-counted result).
 - **0 `sorry`** anywhere in the built (`Ecdlp/`-minus-`Targets/`) tree.
 - **No CUSTOM axioms.** Everything depends only on Lean/Mathlib's standard
@@ -40,6 +40,14 @@
   zero, and the base subtotal cancels the target. A thin `FactorBaseX`
   specialization changes no scope: arbitrary closure lifts, witness recovery
   or uniqueness, relation production, rank, solving, and cost remain unproved.
+- **Cancellation pairs give a large root-output family, not a solver or cost
+  lower bound.** For a proved nonidentity target, seven independently chosen
+  labelled pairs inject `283527^7` liftable assignments and `564522^7`
+  complete assignments into the corresponding reduced/direct root sets.
+  Repetitions are allowed and the labelled slots preserve order. Every pair is
+  deliberately degenerate, however: it contributes zero to the point sum.
+  The cardinality comparison is not a PFPO, runtime, memory, relation-yield,
+  independence, rank, recovery, or ECDLP result.
 
 ## 1. Honest framing (one paragraph)
 

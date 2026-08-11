@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~279 distinct results / 318 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~280 distinct results / 319 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -208,6 +208,15 @@ exact `Θ` statements.
   `FactorBaseX`. These equivalences neither compute, descend, or uniquely
   select witnesses nor produce relations or prove recovery, usable yield/rank,
   solving, sparse linear algebra, or cost.
+  A separate exact construction now fixes a signed liftable anchor and the
+  nonidentity target `R = -(A+A)`, then puts seven arbitrary ordered choices in
+  labelled cancellation pairs. It injects `283527^7` liftable assignments and
+  `564522^7` complete assignments into the reduced roots, with the latter bound
+  transported exactly to literal direct-System roots. The resulting output
+  cardinality exceeds the optimistic desk ceiling, but no root entry is charged
+  as a PFPO and all seven pairs cancel tautologically. Thus the theorem proves
+  no solver-node, runtime, memory, useful relation yield, independence, rank,
+  scalar recovery, sparse linear algebra, or total-cost lower bound.
   `CELL-M-PKC-SMOOTH-M16` remains `open_non_executable`,
   `CQ-SEMAEV-S17-SYSTEM-COST` remains `partial`, and
   `B-PKC-M16-COMPLETE-COST-BRIDGE` remains open on establishing a nonempty
