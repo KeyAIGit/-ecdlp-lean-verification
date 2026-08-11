@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 313,
-  "ledger_reference_count": 753,
-  "ledger_named_declarations": 728,
+  "ledger_rows": 314,
+  "ledger_reference_count": 781,
+  "ledger_named_declarations": 756,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1283,
-  "distinct_qualified_names": 1283,
-  "verified_md_citations": 728,
+  "declaration_count": 1311,
+  "distinct_qualified_names": 1311,
+  "verified_md_citations": 756,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -605,6 +605,34 @@
     "Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_seven",
     "Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_six",
     "Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_six_le_budget",
+    "Ecdlp.M16FrobeniusPointSplit.BarCurve",
+    "Ecdlp.M16FrobeniusPointSplit.BarPoint",
+    "Ecdlp.M16FrobeniusPointSplit.BasePoint",
+    "Ecdlp.M16FrobeniusPointSplit.Fp",
+    "Ecdlp.M16FrobeniusPointSplit.FpBar",
+    "Ecdlp.M16FrobeniusPointSplit.IsFp2Point",
+    "Ecdlp.M16FrobeniusPointSplit.LiesOver",
+    "Ecdlp.M16FrobeniusPointSplit.exists_includePoint_eq_of_liesOver_of_isLiftable",
+    "Ecdlp.M16FrobeniusPointSplit.exists_includePoint_eq_sum_of_liftable_liesOver",
+    "Ecdlp.M16FrobeniusPointSplit.exists_includePoint_eq_sum_of_pointwise_descent",
+    "Ecdlp.M16FrobeniusPointSplit.fp2Points",
+    "Ecdlp.M16FrobeniusPointSplit.frobeniusField",
+    "Ecdlp.M16FrobeniusPointSplit.frobeniusField_algebraMap",
+    "Ecdlp.M16FrobeniusPointSplit.frobeniusField_apply",
+    "Ecdlp.M16FrobeniusPointSplit.frobeniusPoint",
+    "Ecdlp.M16FrobeniusPointSplit.frobeniusPoint_eq_neg_of_liesOver_of_not_isLiftable",
+    "Ecdlp.M16FrobeniusPointSplit.frobeniusPoint_eq_of_liesOver_of_isLiftable",
+    "Ecdlp.M16FrobeniusPointSplit.frobeniusPoint_includePoint",
+    "Ecdlp.M16FrobeniusPointSplit.frobeniusPoint_sum_eq_neg_of_nonliftable_liesOver",
+    "Ecdlp.M16FrobeniusPointSplit.frobenius_split_before_two_torsion",
+    "Ecdlp.M16FrobeniusPointSplit.frobenius_split_of_base_subtotal",
+    "Ecdlp.M16FrobeniusPointSplit.frobenius_split_with_signed_target",
+    "Ecdlp.M16FrobeniusPointSplit.includePoint",
+    "Ecdlp.M16FrobeniusPointSplit.includePoint_injective",
+    "Ecdlp.M16FrobeniusPointSplit.includePoint_some",
+    "Ecdlp.M16FrobeniusPointSplit.includePoint_zero",
+    "Ecdlp.M16FrobeniusPointSplit.isFp2Point_of_liesOver",
+    "Ecdlp.M16FrobeniusPointSplit.split_partitioned_point_witnesses",
     "Ecdlp.M16LiftableSixWidthNoGo.budget_lt_card_sym_liftableFactorBaseX_seven",
     "Ecdlp.M16LiftableSixWidthNoGo.card_sym_liftableFactorBaseX_seven",
     "Ecdlp.M16LiftableSixWidthNoGo.card_sym_liftableFactorBaseX_six",
@@ -10611,6 +10639,242 @@
           "line": 115
         }
       ]
+    },
+    {
+      "id": "ledger-313",
+      "claim": "Conditional point-witness Frobenius split over the secp256k1 base/antifixed branches (arithmetic Frobenius on the algebraic-closure curve fixes every explicitly base-changed point. For an actual affine closure point lying above a base-field `x`-coordinate, liftability yields literal descent to a base point, including `rhs = 0`, while nonliftability yields `F(P) = -P` by the finite-field quadratic-character calculation. Finite liftable subtotals therefore descend and finite nonliftable subtotals are antifixed. Conjugating an assumed point-sum relation first exposes possible closure-field two-torsion; the final theorem eliminates it only after the fixed subtotal is shown to be in the base-change image and pulled back through injectivity, then applies the existing base-field no-nonzero-two-torsion theorem. Honest scope: this is conditional on actual point witnesses, their `LiesOver` hypotheses, liftability classifications, and the actual point-sum relation. It constructs no point from `S17At`, direct, frozen, or chart roots; proves no factor-base membership, witness or recovery completeness, root solving, relation existence/yield/rank, cost improvement, or ECDLP shortcut. No explicit quadratic-twist model or isomorphism is formalized. The module adds zero `native_decide` owners; concrete `Fp` conclusions inherit pre-existing compiler-trusted secp256k1 parameter/primality leaves, and the final split additionally inherits the existing base-field no-two-torsion certificate chain)",
+      "theorem_cell": "`Ecdlp.M16FrobeniusPointSplit.frobeniusPoint`, `LiesOver`, `IsFp2Point`, `includePoint_injective`, `frobeniusPoint_includePoint`, `exists_includePoint_eq_of_liesOver_of_isLiftable`, `frobeniusPoint_eq_of_liesOver_of_isLiftable`, `frobeniusPoint_eq_neg_of_liesOver_of_not_isLiftable`, `isFp2Point_of_liesOver`, `exists_includePoint_eq_sum_of_liftable_liesOver`, `frobeniusPoint_sum_eq_neg_of_nonliftable_liesOver`, `frobenius_split_before_two_torsion`, `frobenius_split_of_base_subtotal`, `frobenius_split_with_signed_target`, `split_partitioned_point_witnesses` and supporting declarations",
+      "declared_files": [
+        "Ecdlp/Proved/M16FrobeniusPointSplit.lean"
+      ],
+      "method": "canonical algebraic-closure Frobenius + explicit point descent/antifixed branch + base-change injection before the existing base-field two-torsion theorem; zero new native owners, inherited secp256k1 compiler trust and the final no-two-torsion chain disclosed",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.M16FrobeniusPointSplit.frobeniusPoint",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.frobeniusPoint",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 47
+        },
+        {
+          "cited": "Ecdlp.M16FrobeniusPointSplit.LiesOver",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.LiesOver",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 131
+        },
+        {
+          "cited": "Ecdlp.M16FrobeniusPointSplit.IsFp2Point",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.IsFp2Point",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 137
+        },
+        {
+          "cited": "Ecdlp.M16FrobeniusPointSplit.includePoint_injective",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.includePoint_injective",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 154
+        },
+        {
+          "cited": "Ecdlp.M16FrobeniusPointSplit.frobeniusPoint_includePoint",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.frobeniusPoint_includePoint",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 164
+        },
+        {
+          "cited": "Ecdlp.M16FrobeniusPointSplit.exists_includePoint_eq_of_liesOver_of_isLiftable",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.exists_includePoint_eq_of_liesOver_of_isLiftable",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 173
+        },
+        {
+          "cited": "Ecdlp.M16FrobeniusPointSplit.frobeniusPoint_eq_of_liesOver_of_isLiftable",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.frobeniusPoint_eq_of_liesOver_of_isLiftable",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 206
+        },
+        {
+          "cited": "Ecdlp.M16FrobeniusPointSplit.frobeniusPoint_eq_neg_of_liesOver_of_not_isLiftable",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.frobeniusPoint_eq_neg_of_liesOver_of_not_isLiftable",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 217
+        },
+        {
+          "cited": "Ecdlp.M16FrobeniusPointSplit.isFp2Point_of_liesOver",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.isFp2Point_of_liesOver",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 261
+        },
+        {
+          "cited": "Ecdlp.M16FrobeniusPointSplit.exists_includePoint_eq_sum_of_liftable_liesOver",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.exists_includePoint_eq_sum_of_liftable_liesOver",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 291
+        },
+        {
+          "cited": "Ecdlp.M16FrobeniusPointSplit.frobeniusPoint_sum_eq_neg_of_nonliftable_liesOver",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.frobeniusPoint_sum_eq_neg_of_nonliftable_liesOver",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 304
+        },
+        {
+          "cited": "Ecdlp.M16FrobeniusPointSplit.frobenius_split_before_two_torsion",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.frobenius_split_before_two_torsion",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 324
+        },
+        {
+          "cited": "Ecdlp.M16FrobeniusPointSplit.frobenius_split_of_base_subtotal",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.frobenius_split_of_base_subtotal",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 364
+        },
+        {
+          "cited": "Ecdlp.M16FrobeniusPointSplit.frobenius_split_with_signed_target",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.frobenius_split_with_signed_target",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 388
+        },
+        {
+          "cited": "Ecdlp.M16FrobeniusPointSplit.split_partitioned_point_witnesses",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.split_partitioned_point_witnesses",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 401
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.BarCurve",
+          "resolution": "supporting-expansion",
+          "kind": "abbrev",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 33
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.BarPoint",
+          "resolution": "supporting-expansion",
+          "kind": "abbrev",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 36
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.BasePoint",
+          "resolution": "supporting-expansion",
+          "kind": "abbrev",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 30
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.Fp",
+          "resolution": "supporting-expansion",
+          "kind": "abbrev",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 22
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.FpBar",
+          "resolution": "supporting-expansion",
+          "kind": "abbrev",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 25
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.exists_includePoint_eq_sum_of_pointwise_descent",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 274
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.fp2Points",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 141
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.frobeniusField",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 43
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.frobeniusField_algebraMap",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 96
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.frobeniusField_apply",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 89
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.includePoint",
+          "resolution": "supporting-expansion",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 74
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.includePoint_some",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 81
+        },
+        {
+          "cited": "<supporting declarations>",
+          "canonical_name": "Ecdlp.M16FrobeniusPointSplit.includePoint_zero",
+          "resolution": "supporting-expansion",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+          "line": 78
+        }
+      ]
     }
   ],
   "declarations": {
@@ -16059,6 +16323,202 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/M16FactorBaseSymmetricGate.lean",
       "line": 32
+    },
+    "Ecdlp.M16FrobeniusPointSplit.BarCurve": {
+      "name": "BarCurve",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 33
+    },
+    "Ecdlp.M16FrobeniusPointSplit.BarPoint": {
+      "name": "BarPoint",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 36
+    },
+    "Ecdlp.M16FrobeniusPointSplit.BasePoint": {
+      "name": "BasePoint",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 30
+    },
+    "Ecdlp.M16FrobeniusPointSplit.Fp": {
+      "name": "Fp",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 22
+    },
+    "Ecdlp.M16FrobeniusPointSplit.FpBar": {
+      "name": "FpBar",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 25
+    },
+    "Ecdlp.M16FrobeniusPointSplit.IsFp2Point": {
+      "name": "IsFp2Point",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 137
+    },
+    "Ecdlp.M16FrobeniusPointSplit.LiesOver": {
+      "name": "LiesOver",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 131
+    },
+    "Ecdlp.M16FrobeniusPointSplit.exists_includePoint_eq_of_liesOver_of_isLiftable": {
+      "name": "exists_includePoint_eq_of_liesOver_of_isLiftable",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 173
+    },
+    "Ecdlp.M16FrobeniusPointSplit.exists_includePoint_eq_sum_of_liftable_liesOver": {
+      "name": "exists_includePoint_eq_sum_of_liftable_liesOver",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 291
+    },
+    "Ecdlp.M16FrobeniusPointSplit.exists_includePoint_eq_sum_of_pointwise_descent": {
+      "name": "exists_includePoint_eq_sum_of_pointwise_descent",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 274
+    },
+    "Ecdlp.M16FrobeniusPointSplit.fp2Points": {
+      "name": "fp2Points",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 141
+    },
+    "Ecdlp.M16FrobeniusPointSplit.frobeniusField": {
+      "name": "frobeniusField",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 43
+    },
+    "Ecdlp.M16FrobeniusPointSplit.frobeniusField_algebraMap": {
+      "name": "frobeniusField_algebraMap",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 96
+    },
+    "Ecdlp.M16FrobeniusPointSplit.frobeniusField_apply": {
+      "name": "frobeniusField_apply",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 89
+    },
+    "Ecdlp.M16FrobeniusPointSplit.frobeniusPoint": {
+      "name": "frobeniusPoint",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 47
+    },
+    "Ecdlp.M16FrobeniusPointSplit.frobeniusPoint_eq_neg_of_liesOver_of_not_isLiftable": {
+      "name": "frobeniusPoint_eq_neg_of_liesOver_of_not_isLiftable",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 217
+    },
+    "Ecdlp.M16FrobeniusPointSplit.frobeniusPoint_eq_of_liesOver_of_isLiftable": {
+      "name": "frobeniusPoint_eq_of_liesOver_of_isLiftable",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 206
+    },
+    "Ecdlp.M16FrobeniusPointSplit.frobeniusPoint_includePoint": {
+      "name": "frobeniusPoint_includePoint",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 164
+    },
+    "Ecdlp.M16FrobeniusPointSplit.frobeniusPoint_sum_eq_neg_of_nonliftable_liesOver": {
+      "name": "frobeniusPoint_sum_eq_neg_of_nonliftable_liesOver",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 304
+    },
+    "Ecdlp.M16FrobeniusPointSplit.frobenius_split_before_two_torsion": {
+      "name": "frobenius_split_before_two_torsion",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 324
+    },
+    "Ecdlp.M16FrobeniusPointSplit.frobenius_split_of_base_subtotal": {
+      "name": "frobenius_split_of_base_subtotal",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 364
+    },
+    "Ecdlp.M16FrobeniusPointSplit.frobenius_split_with_signed_target": {
+      "name": "frobenius_split_with_signed_target",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 388
+    },
+    "Ecdlp.M16FrobeniusPointSplit.includePoint": {
+      "name": "includePoint",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 74
+    },
+    "Ecdlp.M16FrobeniusPointSplit.includePoint_injective": {
+      "name": "includePoint_injective",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 154
+    },
+    "Ecdlp.M16FrobeniusPointSplit.includePoint_some": {
+      "name": "includePoint_some",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 81
+    },
+    "Ecdlp.M16FrobeniusPointSplit.includePoint_zero": {
+      "name": "includePoint_zero",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 78
+    },
+    "Ecdlp.M16FrobeniusPointSplit.isFp2Point_of_liesOver": {
+      "name": "isFp2Point_of_liesOver",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 261
+    },
+    "Ecdlp.M16FrobeniusPointSplit.split_partitioned_point_witnesses": {
+      "name": "split_partitioned_point_witnesses",
+      "namespace": "Ecdlp.M16FrobeniusPointSplit",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "line": 401
     },
     "Ecdlp.M16LiftableSixWidthNoGo.LiftableSignedSixIndex": {
       "name": "LiftableSignedSixIndex",
