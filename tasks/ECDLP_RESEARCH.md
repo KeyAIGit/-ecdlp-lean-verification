@@ -12,16 +12,30 @@ Canonical start order:
 4. Read this queue.
 5. Load `repo/FORMAL_SUBSTRATE.json` only for a selected formal dependency.
 
+## Owner-directed engineering program
+
+`tasks/ECDLP_LAB_BUILD.md` owns the single ordered umbrella task
+`ECDLP-LAB-001`. Owner direction dated 2026-08-11 permits only bounded
+`lab_engineering_fixture` infrastructure and synthetic smoke fixtures. It does
+not change the RH scientific portfolio priority, select an ECDLP hypothesis,
+or authorize a Research Engine/candidate experiment. Its first phase is a
+health and reuse preflight; later phases remain blocked until their predecessor
+has landed through green CI.
+
 ## Active tasks
 
-Execution lock for the `post-task029-maintenance-intake` phase: no experiment
-is executable or receives compute. `TASK-029` formulated and reviewed the
-current-seed `HYP-M16-SOLVER-SLOPE-001` proposal; the proposal is hard rejected
-with zero quality clearance, zero retention, and no authorization or route
-effect. No new scientific execution is selected. The operational queue returns
-to `TASK-008` maintenance/evidence intake. The ML qualification contracts and
-`TASK-013` remain maintenance references. Any future scientific execution
-requires a new reviewed candidate and a separate dated authorization.
+Execution lock for the `post-task029-maintenance-intake` phase: no Research
+Engine, candidate, or scientific experiment is executable or receives compute.
+`TASK-029` formulated and reviewed the current-seed
+`HYP-M16-SOLVER-SLOPE-001` proposal; the proposal is hard rejected with zero
+quality clearance, zero retention, and no authorization or route effect. No
+new scientific execution is selected. The operational queue returns to
+`TASK-008` maintenance/evidence intake. The ML qualification contracts and
+`TASK-013` remain maintenance references. Bounded synthetic
+`lab_engineering_fixture` smoke under `ECDLP-LAB-001` is outside that scientific
+execution lock and cannot produce Engine state or route effects. Any future
+scientific execution requires a new reviewed candidate and a separate dated
+authorization.
 
 ### ML-P0 qualification under TASK-013
 
