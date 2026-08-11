@@ -1,0 +1,320 @@
+{
+  "catalog_kind": "ecdlp_lab_ci_curve_catalog_v1",
+  "classification": "engineering_only",
+  "curve_count": 6,
+  "families": [
+    "j0_glv_like",
+    "random_generic_j_prime_subgroup",
+    "j0_no_fp_glv_control"
+  ],
+  "field_bits": [
+    11,
+    13
+  ],
+  "fixtures": [
+    {
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_id": "ecdlp-lab-j0-glv-like-b11-p1051",
+      "endomorphism": {
+        "beta": 180,
+        "lambda": 941,
+        "reason": null,
+        "status": "verified_j0_glv"
+      },
+      "family": "j0_glv_like",
+      "family_property": {
+        "equation_shape": "y^2=x^3+7",
+        "field_p_mod_3": 1,
+        "j_invariant": 0,
+        "kind": "j0_glv_like_v1"
+      },
+      "field_bits": 11,
+      "field_p": 1051,
+      "fixture_id": "ecdlp-lab-j0-glv-like-b11-p1051-g0",
+      "full_order": 1093,
+      "generation_search": {
+        "curve_candidates_examined": 9,
+        "point_attempts": 22,
+        "prime_candidates_examined": 45
+      },
+      "generator": [
+        863,
+        955
+      ],
+      "j_invariant": 0,
+      "order_certificate": {
+        "inputs": {
+          "cofactor": 1,
+          "field_p": 1051,
+          "full_order": 1093,
+          "generator": [
+            863,
+            955
+          ],
+          "hasse_lower": 988,
+          "hasse_upper": 1116,
+          "subgroup_order": 1093,
+          "twice_subgroup_order": 2186
+        },
+        "type": "prime_order_hasse_unique_v1"
+      },
+      "subgroup_order": 1093,
+      "subgroup_order_bits": 11
+    },
+    {
+      "cofactor": 4,
+      "curve_a": 710,
+      "curve_b": 553,
+      "curve_id": "ecdlp-lab-random-generic-j-prime-subgroup-b11-p1069",
+      "endomorphism": {
+        "beta": null,
+        "lambda": null,
+        "reason": "generic_j_control_has_no_claimed_j0_endomorphism",
+        "status": "not_claimed_generic_control"
+      },
+      "family": "random_generic_j_prime_subgroup",
+      "family_property": {
+        "excluded_j_residues": [
+          0,
+          659
+        ],
+        "j_invariant": 919,
+        "kind": "random_generic_j_prime_subgroup_v1",
+        "subgroup_selection": "largest_prime_factor"
+      },
+      "field_bits": 11,
+      "field_p": 1069,
+      "fixture_id": "ecdlp-lab-random-generic-j-prime-subgroup-b11-p1069-g0",
+      "full_order": 1124,
+      "generation_search": {
+        "curve_candidates_examined": 8,
+        "point_attempts": 1,
+        "prime_candidates_examined": 3
+      },
+      "generator": [
+        207,
+        709
+      ],
+      "j_invariant": 919,
+      "order_certificate": {
+        "inputs": {
+          "curve_a": 710,
+          "curve_b": 553,
+          "expected_full_order": 1124,
+          "field_p": 1069,
+          "legendre_exponent": 534,
+          "x_start": 0,
+          "x_stop_exclusive": 1069
+        },
+        "type": "exact_legendre_sum_v1"
+      },
+      "subgroup_order": 281,
+      "subgroup_order_bits": 9
+    },
+    {
+      "cofactor": 6,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_id": "ecdlp-lab-j0-no-fp-glv-control-b11-p1613",
+      "endomorphism": {
+        "beta": null,
+        "lambda": null,
+        "reason": "gcd(3,field_p-1)=1_no_nontrivial_base_field_cube_root",
+        "status": "unavailable_no_base_field_cube_root"
+      },
+      "family": "j0_no_fp_glv_control",
+      "family_property": {
+        "claim_scope": "base_field_only",
+        "cube_map_gcd": 1,
+        "equation_shape": "y^2=x^3+7",
+        "field_p_mod_3": 2,
+        "j_invariant": 0,
+        "kind": "j0_no_fp_glv_control_v1"
+      },
+      "field_bits": 11,
+      "field_p": 1613,
+      "fixture_id": "ecdlp-lab-j0-no-fp-glv-control-b11-p1613-g0",
+      "full_order": 1614,
+      "generation_search": {
+        "curve_candidates_examined": 34,
+        "point_attempts": 2,
+        "prime_candidates_examined": 221
+      },
+      "generator": [
+        364,
+        1048
+      ],
+      "j_invariant": 0,
+      "order_certificate": {
+        "inputs": {
+          "curve_a": 0,
+          "curve_b": 7,
+          "expected_full_order": 1614,
+          "field_p": 1613,
+          "field_p_mod_3": 2
+        },
+        "type": "j0_p_plus_one_v1"
+      },
+      "subgroup_order": 269,
+      "subgroup_order_bits": 9
+    },
+    {
+      "cofactor": 1,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_id": "ecdlp-lab-j0-glv-like-b13-p6709",
+      "endomorphism": {
+        "beta": 1239,
+        "lambda": 6094,
+        "reason": null,
+        "status": "verified_j0_glv"
+      },
+      "family": "j0_glv_like",
+      "family_property": {
+        "equation_shape": "y^2=x^3+7",
+        "field_p_mod_3": 1,
+        "j_invariant": 0,
+        "kind": "j0_glv_like_v1"
+      },
+      "field_bits": 13,
+      "field_p": 6709,
+      "fixture_id": "ecdlp-lab-j0-glv-like-b13-p6709-g0",
+      "full_order": 6829,
+      "generation_search": {
+        "curve_candidates_examined": 1,
+        "point_attempts": 1,
+        "prime_candidates_examined": 3
+      },
+      "generator": [
+        2336,
+        6475
+      ],
+      "j_invariant": 0,
+      "order_certificate": {
+        "inputs": {
+          "cofactor": 1,
+          "field_p": 6709,
+          "full_order": 6829,
+          "generator": [
+            2336,
+            6475
+          ],
+          "hasse_lower": 6547,
+          "hasse_upper": 6873,
+          "subgroup_order": 6829,
+          "twice_subgroup_order": 13658
+        },
+        "type": "prime_order_hasse_unique_v1"
+      },
+      "subgroup_order": 6829,
+      "subgroup_order_bits": 13
+    },
+    {
+      "cofactor": 1,
+      "curve_a": 77,
+      "curve_b": 1022,
+      "curve_id": "ecdlp-lab-random-generic-j-prime-subgroup-b13-p7753",
+      "endomorphism": {
+        "beta": null,
+        "lambda": null,
+        "reason": "generic_j_control_has_no_claimed_j0_endomorphism",
+        "status": "not_claimed_generic_control"
+      },
+      "family": "random_generic_j_prime_subgroup",
+      "family_property": {
+        "excluded_j_residues": [
+          0,
+          1728
+        ],
+        "j_invariant": 1148,
+        "kind": "random_generic_j_prime_subgroup_v1",
+        "subgroup_selection": "largest_prime_factor"
+      },
+      "field_bits": 13,
+      "field_p": 7753,
+      "fixture_id": "ecdlp-lab-random-generic-j-prime-subgroup-b13-p7753-g0",
+      "full_order": 7841,
+      "generation_search": {
+        "curve_candidates_examined": 8,
+        "point_attempts": 1,
+        "prime_candidates_examined": 5
+      },
+      "generator": [
+        7732,
+        5106
+      ],
+      "j_invariant": 1148,
+      "order_certificate": {
+        "inputs": {
+          "curve_a": 77,
+          "curve_b": 1022,
+          "expected_full_order": 7841,
+          "field_p": 7753,
+          "legendre_exponent": 3876,
+          "x_start": 0,
+          "x_stop_exclusive": 7753
+        },
+        "type": "exact_legendre_sum_v1"
+      },
+      "subgroup_order": 7841,
+      "subgroup_order_bits": 13
+    },
+    {
+      "cofactor": 6,
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_id": "ecdlp-lab-j0-no-fp-glv-control-b13-p6197",
+      "endomorphism": {
+        "beta": null,
+        "lambda": null,
+        "reason": "gcd(3,field_p-1)=1_no_nontrivial_base_field_cube_root",
+        "status": "unavailable_no_base_field_cube_root"
+      },
+      "family": "j0_no_fp_glv_control",
+      "family_property": {
+        "claim_scope": "base_field_only",
+        "cube_map_gcd": 1,
+        "equation_shape": "y^2=x^3+7",
+        "field_p_mod_3": 2,
+        "j_invariant": 0,
+        "kind": "j0_no_fp_glv_control_v1"
+      },
+      "field_bits": 13,
+      "field_p": 6197,
+      "fixture_id": "ecdlp-lab-j0-no-fp-glv-control-b13-p6197-g0",
+      "full_order": 6198,
+      "generation_search": {
+        "curve_candidates_examined": 84,
+        "point_attempts": 2,
+        "prime_candidates_examined": 721
+      },
+      "generator": [
+        3891,
+        1594
+      ],
+      "j_invariant": 0,
+      "order_certificate": {
+        "inputs": {
+          "curve_a": 0,
+          "curve_b": 7,
+          "expected_full_order": 6198,
+          "field_p": 6197,
+          "field_p_mod_3": 2
+        },
+        "type": "j0_p_plus_one_v1"
+      },
+      "subgroup_order": 1033,
+      "subgroup_order_bits": 11
+    }
+  ],
+  "limits": {
+    "max_curve_candidates": 4096,
+    "max_point_attempts": 1024,
+    "max_prime_candidates": 4096
+  },
+  "native_research_outcome": false,
+  "schema_version": 1,
+  "spec_sha256": "430bad69f03521ccab5cd12a7cf70175b4cd5923755166641a40cc3e050836ef"
+}

@@ -1,0 +1,312 @@
+{
+  "$defs": {
+    "certificate": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "inputs": {
+              "additionalProperties": false,
+              "properties": {
+                "cofactor": {"const": 1},
+                "field_p": {"$ref": "#/$defs/uint32"},
+                "full_order": {"$ref": "#/$defs/positive"},
+                "generator": {"$ref": "#/$defs/point"},
+                "hasse_lower": {"$ref": "#/$defs/positive"},
+                "hasse_upper": {"$ref": "#/$defs/positive"},
+                "subgroup_order": {"$ref": "#/$defs/positive"},
+                "twice_subgroup_order": {"$ref": "#/$defs/positive"}
+              },
+              "required": [
+                "field_p",
+                "generator",
+                "subgroup_order",
+                "full_order",
+                "cofactor",
+                "hasse_lower",
+                "hasse_upper",
+                "twice_subgroup_order"
+              ],
+              "type": "object"
+            },
+            "type": {"const": "prime_order_hasse_unique_v1"}
+          },
+          "required": ["type", "inputs"],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "inputs": {
+              "additionalProperties": false,
+              "properties": {
+                "curve_a": {"$ref": "#/$defs/uint32"},
+                "curve_b": {"$ref": "#/$defs/uint32"},
+                "expected_full_order": {"$ref": "#/$defs/positive"},
+                "field_p": {"$ref": "#/$defs/uint32"},
+                "legendre_exponent": {"$ref": "#/$defs/positive"},
+                "x_start": {"const": 0},
+                "x_stop_exclusive": {"$ref": "#/$defs/uint32"}
+              },
+              "required": [
+                "field_p",
+                "curve_a",
+                "curve_b",
+                "x_start",
+                "x_stop_exclusive",
+                "legendre_exponent",
+                "expected_full_order"
+              ],
+              "type": "object"
+            },
+            "type": {"const": "exact_legendre_sum_v1"}
+          },
+          "required": ["type", "inputs"],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "inputs": {
+              "additionalProperties": false,
+              "properties": {
+                "curve_a": {"const": 0},
+                "curve_b": {"const": 7},
+                "expected_full_order": {"$ref": "#/$defs/positive"},
+                "field_p": {"$ref": "#/$defs/uint32"},
+                "field_p_mod_3": {"const": 2}
+              },
+              "required": [
+                "field_p",
+                "curve_a",
+                "curve_b",
+                "field_p_mod_3",
+                "expected_full_order"
+              ],
+              "type": "object"
+            },
+            "type": {"const": "j0_p_plus_one_v1"}
+          },
+          "required": ["type", "inputs"],
+          "type": "object"
+        }
+      ]
+    },
+    "endomorphism": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "beta": {"$ref": "#/$defs/positive"},
+            "lambda": {"$ref": "#/$defs/positive"},
+            "reason": {"type": "null"},
+            "status": {"const": "verified_j0_glv"}
+          },
+          "required": ["status", "beta", "lambda", "reason"],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "beta": {"type": "null"},
+            "lambda": {"type": "null"},
+            "reason": {"const": "generic_j_control_has_no_claimed_j0_endomorphism"},
+            "status": {"const": "not_claimed_generic_control"}
+          },
+          "required": ["status", "beta", "lambda", "reason"],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "beta": {"type": "null"},
+            "lambda": {"type": "null"},
+            "reason": {"const": "gcd(3,field_p-1)=1_no_nontrivial_base_field_cube_root"},
+            "status": {"const": "unavailable_no_base_field_cube_root"}
+          },
+          "required": ["status", "beta", "lambda", "reason"],
+          "type": "object"
+        }
+      ]
+    },
+    "entry": {
+      "additionalProperties": false,
+      "properties": {
+        "cofactor": {"$ref": "#/$defs/positive"},
+        "curve_a": {"$ref": "#/$defs/uint32"},
+        "curve_b": {"$ref": "#/$defs/uint32"},
+        "curve_id": {"$ref": "#/$defs/identifier"},
+        "endomorphism": {"$ref": "#/$defs/endomorphism"},
+        "family": {
+          "enum": [
+            "j0_glv_like",
+            "random_generic_j_prime_subgroup",
+            "j0_no_fp_glv_control"
+          ]
+        },
+        "family_property": {"$ref": "#/$defs/familyProperty"},
+        "field_bits": {"enum": [11, 13]},
+        "field_p": {"$ref": "#/$defs/uint32"},
+        "fixture_id": {"$ref": "#/$defs/identifier"},
+        "full_order": {"$ref": "#/$defs/positive"},
+        "generation_search": {"$ref": "#/$defs/search"},
+        "generator": {"$ref": "#/$defs/point"},
+        "j_invariant": {"$ref": "#/$defs/uint32"},
+        "order_certificate": {"$ref": "#/$defs/certificate"},
+        "subgroup_order": {"$ref": "#/$defs/positive"},
+        "subgroup_order_bits": {"type": "integer", "minimum": 2, "maximum": 32}
+      },
+      "required": [
+        "fixture_id",
+        "curve_id",
+        "family",
+        "field_bits",
+        "field_p",
+        "curve_a",
+        "curve_b",
+        "j_invariant",
+        "full_order",
+        "subgroup_order",
+        "subgroup_order_bits",
+        "cofactor",
+        "generator",
+        "endomorphism",
+        "family_property",
+        "order_certificate",
+        "generation_search"
+      ],
+      "type": "object"
+    },
+    "familyProperty": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "equation_shape": {"const": "y^2=x^3+7"},
+            "field_p_mod_3": {"const": 1},
+            "j_invariant": {"const": 0},
+            "kind": {"const": "j0_glv_like_v1"}
+          },
+          "required": ["kind", "equation_shape", "j_invariant", "field_p_mod_3"],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "excluded_j_residues": {
+              "items": {"$ref": "#/$defs/uint32"},
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array",
+              "uniqueItems": true
+            },
+            "j_invariant": {"$ref": "#/$defs/uint32"},
+            "kind": {"const": "random_generic_j_prime_subgroup_v1"},
+            "subgroup_selection": {"const": "largest_prime_factor"}
+          },
+          "required": ["kind", "j_invariant", "excluded_j_residues", "subgroup_selection"],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "claim_scope": {"const": "base_field_only"},
+            "cube_map_gcd": {"const": 1},
+            "equation_shape": {"const": "y^2=x^3+7"},
+            "field_p_mod_3": {"const": 2},
+            "j_invariant": {"const": 0},
+            "kind": {"const": "j0_no_fp_glv_control_v1"}
+          },
+          "required": [
+            "kind",
+            "equation_shape",
+            "j_invariant",
+            "field_p_mod_3",
+            "cube_map_gcd",
+            "claim_scope"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "identifier": {
+      "maxLength": 128,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "type": "string"
+    },
+    "limits": {
+      "additionalProperties": false,
+      "properties": {
+        "max_curve_candidates": {"const": 4096},
+        "max_point_attempts": {"const": 1024},
+        "max_prime_candidates": {"const": 4096}
+      },
+      "required": ["max_prime_candidates", "max_curve_candidates", "max_point_attempts"],
+      "type": "object"
+    },
+    "point": {
+      "items": false,
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+        {"$ref": "#/$defs/uint32"},
+        {"$ref": "#/$defs/uint32"}
+      ],
+      "type": "array"
+    },
+    "positive": {"type": "integer", "minimum": 1, "maximum": 4294967295},
+    "search": {
+      "additionalProperties": false,
+      "properties": {
+        "curve_candidates_examined": {"type": "integer", "minimum": 1, "maximum": 4096},
+        "point_attempts": {"type": "integer", "minimum": 1, "maximum": 1024},
+        "prime_candidates_examined": {"type": "integer", "minimum": 1, "maximum": 4096}
+      },
+      "required": ["prime_candidates_examined", "curve_candidates_examined", "point_attempts"],
+      "type": "object"
+    },
+    "sha256": {"pattern": "^[0-9a-f]{64}$", "type": "string"},
+    "uint32": {"type": "integer", "minimum": 0, "maximum": 4294967295}
+  },
+  "$id": "https://keyai.example/schemas/ecdlp-lab/ci-curve-catalog-v1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "catalog_kind": {"const": "ecdlp_lab_ci_curve_catalog_v1"},
+    "classification": {"const": "engineering_only"},
+    "curve_count": {"const": 6},
+    "families": {
+      "const": [
+        "j0_glv_like",
+        "random_generic_j_prime_subgroup",
+        "j0_no_fp_glv_control"
+      ]
+    },
+    "field_bits": {"const": [11, 13]},
+    "fixtures": {
+      "items": {"$ref": "#/$defs/entry"},
+      "maxItems": 6,
+      "minItems": 6,
+      "type": "array"
+    },
+    "limits": {"$ref": "#/$defs/limits"},
+    "native_research_outcome": {"const": false},
+    "schema_version": {"const": 1},
+    "spec_sha256": {"$ref": "#/$defs/sha256"}
+  },
+  "required": [
+    "schema_version",
+    "catalog_kind",
+    "classification",
+    "native_research_outcome",
+    "spec_sha256",
+    "curve_count",
+    "field_bits",
+    "families",
+    "limits",
+    "fixtures"
+  ],
+  "title": "ECDLP lab deterministic six-curve CI catalog",
+  "type": "object"
+}

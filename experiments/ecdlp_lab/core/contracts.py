@@ -461,7 +461,6 @@ def _receipt_issues(record: dict[str, Any]) -> list[Issue]:
     if (
         passed
         and record.get("subject_contract_kind") == "method_result_v1"
-        and record.get("candidate_scalar") is not None
         and record.get("candidate_relation_valid") is not True
     ):
         issues.append(
@@ -471,6 +470,20 @@ def _receipt_issues(record: dict[str, Any]) -> list[Issue]:
                 "a passed method-result receipt requires a valid candidate relation",
             )
         )
+    if record.get("subject_contract_kind") != "method_result_v1":
+        for field_name in (
+            "candidate_scalar",
+            "candidate_relation_valid",
+            "private_target_receipt_sha256",
+        ):
+            if record.get(field_name) is not None:
+                issues.append(
+                    Issue(
+                        "contract.validation.non_method_candidate",
+                        f"$.{field_name}",
+                        "non-method validation receipts cannot carry candidate material",
+                    )
+                )
     retaining = record.get("retention_decision") == "retain"
     if retaining and not passed:
         issues.append(

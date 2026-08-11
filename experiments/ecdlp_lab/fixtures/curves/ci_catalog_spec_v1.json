@@ -1,0 +1,41 @@
+{
+  "catalog_nonce": "ecdlp-lab-ci-v1",
+  "family_order": [
+    "j0_glv_like",
+    "random_generic_j_prime_subgroup",
+    "j0_no_fp_glv_control"
+  ],
+  "family_parameters": {
+    "j0_glv_like": {
+      "certificate_type": "prime_order_hasse_unique_v1",
+      "curve_a": 0,
+      "curve_b": 7
+    },
+    "j0_no_fp_glv_control": {
+      "certificate_type": "j0_p_plus_one_v1",
+      "curve_a": 0,
+      "curve_b": 7
+    },
+    "random_generic_j_prime_subgroup": {
+      "certificate_type": "exact_legendre_sum_v1"
+    }
+  },
+  "field_bits": [
+    11,
+    13
+  ],
+  "limits": {
+    "max_curve_candidates": 4096,
+    "max_point_attempts": 1024,
+    "max_prime_candidates": 4096
+  },
+  "schema_version": 1,
+  "search_policy": {
+    "generic_curves_per_prime": 64,
+    "minimum_subgroup_order_bits_margin": 2,
+    "point_derivation": "sha256_x_then_canonical_parity_v1",
+    "prime_slot_order": "sha256_rotated_exact_width_odd_v1",
+    "subgroup_selection": "largest_prime_factor"
+  },
+  "spec_kind": "ecdlp_lab_ci_curve_catalog_spec_v1"
+}

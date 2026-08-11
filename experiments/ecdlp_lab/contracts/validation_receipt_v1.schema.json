@@ -129,6 +129,33 @@
       },
       "then": {"$ref": "#/$defs/passedInvariant"}
     },
+    {
+      "if": {
+        "properties": {
+          "passed": {"const": true},
+          "subject_contract_kind": {"const": "method_result_v1"}
+        },
+        "required": ["passed", "subject_contract_kind"]
+      },
+      "then": {
+        "properties": {"candidate_relation_valid": {"const": true}}
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "subject_contract_kind": {"not": {"const": "method_result_v1"}}
+        },
+        "required": ["subject_contract_kind"]
+      },
+      "then": {
+        "properties": {
+          "candidate_scalar": {"type": "null"},
+          "candidate_relation_valid": {"type": "null"},
+          "private_target_receipt_sha256": {"type": "null"}
+        }
+      }
+    },
     {"$ref": "#/$defs/retentionInvariant"}
   ],
   "$defs": {
@@ -148,9 +175,8 @@
       }
     },
     "passedInvariant": {
-      "required": ["candidate_relation_valid", "provenance_valid", "checks"],
+      "required": ["provenance_valid", "checks"],
       "properties": {
-        "candidate_relation_valid": {"const": true},
         "provenance_valid": {"const": true},
         "checks": {
           "items": {

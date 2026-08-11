@@ -343,7 +343,7 @@ Completion evidence:
 
 ### P02: lab fixture catalog and independent curve validation
 
-Status: ready
+Status: complete
 Allowed paths: `experiments/ecdlp_lab/curves/`,
 `experiments/ecdlp_lab/core/`, `experiments/ecdlp_lab/contracts/`,
 `experiments/ecdlp_lab/fixtures/`, `experiments/ecdlp_lab/tests/`
@@ -405,9 +405,31 @@ Exit criteria:
   certificate is rejected independently;
 - existing P1 artifacts are byte-for-byte unchanged.
 
+Completion evidence at baseline `1a2fecd31fe5b2d5c6cff85bb77ea991d4c37347`:
+
+- the committed registry is the sole catalog authority and binds the immutable
+  40-curve P1 catalog plus one six-fixture CI catalog; its raw SHA-256 is
+  `5b71f3a1070ebf360f5eb42a7383762a3501d4495098f94174960f0876ac7067`;
+- the CI spec and byte-identical generated catalog have raw SHA-256 values
+  `430bad69f03521ccab5cd12a7cf70175b4cd5923755166641a40cc3e050836ef`
+  and `7f125738007c5399a545ae4d0309335f0362d6feb5431c05e3d17665cdf03a0a`;
+- all three families at 11 and 13 field bits validate independently; the worst
+  observed per-fixture search receipts are 721 prime slots, 84 curve
+  candidates, and 22 point attempts, below the frozen 4096/4096/1024 ceilings;
+- the independent oracle validates all six CI fixtures and all 40 legacy P1
+  curves, including endomorphism eigenpair relations, without exact-counting legacy 20/24-bit
+  fields; producer imports are rejected by an AST and runtime independence
+  gate;
+- 96 stdlib-only tests pass in about 1.5 seconds under a 512 MiB address-space
+  cap, including catalog/registry drift, primitive and certificate corruption,
+  non-finite legacy numbers, unhashable identifiers, oversize exact-count and
+  fixture-array CPU-amplification regressions;
+- the frozen P1 arithmetic, validator, catalog, and independent-oracle hashes
+  remain `c18d954a...`, `0a33a4c1...`, `d293afa7...`, and `7acc852d...`.
+
 ### P03: reference BSGS and ordinary seeded rho
 
-Status: blocked_by_P02
+Status: ready
 Allowed paths: `experiments/ecdlp_lab/methods/python/`,
 `experiments/ecdlp_lab/core/`, `experiments/ecdlp_lab/fixtures/`,
 `experiments/ecdlp_lab/tests/`
