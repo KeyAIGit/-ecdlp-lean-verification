@@ -4,8 +4,8 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 313,
-    "ledger_rows": 313,
+    "theorems": 314,
+    "ledger_rows": 314,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
@@ -37,10 +37,10 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1224,
+    "edges": 1227,
     "by_edge_type": {
-      "imports": 556,
-      "member_of": 313,
+      "imports": 558,
+      "member_of": 314,
       "grounded_in_source_claim": 62,
       "requires_foundation": 41,
       "supports": 27,
@@ -209,11 +209,12 @@
       "roots of unity + exact symmetric-power arithmetic; six isolated new `native_decide` arithmetic owners plus disclosed inherited compiler trust": 1,
       "exact GLV-orbit enumeration + two isolated new `native_decide` certificates + kernel composition with disclosed inherited compiler trust": 1,
       "finite-range counting + exact secp256k1 cardinality; one isolated new `native_decide` comparison plus disclosed inherited compiler trust": 1,
-      "exact symmetric-power/range counting + one private new `native_decide` comparison plus disclosed inherited compiler trust": 1
+      "exact symmetric-power/range counting + one private new `native_decide` comparison plus disclosed inherited compiler trust": 1,
+      "canonical algebraic-closure Frobenius + explicit point descent/antifixed branch + base-change injection before the existing base-field two-torsion theorem; zero new native owners, inherited secp256k1 compiler trust and the final no-two-torsion chain disclosed": 1
     },
     "by_area": {
       "curve-torsion": 153,
-      "primality": 59,
+      "primality": 60,
       "other": 35,
       "generic-hardness": 30,
       "protocol-soundness": 23,
@@ -6516,6 +6517,26 @@
       "family_id": "family-other",
       "dependency_depth": 11,
       "gated": true
+    },
+    {
+      "id": "thm-313",
+      "name": "Ecdlp.M16FrobeniusPointSplit.frobeniusPoint`, `LiesOver`, `IsFp2Point`, `includePoint_injective`, `frobeniusPoint_includePoint`, `exists_includePoint_eq_of_liesOver_of_isLiftable`, `frobeniusPoint_eq_of_liesOver_of_isLiftable`, `frobeniusPoint_eq_neg_of_liesOver_of_not_isLiftable`, `isFp2Point_of_liesOver`, `exists_includePoint_eq_sum_of_liftable_liesOver`, `frobeniusPoint_sum_eq_neg_of_nonliftable_liesOver`, `frobenius_split_before_two_torsion`, `frobenius_split_of_base_subtotal`, `frobenius_split_with_signed_target`, `split_partitioned_point_witnesses` and supporting declarations",
+      "short_name": "frobeniusPoint`,",
+      "module": "Ecdlp.Proved.M16FrobeniusPointSplit",
+      "modules": [
+        "Ecdlp.Proved.M16FrobeniusPointSplit"
+      ],
+      "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
+      "files": [
+        "Ecdlp/Proved/M16FrobeniusPointSplit.lean"
+      ],
+      "claim": "Conditional point-witness Frobenius split over the secp256k1 base/antifixed branches (arithmetic Frobenius on the algebraic-closure curve fixes every explicitly base-changed point. For an actual affine closure point lying above a base-field `x`-coordinate, liftability yields literal descent to a base point, including `rhs = 0`, while nonliftability yields `F(P) = -P` by the finite-field quadratic-character calculation. Finite liftable subtotals therefore descend and finite nonliftable subtotals are antifixed. Conjugating an assumed point-sum relation first exposes possible closure-field two-torsion; the final theorem eliminates it only after the fixed subtotal is shown to be in the base-change image and pulled back through injectivity, then applies the existing base-field no-nonzero-two-torsion theorem. Honest scope: this is conditional on actual point witnesses, their `LiesOver` hypotheses, liftability classifications, and the actual point-sum relation. It constructs no point from `S17At`, direct, frozen, or chart roots; proves no factor-base membership, witness or recovery completeness, root solving, relation existence/yield/rank, cost improvement, or ECDLP shortcut. No explicit quadratic-twist model or isomorphism is formalized. The module adds zero `native_decide` owners; concrete `Fp` conclusions inherit pre-existing compiler-trusted secp256k1 parameter/primality leaves, and the final split additionally inherits the existing base-field no-two-torsion certificate chain)",
+      "method": "canonical algebraic-closure Frobenius + explicit point descent/antifixed branch + base-change injection before the existing base-field two-torsion theorem; zero new native owners, inherited secp256k1 compiler trust and the final no-two-torsion chain disclosed",
+      "status": "proved",
+      "area": "primality",
+      "family_id": "family-primality",
+      "dependency_depth": 11,
+      "gated": true
     }
   ],
   "barriers": [
@@ -12698,6 +12719,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.M16FrobeniusPointSplit",
+      "to": "Ecdlp.Proved.M16FactorBaseLiftable",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.M16LiftableSixWidthNoGo",
       "to": "Ecdlp.Proved.M16FactorBaseLiftable",
       "type": "imports"
@@ -14389,6 +14415,11 @@
     },
     {
       "from": "Ecdlp",
+      "to": "Ecdlp.Proved.M16FrobeniusPointSplit",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
       "to": "Ecdlp.Proved.M16SixWidthNoGo",
       "type": "imports"
     },
@@ -16025,6 +16056,11 @@
     {
       "from": "thm-312",
       "to": "family-other",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-313",
+      "to": "family-primality",
       "type": "member_of"
     },
     {
