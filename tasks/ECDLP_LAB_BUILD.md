@@ -277,7 +277,7 @@ Allowed paths: `experiments/ecdlp_lab/contracts/`, `core/`, `fixtures/`,
 
 Deliverables:
 
-- Implement the eight contracts from section 7 and dependency-free semantic
+- Implement the nine contract families from section 7 and dependency-free semantic
   validators.
 - Implement canonical JSON and content hashing.
 - Add positive and adversarial fixtures.
