@@ -1,0 +1,103 @@
+{
+  "scope": "fixed public secp256k1 parameters and fixed known scalars only",
+  "p_hex": "0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f",
+  "n_hex": "0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141",
+  "gcd_n_p_minus_one": 1,
+  "phi_g_hex": "0xee45a5d3582bcc343de09e2560a984ff1cbda1b74b117071860c29563f329c94",
+  "chi_phi_g": -1,
+  "bridge": "(-1)^k = chi(phi([k]G))*chi(W_G(k)), because chi(phi(G))=-1",
+  "normalization_check": {
+    "corrected_identity": "phi([k]G)=phi(G)^(k^2)*W_G(k)",
+    "printed_2008_equation_checked": "phi([k]G)=phi(G)^(k^2-1)*W_G(k)",
+    "printed_equation_passes_fixed_samples": false,
+    "interpretation": "The k^2 exponent is consistent with k=1, the net transformation law, the later 2k+1 ratio formula, and every fixed replay sample."
+  },
+  "samples": [
+    {
+      "scalar": "1",
+      "phi_q_hex": "0xee45a5d3582bcc343de09e2560a984ff1cbda1b74b117071860c29563f329c94",
+      "chi_phi_q": -1,
+      "chi_w_k": 1,
+      "product_equals_minus_one_pow_k": -1,
+      "parity_sign": -1,
+      "corrected_k_squared_identity": true,
+      "displayed_k_squared_minus_one_identity": false
+    },
+    {
+      "scalar": "2",
+      "phi_q_hex": "0x117788dd4beb12d9c6420a1059606b869f522c22f7d49d42cdb645925b98cc80",
+      "chi_phi_q": 1,
+      "chi_w_k": 1,
+      "product_equals_minus_one_pow_k": 1,
+      "parity_sign": 1,
+      "corrected_k_squared_identity": true,
+      "displayed_k_squared_minus_one_identity": false
+    },
+    {
+      "scalar": "3",
+      "phi_q_hex": "0x8ee8c7df331924c4a8094a0ef3b9f1e80ade3e9b0ec901d01721cb0454c5418a",
+      "chi_phi_q": 1,
+      "chi_w_k": -1,
+      "product_equals_minus_one_pow_k": -1,
+      "parity_sign": -1,
+      "corrected_k_squared_identity": true,
+      "displayed_k_squared_minus_one_identity": false
+    },
+    {
+      "scalar": "7",
+      "phi_q_hex": "0x14e419bae67b60bc6a2ccb15a872f6817befbe6fa393b0655fb7c3fae0edce3d",
+      "chi_phi_q": 1,
+      "chi_w_k": -1,
+      "product_equals_minus_one_pow_k": -1,
+      "parity_sign": -1,
+      "corrected_k_squared_identity": true,
+      "displayed_k_squared_minus_one_identity": false
+    },
+    {
+      "scalar": "11",
+      "phi_q_hex": "0xabe079babbddb1e8ad76cee6641879ed7aaebfd35d0492cf269fb381497fe5b7",
+      "chi_phi_q": -1,
+      "chi_w_k": 1,
+      "product_equals_minus_one_pow_k": -1,
+      "parity_sign": -1,
+      "corrected_k_squared_identity": true,
+      "displayed_k_squared_minus_one_identity": false
+    },
+    {
+      "scalar": "123456789",
+      "phi_q_hex": "0x12b4e4b5a211f6d85d722aa49413cbe5afe39c71bac45b708f1b05800b59992",
+      "chi_phi_q": -1,
+      "chi_w_k": 1,
+      "product_equals_minus_one_pow_k": -1,
+      "parity_sign": -1,
+      "corrected_k_squared_identity": true,
+      "displayed_k_squared_minus_one_identity": false
+    },
+    {
+      "scalar": "115792089237316195423570985008687907852837564279074904382605163141518161494335",
+      "phi_q_hex": "0xee887722b414ed2639bdf5efa69f947960add3dd082b62bd3249ba6ca4672faf",
+      "chi_phi_q": -1,
+      "chi_w_k": 1,
+      "product_equals_minus_one_pow_k": -1,
+      "parity_sign": -1,
+      "corrected_k_squared_identity": true,
+      "displayed_k_squared_minus_one_identity": false
+    },
+    {
+      "scalar": "115792089237316195423570985008687907852837564279074904382605163141518161494336",
+      "phi_q_hex": "0x11ba5a2ca7d433cbc21f61da9f567b00e3425e48b4ee8f8e79f3d6a8c0cd5f9b",
+      "chi_phi_q": 1,
+      "chi_w_k": 1,
+      "product_equals_minus_one_pow_k": 1,
+      "parity_sign": 1,
+      "corrected_k_squared_identity": true,
+      "displayed_k_squared_minus_one_identity": false
+    }
+  ],
+  "claim_boundary": [
+    "This verifies a public structural condition, not a discrete logarithm.",
+    "The hidden value chi(W_G(k)) is not computed from an unknown target.",
+    "The program accepts no external point or scalar.",
+    "Independent CAS and source-level review remain required before promotion."
+  ]
+}
