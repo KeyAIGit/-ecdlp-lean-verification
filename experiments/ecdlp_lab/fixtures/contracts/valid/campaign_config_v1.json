@@ -1,0 +1,44 @@
+{
+  "allowed_method_ids": ["bsgs_v1"],
+  "authorization_id": null,
+  "budgets": {
+    "max_field_bits": 32,
+    "max_group_law_invocations": 100000,
+    "max_memory_bytes": 67108864,
+    "max_steps": 100000,
+    "max_subgroup_order_bits": 32,
+    "max_table_entries": 65536,
+    "timeout_ns": 5000000000,
+    "workers": 1
+  },
+  "campaign_id": "536a86cc289e5e296afe69aea548cb317b50e0af6e17a61419bb3f02b6799bff",
+  "candidate_id": null,
+  "contract_kind": "campaign_config_v1",
+  "expected_work_unit_count": 1,
+  "framework_authorization_class": "fixture",
+  "hypothesis_id": null,
+  "internal_classification": "engineering_only",
+  "matrix": {
+    "algorithm_seeds": [7],
+    "curve_catalog_sha256s": ["d293afa7e5b614f39ed00356e35ee81a400b57ee9656907170193cb3aca0bbd7"],
+    "curve_fixture_ids": ["toy-secp-j0-b13-c0-p5923"],
+    "method_ids": ["bsgs_v1"],
+    "repetitions": 1,
+    "target_vector_sha256s": ["f530af54bbc7c68523bef1abcf97853d7c635244c15f5c071f91857ecf8083d8"]
+  },
+  "native_research_outcome": false,
+  "provenance": {
+    "config_sha256": "536a86cc289e5e296afe69aea548cb317b50e0af6e17a61419bb3f02b6799bff",
+    "diff_sha256": null,
+    "producer_dependency_sha256s": ["2222222222222222222222222222222222222222222222222222222222222222"],
+    "source_commit": "0123456789abcdef0123456789abcdef01234567",
+    "source_snapshot_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "source_tree_clean": true,
+    "validator_dependency_sha256s": ["3333333333333333333333333333333333333333333333333333333333333333"]
+  },
+  "record_kind": "lab_engineering_fixture",
+  "retainable": false,
+  "retention_class": "engineering_only",
+  "route_effect": "none",
+  "schema_version": 1
+}

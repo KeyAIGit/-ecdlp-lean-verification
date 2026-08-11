@@ -1,0 +1,69 @@
+{
+  "attempt_id": "006ac6b74aa40a66e22e16dafa5488be265d70f0c9493d046ecfe2eb9c6100f6",
+  "authorization_id": null,
+  "candidate_id": null,
+  "candidate_scalar": 1,
+  "contract_kind": "method_result_v1",
+  "counters": {
+    "collisions": 0,
+    "counter_semantics_id": "affine_group_calls_v1",
+    "distinguished_points": 0,
+    "estimated_algorithmic_table_bytes": 4928,
+    "field_counter_semantics": "not_instrumented",
+    "legacy_p1_group_operations": 101,
+    "method_self_check": {
+      "doublings": 0,
+      "field_inversions": null,
+      "field_multiplications": null,
+      "field_squarings": null,
+      "group_law_invocations": 0,
+      "negations": 0,
+      "nontrivial_additions": 0
+    },
+    "noninvertible_collisions": 0,
+    "offline_setup": {
+      "doublings": 7,
+      "field_inversions": null,
+      "field_multiplications": null,
+      "field_squarings": null,
+      "group_law_invocations": 91,
+      "negations": 1,
+      "nontrivial_additions": 77
+    },
+    "online_target": {
+      "doublings": 0,
+      "field_inversions": null,
+      "field_multiplications": null,
+      "field_squarings": null,
+      "group_law_invocations": 10,
+      "negations": 0,
+      "nontrivial_additions": 10
+    },
+    "restarts": 0,
+    "table_entries": 77
+  },
+  "failure": null,
+  "framework_authorization_class": "fixture",
+  "hypothesis_id": null,
+  "internal_classification": "engineering_only",
+  "method_id": "bsgs_v1",
+  "method_request_sha256": "8d767de1e543de06537685f26fe89d6d42a13e9af1c8fbb9c96fe93d73a50ff8",
+  "native_research_outcome": false,
+  "provenance": {
+    "config_sha256": "536a86cc289e5e296afe69aea548cb317b50e0af6e17a61419bb3f02b6799bff",
+    "diff_sha256": null,
+    "producer_dependency_sha256s": ["2222222222222222222222222222222222222222222222222222222222222222"],
+    "source_commit": "0123456789abcdef0123456789abcdef01234567",
+    "source_snapshot_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "source_tree_clean": true,
+    "validator_dependency_sha256s": ["3333333333333333333333333333333333333333333333333333333333333333"]
+  },
+  "record_kind": "lab_engineering_fixture",
+  "result_id": "6666666666666666666666666666666666666666666666666666666666666666",
+  "retainable": false,
+  "retention_class": "engineering_only",
+  "route_effect": "none",
+  "schema_version": 1,
+  "status": "success",
+  "work_unit_id": "9fe1df57d4477c89c5b7082c3716d6bb7a4cee4c1b31cf96ea994a97f8a95498"
+}

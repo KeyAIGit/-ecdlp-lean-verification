@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "document_kind": "ecdlp_lab_identity_derivation_v1",
+  "canonical_json": {
+    "encoding": "utf-8",
+    "key_order": "lexicographic",
+    "separators": "comma_colon_no_whitespace",
+    "allow_nan": false,
+    "allow_infinity": false,
+    "allow_negative_zero": false,
+    "allow_duplicate_keys": false
+  },
+  "identities": [
+    {
+      "field": "campaign_id",
+      "contract_kind": "campaign_config_v1",
+      "hash": "sha256",
+      "payload": "top-level record projection",
+      "excluded_fields": [
+        "campaign_id",
+        "provenance",
+        "retainable"
+      ]
+    },
+    {
+      "field": "target_vector_id",
+      "contract_kind": "target_vector_v1",
+      "branch": "public",
+      "hash": "sha256",
+      "payload": "record.public_payload",
+      "excluded_fields": []
+    },
+    {
+      "field": "target_vector_id",
+      "contract_kind": "target_vector_v1",
+      "branch": "private_validator_only",
+      "hash": "sha256",
+      "payload": "record.private_payload",
+      "excluded_fields": []
+    },
+    {
+      "field": "work_unit_id",
+      "contract_kind": "work_unit_v1",
+      "hash": "sha256",
+      "payload": "record.identity",
+      "identity_members_include": [
+        "campaign_config_sha256",
+        "curve_catalog_sha256",
+        "curve_fixture_id",
+        "public_target_vector_sha256",
+        "method_id",
+        "algorithm_seed",
+        "method_implementation_sha256",
+        "validator_implementation_sha256",
+        "budgets",
+        "repetition_ordinal"
+      ],
+      "excluded_fields": [
+        "work_unit_id",
+        "campaign_id",
+        "attempt_id",
+        "retry_ordinal",
+        "provenance",
+        "retainable"
+      ]
+    },
+    {
+      "field": "attempt_id",
+      "contract_kind": "work_unit_v1",
+      "hash": "sha256",
+      "payload_object_fields": [
+        "work_unit_id",
+        "retry_ordinal"
+      ],
+      "excluded_fields": [
+        "provenance",
+        "retainable"
+      ]
+    }
+  ],
+  "semantic_record_links": [
+    {
+      "fields": [
+        "all_contract_families.provenance.config_sha256"
+      ],
+      "target_contract_kind": "campaign_config_v1",
+      "digest": "campaign_id = sha256(canonical_json(campaign top-level projection excluding campaign_id, provenance, retainable))"
+    },
+    {
+      "fields": [
+        "work_unit_v1.identity.campaign_config_sha256"
+      ],
+      "target_contract_kind": "campaign_config_v1",
+      "digest": "sha256(canonical_json(full_record))"
+    },
+    {
+      "fields": [
+        "campaign_config_v1.matrix.target_vector_sha256s[]",
+        "target_vector_v1.private_payload.public_target_vector_sha256",
+        "work_unit_v1.identity.public_target_vector_sha256",
+        "method_request_v1.public_target_vector_sha256"
+      ],
+      "target_contract_kind": "target_vector_v1",
+      "target_branch": "public",
+      "digest": "target_vector_id = sha256(canonical_json(record.public_payload))"
+    },
+    {
+      "fields": [
+        "method_result_v1.method_request_sha256"
+      ],
+      "target_contract_kind": "method_request_v1",
+      "digest": "sha256(canonical_json(full_record))"
+    },
+    {
+      "fields": [
+        "validation_receipt_v1.subject_sha256"
+      ],
+      "target_contract_kind": "method_result_v1",
+      "digest": "sha256(canonical_json(full_record))"
+    },
+    {
+      "fields": [
+        "validation_receipt_v1.private_target_receipt_sha256"
+      ],
+      "target_contract_kind": "target_vector_v1",
+      "target_branch": "private_validator_only",
+      "digest": "target_vector_id = sha256(canonical_json(record.private_payload))"
+    },
+    {
+      "fields": [
+        "analysis_summary_v1.input_validation_receipt_sha256s[]"
+      ],
+      "target_contract_kind": "validation_receipt_v1",
+      "digest": "sha256(canonical_json(full_record))"
+    }
+  ],
+  "external_file_links": [
+    {
+      "fields": [
+        "campaign_config_v1.matrix.curve_catalog_sha256s[]",
+        "target_vector_v1.public_payload.curve_catalog_sha256",
+        "work_unit_v1.identity.curve_catalog_sha256",
+        "method_request_v1.curve_catalog_sha256"
+      ],
+      "digest": "sha256(raw_file_bytes)",
+      "fixture_value": "d293afa7e5b614f39ed00356e35ee81a400b57ee9656907170193cb3aca0bbd7",
+      "fixture_source": "experiments/ml_structure_probe/reports/p1_toy_scaling/curve_catalog.json"
+    },
+    {
+      "fields": [
+        "artifact_ref_v1.artifact_id",
+        "artifact_ref_v1.sha256"
+      ],
+      "digest": "sha256(raw_artifact_file_bytes)"
+    }
+  ],
+  "matrix_expansion": {
+    "repetition_ordinal": {
+      "location": "work_unit_v1.identity.repetition_ordinal",
+      "range": "0 <= repetition_ordinal < campaign_config_v1.matrix.repetitions"
+    },
+    "budget_equality": {
+      "fields": [
+        "campaign_config_v1.budgets",
+        "work_unit_v1.identity.budgets",
+        "method_request_v1.budgets"
+      ],
+      "required_keys": [
+        "max_subgroup_order_bits",
+        "max_field_bits",
+        "max_group_law_invocations",
+        "max_table_entries",
+        "max_steps",
+        "timeout_ns",
+        "max_memory_bytes",
+        "workers"
+      ],
+      "rule": "objects are exactly equal; no out-of-band or raised method budget"
+    }
+  },
+  "pattern_only_identifiers": [
+    "request_id",
+    "result_id",
+    "telemetry_id",
+    "validation_id",
+    "analysis_id"
+  ],
+  "note": "This document describes lab identity and link projections only. It does not compete with framework or Engine schemas, and no lab record is an Engine run."
+}

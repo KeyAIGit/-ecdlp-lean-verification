@@ -1,0 +1,275 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keyai.example/schemas/ecdlp-lab/analysis_summary_v1.schema.json",
+  "title": "ECDLP lab deterministic analysis summary v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_kind",
+    "contract_kind",
+    "internal_classification",
+    "framework_authorization_class",
+    "hypothesis_id",
+    "candidate_id",
+    "authorization_id",
+    "native_research_outcome",
+    "route_effect",
+    "retention_class",
+    "retainable",
+    "provenance",
+    "analysis_id",
+    "campaign_id",
+    "input_validation_receipt_sha256s",
+    "primary_scaling_variable",
+    "primary_cost_unit",
+    "success_targets_decimal",
+    "comparisons",
+    "model_fits",
+    "warnings",
+    "inference_status",
+    "secp256k1_extrapolation"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "record_kind": {"const": "lab_engineering_fixture"},
+    "contract_kind": {"const": "analysis_summary_v1"},
+    "internal_classification": {"const": "engineering_only"},
+    "framework_authorization_class": {"const": "fixture"},
+    "hypothesis_id": {"type": "null"},
+    "candidate_id": {"type": "null"},
+    "authorization_id": {"type": "null"},
+    "native_research_outcome": {"const": false},
+    "route_effect": {"const": "none"},
+    "retention_class": {"const": "engineering_only"},
+    "retainable": {"type": "boolean"},
+    "provenance": {"$ref": "#/$defs/provenance"},
+    "analysis_id": {"$ref": "#/$defs/sha256"},
+    "campaign_id": {"$ref": "#/$defs/sha256"},
+    "input_validation_receipt_sha256s": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/sha256"}
+    },
+    "primary_scaling_variable": {"const": "log2_subgroup_order"},
+    "primary_cost_unit": {"const": "group_law_invocations"},
+    "success_targets_decimal": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/probabilityDecimal"}
+    },
+    "comparisons": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/comparison"}
+    },
+    "model_fits": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/modelFit"}
+    },
+    "warnings": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/warning"}
+    },
+    "inference_status": {"const": "insufficient_for_asymptotic_inference"},
+    "secp256k1_extrapolation": {"const": false}
+  },
+  "allOf": [{"$ref": "#/$defs/retentionInvariant"}],
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "gitCommit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "methodId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*_v[0-9]+$"
+    },
+    "unsignedDecimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+    },
+    "signedDecimal": {
+      "type": "string",
+      "pattern": "^(?!-0(?:\\.0+)?$)-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+    },
+    "probabilityDecimal": {
+      "type": "string",
+      "pattern": "^(0(\\.[0-9]+)?|1(\\.0+)?)$"
+    },
+    "comparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method_id",
+        "field_bits",
+        "subgroup_order_bits",
+        "target_count",
+        "successes",
+        "failures",
+        "censored",
+        "empirical_success_probability_decimal",
+        "normalized_expected_group_operations_decimal",
+        "median_online_group_operations_decimal",
+        "offline_group_operations",
+        "estimated_algorithmic_memory_bytes",
+        "workers",
+        "full_cost"
+      ],
+      "properties": {
+        "method_id": {"$ref": "#/$defs/methodId"},
+        "field_bits": {"type": "integer", "minimum": 3, "maximum": 32},
+        "subgroup_order_bits": {"type": "integer", "minimum": 2, "maximum": 32},
+        "target_count": {"type": "integer", "minimum": 1},
+        "successes": {"type": "integer", "minimum": 0},
+        "failures": {"type": "integer", "minimum": 0},
+        "censored": {"type": "integer", "minimum": 0},
+        "empirical_success_probability_decimal": {"$ref": "#/$defs/probabilityDecimal"},
+        "normalized_expected_group_operations_decimal": {"$ref": "#/$defs/unsignedDecimal"},
+        "median_online_group_operations_decimal": {"$ref": "#/$defs/unsignedDecimal"},
+        "offline_group_operations": {"type": "integer", "minimum": 0},
+        "estimated_algorithmic_memory_bytes": {"type": "integer", "minimum": 0},
+        "workers": {"type": "integer", "minimum": 1},
+        "full_cost": {"$ref": "#/$defs/fullCost"}
+      }
+    },
+    "fullCost": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "online_cpu_hours_decimal",
+        "online_gpu_hours_decimal",
+        "offline_cpu_hours_decimal",
+        "offline_gpu_hours_decimal",
+        "storage_gb_decimal",
+        "money_usd_decimal",
+        "implementation_hours_decimal",
+        "reviewer_hours_decimal",
+        "preprocessing_included_in_totals",
+        "amortization_class",
+        "amortization_target_count",
+        "reusable_setup",
+        "shared_setup_id"
+      ],
+      "properties": {
+        "online_cpu_hours_decimal": {"$ref": "#/$defs/unsignedDecimal"},
+        "online_gpu_hours_decimal": {"$ref": "#/$defs/unsignedDecimal"},
+        "offline_cpu_hours_decimal": {"$ref": "#/$defs/unsignedDecimal"},
+        "offline_gpu_hours_decimal": {"$ref": "#/$defs/unsignedDecimal"},
+        "storage_gb_decimal": {"$ref": "#/$defs/unsignedDecimal"},
+        "money_usd_decimal": {"$ref": "#/$defs/unsignedDecimal"},
+        "implementation_hours_decimal": {"$ref": "#/$defs/unsignedDecimal"},
+        "reviewer_hours_decimal": {"$ref": "#/$defs/unsignedDecimal"},
+        "preprocessing_included_in_totals": {"const": true},
+        "amortization_class": {
+          "enum": ["none_single_target", "fixed_batch", "multi_target", "reusable_setup"]
+        },
+        "amortization_target_count": {"type": "integer", "minimum": 1},
+        "reusable_setup": {"type": "boolean"},
+        "shared_setup_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+            },
+            {"type": "null"}
+          ]
+        }
+      }
+    },
+    "coefficient": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "value_decimal"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1, "maxLength": 64},
+        "value_decimal": {"$ref": "#/$defs/signedDecimal"}
+      }
+    },
+    "modelFit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model_id", "status", "coefficients", "warning_codes"],
+      "properties": {
+        "model_id": {
+          "enum": [
+            "log2_t_alpha_log2_n_beta_log2log2_n_v1",
+            "constant_factor_v1",
+            "model_undecided_v1"
+          ]
+        },
+        "status": {"enum": ["fitted", "undecided", "insufficient_data"]},
+        "coefficients": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/coefficient"}
+        },
+        "warning_codes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"}
+        }
+      }
+    },
+    "warning": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "detail"],
+      "properties": {
+        "code": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+        "detail": {"type": "string", "minLength": 1, "maxLength": 512}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_commit",
+        "source_tree_clean",
+        "source_snapshot_sha256",
+        "producer_dependency_sha256s",
+        "validator_dependency_sha256s",
+        "config_sha256",
+        "diff_sha256"
+      ],
+      "properties": {
+        "source_commit": {"$ref": "#/$defs/gitCommit"},
+        "source_tree_clean": {"type": "boolean"},
+        "source_snapshot_sha256": {"$ref": "#/$defs/sha256"},
+        "producer_dependency_sha256s": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/sha256"}
+        },
+        "validator_dependency_sha256s": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/sha256"}
+        },
+        "config_sha256": {"$ref": "#/$defs/sha256"},
+        "diff_sha256": {
+          "oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]
+        }
+      }
+    },
+    "retentionInvariant": {
+      "if": {
+        "properties": {"retainable": {"const": true}},
+        "required": ["retainable"]
+      },
+      "then": {
+        "properties": {
+          "provenance": {
+            "properties": {
+              "source_tree_clean": {"const": true},
+              "diff_sha256": {"type": "null"}
+            },
+            "required": ["source_tree_clean", "diff_sha256"]
+          }
+        }
+      }
+    }
+  }
+}

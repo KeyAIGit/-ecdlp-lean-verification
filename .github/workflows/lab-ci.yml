@@ -1,0 +1,50 @@
+name: ECDLP lab contracts
+
+on:
+  pull_request:
+    paths:
+      - "experiments/ecdlp_lab/**"
+      - "experiments/framework/**"
+      - "experiments/README.md"
+      - "tasks/ECDLP_LAB_BUILD.md"
+      - "repo/AUTOMATION_INVENTORY.json"
+      - "scripts/check_automation_inventory.py"
+      - ".github/workflows/lab-ci.yml"
+  push:
+    branches: [main]
+    paths:
+      - "experiments/ecdlp_lab/**"
+      - "experiments/framework/**"
+      - "experiments/README.md"
+      - "tasks/ECDLP_LAB_BUILD.md"
+      - "repo/AUTOMATION_INVENTORY.json"
+      - "scripts/check_automation_inventory.py"
+      - ".github/workflows/lab-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ecdlp-lab-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  stdlib-offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate lab contracts and boundaries
+        run: python3 -m unittest discover -s experiments/ecdlp_lab/tests -p 'test_*.py'
+      - name: Report capability state
+        run: python3 -m experiments.ecdlp_lab.core.capabilities --json
+      - name: Validate committed lab records offline
+        run: python3 -m experiments.ecdlp_lab.core.validate --offline
+      - name: Keep the independent EC framework green
+        run: python3 experiments/framework/test_framework.py
+      - name: Check workflow classification
+        run: python3 scripts/check_automation_inventory.py

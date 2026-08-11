@@ -1,0 +1,215 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keyai.example/schemas/ecdlp-lab/validation_receipt_v1.schema.json",
+  "title": "ECDLP lab independent validation receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_kind",
+    "contract_kind",
+    "internal_classification",
+    "framework_authorization_class",
+    "hypothesis_id",
+    "candidate_id",
+    "authorization_id",
+    "native_research_outcome",
+    "route_effect",
+    "retention_class",
+    "retainable",
+    "provenance",
+    "validation_id",
+    "subject_contract_kind",
+    "subject_id",
+    "subject_sha256",
+    "validator_id",
+    "producer_implementation_sha256",
+    "validator_implementation_sha256",
+    "validator_request_sha256",
+    "validator_output_sha256",
+    "private_target_receipt_sha256",
+    "independent_implementation",
+    "shares_decisive_logic",
+    "passed",
+    "candidate_scalar",
+    "candidate_relation_valid",
+    "provenance_valid",
+    "checks",
+    "retention_decision"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "record_kind": {"const": "lab_engineering_fixture"},
+    "contract_kind": {"const": "validation_receipt_v1"},
+    "internal_classification": {"const": "engineering_only"},
+    "framework_authorization_class": {"const": "fixture"},
+    "hypothesis_id": {"type": "null"},
+    "candidate_id": {"type": "null"},
+    "authorization_id": {"type": "null"},
+    "native_research_outcome": {"const": false},
+    "route_effect": {"const": "none"},
+    "retention_class": {"const": "engineering_only"},
+    "retainable": {"type": "boolean"},
+    "provenance": {"$ref": "#/$defs/provenance"},
+    "validation_id": {"$ref": "#/$defs/sha256"},
+    "subject_contract_kind": {
+      "enum": [
+        "campaign_config_v1",
+        "target_vector_v1",
+        "work_unit_v1",
+        "method_request_v1",
+        "method_result_v1",
+        "telemetry_v1",
+        "analysis_summary_v1",
+        "artifact_ref_v1"
+      ]
+    },
+    "subject_id": {"$ref": "#/$defs/sha256"},
+    "subject_sha256": {"$ref": "#/$defs/sha256"},
+    "validator_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_.-]*_v[0-9]+$"
+    },
+    "producer_implementation_sha256": {"$ref": "#/$defs/sha256"},
+    "validator_implementation_sha256": {"$ref": "#/$defs/sha256"},
+    "validator_request_sha256": {"$ref": "#/$defs/sha256"},
+    "validator_output_sha256": {"$ref": "#/$defs/sha256"},
+    "private_target_receipt_sha256": {
+      "oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]
+    },
+    "independent_implementation": {"const": true},
+    "shares_decisive_logic": {"const": false},
+    "passed": {"type": "boolean"},
+    "candidate_scalar": {
+      "oneOf": [
+        {"type": "integer", "minimum": 0, "maximum": 4294967295},
+        {"type": "null"}
+      ]
+    },
+    "candidate_relation_valid": {
+      "oneOf": [{"type": "boolean"}, {"type": "null"}]
+    },
+    "provenance_valid": {"type": "boolean"},
+    "checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/check"}
+    },
+    "retention_decision": {"enum": ["retain", "development_only", "reject"]}
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"retention_decision": {"const": "retain"}},
+        "required": ["retention_decision"]
+      },
+      "then": {
+        "properties": {
+          "retainable": {"const": true},
+          "passed": {"const": true}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {"retainable": {"const": true}},
+        "required": ["retainable"]
+      },
+      "then": {
+        "properties": {
+          "retention_decision": {"const": "retain"},
+          "passed": {"const": true}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {"passed": {"const": true}},
+        "required": ["passed"]
+      },
+      "then": {"$ref": "#/$defs/passedInvariant"}
+    },
+    {"$ref": "#/$defs/retentionInvariant"}
+  ],
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "gitCommit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["check_id", "status", "detail"],
+      "properties": {
+        "check_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*_v[0-9]+$"
+        },
+        "status": {"enum": ["passed", "failed", "skipped_missing_capability"]},
+        "detail": {"type": "string", "minLength": 1, "maxLength": 512}
+      }
+    },
+    "passedInvariant": {
+      "required": ["candidate_relation_valid", "provenance_valid", "checks"],
+      "properties": {
+        "candidate_relation_valid": {"const": true},
+        "provenance_valid": {"const": true},
+        "checks": {
+          "items": {
+            "required": ["status"],
+            "properties": {"status": {"const": "passed"}}
+          }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_commit",
+        "source_tree_clean",
+        "source_snapshot_sha256",
+        "producer_dependency_sha256s",
+        "validator_dependency_sha256s",
+        "config_sha256",
+        "diff_sha256"
+      ],
+      "properties": {
+        "source_commit": {"$ref": "#/$defs/gitCommit"},
+        "source_tree_clean": {"type": "boolean"},
+        "source_snapshot_sha256": {"$ref": "#/$defs/sha256"},
+        "producer_dependency_sha256s": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/sha256"}
+        },
+        "validator_dependency_sha256s": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/sha256"}
+        },
+        "config_sha256": {"$ref": "#/$defs/sha256"},
+        "diff_sha256": {
+          "oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]
+        }
+      }
+    },
+    "retentionInvariant": {
+      "if": {
+        "properties": {"retainable": {"const": true}},
+        "required": ["retainable"]
+      },
+      "then": {
+        "properties": {
+          "provenance": {
+            "properties": {
+              "source_tree_clean": {"const": true},
+              "diff_sha256": {"type": "null"}
+            },
+            "required": ["source_tree_clean", "diff_sha256"]
+          }
+        }
+      }
+    }
+  }
+}
