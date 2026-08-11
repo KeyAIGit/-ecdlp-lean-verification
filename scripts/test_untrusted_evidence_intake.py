@@ -4,7 +4,9 @@
 from __future__ import annotations
 
 import copy
+import tempfile
 import unittest
+from pathlib import Path
 from unittest.mock import patch
 
 from build_untrusted_evidence_intake import (
@@ -17,6 +19,7 @@ from build_untrusted_evidence_intake import (
     forbidden_consumer_references,
     load_json_strict,
     loads_strict,
+    quarantine_reference_tokens,
     scan_forbidden_consumers,
     validate_contract,
     validation_problems,
@@ -142,6 +145,47 @@ class UntrustedEvidenceIntakeTests(unittest.TestCase):
             }
         )
         self.assertEqual(["scripts/hypothesis_ranker.py"], references)
+
+    def test_direct_archive_read_in_experiment_is_rejected(self) -> None:
+        references = forbidden_consumer_references(
+            {
+                "experiments/candidate/run.py": (
+                    'Path("archive/untrusted_intake/'
+                    'OPUS-ECDLP-SCREEN-ATLAS-2026-07-26/'
+                    'all_properties.json").read_text()'
+                )
+            },
+            reference_tokens=quarantine_reference_tokens(self.contract),
+        )
+        self.assertEqual(["experiments/candidate/run.py"], references)
+
+    def test_segmented_windows_archive_path_is_rejected(self) -> None:
+        references = forbidden_consumer_references(
+            {
+                "experiments/candidate/run.ps1": (
+                    "$p = 'archive' + '\\untrusted_intake' + "
+                    "'\\OPUS-ECDLP-SCREEN-ATLAS-2026-07-26' + "
+                    "'\\all_mechanisms.json'"
+                )
+            },
+            reference_tokens=quarantine_reference_tokens(self.contract),
+        )
+        self.assertEqual(["experiments/candidate/run.ps1"], references)
+
+    def test_experiments_root_and_shell_suffix_are_scanned(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            consumer = root / "experiments" / "candidate" / "run.sh"
+            consumer.parent.mkdir(parents=True)
+            consumer.write_text(
+                "cat archive/untrusted_intake/"
+                "OPUS-ECDLP-SCREEN-ATLAS-2026-07-26/all_properties.json\n",
+                encoding="utf-8",
+            )
+            self.assertEqual(
+                ["experiments/candidate/run.sh"],
+                scan_forbidden_consumers(root=root, contract=self.contract),
+            )
 
     def test_current_tree_has_no_scientific_consumer_reference(self) -> None:
         self.assertEqual([], scan_forbidden_consumers())

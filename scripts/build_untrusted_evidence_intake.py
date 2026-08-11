@@ -97,15 +97,44 @@ PROTECTED_FROZEN_FIELDS = (
     "protected_main_receipt",
 )
 QUARANTINE_REFERENCE_TOKENS = {
+    "archive/untrusted_intake",
+    "data/untrusted_evidence_intake",
     "untrusted_evidence_intake",
     "build_untrusted_evidence_intake",
+    "opus-ecdlp-screen-atlas-2026-07-26",
+    "all_mechanisms.json",
+    "all_properties.json",
+    "ecdlp_screen_atlas_report.md",
 }
 QUARANTINE_REFERENCE_SCAN_ROOTS = (
     "scripts",
     "repo",
     "data",
+    "experiments",
     ".github/workflows",
 )
+QUARANTINE_REFERENCE_SCAN_SUFFIXES = {
+    ".bat",
+    ".c",
+    ".cmd",
+    ".cpp",
+    ".go",
+    ".h",
+    ".ipynb",
+    ".js",
+    ".json",
+    ".jsx",
+    ".lean",
+    ".ps1",
+    ".py",
+    ".rs",
+    ".sh",
+    ".toml",
+    ".ts",
+    ".tsx",
+    ".yaml",
+    ".yml",
+}
 QUARANTINE_REFERENCE_ALLOWLIST = {
     ".github/workflows/ci.yml",
     ".github/workflows/docs-sync.yml",
@@ -241,6 +270,7 @@ def forbidden_consumer_references(
     documents: dict[str, str],
     *,
     allowlist: set[str] = QUARANTINE_REFERENCE_ALLOWLIST,
+    reference_tokens: set[str] = QUARANTINE_REFERENCE_TOKENS,
 ) -> list[str]:
     """Find quarantine references outside the intake implementation surface."""
     problems: list[str] = []
@@ -248,25 +278,40 @@ def forbidden_consumer_references(
         normalized = relative.replace("\\", "/")
         if normalized in allowlist:
             continue
-        folded = content.casefold()
-        if any(token in folded for token in QUARANTINE_REFERENCE_TOKENS):
+        folded = content.casefold().replace("\\", "/")
+        if any(token.casefold() in folded for token in reference_tokens):
             problems.append(normalized)
     return problems
 
 
-def scan_forbidden_consumers(*, root: Path = ROOT) -> list[str]:
+def quarantine_reference_tokens(contract: dict[str, Any]) -> set[str]:
+    """Bind the lexical guard to this receipt as well as known path classes."""
+    tokens = set(QUARANTINE_REFERENCE_TOKENS)
+    for field in ("intake_id", "source_directory", "output_path"):
+        value = contract.get(field)
+        if isinstance(value, str) and value:
+            tokens.add(value.casefold().replace("\\", "/"))
+    for source in contract.get("sources", []):
+        if isinstance(source, dict):
+            value = source.get("path")
+            if isinstance(value, str) and value:
+                tokens.add(value.casefold().replace("\\", "/"))
+    return tokens
+
+
+def scan_forbidden_consumers(
+    *, root: Path = ROOT, contract: dict[str, Any] | None = None
+) -> list[str]:
     documents: dict[str, str] = {}
     for scan_root in QUARANTINE_REFERENCE_SCAN_ROOTS:
         directory = root / scan_root
         if not directory.is_dir():
             continue
         for path in directory.rglob("*"):
-            if not path.is_file() or path.suffix.lower() not in {
-                ".json",
-                ".py",
-                ".yaml",
-                ".yml",
-            }:
+            if (
+                not path.is_file()
+                or path.suffix.lower() not in QUARANTINE_REFERENCE_SCAN_SUFFIXES
+            ):
                 continue
             relative = path.relative_to(root).as_posix()
             try:
@@ -275,7 +320,14 @@ def scan_forbidden_consumers(*, root: Path = ROOT) -> list[str]:
                 raise IntakeError(
                     f"consumer scan cannot decode UTF-8 file {relative}: {error}"
                 ) from error
-    return forbidden_consumer_references(documents)
+    reference_tokens = (
+        QUARANTINE_REFERENCE_TOKENS
+        if contract is None
+        else quarantine_reference_tokens(contract)
+    )
+    return forbidden_consumer_references(
+        documents, reference_tokens=reference_tokens
+    )
 
 
 def _reject_constant(value: str) -> None:
@@ -665,7 +717,7 @@ def analyze_atlas(
 def build_state(contract: dict[str, Any], *, root: Path = ROOT) -> dict[str, Any]:
     validate_contract(contract)
     validate_protected_main_receipt(contract, root=root)
-    consumer_references = scan_forbidden_consumers(root=root)
+    consumer_references = scan_forbidden_consumers(root=root, contract=contract)
     _require(
         not consumer_references,
         "quarantine referenced by prohibited consumer: "
@@ -775,6 +827,13 @@ def build_state(contract: dict[str, Any], *, root: Path = ROOT) -> dict[str, Any
                 "status": "passed",
                 "prohibited_consumer_references": consumer_references,
                 "scan_roots": list(QUARANTINE_REFERENCE_SCAN_ROOTS),
+                "scan_suffixes": sorted(QUARANTINE_REFERENCE_SCAN_SUFFIXES),
+                "reference_tokens": sorted(quarantine_reference_tokens(contract)),
+                "boundary": (
+                    "This is a repository-wide lexical path guard over executable "
+                    "and configuration files, not a proof of information-flow "
+                    "noninterference."
+                ),
             },
             "boundary": (
                 "Every mechanism, property, requirement, heat label, source status, "
@@ -856,6 +915,10 @@ def validation_problems(state: Any, contract: dict[str, Any]) -> list[str]:
         or dependency_scan.get("prohibited_consumer_references") != []
         or dependency_scan.get("scan_roots")
         != list(QUARANTINE_REFERENCE_SCAN_ROOTS)
+        or dependency_scan.get("scan_suffixes")
+        != sorted(QUARANTINE_REFERENCE_SCAN_SUFFIXES)
+        or dependency_scan.get("reference_tokens")
+        != sorted(quarantine_reference_tokens(contract))
     ):
         problems.append("negative dependency scan drifted")
     if state.get("observations") != contract.get("expected_observations"):
