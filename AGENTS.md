@@ -107,6 +107,7 @@ Green build = every built theorem fully proved (Lean kernel). Never weaken/`sorr
   `data/typed_evidence_state.json`, `data/research_engine_state.json`,
   `repo/PRODUCT_MODEL.json`,
   `repo/PILOT_PROTOCOL.json`, the queue router and all three owning queues,
+  the linked `tasks/ECDLP_LAB_BUILD.md` engineering contract,
   `data/stats.json`, `data/frontier_map.json`.
 - **medium** — adds `README.md`, this file, `VERIFIED.md`, `BARRIERS.md`,
   `domains/riemann-hypothesis/corpus.md`, `notes/SECURITY_SCOPE.md`,

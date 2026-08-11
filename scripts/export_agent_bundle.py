@@ -82,6 +82,8 @@ _SMALL = [
     ("tasks/RIEMANN_HYPOTHESIS.md",
      "active RH foundation-audit contracts, route gates, and hard stop rules"),
     ("tasks/ECDLP_RESEARCH.md", "bounded ECDLP research contracts and exit criteria"),
+    ("tasks/ECDLP_LAB_BUILD.md",
+     "owner-directed sequential ECDLP lab engineering contract and safety gates"),
     ("tasks/KEYAI_PRODUCT.md", "product-validation contracts and separate product KPIs"),
     ("data/stats.json", "machine-readable headline counts (ledger rows / distinct / modules)"),
     ("data/frontier_map.json", "per-claim frontier status: verified / tractable / blocked / informal"),

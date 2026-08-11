@@ -155,7 +155,13 @@
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 109976
+        "bytes": 110697
+      },
+      {
+        "path": "tasks/ECDLP_LAB_BUILD.md",
+        "reason": "owner-directed sequential ECDLP lab engineering contract and safety gates",
+        "exists": true,
+        "bytes": 38327
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -325,7 +331,13 @@
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 109976
+        "bytes": 110697
+      },
+      {
+        "path": "tasks/ECDLP_LAB_BUILD.md",
+        "reason": "owner-directed sequential ECDLP lab engineering contract and safety gates",
+        "exists": true,
+        "bytes": 38327
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -355,7 +367,7 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 19823
+        "bytes": 19885
       },
       {
         "path": "domains/riemann-hypothesis/corpus.md",
@@ -711,7 +723,13 @@
         "path": "tasks/ECDLP_RESEARCH.md",
         "reason": "bounded ECDLP research contracts and exit criteria",
         "exists": true,
-        "bytes": 109976
+        "bytes": 110697
+      },
+      {
+        "path": "tasks/ECDLP_LAB_BUILD.md",
+        "reason": "owner-directed sequential ECDLP lab engineering contract and safety gates",
+        "exists": true,
+        "bytes": 38327
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -741,7 +759,7 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 19823
+        "bytes": 19885
       },
       {
         "path": "domains/riemann-hypothesis/corpus.md",
