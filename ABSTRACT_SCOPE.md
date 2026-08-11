@@ -7,7 +7,7 @@
 
 ## Canonical accounting
 
-- **324 ledger rows / ~285 distinct kernel-verified results** (39 rows are
+- **325 ledger rows / ~286 distinct kernel-verified results** (39 rows are
   alternate-form / supporting restatements of an already-counted result).
 - **0 `sorry`** anywhere in the built (`Ecdlp/`-minus-`Targets/`) tree.
 - **No CUSTOM axioms.** Everything depends only on Lean/Mathlib's standard
@@ -117,11 +117,23 @@
   backpointer subtype has cardinality at least `283527^7`. This counts
   explicitly constructed labelled root-plus-recovery pairs, not `283527^7`
   recoveries of one fixed root and not all roots or recoveries above that row.
-  It proves no row uniqueness, evaluation injectivity, efficient enumeration,
-  `Recover`, PFPO, `AllRoots`, square-root/decompression algorithm,
-  relation filtering, independence/yield/rank, sparse-linear-algebra result,
-  runtime/memory/solver-node/total-cost result, scalar recovery, or ECDLP
-  shortcut.
+  That backpointer cardinality alone proves no row uniqueness, evaluation
+  injectivity, efficient enumeration, `Recover`, PFPO, `AllRoots`, square-root/
+  decompression algorithm, relation filtering, independence/yield/rank,
+  sparse-linear-algebra result, runtime/memory/solver-node/total-cost result,
+  scalar recovery, or ECDLP shortcut.
+- **The same explicit cancellation family has exact rank one and maximal
+  labelled redundancy.** Its `283527^7` labels remain distinct certified
+  recoveries, but every mod-`n` GLV coefficient row is the same nonzero row and
+  every augmented row is the same nonzero homogeneous row. Consequently both
+  coefficient and augmented matrix ranks are exactly `1`, while both labelled
+  synthesis kernels have dimension `283527^7 - 1`. The large kernel records
+  duplicate-row dependencies in this deliberately degenerate family; it is not
+  useful relation yield, independence, rank growth, or evidence about the rank
+  of other collected recoveries. The family is a noncomputable mathematical
+  construction, not an enumeration, filtering or sparse-linear-algebra
+  algorithm, and it supplies no `Recover`, PFPO, `AllRoots`, runtime/memory/
+  cost, scalar recovery, or ECDLP shortcut.
 
 ## 1. Honest framing (one paragraph)
 
