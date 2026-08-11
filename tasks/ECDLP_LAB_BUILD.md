@@ -123,8 +123,7 @@ No phase in this umbrella task may edit:
 - `experiments/HYPOTHESES.yaml`;
 - `experiments/engine/proposals/`, `proposal_reviews/`, `outcomes/`, or `runs/`;
 - existing P0/P1 run manifests, result bundles, raw predictions, or reports;
-- generated scientific state under `data/` except outputs changed through an
-  existing required generator because a permitted documentation file changed;
+- generated scientific state under `data/`;
 - `VERIFIED.md`, `VERIFIED_RESEARCHOS.md`, `Ecdlp/Proved/`, or theorem imports;
 - PR #356 historical result files or note by copying or rewriting them from the
   lab branch.
@@ -139,17 +138,21 @@ A lab execution uses:
 
 ```text
 record_kind                 = lab_engineering_fixture
+contract_kind               = one of the nine lab contract families
 hypothesis_id               = null
 candidate_id                = null
 authorization_id            = null
 native_research_outcome     = false
 route_effect                = none
 retention_class             = engineering_only
+retainable                  = true only for a clean independently validated record
 ```
 
 A lab fixture is not an `exploration`, `promotion`, Engine native run, or
-scientific outcome. Lab code must never write to Engine event directories or
-generated scientific state.
+scientific outcome. The common `record_kind` fixes the authorization boundary;
+`contract_kind` selects the schema. A dirty development record keeps
+`retention_class=engineering_only` but must set `retainable=false`. Lab code
+must never write to Engine event directories or generated scientific state.
 
 The engineering runner has a non-configurable safety ceiling:
 
@@ -184,6 +187,10 @@ Define only lab-specific contracts:
 8. `analysis_summary`: deterministic normalized comparison and warnings.
 9. `artifact_ref`: digest, size, media type, role, and optional location.
 
+Every family carries `record_kind=lab_engineering_fixture` and its own
+versioned `contract_kind`; schemas dispatch on `contract_kind`, never by
+changing the authorization-bearing record kind.
+
 Do not duplicate the full candidate or Engine schemas. Add a machine-readable
 mapping/gap document showing where each lab field agrees with the existing
 candidate, cost, result, validation, and provenance vocabulary.
@@ -202,8 +209,9 @@ candidate, cost, result, validation, and provenance vocabulary.
 - Canonical clean runs bind the 40-hex source commit, clean-tree state, source
   snapshot digest, producer dependency hashes, validator dependency hashes,
   inputs, and config.
-- Dirty-tree runs are development-only and non-retainable. If allowed locally,
-  bind the exact diff digest.
+- Dirty-tree runs are development-only, set `retainable=false`, and may not
+  enter the retained content-addressed set. If allowed locally, bind the exact
+  diff digest.
 
 ### Anti-cheat split
 
@@ -242,18 +250,25 @@ Only the first incomplete phase whose dependencies are green is actionable.
 Later phases remain blocked. Every phase is a separately reviewable and
 revertible PR from current `main`.
 
+In addition to each phase allowlist, every phase may update
+`tasks/ECDLP_LAB_BUILD.md` for status/evidence and regenerate only
+`bundles/MANIFEST.json`. No phase bookkeeping exception permits a change under
+the immutable denylist.
+
 ### P00: health, inventory, and upstream reconciliation
 
 Status: ready
-Allowed paths: task/router/bundle documentation and generated routing views
+Allowed paths: task/router/bundle documentation and generated routing views;
+the reuse inventory is `tasks/ECDLP_LAB_REUSE_INVENTORY.json`
 
 Deliverables:
 
 - Record a clean baseline gate report at current `main`.
 - Verify that adding the contract and routing files leaves the source-registry
   and generated-fixpoint chain green without modifying frozen funnel policy.
-- Inventory every reused source and immutable output with path, role, digest,
-  mutation policy, and owning validator.
+- Create `tasks/ECDLP_LAB_REUSE_INVENTORY.json` with every reused source and
+  immutable output, including path, role, digest, mutation policy, and owning
+  validator.
 - Record PR #356 state, head/base commits, CI, independent-replay status, and
   owner disposition. Do not merge it as part of the lab task.
 - Include this contract in the small agent bundle through
@@ -271,8 +286,10 @@ Exit criteria:
 ### P01: lab contracts, canonical JSON, and path-scoped CI
 
 Status: blocked_by_P00
-Allowed paths: `experiments/ecdlp_lab/contracts/`, `core/`, `fixtures/`,
-`tests/`, `experiments/README.md`, `.github/workflows/lab-ci.yml`,
+Allowed paths: `experiments/ecdlp_lab/contracts/`,
+`experiments/ecdlp_lab/core/`, `experiments/ecdlp_lab/fixtures/`,
+`experiments/ecdlp_lab/tests/`, `experiments/README.md`,
+`.github/workflows/lab-ci.yml`,
 `repo/AUTOMATION_INVENTORY.json`
 
 Deliverables:
@@ -305,20 +322,26 @@ Exit criteria:
 ### P02: lab fixture catalog and independent curve validation
 
 Status: blocked_by_P01
-Allowed paths: `experiments/ecdlp_lab/curves/`, `fixtures/`, `tests/`
+Allowed paths: `experiments/ecdlp_lab/curves/`,
+`experiments/ecdlp_lab/core/`, `experiments/ecdlp_lab/contracts/`,
+`experiments/ecdlp_lab/fixtures/`, `experiments/ecdlp_lab/tests/`
 
 Deliverables:
 
 - Add a read-only adapter for the existing 40-curve P1 catalog.
-- Add a very small CI fixture catalog whose generation is deterministic and
-  bounded to at most 16 field bits.
+- Add one digest-bound CI catalog with exactly six fixtures: one entry from
+  each of the three families at 11 and 13 field bits. Freeze
+  `max_prime_candidates=4096`, `max_curve_candidates=4096`, and
+  `max_point_attempts=1024`; exhaustion is a deterministic failure.
+- Exclude timing, platform, current commit, and dirty-tree observations from
+  semantic fixture bytes.
 - Distinguish `field_bits` and `subgroup_order_bits`.
 - Define precise families:
   - `j0_glv_like`: secp-shaped toy curves with verified public beta/lambda;
   - `random_generic_j_prime_subgroup`: controls with
     `j not in {0,1728}`, subgroup, and cofactor;
-  - `j0_no_fp_glv_control`: a named j=0 control where the expected base-field
-    efficient-endomorphism property is absent and validated.
+  - `j0_no_fp_glv_control`: a named j=0 control where the P1-style base-field
+    cube-root map is absent and validated; beta/lambda are null with a reason.
 - Record full curve order when certified, subgroup order, cofactor, generator,
   family property, and exact order-certificate type and inputs.
 
@@ -327,18 +350,28 @@ Validation rules:
 - producer arithmetic may adapt P1 `curve_math.py`;
 - validator arithmetic must use `experiments/framework/ec_oracle.py` or another
   producer-independent implementation;
+- every certificate first checks `p>3`, prime `p` and `ell`, nonsingularity,
+  canonical coordinates, `G in E(F_p)` and nonzero, `[ell]G=O`, cofactor at
+  least one, and `full_order=cofactor*ell`;
 - `[ell]G=O` with prime `ell` and nonzero `G` certifies the point order only;
   it does not by itself certify the reported full curve order or cofactor;
 - `prime_order_hasse_unique_v1` requires `full_order=ell`, cofactor one,
   prime `ell`, nonzero `G`, `[ell]G=O`, membership in the Hasse interval, and
   `2*ell > hasse_upper`;
 - `exact_legendre_sum_v1` independently recomputes the full order and is
-  permitted only for committed CI fields at most 16 bits;
+  permitted only for entries generated from the committed CI catalog spec at
+  most 16 bits;
 - `j0_p_plus_one_v1` requires `a=0`, nonsingularity, `p mod 3 = 2`,
   `full_order=p+1`, and `full_order=cofactor*ell`; CI also exact-counts it;
 - the `j0_no_fp_glv_control` claim is only that `gcd(3,p-1)=1` leaves no
   nontrivial cube root in the base field, not that extensions have no
   endomorphisms;
+- the generic-j validator independently recomputes
+  `j=1728*4*a^3/(4*a^3+27*b^2) mod p` and rejects `0` and `1728`;
+- the `j0_glv_like` validator requires nontrivial beta,
+  `beta^2+beta+1=0 mod p`, `lambda^2+lambda+1=0 mod ell`, and verifies
+  `(beta*x_G,y_G)=[lambda]G` through the independent oracle;
+- the no-base-field-map control rejects any non-null beta or lambda;
 - the program does not execute or commit new 28/32-bit scientific catalogs;
   those sizes may be represented only as future configuration.
 
@@ -353,8 +386,9 @@ Exit criteria:
 ### P03: reference BSGS and ordinary seeded rho
 
 Status: blocked_by_P02
-Allowed paths: `experiments/ecdlp_lab/methods/python/`, `core/`, `fixtures/`,
-`tests/`
+Allowed paths: `experiments/ecdlp_lab/methods/python/`,
+`experiments/ecdlp_lab/core/`, `experiments/ecdlp_lab/fixtures/`,
+`experiments/ecdlp_lab/tests/`
 
 Deliverables:
 
@@ -369,6 +403,30 @@ Deliverables:
 - Report BSGS cold-start table construction separately from reusable-table
   online cost.
 - Record rho restarts, cycles, and noninvertible collisions.
+- Freeze the legacy compatibility walk as `ordinary_rho_xmod3_v1`: four
+  restarts; at most `8*ceil_sqrt(ell)` Floyd iterations per restart; initial
+  coefficients from SHA-256 of ASCII `keyai/p1-rho/{seed}/{restart}`, using
+  `1+u64 mod (ell-1)` from bytes 0:8 and 8:16; infinity and `x mod 3 = 0`
+  add `G`, partition 1 doubles, and partition 2 adds `Q`; use tortoise one-step
+  and hare two-step updates; on collision compute
+  `numerator=a_t-a_h`, `denominator=b_h-b_t` modulo `ell`, and restart after a
+  zero/noninvertible denominator or an invalid candidate.
+- Replay all 64 retained legacy solver rows by joining
+  `assay_result.json` (file SHA-256
+  `6a4a6b8302877a9b6505d70fc246677c741c7b26cda314bdc17ac36a4edd044f`)
+  with `curve_catalog.json` (file SHA-256
+  `d293afa7e5b614f39ed00356e35ee81a400b57ee9656907170193cb3aca0bbd7`)
+  on `(field_bits,curve_index)`, selecting the recorded generator index.
+- Derive each replay target `Q` validation-side from the legacy expected scalar
+  with the independent oracle, then build a sanitized method request containing
+  neither that scalar nor its source record. Compare candidate and legacy group
+  operations exactly, never wall time.
+- Preserve `legacy_p1_group_operations` as a compatibility field. Keep
+  canonical BSGS setup, online work, optional method self-check, and independent
+  validator work in separate counters. The historical rho `1024` and BSGS
+  `len(table)*64` values are labelled estimates, not measured RSS.
+- Require every successful candidate to satisfy `0 <= k < ell` before the
+  independent check `[k]G=Q`; scalar aliases outside that range are rejected.
 
 Exit criteria:
 
@@ -394,15 +452,17 @@ Kangaroo and endomorphism-quotient rho are not part of this phase:
 ### P04: safe, resumable campaign runner
 
 Status: blocked_by_P03
-Allowed paths: `experiments/ecdlp_lab/orchestration/`, `core/`, `fixtures/`,
-`tests/`, `scripts/lab_*.py`
+Allowed paths: `experiments/ecdlp_lab/orchestration/`,
+`experiments/ecdlp_lab/core/`, `experiments/ecdlp_lab/fixtures/`,
+`experiments/ecdlp_lab/tests/`, `scripts/lab_*.py`
 
 Deliverables:
 
 - Expand campaign configs into unique canonical work units.
 - Resolve method IDs only through a committed allowlist. Never execute a raw
   command from JSON and never use `shell=True`.
-- Run method, validator, and analysis in separate process boundaries.
+- Run method and validator in separate process boundaries. P04 emits only
+  validated work-unit receipts; it does not import the future analysis module.
 - Use create-only receipts, writer locks, atomic writes, process groups,
   timeout tree-kill, bounded parallelism, deterministic resume, and replay.
 - The coordinator owns a hash-chained JSONL event log. This is tamper-evident
@@ -437,11 +497,14 @@ Exit criteria:
 ### P05: equal-success comparison and scaling diagnostics
 
 Status: blocked_by_P04
-Allowed paths: `experiments/ecdlp_lab/analysis/`, `fixtures/`, `tests/`
+Allowed paths: `experiments/ecdlp_lab/analysis/`,
+`experiments/ecdlp_lab/fixtures/`, `experiments/ecdlp_lab/tests/`
 
 Deliverables:
 
 - Make operation counts primary and wall time secondary.
+- Add a separate analysis process boundary that consumes validation receipts,
+  never private target receipts or method-process state.
 - Compare at fixed success targets, including 0.50 and a separately reported
   0.95 target, over independent algorithm seeds.
 - Normalize expected operations and disclose failures, censoring, restarts,
@@ -466,9 +529,11 @@ Exit criteria:
 ### P06: isolated SageMath/CAS workbench and theta upstream adapter
 
 Status: blocked_by_P05; theta adapter also requires a recorded PR #356 state
-Allowed paths: `experiments/ecdlp_lab/methods/sage/`, `env/docker/`,
-`replay_fixtures/`, `tests/`; if PR #356 is accepted, only a new wrapper around
-its files, not rewriting its historical outputs
+Allowed paths: `experiments/ecdlp_lab/methods/sage/`,
+`experiments/ecdlp_lab/env/docker/`,
+`experiments/ecdlp_lab/replay_fixtures/`, `experiments/ecdlp_lab/tests/`; if
+PR #356 is accepted, only a new wrapper around its files, not rewriting its
+historical outputs
 
 Deliverables:
 
@@ -516,7 +581,7 @@ Exit criteria:
 
 Status: blocked_by_P06
 Allowed paths: `experiments/ecdlp_lab/methods/padic_theta/`,
-`replay_fixtures/`, `tests/`
+`experiments/ecdlp_lab/replay_fixtures/`, `experiments/ecdlp_lab/tests/`
 
 Current mathematical boundary:
 
@@ -564,8 +629,9 @@ Exit criteria:
 ### P08: profile gate and optional Rust backend
 
 Status: blocked_by_P07
-Allowed paths: `experiments/ecdlp_lab/methods/native/`, `env/locks/`,
-`fixtures/`, `tests/`
+Allowed paths: `experiments/ecdlp_lab/methods/native/`,
+`experiments/ecdlp_lab/env/locks/`, `experiments/ecdlp_lab/fixtures/`,
+`experiments/ecdlp_lab/tests/`
 
 Deliverables:
 
@@ -601,16 +667,18 @@ Exit criteria:
 ### P09: content-addressed storage and dry-run remote jobs
 
 Status: blocked_by_P08
-Allowed paths: `experiments/ecdlp_lab/remote/`, `env/docker/`, `fixtures/`,
-`tests/`, optional `scripts/lab_*.py`
+Allowed paths: `experiments/ecdlp_lab/remote/`,
+`experiments/ecdlp_lab/env/docker/`, `experiments/ecdlp_lab/fixtures/`,
+`experiments/ecdlp_lab/tests/`, optional `scripts/lab_*.py`
 
 Deliverables:
 
 - Implement a local content-addressed store first.
 - Keep artifact identity `{sha256,size,media_type,role}` independent of an
   optional location URI.
-- Build a provider-neutral signed job bundle containing only reviewed committed
-  code, public inputs, budgets, and output contract.
+- Build a provider-neutral digest-bound job bundle containing only reviewed
+  committed code, public inputs, budgets, and output contract. Cryptographic
+  signing and key custody are outside this phase.
 - Add deterministic dry-run templates for a secret-free lab worker.
 - Separate producer/validator processes from uploader credentials.
 - Enforce budget, region, instance allowlist, timeout, artifact-size ceiling,
