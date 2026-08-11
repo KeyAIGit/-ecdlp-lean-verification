@@ -4,8 +4,8 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 319,
-    "ledger_rows": 319,
+    "theorems": 320,
+    "ledger_rows": 320,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
@@ -37,10 +37,10 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1247,
+    "edges": 1250,
     "by_edge_type": {
-      "imports": 573,
-      "member_of": 319,
+      "imports": 575,
+      "member_of": 320,
       "grounded_in_source_claim": 62,
       "requires_foundation": 41,
       "supports": 27,
@@ -215,11 +215,12 @@
       "induction through the complete normalized local Kummer fiber + existing exact projective/chart-cover equivalence; zero new native owners, inherited secp256k1 primality families disclosed": 1,
       "algebraic-closure square-root existence + exact direct-system/chart bridge + recursive Kummer signed-sum semantics; zero new native owners, inherited secp256k1 primality families disclosed": 1,
       "exact finite partition + direct point semantics + existing conditional Frobenius/base-field two-torsion split; zero new native owners, inherited primality and no-two-torsion compiler trust disclosed": 1,
-      "labelled finite-function injections + exact factor-base counts + point-sum semantics + reduced/direct root equivalence; zero new native owners, inherited certificate trust disclosed": 1
+      "labelled finite-function injections + exact factor-base counts + point-sum semantics + reduced/direct root equivalence; zero new native owners, inherited certificate trust disclosed": 1,
+      "exact square-root/actual-point equivalence + target-labelled global-negation quotient + direct point semantics and pointwise descent; zero new native owners, inherited discriminant/primality compiler trust only": 1
     },
     "by_area": {
       "curve-torsion": 154,
-      "primality": 64,
+      "primality": 65,
       "other": 35,
       "generic-hardness": 30,
       "protocol-soundness": 23,
@@ -6642,6 +6643,26 @@
       "family_id": "family-curve-torsion",
       "dependency_depth": 13,
       "gated": true
+    },
+    {
+      "id": "thm-319",
+      "name": "Ecdlp.M16BaseRecoveryFiber.LiftAt`, `liftAtEquivActualLiftAt`, `RecoveryFiber`, `NormalizedFiber`, `recoveryGlobalNegate_ne`, `recoveryFiberEquivNormalizedFiberProdBool`, `mem_recoveryFinset_iff`, `recoveryFiberEquivRecoveryFinsetSubtype`, `nonempty_recoveryFiber_iff_S17At_eq_zero_and_all_isLiftable`, `not_nonempty_recoveryFiber_of_not_isLiftable`, `nonempty_recoveryFiber_of_directSystem4_iff_all_isLiftable",
+      "short_name": "LiftAt`,",
+      "module": "Ecdlp.Proved.M16BaseRecoveryFiber",
+      "modules": [
+        "Ecdlp.Proved.M16BaseRecoveryFiber"
+      ],
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "files": [
+        "Ecdlp/Proved/M16BaseRecoveryFiber.lean"
+      ],
+      "claim": "Exact labelled base-field recovery fibers for direct M16 roots (`LiftAt a` is the finite square-root fiber above an arbitrary source coordinate and is equivalent to the actual base-field affine points above `a`. For sixteen coordinates and a supplied base-field target `R`, `RecoveryFiber x R` retains a `Bool`-labelled choice of target orientation. Global pointwise negation flips that label, is a fixed-point-free involution on the labelled fiber, and gives the exact equivalence `RecoveryFiber x R ≃ NormalizedFiber x R × Bool`. A canonical `Finset.univ.filter` specification has exactly the same witnesses. Under `hR : LiesOver X (includePoint R)`, the fiber is inhabited iff `S17At x X = 0` and every source coordinate is liftable; a nonliftable slot makes it empty, and the same criterion specializes to a supplied literal `DirectSystem4` solution. Honest scope: `hR` is affine and therefore excludes `R = 0`, while the labelled structural equivalence itself remains valid for arbitrary `R`, including zero. The factor of two counts target-orientation labels, not necessarily distinct unlabelled recoveries. The finite `Finset` is a semantic specification, not an efficient `Recover`, PFPO, `AllRoots`, root solver, enumeration requirement, runtime/memory/cost bound, relation-yield/rank result, sparse-linear-algebra result, scalar recovery, or ECDLP shortcut. The module adds zero new `native_decide` owners and inherits only the existing secp256k1 discriminant and ten primality native-owner families)",
+      "method": "exact square-root/actual-point equivalence + target-labelled global-negation quotient + direct point semantics and pointwise descent; zero new native owners, inherited discriminant/primality compiler trust only",
+      "status": "proved",
+      "area": "primality",
+      "family_id": "family-primality",
+      "dependency_depth": 13,
+      "gated": true
     }
   ],
   "barriers": [
@@ -12784,6 +12805,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.M16BaseRecoveryFiber",
+      "to": "Ecdlp.Proved.M16DirectPointSemantics",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.M16CancellationRootLowerBound",
       "to": "Ecdlp.Proved.M16DirectPointSemantics",
       "type": "imports"
@@ -14590,6 +14616,11 @@
     },
     {
       "from": "Ecdlp",
+      "to": "Ecdlp.Proved.M16BaseRecoveryFiber",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
       "to": "Ecdlp.Proved.M16PartitionedPointSemantics",
       "type": "imports"
     },
@@ -16266,6 +16297,11 @@
     {
       "from": "thm-318",
       "to": "family-curve-torsion",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-319",
+      "to": "family-primality",
       "type": "member_of"
     },
     {

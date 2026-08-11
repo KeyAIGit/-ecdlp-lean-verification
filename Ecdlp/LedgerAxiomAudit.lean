@@ -528,6 +528,17 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.GenericGroup.secp256k1_bsgs_steps_le
 #print axioms Ecdlp.GenericGroup.secp256k1_generic_security
 #print axioms Ecdlp.GenericGroup.two_pow_255_lt_secp256k1_n
+#print axioms Ecdlp.M16BaseRecoveryFiber.LiftAt
+#print axioms Ecdlp.M16BaseRecoveryFiber.NormalizedFiber
+#print axioms Ecdlp.M16BaseRecoveryFiber.RecoveryFiber
+#print axioms Ecdlp.M16BaseRecoveryFiber.liftAtEquivActualLiftAt
+#print axioms Ecdlp.M16BaseRecoveryFiber.mem_recoveryFinset_iff
+#print axioms Ecdlp.M16BaseRecoveryFiber.nonempty_recoveryFiber_iff_S17At_eq_zero_and_all_isLiftable
+#print axioms Ecdlp.M16BaseRecoveryFiber.nonempty_recoveryFiber_of_directSystem4_iff_all_isLiftable
+#print axioms Ecdlp.M16BaseRecoveryFiber.not_nonempty_recoveryFiber_of_not_isLiftable
+#print axioms Ecdlp.M16BaseRecoveryFiber.recoveryFiberEquivNormalizedFiberProdBool
+#print axioms Ecdlp.M16BaseRecoveryFiber.recoveryFiberEquivRecoveryFinsetSubtype
+#print axioms Ecdlp.M16BaseRecoveryFiber.recoveryGlobalNegate_ne
 #print axioms Ecdlp.M16CancellationRootLowerBound.DirectRoot
 #print axioms Ecdlp.M16CancellationRootLowerBound.LiftableReducedRoot
 #print axioms Ecdlp.M16CancellationRootLowerBound.ReducedRoot

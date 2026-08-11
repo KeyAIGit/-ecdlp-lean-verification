@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 319,
-  "ledger_reference_count": 822,
-  "ledger_named_declarations": 797,
+  "ledger_rows": 320,
+  "ledger_reference_count": 833,
+  "ledger_named_declarations": 808,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1384,
-  "distinct_qualified_names": 1384,
-  "verified_md_citations": 797,
+  "declaration_count": 1433,
+  "distinct_qualified_names": 1433,
+  "verified_md_citations": 808,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -596,6 +596,17 @@
     "Ecdlp.GenericGroup.secp256k1_bsgs_steps_le",
     "Ecdlp.GenericGroup.secp256k1_generic_security",
     "Ecdlp.GenericGroup.two_pow_255_lt_secp256k1_n",
+    "Ecdlp.M16BaseRecoveryFiber.LiftAt",
+    "Ecdlp.M16BaseRecoveryFiber.NormalizedFiber",
+    "Ecdlp.M16BaseRecoveryFiber.RecoveryFiber",
+    "Ecdlp.M16BaseRecoveryFiber.liftAtEquivActualLiftAt",
+    "Ecdlp.M16BaseRecoveryFiber.mem_recoveryFinset_iff",
+    "Ecdlp.M16BaseRecoveryFiber.nonempty_recoveryFiber_iff_S17At_eq_zero_and_all_isLiftable",
+    "Ecdlp.M16BaseRecoveryFiber.nonempty_recoveryFiber_of_directSystem4_iff_all_isLiftable",
+    "Ecdlp.M16BaseRecoveryFiber.not_nonempty_recoveryFiber_of_not_isLiftable",
+    "Ecdlp.M16BaseRecoveryFiber.recoveryFiberEquivNormalizedFiberProdBool",
+    "Ecdlp.M16BaseRecoveryFiber.recoveryFiberEquivRecoveryFinsetSubtype",
+    "Ecdlp.M16BaseRecoveryFiber.recoveryGlobalNegate_ne",
     "Ecdlp.M16CancellationRootLowerBound.DirectRoot",
     "Ecdlp.M16CancellationRootLowerBound.LiftableReducedRoot",
     "Ecdlp.M16CancellationRootLowerBound.ReducedRoot",
@@ -11304,6 +11315,106 @@
           "line": 324
         }
       ]
+    },
+    {
+      "id": "ledger-319",
+      "claim": "Exact labelled base-field recovery fibers for direct M16 roots (`LiftAt a` is the finite square-root fiber above an arbitrary source coordinate and is equivalent to the actual base-field affine points above `a`. For sixteen coordinates and a supplied base-field target `R`, `RecoveryFiber x R` retains a `Bool`-labelled choice of target orientation. Global pointwise negation flips that label, is a fixed-point-free involution on the labelled fiber, and gives the exact equivalence `RecoveryFiber x R ≃ NormalizedFiber x R × Bool`. A canonical `Finset.univ.filter` specification has exactly the same witnesses. Under `hR : LiesOver X (includePoint R)`, the fiber is inhabited iff `S17At x X = 0` and every source coordinate is liftable; a nonliftable slot makes it empty, and the same criterion specializes to a supplied literal `DirectSystem4` solution. Honest scope: `hR` is affine and therefore excludes `R = 0`, while the labelled structural equivalence itself remains valid for arbitrary `R`, including zero. The factor of two counts target-orientation labels, not necessarily distinct unlabelled recoveries. The finite `Finset` is a semantic specification, not an efficient `Recover`, PFPO, `AllRoots`, root solver, enumeration requirement, runtime/memory/cost bound, relation-yield/rank result, sparse-linear-algebra result, scalar recovery, or ECDLP shortcut. The module adds zero new `native_decide` owners and inherits only the existing secp256k1 discriminant and ten primality native-owner families)",
+      "theorem_cell": "`Ecdlp.M16BaseRecoveryFiber.LiftAt`, `liftAtEquivActualLiftAt`, `RecoveryFiber`, `NormalizedFiber`, `recoveryGlobalNegate_ne`, `recoveryFiberEquivNormalizedFiberProdBool`, `mem_recoveryFinset_iff`, `recoveryFiberEquivRecoveryFinsetSubtype`, `nonempty_recoveryFiber_iff_S17At_eq_zero_and_all_isLiftable`, `not_nonempty_recoveryFiber_of_not_isLiftable`, `nonempty_recoveryFiber_of_directSystem4_iff_all_isLiftable`",
+      "declared_files": [
+        "Ecdlp/Proved/M16BaseRecoveryFiber.lean"
+      ],
+      "method": "exact square-root/actual-point equivalence + target-labelled global-negation quotient + direct point semantics and pointwise descent; zero new native owners, inherited discriminant/primality compiler trust only",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.M16BaseRecoveryFiber.LiftAt",
+          "canonical_name": "Ecdlp.M16BaseRecoveryFiber.LiftAt",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+          "line": 52
+        },
+        {
+          "cited": "Ecdlp.M16BaseRecoveryFiber.liftAtEquivActualLiftAt",
+          "canonical_name": "Ecdlp.M16BaseRecoveryFiber.liftAtEquivActualLiftAt",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+          "line": 118
+        },
+        {
+          "cited": "Ecdlp.M16BaseRecoveryFiber.RecoveryFiber",
+          "canonical_name": "Ecdlp.M16BaseRecoveryFiber.RecoveryFiber",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+          "line": 199
+        },
+        {
+          "cited": "Ecdlp.M16BaseRecoveryFiber.NormalizedFiber",
+          "canonical_name": "Ecdlp.M16BaseRecoveryFiber.NormalizedFiber",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+          "line": 203
+        },
+        {
+          "cited": "Ecdlp.M16BaseRecoveryFiber.recoveryGlobalNegate_ne",
+          "canonical_name": "Ecdlp.M16BaseRecoveryFiber.recoveryGlobalNegate_ne",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+          "line": 247
+        },
+        {
+          "cited": "Ecdlp.M16BaseRecoveryFiber.recoveryFiberEquivNormalizedFiberProdBool",
+          "canonical_name": "Ecdlp.M16BaseRecoveryFiber.recoveryFiberEquivNormalizedFiberProdBool",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+          "line": 282
+        },
+        {
+          "cited": "Ecdlp.M16BaseRecoveryFiber.mem_recoveryFinset_iff",
+          "canonical_name": "Ecdlp.M16BaseRecoveryFiber.mem_recoveryFinset_iff",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+          "line": 362
+        },
+        {
+          "cited": "Ecdlp.M16BaseRecoveryFiber.recoveryFiberEquivRecoveryFinsetSubtype",
+          "canonical_name": "Ecdlp.M16BaseRecoveryFiber.recoveryFiberEquivRecoveryFinsetSubtype",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+          "line": 370
+        },
+        {
+          "cited": "Ecdlp.M16BaseRecoveryFiber.nonempty_recoveryFiber_iff_S17At_eq_zero_and_all_isLiftable",
+          "canonical_name": "Ecdlp.M16BaseRecoveryFiber.nonempty_recoveryFiber_iff_S17At_eq_zero_and_all_isLiftable",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+          "line": 453
+        },
+        {
+          "cited": "Ecdlp.M16BaseRecoveryFiber.not_nonempty_recoveryFiber_of_not_isLiftable",
+          "canonical_name": "Ecdlp.M16BaseRecoveryFiber.not_nonempty_recoveryFiber_of_not_isLiftable",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+          "line": 472
+        },
+        {
+          "cited": "Ecdlp.M16BaseRecoveryFiber.nonempty_recoveryFiber_of_directSystem4_iff_all_isLiftable",
+          "canonical_name": "Ecdlp.M16BaseRecoveryFiber.nonempty_recoveryFiber_of_directSystem4_iff_all_isLiftable",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+          "line": 482
+        }
+      ]
     }
   ],
   "declarations": {
@@ -16577,6 +16688,349 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/Secp256k1GenericSecurity.lean",
       "line": 28
+    },
+    "Ecdlp.M16BaseRecoveryFiber.ActualLiftAt": {
+      "name": "ActualLiftAt",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 88
+    },
+    "Ecdlp.M16BaseRecoveryFiber.BarCurve": {
+      "name": "BarCurve",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 37
+    },
+    "Ecdlp.M16BaseRecoveryFiber.BarPoint": {
+      "name": "BarPoint",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 38
+    },
+    "Ecdlp.M16BaseRecoveryFiber.BasePoint": {
+      "name": "BasePoint",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 36
+    },
+    "Ecdlp.M16BaseRecoveryFiber.Compatible": {
+      "name": "Compatible",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 194
+    },
+    "Ecdlp.M16BaseRecoveryFiber.Fp": {
+      "name": "Fp",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 34
+    },
+    "Ecdlp.M16BaseRecoveryFiber.FpBar": {
+      "name": "FpBar",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 35
+    },
+    "Ecdlp.M16BaseRecoveryFiber.LiftAt": {
+      "name": "LiftAt",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 52
+    },
+    "Ecdlp.M16BaseRecoveryFiber.LiftTuple": {
+      "name": "LiftTuple",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 160
+    },
+    "Ecdlp.M16BaseRecoveryFiber.NormalizedFiber": {
+      "name": "NormalizedFiber",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 203
+    },
+    "Ecdlp.M16BaseRecoveryFiber.RecoveryFiber": {
+      "name": "RecoveryFiber",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 199
+    },
+    "Ecdlp.M16BaseRecoveryFiber.S17At_eq_zero_of_recoveryFiber": {
+      "name": "S17At_eq_zero_of_recoveryFiber",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 405
+    },
+    "Ecdlp.M16BaseRecoveryFiber.card_recoveryFiber_eq_two_mul_card_normalizedFiber": {
+      "name": "card_recoveryFiber_eq_two_mul_card_normalizedFiber",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 314
+    },
+    "Ecdlp.M16BaseRecoveryFiber.card_recoveryFinset": {
+      "name": "card_recoveryFinset",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 378
+    },
+    "Ecdlp.M16BaseRecoveryFiber.compatible_globalNegate_iff": {
+      "name": "compatible_globalNegate_iff",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 224
+    },
+    "Ecdlp.M16BaseRecoveryFiber.globalNegate": {
+      "name": "globalNegate",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 207
+    },
+    "Ecdlp.M16BaseRecoveryFiber.globalNegate_involutive": {
+      "name": "globalNegate_involutive",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 210
+    },
+    "Ecdlp.M16BaseRecoveryFiber.liesOver_include_liftPoint": {
+      "name": "liesOver_include_liftPoint",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 91
+    },
+    "Ecdlp.M16BaseRecoveryFiber.liftAtEquivActualLiftAt": {
+      "name": "liftAtEquivActualLiftAt",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 118
+    },
+    "Ecdlp.M16BaseRecoveryFiber.liftAtFintype": {
+      "name": "liftAtFintype",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "instance",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 55
+    },
+    "Ecdlp.M16BaseRecoveryFiber.liftPoint": {
+      "name": "liftPoint",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 72
+    },
+    "Ecdlp.M16BaseRecoveryFiber.liftPoint_injective": {
+      "name": "liftPoint_injective",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 79
+    },
+    "Ecdlp.M16BaseRecoveryFiber.liftPoint_ne_zero": {
+      "name": "liftPoint_ne_zero",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 75
+    },
+    "Ecdlp.M16BaseRecoveryFiber.liftPoint_negLiftAt": {
+      "name": "liftPoint_negLiftAt",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 149
+    },
+    "Ecdlp.M16BaseRecoveryFiber.liftTuplePoints": {
+      "name": "liftTuplePoints",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 173
+    },
+    "Ecdlp.M16BaseRecoveryFiber.mem_recoveryFinset_iff": {
+      "name": "mem_recoveryFinset_iff",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 362
+    },
+    "Ecdlp.M16BaseRecoveryFiber.negLiftAt": {
+      "name": "negLiftAt",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 141
+    },
+    "Ecdlp.M16BaseRecoveryFiber.negLiftAt_involutive": {
+      "name": "negLiftAt_involutive",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 144
+    },
+    "Ecdlp.M16BaseRecoveryFiber.nonempty_liftAt_iff_isLiftable": {
+      "name": "nonempty_liftAt_iff_isLiftable",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 131
+    },
+    "Ecdlp.M16BaseRecoveryFiber.nonempty_liftTuple_iff": {
+      "name": "nonempty_liftTuple_iff",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 163
+    },
+    "Ecdlp.M16BaseRecoveryFiber.nonempty_recoveryFiber_iff_S17At_eq_zero_and_all_isLiftable": {
+      "name": "nonempty_recoveryFiber_iff_S17At_eq_zero_and_all_isLiftable",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 453
+    },
+    "Ecdlp.M16BaseRecoveryFiber.nonempty_recoveryFiber_of_directSystem4_iff_all_isLiftable": {
+      "name": "nonempty_recoveryFiber_of_directSystem4_iff_all_isLiftable",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 482
+    },
+    "Ecdlp.M16BaseRecoveryFiber.normalizedFiberFintype": {
+      "name": "normalizedFiberFintype",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "instance",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 301
+    },
+    "Ecdlp.M16BaseRecoveryFiber.not_nonempty_recoveryFiber_of_not_isLiftable": {
+      "name": "not_nonempty_recoveryFiber_of_not_isLiftable",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 472
+    },
+    "Ecdlp.M16BaseRecoveryFiber.recoveryFiberEquivNormalizedFiberProdBool": {
+      "name": "recoveryFiberEquivNormalizedFiberProdBool",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 282
+    },
+    "Ecdlp.M16BaseRecoveryFiber.recoveryFiberEquivRecoveryFinsetSubtype": {
+      "name": "recoveryFiberEquivRecoveryFinsetSubtype",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 370
+    },
+    "Ecdlp.M16BaseRecoveryFiber.recoveryFiberEquiv_globalNegate": {
+      "name": "recoveryFiberEquiv_globalNegate",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 333
+    },
+    "Ecdlp.M16BaseRecoveryFiber.recoveryFiberEquiv_sign": {
+      "name": "recoveryFiberEquiv_sign",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 326
+    },
+    "Ecdlp.M16BaseRecoveryFiber.recoveryFiberFintype": {
+      "name": "recoveryFiberFintype",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "instance",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 306
+    },
+    "Ecdlp.M16BaseRecoveryFiber.recoveryFiber_all_isLiftable": {
+      "name": "recoveryFiber_all_isLiftable",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 386
+    },
+    "Ecdlp.M16BaseRecoveryFiber.recoveryFinset": {
+      "name": "recoveryFinset",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 357
+    },
+    "Ecdlp.M16BaseRecoveryFiber.recoveryGlobalNegate": {
+      "name": "recoveryGlobalNegate",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 234
+    },
+    "Ecdlp.M16BaseRecoveryFiber.recoveryGlobalNegate_involutive": {
+      "name": "recoveryGlobalNegate_involutive",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 239
+    },
+    "Ecdlp.M16BaseRecoveryFiber.recoveryGlobalNegate_ne": {
+      "name": "recoveryGlobalNegate_ne",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 247
+    },
+    "Ecdlp.M16BaseRecoveryFiber.signedTarget": {
+      "name": "signedTarget",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 179
+    },
+    "Ecdlp.M16BaseRecoveryFiber.signedTarget_false": {
+      "name": "signedTarget_false",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 182
+    },
+    "Ecdlp.M16BaseRecoveryFiber.signedTarget_not": {
+      "name": "signedTarget_not",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 188
+    },
+    "Ecdlp.M16BaseRecoveryFiber.signedTarget_true": {
+      "name": "signedTarget_true",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 185
+    },
+    "Ecdlp.M16BaseRecoveryFiber.sum_liftTuplePoints_globalNegate": {
+      "name": "sum_liftTuplePoints_globalNegate",
+      "namespace": "Ecdlp.M16BaseRecoveryFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
+      "line": 216
     },
     "Ecdlp.M16CancellationRootLowerBound.BarCurve": {
       "name": "BarCurve",

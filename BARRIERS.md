@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~280 distinct results / 319 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~281 distinct results / 320 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -217,6 +217,16 @@ exact `Θ` statements.
   as a PFPO and all seven pairs cancel tautologically. Thus the theorem proves
   no solver-node, runtime, memory, useful relation yield, independence, rank,
   scalar recovery, sparse linear algebra, or total-cost lower bound.
+  The base-field recovery layer now gives an exact finite semantic fiber:
+  relative to an affine supplied target, it is inhabited exactly by a direct
+  root whose sixteen coordinates all lift, and global negation separates the
+  two explicitly labelled target orientations. Its filtered `Finset` is a
+  duplicate-free specification only, not an efficient `Recover`, PFPO,
+  `AllRoots`, root enumeration or solver. The affine target premise excludes
+  the identity, while the underlying labelled equivalence is identity-safe;
+  its factor of two counts labels rather than distinct unlabelled recoveries.
+  No relation yield/rank, sparse linear algebra, scalar recovery, runtime,
+  memory, or total-cost bridge follows.
   `CELL-M-PKC-SMOOTH-M16` remains `open_non_executable`,
   `CQ-SEMAEV-S17-SYSTEM-COST` remains `partial`, and
   `B-PKC-M16-COMPLETE-COST-BRIDGE` remains open on establishing a nonempty
