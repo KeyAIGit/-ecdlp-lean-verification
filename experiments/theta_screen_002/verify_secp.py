@@ -13,7 +13,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from sage.all import GF, PolynomialRing, Integer, is_prime, version
+from sage.all import GF, PolynomialRing, Integer, version
 
 
 P = Integer(2) ** 256 - Integer(2) ** 32 - Integer(977)
@@ -24,7 +24,7 @@ BETA_REPO = Integer(
 
 
 def main() -> None:
-    assert is_prime(P, proof=False)
+    assert P.is_prime(proof=False)
 
     Fp = GF(P, proof=False)
     beta = Fp(-7) ** ((P - 1) // 3)
