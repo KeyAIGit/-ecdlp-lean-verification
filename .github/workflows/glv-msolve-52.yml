@@ -1,0 +1,211 @@
+name: GLV msolve 52-system structural benchmark
+
+on:
+  push:
+    branches:
+      - bench/glv-msolve-52-20260811
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: glv-msolve-52-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  benchmark:
+    name: msolve ${{ matrix.case }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    strategy:
+      fail-fast: false
+      matrix:
+        case:
+          - p43_k1
+          - p43_k2
+          - p43_k3
+          - p67_k1
+          - p67_k2
+          - p67_k3
+          - p127_k2
+          - p127_k3
+          - p211_k2
+          - p211_k3
+          - p823_k2
+          - p823_k3
+          - p823_k4
+
+    steps:
+      - name: Checkout benchmark branch
+        uses: actions/checkout@v4
+
+      - name: Install build and runtime dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            autoconf automake libtool pkg-config build-essential \
+            libgmp-dev libmpfr-dev libflint-dev time curl
+
+      - name: Build pinned msolve 0.10.1
+        shell: bash
+        run: |
+          set -euxo pipefail
+          curl -L --fail --retry 5 \
+            -o "$RUNNER_TEMP/msolve-0.10.1.tar.gz" \
+            https://github.com/algebraic-solving/msolve/releases/download/v0.10.1/msolve-0.10.1.tar.gz
+          echo "4ea31066005dc38461fe6b85eb96828990340ce68bdc246fd37e1338d2155beb  $RUNNER_TEMP/msolve-0.10.1.tar.gz" | sha256sum -c -
+          mkdir -p "$RUNNER_TEMP/msolve-src"
+          tar -xzf "$RUNNER_TEMP/msolve-0.10.1.tar.gz" -C "$RUNNER_TEMP/msolve-src" --strip-components=1
+          cd "$RUNNER_TEMP/msolve-src"
+          ./autogen.sh
+          ./configure CFLAGS="-O2 -g0"
+          make -j2
+          test -x ./msolve
+          ./msolve --help > "$RUNNER_TEMP/msolve-help.txt" 2>&1 || true
+          ldd ./msolve | tee "$RUNNER_TEMP/msolve-ldd.txt"
+          cp ./msolve "$RUNNER_TEMP/msolve"
+
+      - name: Decode and verify the frozen 52-system bundle
+        shell: bash
+        run: |
+          set -euxo pipefail
+          cat benchmarks/glv-msolve-52/msolve_inputs_glv.tar.gz.b64.part* \
+            | base64 --decode > "$RUNNER_TEMP/msolve_inputs_glv.tar.gz"
+          echo "6e96df7baa54536d868bcb7894e047e49a2e737471563e2e22cf27b9607cd5c0  $RUNNER_TEMP/msolve_inputs_glv.tar.gz" | sha256sum -c -
+          mkdir -p "$RUNNER_TEMP/glv-suite"
+          tar -xzf "$RUNNER_TEMP/msolve_inputs_glv.tar.gz" -C "$RUNNER_TEMP/glv-suite"
+          python3 - <<'PY'
+          import hashlib, json, pathlib
+          root = pathlib.Path(__import__('os').environ['RUNNER_TEMP']) / 'glv-suite'
+          manifest = json.loads((root/'msolve_inputs/manifest.json').read_text())
+          assert len(manifest['systems']) == 52, len(manifest['systems'])
+          for row in manifest['systems']:
+              path = root/'msolve_inputs'/row['file']
+              assert hashlib.sha256(path.read_bytes()).hexdigest() == row['sha256'], row['file']
+          print('verified systems:', len(manifest['systems']))
+          PY
+
+      - name: Run four equivalent presentations for ${{ matrix.case }}
+        shell: bash
+        env:
+          CASE: ${{ matrix.case }}
+          TIMEOUT_SECONDS: "600"
+          THREADS: "4"
+        run: |
+          set -uo pipefail
+          ROOT="$RUNNER_TEMP/glv-suite"
+          LOG_DIR="$GITHUB_WORKSPACE/msolve_logs/$CASE"
+          MSOLVE="$RUNNER_TEMP/msolve"
+          mkdir -p "$LOG_DIR"
+          printf 'case=%s\nmsolve=%s\nthreads=%s\ntimeout_seconds=%s\nrunner=%s\nsha=%s\n' \
+            "$CASE" "$MSOLVE" "$THREADS" "$TIMEOUT_SECONDS" "$RUNNER_OS" "$GITHUB_SHA" \
+            > "$LOG_DIR/environment.txt"
+          cp "$RUNNER_TEMP/msolve-help.txt" "$LOG_DIR/msolve_help.txt"
+          cp "$RUNNER_TEMP/msolve-ldd.txt" "$LOG_DIR/msolve_ldd.txt"
+
+          count=0
+          for f in "$ROOT"/msolve_inputs/"$CASE"_*.ms; do
+            count=$((count+1))
+            base="$(basename "$f" .ms)"
+            echo "[$(date -u +%FT%TZ)] START $base"
+            (
+              ulimit -v 6000000
+              /usr/bin/time -v timeout --signal=TERM --kill-after=30s "$TIMEOUT_SECONDS" \
+                "$MSOLVE" -v 2 -g 1 -t "$THREADS" -f "$f" -o "$LOG_DIR/$base.out"
+            ) > "$LOG_DIR/$base.log" 2> "$LOG_DIR/$base.time"
+            rc=$?
+            printf '%s\n' "$rc" > "$LOG_DIR/$base.exitcode"
+            grep -Ei 'matrix|row|column|density|degree|pair|time|memory|basis|reduc|rank|nonzero|ncols|nrows' \
+              "$LOG_DIR/$base.log" "$LOG_DIR/$base.time" \
+              > "$LOG_DIR/$base.metrics.txt" || true
+            echo "[$(date -u +%FT%TZ)] END $base rc=$rc"
+          done
+          test "$count" -eq 4
+          python3 "$ROOT/summarize_msolve_logs.py" "$LOG_DIR" || true
+
+      - name: Upload raw shard logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: glv-msolve-${{ matrix.case }}
+          path: msolve_logs/${{ matrix.case }}
+          if-no-files-found: error
+          retention-days: 14
+
+  aggregate:
+    name: Aggregate 52-system result
+    needs: benchmark
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Download all shard artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: glv-msolve-*
+          path: shards
+          merge-multiple: false
+
+      - name: Build combined JSON, CSV and Markdown summaries
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import csv, json, pathlib, re
+          root = pathlib.Path('shards')
+          rows=[]
+          for code in sorted(root.rglob('*.exitcode')):
+              base=code.stem
+              folder=code.parent
+              time=(folder/f'{base}.time').read_text(errors='replace') if (folder/f'{base}.time').exists() else ''
+              log=(folder/f'{base}.log').read_text(errors='replace') if (folder/f'{base}.log').exists() else ''
+              metrics=(folder/f'{base}.metrics.txt').read_text(errors='replace').splitlines() if (folder/f'{base}.metrics.txt').exists() else []
+              def grab(pattern):
+                  m=re.search(pattern,time,re.I|re.M)
+                  return m.group(1).strip() if m else None
+              rc=int(code.read_text().strip())
+              rows.append({
+                  'case':base,
+                  'family':base.rsplit('_',3)[-3] if False else next((x for x in ['x_plain','y_c3_quotient','q_c6_orbit','u_faithful_glv'] if base.endswith(x)), 'unknown'),
+                  'exit_code':rc,
+                  'timed_out': rc in (124,137),
+                  'elapsed_wall':grab(r'Elapsed \(wall clock\) time[^:]*:\s*(.+)'),
+                  'max_rss_kb':grab(r'Maximum resident set size \(kbytes\):\s*(\d+)'),
+                  'metric_lines':metrics,
+                  'log_tail':'\n'.join(log.splitlines()[-30:]),
+              })
+          rows.sort(key=lambda r:r['case'])
+          pathlib.Path('combined').mkdir()
+          pathlib.Path('combined/combined_summary.json').write_text(json.dumps({'expected':52,'observed':len(rows),'rows':rows},indent=2)+'\n')
+          with pathlib.Path('combined/combined_summary.csv').open('w',newline='') as f:
+              w=csv.DictWriter(f,fieldnames=['case','family','exit_code','timed_out','elapsed_wall','max_rss_kb'])
+              w.writeheader(); w.writerows({k:r[k] for k in w.fieldnames} for r in rows)
+          completed=sum(r['exit_code']==0 for r in rows)
+          timed=sum(r['timed_out'] for r in rows)
+          failed=len(rows)-completed-timed
+          lines=[
+              '# GLV msolve 52-system run', '',
+              f'- Expected systems: 52',
+              f'- Observed result records: {len(rows)}',
+              f'- Completed: {completed}',
+              f'- Timed out or killed: {timed}',
+              f'- Other nonzero exits: {failed}', '',
+              '| Case | Family | Exit | Wall | Max RSS KB |',
+              '|---|---|---:|---:|---:|',
+          ]
+          for r in rows:
+              lines.append(f"| {r['case']} | {r['family']} | {r['exit_code']} | {r['elapsed_wall'] or ''} | {r['max_rss_kb'] or ''} |")
+          pathlib.Path('combined/RESULTS.md').write_text('\n'.join(lines)+'\n')
+          print('\n'.join(lines[:12]))
+          if len(rows) != 52:
+              print(f'WARNING: expected 52 records, found {len(rows)}')
+          PY
+          cp -R shards combined/raw_shards
+
+      - name: Upload combined authoritative logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: glv-msolve-all-52
+          path: combined
+          if-no-files-found: error
+          retention-days: 14
