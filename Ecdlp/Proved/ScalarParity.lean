@@ -1,4 +1,5 @@
 import Mathlib
+import Ecdlp.Proved.EdsResidueBalance
 
 /-!
 # Generator-relative scalar parity foundations
