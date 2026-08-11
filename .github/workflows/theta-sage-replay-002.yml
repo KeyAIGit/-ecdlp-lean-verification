@@ -1,3 +1,4 @@
+# Branch-local, bounded replay. Result commits do not retrigger this workflow.
 name: Theta screen 002 independent Sage replay
 
 on:
@@ -107,9 +108,9 @@ jobs:
           python3 experiments/theta_screen_002/summarize_sage_replay.py \
             > "$ROOT/logs/summarize.log" 2>&1
           (cd "$ROOT" && sha256sum -c SHA256SUMS)
-          tar -C experiments/theta_screen_002 -czf \
-            "$ROOT/theta-sage-replay-002.tar.gz" sage_replay \
-            --exclude='sage_replay/theta-sage-replay-002.tar.gz'
+          tar --exclude='sage_replay/theta-sage-replay-002.tar.gz' \
+            -C experiments/theta_screen_002 -czf \
+            "$ROOT/theta-sage-replay-002.tar.gz" sage_replay
 
       - name: Commit permanent replay evidence
         shell: bash
