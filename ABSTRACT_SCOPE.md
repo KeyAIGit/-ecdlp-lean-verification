@@ -7,7 +7,7 @@
 
 ## Canonical accounting
 
-- **320 ledger rows / ~281 distinct kernel-verified results** (39 rows are
+- **321 ledger rows / ~282 distinct kernel-verified results** (39 rows are
   alternate-form / supporting restatements of an already-counted result).
 - **0 `sorry`** anywhere in the built (`Ecdlp/`-minus-`Targets/`) tree.
 - **No CUSTOM axioms.** Everything depends only on Lean/Mathlib's standard
@@ -51,6 +51,22 @@
   doubling counts labels, not necessarily distinct unlabelled recoveries, and
   proves no efficient `Recover`, PFPO, `AllRoots`, solver, enumeration cost,
   yield/rank, runtime/memory/total cost, scalar recovery, or ECDLP shortcut.
+- **Canonical factor-base recovery rows normalize labels; they do not make
+  recoveries unique.** A uniquely characterized lower-`ZMod.val` square root
+  fixes the reference sign at each liftable coordinate. This is a noncomputable
+  mathematical convention built with `Classical.choice`, not an implemented
+  square-root, point-decompression, or recovery procedure. The resulting
+  integral `Finsupp` aggregates repeated labelled slots, evaluates to the
+  source-point subtotal, and after the exact target-sign rescaling evaluates to
+  the supplied target. Global source negation with target-label flipping leaves
+  that row unchanged. The finite `Finset` row-image specification is
+  partitioned exactly by labelled backpointer multiplicities, including at
+  target zero. Global sign pairs, repeated coordinates, permutations, and
+  point-group relations can still
+  collide. Membership implies `evalRow row = R`; no converse/sufficient
+  image-membership criterion is proved. This is not an efficient enumeration,
+  `Recover`, PFPO, `AllRoots`, recovery, rank/yield, sparse-linear-algebra,
+  runtime/memory/cost, scalar-recovery, or ECDLP result.
 - **Cancellation pairs give a large root-output family, not a solver or cost
   lower bound.** For a proved nonidentity target, seven independently chosen
   labelled pairs inject `283527^7` liftable assignments and `564522^7`

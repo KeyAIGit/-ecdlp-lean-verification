@@ -4,8 +4,8 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 320,
-    "ledger_rows": 320,
+    "theorems": 321,
+    "ledger_rows": 321,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
@@ -37,10 +37,10 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1250,
+    "edges": 1254,
     "by_edge_type": {
-      "imports": 575,
-      "member_of": 320,
+      "imports": 578,
+      "member_of": 321,
       "grounded_in_source_claim": 62,
       "requires_foundation": 41,
       "supports": 27,
@@ -216,11 +216,12 @@
       "algebraic-closure square-root existence + exact direct-system/chart bridge + recursive Kummer signed-sum semantics; zero new native owners, inherited secp256k1 primality families disclosed": 1,
       "exact finite partition + direct point semantics + existing conditional Frobenius/base-field two-torsion split; zero new native owners, inherited primality and no-two-torsion compiler trust disclosed": 1,
       "labelled finite-function injections + exact factor-base counts + point-sum semantics + reduced/direct root equivalence; zero new native owners, inherited certificate trust disclosed": 1,
-      "exact square-root/actual-point equivalence + target-labelled global-negation quotient + direct point semantics and pointwise descent; zero new native owners, inherited discriminant/primality compiler trust only": 1
+      "exact square-root/actual-point equivalence + target-labelled global-negation quotient + direct point semantics and pointwise descent; zero new native owners, inherited discriminant/primality compiler trust only": 1,
+      "noncomputable lower-residue reference/sign classification + repeated-coordinate `Finsupp.linearCombination` evaluation + exact target-sign normalization + finite image/fiber cardinal partition; zero new native owners, inherited discriminant/rhs-support/primality trust disclosed": 1
     },
     "by_area": {
       "curve-torsion": 154,
-      "primality": 65,
+      "primality": 66,
       "other": 35,
       "generic-hardness": 30,
       "protocol-soundness": 23,
@@ -6663,6 +6664,26 @@
       "family_id": "family-primality",
       "dependency_depth": 13,
       "gated": true
+    },
+    {
+      "id": "thm-320",
+      "name": "Ecdlp.M16CanonicalRecoveryRows.referenceLift`, `referenceLift_isLowerResidue`, `existsUnique_lowerResidueLift`, `referenceSignEquiv`, `existsUnique_referenceSign`, `liftPoint_eq_liftCoefficient_smul_referencePoint`, `coefficientVector_apply`, `coefficientVector_globalNegate`, `evalRow_coefficientVector`, `canonicalRow`, `canonicalRow_globalNegate`, `evalRow_canonicalRow_of_compatible`, `canonicalRow_recoveryGlobalNegate`, `canonicalRows`, `rowBackpointers`, `rowMultiplicity`, `mem_rowBackpointers_iff`, `mem_canonicalRows_iff_backpointers_nonempty`, `rowMultiplicity_pos_iff_mem_canonicalRows`, `evalRow_eq_target_of_mem_canonicalRows`, `card_recoveryFiber_eq_sum_rowMultiplicity",
+      "short_name": "referenceLift`,",
+      "module": "Ecdlp.Proved.M16CanonicalRecoveryRows",
+      "modules": [
+        "Ecdlp.Proved.M16CanonicalRecoveryRows"
+      ],
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "files": [
+        "Ecdlp/Proved/M16CanonicalRecoveryRows.lean"
+      ],
+      "claim": "Canonical factor-base coefficient rows for labelled M16 recoveries (every liftable factor-base coordinate has a reproducible reference lift: the unique square root whose canonical `ZMod.val` representative is smaller than that of its negative. This is a noncomputable mathematical convention constructed with `Classical.choice`, not an implemented square-root, point-decompression, or recovery procedure. Every lift is uniquely the reference or its negative. A labelled sixteen-slot lift tuple maps to an integral `Finsupp` coefficient row, so repeated factor-base coordinates aggregate and can cancel; `evalRow` evaluates that row against the reference points and exactly recovers the source-point subtotal. If the retained target coefficient is `tau`, `canonicalRow` is `(-tau)` times the raw row. Compatibility therefore makes its evaluation exactly the supplied target `R`, and simultaneous global source negation plus Boolean target-label flipping leaves the row unchanged. `canonicalRows` is the duplicate-free image of `recoveryFinset`; `rowBackpointers` and `rowMultiplicity` give the exact labelled fibers, membership/evaluation facts, and a cardinality partition of the complete recovery fiber. Honest scope: reference positivity means only the lower canonical residue, not an order on the field. The unique sign classifies one lift relative to that reference; it does not make a recovery witness or row unique. Global sign pairs always collide, repeated coordinates and slot permutations can collide, and elliptic-curve relations can make `evalRow` noninjective. At `R = 0`, the Boolean labels remain distinct even though they name the same geometric target. Membership implies `evalRow row = R`; no converse/sufficient image-membership criterion is proved. The finite image/filter specification is not an efficient enumeration, `Recover`, PFPO, `AllRoots`, square-root or recovery algorithm, and proves no relation independence/yield/rank, sparse-linear-algebra result, runtime/memory/solver-node/total-cost result, scalar recovery, or ECDLP shortcut. The module adds zero new `native_decide` owners and inherits only the existing secp256k1 discriminant owner, the three existing `rhs ≠ 0` support owners (`three_dvd_p_sub_one`, `secp256k1_seven_ne_zero`, and `secp256k1_neg7_pow_ne_one`), and ten existing secp256k1 primality native-owner families)",
+      "method": "noncomputable lower-residue reference/sign classification + repeated-coordinate `Finsupp.linearCombination` evaluation + exact target-sign normalization + finite image/fiber cardinal partition; zero new native owners, inherited discriminant/rhs-support/primality trust disclosed",
+      "status": "proved",
+      "area": "primality",
+      "family_id": "family-primality",
+      "dependency_depth": 14,
+      "gated": true
     }
   ],
   "barriers": [
@@ -12820,6 +12841,16 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.M16CanonicalRecoveryRows",
+      "to": "Ecdlp.Proved.M16BaseRecoveryFiber",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16CanonicalRecoveryRows",
+      "to": "Ecdlp.Proved.M16FactorBaseLiftable",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.M16DirectPointSemantics",
       "to": "Ecdlp.Proved.FrozenProjectiveSecpChainSemantics",
       "type": "imports"
@@ -14621,6 +14652,11 @@
     },
     {
       "from": "Ecdlp",
+      "to": "Ecdlp.Proved.M16CanonicalRecoveryRows",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
       "to": "Ecdlp.Proved.M16PartitionedPointSemantics",
       "type": "imports"
     },
@@ -16301,6 +16337,11 @@
     },
     {
       "from": "thm-319",
+      "to": "family-primality",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-320",
       "to": "family-primality",
       "type": "member_of"
     },

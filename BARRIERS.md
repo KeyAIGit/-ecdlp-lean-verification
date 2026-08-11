@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~281 distinct results / 320 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~282 distinct results / 321 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -227,6 +227,19 @@ exact `Θ` statements.
   its factor of two counts labels rather than distinct unlabelled recoveries.
   No relation yield/rank, sparse linear algebra, scalar recovery, runtime,
   memory, or total-cost bridge follows.
+  The factor-base row layer now fixes a reproducible lower-residue reference
+  sign and exactly aggregates all sixteen labelled lift coefficients in a
+  `Finsupp`. That reference is a noncomputable mathematical convention built
+  with `Classical.choice`, not a square-root, point-decompression, or recovery
+  procedure. Compatible witnesses normalize to rows evaluating to the supplied
+  target, and the finite `Finset` row-image specification is partitioned by
+  exact row backpointer multiplicities. This does not remove collisions:
+  global sign pairs map to the same row, repeated coordinates can cancel, slot
+  permutations can agree, and point-group relations make evaluation
+  noninjective. Membership implies `evalRow row = R`; no converse/sufficient
+  image-membership criterion is proved. The partition supplies no efficient
+  enumeration, useful relation yield, independence, rank,
+  sparse-linear-algebra, recovery, or cost bridge.
   `CELL-M-PKC-SMOOTH-M16` remains `open_non_executable`,
   `CQ-SEMAEV-S17-SYSTEM-COST` remains `partial`, and
   `B-PKC-M16-COMPLETE-COST-BRIDGE` remains open on establishing a nonempty

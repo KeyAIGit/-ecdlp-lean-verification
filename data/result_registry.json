@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 320,
-  "ledger_reference_count": 833,
-  "ledger_named_declarations": 808,
+  "ledger_rows": 321,
+  "ledger_reference_count": 854,
+  "ledger_named_declarations": 829,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1433,
-  "distinct_qualified_names": 1433,
-  "verified_md_citations": 808,
+  "declaration_count": 1485,
+  "distinct_qualified_names": 1485,
+  "verified_md_citations": 829,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -614,6 +614,27 @@
     "Ecdlp.M16CancellationRootLowerBound.exists_nonzero_target_root_lower_bounds",
     "Ecdlp.M16CancellationRootLowerBound.exists_target_budget_lt_directRoot_card",
     "Ecdlp.M16CancellationRootLowerBound.maxRelationTermBudget_lt_liftable_cancellation_family",
+    "Ecdlp.M16CanonicalRecoveryRows.canonicalRow",
+    "Ecdlp.M16CanonicalRecoveryRows.canonicalRow_globalNegate",
+    "Ecdlp.M16CanonicalRecoveryRows.canonicalRow_recoveryGlobalNegate",
+    "Ecdlp.M16CanonicalRecoveryRows.canonicalRows",
+    "Ecdlp.M16CanonicalRecoveryRows.card_recoveryFiber_eq_sum_rowMultiplicity",
+    "Ecdlp.M16CanonicalRecoveryRows.coefficientVector_apply",
+    "Ecdlp.M16CanonicalRecoveryRows.coefficientVector_globalNegate",
+    "Ecdlp.M16CanonicalRecoveryRows.evalRow_canonicalRow_of_compatible",
+    "Ecdlp.M16CanonicalRecoveryRows.evalRow_coefficientVector",
+    "Ecdlp.M16CanonicalRecoveryRows.evalRow_eq_target_of_mem_canonicalRows",
+    "Ecdlp.M16CanonicalRecoveryRows.existsUnique_lowerResidueLift",
+    "Ecdlp.M16CanonicalRecoveryRows.existsUnique_referenceSign",
+    "Ecdlp.M16CanonicalRecoveryRows.liftPoint_eq_liftCoefficient_smul_referencePoint",
+    "Ecdlp.M16CanonicalRecoveryRows.mem_canonicalRows_iff_backpointers_nonempty",
+    "Ecdlp.M16CanonicalRecoveryRows.mem_rowBackpointers_iff",
+    "Ecdlp.M16CanonicalRecoveryRows.referenceLift",
+    "Ecdlp.M16CanonicalRecoveryRows.referenceLift_isLowerResidue",
+    "Ecdlp.M16CanonicalRecoveryRows.referenceSignEquiv",
+    "Ecdlp.M16CanonicalRecoveryRows.rowBackpointers",
+    "Ecdlp.M16CanonicalRecoveryRows.rowMultiplicity",
+    "Ecdlp.M16CanonicalRecoveryRows.rowMultiplicity_pos_iff_mem_canonicalRows",
     "Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_relation",
     "Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_sum_add_target_eq_zero",
     "Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_sum_eq_target_or_neg",
@@ -11415,6 +11436,186 @@
           "line": 482
         }
       ]
+    },
+    {
+      "id": "ledger-320",
+      "claim": "Canonical factor-base coefficient rows for labelled M16 recoveries (every liftable factor-base coordinate has a reproducible reference lift: the unique square root whose canonical `ZMod.val` representative is smaller than that of its negative. This is a noncomputable mathematical convention constructed with `Classical.choice`, not an implemented square-root, point-decompression, or recovery procedure. Every lift is uniquely the reference or its negative. A labelled sixteen-slot lift tuple maps to an integral `Finsupp` coefficient row, so repeated factor-base coordinates aggregate and can cancel; `evalRow` evaluates that row against the reference points and exactly recovers the source-point subtotal. If the retained target coefficient is `tau`, `canonicalRow` is `(-tau)` times the raw row. Compatibility therefore makes its evaluation exactly the supplied target `R`, and simultaneous global source negation plus Boolean target-label flipping leaves the row unchanged. `canonicalRows` is the duplicate-free image of `recoveryFinset`; `rowBackpointers` and `rowMultiplicity` give the exact labelled fibers, membership/evaluation facts, and a cardinality partition of the complete recovery fiber. Honest scope: reference positivity means only the lower canonical residue, not an order on the field. The unique sign classifies one lift relative to that reference; it does not make a recovery witness or row unique. Global sign pairs always collide, repeated coordinates and slot permutations can collide, and elliptic-curve relations can make `evalRow` noninjective. At `R = 0`, the Boolean labels remain distinct even though they name the same geometric target. Membership implies `evalRow row = R`; no converse/sufficient image-membership criterion is proved. The finite image/filter specification is not an efficient enumeration, `Recover`, PFPO, `AllRoots`, square-root or recovery algorithm, and proves no relation independence/yield/rank, sparse-linear-algebra result, runtime/memory/solver-node/total-cost result, scalar recovery, or ECDLP shortcut. The module adds zero new `native_decide` owners and inherits only the existing secp256k1 discriminant owner, the three existing `rhs ≠ 0` support owners (`three_dvd_p_sub_one`, `secp256k1_seven_ne_zero`, and `secp256k1_neg7_pow_ne_one`), and ten existing secp256k1 primality native-owner families)",
+      "theorem_cell": "`Ecdlp.M16CanonicalRecoveryRows.referenceLift`, `referenceLift_isLowerResidue`, `existsUnique_lowerResidueLift`, `referenceSignEquiv`, `existsUnique_referenceSign`, `liftPoint_eq_liftCoefficient_smul_referencePoint`, `coefficientVector_apply`, `coefficientVector_globalNegate`, `evalRow_coefficientVector`, `canonicalRow`, `canonicalRow_globalNegate`, `evalRow_canonicalRow_of_compatible`, `canonicalRow_recoveryGlobalNegate`, `canonicalRows`, `rowBackpointers`, `rowMultiplicity`, `mem_rowBackpointers_iff`, `mem_canonicalRows_iff_backpointers_nonempty`, `rowMultiplicity_pos_iff_mem_canonicalRows`, `evalRow_eq_target_of_mem_canonicalRows`, `card_recoveryFiber_eq_sum_rowMultiplicity`",
+      "declared_files": [
+        "Ecdlp/Proved/M16CanonicalRecoveryRows.lean"
+      ],
+      "method": "noncomputable lower-residue reference/sign classification + repeated-coordinate `Finsupp.linearCombination` evaluation + exact target-sign normalization + finite image/fiber cardinal partition; zero new native owners, inherited discriminant/rhs-support/primality trust disclosed",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.M16CanonicalRecoveryRows.referenceLift",
+          "canonical_name": "Ecdlp.M16CanonicalRecoveryRows.referenceLift",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+          "line": 114
+        },
+        {
+          "cited": "Ecdlp.M16CanonicalRecoveryRows.referenceLift_isLowerResidue",
+          "canonical_name": "Ecdlp.M16CanonicalRecoveryRows.referenceLift_isLowerResidue",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+          "line": 121
+        },
+        {
+          "cited": "Ecdlp.M16CanonicalRecoveryRows.existsUnique_lowerResidueLift",
+          "canonical_name": "Ecdlp.M16CanonicalRecoveryRows.existsUnique_lowerResidueLift",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+          "line": 160
+        },
+        {
+          "cited": "Ecdlp.M16CanonicalRecoveryRows.referenceSignEquiv",
+          "canonical_name": "Ecdlp.M16CanonicalRecoveryRows.referenceSignEquiv",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+          "line": 167
+        },
+        {
+          "cited": "Ecdlp.M16CanonicalRecoveryRows.existsUnique_referenceSign",
+          "canonical_name": "Ecdlp.M16CanonicalRecoveryRows.existsUnique_referenceSign",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+          "line": 200
+        },
+        {
+          "cited": "Ecdlp.M16CanonicalRecoveryRows.liftPoint_eq_liftCoefficient_smul_referencePoint",
+          "canonical_name": "Ecdlp.M16CanonicalRecoveryRows.liftPoint_eq_liftCoefficient_smul_referencePoint",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+          "line": 263
+        },
+        {
+          "cited": "Ecdlp.M16CanonicalRecoveryRows.coefficientVector_apply",
+          "canonical_name": "Ecdlp.M16CanonicalRecoveryRows.coefficientVector_apply",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+          "line": 279
+        },
+        {
+          "cited": "Ecdlp.M16CanonicalRecoveryRows.coefficientVector_globalNegate",
+          "canonical_name": "Ecdlp.M16CanonicalRecoveryRows.coefficientVector_globalNegate",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+          "line": 286
+        },
+        {
+          "cited": "Ecdlp.M16CanonicalRecoveryRows.evalRow_coefficientVector",
+          "canonical_name": "Ecdlp.M16CanonicalRecoveryRows.evalRow_coefficientVector",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+          "line": 306
+        },
+        {
+          "cited": "Ecdlp.M16CanonicalRecoveryRows.canonicalRow",
+          "canonical_name": "Ecdlp.M16CanonicalRecoveryRows.canonicalRow",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+          "line": 341
+        },
+        {
+          "cited": "Ecdlp.M16CanonicalRecoveryRows.canonicalRow_globalNegate",
+          "canonical_name": "Ecdlp.M16CanonicalRecoveryRows.canonicalRow_globalNegate",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+          "line": 345
+        },
+        {
+          "cited": "Ecdlp.M16CanonicalRecoveryRows.evalRow_canonicalRow_of_compatible",
+          "canonical_name": "Ecdlp.M16CanonicalRecoveryRows.evalRow_canonicalRow_of_compatible",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+          "line": 353
+        },
+        {
+          "cited": "Ecdlp.M16CanonicalRecoveryRows.canonicalRow_recoveryGlobalNegate",
+          "canonical_name": "Ecdlp.M16CanonicalRecoveryRows.canonicalRow_recoveryGlobalNegate",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+          "line": 379
+        },
+        {
+          "cited": "Ecdlp.M16CanonicalRecoveryRows.canonicalRows",
+          "canonical_name": "Ecdlp.M16CanonicalRecoveryRows.canonicalRows",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+          "line": 393
+        },
+        {
+          "cited": "Ecdlp.M16CanonicalRecoveryRows.rowBackpointers",
+          "canonical_name": "Ecdlp.M16CanonicalRecoveryRows.rowBackpointers",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+          "line": 399
+        },
+        {
+          "cited": "Ecdlp.M16CanonicalRecoveryRows.rowMultiplicity",
+          "canonical_name": "Ecdlp.M16CanonicalRecoveryRows.rowMultiplicity",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+          "line": 407
+        },
+        {
+          "cited": "Ecdlp.M16CanonicalRecoveryRows.mem_rowBackpointers_iff",
+          "canonical_name": "Ecdlp.M16CanonicalRecoveryRows.mem_rowBackpointers_iff",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+          "line": 411
+        },
+        {
+          "cited": "Ecdlp.M16CanonicalRecoveryRows.mem_canonicalRows_iff_backpointers_nonempty",
+          "canonical_name": "Ecdlp.M16CanonicalRecoveryRows.mem_canonicalRows_iff_backpointers_nonempty",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+          "line": 420
+        },
+        {
+          "cited": "Ecdlp.M16CanonicalRecoveryRows.rowMultiplicity_pos_iff_mem_canonicalRows",
+          "canonical_name": "Ecdlp.M16CanonicalRecoveryRows.rowMultiplicity_pos_iff_mem_canonicalRows",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+          "line": 430
+        },
+        {
+          "cited": "Ecdlp.M16CanonicalRecoveryRows.evalRow_eq_target_of_mem_canonicalRows",
+          "canonical_name": "Ecdlp.M16CanonicalRecoveryRows.evalRow_eq_target_of_mem_canonicalRows",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+          "line": 437
+        },
+        {
+          "cited": "Ecdlp.M16CanonicalRecoveryRows.card_recoveryFiber_eq_sum_rowMultiplicity",
+          "canonical_name": "Ecdlp.M16CanonicalRecoveryRows.card_recoveryFiber_eq_sum_rowMultiplicity",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+          "line": 451
+        }
+      ]
     }
   ],
   "declarations": {
@@ -17115,6 +17316,370 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/M16CancellationRootLowerBound.lean",
       "line": 312
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.BasePoint": {
+      "name": "BasePoint",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 39
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.FactorBaseTuple": {
+      "name": "FactorBaseTuple",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 44
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.Fp": {
+      "name": "Fp",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 38
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.IsLowerResidueLift": {
+      "name": "IsLowerResidueLift",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 107
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.RecoveryData": {
+      "name": "RecoveryData",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 52
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.Row": {
+      "name": "Row",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 56
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.boolCoefficient": {
+      "name": "boolCoefficient",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 211
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.boolCoefficient_false": {
+      "name": "boolCoefficient_false",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 215
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.boolCoefficient_not": {
+      "name": "boolCoefficient_not",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 218
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.boolCoefficient_true": {
+      "name": "boolCoefficient_true",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 216
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.canonicalRow": {
+      "name": "canonicalRow",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 341
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.canonicalRow_globalNegate": {
+      "name": "canonicalRow_globalNegate",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 345
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.canonicalRow_recoveryGlobalNegate": {
+      "name": "canonicalRow_recoveryGlobalNegate",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 379
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.canonicalRows": {
+      "name": "canonicalRows",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 393
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.card_recoveryFiber_eq_sum_rowMultiplicity": {
+      "name": "card_recoveryFiber_eq_sum_rowMultiplicity",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 451
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.coefficientVector": {
+      "name": "coefficientVector",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 275
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.coefficientVector_apply": {
+      "name": "coefficientVector_apply",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 279
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.coefficientVector_globalNegate": {
+      "name": "coefficientVector_globalNegate",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 286
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.evalRow": {
+      "name": "evalRow",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 303
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.evalRow_canonicalRow": {
+      "name": "evalRow_canonicalRow",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 374
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.evalRow_canonicalRow_of_compatible": {
+      "name": "evalRow_canonicalRow_of_compatible",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 353
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.evalRow_coefficientVector": {
+      "name": "evalRow_coefficientVector",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 306
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.evalRow_eq_target_of_mem_canonicalRows": {
+      "name": "evalRow_eq_target_of_mem_canonicalRows",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 437
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.existsUnique_lowerResidueLift": {
+      "name": "existsUnique_lowerResidueLift",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 160
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.existsUnique_referenceSign": {
+      "name": "existsUnique_referenceSign",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 200
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.liftAt_eq_reference_or_neg_reference": {
+      "name": "liftAt_eq_reference_or_neg_reference",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 133
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.liftAt_ne_negLiftAt": {
+      "name": "liftAt_ne_negLiftAt",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 94
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.liftAt_value_ne_neg": {
+      "name": "liftAt_value_ne_neg",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 80
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.liftAt_value_ne_zero": {
+      "name": "liftAt_value_ne_zero",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 73
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.liftCoefficient": {
+      "name": "liftCoefficient",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 223
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.liftCoefficient_negLiftAt": {
+      "name": "liftCoefficient_negLiftAt",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 250
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.liftCoefficient_neg_referenceLift": {
+      "name": "liftCoefficient_neg_referenceLift",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 237
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.liftCoefficient_referenceLift": {
+      "name": "liftCoefficient_referenceLift",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 227
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.liftPoint_eq_liftCoefficient_smul_referencePoint": {
+      "name": "liftPoint_eq_liftCoefficient_smul_referencePoint",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 263
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.lowerResidueLift_unique": {
+      "name": "lowerResidueLift_unique",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 143
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.mem_canonicalRows_iff_backpointers_nonempty": {
+      "name": "mem_canonicalRows_iff_backpointers_nonempty",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 420
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.mem_rowBackpointers_iff": {
+      "name": "mem_rowBackpointers_iff",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 411
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.referenceLift": {
+      "name": "referenceLift",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 114
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.referenceLift_isLowerResidue": {
+      "name": "referenceLift_isLowerResidue",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 121
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.referencePoint": {
+      "name": "referencePoint",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 260
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.referenceSignEquiv": {
+      "name": "referenceSignEquiv",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 167
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.referenceSignEquiv_false": {
+      "name": "referenceSignEquiv_false",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 192
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.referenceSignEquiv_true": {
+      "name": "referenceSignEquiv_true",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 196
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.rowBackpointers": {
+      "name": "rowBackpointers",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 399
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.rowMultiplicity": {
+      "name": "rowMultiplicity",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 407
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.rowMultiplicity_pos_iff_mem_canonicalRows": {
+      "name": "rowMultiplicity_pos_iff_mem_canonicalRows",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 430
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.signedTarget_eq_targetCoefficient_smul": {
+      "name": "signedTarget_eq_targetCoefficient_smul",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 333
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.sourceCoordinates": {
+      "name": "sourceCoordinates",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 48
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.targetCoefficient": {
+      "name": "targetCoefficient",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 322
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.targetCoefficient_false": {
+      "name": "targetCoefficient_false",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 326
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.targetCoefficient_not": {
+      "name": "targetCoefficient_not",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 329
+    },
+    "Ecdlp.M16CanonicalRecoveryRows.targetCoefficient_true": {
+      "name": "targetCoefficient_true",
+      "namespace": "Ecdlp.M16CanonicalRecoveryRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CanonicalRecoveryRows.lean",
+      "line": 327
     },
     "Ecdlp.M16DirectPointSemantics.BarCurve": {
       "name": "BarCurve",
