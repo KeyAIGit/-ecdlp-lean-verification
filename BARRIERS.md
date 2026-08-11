@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~284 distinct results / 323 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~285 distinct results / 324 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -253,6 +253,19 @@ exact `Θ` statements.
   encoding convention. No `Recover`, PFPO, `AllRoots`, solver, relation
   distribution, sparse-linear-algebra, runtime/memory/total-cost, scalar-
   recovery, or ECDLP consequence follows.
+  The finite rank-accounting layer maps each certified recovery to a mod-`n`
+  GLV coefficient row evaluating to its fixed target, and to an augmented
+  homogeneous row with target coefficient `-1`. For any finite labelled sample,
+  duplicate observations remain labelled; coefficient and augmented synthesis
+  maps satisfy rank-nullity and agree with matrix rank. The coefficient system
+  has 94509 factor-base columns with the target on the right-hand side, whereas
+  the augmented homogeneous system has one additional target column. Their ranks
+  satisfy `coefficientRank ≤ augmentedRank ≤ coefficientRank + 1`, and
+  deduplicated row counts provide upper bounds only. This constructs no sample,
+  proves no achieved rank, independence, yield or distribution, and supplies no
+  enumeration, root solver, `AllRoots`, PFPO, sparse-linear-algebra outcome,
+  runtime/memory/total-cost, scalar-recovery, experimental encoding comparison,
+  or ECDLP consequence.
   The explicit cancellation backpointer layer now sharpens one collision:
   after fixing a liftable anchor and its noncomputable lower-residue reference,
   seven labelled factor-base choices inject into root-plus-recovery

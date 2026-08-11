@@ -202,6 +202,7 @@ import Ecdlp.Proved.M16DirectPointSemantics
 import Ecdlp.Proved.M16BaseRecoveryFiber
 import Ecdlp.Proved.M16CanonicalRecoveryRows
 import Ecdlp.Proved.M16GLVCanonicalRows
+import Ecdlp.Proved.M16FiniteGLVRelationRank
 import Ecdlp.Proved.M16PartitionedPointSemantics
 import Ecdlp.Proved.M16CancellationRootLowerBound
 import Ecdlp.Proved.M16CancellationBackpointerCollapse

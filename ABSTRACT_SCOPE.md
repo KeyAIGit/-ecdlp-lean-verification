@@ -7,7 +7,7 @@
 
 ## Canonical accounting
 
-- **323 ledger rows / ~284 distinct kernel-verified results** (39 rows are
+- **324 ledger rows / ~285 distinct kernel-verified results** (39 rows are
   alternate-form / supporting restatements of an already-counted result).
 - **0 `sorry`** anywhere in the built (`Ecdlp/`-minus-`Targets/`) tree.
 - **No CUSTOM axioms.** Everything depends only on Lean/Mathlib's standard
@@ -84,6 +84,20 @@
   convention. This supplies no `Recover`, PFPO, `AllRoots`, root solver,
   relation distribution, sparse-linear-algebra outcome, runtime/memory/cost,
   scalar-recovery, or ECDLP result.
+- **Finite labelled GLV matrices now have exact, deliberately separated rank
+  accounting.** Every certified recovery yields a mod-`n` coefficient row whose
+  concrete subgroup evaluation is the fixed target; for a nonzero target that
+  row is nonzero, and adjoining target coefficient `-1` closes an exact
+  homogeneous relation. A finite labelled sample retains duplicate observations.
+  Its 94509-column coefficient matrix treats the target as a right-hand side,
+  while the augmented matrix adds one target column. Their synthesis maps obey
+  rank-nullity and agree with `Matrix.rank`, with coefficient rank at most
+  augmented rank and augmented rank at most coefficient rank plus one. The
+  number of distinct rows is only an upper bound on either rank. No sample is
+  constructed or enumerated, no achieved rank, independence, yield, relation
+  distribution, sparse-linear-algebra result, root solver, `AllRoots`, PFPO,
+  runtime/memory/cost, scalar recovery, experimental encoding equivalence, or
+  ECDLP result follows.
 - **Cancellation pairs give a large root-output family, not a solver or cost
   lower bound.** For a proved nonidentity target, seven independently chosen
   labelled pairs inject `283527^7` liftable assignments and `564522^7`
