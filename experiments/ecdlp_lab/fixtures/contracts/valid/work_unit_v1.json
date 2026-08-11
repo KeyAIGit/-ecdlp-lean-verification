@@ -1,0 +1,48 @@
+{
+  "attempt_id": "006ac6b74aa40a66e22e16dafa5488be265d70f0c9493d046ecfe2eb9c6100f6",
+  "authorization_id": null,
+  "campaign_id": "536a86cc289e5e296afe69aea548cb317b50e0af6e17a61419bb3f02b6799bff",
+  "candidate_id": null,
+  "contract_kind": "work_unit_v1",
+  "framework_authorization_class": "fixture",
+  "hypothesis_id": null,
+  "identity": {
+    "algorithm_seed": 7,
+    "budgets": {
+      "max_field_bits": 32,
+      "max_group_law_invocations": 100000,
+      "max_memory_bytes": 67108864,
+      "max_steps": 100000,
+      "max_subgroup_order_bits": 32,
+      "max_table_entries": 65536,
+      "timeout_ns": 5000000000,
+      "workers": 1
+    },
+    "campaign_config_sha256": "4c87bc93fa496ff44da3bfe6aadd4834499aef395e5c39159e91cd8f48ae5515",
+    "curve_catalog_sha256": "d293afa7e5b614f39ed00356e35ee81a400b57ee9656907170193cb3aca0bbd7",
+    "curve_fixture_id": "toy-secp-j0-b13-c0-p5923",
+    "method_id": "bsgs_v1",
+    "method_implementation_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+    "public_target_vector_sha256": "f530af54bbc7c68523bef1abcf97853d7c635244c15f5c071f91857ecf8083d8",
+    "repetition_ordinal": 0,
+    "validator_implementation_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+  },
+  "internal_classification": "engineering_only",
+  "native_research_outcome": false,
+  "provenance": {
+    "config_sha256": "536a86cc289e5e296afe69aea548cb317b50e0af6e17a61419bb3f02b6799bff",
+    "diff_sha256": null,
+    "producer_dependency_sha256s": ["2222222222222222222222222222222222222222222222222222222222222222"],
+    "source_commit": "0123456789abcdef0123456789abcdef01234567",
+    "source_snapshot_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "source_tree_clean": true,
+    "validator_dependency_sha256s": ["3333333333333333333333333333333333333333333333333333333333333333"]
+  },
+  "record_kind": "lab_engineering_fixture",
+  "retainable": false,
+  "retention_class": "engineering_only",
+  "retry_ordinal": 0,
+  "route_effect": "none",
+  "schema_version": 1,
+  "work_unit_id": "9fe1df57d4477c89c5b7082c3716d6bb7a4cee4c1b31cf96ea994a97f8a95498"
+}

@@ -1,0 +1,42 @@
+{
+  "attempt_id": "006ac6b74aa40a66e22e16dafa5488be265d70f0c9493d046ecfe2eb9c6100f6",
+  "authorization_id": null,
+  "candidate_id": null,
+  "contract_kind": "telemetry_v1",
+  "framework_authorization_class": "fixture",
+  "hypothesis_id": null,
+  "internal_classification": "engineering_only",
+  "native_research_outcome": false,
+  "observed": {
+    "architecture": "x86_64",
+    "cpu_time_ns": 800000,
+    "exit_code": 0,
+    "finished_at_utc": "2026-08-11T00:00:01Z",
+    "peak_rss_bytes": 16777216,
+    "platform": "linux",
+    "python_version": "3.12.13",
+    "started_at_utc": "2026-08-11T00:00:00Z",
+    "termination_signal": null,
+    "tools": [
+      {"capability_state": "available", "name": "python", "version": "3.12.13"}
+    ],
+    "wall_duration_ns": 1000000
+  },
+  "provenance": {
+    "config_sha256": "536a86cc289e5e296afe69aea548cb317b50e0af6e17a61419bb3f02b6799bff",
+    "diff_sha256": null,
+    "producer_dependency_sha256s": ["2222222222222222222222222222222222222222222222222222222222222222"],
+    "source_commit": "0123456789abcdef0123456789abcdef01234567",
+    "source_snapshot_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "source_tree_clean": true,
+    "validator_dependency_sha256s": []
+  },
+  "record_kind": "lab_engineering_fixture",
+  "retainable": false,
+  "retention_class": "engineering_only",
+  "route_effect": "none",
+  "schema_version": 1,
+  "semantic_digest_member": false,
+  "telemetry_id": "7777777777777777777777777777777777777777777777777777777777777777",
+  "work_unit_id": "9fe1df57d4477c89c5b7082c3716d6bb7a4cee4c1b31cf96ea994a97f8a95498"
+}

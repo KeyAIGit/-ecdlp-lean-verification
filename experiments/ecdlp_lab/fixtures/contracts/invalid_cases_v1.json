@@ -1,0 +1,265 @@
+{
+  "schema_version": 1,
+  "fixture_corpus_kind": "ecdlp_lab_invalid_contract_mutations_v1",
+  "mutation_format": "apply one mutation to a deep copy of the named valid base fixture",
+  "cases": [
+    {
+      "case_id": "unknown_field",
+      "base_fixture": "experiments/ecdlp_lab/fixtures/contracts/valid/method_request_v1.json",
+      "contract_kind": "method_request_v1",
+      "mutation": {"operation": "add", "pointer": "/unexpected", "value": true},
+      "expected_stage": "schema",
+      "expected_error": "unknown_field"
+    },
+    {
+      "case_id": "malformed_digest",
+      "base_fixture": "experiments/ecdlp_lab/fixtures/contracts/valid/artifact_ref_v1.json",
+      "contract_kind": "artifact_ref_v1",
+      "mutation": {"operation": "replace", "pointer": "/sha256", "value": "1234"},
+      "expected_stage": "schema",
+      "expected_error": "malformed_digest"
+    },
+    {
+      "case_id": "absolute_path",
+      "base_fixture": "experiments/ecdlp_lab/fixtures/contracts/valid/artifact_ref_v1.json",
+      "contract_kind": "artifact_ref_v1",
+      "mutation": {"operation": "replace", "pointer": "/location", "value": "/tmp/result.json"},
+      "expected_stage": "schema",
+      "expected_error": "absolute_path"
+    },
+    {
+      "case_id": "parent_path_escape",
+      "base_fixture": "experiments/ecdlp_lab/fixtures/contracts/valid/artifact_ref_v1.json",
+      "contract_kind": "artifact_ref_v1",
+      "mutation": {"operation": "replace", "pointer": "/location", "value": "experiments/ecdlp_lab/../engine/run.json"},
+      "expected_stage": "schema",
+      "expected_error": "parent_path_segment"
+    },
+    {
+      "case_id": "symlink_escape",
+      "base_fixture": "experiments/ecdlp_lab/fixtures/contracts/valid/artifact_ref_v1.json",
+      "contract_kind": "artifact_ref_v1",
+      "mutation": {
+        "operation": "ephemeral_symlink_escape",
+        "pointer": "/location",
+        "value": "experiments/ecdlp_lab/fixtures/contracts/link/result.json"
+      },
+      "expected_stage": "semantic",
+      "expected_error": "resolved_path_outside_artifact_root"
+    },
+    {
+      "case_id": "missing_provenance",
+      "base_fixture": "experiments/ecdlp_lab/fixtures/contracts/valid/campaign_config_v1.json",
+      "contract_kind": "campaign_config_v1",
+      "mutation": {"operation": "remove", "pointer": "/provenance", "value": null},
+      "expected_stage": "schema",
+      "expected_error": "missing_provenance"
+    },
+    {
+      "case_id": "dirty_record_marked_retainable",
+      "base_fixture": "experiments/ecdlp_lab/fixtures/contracts/valid/validation_receipt_v1.json",
+    "contract_kind": "validation_receipt_v1",
+    "mutation": {
+      "operation": "replace_many",
+      "pointer": "/",
+      "value": {
+        "provenance": {
+          "config_sha256": "536a86cc289e5e296afe69aea548cb317b50e0af6e17a61419bb3f02b6799bff",
+          "diff_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "producer_dependency_sha256s": ["2222222222222222222222222222222222222222222222222222222222222222"],
+          "source_commit": "0123456789abcdef0123456789abcdef01234567",
+          "source_snapshot_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "source_tree_clean": false,
+          "validator_dependency_sha256s": ["3333333333333333333333333333333333333333333333333333333333333333"]
+        },
+        "retainable": true,
+        "retention_decision": "retain"
+      }
+      },
+      "expected_stage": "schema_or_semantic",
+      "expected_error": "dirty_record_not_retainable"
+    },
+    {
+      "case_id": "self_validation",
+      "base_fixture": "experiments/ecdlp_lab/fixtures/contracts/valid/validation_receipt_v1.json",
+      "contract_kind": "validation_receipt_v1",
+      "mutation": {
+        "operation": "copy",
+        "pointer": "/validator_implementation_sha256",
+        "value": "/producer_implementation_sha256"
+      },
+      "expected_stage": "semantic",
+      "expected_error": "validator_shares_producer_identity"
+    },
+    {
+      "case_id": "hidden_precomputation",
+      "base_fixture": "experiments/ecdlp_lab/fixtures/contracts/valid/method_request_v1.json",
+      "contract_kind": "method_request_v1",
+      "mutation": {
+        "operation": "replace",
+        "pointer": "/public_precomputation",
+        "value": {
+          "artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "priced_in_offline_cost": false,
+          "reusable_for_same_curve_generator": true,
+          "setup_id": "hidden-table"
+        }
+      },
+      "expected_stage": "schema",
+      "expected_error": "unpriced_precomputation"
+    },
+    {
+      "case_id": "expected_scalar_leak",
+      "base_fixture": "experiments/ecdlp_lab/fixtures/contracts/valid/method_request_v1.json",
+      "contract_kind": "method_request_v1",
+      "mutation": {"operation": "add", "pointer": "/expected_scalar", "value": 1},
+      "expected_stage": "schema",
+      "expected_error": "private_target_data_in_method_request"
+    },
+    {
+      "case_id": "target_seed_leak",
+      "base_fixture": "experiments/ecdlp_lab/fixtures/contracts/valid/method_request_v1.json",
+      "contract_kind": "method_request_v1",
+      "mutation": {
+        "operation": "add",
+        "pointer": "/target_derivation_seed",
+        "value": "9999999999999999999999999999999999999999999999999999999999999999"
+      },
+      "expected_stage": "schema",
+      "expected_error": "private_target_data_in_method_request"
+    },
+    {
+      "case_id": "science_identifiers",
+      "base_fixture": "experiments/ecdlp_lab/fixtures/contracts/valid/work_unit_v1.json",
+      "contract_kind": "work_unit_v1",
+      "mutation": {
+        "operation": "replace_many",
+        "pointer": "/",
+        "value": {
+          "authorization_id": "AUTH-UNAUTHORIZED",
+          "candidate_id": "CAND-UNAUTHORIZED",
+          "hypothesis_id": "HYP-UNAUTHORIZED"
+        }
+      },
+      "expected_stage": "schema",
+      "expected_error": "science_identifier_forbidden"
+    },
+    {
+      "case_id": "attempted_engine_conversion",
+      "base_fixture": "experiments/ecdlp_lab/fixtures/contracts/valid/method_result_v1.json",
+      "contract_kind": "method_result_v1",
+      "mutation": {"operation": "add", "pointer": "/run_id", "value": "RER-2026-08-11-001"},
+      "expected_stage": "schema",
+      "expected_error": "engine_run_field_forbidden"
+    },
+    {
+      "case_id": "native_research_outcome",
+      "base_fixture": "experiments/ecdlp_lab/fixtures/contracts/valid/method_result_v1.json",
+      "contract_kind": "method_result_v1",
+      "mutation": {"operation": "replace", "pointer": "/native_research_outcome", "value": true},
+      "expected_stage": "schema",
+      "expected_error": "native_research_outcome_forbidden"
+    },
+    {
+      "case_id": "subgroup_bits_over_32",
+      "base_fixture": "experiments/ecdlp_lab/fixtures/contracts/valid/method_request_v1.json",
+      "contract_kind": "method_request_v1",
+      "mutation": {
+        "operation": "replace_many",
+        "pointer": "/",
+        "value": {"subgroup_order": 4294967296, "subgroup_order_bits": 33}
+      },
+      "expected_stage": "schema",
+      "expected_error": "subgroup_safety_ceiling"
+    },
+    {
+      "case_id": "exact_secp256k1_parameters",
+      "base_fixture": "experiments/ecdlp_lab/fixtures/contracts/valid/method_request_v1.json",
+      "contract_kind": "method_request_v1",
+      "mutation": {
+        "operation": "replace_many",
+        "pointer": "/curve",
+        "value": {
+          "field_bits": 256,
+          "field_p": 115792089237316195423570985008687907853269984665640564039457584007908834671663,
+          "curve_a": 0,
+          "curve_b": 7
+        }
+      },
+      "expected_stage": "schema",
+      "expected_error": "field_safety_ceiling"
+    },
+    {
+      "case_id": "external_target_point",
+      "base_fixture": "experiments/ecdlp_lab/fixtures/contracts/valid/method_request_v1.json",
+      "contract_kind": "method_request_v1",
+      "mutation": {"operation": "replace", "pointer": "/target", "value": [1, 2]},
+      "expected_stage": "semantic",
+      "expected_error": "target_vector_binding_mismatch"
+    },
+    {
+      "case_id": "unknown_catalog_digest",
+      "base_fixture": "experiments/ecdlp_lab/fixtures/contracts/valid/method_request_v1.json",
+      "contract_kind": "method_request_v1",
+      "mutation": {
+        "operation": "replace",
+        "pointer": "/curve_catalog_sha256",
+        "value": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expected_stage": "semantic",
+      "expected_error": "unknown_catalog_digest"
+    },
+    {
+      "case_id": "unknown_vector_digest",
+      "base_fixture": "experiments/ecdlp_lab/fixtures/contracts/valid/method_request_v1.json",
+      "contract_kind": "method_request_v1",
+      "mutation": {
+        "operation": "replace",
+        "pointer": "/public_target_vector_sha256",
+        "value": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expected_stage": "semantic",
+      "expected_error": "unknown_target_vector_digest"
+    },
+    {
+      "case_id": "floating_point_counter",
+      "base_fixture": "experiments/ecdlp_lab/fixtures/contracts/valid/telemetry_v1.json",
+      "contract_kind": "telemetry_v1",
+      "mutation": {"operation": "replace", "pointer": "/observed/wall_duration_ns", "value": "1.5"},
+      "expected_stage": "schema",
+      "expected_error": "floating_point_forbidden"
+    },
+    {
+      "case_id": "nan_lexeme",
+      "base_fixture": null,
+      "contract_kind": "telemetry_v1",
+      "mutation": {"operation": "parse_raw_json", "pointer": null, "value": "{\"wall_duration_ns\":NaN}"},
+      "expected_stage": "parse",
+      "expected_error": "non_finite_number"
+    },
+    {
+      "case_id": "infinity_lexeme",
+      "base_fixture": null,
+      "contract_kind": "telemetry_v1",
+      "mutation": {"operation": "parse_raw_json", "pointer": null, "value": "{\"wall_duration_ns\":Infinity}"},
+      "expected_stage": "parse",
+      "expected_error": "non_finite_number"
+    },
+    {
+      "case_id": "negative_zero_lexeme",
+      "base_fixture": null,
+      "contract_kind": "telemetry_v1",
+      "mutation": {"operation": "parse_raw_json", "pointer": null, "value": "{\"wall_duration_ns\":-0}"},
+      "expected_stage": "parse",
+      "expected_error": "negative_zero"
+    },
+    {
+      "case_id": "duplicate_key",
+      "base_fixture": null,
+      "contract_kind": "method_request_v1",
+      "mutation": {"operation": "parse_raw_json", "pointer": null, "value": "{\"schema_version\":1,\"schema_version\":1}"},
+      "expected_stage": "parse",
+      "expected_error": "duplicate_key"
+    }
+  ]
+}

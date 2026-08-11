@@ -1,0 +1,219 @@
+{
+  "schema_version": 1,
+  "document_kind": "ecdlp_lab_framework_engine_mapping_gap_v1",
+  "authority_boundary": {
+    "lab_is_competing_source_of_truth": false,
+    "lab_records_are_engineering_only": true,
+    "automatic_framework_candidate_conversion": false,
+    "automatic_engine_run_conversion": false,
+    "engine_event_write_allowed": false,
+    "scientific_route_effect": "none",
+    "separate_owner_review_required_for_any_adapter": true
+  },
+  "classification_mapping": {
+    "lab_record_kind": "lab_engineering_fixture",
+    "lab_internal_classification": "engineering_only",
+    "framework_candidate_run_record_kind": "framework_fixture",
+    "framework_authorization_class": "fixture",
+    "framework_exploration_authorized": false,
+    "framework_promotion_authorized": false,
+    "engine_native_research_outcome": false,
+    "candidate_id": null,
+    "hypothesis_id": null,
+    "authorization_id": null
+  },
+  "canonical_existing_schemas": [
+    {
+      "path": "experiments/framework/candidate_run.schema.json",
+      "authority": "candidate_evidence_gate",
+      "lab_relationship": "field_mapping_only_no_record_substitution"
+    },
+    {
+      "path": "experiments/engine/cost_contract.schema.json",
+      "authority": "research_engine_full_cost_vocabulary",
+      "lab_relationship": "meaning_reused_units_encoded_without_floats"
+    },
+    {
+      "path": "experiments/engine/run.schema.json",
+      "authority": "research_engine_native_run_envelope",
+      "lab_relationship": "no_direct_reuse"
+    },
+    {
+      "path": "experiments/engine/instance_result.schema.json",
+      "authority": "research_engine_instance_result",
+      "lab_relationship": "status_mapping_only"
+    },
+    {
+      "path": "experiments/engine/instance_validation.schema.json",
+      "authority": "research_engine_instance_validation",
+      "lab_relationship": "independence_vocabulary_reused_no_record_substitution"
+    },
+    {
+      "path": "experiments/engine/validator_contract.schema.json",
+      "authority": "research_engine_validator_contract",
+      "lab_relationship": "independence_vocabulary_reused"
+    },
+    {
+      "path": "experiments/engine/validator_request.schema.json",
+      "authority": "research_engine_validator_request",
+      "lab_relationship": "sanitization_pattern_reused"
+    },
+    {
+      "path": "experiments/engine/validator_output.schema.json",
+      "authority": "research_engine_validator_output",
+      "lab_relationship": "validation_result_mapping_only"
+    }
+  ],
+  "field_mappings": [
+    {
+      "lab_contract_kind": "campaign_config_v1",
+      "lab_field": "allowed_method_ids",
+      "existing_schema": "experiments/framework/candidate_run.schema.json",
+      "existing_field": "candidate.implementation",
+      "relationship": "related_not_equivalent",
+      "gap": "lab method registry IDs do not create candidate identities or authorization"
+    },
+    {
+      "lab_contract_kind": "target_vector_v1",
+      "lab_field": "public_payload.curve_id",
+      "existing_schema": "experiments/framework/candidate_run.schema.json",
+      "existing_field": "target.curve_id",
+      "relationship": "same_meaning"
+    },
+    {
+      "lab_contract_kind": "target_vector_v1",
+      "lab_field": "public_payload.generator",
+      "existing_schema": "experiments/framework/candidate_run.schema.json",
+      "existing_field": "target.base_point",
+      "relationship": "same_meaning"
+    },
+    {
+      "lab_contract_kind": "target_vector_v1",
+      "lab_field": "public_payload.target",
+      "existing_schema": "experiments/framework/candidate_run.schema.json",
+      "existing_field": "target.target_point",
+      "relationship": "same_meaning"
+    },
+    {
+      "lab_contract_kind": "target_vector_v1",
+      "lab_field": "public_payload.subgroup_order",
+      "existing_schema": "experiments/framework/candidate_run.schema.json",
+      "existing_field": "target.base_order",
+      "relationship": "same_meaning_with_lab_32_bit_ceiling"
+    },
+    {
+      "lab_contract_kind": "method_result_v1",
+      "lab_field": "candidate_scalar",
+      "existing_schema": "experiments/framework/candidate_run.schema.json",
+      "existing_field": "result.claimed_scalar",
+      "relationship": "same_mathematical_value_after_independent_validation"
+    },
+    {
+      "lab_contract_kind": "method_result_v1",
+      "lab_field": "counters.online_target.group_law_invocations",
+      "existing_schema": "experiments/framework/candidate_run.schema.json",
+      "existing_field": "cost.online.group_operations",
+      "relationship": "same_primary_unit_with_lab_counter_semantics_id"
+    },
+    {
+      "lab_contract_kind": "method_result_v1",
+      "lab_field": "counters.offline_setup.group_law_invocations",
+      "existing_schema": "experiments/framework/candidate_run.schema.json",
+      "existing_field": "cost.offline.group_operations",
+      "relationship": "same_primary_unit_with_reuse_disclosed"
+    },
+    {
+      "lab_contract_kind": "telemetry_v1",
+      "lab_field": "observed.wall_duration_ns",
+      "existing_schema": "experiments/engine/cost_contract.schema.json",
+      "existing_field": "wall_time_hours",
+      "relationship": "convertible_unit_not_same_encoding",
+      "gap": "lab stores integer nanoseconds outside semantic digest; Engine stores a JSON number of hours"
+    },
+    {
+      "lab_contract_kind": "telemetry_v1",
+      "lab_field": "observed.peak_rss_bytes",
+      "existing_schema": "experiments/engine/cost_contract.schema.json",
+      "existing_field": "peak_memory_gb",
+      "relationship": "convertible_unit_not_same_encoding"
+    },
+    {
+      "lab_contract_kind": "analysis_summary_v1",
+      "lab_field": "comparisons.empirical_success_probability_decimal",
+      "existing_schema": "experiments/engine/cost_contract.schema.json",
+      "existing_field": "success_probability",
+      "relationship": "same_meaning_different_encoding",
+      "gap": "lab hashed payload uses a decimal string and requires explicit checked conversion"
+    },
+    {
+      "lab_contract_kind": "analysis_summary_v1",
+      "lab_field": "comparisons.full_cost",
+      "existing_schema": "experiments/engine/cost_contract.schema.json",
+      "existing_field": "online,offline,storage_gb,money_usd,implementation_hours,reviewer_hours,preprocessing,amortization,shared_setup",
+      "relationship": "same_cost_vocabulary_different_encoding",
+      "gap": "lab hashed payload uses decimal strings for non-integral quantities and cannot be substituted directly for an Engine cost contract"
+    },
+    {
+      "lab_contract_kind": "artifact_ref_v1",
+      "lab_field": "location,sha256,role",
+      "existing_schema": "experiments/engine/run.schema.json",
+      "existing_field": "result_artifacts.path,sha256,role",
+      "relationship": "compatible_shape_not_engine_artifact"
+    },
+    {
+      "lab_contract_kind": "validation_receipt_v1",
+      "lab_field": "independent_implementation,shares_decisive_logic,passed",
+      "existing_schema": "experiments/engine/instance_validation.schema.json",
+      "existing_field": "independent,shares_decisive_logic,passed",
+      "relationship": "same_validation_meaning_no_engine_lifecycle_effect"
+    }
+  ],
+  "intentional_gaps": [
+    {
+      "gap_id": "no_candidate_identity",
+      "lab_value": null,
+      "existing_fields": ["candidate.id", "candidate_id"],
+      "reason": "engineering fixtures do not create candidates"
+    },
+    {
+      "gap_id": "no_hypothesis_identity",
+      "lab_value": null,
+      "existing_fields": ["candidate.hypothesis_id", "hypothesis_id"],
+      "reason": "P01 supplies no scientific hypothesis authorization"
+    },
+    {
+      "gap_id": "no_engine_run_id",
+      "lab_value": null,
+      "existing_fields": ["run_id"],
+      "reason": "campaign_id and work_unit_id are lab semantic identities only"
+    },
+    {
+      "gap_id": "no_engine_decisive_measurement",
+      "lab_value": null,
+      "existing_fields": ["decisive_measurement"],
+      "reason": "lab summaries are engineering diagnostics and cannot support or falsify a research candidate"
+    },
+    {
+      "gap_id": "no_float_in_hashed_payload",
+      "lab_value": "decimal_string_or_integer_unit",
+      "existing_fields": [
+        "success_probability",
+        "wall_time_hours",
+        "peak_memory_gb",
+        "cpu_hours",
+        "gpu_hours",
+        "money_usd"
+      ],
+      "reason": "canonical lab JSON forbids floating-point semantic values"
+    }
+  ],
+  "m16_run_reuse": {
+    "allowed": false,
+    "direct_replay_allowed": false,
+    "direct_schema_conversion_allowed": false,
+    "authorization_reuse_allowed": false,
+    "consumed_authorization": "AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01",
+    "frozen_run_reference": "TASK-026",
+    "reason": "the decision-level singleton authorization was consumed once and authorizes no rerun, solver, campaign, or lab-to-Engine conversion"
+  }
+}

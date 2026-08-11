@@ -1,0 +1,241 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keyai.example/schemas/ecdlp-lab/method_result_v1.schema.json",
+  "title": "ECDLP lab method result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_kind",
+    "contract_kind",
+    "internal_classification",
+    "framework_authorization_class",
+    "hypothesis_id",
+    "candidate_id",
+    "authorization_id",
+    "native_research_outcome",
+    "route_effect",
+    "retention_class",
+    "retainable",
+    "provenance",
+    "result_id",
+    "work_unit_id",
+    "attempt_id",
+    "method_request_sha256",
+    "method_id",
+    "status",
+    "candidate_scalar",
+    "failure",
+    "counters"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "record_kind": {"const": "lab_engineering_fixture"},
+    "contract_kind": {"const": "method_result_v1"},
+    "internal_classification": {"const": "engineering_only"},
+    "framework_authorization_class": {"const": "fixture"},
+    "hypothesis_id": {"type": "null"},
+    "candidate_id": {"type": "null"},
+    "authorization_id": {"type": "null"},
+    "native_research_outcome": {"const": false},
+    "route_effect": {"const": "none"},
+    "retention_class": {"const": "engineering_only"},
+    "retainable": {"const": false},
+    "provenance": {"$ref": "#/$defs/provenance"},
+    "result_id": {"$ref": "#/$defs/sha256"},
+    "work_unit_id": {"$ref": "#/$defs/sha256"},
+    "attempt_id": {"$ref": "#/$defs/sha256"},
+    "method_request_sha256": {"$ref": "#/$defs/sha256"},
+    "method_id": {"$ref": "#/$defs/methodId"},
+    "status": {"enum": ["success", "bounded_failure", "invalid_request", "internal_error"]},
+    "candidate_scalar": {
+      "oneOf": [
+        {"type": "integer", "minimum": 0, "maximum": 4294967295},
+        {"type": "null"}
+      ]
+    },
+    "failure": {
+      "oneOf": [
+        {"$ref": "#/$defs/failure"},
+        {"type": "null"}
+      ]
+    },
+    "counters": {"$ref": "#/$defs/counters"}
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"status": {"const": "success"}},
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "candidate_scalar": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "failure": {"type": "null"}
+        }
+      },
+      "else": {
+        "properties": {
+          "candidate_scalar": {"type": "null"},
+          "failure": {"$ref": "#/$defs/failure"}
+        }
+      }
+    },
+    {"$ref": "#/$defs/retentionInvariant"}
+  ],
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "gitCommit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "methodId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*_v[0-9]+$"
+    },
+    "nullableCounter": {
+      "oneOf": [
+        {"type": "integer", "minimum": 0},
+        {"type": "null"}
+      ]
+    },
+    "phaseCounters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "group_law_invocations",
+        "nontrivial_additions",
+        "doublings",
+        "negations",
+        "field_inversions",
+        "field_multiplications",
+        "field_squarings"
+      ],
+      "properties": {
+        "group_law_invocations": {"type": "integer", "minimum": 0},
+        "nontrivial_additions": {"type": "integer", "minimum": 0},
+        "doublings": {"type": "integer", "minimum": 0},
+        "negations": {"type": "integer", "minimum": 0},
+        "field_inversions": {"$ref": "#/$defs/nullableCounter"},
+        "field_multiplications": {"$ref": "#/$defs/nullableCounter"},
+        "field_squarings": {"$ref": "#/$defs/nullableCounter"}
+      }
+    },
+    "counters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "counter_semantics_id",
+        "field_counter_semantics",
+        "offline_setup",
+        "online_target",
+        "method_self_check",
+        "table_entries",
+        "estimated_algorithmic_table_bytes",
+        "restarts",
+        "collisions",
+        "noninvertible_collisions",
+        "distinguished_points",
+        "legacy_p1_group_operations"
+      ],
+      "properties": {
+        "counter_semantics_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*_v[0-9]+$"
+        },
+        "field_counter_semantics": {
+          "enum": ["explicit_backend_operations", "not_instrumented"]
+        },
+        "offline_setup": {"$ref": "#/$defs/phaseCounters"},
+        "online_target": {"$ref": "#/$defs/phaseCounters"},
+        "method_self_check": {"$ref": "#/$defs/phaseCounters"},
+        "table_entries": {"type": "integer", "minimum": 0},
+        "estimated_algorithmic_table_bytes": {"type": "integer", "minimum": 0},
+        "restarts": {"type": "integer", "minimum": 0},
+        "collisions": {"type": "integer", "minimum": 0},
+        "noninvertible_collisions": {"type": "integer", "minimum": 0},
+        "distinguished_points": {"type": "integer", "minimum": 0},
+        "legacy_p1_group_operations": {
+          "oneOf": [
+            {"type": "integer", "minimum": 0},
+            {"type": "null"}
+          ]
+        }
+      }
+    },
+    "failure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "detail"],
+      "properties": {
+        "code": {
+          "enum": [
+            "group_operation_budget_exhausted",
+            "table_budget_exhausted",
+            "step_budget_exhausted",
+            "restart_budget_exhausted",
+            "memory_budget_exhausted",
+            "process_timeout",
+            "process_terminated",
+            "no_solution",
+            "invalid_public_input",
+            "backend_error"
+          ]
+        },
+        "detail": {"type": "string", "minLength": 1, "maxLength": 512}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_commit",
+        "source_tree_clean",
+        "source_snapshot_sha256",
+        "producer_dependency_sha256s",
+        "validator_dependency_sha256s",
+        "config_sha256",
+        "diff_sha256"
+      ],
+      "properties": {
+        "source_commit": {"$ref": "#/$defs/gitCommit"},
+        "source_tree_clean": {"type": "boolean"},
+        "source_snapshot_sha256": {"$ref": "#/$defs/sha256"},
+        "producer_dependency_sha256s": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/sha256"}
+        },
+        "validator_dependency_sha256s": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/sha256"}
+        },
+        "config_sha256": {"$ref": "#/$defs/sha256"},
+        "diff_sha256": {
+          "oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]
+        }
+      }
+    },
+    "retentionInvariant": {
+      "if": {
+        "properties": {"retainable": {"const": true}},
+        "required": ["retainable"]
+      },
+      "then": {
+        "properties": {
+          "provenance": {
+            "properties": {
+              "source_tree_clean": {"const": true},
+              "diff_sha256": {"type": "null"}
+            },
+            "required": ["source_tree_clean", "diff_sha256"]
+          }
+        }
+      }
+    }
+  }
+}

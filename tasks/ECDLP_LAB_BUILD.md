@@ -293,7 +293,7 @@ Completion evidence at baseline `61842fe336f85518fccab7a470bbb9b699126f2d`:
 
 ### P01: lab contracts, canonical JSON, and path-scoped CI
 
-Status: ready
+Status: complete
 Allowed paths: `experiments/ecdlp_lab/contracts/`,
 `experiments/ecdlp_lab/core/`, `experiments/ecdlp_lab/fixtures/`,
 `experiments/ecdlp_lab/tests/`, `experiments/README.md`,
@@ -327,9 +327,23 @@ Exit criteria:
 - `experiments/framework/test_framework.py` remains green;
 - automation inventory and repository artifact checks pass.
 
+Completion evidence:
+
+- nine versioned contract families dispatch under
+  `record_kind=lab_engineering_fixture` without changing framework or Engine
+  schemas;
+- the stdlib-only suite passes 48 tests under a 512 MiB address-space cap, and
+  the one-command offline validator accepts 10 hash-linked valid records while
+  rejecting all 24 adversarial fixtures;
+- the capability report marks unavailable optional tools as
+  `skipped_missing_capability` and discovered-but-unverified tools as
+  `untested`, never as passed;
+- the independent framework suite, automation inventory, repository artifact
+  map, status consistency, and scientific-semantic gates remain green.
+
 ### P02: lab fixture catalog and independent curve validation
 
-Status: blocked_by_P01
+Status: ready
 Allowed paths: `experiments/ecdlp_lab/curves/`,
 `experiments/ecdlp_lab/core/`, `experiments/ecdlp_lab/contracts/`,
 `experiments/ecdlp_lab/fixtures/`, `experiments/ecdlp_lab/tests/`

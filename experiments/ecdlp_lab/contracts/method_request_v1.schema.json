@@ -1,0 +1,222 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://keyai.example/schemas/ecdlp-lab/method_request_v1.schema.json",
+  "title": "ECDLP lab sanitized method request v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_kind",
+    "contract_kind",
+    "internal_classification",
+    "framework_authorization_class",
+    "hypothesis_id",
+    "candidate_id",
+    "authorization_id",
+    "native_research_outcome",
+    "route_effect",
+    "retention_class",
+    "retainable",
+    "provenance",
+    "request_id",
+    "work_unit_id",
+    "attempt_id",
+    "method_id",
+    "algorithm_seed",
+    "curve_catalog_sha256",
+    "curve_fixture_id",
+    "public_target_vector_sha256",
+    "curve",
+    "generator",
+    "target",
+    "subgroup_order",
+    "subgroup_order_bits",
+    "budgets",
+    "public_scalar_interval",
+    "public_precomputation"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "record_kind": {"const": "lab_engineering_fixture"},
+    "contract_kind": {"const": "method_request_v1"},
+    "internal_classification": {"const": "engineering_only"},
+    "framework_authorization_class": {"const": "fixture"},
+    "hypothesis_id": {"type": "null"},
+    "candidate_id": {"type": "null"},
+    "authorization_id": {"type": "null"},
+    "native_research_outcome": {"const": false},
+    "route_effect": {"const": "none"},
+    "retention_class": {"const": "engineering_only"},
+    "retainable": {"type": "boolean"},
+    "provenance": {"$ref": "#/$defs/provenance"},
+    "request_id": {"$ref": "#/$defs/sha256"},
+    "work_unit_id": {"$ref": "#/$defs/sha256"},
+    "attempt_id": {"$ref": "#/$defs/sha256"},
+    "method_id": {"$ref": "#/$defs/methodId"},
+    "algorithm_seed": {"type": "integer", "minimum": 0},
+    "curve_catalog_sha256": {"$ref": "#/$defs/sha256"},
+    "curve_fixture_id": {"$ref": "#/$defs/identifier"},
+    "public_target_vector_sha256": {"$ref": "#/$defs/sha256"},
+    "curve": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["curve_id", "field_bits", "field_p", "curve_a", "curve_b"],
+      "properties": {
+        "curve_id": {"$ref": "#/$defs/identifier"},
+        "field_bits": {"type": "integer", "minimum": 3, "maximum": 32},
+        "field_p": {"type": "integer", "minimum": 5, "maximum": 4294967295},
+        "curve_a": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+        "curve_b": {"type": "integer", "minimum": 0, "maximum": 4294967295}
+      }
+    },
+    "generator": {"$ref": "#/$defs/point"},
+    "target": {"$ref": "#/$defs/point"},
+    "subgroup_order": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 4294967295
+    },
+    "subgroup_order_bits": {"type": "integer", "minimum": 2, "maximum": 32},
+    "budgets": {"$ref": "#/$defs/budgets"},
+    "public_scalar_interval": {
+      "oneOf": [
+        {"$ref": "#/$defs/scalarInterval"},
+        {"type": "null"}
+      ]
+    },
+    "public_precomputation": {
+      "oneOf": [
+        {"$ref": "#/$defs/publicPrecomputation"},
+        {"type": "null"}
+      ]
+    }
+  },
+  "allOf": [{"$ref": "#/$defs/retentionInvariant"}],
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "gitCommit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "methodId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*_v[0-9]+$"
+    },
+    "budgets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_subgroup_order_bits",
+        "max_field_bits",
+        "max_group_law_invocations",
+        "max_table_entries",
+        "max_steps",
+        "timeout_ns",
+        "max_memory_bytes",
+        "workers"
+      ],
+      "properties": {
+        "max_subgroup_order_bits": {"const": 32},
+        "max_field_bits": {"const": 32},
+        "max_group_law_invocations": {"type": "integer", "minimum": 1},
+        "max_table_entries": {"type": "integer", "minimum": 1},
+        "max_steps": {"type": "integer", "minimum": 1},
+        "timeout_ns": {"type": "integer", "minimum": 1},
+        "max_memory_bytes": {"type": "integer", "minimum": 1},
+        "workers": {"type": "integer", "minimum": 1}
+      }
+    },
+    "point": {
+      "type": "array",
+      "prefixItems": [
+        {"type": "integer", "minimum": 0, "maximum": 4294967295},
+        {"type": "integer", "minimum": 0, "maximum": 4294967295}
+      ],
+      "items": false
+    },
+    "scalarInterval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lower", "upper", "conditioned_threat_model"],
+      "properties": {
+        "lower": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+        "upper": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+        "conditioned_threat_model": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "publicPrecomputation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "setup_id",
+        "artifact_sha256",
+        "priced_in_offline_cost",
+        "reusable_for_same_curve_generator"
+      ],
+      "properties": {
+        "setup_id": {"$ref": "#/$defs/identifier"},
+        "artifact_sha256": {"$ref": "#/$defs/sha256"},
+        "priced_in_offline_cost": {"const": true},
+        "reusable_for_same_curve_generator": {"type": "boolean"}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_commit",
+        "source_tree_clean",
+        "source_snapshot_sha256",
+        "producer_dependency_sha256s",
+        "validator_dependency_sha256s",
+        "config_sha256",
+        "diff_sha256"
+      ],
+      "properties": {
+        "source_commit": {"$ref": "#/$defs/gitCommit"},
+        "source_tree_clean": {"type": "boolean"},
+        "source_snapshot_sha256": {"$ref": "#/$defs/sha256"},
+        "producer_dependency_sha256s": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/sha256"}
+        },
+        "validator_dependency_sha256s": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/sha256"}
+        },
+        "config_sha256": {"$ref": "#/$defs/sha256"},
+        "diff_sha256": {
+          "oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]
+        }
+      }
+    },
+    "retentionInvariant": {
+      "if": {
+        "properties": {"retainable": {"const": true}},
+        "required": ["retainable"]
+      },
+      "then": {
+        "properties": {
+          "provenance": {
+            "properties": {
+              "source_tree_clean": {"const": true},
+              "diff_sha256": {"type": "null"}
+            },
+            "required": ["source_tree_clean", "diff_sha256"]
+          }
+        }
+      }
+    }
+  }
+}

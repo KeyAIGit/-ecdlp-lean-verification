@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "fixture_corpus_kind": "ecdlp_lab_valid_contracts_v1",
+  "coherent_bundle": true,
+  "records": [
+    {
+      "contract_kind": "campaign_config_v1",
+      "path": "experiments/ecdlp_lab/fixtures/contracts/valid/campaign_config_v1.json"
+    },
+    {
+      "contract_kind": "target_vector_v1",
+      "path": "experiments/ecdlp_lab/fixtures/contracts/valid/target_vector_public_v1.json"
+    },
+    {
+      "contract_kind": "target_vector_v1",
+      "path": "experiments/ecdlp_lab/fixtures/contracts/valid/target_vector_private_v1.json"
+    },
+    {
+      "contract_kind": "work_unit_v1",
+      "path": "experiments/ecdlp_lab/fixtures/contracts/valid/work_unit_v1.json"
+    },
+    {
+      "contract_kind": "method_request_v1",
+      "path": "experiments/ecdlp_lab/fixtures/contracts/valid/method_request_v1.json"
+    },
+    {
+      "contract_kind": "method_result_v1",
+      "path": "experiments/ecdlp_lab/fixtures/contracts/valid/method_result_v1.json"
+    },
+    {
+      "contract_kind": "telemetry_v1",
+      "path": "experiments/ecdlp_lab/fixtures/contracts/valid/telemetry_v1.json"
+    },
+    {
+      "contract_kind": "validation_receipt_v1",
+      "path": "experiments/ecdlp_lab/fixtures/contracts/valid/validation_receipt_v1.json"
+    },
+    {
+      "contract_kind": "analysis_summary_v1",
+      "path": "experiments/ecdlp_lab/fixtures/contracts/valid/analysis_summary_v1.json"
+    },
+    {
+      "contract_kind": "artifact_ref_v1",
+      "path": "experiments/ecdlp_lab/fixtures/contracts/valid/artifact_ref_v1.json"
+    }
+  ],
+  "derived_id_assertions": {
+    "attempt_id": "006ac6b74aa40a66e22e16dafa5488be265d70f0c9493d046ecfe2eb9c6100f6",
+    "work_unit_id": "9fe1df57d4477c89c5b7082c3716d6bb7a4cee4c1b31cf96ea994a97f8a95498"
+  }
+}

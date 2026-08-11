@@ -1,0 +1,77 @@
+{
+  "analysis_id": "abababababababababababababababababababababababababababababababab",
+  "authorization_id": null,
+  "campaign_id": "536a86cc289e5e296afe69aea548cb317b50e0af6e17a61419bb3f02b6799bff",
+  "candidate_id": null,
+  "comparisons": [
+    {
+      "censored": 0,
+      "empirical_success_probability_decimal": "1.0",
+      "estimated_algorithmic_memory_bytes": 4928,
+      "failures": 0,
+      "field_bits": 13,
+      "full_cost": {
+        "amortization_class": "none_single_target",
+        "amortization_target_count": 1,
+        "implementation_hours_decimal": "0",
+        "money_usd_decimal": "0",
+        "offline_cpu_hours_decimal": "0",
+        "offline_gpu_hours_decimal": "0",
+        "online_cpu_hours_decimal": "0.000001",
+        "online_gpu_hours_decimal": "0",
+        "preprocessing_included_in_totals": true,
+        "reusable_setup": false,
+        "reviewer_hours_decimal": "0",
+        "shared_setup_id": null,
+        "storage_gb_decimal": "0.000005"
+      },
+      "median_online_group_operations_decimal": "10",
+      "method_id": "bsgs_v1",
+      "normalized_expected_group_operations_decimal": "101",
+      "offline_group_operations": 91,
+      "subgroup_order_bits": 13,
+      "successes": 1,
+      "target_count": 1,
+      "workers": 1
+    }
+  ],
+  "contract_kind": "analysis_summary_v1",
+  "framework_authorization_class": "fixture",
+  "hypothesis_id": null,
+  "inference_status": "insufficient_for_asymptotic_inference",
+  "input_validation_receipt_sha256s": ["761f02fc3948ae0e530ec4a196a53f24f89b7c3eb55e72af8d0f26adf6b9ad61"],
+  "internal_classification": "engineering_only",
+  "model_fits": [
+    {
+      "coefficients": [],
+      "model_id": "model_undecided_v1",
+      "status": "insufficient_data",
+      "warning_codes": ["too_few_sizes"]
+    }
+  ],
+  "native_research_outcome": false,
+  "primary_cost_unit": "group_law_invocations",
+  "primary_scaling_variable": "log2_subgroup_order",
+  "provenance": {
+    "config_sha256": "536a86cc289e5e296afe69aea548cb317b50e0af6e17a61419bb3f02b6799bff",
+    "diff_sha256": null,
+    "producer_dependency_sha256s": ["2222222222222222222222222222222222222222222222222222222222222222"],
+    "source_commit": "0123456789abcdef0123456789abcdef01234567",
+    "source_snapshot_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "source_tree_clean": true,
+    "validator_dependency_sha256s": ["3333333333333333333333333333333333333333333333333333333333333333"]
+  },
+  "record_kind": "lab_engineering_fixture",
+  "retainable": false,
+  "retention_class": "engineering_only",
+  "route_effect": "none",
+  "schema_version": 1,
+  "secp256k1_extrapolation": false,
+  "success_targets_decimal": ["0.50", "0.95"],
+  "warnings": [
+    {
+      "code": "too_few_sizes",
+      "detail": "One toy size cannot support an asymptotic inference."
+    }
+  ]
+}

@@ -32,6 +32,14 @@
       "reason": "Validates registered versioned corpus manifests, source relations, counts, hashes, and the experiment-authorization boundary."
     },
     {
+      "file": ".github/workflows/lab-ci.yml",
+      "class": "experiment_gate",
+      "trigger_policy": "scoped_push_pr_manual",
+      "disposition": "keep",
+      "spends_external_budget": false,
+      "reason": "Runs the bounded stdlib-only ECDLP engineering-fixture contract suite, capability report, and independent framework check; it creates no scientific outcome and authorizes no Engine work."
+    },
+    {
       "file": ".github/workflows/n7-stem-check.yml",
       "class": "proof_diagnostic",
       "trigger_policy": "target_push_or_manual",

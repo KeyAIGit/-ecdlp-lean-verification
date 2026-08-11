@@ -10,9 +10,13 @@ validator, and no experiment here touches the Lean ledger or the headline theore
 Current non-hypothesis implementation work under `experiments/` consists of the
 candidate-neutral validation infrastructure in `experiments/framework/` and
 the route-neutral ML data/probe/AutoML qualification package in
-`experiments/ml_structure_probe/`. The latter generates only synthetic keys,
-uses canaries and nulls, selects model parameters only on validation, and
-records no scientific outcome. A real candidate record is rejected until
+`experiments/ml_structure_probe/`. The bounded engineering fixture package in
+`experiments/ecdlp_lab/` adds strict contracts, canonical serialization, and
+independent validation for generated toy ECDLP workloads of at most 32 subgroup
+bits. It cannot emit or target Research Engine runs and rejects exact
+secp256k1-sized inputs. The ML package generates only synthetic keys, uses
+canaries and nulls, selects model parameters only on validation, and records no
+scientific outcome. A real candidate record is rejected until
 `repo/ECDLP_DECISION_SUBSTRATE.json` explicitly authorizes its route.
 
 ## The GLV–Semaev line (`HYP_GLV_SEMAEV_001`, status: PARKED)
