@@ -38,6 +38,8 @@ jobs:
       PYTHONHASHSEED: "0"
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Validate lab contracts and boundaries
         run: python3 -m unittest discover -s experiments/ecdlp_lab/tests -p 'test_*.py'
       - name: Report capability state
