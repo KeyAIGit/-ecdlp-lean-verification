@@ -14,7 +14,7 @@ Build a small, reproducible computational laboratory that can evaluate future
 classical ECDLP method candidates on deterministic synthetic toy groups. The
 laboratory must provide:
 
-- a neutral executable BSGS and Pollard-rho reference;
+- a neutral executable BSGS and seeded-rho reference;
 - independently validated toy-curve inputs;
 - a safe, resumable campaign runner;
 - provenance, cost, operation-count, and validation receipts;
@@ -45,7 +45,7 @@ creating a parallel research system.
 | `run_assay.py` BSGS/rho implementation and committed assay result | Existing matched generic baseline evidence | Preserve as immutable historical implementation and golden comparison |
 | `experiments/p0_glv_semaev/manifest.py` and runs | Legacy experiment provenance | Do not rewrite historical manifests; reuse lessons through new code |
 | `scripts/hypothesis_space_campaign.py` | Policy-coupled deterministic receipts, locks, resume, and replay | Reuse patterns only; do not import its scientific policy or run namespace |
-| GLV, Semaev, division-polynomial producers and validators | Existing exact/symbolic replay assets | Reference and adapt; do not fork formula implementations silently |
+| efficient-endomorphism, summation-polynomial, and division-polynomial producers and validators | Existing exact/symbolic replay assets | Reference and adapt; do not fork formula implementations silently |
 | draft PR #356, `research/theta-screen-002` at `7a76a73` | Unmerged bounded theta/Kummer/Jacobi screen | Treat as upstream pending; never copy it silently into the lab |
 
 The top ML README contains an old reference to a 12-bit rung. The package
@@ -60,18 +60,19 @@ Observed on `main` commit `be7a2715768ef5a120e0db2b8851e3a143b3670e` on
 - `scripts/check_repo_artifacts.py`: pass;
 - `scripts/check_status_consistency.py`: pass;
 - `scripts/check_scientific_semantics.py`: pass;
-- `scripts/check_generated_fixpoint.py --check`: fail before lab work with
-  `parent funnel root drifted` from `scripts/hypothesis_space_funnel.py`;
+- `scripts/check_generated_fixpoint.py --check`: pass on a clean checkout;
 - the lab task was not yet included in the small agent bundle;
 - PR #356 is draft, open, mergeable, unmerged, and red;
-- PR #356 CI fails on stale source-registry output and inherited parent-funnel
-  root drift;
+- PR #356 CI fails on stale source-registry output and a parent-funnel root
+  mismatch within that branch;
 - PR #356 still requires an independent Sage replay and an explicit owner
   disposition before merge.
 
-Inherited red gates must be recorded before the first lab change. They may not
-be blamed on lab code, ignored, or weakened. Repairing unhealthy `main` is a
-separate health PR and precedes the first implementation phase.
+Every red gate must be reproduced against clean `main` before attribution. A
+new hand-authored document can change the generated source registry and thereby
+invalidate a frozen funnel binding even when it contains no scientific result.
+The lab contract must not be merged until the clean-tree gate remains green,
+and no mismatch may be mislabeled as inherited or weakened away.
 
 ## 4. Canonical placement
 
@@ -244,13 +245,13 @@ revertible PR from current `main`.
 ### P00: health, inventory, and upstream reconciliation
 
 Status: ready
-Allowed paths: task/router/bundle documentation, or a separate main-health PR
+Allowed paths: task/router/bundle documentation and generated routing views
 
 Deliverables:
 
 - Record a clean baseline gate report at current `main`.
-- Repair `parent funnel root drifted` in a separate main-health PR without
-  weakening the funnel or generated-fixpoint checks.
+- Verify that adding the contract and routing files leaves the source-registry
+  and generated-fixpoint chain green without modifying frozen funnel policy.
 - Inventory every reused source and immutable output with path, role, digest,
   mutation policy, and owning validator.
 - Record PR #356 state, head/base commits, CI, independent-replay status, and
@@ -316,7 +317,7 @@ Deliverables:
   - `j0_glv_like`: secp-shaped toy curves with verified public beta/lambda;
   - `random_non_cm_prime_subgroup`: non-j=0 controls with subgroup and cofactor;
   - `j0_no_fp_glv_control`: a named j=0 control where the expected base-field
-    GLV property is absent and validated.
+    efficient-endomorphism property is absent and validated.
 - Record full curve order when certified, subgroup order, cofactor, generator,
   family property, and exact order-certificate type and inputs.
 
@@ -334,11 +335,12 @@ Validation rules:
 Exit criteria:
 
 - repeated small-fixture generation is byte-identical;
-- corruption of `p`, `a`, `b`, order, cofactor, generator, GLV constants, or
+- corruption of `p`, `a`, `b`, order, cofactor, generator, endomorphism
+  constants, or
   certificate is rejected independently;
 - existing P1 artifacts are byte-for-byte unchanged.
 
-### P03: reference BSGS and ordinary Pollard rho
+### P03: reference BSGS and ordinary seeded rho
 
 Status: blocked_by_P02
 Allowed paths: `experiments/ecdlp_lab/methods/python/`, `core/`, `fixtures/`,
@@ -346,8 +348,8 @@ Allowed paths: `experiments/ecdlp_lab/methods/python/`, `core/`, `fixtures/`,
 
 Deliverables:
 
-- Implement a dependency-light neutral BSGS and a frozen seeded ordinary
-  Pollard-rho specification.
+- Implement a dependency-light neutral BSGS and a frozen seeded ordinary rho
+  specification.
 - Carry `derived_from` locators to the existing P1 implementations and compare
   against committed legacy baseline candidates/results without rewriting the
   legacy runner.
@@ -366,11 +368,12 @@ Exit criteria:
 - golden differential comparison with legacy BSGS/rho results passes;
 - no method receives target-generation secrets.
 
-Kangaroo and GLV-rho are not part of this phase:
+Kangaroo and endomorphism-quotient rho are not part of this phase:
 
 - kangaroo is an interval-conditioned method and must later declare a public
   scalar interval and the conditioned threat model;
-- GLV-rho requires a verified beta/lambda, a specified orbit canonicalization,
+- endomorphism-quotient rho requires a verified beta/lambda, a specified orbit
+  canonicalization,
   coefficient transport, and differential tests. A label-only `glv_rho`
   implementation is forbidden.
 
@@ -464,8 +467,9 @@ Deliverables:
   from verification state (`passed`, `failed`, `skipped_missing_capability`).
   A missing backend is never a pass. A `--require-backend sage` gate fails
   closed when Sage was required but unavailable.
-- Adapt existing Semaev, GLV, and division-polynomial producers and validators
-  through narrow wrappers rather than reimplementing formulas.
+- Adapt existing summation-polynomial, efficient-endomorphism, and
+  division-polynomial producers and validators through narrow wrappers rather
+  than reimplementing formulas.
 - Treat Sage as producer. Replay tiny decisive identities through SymPy, PARI,
   or exact stdlib Python where possible.
 - Capability-probe FLINT, NTL, and GAP only. Integrate one only when a named
@@ -503,7 +507,8 @@ Allowed paths: `experiments/ecdlp_lab/methods/padic_theta/`,
 Current mathematical boundary:
 
 - the direct formal-log route is blocked for the prime-to-p secp256k1 subgroup;
-- PR #356 reports that the tested Kummer plus GLV action collapses to the
+- PR #356 reports that the tested Kummer plus efficient-endomorphism action
+  collapses to the
   existing cubic mechanism at its stated scope;
 - no alternative public p-adic theta observable with recovery and cost bounds
   is currently specified.
@@ -726,7 +731,7 @@ Stop and ask the owner only for:
 - wallet, blockchain target, nonce-leak, or third-party key ingestion;
 - registering a free-form theta hypothesis from the lab;
 - writing Research Engine events or changing route dispositions;
-- claiming sub-Pollard scaling from engineering fixtures;
+- claiming below-generic-square-root scaling from engineering fixtures;
 - building a broad isogeny, pairing, lattice, or quantum platform without a
   named mechanism dependency;
 - mandatory CUDA, Ray, Slurm, Magma, or paid cloud work;
