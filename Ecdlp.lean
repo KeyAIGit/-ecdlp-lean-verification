@@ -207,5 +207,6 @@ import Ecdlp.Proved.M16PartitionedPointSemantics
 import Ecdlp.Proved.M16CancellationRootLowerBound
 import Ecdlp.Proved.M16CancellationBackpointerCollapse
 import Ecdlp.Proved.M16CancellationRelationRank
+import Ecdlp.Proved.M16GLVSectionChangeRank
 import Ecdlp.Proved.M16SixWidthNoGo
 import Ecdlp.Proved.M16LiftableSixWidthNoGo
