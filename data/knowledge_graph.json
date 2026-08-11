@@ -4,8 +4,8 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 322,
-    "ledger_rows": 322,
+    "theorems": 323,
+    "ledger_rows": 323,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
@@ -37,10 +37,10 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1258,
+    "edges": 1263,
     "by_edge_type": {
-      "imports": 581,
-      "member_of": 322,
+      "imports": 585,
+      "member_of": 323,
       "grounded_in_source_claim": 62,
       "requires_foundation": 41,
       "supports": 27,
@@ -218,11 +218,12 @@
       "labelled finite-function injections + exact factor-base counts + point-sum semantics + reduced/direct root equivalence; zero new native owners, inherited certificate trust disclosed": 1,
       "exact square-root/actual-point equivalence + target-labelled global-negation quotient + direct point semantics and pointwise descent; zero new native owners, inherited discriminant/primality compiler trust only": 1,
       "noncomputable lower-residue reference/sign classification + repeated-coordinate `Finsupp.linearCombination` evaluation + exact target-sign normalization + finite image/fiber cardinal partition; zero new native owners, inherited discriminant/rhs-support/primality trust disclosed": 1,
-      "noncomputable anchor/reference selection + explicit labelled cancellation recovery/root injection + exact repeated-coordinate `Finsupp` cancellation + constant-row subtype cardinality; zero new native owners, inherited curve/primality/no-two-torsion/factor-base census trust and existing budget owner disclosed": 1
+      "noncomputable anchor/reference selection + explicit labelled cancellation recovery/root injection + exact repeated-coordinate `Finsupp` cancellation + constant-row subtype cardinality; zero new native owners, inherited curve/primality/no-two-torsion/factor-base census trust and existing budget owner disclosed": 1,
+      "exact census phase equivalence + noncomputable lower-residue GLV covariance + integral and mod-`n` linear-map identities + finite-dimensional rank-nullity; zero new native owners, inherited trust disclosed": 1
     },
     "by_area": {
       "curve-torsion": 154,
-      "primality": 67,
+      "primality": 68,
       "other": 35,
       "generic-hardness": 30,
       "protocol-soundness": 23,
@@ -6462,7 +6463,7 @@
     },
     {
       "id": "thm-310",
-      "name": "Ecdlp.M16FactorBaseLiftable.Certificates.factorBaseGenerator_certificate`, `representative_count_native`, `Ecdlp.M16FactorBaseLiftable.factorBaseGenerator_order`, `card_liftableGLVOrbitRep`, `card_nonliftableGLVOrbitRep`, `card_liftableFactorBaseX`, `card_nonliftableFactorBaseX`, `factorBaseCharacterSum_eq`, `card_liftFiber`, `card_signedAffineFactorBasePoint`, `toPoint_ne_zero",
+      "name": "Ecdlp.M16FactorBaseLiftable.Certificates.factorBaseGenerator_certificate`, `representative_count_native`, `Ecdlp.M16FactorBaseLiftable.factorBaseGenerator_order`, `card_liftableGLVOrbitRep`, `card_nonliftableGLVOrbitRep`, `card_liftableFactorBaseX`, `card_nonliftableFactorBaseX`, `factorBaseCharacterSum_eq`, `card_liftFiber`, `card_signedAffineFactorBasePoint`, `toPoint_ne_zero`, `rhs_beta_mul`, `liftableOrbitEquiv`, `liftableOrbitEquiv_apply_fst",
       "short_name": "factorBaseGenerator_certificate`,",
       "module": "Ecdlp.Proved.M16FactorBaseLiftableDefs",
       "modules": [
@@ -6478,7 +6479,7 @@
         "Ecdlp/Proved/M16FactorBaseLiftableCountCertificate.lean",
         "Ecdlp/Proved/M16FactorBaseLiftable.lean"
       ],
-      "claim": "Exact liftable M16 factor-base census on secp256k1 (an exact-order generator partitions all 564522 coordinates into 188174 free three-coordinate GLV orbits; exactly 94509 representative orbits and 283527 coordinates lift, 93665 representative orbits and 280995 coordinates do not, the quadratic-character sum is 2532, every lift fiber has size two, and the signed affine factor-base type has size 567054. Honest scope: this is a finite-field and affine-point census only. It proves no relation existence or distribution, rank, solver, recovery, cost, complexity improvement, or ECDLP shortcut/lower bound. Exactly two new native certificate owners are used: the generator certificate and the representative counter; the facade contains no `native_decide`, while public conclusions also transitively inherit pre-existing compiler-trusted secp256k1 parameter/primality leaves)",
+      "claim": "Exact liftable M16 factor-base census on secp256k1 (an exact-order generator partitions all 564522 coordinates into 188174 free three-coordinate GLV orbits; exactly 94509 representative orbits and 283527 coordinates lift, 93665 representative orbits and 280995 coordinates do not, the quadratic-character sum is 2532, every lift fiber has size two, and the signed affine factor-base type has size 567054. The facade also exposes exact `rhs` covariance under multiplication by `beta` and the orbit-layer equivalence used by downstream GLV normalization. Honest scope: this is a finite-field and affine-point census only. It proves no relation existence or distribution, rank, solver, recovery, cost, complexity improvement, or ECDLP shortcut/lower bound. Exactly two new native certificate owners are used: the generator certificate and the representative counter; the facade contains no `native_decide`, while public conclusions also transitively inherit pre-existing compiler-trusted secp256k1 parameter/primality leaves)",
       "method": "exact GLV-orbit enumeration + two isolated new `native_decide` certificates + kernel composition with disclosed inherited compiler trust",
       "status": "proved",
       "area": "primality",
@@ -6700,6 +6701,26 @@
       ],
       "claim": "Explicit `283527^7` collapse of labelled M16 cancellation backpointers onto one canonical row (fix a liftable factor-base anchor `a` and its noncomputable lower-residue reference point `A`. The target `R = -(A+A)` is nonidentity, and a target coordinate `X` with `LiesOver X (includePoint R)` is chosen noncomputably. Each labelled seven-tuple of liftable factor-base coordinates fills seven fixed cancellation pairs after two positive anchor slots, producing an explicit compatible `false`-orientation recovery and liftable reduced root. Packaging the root with that retained recovery is injective in all seven choices, while the pair coefficients cancel exactly and every displayed normalized row is `Finsupp.single a (-2)`, even when pair coordinates repeat or equal `a`. Consequently the subtype of root-plus-recovery backpointers with that row has cardinality at least `283527^7`, and the existing desk ceiling is numerically smaller. Honest scope: this is an aggregate sigma-type preimage of constructed labelled root-plus-recovery pairs, not `283527^7` members of one fixed root's `RecoveryFiber` or `rowBackpointers`; it does not classify all roots, recoveries, or rows. It proves no row/recovery uniqueness, evaluation injectivity, efficient enumeration, `Recover`, PFPO, `AllRoots`, square-root/decompression/recovery algorithm, relation filtering, independence/yield/rank, sparse linear algebra, runtime/memory/solver-node/total-cost result, scalar recovery, or ECDLP shortcut. The module adds zero new `native_decide` owners; it inherits the existing secp256k1 parameter/primality, `rhs ≠ 0`, no-two-torsion, and factor-base/liftable-census families, while only the final numeric comparison additionally inherits the existing solver-budget owner)",
       "method": "noncomputable anchor/reference selection + explicit labelled cancellation recovery/root injection + exact repeated-coordinate `Finsupp` cancellation + constant-row subtype cardinality; zero new native owners, inherited curve/primality/no-two-torsion/factor-base census trust and existing budget owner disclosed",
+      "status": "proved",
+      "area": "primality",
+      "family_id": "family-primality",
+      "dependency_depth": 15,
+      "gated": true
+    },
+    {
+      "id": "thm-322",
+      "name": "Ecdlp.M16GLVCanonicalRows.liftableGLVPhaseEquiv`, `referencePoint_glvPhase`, `glvCompress_single_phase`, `evalGLVRow_comp_glvCompress`, `canonicalGLVRow_globalNegate`, `evalGLVRow_canonicalGLVRow`, `glvCompress_not_injective`, `glvCompressModN_reduceModN`, `glvCompressModN_comp_glvPhaseZeroSectionModN`, `glvCompressModN_surjective`, `finrank_rawRowModN`, `finrank_glvRowModN`, `finrank_ker_glvCompressModN",
+      "short_name": "liftableGLVPhaseEquiv`,",
+      "module": "Ecdlp.Proved.M16GLVCanonicalRows",
+      "modules": [
+        "Ecdlp.Proved.M16GLVCanonicalRows"
+      ],
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "files": [
+        "Ecdlp/Proved/M16GLVCanonicalRows.lean"
+      ],
+      "claim": "Exact GLV compression of canonical M16 recovery rows and ambient coefficient spaces (the 283527 liftable coordinates are reorganized exactly as three GLV phases over 94509 orbit representatives. The noncomputable lower-residue reference points transform by the published secp256k1 eigenvalue, so integral phase folding with coefficients `lambda^j` preserves exact elliptic-curve row evaluation. Compatible canonical rows still evaluate to the supplied target and retain global-sign invariance. An explicit nonzero alias row proves integral compression noninjective. Over `ZMod n`, compression commutes with coefficient reduction, has a phase-zero right inverse, is surjective, and has ambient raw/orbit/kernel dimensions `283527`, `94509`, and `189018`. Honest scope: the lower-residue and census equivalences are noncomputable mathematical conventions, not square-root, point-decompression, enumeration, or recovery procedures. The three dimensions describe ambient coefficient spaces, not the rank, independence, or yield of a collected relation matrix. No theorem identifies this census convention byte-for-byte with the separate experimental minimum-point-encoding convention. The module proves no `Recover`, PFPO, `AllRoots`, root solver, relation distribution, sparse-linear-algebra outcome, runtime/memory/solver-node/total-cost result, scalar recovery, or ECDLP shortcut. It adds zero new `native_decide` owners and inherits only pre-existing secp256k1 parameter/primality, GLV/full-group, `rhs`-support, and liftable-census certificate families)",
+      "method": "exact census phase equivalence + noncomputable lower-residue GLV covariance + integral and mod-`n` linear-map identities + finite-dimensional rank-nullity; zero new native owners, inherited trust disclosed",
       "status": "proved",
       "area": "primality",
       "family_id": "family-primality",
@@ -12962,6 +12983,21 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.M16GLVCanonicalRows",
+      "to": "Ecdlp.Proved.CurveFullGroup",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16GLVCanonicalRows",
+      "to": "Ecdlp.Proved.GlvSubgroupEigenvalue",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16GLVCanonicalRows",
+      "to": "Ecdlp.Proved.M16CanonicalRecoveryRows",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.M16LiftableSixWidthNoGo",
       "to": "Ecdlp.Proved.M16FactorBaseLiftable",
       "type": "imports"
@@ -14688,6 +14724,11 @@
     },
     {
       "from": "Ecdlp",
+      "to": "Ecdlp.Proved.M16GLVCanonicalRows",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
       "to": "Ecdlp.Proved.M16PartitionedPointSemantics",
       "type": "imports"
     },
@@ -16383,6 +16424,11 @@
     },
     {
       "from": "thm-321",
+      "to": "family-primality",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-322",
       "to": "family-primality",
       "type": "member_of"
     },

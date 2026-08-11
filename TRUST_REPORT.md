@@ -2,7 +2,7 @@
 
 > Counts here are a snapshot; the single canonical figure is **`STATUS.md`** (generated from `data/stats.json`). If they differ, STATUS.md wins.
 
-**Scope of the verified body.** `322 ledger rows / ~283 distinct kernel-verified
+**Scope of the verified body.** `323 ledger rows / ~284 distinct kernel-verified
 results`. A row may group several supporting declarations; the exact expansion is
 generated in `data/result_registry.json`. The built surface has **0 `sorry`, 0
 `admit`, and 0 custom axioms**. Open target stems are explicitly outside the built
@@ -296,6 +296,29 @@ These are pre-existing transitive leaves, not new closed computations in this
 module; the finite `Finset` row-image specification is semantic rather than an
 enumeration or cost claim.
 
+`M16GLVCanonicalRows.lean` adds **zero** `native_decide` owners. Its exact
+three-phase census equivalence, lower-residue reference-point covariance,
+integral and mod-`n` compression identities, the direct global-sign identity
+`canonicalGLVRow_globalNegate`, explicit noninjectivity witness, split
+surjectivity, and ambient finrank calculation are ordinary Lean/Mathlib
+composition. The census equivalence and lower-residue reference are
+noncomputable mathematical conventions using `Classical.choice`, not an
+enumerator, square-root, point-decompression, or recovery implementation. The
+audited declarations inherit the three standard axioms and only already
+catalogued native-owner families reached through their dependencies: the
+secp256k1 discriminant/parameter and ten primality families;
+`Secp256k1.beta_field_eigenvalue`; the curve-cardinality/cofactor-one and
+generator/GLV-eigenvalue chains used to promote `[lambda]` to the whole
+base-point group; the three `rhs ≠ 0` support owners
+`three_dvd_p_sub_one`, `secp256k1_seven_ne_zero`, and
+`secp256k1_neg7_pow_ne_one`; and the two liftable-census owners
+`factorBaseGenerator_certificate` and `representative_count_native`. Not every
+export reaches every listed family, and the newly public factor-base wrapper
+helpers introduce no owner. The dimensions `283527`, `94509`, and `189018`
+describe ambient coefficient spaces, not collected relation rank or yield; no
+theorem identifies the census reference with the separate experimental
+minimum-point-encoding convention or supplies a recovery/solver/cost result.
+
 `M16PartitionedPointSemantics.lean` likewise adds **zero** `native_decide`
 owners, but its trust inheritance is deliberately stated separately: the
 partition theorem calls the existing final Frobenius split, so its audited
@@ -431,6 +454,18 @@ depends on `Lean.ofReduceBool`). These are the rows tagged "Mathlib + native_dec
   secp256k1 discriminant owner, three `rhs ≠ 0` support owners, and ten
   primality native-owner families, but neither the liftable-census owners nor
   the base-field no-two-torsion chain.
+- `Ecdlp/Proved/M16GLVCanonicalRows.lean` → `liftableGLVPhaseEquiv`,
+  `referencePoint_glvPhase`, `glvCompress_single_phase`,
+  `evalGLVRow_comp_glvCompress`, `canonicalGLVRow_globalNegate`,
+  `evalGLVRow_canonicalGLVRow`,
+  `glvCompress_not_injective`, `glvCompressModN_reduceModN`,
+  `glvCompressModN_comp_glvPhaseZeroSectionModN`,
+  `glvCompressModN_surjective`, `finrank_rawRowModN`,
+  `finrank_glvRowModN`, and `finrank_ker_glvCompressModN`. Their proof bodies
+  add no `native_decide` owner. They inherit only the pre-existing secp256k1
+  parameter/primality, GLV/full-group, `rhs`-support, and liftable-census
+  certificate families described above; the three newly public
+  `M16FactorBaseLiftable` wrappers likewise add no owner.
 - `Ecdlp/Proved/M16CancellationRootLowerBound.lean` →
   `cancellation_pair_root_lower_bounds`,
   `exists_nonzero_target_root_lower_bounds`,
@@ -454,7 +489,9 @@ depends on `Lean.ofReduceBool`). These are the rows tagged "Mathlib + native_dec
   factor-base/liftable-census certificate families; only the final numeric
   comparison also inherits the existing solver-budget arithmetic owner.
 - `Ecdlp/Proved/M16FactorBaseLiftable.lean` → the public generator/orbit,
-  liftable/nonliftable, character-sum, fiber, and signed-point counts. Kernel
+  liftable/nonliftable, character-sum, fiber, and signed-point counts, plus
+  `rhs_beta_mul`, `liftableOrbitEquiv`, and
+  `liftableOrbitEquiv_apply_fst`. Kernel
   composition surrounds exactly the two new census owners catalogued above and
   also inherits pre-existing compiler-trusted secp256k1 parameter/primality
   leaves.
@@ -503,7 +540,7 @@ Distinguishing *machine-enforced* (a red build blocks merge) from *documentation
 | `Ensure no incomplete proofs remain` | `grep -rniI --include='*.lean' --exclude-dir=Targets 'sorry' Ecdlp/` — fails if `sorry`/`admit` text appears in any **built** `.lean` file. `Ecdlp/Targets/` (open stems) is excluded by design. | **MACHINE-ENFORCED**, with the documented scope limit that it is a *text* grep over built files and deliberately skips `Targets/`. |
 | `Ensure no built file imports an open target stem` | `grep` for `import Ecdlp.Targets` outside `Targets/`. Closes the hole where a built file could pull a `sorry`-bearing stem into the build graph (since `sorry` is only a warning). | **MACHINE-ENFORCED.** This is the guard that makes the previous grep sound. |
 | `Fetch prebuilt Mathlib cache` + `Build and verify ALL proofs` — `lake build` | The **kernel** re-checks every built proof term. A `sorry` that reached the build graph, or any type error, fails here. | **MACHINE-ENFORCED.** This is the core verification: a green `lake build` means the kernel accepted every built theorem. |
-| `Axiom audit (no sorryAx, no custom axioms)` — `lake env lean Ecdlp/LedgerAxiomAudit.lean` → `scripts/check_axioms.py` | Generates `#print axioms` for every named declaration resolved from all 322 ledger rows. It fails on `sorryAx`, guard/custom axioms, unknown names, or any mismatch between Lean output and `data/result_registry.json`; compiler-trust markers from `native_decide` are disclosed. | **MACHINE-ENFORCED and exhaustive over the named ledger declaration set.** Seven anonymous instance targets are source-resolved exemptions because they have no source-level declaration name; their defining files are still built and their named load-bearing theorems are audited. |
+| `Axiom audit (no sorryAx, no custom axioms)` — `lake env lean Ecdlp/LedgerAxiomAudit.lean` → `scripts/check_axioms.py` | Generates `#print axioms` for every named declaration resolved from all 323 ledger rows. It fails on `sorryAx`, guard/custom axioms, unknown names, or any mismatch between Lean output and `data/result_registry.json`; compiler-trust markers from `native_decide` are disclosed. | **MACHINE-ENFORCED and exhaustive over the named ledger declaration set.** Seven anonymous instance targets are source-resolved exemptions because they have no source-level declaration name; their defining files are still built and their named load-bearing theorems are audited. |
 | `Typecheck open target stems (non-blocking)` | `lake env lean` over `Ecdlp/Targets/*.lean`; `continue-on-error: true`. | **DOCUMENTATION/INFO ONLY.** A stem failing to typecheck emits a warning, never blocks. |
 | `Featherless API smoke test`, `Prover target attempt`, report upload | All `continue-on-error: true` and skipped on PRs. | **DOCUMENTATION/INFO ONLY.** Prover orchestration; cannot affect the verification verdict. |
 

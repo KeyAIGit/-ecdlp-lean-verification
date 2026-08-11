@@ -7,7 +7,7 @@
 
 ## Canonical accounting
 
-- **322 ledger rows / ~283 distinct kernel-verified results** (39 rows are
+- **323 ledger rows / ~284 distinct kernel-verified results** (39 rows are
   alternate-form / supporting restatements of an already-counted result).
 - **0 `sorry`** anywhere in the built (`Ecdlp/`-minus-`Targets/`) tree.
 - **No CUSTOM axioms.** Everything depends only on Lean/Mathlib's standard
@@ -67,6 +67,23 @@
   image-membership criterion is proved. This is not an efficient enumeration,
   `Recover`, PFPO, `AllRoots`, recovery, rank/yield, sparse-linear-algebra,
   runtime/memory/cost, scalar-recovery, or ECDLP result.
+- **GLV phase compression preserves exact row evaluation but is deliberately
+  noninjective.** The 283527 liftable columns are noncomputably identified with
+  three phases over 94509 census orbit representatives. The lower-residue
+  reference points transform by the published secp256k1 eigenvalue, so folding
+  phase `j` with coefficient `lambda^j` preserves integral elliptic-curve
+  evaluation and compatible canonical rows still evaluate to their target.
+  A concrete nonzero alias lies in the integral kernel. Modulo the prime group
+  order, compression is split surjective with ambient raw/orbit/kernel
+  dimensions `283527`, `94509`, and `189018`. These are dimensions of the
+  ambient coefficient spaces, not the rank, independence, or yield of any
+  collected relation matrix. The census and lower-residue choices are
+  noncomputable mathematical conventions, not enumerators, square-root,
+  point-decompression, or recovery algorithms, and no theorem equates them
+  byte-for-byte with the separate experimental minimum-point-encoding
+  convention. This supplies no `Recover`, PFPO, `AllRoots`, root solver,
+  relation distribution, sparse-linear-algebra outcome, runtime/memory/cost,
+  scalar-recovery, or ECDLP result.
 - **Cancellation pairs give a large root-output family, not a solver or cost
   lower bound.** For a proved nonidentity target, seven independently chosen
   labelled pairs inject `283527^7` liftable assignments and `564522^7`

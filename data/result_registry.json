@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 322,
-  "ledger_reference_count": 863,
-  "ledger_named_declarations": 838,
+  "ledger_rows": 323,
+  "ledger_reference_count": 879,
+  "ledger_named_declarations": 854,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1513,
-  "distinct_qualified_names": 1513,
-  "verified_md_citations": 838,
+  "declaration_count": 1564,
+  "distinct_qualified_names": 1564,
+  "verified_md_citations": 854,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -669,6 +669,9 @@
     "Ecdlp.M16FactorBaseLiftable.card_signedAffineFactorBasePoint",
     "Ecdlp.M16FactorBaseLiftable.factorBaseCharacterSum_eq",
     "Ecdlp.M16FactorBaseLiftable.factorBaseGenerator_order",
+    "Ecdlp.M16FactorBaseLiftable.liftableOrbitEquiv",
+    "Ecdlp.M16FactorBaseLiftable.liftableOrbitEquiv_apply_fst",
+    "Ecdlp.M16FactorBaseLiftable.rhs_beta_mul",
     "Ecdlp.M16FactorBaseLiftable.toPoint_ne_zero",
     "Ecdlp.M16FactorBaseSymmetricGate.budget_lt_card_sym_factorBaseX_seven",
     "Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_seven",
@@ -702,6 +705,19 @@
     "Ecdlp.M16FrobeniusPointSplit.includePoint_zero",
     "Ecdlp.M16FrobeniusPointSplit.isFp2Point_of_liesOver",
     "Ecdlp.M16FrobeniusPointSplit.split_partitioned_point_witnesses",
+    "Ecdlp.M16GLVCanonicalRows.canonicalGLVRow_globalNegate",
+    "Ecdlp.M16GLVCanonicalRows.evalGLVRow_canonicalGLVRow",
+    "Ecdlp.M16GLVCanonicalRows.evalGLVRow_comp_glvCompress",
+    "Ecdlp.M16GLVCanonicalRows.finrank_glvRowModN",
+    "Ecdlp.M16GLVCanonicalRows.finrank_ker_glvCompressModN",
+    "Ecdlp.M16GLVCanonicalRows.finrank_rawRowModN",
+    "Ecdlp.M16GLVCanonicalRows.glvCompressModN_comp_glvPhaseZeroSectionModN",
+    "Ecdlp.M16GLVCanonicalRows.glvCompressModN_reduceModN",
+    "Ecdlp.M16GLVCanonicalRows.glvCompressModN_surjective",
+    "Ecdlp.M16GLVCanonicalRows.glvCompress_not_injective",
+    "Ecdlp.M16GLVCanonicalRows.glvCompress_single_phase",
+    "Ecdlp.M16GLVCanonicalRows.liftableGLVPhaseEquiv",
+    "Ecdlp.M16GLVCanonicalRows.referencePoint_glvPhase",
     "Ecdlp.M16LiftableSixWidthNoGo.budget_lt_card_sym_liftableFactorBaseX_seven",
     "Ecdlp.M16LiftableSixWidthNoGo.card_sym_liftableFactorBaseX_seven",
     "Ecdlp.M16LiftableSixWidthNoGo.card_sym_liftableFactorBaseX_six",
@@ -10501,8 +10517,8 @@
     },
     {
       "id": "ledger-310",
-      "claim": "Exact liftable M16 factor-base census on secp256k1 (an exact-order generator partitions all 564522 coordinates into 188174 free three-coordinate GLV orbits; exactly 94509 representative orbits and 283527 coordinates lift, 93665 representative orbits and 280995 coordinates do not, the quadratic-character sum is 2532, every lift fiber has size two, and the signed affine factor-base type has size 567054. Honest scope: this is a finite-field and affine-point census only. It proves no relation existence or distribution, rank, solver, recovery, cost, complexity improvement, or ECDLP shortcut/lower bound. Exactly two new native certificate owners are used: the generator certificate and the representative counter; the facade contains no `native_decide`, while public conclusions also transitively inherit pre-existing compiler-trusted secp256k1 parameter/primality leaves)",
-      "theorem_cell": "`Ecdlp.M16FactorBaseLiftable.Certificates.factorBaseGenerator_certificate`, `representative_count_native`, `Ecdlp.M16FactorBaseLiftable.factorBaseGenerator_order`, `card_liftableGLVOrbitRep`, `card_nonliftableGLVOrbitRep`, `card_liftableFactorBaseX`, `card_nonliftableFactorBaseX`, `factorBaseCharacterSum_eq`, `card_liftFiber`, `card_signedAffineFactorBasePoint`, `toPoint_ne_zero`",
+      "claim": "Exact liftable M16 factor-base census on secp256k1 (an exact-order generator partitions all 564522 coordinates into 188174 free three-coordinate GLV orbits; exactly 94509 representative orbits and 283527 coordinates lift, 93665 representative orbits and 280995 coordinates do not, the quadratic-character sum is 2532, every lift fiber has size two, and the signed affine factor-base type has size 567054. The facade also exposes exact `rhs` covariance under multiplication by `beta` and the orbit-layer equivalence used by downstream GLV normalization. Honest scope: this is a finite-field and affine-point census only. It proves no relation existence or distribution, rank, solver, recovery, cost, complexity improvement, or ECDLP shortcut/lower bound. Exactly two new native certificate owners are used: the generator certificate and the representative counter; the facade contains no `native_decide`, while public conclusions also transitively inherit pre-existing compiler-trusted secp256k1 parameter/primality leaves)",
+      "theorem_cell": "`Ecdlp.M16FactorBaseLiftable.Certificates.factorBaseGenerator_certificate`, `representative_count_native`, `Ecdlp.M16FactorBaseLiftable.factorBaseGenerator_order`, `card_liftableGLVOrbitRep`, `card_nonliftableGLVOrbitRep`, `card_liftableFactorBaseX`, `card_nonliftableFactorBaseX`, `factorBaseCharacterSum_eq`, `card_liftFiber`, `card_signedAffineFactorBasePoint`, `toPoint_ne_zero`, `rhs_beta_mul`, `liftableOrbitEquiv`, `liftableOrbitEquiv_apply_fst`",
       "declared_files": [
         "Ecdlp/Proved/M16FactorBaseLiftableDefs.lean",
         "Ecdlp/Proved/M16FactorBaseLiftableGeneratorCertificate.lean",
@@ -10542,7 +10558,7 @@
           "resolution": "exact",
           "kind": "theorem",
           "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-          "line": 276
+          "line": 278
         },
         {
           "cited": "Ecdlp.M16FactorBaseLiftable.card_nonliftableGLVOrbitRep",
@@ -10550,7 +10566,7 @@
           "resolution": "exact",
           "kind": "theorem",
           "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-          "line": 292
+          "line": 294
         },
         {
           "cited": "Ecdlp.M16FactorBaseLiftable.card_liftableFactorBaseX",
@@ -10558,7 +10574,7 @@
           "resolution": "exact",
           "kind": "theorem",
           "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-          "line": 320
+          "line": 329
         },
         {
           "cited": "Ecdlp.M16FactorBaseLiftable.card_nonliftableFactorBaseX",
@@ -10566,7 +10582,7 @@
           "resolution": "exact",
           "kind": "theorem",
           "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-          "line": 330
+          "line": 339
         },
         {
           "cited": "Ecdlp.M16FactorBaseLiftable.factorBaseCharacterSum_eq",
@@ -10574,7 +10590,7 @@
           "resolution": "exact",
           "kind": "theorem",
           "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-          "line": 347
+          "line": 356
         },
         {
           "cited": "Ecdlp.M16FactorBaseLiftable.card_liftFiber",
@@ -10582,7 +10598,7 @@
           "resolution": "exact",
           "kind": "theorem",
           "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-          "line": 453
+          "line": 462
         },
         {
           "cited": "Ecdlp.M16FactorBaseLiftable.card_signedAffineFactorBasePoint",
@@ -10590,7 +10606,7 @@
           "resolution": "exact",
           "kind": "theorem",
           "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-          "line": 461
+          "line": 470
         },
         {
           "cited": "Ecdlp.M16FactorBaseLiftable.toPoint_ne_zero",
@@ -10598,7 +10614,31 @@
           "resolution": "exact",
           "kind": "theorem",
           "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-          "line": 484
+          "line": 493
+        },
+        {
+          "cited": "Ecdlp.M16FactorBaseLiftable.rhs_beta_mul",
+          "canonical_name": "Ecdlp.M16FactorBaseLiftable.rhs_beta_mul",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+          "line": 207
+        },
+        {
+          "cited": "Ecdlp.M16FactorBaseLiftable.liftableOrbitEquiv",
+          "canonical_name": "Ecdlp.M16FactorBaseLiftable.liftableOrbitEquiv",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+          "line": 319
+        },
+        {
+          "cited": "Ecdlp.M16FactorBaseLiftable.liftableOrbitEquiv_apply_fst",
+          "canonical_name": "Ecdlp.M16FactorBaseLiftable.liftableOrbitEquiv_apply_fst",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+          "line": 323
         }
       ]
     },
@@ -11707,6 +11747,122 @@
           "kind": "theorem",
           "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
           "line": 288
+        }
+      ]
+    },
+    {
+      "id": "ledger-322",
+      "claim": "Exact GLV compression of canonical M16 recovery rows and ambient coefficient spaces (the 283527 liftable coordinates are reorganized exactly as three GLV phases over 94509 orbit representatives. The noncomputable lower-residue reference points transform by the published secp256k1 eigenvalue, so integral phase folding with coefficients `lambda^j` preserves exact elliptic-curve row evaluation. Compatible canonical rows still evaluate to the supplied target and retain global-sign invariance. An explicit nonzero alias row proves integral compression noninjective. Over `ZMod n`, compression commutes with coefficient reduction, has a phase-zero right inverse, is surjective, and has ambient raw/orbit/kernel dimensions `283527`, `94509`, and `189018`. Honest scope: the lower-residue and census equivalences are noncomputable mathematical conventions, not square-root, point-decompression, enumeration, or recovery procedures. The three dimensions describe ambient coefficient spaces, not the rank, independence, or yield of a collected relation matrix. No theorem identifies this census convention byte-for-byte with the separate experimental minimum-point-encoding convention. The module proves no `Recover`, PFPO, `AllRoots`, root solver, relation distribution, sparse-linear-algebra outcome, runtime/memory/solver-node/total-cost result, scalar recovery, or ECDLP shortcut. It adds zero new `native_decide` owners and inherits only pre-existing secp256k1 parameter/primality, GLV/full-group, `rhs`-support, and liftable-census certificate families)",
+      "theorem_cell": "`Ecdlp.M16GLVCanonicalRows.liftableGLVPhaseEquiv`, `referencePoint_glvPhase`, `glvCompress_single_phase`, `evalGLVRow_comp_glvCompress`, `canonicalGLVRow_globalNegate`, `evalGLVRow_canonicalGLVRow`, `glvCompress_not_injective`, `glvCompressModN_reduceModN`, `glvCompressModN_comp_glvPhaseZeroSectionModN`, `glvCompressModN_surjective`, `finrank_rawRowModN`, `finrank_glvRowModN`, `finrank_ker_glvCompressModN`",
+      "declared_files": [
+        "Ecdlp/Proved/M16GLVCanonicalRows.lean"
+      ],
+      "method": "exact census phase equivalence + noncomputable lower-residue GLV covariance + integral and mod-`n` linear-map identities + finite-dimensional rank-nullity; zero new native owners, inherited trust disclosed",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.M16GLVCanonicalRows.liftableGLVPhaseEquiv",
+          "canonical_name": "Ecdlp.M16GLVCanonicalRows.liftableGLVPhaseEquiv",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+          "line": 63
+        },
+        {
+          "cited": "Ecdlp.M16GLVCanonicalRows.referencePoint_glvPhase",
+          "canonical_name": "Ecdlp.M16GLVCanonicalRows.referencePoint_glvPhase",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+          "line": 165
+        },
+        {
+          "cited": "Ecdlp.M16GLVCanonicalRows.glvCompress_single_phase",
+          "canonical_name": "Ecdlp.M16GLVCanonicalRows.glvCompress_single_phase",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+          "line": 235
+        },
+        {
+          "cited": "Ecdlp.M16GLVCanonicalRows.evalGLVRow_comp_glvCompress",
+          "canonical_name": "Ecdlp.M16GLVCanonicalRows.evalGLVRow_comp_glvCompress",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+          "line": 269
+        },
+        {
+          "cited": "Ecdlp.M16GLVCanonicalRows.canonicalGLVRow_globalNegate",
+          "canonical_name": "Ecdlp.M16GLVCanonicalRows.canonicalGLVRow_globalNegate",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+          "line": 292
+        },
+        {
+          "cited": "Ecdlp.M16GLVCanonicalRows.evalGLVRow_canonicalGLVRow",
+          "canonical_name": "Ecdlp.M16GLVCanonicalRows.evalGLVRow_canonicalGLVRow",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+          "line": 309
+        },
+        {
+          "cited": "Ecdlp.M16GLVCanonicalRows.glvCompress_not_injective",
+          "canonical_name": "Ecdlp.M16GLVCanonicalRows.glvCompress_not_injective",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+          "line": 344
+        },
+        {
+          "cited": "Ecdlp.M16GLVCanonicalRows.glvCompressModN_reduceModN",
+          "canonical_name": "Ecdlp.M16GLVCanonicalRows.glvCompressModN_reduceModN",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+          "line": 442
+        },
+        {
+          "cited": "Ecdlp.M16GLVCanonicalRows.glvCompressModN_comp_glvPhaseZeroSectionModN",
+          "canonical_name": "Ecdlp.M16GLVCanonicalRows.glvCompressModN_comp_glvPhaseZeroSectionModN",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+          "line": 462
+        },
+        {
+          "cited": "Ecdlp.M16GLVCanonicalRows.glvCompressModN_surjective",
+          "canonical_name": "Ecdlp.M16GLVCanonicalRows.glvCompressModN_surjective",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+          "line": 469
+        },
+        {
+          "cited": "Ecdlp.M16GLVCanonicalRows.finrank_rawRowModN",
+          "canonical_name": "Ecdlp.M16GLVCanonicalRows.finrank_rawRowModN",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+          "line": 478
+        },
+        {
+          "cited": "Ecdlp.M16GLVCanonicalRows.finrank_glvRowModN",
+          "canonical_name": "Ecdlp.M16GLVCanonicalRows.finrank_glvRowModN",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+          "line": 483
+        },
+        {
+          "cited": "Ecdlp.M16GLVCanonicalRows.finrank_ker_glvCompressModN",
+          "canonical_name": "Ecdlp.M16GLVCanonicalRows.finrank_ker_glvCompressModN",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+          "line": 489
         }
       ]
     }
@@ -18206,7 +18362,7 @@
       "namespace": "Ecdlp.M16FactorBaseLiftable",
       "kind": "abbrev",
       "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-      "line": 393
+      "line": 402
     },
     "Ecdlp.M16FactorBaseLiftable.LiftableFactorBaseX": {
       "name": "LiftableFactorBaseX",
@@ -18220,7 +18376,7 @@
       "namespace": "Ecdlp.M16FactorBaseLiftable",
       "kind": "abbrev",
       "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-      "line": 235
+      "line": 237
     },
     "Ecdlp.M16FactorBaseLiftable.NonliftableFactorBaseX": {
       "name": "NonliftableFactorBaseX",
@@ -18234,77 +18390,77 @@
       "namespace": "Ecdlp.M16FactorBaseLiftable",
       "kind": "abbrev",
       "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-      "line": 239
+      "line": 241
     },
     "Ecdlp.M16FactorBaseLiftable.SignedAffineFactorBasePoint": {
       "name": "SignedAffineFactorBasePoint",
       "namespace": "Ecdlp.M16FactorBaseLiftable",
       "kind": "abbrev",
       "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-      "line": 397
+      "line": 406
     },
     "Ecdlp.M16FactorBaseLiftable.card_glvOrbitRep": {
       "name": "card_glvOrbitRep",
       "namespace": "Ecdlp.M16FactorBaseLiftable",
       "kind": "theorem",
       "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-      "line": 270
+      "line": 272
     },
     "Ecdlp.M16FactorBaseLiftable.card_liftFiber": {
       "name": "card_liftFiber",
       "namespace": "Ecdlp.M16FactorBaseLiftable",
       "kind": "theorem",
       "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-      "line": 453
+      "line": 462
     },
     "Ecdlp.M16FactorBaseLiftable.card_liftableFactorBaseX": {
       "name": "card_liftableFactorBaseX",
       "namespace": "Ecdlp.M16FactorBaseLiftable",
       "kind": "theorem",
       "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-      "line": 320
+      "line": 329
     },
     "Ecdlp.M16FactorBaseLiftable.card_liftableGLVOrbitRep": {
       "name": "card_liftableGLVOrbitRep",
       "namespace": "Ecdlp.M16FactorBaseLiftable",
       "kind": "theorem",
       "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-      "line": 276
+      "line": 278
     },
     "Ecdlp.M16FactorBaseLiftable.card_nonliftableFactorBaseX": {
       "name": "card_nonliftableFactorBaseX",
       "namespace": "Ecdlp.M16FactorBaseLiftable",
       "kind": "theorem",
       "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-      "line": 330
+      "line": 339
     },
     "Ecdlp.M16FactorBaseLiftable.card_nonliftableGLVOrbitRep": {
       "name": "card_nonliftableGLVOrbitRep",
       "namespace": "Ecdlp.M16FactorBaseLiftable",
       "kind": "theorem",
       "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-      "line": 292
+      "line": 294
     },
     "Ecdlp.M16FactorBaseLiftable.card_signedAffineFactorBasePoint": {
       "name": "card_signedAffineFactorBasePoint",
       "namespace": "Ecdlp.M16FactorBaseLiftable",
       "kind": "theorem",
       "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-      "line": 461
+      "line": 470
     },
     "Ecdlp.M16FactorBaseLiftable.factorBaseCharacterSum": {
       "name": "factorBaseCharacterSum",
       "namespace": "Ecdlp.M16FactorBaseLiftable",
       "kind": "def",
       "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-      "line": 340
+      "line": 349
     },
     "Ecdlp.M16FactorBaseLiftable.factorBaseCharacterSum_eq": {
       "name": "factorBaseCharacterSum_eq",
       "namespace": "Ecdlp.M16FactorBaseLiftable",
       "kind": "theorem",
       "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-      "line": 347
+      "line": 356
     },
     "Ecdlp.M16FactorBaseLiftable.factorBaseGenerator": {
       "name": "factorBaseGenerator",
@@ -18381,7 +18537,21 @@
       "namespace": "Ecdlp.M16FactorBaseLiftable",
       "kind": "def",
       "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-      "line": 400
+      "line": 409
+    },
+    "Ecdlp.M16FactorBaseLiftable.liftableOrbitEquiv": {
+      "name": "liftableOrbitEquiv",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 319
+    },
+    "Ecdlp.M16FactorBaseLiftable.liftableOrbitEquiv_apply_fst": {
+      "name": "liftableOrbitEquiv_apply_fst",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 323
     },
     "Ecdlp.M16FactorBaseLiftable.orbitRepresentative": {
       "name": "orbitRepresentative",
@@ -18397,6 +18567,13 @@
       "file": "Ecdlp/Proved/M16FactorBaseLiftableDefs.lean",
       "line": 21
     },
+    "Ecdlp.M16FactorBaseLiftable.rhs_beta_mul": {
+      "name": "rhs_beta_mul",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 207
+    },
     "Ecdlp.M16FactorBaseLiftable.secp256k1_rhs_ne_zero": {
       "name": "secp256k1_rhs_ne_zero",
       "namespace": "Ecdlp.M16FactorBaseLiftable",
@@ -18409,14 +18586,14 @@
       "namespace": "Ecdlp.M16FactorBaseLiftable",
       "kind": "def",
       "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-      "line": 479
+      "line": 488
     },
     "Ecdlp.M16FactorBaseLiftable.toPoint_ne_zero": {
       "name": "toPoint_ne_zero",
       "namespace": "Ecdlp.M16FactorBaseLiftable",
       "kind": "theorem",
       "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
-      "line": 484
+      "line": 493
     },
     "Ecdlp.M16FactorBaseSymmetricGate.budget_lt_card_sym_factorBaseX_seven": {
       "name": "budget_lt_card_sym_factorBaseX_seven",
@@ -18641,6 +18818,342 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/M16FrobeniusPointSplit.lean",
       "line": 401
+    },
+    "Ecdlp.M16GLVCanonicalRows.BasePoint": {
+      "name": "BasePoint",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 43
+    },
+    "Ecdlp.M16GLVCanonicalRows.Fp": {
+      "name": "Fp",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 42
+    },
+    "Ecdlp.M16GLVCanonicalRows.GLVRow": {
+      "name": "GLVRow",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 203
+    },
+    "Ecdlp.M16GLVCanonicalRows.GLVRowModN": {
+      "name": "GLVRowModN",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 362
+    },
+    "Ecdlp.M16GLVCanonicalRows.RawRowModN": {
+      "name": "RawRowModN",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 358
+    },
+    "Ecdlp.M16GLVCanonicalRows.canonicalGLVRow": {
+      "name": "canonicalGLVRow",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 288
+    },
+    "Ecdlp.M16GLVCanonicalRows.canonicalGLVRowModN": {
+      "name": "canonicalGLVRowModN",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 451
+    },
+    "Ecdlp.M16GLVCanonicalRows.canonicalGLVRow_globalNegate": {
+      "name": "canonicalGLVRow_globalNegate",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 292
+    },
+    "Ecdlp.M16GLVCanonicalRows.evalGLVRow": {
+      "name": "evalGLVRow",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 264
+    },
+    "Ecdlp.M16GLVCanonicalRows.evalGLVRow_canonicalGLVRow": {
+      "name": "evalGLVRow_canonicalGLVRow",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 309
+    },
+    "Ecdlp.M16GLVCanonicalRows.evalGLVRow_canonicalGLVRow_of_compatible": {
+      "name": "evalGLVRow_canonicalGLVRow_of_compatible",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 302
+    },
+    "Ecdlp.M16GLVCanonicalRows.evalGLVRow_comp_glvCompress": {
+      "name": "evalGLVRow_comp_glvCompress",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 269
+    },
+    "Ecdlp.M16GLVCanonicalRows.evalGLVRow_glvCompress": {
+      "name": "evalGLVRow_glvCompress",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 281
+    },
+    "Ecdlp.M16GLVCanonicalRows.finrank_glvRowModN": {
+      "name": "finrank_glvRowModN",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 483
+    },
+    "Ecdlp.M16GLVCanonicalRows.finrank_ker_glvCompressModN": {
+      "name": "finrank_ker_glvCompressModN",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 489
+    },
+    "Ecdlp.M16GLVCanonicalRows.finrank_rawRowModN": {
+      "name": "finrank_rawRowModN",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 478
+    },
+    "Ecdlp.M16GLVCanonicalRows.glvAliasRow": {
+      "name": "glvAliasRow",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 319
+    },
+    "Ecdlp.M16GLVCanonicalRows.glvAliasRow_ne_zero": {
+      "name": "glvAliasRow_ne_zero",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 328
+    },
+    "Ecdlp.M16GLVCanonicalRows.glvCompress": {
+      "name": "glvCompress",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 224
+    },
+    "Ecdlp.M16GLVCanonicalRows.glvCompressModN": {
+      "name": "glvCompressModN",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 385
+    },
+    "Ecdlp.M16GLVCanonicalRows.glvCompressModN_apply": {
+      "name": "glvCompressModN_apply",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 391
+    },
+    "Ecdlp.M16GLVCanonicalRows.glvCompressModN_comp_glvPhaseZeroSectionModN": {
+      "name": "glvCompressModN_comp_glvPhaseZeroSectionModN",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 462
+    },
+    "Ecdlp.M16GLVCanonicalRows.glvCompressModN_reduceModN": {
+      "name": "glvCompressModN_reduceModN",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 442
+    },
+    "Ecdlp.M16GLVCanonicalRows.glvCompressModN_single_phase": {
+      "name": "glvCompressModN_single_phase",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 399
+    },
+    "Ecdlp.M16GLVCanonicalRows.glvCompressModN_surjective": {
+      "name": "glvCompressModN_surjective",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 469
+    },
+    "Ecdlp.M16GLVCanonicalRows.glvCompress_apply": {
+      "name": "glvCompress_apply",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 228
+    },
+    "Ecdlp.M16GLVCanonicalRows.glvCompress_glvAliasRow": {
+      "name": "glvCompress_glvAliasRow",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 324
+    },
+    "Ecdlp.M16GLVCanonicalRows.glvCompress_not_injective": {
+      "name": "glvCompress_not_injective",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 344
+    },
+    "Ecdlp.M16GLVCanonicalRows.glvCompress_single_phase": {
+      "name": "glvCompress_single_phase",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 235
+    },
+    "Ecdlp.M16GLVCanonicalRows.glvPhaseToLayer": {
+      "name": "glvPhaseToLayer",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 49
+    },
+    "Ecdlp.M16GLVCanonicalRows.glvPhaseToLayer_one": {
+      "name": "glvPhaseToLayer_one",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 55
+    },
+    "Ecdlp.M16GLVCanonicalRows.glvPhaseToLayer_two": {
+      "name": "glvPhaseToLayer_two",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 58
+    },
+    "Ecdlp.M16GLVCanonicalRows.glvPhaseToLayer_zero": {
+      "name": "glvPhaseToLayer_zero",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 52
+    },
+    "Ecdlp.M16GLVCanonicalRows.glvPhaseZeroSectionModN": {
+      "name": "glvPhaseZeroSectionModN",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 456
+    },
+    "Ecdlp.M16GLVCanonicalRows.glvPoint_eq_lam": {
+      "name": "glvPoint_eq_lam",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 153
+    },
+    "Ecdlp.M16GLVCanonicalRows.glvRepresentativePoint": {
+      "name": "glvRepresentativePoint",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 159
+    },
+    "Ecdlp.M16GLVCanonicalRows.liftableGLVPhaseEquiv": {
+      "name": "liftableGLVPhaseEquiv",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 63
+    },
+    "Ecdlp.M16GLVCanonicalRows.liftableGLVPhaseEquiv_apply_fst": {
+      "name": "liftableGLVPhaseEquiv_apply_fst",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 68
+    },
+    "Ecdlp.M16GLVCanonicalRows.liftableGLVPhaseEquiv_one_val": {
+      "name": "liftableGLVPhaseEquiv_one_val",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 80
+    },
+    "Ecdlp.M16GLVCanonicalRows.liftableGLVPhaseEquiv_two_val": {
+      "name": "liftableGLVPhaseEquiv_two_val",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 88
+    },
+    "Ecdlp.M16GLVCanonicalRows.liftableGLVPhaseEquiv_zero_fst": {
+      "name": "liftableGLVPhaseEquiv_zero_fst",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 74
+    },
+    "Ecdlp.M16GLVCanonicalRows.reduceModN": {
+      "name": "reduceModN",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 431
+    },
+    "Ecdlp.M16GLVCanonicalRows.reduceModN_apply": {
+      "name": "reduceModN_apply",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 436
+    },
+    "Ecdlp.M16GLVCanonicalRows.referenceLift_val_glvPhase": {
+      "name": "referenceLift_val_glvPhase",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 117
+    },
+    "Ecdlp.M16GLVCanonicalRows.referencePoint_glvPhase": {
+      "name": "referencePoint_glvPhase",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 165
+    },
+    "Ecdlp.M16GLVCanonicalRows.referencePoint_glvPhase_one": {
+      "name": "referencePoint_glvPhase_one",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 132
+    },
+    "Ecdlp.M16GLVCanonicalRows.referencePoint_glvPhase_two": {
+      "name": "referencePoint_glvPhase_two",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 141
+    },
+    "Ecdlp.M16GLVCanonicalRows.rhs_liftableGLVPhaseEquiv": {
+      "name": "rhs_liftableGLVPhaseEquiv",
+      "namespace": "Ecdlp.M16GLVCanonicalRows",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
+      "line": 98
     },
     "Ecdlp.M16LiftableSixWidthNoGo.LiftableSignedSixIndex": {
       "name": "LiftableSignedSixIndex",
