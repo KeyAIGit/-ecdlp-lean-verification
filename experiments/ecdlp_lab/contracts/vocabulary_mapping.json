@@ -1,0 +1,57 @@
+{
+  "engine_conversion": "forbidden",
+  "lab_record_kind": "lab_engineering_fixture",
+  "mappings": [
+    {
+      "agreement": "nanoseconds, bytes, workers, setup/online separation",
+      "existing": "experiments/engine/cost_contract.schema.json",
+      "gap": "lab adds hard 32-bit synthetic ceiling and no Engine authorization",
+      "lab": "campaign_config.budgets"
+    },
+    {
+      "agreement": "curve, G, Q, subgroup order, public interval",
+      "existing": "experiments/framework/candidate_run.schema.json target",
+      "gap": "lab binds committed catalog/vector digests and keeps expected scalar in a private receipt",
+      "lab": "target_vector"
+    },
+    {
+      "agreement": "source commit, snapshot, producer and validator dependencies",
+      "existing": "candidate provenance and Research Engine run identity",
+      "gap": "retry changes attempt_id only; dirty runs are never retainable",
+      "lab": "work_unit.source"
+    },
+    {
+      "agreement": "group operations and backend-labelled counters",
+      "existing": "experiments/engine/cost_contract.schema.json",
+      "gap": "no claim or candidate outcome semantics",
+      "lab": "method_result.counters"
+    },
+    {
+      "agreement": "source-independent validator and output digest",
+      "existing": "experiments/engine/validator_*.schema.json",
+      "gap": "self-validation and shared decisive source are rejected unconditionally",
+      "lab": "validation_receipt"
+    },
+    {
+      "agreement": "normalized metrics and warnings",
+      "existing": "candidate claims and Engine outcome summaries",
+      "gap": "asymptotic, secp256k1-break, route-promotion and scientific-outcome fields are fixed to null/false",
+      "lab": "analysis_summary"
+    },
+    {
+      "agreement": "digest, size, media type, role, optional location",
+      "existing": "content-addressed repository artifacts",
+      "gap": "only safe relative locations; no URL or Engine path",
+      "lab": "artifact_ref"
+    }
+  ],
+  "non_mappings": [
+    "candidate_id",
+    "hypothesis_id",
+    "authorization_id",
+    "route disposition",
+    "Research Engine event or outcome writer"
+  ],
+  "schema_version": "1.0",
+  "status": "engineering_vocabulary_mapping_only"
+}

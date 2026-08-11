@@ -1,0 +1,33 @@
+{
+  "allowed_method_ids": [
+    "bsgs_reference_v1",
+    "rho_reference_v1"
+  ],
+  "catalogs": {
+    "5681b454066b4c5aeb675004276388a33ee62da0e61675260d6230a577da4f65": {
+      "catalog_id": "p01-fixture-catalog-v1",
+      "catalog_kind": "synthetic_contract_fixture",
+      "max_subgroup_bits": 5
+    }
+  },
+  "schema_version": "1.0",
+  "target_vectors": {
+    "42694ecc6245bdc2a6d3dd6373f0362c1e7f376963c55c2928cc94392fa13490": {
+      "base_point": {
+        "x": 2,
+        "y": 12
+      },
+      "catalog_sha256": "5681b454066b4c5aeb675004276388a33ee62da0e61675260d6230a577da4f65",
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_id": "fixture-j0-p43",
+      "field_p": 43,
+      "subgroup_order": 31,
+      "target_point": {
+        "x": 12,
+        "y": 12
+      },
+      "target_vector_id": "fa36d339d98a4b9cccfa70cdc54063e2a12a89ed44eb6972befad745287ec46e"
+    }
+  }
+}

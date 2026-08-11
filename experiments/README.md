@@ -15,6 +15,13 @@ uses canaries and nulls, selects model parameters only on validation, and
 records no scientific outcome. A real candidate record is rejected until
 `repo/ECDLP_DECISION_SUBSTRATE.json` explicitly authorizes its route.
 
+`experiments/ecdlp_lab/` is a separate candidate-neutral engineering surface for
+bounded synthetic groups. Its P01 contracts use strict canonical JSON, digest-bound
+catalog/vector references, source-independent validation, and a non-configurable
+32-bit subgroup ceiling. Lab fixtures have no hypothesis, candidate, authorization,
+route effect, or scientific-outcome status and cannot be converted into Research
+Engine records by this package.
+
 ## The GLV–Semaev line (`HYP_GLV_SEMAEV_001`, status: PARKED)
 
 The hypothesis: for `j=0` curves `E_b: y²=x³+b` over `p≡1 (mod 3)`, does closing a Semaev

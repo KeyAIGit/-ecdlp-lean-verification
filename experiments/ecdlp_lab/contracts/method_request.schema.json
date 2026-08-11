@@ -1,0 +1,215 @@
+{
+  "$id": "https://keyai.example/schemas/ecdlp-lab-method_request-v1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authorization_id": {
+      "type": "null"
+    },
+    "candidate_id": {
+      "type": "null"
+    },
+    "contract_kind": {
+      "const": "method_request"
+    },
+    "hypothesis_id": {
+      "type": "null"
+    },
+    "native_research_outcome": {
+      "const": false
+    },
+    "payload": {
+      "additionalProperties": false,
+      "properties": {
+        "algorithm_seed": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "base_point": {
+          "additionalProperties": false,
+          "properties": {
+            "x": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "y": {
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "x",
+            "y"
+          ],
+          "type": "object"
+        },
+        "budgets": {
+          "additionalProperties": false,
+          "properties": {
+            "max_group_operations": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "max_rss_bytes": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "parallel_workers": {
+              "maximum": 64,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "timeout_ns": {
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "timeout_ns",
+            "max_rss_bytes",
+            "max_group_operations",
+            "parallel_workers"
+          ],
+          "type": "object"
+        },
+        "curve": {
+          "additionalProperties": false,
+          "properties": {
+            "curve_a": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "curve_b": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "curve_id": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+              "type": "string"
+            },
+            "field_p": {
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "curve_id",
+            "field_p",
+            "curve_a",
+            "curve_b"
+          ],
+          "type": "object"
+        },
+        "method_id": {
+          "pattern": "^[a-z][a-z0-9_]{2,63}$",
+          "type": "string"
+        },
+        "public_interval": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "items": false,
+              "prefixItems": [
+                {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              ],
+              "type": "array"
+            }
+          ]
+        },
+        "request_id": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "subgroup_order": {
+          "maximum": 4294967295,
+          "minimum": 2,
+          "type": "integer"
+        },
+        "target_point": {
+          "additionalProperties": false,
+          "properties": {
+            "x": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "y": {
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "x",
+            "y"
+          ],
+          "type": "object"
+        },
+        "target_vector_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "work_unit_id": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "request_id",
+        "work_unit_id",
+        "target_vector_sha256",
+        "method_id",
+        "algorithm_seed",
+        "curve",
+        "base_point",
+        "target_point",
+        "subgroup_order",
+        "public_interval",
+        "budgets"
+      ],
+      "type": "object"
+    },
+    "record_kind": {
+      "const": "lab_engineering_fixture"
+    },
+    "record_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "retainable": {
+      "type": "boolean"
+    },
+    "retention_class": {
+      "const": "engineering_only"
+    },
+    "route_effect": {
+      "const": "none"
+    },
+    "schema_version": {
+      "const": "1.0"
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_kind",
+    "contract_kind",
+    "hypothesis_id",
+    "candidate_id",
+    "authorization_id",
+    "native_research_outcome",
+    "route_effect",
+    "retention_class",
+    "retainable",
+    "payload",
+    "record_sha256"
+  ],
+  "title": "ECDLP lab method_request engineering fixture",
+  "type": "object"
+}

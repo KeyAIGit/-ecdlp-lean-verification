@@ -1,0 +1,147 @@
+{
+  "$id": "https://keyai.example/schemas/ecdlp-lab-campaign_config-v1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authorization_id": {
+      "type": "null"
+    },
+    "candidate_id": {
+      "type": "null"
+    },
+    "contract_kind": {
+      "const": "campaign_config"
+    },
+    "hypothesis_id": {
+      "type": "null"
+    },
+    "native_research_outcome": {
+      "const": false
+    },
+    "payload": {
+      "additionalProperties": false,
+      "properties": {
+        "algorithm_seeds": {
+          "items": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "amortization_target_count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "budgets": {
+          "additionalProperties": false,
+          "properties": {
+            "max_group_operations": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "max_rss_bytes": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "parallel_workers": {
+              "maximum": 64,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "timeout_ns": {
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "timeout_ns",
+            "max_rss_bytes",
+            "max_group_operations",
+            "parallel_workers"
+          ],
+          "type": "object"
+        },
+        "campaign_id": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "catalog_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "method_ids": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]{2,63}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "output_subdir": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "reusable_setup": {
+          "type": "boolean"
+        },
+        "target_vector_sha256s": {
+          "items": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "campaign_id",
+        "catalog_sha256",
+        "target_vector_sha256s",
+        "method_ids",
+        "algorithm_seeds",
+        "budgets",
+        "output_subdir",
+        "reusable_setup",
+        "amortization_target_count"
+      ],
+      "type": "object"
+    },
+    "record_kind": {
+      "const": "lab_engineering_fixture"
+    },
+    "record_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "retainable": {
+      "type": "boolean"
+    },
+    "retention_class": {
+      "const": "engineering_only"
+    },
+    "route_effect": {
+      "const": "none"
+    },
+    "schema_version": {
+      "const": "1.0"
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_kind",
+    "contract_kind",
+    "hypothesis_id",
+    "candidate_id",
+    "authorization_id",
+    "native_research_outcome",
+    "route_effect",
+    "retention_class",
+    "retainable",
+    "payload",
+    "record_sha256"
+  ],
+  "title": "ECDLP lab campaign_config engineering fixture",
+  "type": "object"
+}

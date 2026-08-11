@@ -1,0 +1,133 @@
+{
+  "$id": "https://keyai.example/schemas/ecdlp-lab-analysis_summary-v1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authorization_id": {
+      "type": "null"
+    },
+    "candidate_id": {
+      "type": "null"
+    },
+    "contract_kind": {
+      "const": "analysis_summary"
+    },
+    "hypothesis_id": {
+      "type": "null"
+    },
+    "native_research_outcome": {
+      "const": false
+    },
+    "payload": {
+      "additionalProperties": false,
+      "properties": {
+        "analysis_summary_id": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "campaign_id": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "claims": {
+          "additionalProperties": false,
+          "properties": {
+            "asymptotic_claim": {
+              "type": "null"
+            },
+            "route_promotion": {
+              "const": false
+            },
+            "scientific_outcome": {
+              "const": false
+            },
+            "secp256k1_break": {
+              "const": false
+            }
+          },
+          "required": [
+            "asymptotic_claim",
+            "secp256k1_break",
+            "route_promotion",
+            "scientific_outcome"
+          ],
+          "type": "object"
+        },
+        "normalized_metrics": {
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "pattern": "^(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?$",
+                "type": "string"
+              }
+            ]
+          },
+          "type": "object"
+        },
+        "validation_receipt_sha256s": {
+          "items": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "warnings": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "analysis_summary_id",
+        "campaign_id",
+        "validation_receipt_sha256s",
+        "normalized_metrics",
+        "warnings",
+        "claims"
+      ],
+      "type": "object"
+    },
+    "record_kind": {
+      "const": "lab_engineering_fixture"
+    },
+    "record_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "retainable": {
+      "type": "boolean"
+    },
+    "retention_class": {
+      "const": "engineering_only"
+    },
+    "route_effect": {
+      "const": "none"
+    },
+    "schema_version": {
+      "const": "1.0"
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_kind",
+    "contract_kind",
+    "hypothesis_id",
+    "candidate_id",
+    "authorization_id",
+    "native_research_outcome",
+    "route_effect",
+    "retention_class",
+    "retainable",
+    "payload",
+    "record_sha256"
+  ],
+  "title": "ECDLP lab analysis_summary engineering fixture",
+  "type": "object"
+}

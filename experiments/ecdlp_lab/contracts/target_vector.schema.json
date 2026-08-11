@@ -1,0 +1,178 @@
+{
+  "$id": "https://keyai.example/schemas/ecdlp-lab-target_vector-v1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authorization_id": {
+      "type": "null"
+    },
+    "candidate_id": {
+      "type": "null"
+    },
+    "contract_kind": {
+      "const": "target_vector"
+    },
+    "hypothesis_id": {
+      "type": "null"
+    },
+    "native_research_outcome": {
+      "const": false
+    },
+    "payload": {
+      "additionalProperties": false,
+      "properties": {
+        "base_point": {
+          "additionalProperties": false,
+          "properties": {
+            "x": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "y": {
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "x",
+            "y"
+          ],
+          "type": "object"
+        },
+        "catalog_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "curve_a": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "curve_b": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "curve_id": {
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+          "type": "string"
+        },
+        "field_bits": {
+          "maximum": 32,
+          "minimum": 2,
+          "type": "integer"
+        },
+        "field_p": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "private_receipt_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "public_interval": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "items": false,
+              "prefixItems": [
+                {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                {
+                  "minimum": 0,
+                  "type": "integer"
+                }
+              ],
+              "type": "array"
+            }
+          ]
+        },
+        "subgroup_order": {
+          "maximum": 4294967295,
+          "minimum": 2,
+          "type": "integer"
+        },
+        "subgroup_order_bits": {
+          "maximum": 32,
+          "minimum": 2,
+          "type": "integer"
+        },
+        "target_point": {
+          "additionalProperties": false,
+          "properties": {
+            "x": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "y": {
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "x",
+            "y"
+          ],
+          "type": "object"
+        },
+        "target_vector_id": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_vector_id",
+        "catalog_sha256",
+        "curve_id",
+        "field_p",
+        "curve_a",
+        "curve_b",
+        "base_point",
+        "target_point",
+        "subgroup_order",
+        "field_bits",
+        "subgroup_order_bits",
+        "public_interval",
+        "private_receipt_sha256"
+      ],
+      "type": "object"
+    },
+    "record_kind": {
+      "const": "lab_engineering_fixture"
+    },
+    "record_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "retainable": {
+      "type": "boolean"
+    },
+    "retention_class": {
+      "const": "engineering_only"
+    },
+    "route_effect": {
+      "const": "none"
+    },
+    "schema_version": {
+      "const": "1.0"
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_kind",
+    "contract_kind",
+    "hypothesis_id",
+    "candidate_id",
+    "authorization_id",
+    "native_research_outcome",
+    "route_effect",
+    "retention_class",
+    "retainable",
+    "payload",
+    "record_sha256"
+  ],
+  "title": "ECDLP lab target_vector engineering fixture",
+  "type": "object"
+}

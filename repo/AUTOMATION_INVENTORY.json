@@ -48,6 +48,14 @@
       "reason": "Replays existing experiment correctness checks; does not authorize new hypotheses."
     },
     {
+      "file": ".github/workflows/lab-ci.yml",
+      "class": "engineering_gate",
+      "trigger_policy": "scoped_push_pr_manual",
+      "disposition": "keep",
+      "spends_external_budget": false,
+      "reason": "Runs the bounded standard-library ECDLP lab contract, canonical-JSON, adversarial-fixture, framework, and artifact checks. It authorizes no scientific hypothesis or Engine outcome."
+    },
+    {
       "file": ".github/workflows/server-run.yml",
       "class": "proof_infrastructure",
       "trigger_policy": "manual_only",

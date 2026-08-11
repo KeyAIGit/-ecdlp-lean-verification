@@ -1,0 +1,130 @@
+{
+  "$id": "https://keyai.example/schemas/ecdlp-lab-validation_receipt-v1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authorization_id": {
+      "type": "null"
+    },
+    "candidate_id": {
+      "type": "null"
+    },
+    "contract_kind": {
+      "const": "validation_receipt"
+    },
+    "hypothesis_id": {
+      "type": "null"
+    },
+    "native_research_outcome": {
+      "const": false
+    },
+    "payload": {
+      "additionalProperties": false,
+      "properties": {
+        "independent_implementation": {
+          "const": true
+        },
+        "method_id": {
+          "pattern": "^[a-z][a-z0-9_]{2,63}$",
+          "type": "string"
+        },
+        "method_result_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "passed": {
+          "type": "boolean"
+        },
+        "private_receipt_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "producer_source_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "recomputed_scalar": {
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "shares_decisive_logic": {
+          "const": false
+        },
+        "validation_receipt_id": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "validator_id": {
+          "pattern": "^[a-z][a-z0-9_]{2,63}$",
+          "type": "string"
+        },
+        "validator_output_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "validator_source_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "work_unit_id": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "validation_receipt_id",
+        "work_unit_id",
+        "method_result_sha256",
+        "method_id",
+        "producer_source_sha256",
+        "validator_id",
+        "validator_source_sha256",
+        "independent_implementation",
+        "shares_decisive_logic",
+        "passed",
+        "recomputed_scalar",
+        "private_receipt_sha256",
+        "validator_output_sha256"
+      ],
+      "type": "object"
+    },
+    "record_kind": {
+      "const": "lab_engineering_fixture"
+    },
+    "record_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "retainable": {
+      "type": "boolean"
+    },
+    "retention_class": {
+      "const": "engineering_only"
+    },
+    "route_effect": {
+      "const": "none"
+    },
+    "schema_version": {
+      "const": "1.0"
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_kind",
+    "contract_kind",
+    "hypothesis_id",
+    "candidate_id",
+    "authorization_id",
+    "native_research_outcome",
+    "route_effect",
+    "retention_class",
+    "retainable",
+    "payload",
+    "record_sha256"
+  ],
+  "title": "ECDLP lab validation_receipt engineering fixture",
+  "type": "object"
+}

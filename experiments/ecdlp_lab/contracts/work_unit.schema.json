@@ -1,0 +1,153 @@
+{
+  "$id": "https://keyai.example/schemas/ecdlp-lab-work_unit-v1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authorization_id": {
+      "type": "null"
+    },
+    "candidate_id": {
+      "type": "null"
+    },
+    "contract_kind": {
+      "const": "work_unit"
+    },
+    "hypothesis_id": {
+      "type": "null"
+    },
+    "native_research_outcome": {
+      "const": false
+    },
+    "payload": {
+      "additionalProperties": false,
+      "properties": {
+        "algorithm_seed": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "attempt_id": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "campaign_id": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "method_id": {
+          "pattern": "^[a-z][a-z0-9_]{2,63}$",
+          "type": "string"
+        },
+        "retry_index": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "source": {
+          "additionalProperties": false,
+          "properties": {
+            "clean_tree": {
+              "type": "boolean"
+            },
+            "commit": {
+              "pattern": "^[0-9a-f]{40}$",
+              "type": "string"
+            },
+            "diff_sha256": {
+              "oneOf": [
+                {
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "producer_dependency_sha256s": {
+              "items": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "minItems": 1,
+              "type": "array"
+            },
+            "source_snapshot_sha256": {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            "validator_dependency_sha256s": {
+              "items": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "commit",
+            "clean_tree",
+            "source_snapshot_sha256",
+            "diff_sha256",
+            "producer_dependency_sha256s",
+            "validator_dependency_sha256s"
+          ],
+          "type": "object"
+        },
+        "target_vector_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "work_unit_id": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "work_unit_id",
+        "attempt_id",
+        "retry_index",
+        "campaign_id",
+        "target_vector_sha256",
+        "method_id",
+        "algorithm_seed",
+        "source"
+      ],
+      "type": "object"
+    },
+    "record_kind": {
+      "const": "lab_engineering_fixture"
+    },
+    "record_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "retainable": {
+      "type": "boolean"
+    },
+    "retention_class": {
+      "const": "engineering_only"
+    },
+    "route_effect": {
+      "const": "none"
+    },
+    "schema_version": {
+      "const": "1.0"
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_kind",
+    "contract_kind",
+    "hypothesis_id",
+    "candidate_id",
+    "authorization_id",
+    "native_research_outcome",
+    "route_effect",
+    "retention_class",
+    "retainable",
+    "payload",
+    "record_sha256"
+  ],
+  "title": "ECDLP lab work_unit engineering fixture",
+  "type": "object"
+}

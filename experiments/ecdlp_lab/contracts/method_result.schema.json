@@ -1,0 +1,186 @@
+{
+  "$id": "https://keyai.example/schemas/ecdlp-lab-method_result-v1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authorization_id": {
+      "type": "null"
+    },
+    "candidate_id": {
+      "type": "null"
+    },
+    "contract_kind": {
+      "const": "method_result"
+    },
+    "hypothesis_id": {
+      "type": "null"
+    },
+    "native_research_outcome": {
+      "const": false
+    },
+    "payload": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_sha256s": {
+          "items": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "claimed_scalar": {
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "counters": {
+          "additionalProperties": false,
+          "properties": {
+            "additions": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "collisions": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "distinguished_points": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "doublings": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "estimated_table_bytes": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "group_law_invocations": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "inversions": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "multiplications": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "negations": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "noninvertible_collisions": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "restarts": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "squarings": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "table_entries": {
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "group_law_invocations",
+            "additions",
+            "doublings",
+            "inversions",
+            "multiplications",
+            "squarings",
+            "negations",
+            "table_entries",
+            "estimated_table_bytes",
+            "restarts",
+            "collisions",
+            "noninvertible_collisions",
+            "distinguished_points"
+          ],
+          "type": "object"
+        },
+        "message": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "method_id": {
+          "pattern": "^[a-z][a-z0-9_]{2,63}$",
+          "type": "string"
+        },
+        "result_id": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "solved",
+            "bounded_failure",
+            "error",
+            "resource_exhausted"
+          ]
+        },
+        "work_unit_id": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "result_id",
+        "work_unit_id",
+        "method_id",
+        "status",
+        "claimed_scalar",
+        "counters",
+        "artifact_sha256s",
+        "message"
+      ],
+      "type": "object"
+    },
+    "record_kind": {
+      "const": "lab_engineering_fixture"
+    },
+    "record_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "retainable": {
+      "type": "boolean"
+    },
+    "retention_class": {
+      "const": "engineering_only"
+    },
+    "route_effect": {
+      "const": "none"
+    },
+    "schema_version": {
+      "const": "1.0"
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_kind",
+    "contract_kind",
+    "hypothesis_id",
+    "candidate_id",
+    "authorization_id",
+    "native_research_outcome",
+    "route_effect",
+    "retention_class",
+    "retainable",
+    "payload",
+    "record_sha256"
+  ],
+  "title": "ECDLP lab method_result engineering fixture",
+  "type": "object"
+}

@@ -1,0 +1,298 @@
+{
+  "analysis_summary": {
+    "authorization_id": null,
+    "candidate_id": null,
+    "contract_kind": "analysis_summary",
+    "hypothesis_id": null,
+    "native_research_outcome": false,
+    "payload": {
+      "analysis_summary_id": "a3b4a3b403979982c8e1353d07de3f015b77b1a3a3903ddb67218b319c11d759",
+      "campaign_id": "338de03b2be0ab38e677b6e05eaf769bb5a56227fb87f4dbbfcecc7286609e18",
+      "claims": {
+        "asymptotic_claim": null,
+        "route_promotion": false,
+        "scientific_outcome": false,
+        "secp256k1_break": false
+      },
+      "normalized_metrics": {
+        "median_group_operations": "12.0",
+        "success_probability": "1.0",
+        "validated_work_units": 1
+      },
+      "validation_receipt_sha256s": [
+        "8cab1203d88b8594d610e913efa1b6989a3d85074eb0377d65a4dae9d7ba39f5"
+      ],
+      "warnings": [
+        "P01 fixture only; no scientific outcome."
+      ]
+    },
+    "record_kind": "lab_engineering_fixture",
+    "record_sha256": "2007481ccd9da259862eb7604d1b5e320629bd33d688ea7abd621a81b4ea7d69",
+    "retainable": true,
+    "retention_class": "engineering_only",
+    "route_effect": "none",
+    "schema_version": "1.0"
+  },
+  "artifact_ref": {
+    "authorization_id": null,
+    "candidate_id": null,
+    "contract_kind": "artifact_ref",
+    "hypothesis_id": null,
+    "native_research_outcome": false,
+    "payload": {
+      "artifact_ref_id": "fc6bc18c3289c9b17e4ad2b219aa871320686b9944c53d99151f49872b877839",
+      "location": "artifacts/p01-fixture-campaign/result.json",
+      "media_type": "application/json",
+      "role": "method-result",
+      "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "size_bytes": 321
+    },
+    "record_kind": "lab_engineering_fixture",
+    "record_sha256": "ff97c2334c9131fbcac1828c177e82edcadb60c327955ee34679bd4a32c42855",
+    "retainable": true,
+    "retention_class": "engineering_only",
+    "route_effect": "none",
+    "schema_version": "1.0"
+  },
+  "campaign_config": {
+    "authorization_id": null,
+    "candidate_id": null,
+    "contract_kind": "campaign_config",
+    "hypothesis_id": null,
+    "native_research_outcome": false,
+    "payload": {
+      "algorithm_seeds": [
+        101,
+        202
+      ],
+      "amortization_target_count": 1,
+      "budgets": {
+        "max_group_operations": 1000000,
+        "max_rss_bytes": 268435456,
+        "parallel_workers": 1,
+        "timeout_ns": 5000000000
+      },
+      "campaign_id": "338de03b2be0ab38e677b6e05eaf769bb5a56227fb87f4dbbfcecc7286609e18",
+      "catalog_sha256": "5681b454066b4c5aeb675004276388a33ee62da0e61675260d6230a577da4f65",
+      "method_ids": [
+        "bsgs_reference_v1",
+        "rho_reference_v1"
+      ],
+      "output_subdir": "artifacts/p01-fixture-campaign",
+      "reusable_setup": false,
+      "target_vector_sha256s": [
+        "42694ecc6245bdc2a6d3dd6373f0362c1e7f376963c55c2928cc94392fa13490"
+      ]
+    },
+    "record_kind": "lab_engineering_fixture",
+    "record_sha256": "7f3a3e9b37f266a7832dc00651eae11e2d912e668781c235d67426a72cc15083",
+    "retainable": true,
+    "retention_class": "engineering_only",
+    "route_effect": "none",
+    "schema_version": "1.0"
+  },
+  "method_request": {
+    "authorization_id": null,
+    "candidate_id": null,
+    "contract_kind": "method_request",
+    "hypothesis_id": null,
+    "native_research_outcome": false,
+    "payload": {
+      "algorithm_seed": 101,
+      "base_point": {
+        "x": 2,
+        "y": 12
+      },
+      "budgets": {
+        "max_group_operations": 1000000,
+        "max_rss_bytes": 268435456,
+        "parallel_workers": 1,
+        "timeout_ns": 5000000000
+      },
+      "curve": {
+        "curve_a": 0,
+        "curve_b": 7,
+        "curve_id": "fixture-j0-p43",
+        "field_p": 43
+      },
+      "method_id": "bsgs_reference_v1",
+      "public_interval": null,
+      "request_id": "eb918f629eb2fb00c62dc84c044348daf28a4fea522b5beccf6e921d0f0d1e18",
+      "subgroup_order": 31,
+      "target_point": {
+        "x": 12,
+        "y": 12
+      },
+      "target_vector_sha256": "42694ecc6245bdc2a6d3dd6373f0362c1e7f376963c55c2928cc94392fa13490",
+      "work_unit_id": "55d6a32c1c10b11fe4e4c1a5ef1d83d1cd2afe96507e09dbce88ac9f1b4092bb"
+    },
+    "record_kind": "lab_engineering_fixture",
+    "record_sha256": "868c7f688f575041c129890296b8dbcf466c5929611854fcde7287bb3481f580",
+    "retainable": true,
+    "retention_class": "engineering_only",
+    "route_effect": "none",
+    "schema_version": "1.0"
+  },
+  "method_result": {
+    "authorization_id": null,
+    "candidate_id": null,
+    "contract_kind": "method_result",
+    "hypothesis_id": null,
+    "native_research_outcome": false,
+    "payload": {
+      "artifact_sha256s": [
+        "ff97c2334c9131fbcac1828c177e82edcadb60c327955ee34679bd4a32c42855"
+      ],
+      "claimed_scalar": 5,
+      "counters": {
+        "additions": 8,
+        "collisions": 0,
+        "distinguished_points": 0,
+        "doublings": 4,
+        "estimated_table_bytes": 384,
+        "group_law_invocations": 12,
+        "inversions": 12,
+        "multiplications": 60,
+        "negations": 0,
+        "noninvertible_collisions": 0,
+        "restarts": 0,
+        "squarings": 12,
+        "table_entries": 6
+      },
+      "message": null,
+      "method_id": "bsgs_reference_v1",
+      "result_id": "f1c77e41d34f54b95095fd3dd34b4ba79bcb71d4e8ab23d8401f14c63989cf7f",
+      "status": "solved",
+      "work_unit_id": "55d6a32c1c10b11fe4e4c1a5ef1d83d1cd2afe96507e09dbce88ac9f1b4092bb"
+    },
+    "record_kind": "lab_engineering_fixture",
+    "record_sha256": "4e9ddc0e8c0a105ffd1adf6003ee37b85368e403f180779f5d8008590854c12d",
+    "retainable": true,
+    "retention_class": "engineering_only",
+    "route_effect": "none",
+    "schema_version": "1.0"
+  },
+  "target_vector": {
+    "authorization_id": null,
+    "candidate_id": null,
+    "contract_kind": "target_vector",
+    "hypothesis_id": null,
+    "native_research_outcome": false,
+    "payload": {
+      "base_point": {
+        "x": 2,
+        "y": 12
+      },
+      "catalog_sha256": "5681b454066b4c5aeb675004276388a33ee62da0e61675260d6230a577da4f65",
+      "curve_a": 0,
+      "curve_b": 7,
+      "curve_id": "fixture-j0-p43",
+      "field_bits": 6,
+      "field_p": 43,
+      "private_receipt_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "public_interval": null,
+      "subgroup_order": 31,
+      "subgroup_order_bits": 5,
+      "target_point": {
+        "x": 12,
+        "y": 12
+      },
+      "target_vector_id": "fa36d339d98a4b9cccfa70cdc54063e2a12a89ed44eb6972befad745287ec46e"
+    },
+    "record_kind": "lab_engineering_fixture",
+    "record_sha256": "42694ecc6245bdc2a6d3dd6373f0362c1e7f376963c55c2928cc94392fa13490",
+    "retainable": true,
+    "retention_class": "engineering_only",
+    "route_effect": "none",
+    "schema_version": "1.0"
+  },
+  "telemetry": {
+    "authorization_id": null,
+    "candidate_id": null,
+    "contract_kind": "telemetry",
+    "hypothesis_id": null,
+    "native_research_outcome": false,
+    "payload": {
+      "attempt_id": "c28a81dbd9b31efd066ec1678611f3d3e11e6e2941e21cbebb29bf2616fba1d8",
+      "cpu_time_ns": 9000000,
+      "exit_code": 0,
+      "max_rss_bytes": 12000000,
+      "parallel_workers": 1,
+      "platform": "fixture-linux-x86_64",
+      "python_version": "3.12.0",
+      "telemetry_id": "fd2824e0f669fb9c192d81d10f9cc6a50d4c15710926486879b48e026b1758fa",
+      "tool_versions": {
+        "fixture-method": "1.0"
+      },
+      "wall_time_ns": 10000000
+    },
+    "record_kind": "lab_engineering_fixture",
+    "record_sha256": "39599bec2b2fea2e3bd4939aad19377072431343f4f74cae65dc10d28d3e0095",
+    "retainable": true,
+    "retention_class": "engineering_only",
+    "route_effect": "none",
+    "schema_version": "1.0"
+  },
+  "validation_receipt": {
+    "authorization_id": null,
+    "candidate_id": null,
+    "contract_kind": "validation_receipt",
+    "hypothesis_id": null,
+    "native_research_outcome": false,
+    "payload": {
+      "independent_implementation": true,
+      "method_id": "bsgs_reference_v1",
+      "method_result_sha256": "4e9ddc0e8c0a105ffd1adf6003ee37b85368e403f180779f5d8008590854c12d",
+      "passed": true,
+      "private_receipt_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "producer_source_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "recomputed_scalar": 5,
+      "shares_decisive_logic": false,
+      "validation_receipt_id": "ff1ef9c824631bd7675894f061713f9fe3c12b5f66728b180030dc1b59b9775f",
+      "validator_id": "ec_oracle_validator_v1",
+      "validator_output_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "validator_source_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "work_unit_id": "55d6a32c1c10b11fe4e4c1a5ef1d83d1cd2afe96507e09dbce88ac9f1b4092bb"
+    },
+    "record_kind": "lab_engineering_fixture",
+    "record_sha256": "8cab1203d88b8594d610e913efa1b6989a3d85074eb0377d65a4dae9d7ba39f5",
+    "retainable": true,
+    "retention_class": "engineering_only",
+    "route_effect": "none",
+    "schema_version": "1.0"
+  },
+  "work_unit": {
+    "authorization_id": null,
+    "candidate_id": null,
+    "contract_kind": "work_unit",
+    "hypothesis_id": null,
+    "native_research_outcome": false,
+    "payload": {
+      "algorithm_seed": 101,
+      "attempt_id": "c28a81dbd9b31efd066ec1678611f3d3e11e6e2941e21cbebb29bf2616fba1d8",
+      "campaign_id": "338de03b2be0ab38e677b6e05eaf769bb5a56227fb87f4dbbfcecc7286609e18",
+      "method_id": "bsgs_reference_v1",
+      "retry_index": 0,
+      "source": {
+        "clean_tree": true,
+        "commit": "1111111111111111111111111111111111111111",
+        "diff_sha256": null,
+        "producer_dependency_sha256s": [
+          "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+        ],
+        "source_snapshot_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "validator_dependency_sha256s": [
+          "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        ]
+      },
+      "target_vector_sha256": "42694ecc6245bdc2a6d3dd6373f0362c1e7f376963c55c2928cc94392fa13490",
+      "work_unit_id": "55d6a32c1c10b11fe4e4c1a5ef1d83d1cd2afe96507e09dbce88ac9f1b4092bb"
+    },
+    "record_kind": "lab_engineering_fixture",
+    "record_sha256": "b57558c14b3350d0ba2b30d45092c934af9930a05d4f81d27219da2b5262dd90",
+    "retainable": true,
+    "retention_class": "engineering_only",
+    "route_effect": "none",
+    "schema_version": "1.0"
+  }
+}

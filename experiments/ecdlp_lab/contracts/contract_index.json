@@ -1,0 +1,44 @@
+{
+  "canonical_json": "../core/canonical_json.py",
+  "contract_kinds": {
+    "analysis_summary": {
+      "identity_field": "analysis_summary_id",
+      "schema": "analysis_summary.schema.json"
+    },
+    "artifact_ref": {
+      "identity_field": "artifact_ref_id",
+      "schema": "artifact_ref.schema.json"
+    },
+    "campaign_config": {
+      "identity_field": "campaign_id",
+      "schema": "campaign_config.schema.json"
+    },
+    "method_request": {
+      "identity_field": "request_id",
+      "schema": "method_request.schema.json"
+    },
+    "method_result": {
+      "identity_field": "result_id",
+      "schema": "method_result.schema.json"
+    },
+    "target_vector": {
+      "identity_field": "target_vector_id",
+      "schema": "target_vector.schema.json"
+    },
+    "telemetry": {
+      "identity_field": "telemetry_id",
+      "schema": "telemetry.schema.json"
+    },
+    "validation_receipt": {
+      "identity_field": "validation_receipt_id",
+      "schema": "validation_receipt.schema.json"
+    },
+    "work_unit": {
+      "identity_field": "work_unit_id",
+      "schema": "work_unit.schema.json"
+    }
+  },
+  "record_kind": "lab_engineering_fixture",
+  "runtime_validator": "../core/contract_validation.py",
+  "schema_version": "1.0"
+}

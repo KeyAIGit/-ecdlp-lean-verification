@@ -1,0 +1,118 @@
+{
+  "$id": "https://keyai.example/schemas/ecdlp-lab-telemetry-v1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authorization_id": {
+      "type": "null"
+    },
+    "candidate_id": {
+      "type": "null"
+    },
+    "contract_kind": {
+      "const": "telemetry"
+    },
+    "hypothesis_id": {
+      "type": "null"
+    },
+    "native_research_outcome": {
+      "const": false
+    },
+    "payload": {
+      "additionalProperties": false,
+      "properties": {
+        "attempt_id": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "cpu_time_ns": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "exit_code": {
+          "type": "integer"
+        },
+        "max_rss_bytes": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "parallel_workers": {
+          "maximum": 64,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "platform": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "python_version": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "telemetry_id": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "tool_versions": {
+          "additionalProperties": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "wall_time_ns": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "telemetry_id",
+        "attempt_id",
+        "wall_time_ns",
+        "cpu_time_ns",
+        "max_rss_bytes",
+        "exit_code",
+        "parallel_workers",
+        "platform",
+        "python_version",
+        "tool_versions"
+      ],
+      "type": "object"
+    },
+    "record_kind": {
+      "const": "lab_engineering_fixture"
+    },
+    "record_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "retainable": {
+      "type": "boolean"
+    },
+    "retention_class": {
+      "const": "engineering_only"
+    },
+    "route_effect": {
+      "const": "none"
+    },
+    "schema_version": {
+      "const": "1.0"
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_kind",
+    "contract_kind",
+    "hypothesis_id",
+    "candidate_id",
+    "authorization_id",
+    "native_research_outcome",
+    "route_effect",
+    "retention_class",
+    "retainable",
+    "payload",
+    "record_sha256"
+  ],
+  "title": "ECDLP lab telemetry engineering fixture",
+  "type": "object"
+}

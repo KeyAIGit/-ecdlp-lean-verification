@@ -1,0 +1,9 @@
+{
+  "files": {
+    "invalid_raw_json.json": "37835026a56de363cc49713b2cb40da0e12edb967c12b1d81c70265204e08874",
+    "invalid_records.json": "edeb4fb059a232d367ebf05e280fdaa32ed8ec341b2acb116c58787c7bb555b6",
+    "registry.json": "54bf801a763b1b208843547c50c6c47ec705af93a56258d087738c1603902618",
+    "valid_records.json": "bd736caf5fa224b1ab16e46323c568eb0a964df10483125f7d429abd0e23ff17"
+  },
+  "schema_version": "1.0"
+}

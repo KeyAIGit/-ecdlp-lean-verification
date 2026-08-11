@@ -1,0 +1,32 @@
+[
+  {
+    "expected_error": "duplicate JSON key",
+    "name": "duplicate_key",
+    "text": "{\"a\":1,\"a\":2}"
+  },
+  {
+    "expected_error": "non-finite",
+    "name": "nan",
+    "text": "{\"value\":NaN}"
+  },
+  {
+    "expected_error": "non-finite",
+    "name": "infinity",
+    "text": "{\"value\":Infinity}"
+  },
+  {
+    "expected_error": "negative zero",
+    "name": "negative_zero_integer",
+    "text": "{\"value\":-0}"
+  },
+  {
+    "expected_error": "negative zero",
+    "name": "negative_zero_decimal",
+    "text": "{\"value\":-0.000e+12}"
+  },
+  {
+    "expected_error": "floating-point",
+    "name": "float_literal",
+    "text": "{\"value\":0.5}"
+  }
+]
