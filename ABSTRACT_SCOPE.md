@@ -7,7 +7,7 @@
 
 ## Canonical accounting
 
-- **326 ledger rows / ~287 distinct kernel-verified results** (39 rows are
+- **327 ledger rows / ~288 distinct kernel-verified results** (39 rows are
   alternate-form / supporting restatements of an already-counted result).
 - **0 `sorry`** anywhere in the built (`Ecdlp/`-minus-`Targets/`) tree.
 - **No CUSTOM axioms.** Everything depends only on Lean/Mathlib's standard
@@ -151,6 +151,24 @@
   relation set, independence, useful yield/distribution, PFPO, `AllRoots`, root
   solving, sparse-linear-algebra outcome, runtime/memory/solver-node/total-cost
   improvement, scalar recovery, ECDLP shortcut, or attack follows.
+- **Fixed-target kernel and normalized-fiber accounting is exact without
+  claiming row multiplicity or useful rank.** For every target, the augmented
+  synthesis kernel is the coefficient synthesis kernel intersected with the
+  zero-label-sum kernel. Only when the target is nonzero do the coefficient and
+  augmented kernels, span ranks, and matrix ranks agree, including after a
+  supplied `SignedGLVSection` rebase. For one fixed factor-base tuple, the full
+  target-labelled semantic fiber and normalized sample have the same
+  coefficient and augmented row ranges and span ranks. Keeping both Boolean
+  target labels adds exactly `card NormalizedFiber` to each synthesis-kernel
+  dimension, which also gives the corresponding rank upper bounds and kernel
+  lower bounds. At target zero no kernel- or rank-equality upgrade is made, and
+  the full and normalized fibers are not claimed equal or equicardinal. Raw
+  integral canonical (`C`) row and GLV/mod-`n` row multiplicity, coarsening, and
+  partition theorems remain deferred; any future multiplicity counts labelled
+  semantic witnesses rather than algebraic roots. No minimum-point-encoding
+  convention is defined or compared, and no achieved rank, independence,
+  useful yield, PFPO, `AllRoots`, root solving, sparse-linear-algebra outcome,
+  runtime/memory/cost, scalar recovery, ECDLP shortcut, or attack follows.
 
 ## 1. Honest framing (one paragraph)
 

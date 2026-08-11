@@ -2,7 +2,7 @@
 
 > Counts here are a snapshot; the single canonical figure is **`STATUS.md`** (generated from `data/stats.json`). If they differ, STATUS.md wins.
 
-**Scope of the verified body.** `326 ledger rows / ~287 distinct kernel-verified
+**Scope of the verified body.** `327 ledger rows / ~288 distinct kernel-verified
 results`. A row may group several supporting declarations; the exact expansion is
 generated in `data/result_registry.json`. The built surface has **0 `sorry`, 0
 `admit`, and 0 custom axioms**. Open target stems are explicitly outside the built
@@ -570,6 +570,36 @@ depends on `Lean.ofReduceBool`). These are the rows tagged "Mathlib + native_dec
   the separate experimental minimum-point-encoding convention. No achieved
   experimental rank, useful yield, solver, cost, or ECDLP conclusion is
   audited.
+- `Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean` →
+  `ker_augmentedSynthesis_eq_inf_ker_coefficientSynthesis_ker_labelSum`,
+  `ker_augmentedSynthesis_eq_ker_coefficientSynthesis_of_target_ne_zero`,
+  `coefficientRank_eq_augmentedRank_of_target_ne_zero`,
+  `coefficientMatrix_rank_eq_augmentedMatrix_rank_of_target_ne_zero`,
+  `ker_rebasedAugmentedSynthesis_eq_ker_rebasedCoefficientSynthesis_of_target_ne_zero`,
+  `rebasedCoefficientMatrix_rank_eq_rebasedAugmentedMatrix_rank_of_target_ne_zero`,
+  `range_coefficientMatrix_row_fixedFiberSample`,
+  `range_augmentedMatrix_row_fixedFiberSample`,
+  `coefficientRank_fixedFiberSample_eq_normalizedFiberSample`,
+  `augmentedRank_fixedFiberSample_eq_normalizedFiberSample`,
+  `finrank_ker_coefficientSynthesis_fixedFiberSample`,
+  `finrank_ker_augmentedSynthesis_fixedFiberSample`,
+  `coefficientRank_fixedFiberSample_le_card_normalizedFiber`,
+  `augmentedRank_fixedFiberSample_le_card_normalizedFiber`,
+  `card_normalizedFiber_le_finrank_ker_coefficientSynthesis_fixedFiberSample`,
+  and
+  `card_normalizedFiber_le_finrank_ker_augmentedSynthesis_fixedFiberSample`.
+  Their proof bodies add no `native_decide` owner. All sixteen audited
+  declarations are transitively compiler-backed only through already
+  catalogued secp256k1 parameter/primality, concrete-subgroup/full-group/GLV,
+  `rhs`-support, base-field no-two-torsion, and factor-base/liftable-census
+  dependency families as applicable; no solver-budget owner, `sorryAx`, or
+  custom axiom is introduced. At target zero only the exact kernel intersection
+  is audited, while kernel/rank equality requires a nonzero target; the rebased
+  results require a supplied `SignedGLVSection`. The full and normalized fibers
+  are not identified, and raw integral canonical (`C`) row and GLV/mod-`n` row
+  multiplicity, coarsening, and partitions remain deferred. No experimental
+  minimum-point encoding, achieved rank, useful yield, solver, cost, scalar
+  recovery, or ECDLP conclusion is audited.
 - `Ecdlp/Proved/M16FactorBaseLiftable.lean` → the public generator/orbit,
   liftable/nonliftable, character-sum, fiber, and signed-point counts, plus
   `rhs_beta_mul`, `liftableOrbitEquiv`, and
@@ -622,7 +652,7 @@ Distinguishing *machine-enforced* (a red build blocks merge) from *documentation
 | `Ensure no incomplete proofs remain` | `grep -rniI --include='*.lean' --exclude-dir=Targets 'sorry' Ecdlp/` — fails if `sorry`/`admit` text appears in any **built** `.lean` file. `Ecdlp/Targets/` (open stems) is excluded by design. | **MACHINE-ENFORCED**, with the documented scope limit that it is a *text* grep over built files and deliberately skips `Targets/`. |
 | `Ensure no built file imports an open target stem` | `grep` for `import Ecdlp.Targets` outside `Targets/`. Closes the hole where a built file could pull a `sorry`-bearing stem into the build graph (since `sorry` is only a warning). | **MACHINE-ENFORCED.** This is the guard that makes the previous grep sound. |
 | `Fetch prebuilt Mathlib cache` + `Build and verify ALL proofs` — `lake build` | The **kernel** re-checks every built proof term. A `sorry` that reached the build graph, or any type error, fails here. | **MACHINE-ENFORCED.** This is the core verification: a green `lake build` means the kernel accepted every built theorem. |
-| `Axiom audit (no sorryAx, no custom axioms)` — `lake env lean Ecdlp/LedgerAxiomAudit.lean` → `scripts/check_axioms.py` | Generates `#print axioms` for every named declaration resolved from all 326 ledger rows. It fails on `sorryAx`, guard/custom axioms, unknown names, or any mismatch between Lean output and `data/result_registry.json`; compiler-trust markers from `native_decide` are disclosed. | **MACHINE-ENFORCED and exhaustive over the named ledger declaration set.** Seven anonymous instance targets are source-resolved exemptions because they have no source-level declaration name; their defining files are still built and their named load-bearing theorems are audited. |
+| `Axiom audit (no sorryAx, no custom axioms)` — `lake env lean Ecdlp/LedgerAxiomAudit.lean` → `scripts/check_axioms.py` | Generates `#print axioms` for every named declaration resolved from all 327 ledger rows. It fails on `sorryAx`, guard/custom axioms, unknown names, or any mismatch between Lean output and `data/result_registry.json`; compiler-trust markers from `native_decide` are disclosed. | **MACHINE-ENFORCED and exhaustive over the named ledger declaration set.** Seven anonymous instance targets are source-resolved exemptions because they have no source-level declaration name; their defining files are still built and their named load-bearing theorems are audited. |
 | `Typecheck open target stems (non-blocking)` | `lake env lean` over `Ecdlp/Targets/*.lean`; `continue-on-error: true`. | **DOCUMENTATION/INFO ONLY.** A stem failing to typecheck emits a warning, never blocks. |
 | `Featherless API smoke test`, `Prover target attempt`, report upload | All `continue-on-error: true` and skipped on PRs. | **DOCUMENTATION/INFO ONLY.** Prover orchestration; cannot affect the verification verdict. |
 

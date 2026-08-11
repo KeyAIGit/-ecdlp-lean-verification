@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~287 distinct results / 326 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~288 distinct results / 327 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -305,6 +305,21 @@ exact `Θ` statements.
   independence, useful relation yield/distribution, PFPO, `AllRoots`, solver,
   sparse-linear-algebra outcome, runtime/memory/solver-node/total cost, scalar
   recovery, ECDLP shortcut, or attack.
+  Fixed-target rank accounting now has an exact boundary. For every target the
+  augmented synthesis kernel is the intersection of the coefficient kernel
+  with the zero-label-sum kernel; only for a nonzero target do coefficient and
+  augmented kernels, span ranks, and matrix ranks agree, including after a
+  supplied signed-section rebase. For a fixed factor-base tuple, retaining both
+  Boolean target labels preserves coefficient and augmented row ranges and
+  span ranks while adding exactly one normalized-fiber cardinality to each
+  labelled synthesis-kernel dimension. This does not identify the full and
+  normalized fibers or upgrade the zero-target case. The raw integral
+  canonical (`C`) row and GLV/mod-`n` row multiplicity, coarsening, and
+  partition layer remains deferred, and any later multiplicity must count
+  target-labelled semantic witnesses rather than algebraic-root multiplicity.
+  No minimum-point-encoding comparison, achieved rank, independence, useful
+  yield, PFPO, `AllRoots`, root solver, sparse-linear-algebra result, runtime,
+  memory, cost, scalar recovery, ECDLP shortcut, or attack follows.
   `CELL-M-PKC-SMOOTH-M16` remains `open_non_executable`,
   `CQ-SEMAEV-S17-SYSTEM-COST` remains `partial`, and
   `B-PKC-M16-COMPLETE-COST-BRIDGE` remains open on establishing a nonempty
