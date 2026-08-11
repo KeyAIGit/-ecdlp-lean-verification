@@ -257,7 +257,7 @@ the immutable denylist.
 
 ### P00: health, inventory, and upstream reconciliation
 
-Status: ready
+Status: complete
 Allowed paths: task/router/bundle documentation and generated routing views;
 the reuse inventory is `tasks/ECDLP_LAB_REUSE_INVENTORY.json`
 
@@ -283,9 +283,17 @@ Exit criteria:
 - PR #356 is either `upstream_pending`, `accepted_on_main`, or `parked`, with
   evidence for that exact state.
 
+Completion evidence at baseline `61842fe336f85518fccab7a470bbb9b699126f2d`:
+
+- contract/routing PR #362 merged after Docs sync and full Lean proof CI;
+- `tasks/ECDLP_LAB_REUSE_INVENTORY.json` binds 28 frozen files and two excluded
+  legacy surfaces, checked by `scripts/lab_check_reuse_inventory.py`;
+- PR #356 is `upstream_pending` at head `7a76a73949492c547b3ce4fd0ee7e376bf687ed2`:
+  draft, both recorded CI runs red, no review, and no independent Sage replay.
+
 ### P01: lab contracts, canonical JSON, and path-scoped CI
 
-Status: blocked_by_P00
+Status: ready
 Allowed paths: `experiments/ecdlp_lab/contracts/`,
 `experiments/ecdlp_lab/core/`, `experiments/ecdlp_lab/fixtures/`,
 `experiments/ecdlp_lab/tests/`, `experiments/README.md`,
@@ -742,6 +750,7 @@ The completed lab must expose commands equivalent to:
 
 ```bash
 python3 -m unittest discover -s experiments/ecdlp_lab/tests -p 'test_*.py'
+python3 scripts/lab_check_reuse_inventory.py
 python3 -m experiments.ecdlp_lab.core.capabilities --json
 python3 -m experiments.ecdlp_lab.core.validate --offline
 python3 -m experiments.ecdlp_lab.orchestration.run_smoke \
