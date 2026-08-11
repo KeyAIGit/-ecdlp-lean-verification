@@ -1,0 +1,80 @@
+{
+  "schema_version": "0.1-untrusted",
+  "parked_id": "PARKED-M-GENERATOR-RELATIVE-PARITY-LIFT",
+  "research_line": "PARITY-LIFT-000",
+  "status": "desired_properties_only",
+  "scientific_identity": "research_question_seed",
+  "threat_model": "classical-single-target-plain",
+  "target_family": "odd-prime-order elliptic-curve groups",
+  "primary_instance": "secp256k1 point group",
+  "question": "Does there exist a public sign-sensitive lift and nonlinear decoder, jointly evaluable below the matched generic square-root baseline, that returns the parity of the canonical generator-relative discrete logarithm?",
+  "required_interface": {
+    "input": [
+      "curve parameters",
+      "odd-prime-order generator G",
+      "public point Q in <G>"
+    ],
+    "lift_output": "a deterministic sign-sensitive, gauge-resolved representation of Q",
+    "decoder_output": "rep_G(Q) mod 2",
+    "correctness": "exact on every canonical scalar representative 0 <= k < ord(G)",
+    "recovery": "bind the exact adaptive parity-to-full-DLP reduction",
+    "cost": "price lift, decoder, precision, preprocessing, memory, exceptions, and all adaptive calls"
+  },
+  "hard_gates": [
+    "does not identify Q with -Q",
+    "normalization is computable without the hidden scalar",
+    "does not hide an exponential table or a k-step orbit walk",
+    "covers zeros, poles, chart changes, extension fields, and exceptional points",
+    "supplies an independent recovery validator",
+    "beats the matched Pollard-rho baseline in total online work",
+    "separates algebraic degree from evaluation complexity",
+    "does not infer an algorithm from a coordinate re-encoding alone"
+  ],
+  "closed_mechanism_classes": [
+    {
+      "id": "KUMMER-SIGN-ERASING",
+      "scope": "representations satisfying pi(Q)=pi(-Q)",
+      "reason": "canonical scalar parity is complemented by point negation"
+    },
+    {
+      "id": "GLOBAL-ORDER-TWO-TRANSLATION-PHASE",
+      "scope": "nonzero observables satisfying F(Q+G)=-F(Q) globally",
+      "reason": "an odd translation cycle cannot support a nonzero order-two character"
+    },
+    {
+      "id": "SMALL-FIXED-LINEAR-THETA-SPACE",
+      "scope": "one fixed theta section space with globally linear translation by the full-order generator",
+      "reason": "the line-bundle degree and representation dimension must be at least ord(G)"
+    },
+    {
+      "id": "BOUNDED-DEGREE-DIRECT-SIGN-FUNCTION",
+      "scope": "rational functions taking exactly +1 or -1 on every group point",
+      "reason": "the pole degree is at least ceil(ord(G)/2)"
+    }
+  ],
+  "surviving_mechanism_classes": [
+    "finite-field character of a structured rational, division-polynomial, or theta expression",
+    "p-adic or analytic theta observable with exact precision and truncation cost",
+    "nonlinear cocycle with a global evaluation algorithm that avoids secret-length traversal",
+    "high algebraic degree with provably low circuit or recurrence complexity"
+  ],
+  "next_packages": [
+    {
+      "id": "CHAR-PARITY-001",
+      "goal": "derive a scoped conductor or degree lower bound for exact finite-field-character parity decoders"
+    },
+    {
+      "id": "STRUCTURED-CHAR-PARITY-002",
+      "goal": "test division-polynomial, EDS, and theta-multiplication observables that may have high degree but fast evaluation"
+    }
+  ],
+  "lifecycle": {
+    "executable": false,
+    "admissible": false,
+    "recommended": false,
+    "authorized": false,
+    "route_promotion": false,
+    "exact_target_experiment": false
+  },
+  "boundary": "This quarantined desired-property record is not a mechanism, hypothesis, candidate, result, route selection, or experiment authorization."
+}
