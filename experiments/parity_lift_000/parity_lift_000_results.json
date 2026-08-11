@@ -1,0 +1,29 @@
+{
+  "scope": "frozen tiny odd cyclic groups only",
+  "theorems_screened": [
+    "scalarParity_neg",
+    "scalarParity_not_factor_through_Kummer",
+    "no_global_alternating_translation_observable",
+    "parityOracle_recovers_dlog",
+    "parity_fourier_has_full_support"
+  ],
+  "toy_odd_orders": [
+    {"n":3,"negation_complement_checked":2,"kummer_collision_witness":{"k":1,"minus_k":2,"same_class":[1,2],"parities":[1,0]},"global_alternation_closes":false,"maximum_oracle_calls":2,"fourier_nonzero_coefficients":3,"largest_fourier_coefficient":2.000000000000001,"all_toy_scalars_recovered":3},
+    {"n":5,"negation_complement_checked":4,"kummer_collision_witness":{"k":1,"minus_k":4,"same_class":[1,4],"parities":[1,0]},"global_alternation_closes":false,"maximum_oracle_calls":3,"fourier_nonzero_coefficients":5,"largest_fourier_coefficient":3.2360679774997907,"all_toy_scalars_recovered":5},
+    {"n":7,"negation_complement_checked":6,"kummer_collision_witness":{"k":1,"minus_k":6,"same_class":[1,6],"parities":[1,0]},"global_alternation_closes":false,"maximum_oracle_calls":3,"fourier_nonzero_coefficients":7,"largest_fourier_coefficient":4.493959207434935,"all_toy_scalars_recovered":7},
+    {"n":11,"negation_complement_checked":10,"kummer_collision_witness":{"k":1,"minus_k":10,"same_class":[1,10],"parities":[1,0]},"global_alternation_closes":false,"maximum_oracle_calls":4,"fourier_nonzero_coefficients":11,"largest_fourier_coefficient":7.026674183332277,"all_toy_scalars_recovered":11},
+    {"n":13,"negation_complement_checked":12,"kummer_collision_witness":{"k":1,"minus_k":12,"same_class":[1,12],"parities":[1,0]},"global_alternation_closes":false,"maximum_oracle_calls":4,"fourier_nonzero_coefficients":13,"largest_fourier_coefficient":8.296229810558767,"all_toy_scalars_recovered":13},
+    {"n":17,"negation_complement_checked":16,"kummer_collision_witness":{"k":1,"minus_k":16,"same_class":[1,16],"parities":[1,0]},"global_alternation_closes":false,"maximum_oracle_calls":5,"fourier_nonzero_coefficients":17,"largest_fourier_coefficient":10.837951447459433,"all_toy_scalars_recovered":17},
+    {"n":19,"negation_complement_checked":18,"kummer_collision_witness":{"k":1,"minus_k":18,"same_class":[1,18],"parities":[1,0]},"global_alternation_closes":false,"maximum_oracle_calls":5,"fourier_nonzero_coefficients":19,"largest_fourier_coefficient":12.109565585441025,"all_toy_scalars_recovered":19},
+    {"n":31,"negation_complement_checked":30,"kummer_collision_witness":{"k":1,"minus_k":30,"same_class":[1,30],"parities":[1,0]},"global_alternation_closes":false,"maximum_oracle_calls":5,"fourier_nonzero_coefficients":31,"largest_fourier_coefficient":19.743660615328217,"all_toy_scalars_recovered":31},
+    {"n":43,"negation_complement_checked":42,"kummer_collision_witness":{"k":1,"minus_k":42,"same_class":[1,42],"parities":[1,0]},"global_alternation_closes":false,"maximum_oracle_calls":6,"fourier_nonzero_coefficients":43,"largest_fourier_coefficient":27.380739517667674,"all_toy_scalars_recovered":43},
+    {"n":67,"negation_complement_checked":66,"kummer_collision_witness":{"k":1,"minus_k":66,"same_class":[1,66],"parities":[1,0]},"global_alternation_closes":false,"maximum_oracle_calls":7,"fourier_nonzero_coefficients":67,"largest_fourier_coefficient":42.65743245276287,"all_toy_scalars_recovered":67},
+    {"n":101,"negation_complement_checked":100,"kummer_collision_witness":{"k":1,"minus_k":100,"same_class":[1,100],"parities":[1,0]},"global_alternation_closes":false,"maximum_oracle_calls":7,"fourier_nonzero_coefficients":101,"largest_fourier_coefficient":64.30118915542103,"all_toy_scalars_recovered":101},
+    {"n":127,"negation_complement_checked":126,"kummer_collision_witness":{"k":1,"minus_k":126,"same_class":[1,126],"parities":[1,0]},"global_alternation_closes":false,"maximum_oracle_calls":7,"fourier_nonzero_coefficients":127,"largest_fourier_coefficient":80.85277253997783,"all_toy_scalars_recovered":127}
+  ],
+  "claim_boundary": [
+    "Arithmetic identity checks are not evidence that a parity oracle exists.",
+    "No production-sized group or external public key is accepted.",
+    "The general proofs are recorded separately in notes/PARITY_LIFT_000.md."
+  ]
+}
