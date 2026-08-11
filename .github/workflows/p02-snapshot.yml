@@ -26,6 +26,8 @@ jobs:
           mkdir -p snapshot
           cp -a experiments/ecdlp_lab snapshot/ecdlp_lab
           cp -a experiments/ml_structure_probe/p1_toy_scaling snapshot/p1_toy_scaling
+          mkdir -p snapshot/p1_reports
+          cp experiments/ml_structure_probe/reports/p1_toy_scaling/curve_catalog.json snapshot/p1_reports/
           mkdir -p snapshot/framework
           cp experiments/framework/ec_oracle.py snapshot/framework/
           cp experiments/framework/test_framework.py snapshot/framework/
