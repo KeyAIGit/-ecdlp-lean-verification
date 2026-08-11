@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 311,
-  "ledger_reference_count": 737,
-  "ledger_named_declarations": 712,
+  "ledger_rows": 313,
+  "ledger_reference_count": 753,
+  "ledger_named_declarations": 728,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1254,
-  "distinct_qualified_names": 1254,
-  "verified_md_citations": 712,
+  "declaration_count": 1283,
+  "distinct_qualified_names": 1283,
+  "verified_md_citations": 728,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -584,6 +584,11 @@
     "Ecdlp.GenericGroup.secp256k1_bsgs_steps_le",
     "Ecdlp.GenericGroup.secp256k1_generic_security",
     "Ecdlp.GenericGroup.two_pow_255_lt_secp256k1_n",
+    "Ecdlp.M16DirectSystemRootBridge.ChainEquations",
+    "Ecdlp.M16DirectSystemRootBridge.DirectSystem4",
+    "Ecdlp.M16DirectSystemRootBridge.S17At_eq_zero_iff_chartPolynomialCover_over",
+    "Ecdlp.M16DirectSystemRootBridge.chainEquations_iff",
+    "Ecdlp.M16DirectSystemRootBridge.directSolEquivReduced",
     "Ecdlp.M16FactorBaseFinite.card_factorBaseX",
     "Ecdlp.M16FactorBaseLiftable.Certificates.factorBaseGenerator_certificate",
     "Ecdlp.M16FactorBaseLiftable.Certificates.representative_count_native",
@@ -716,6 +721,17 @@
     "Ecdlp.Semaev.secp256k1_semaev_three_point",
     "Ecdlp.Semaev.secp256k1_semaev_three_point_double",
     "Ecdlp.Semaev.secp256k1_semaev_three_tangent",
+    "Ecdlp.SemaevLeftFoldAffine.C",
+    "Ecdlp.SemaevLeftFoldAffine.HValue_affine_eq_f3",
+    "Ecdlp.SemaevLeftFoldAffine.S17At",
+    "Ecdlp.SemaevLeftFoldAffine.S17At_eq_frozenSpecialize",
+    "Ecdlp.SemaevLeftFoldAffine.dehom_frozenC_eq_semaevLeftFoldC",
+    "Ecdlp.SemaevLeftFoldAffine.eval_dehom_eq_frozenSpecialize",
+    "Ecdlp.SemaevLeftFoldAffine.f3",
+    "Ecdlp.SemaevLeftFoldAffine.f3_eq_S₃",
+    "Ecdlp.SemaevLeftFoldAffine.localSlice_eq_eliminationOrder",
+    "Ecdlp.SemaevLeftFoldAffine.map_localSlice_dehom",
+    "Ecdlp.SemaevLeftFoldAffine.map_outputSlice_dehom",
     "Ecdlp.Targets.glv_eigenvalue_zmod",
     "Ecdlp.TaskSylvester.det_taskSylvester_eq_resultant",
     "Ecdlp.TaskSylvester.det_taskSylvester_eq_zero_iff_common_projective_root",
@@ -10113,6 +10129,158 @@
     },
     {
       "id": "ledger-307",
+      "claim": "Semaev-2004 affine left-fold `f17` representative and exact unit-one frozen-family bridge (the displayed `f3` formula and the fixed `k=1` resultant recurrence define `C R s = f_(s+3)`, hence `C R 14` is a source-derived `f17` representative. Explicit dehomogenization sends every frozen denominator coordinate to one, commutes with both resultant operands, and identifies the full recursive families at every stage with coefficient unit exactly one; target specialization therefore equals the repository frozen specialization. Honest scope: this is the Semaev-2004 left-fold representative, not a unique normalization and not a claim that another paper prints these exact coefficients. The symbolic DAG is not expanded. It proves no root solver, multiplicity, ideal/radical equivalence, relation yield, recovery, descent, cost reduction, or ECDLP shortcut. The module contains no `native_decide` and introduces no compiler-trusted owner)",
+      "theorem_cell": "`Ecdlp.SemaevLeftFoldAffine.f3`, `f3_eq_S₃`, `localSlice_eq_eliminationOrder`, `C`, `S17At`, `HValue_affine_eq_f3`, `map_outputSlice_dehom`, `map_localSlice_dehom`, `dehom_frozenC_eq_semaevLeftFoldC`, `eval_dehom_eq_frozenSpecialize`, `S17At_eq_frozenSpecialize`",
+      "declared_files": [
+        "Ecdlp/Proved/SemaevLeftFoldAffine.lean"
+      ],
+      "method": "literal source formula + fixed-degree `resultant_map_map` induction + explicit affine evaluation; zero new native owners",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.SemaevLeftFoldAffine.f3",
+          "canonical_name": "Ecdlp.SemaevLeftFoldAffine.f3",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+          "line": 33
+        },
+        {
+          "cited": "Ecdlp.SemaevLeftFoldAffine.f3_eq_S₃",
+          "canonical_name": "Ecdlp.SemaevLeftFoldAffine.f3_eq_S₃",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+          "line": 41
+        },
+        {
+          "cited": "Ecdlp.SemaevLeftFoldAffine.localSlice_eq_eliminationOrder",
+          "canonical_name": "Ecdlp.SemaevLeftFoldAffine.localSlice_eq_eliminationOrder",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+          "line": 70
+        },
+        {
+          "cited": "Ecdlp.SemaevLeftFoldAffine.C",
+          "canonical_name": "Ecdlp.SemaevLeftFoldAffine.C",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+          "line": 85
+        },
+        {
+          "cited": "Ecdlp.SemaevLeftFoldAffine.S17At",
+          "canonical_name": "Ecdlp.SemaevLeftFoldAffine.S17At",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+          "line": 112
+        },
+        {
+          "cited": "Ecdlp.SemaevLeftFoldAffine.HValue_affine_eq_f3",
+          "canonical_name": "Ecdlp.SemaevLeftFoldAffine.HValue_affine_eq_f3",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+          "line": 152
+        },
+        {
+          "cited": "Ecdlp.SemaevLeftFoldAffine.map_outputSlice_dehom",
+          "canonical_name": "Ecdlp.SemaevLeftFoldAffine.map_outputSlice_dehom",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+          "line": 177
+        },
+        {
+          "cited": "Ecdlp.SemaevLeftFoldAffine.map_localSlice_dehom",
+          "canonical_name": "Ecdlp.SemaevLeftFoldAffine.map_localSlice_dehom",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+          "line": 208
+        },
+        {
+          "cited": "Ecdlp.SemaevLeftFoldAffine.dehom_frozenC_eq_semaevLeftFoldC",
+          "canonical_name": "Ecdlp.SemaevLeftFoldAffine.dehom_frozenC_eq_semaevLeftFoldC",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+          "line": 218
+        },
+        {
+          "cited": "Ecdlp.SemaevLeftFoldAffine.eval_dehom_eq_frozenSpecialize",
+          "canonical_name": "Ecdlp.SemaevLeftFoldAffine.eval_dehom_eq_frozenSpecialize",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+          "line": 242
+        },
+        {
+          "cited": "Ecdlp.SemaevLeftFoldAffine.S17At_eq_frozenSpecialize",
+          "canonical_name": "Ecdlp.SemaevLeftFoldAffine.S17At_eq_frozenSpecialize",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+          "line": 271
+        }
+      ]
+    },
+    {
+      "id": "ledger-308",
+      "claim": "Exact set-level reduction of literal sixteen-row M16 System (4) and complete internal chart-root bridge (each four-coordinate row satisfies the three transitions and terminal equation iff it is the canonical extension of a source coordinate with `x^564522=1`. Consequently, an explicit subtype equivalence removes exactly 48 transition coordinates from the literal `16×4` system while preserving the target-specialized left-fold `f17` zero condition. After injective base change to an algebraically closed field, that condition is equivalent to the existing chart-polynomial cover with all fourteen internal affine/infinity masks retained. Honest scope: this is only an equivalence of distinct solution sets. It proves no curve lift, ideal/radical or multiplicity preservation, solver behavior, relation yield/rank, recovery, internal-witness descent, runtime/memory/total cost improvement, exact-target computation, or ECDLP shortcut. Both external inputs and the target remain affine. The module has zero new `native_decide` owners; its concrete `Fp` conclusions transitively inherit the existing compiler-trusted secp256k1 Pratt/primality leaves)",
+      "theorem_cell": "`Ecdlp.M16DirectSystemRootBridge.ChainEquations`, `chainEquations_iff`, `DirectSystem4`, `directSolEquivReduced`, `S17At_eq_zero_iff_chartPolynomialCover_over`",
+      "declared_files": [
+        "Ecdlp/Proved/M16DirectSystemRootBridge.lean"
+      ],
+      "method": "exact exponent identity + explicit solution-subtype equivalence + existing full chart-cover theorem; zero new native owners, inherited secp256k1 compiler trust disclosed",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.M16DirectSystemRootBridge.ChainEquations",
+          "canonical_name": "Ecdlp.M16DirectSystemRootBridge.ChainEquations",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16DirectSystemRootBridge.lean",
+          "line": 38
+        },
+        {
+          "cited": "Ecdlp.M16DirectSystemRootBridge.chainEquations_iff",
+          "canonical_name": "Ecdlp.M16DirectSystemRootBridge.chainEquations_iff",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16DirectSystemRootBridge.lean",
+          "line": 50
+        },
+        {
+          "cited": "Ecdlp.M16DirectSystemRootBridge.DirectSystem4",
+          "canonical_name": "Ecdlp.M16DirectSystemRootBridge.DirectSystem4",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16DirectSystemRootBridge.lean",
+          "line": 81
+        },
+        {
+          "cited": "Ecdlp.M16DirectSystemRootBridge.directSolEquivReduced",
+          "canonical_name": "Ecdlp.M16DirectSystemRootBridge.directSolEquivReduced",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16DirectSystemRootBridge.lean",
+          "line": 87
+        },
+        {
+          "cited": "Ecdlp.M16DirectSystemRootBridge.S17At_eq_zero_iff_chartPolynomialCover_over",
+          "canonical_name": "Ecdlp.M16DirectSystemRootBridge.S17At_eq_zero_iff_chartPolynomialCover_over",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16DirectSystemRootBridge.lean",
+          "line": 122
+        }
+      ]
+    },
+    {
+      "id": "ledger-309",
       "claim": "Exact root-based M16 factor-base size and narrow representation gates (`card_factorBaseX` proves that `x^564522 = 1` has exactly 564522 solutions in the secp256k1 base field. The solver gate records the exact uncalibrated desk ceiling and its `2^114/2^115` and `D^5/D^6` windows. The width-six and width-seven multiset counts are exact. Honest scope: these are finite-field cardinality and representation-size facts only. They do not prove liftability, relation yield, solving degree, a solver runtime, a calibrated cost, a lower bound for M16, or an ECDLP shortcut/lower bound. Exactly six new closed arithmetic owners in `M16SolverGate.lean` use `native_decide`; the root-count and symmetric-power proof bodies add no new native owner, but their public conclusions transitively inherit pre-existing compiler-trusted secp256k1 factorization/primality certificates)",
       "theorem_cell": "`Ecdlp.M16FactorBaseFinite.card_factorBaseX`, `Ecdlp.M16SolverGate.relationTermGate_at_max`, `relationTermGate_succ_max_fails`, `two_pow_114_le_maxRelationTermBudget`, `maxRelationTermBudget_lt_two_pow_115`, `factorBaseDegree_pow_five_le_maxRelationTermBudget`, `maxRelationTermBudget_lt_factorBaseDegree_pow_six`, `relationTermGate_fails_of_degree_six_lower_bound`, `Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_six`, `card_sym_factorBaseX_six_le_budget`, `card_sym_factorBaseX_seven`, `budget_lt_card_sym_factorBaseX_seven`",
       "declared_files": [
@@ -10222,7 +10390,7 @@
       ]
     },
     {
-      "id": "ledger-308",
+      "id": "ledger-310",
       "claim": "Exact liftable M16 factor-base census on secp256k1 (an exact-order generator partitions all 564522 coordinates into 188174 free three-coordinate GLV orbits; exactly 94509 representative orbits and 283527 coordinates lift, 93665 representative orbits and 280995 coordinates do not, the quadratic-character sum is 2532, every lift fiber has size two, and the signed affine factor-base type has size 567054. Honest scope: this is a finite-field and affine-point census only. It proves no relation existence or distribution, rank, solver, recovery, cost, complexity improvement, or ECDLP shortcut/lower bound. Exactly two new native certificate owners are used: the generator certificate and the representative counter; the facade contains no `native_decide`, while public conclusions also transitively inherit pre-existing compiler-trusted secp256k1 parameter/primality leaves)",
       "theorem_cell": "`Ecdlp.M16FactorBaseLiftable.Certificates.factorBaseGenerator_certificate`, `representative_count_native`, `Ecdlp.M16FactorBaseLiftable.factorBaseGenerator_order`, `card_liftableGLVOrbitRep`, `card_nonliftableGLVOrbitRep`, `card_liftableFactorBaseX`, `card_nonliftableFactorBaseX`, `factorBaseCharacterSum_eq`, `card_liftFiber`, `card_signedAffineFactorBasePoint`, `toPoint_ne_zero`",
       "declared_files": [
@@ -10325,7 +10493,7 @@
       ]
     },
     {
-      "id": "ledger-309",
+      "id": "ledger-311",
       "claim": "Six-width fixed-oblivious translated-image coverage obstruction (the full root-based signed width-six index has fewer than `2^112` entries. For an arbitrary table payload indexed by that type and a fixed target-independent residual list, `q <= 2^141` covers strictly less than half of the secp256k1 point group, so half coverage requires `q > 2^141`. Honest scope: this is only the explicitly defined fixed, oblivious translated-image model. `q` counts literal residual slots, not time, memory, field/group operations, or calibrated cost. The result excludes no target-adaptive, implicit/streaming, multilevel/Wagner, nontranslation, Groebner, rank, recovery, sparse-linear-algebra, general M16, or general ECDLP method. Exactly one new closed comparison uses `native_decide`; public conclusions also inherit existing compiler-trusted root/cardinality/primality leaves)",
       "theorem_cell": "`Ecdlp.M16SixWidthNoGo.ncard_coveredTargets_le`, `card_sym_factorBaseX_six_lt_two_pow_106`, `natCard_signedSixIndex_lt_two_pow_112`, `no_half_coverage_of_two_pow_141_probe_bound`, `half_coverage_requires_more_than_two_pow_141_probes`",
       "declared_files": [
@@ -10377,7 +10545,7 @@
       ]
     },
     {
-      "id": "ledger-310",
+      "id": "ledger-312",
       "claim": "Liftability-aware six-width fixed-oblivious translated-image obstruction (the 283527-coordinate liftable factor base has exactly 721534357111870307687559424092 width-six multisets and 46178198855159699692003803141888 signed indices; width six fits the uncalibrated desk ceiling while width seven exceeds it. In the same fixed target-independent translated-image model, `q <= 2^148` covers strictly less than half of secp256k1, so half coverage requires `q > 2^148`. Honest scope: the same representation/counting-only boundary applies: this is not a runtime or memory lower bound, not a general M16 or ECDLP lower bound, and it does not cover adaptive, implicit/streaming, multilevel, algebraic-solving, rank, or recovery mechanisms. Exactly one new private closed comparison uses `native_decide`; public conclusions also inherit the two liftable-census owners and pre-existing compiler-trusted secp256k1 leaves)",
       "theorem_cell": "`Ecdlp.M16LiftableSixWidthNoGo.card_sym_liftableFactorBaseX_six`, `card_sym_liftableFactorBaseX_six_le_budget`, `card_sym_liftableFactorBaseX_seven`, `budget_lt_card_sym_liftableFactorBaseX_seven`, `natCard_liftableSignedSixIndex`, `no_half_coverage_of_two_pow_148_probe_bound`, `half_coverage_requires_more_than_two_pow_148_probes`",
       "declared_files": [
@@ -15507,6 +15675,62 @@
       "file": "Ecdlp/Proved/Secp256k1GenericSecurity.lean",
       "line": 28
     },
+    "Ecdlp.M16DirectSystemRootBridge.ChainEquations": {
+      "name": "ChainEquations",
+      "namespace": "Ecdlp.M16DirectSystemRootBridge",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16DirectSystemRootBridge.lean",
+      "line": 38
+    },
+    "Ecdlp.M16DirectSystemRootBridge.ChainVars": {
+      "name": "ChainVars",
+      "namespace": "Ecdlp.M16DirectSystemRootBridge",
+      "kind": "structure",
+      "file": "Ecdlp/Proved/M16DirectSystemRootBridge.lean",
+      "line": 28
+    },
+    "Ecdlp.M16DirectSystemRootBridge.DirectSystem4": {
+      "name": "DirectSystem4",
+      "namespace": "Ecdlp.M16DirectSystemRootBridge",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16DirectSystemRootBridge.lean",
+      "line": 81
+    },
+    "Ecdlp.M16DirectSystemRootBridge.Fp": {
+      "name": "Fp",
+      "namespace": "Ecdlp.M16DirectSystemRootBridge",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16DirectSystemRootBridge.lean",
+      "line": 25
+    },
+    "Ecdlp.M16DirectSystemRootBridge.S17At_eq_zero_iff_chartPolynomialCover_over": {
+      "name": "S17At_eq_zero_iff_chartPolynomialCover_over",
+      "namespace": "Ecdlp.M16DirectSystemRootBridge",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16DirectSystemRootBridge.lean",
+      "line": 122
+    },
+    "Ecdlp.M16DirectSystemRootBridge.chainEquations_iff": {
+      "name": "chainEquations_iff",
+      "namespace": "Ecdlp.M16DirectSystemRootBridge",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16DirectSystemRootBridge.lean",
+      "line": 50
+    },
+    "Ecdlp.M16DirectSystemRootBridge.directSolEquivReduced": {
+      "name": "directSolEquivReduced",
+      "namespace": "Ecdlp.M16DirectSystemRootBridge",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16DirectSystemRootBridge.lean",
+      "line": 87
+    },
+    "Ecdlp.M16DirectSystemRootBridge.extendLeaf": {
+      "name": "extendLeaf",
+      "namespace": "Ecdlp.M16DirectSystemRootBridge",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16DirectSystemRootBridge.lean",
+      "line": 45
+    },
     "Ecdlp.M16FactorBaseFinite.FactorBaseX": {
       "name": "FactorBaseX",
       "namespace": "Ecdlp.M16FactorBaseFinite",
@@ -17270,6 +17494,153 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/SemaevThree.lean",
       "line": 184
+    },
+    "Ecdlp.SemaevLeftFoldAffine.C": {
+      "name": "C",
+      "namespace": "Ecdlp.SemaevLeftFoldAffine",
+      "kind": "def",
+      "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+      "line": 85
+    },
+    "Ecdlp.SemaevLeftFoldAffine.HValue_affine_eq_S₃": {
+      "name": "HValue_affine_eq_S₃",
+      "namespace": "Ecdlp.SemaevLeftFoldAffine",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+      "line": 166
+    },
+    "Ecdlp.SemaevLeftFoldAffine.HValue_affine_eq_f3": {
+      "name": "HValue_affine_eq_f3",
+      "namespace": "Ecdlp.SemaevLeftFoldAffine",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+      "line": 152
+    },
+    "Ecdlp.SemaevLeftFoldAffine.S17At": {
+      "name": "S17At",
+      "namespace": "Ecdlp.SemaevLeftFoldAffine",
+      "kind": "def",
+      "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+      "line": 112
+    },
+    "Ecdlp.SemaevLeftFoldAffine.S17At_eq_frozenSpecialize": {
+      "name": "S17At_eq_frozenSpecialize",
+      "namespace": "Ecdlp.SemaevLeftFoldAffine",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+      "line": 271
+    },
+    "Ecdlp.SemaevLeftFoldAffine.Var": {
+      "name": "Var",
+      "namespace": "Ecdlp.SemaevLeftFoldAffine",
+      "kind": "inductive",
+      "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+      "line": 24
+    },
+    "Ecdlp.SemaevLeftFoldAffine.assignment": {
+      "name": "assignment",
+      "namespace": "Ecdlp.SemaevLeftFoldAffine",
+      "kind": "def",
+      "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+      "line": 106
+    },
+    "Ecdlp.SemaevLeftFoldAffine.dehom": {
+      "name": "dehom",
+      "namespace": "Ecdlp.SemaevLeftFoldAffine",
+      "kind": "def",
+      "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+      "line": 120
+    },
+    "Ecdlp.SemaevLeftFoldAffine.dehom_C": {
+      "name": "dehom_C",
+      "namespace": "Ecdlp.SemaevLeftFoldAffine",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+      "line": 145
+    },
+    "Ecdlp.SemaevLeftFoldAffine.dehom_X": {
+      "name": "dehom_X",
+      "namespace": "Ecdlp.SemaevLeftFoldAffine",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+      "line": 132
+    },
+    "Ecdlp.SemaevLeftFoldAffine.dehom_frozenC_eq_semaevLeftFoldC": {
+      "name": "dehom_frozenC_eq_semaevLeftFoldC",
+      "namespace": "Ecdlp.SemaevLeftFoldAffine",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+      "line": 218
+    },
+    "Ecdlp.SemaevLeftFoldAffine.eval_dehom_eq_frozenSpecialize": {
+      "name": "eval_dehom_eq_frozenSpecialize",
+      "namespace": "Ecdlp.SemaevLeftFoldAffine",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+      "line": 242
+    },
+    "Ecdlp.SemaevLeftFoldAffine.externalValue": {
+      "name": "externalValue",
+      "namespace": "Ecdlp.SemaevLeftFoldAffine",
+      "kind": "def",
+      "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+      "line": 101
+    },
+    "Ecdlp.SemaevLeftFoldAffine.f3": {
+      "name": "f3",
+      "namespace": "Ecdlp.SemaevLeftFoldAffine",
+      "kind": "def",
+      "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+      "line": 33
+    },
+    "Ecdlp.SemaevLeftFoldAffine.f3_eq_S₃": {
+      "name": "f3_eq_S₃",
+      "namespace": "Ecdlp.SemaevLeftFoldAffine",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+      "line": 41
+    },
+    "Ecdlp.SemaevLeftFoldAffine.localSlice": {
+      "name": "localSlice",
+      "namespace": "Ecdlp.SemaevLeftFoldAffine",
+      "kind": "def",
+      "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+      "line": 60
+    },
+    "Ecdlp.SemaevLeftFoldAffine.localSlice_eq_eliminationOrder": {
+      "name": "localSlice_eq_eliminationOrder",
+      "namespace": "Ecdlp.SemaevLeftFoldAffine",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+      "line": 70
+    },
+    "Ecdlp.SemaevLeftFoldAffine.map_localSlice_dehom": {
+      "name": "map_localSlice_dehom",
+      "namespace": "Ecdlp.SemaevLeftFoldAffine",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+      "line": 208
+    },
+    "Ecdlp.SemaevLeftFoldAffine.map_outputSlice_dehom": {
+      "name": "map_outputSlice_dehom",
+      "namespace": "Ecdlp.SemaevLeftFoldAffine",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+      "line": 177
+    },
+    "Ecdlp.SemaevLeftFoldAffine.outputSlice": {
+      "name": "outputSlice",
+      "namespace": "Ecdlp.SemaevLeftFoldAffine",
+      "kind": "def",
+      "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+      "line": 48
+    },
+    "Ecdlp.SemaevLeftFoldAffine.projectiveLeaves": {
+      "name": "projectiveLeaves",
+      "namespace": "Ecdlp.SemaevLeftFoldAffine",
+      "kind": "def",
+      "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+      "line": 235
     },
     "Ecdlp.Targets.glv_eigenvalue_zmod": {
       "name": "glv_eigenvalue_zmod",

@@ -4,8 +4,8 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 311,
-    "ledger_rows": 311,
+    "theorems": 313,
+    "ledger_rows": 313,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
@@ -37,10 +37,10 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1216,
+    "edges": 1224,
     "by_edge_type": {
-      "imports": 550,
-      "member_of": 311,
+      "imports": 556,
+      "member_of": 313,
       "grounded_in_source_claim": 62,
       "requires_foundation": 41,
       "supports": 27,
@@ -204,6 +204,8 @@
       "exact two-chart normalization + literal fixed-mask `MvPolynomial` family + TASK-021/TASK-022 equivalences + injective base change; `native_decide` only for `card_chartEquation": 1,
       "local projective `H` identities + exact TASK-023 cover restriction + path-independent-set counts; `native_decide` only for the three cardinalities": 1,
       "exact local substitution + fixed-degree projective-resultant forward implication + balanced prefix/suffix frozen specializations + exact chart-cover restriction; `native_decide` only for the four mask cardinalities": 1,
+      "literal source formula + fixed-degree `resultant_map_map` induction + explicit affine evaluation; zero new native owners": 1,
+      "exact exponent identity + explicit solution-subtype equivalence + existing full chart-cover theorem; zero new native owners, inherited secp256k1 compiler trust disclosed": 1,
       "roots of unity + exact symmetric-power arithmetic; six isolated new `native_decide` arithmetic owners plus disclosed inherited compiler trust": 1,
       "exact GLV-orbit enumeration + two isolated new `native_decide` certificates + kernel composition with disclosed inherited compiler trust": 1,
       "finite-range counting + exact secp256k1 cardinality; one isolated new `native_decide` comparison plus disclosed inherited compiler trust": 1,
@@ -211,8 +213,8 @@
     },
     "by_area": {
       "curve-torsion": 153,
-      "primality": 58,
-      "other": 34,
+      "primality": 59,
+      "other": 35,
       "generic-hardness": 30,
       "protocol-soundness": 23,
       "attack-resistance": 7,
@@ -6387,6 +6389,46 @@
     },
     {
       "id": "thm-307",
+      "name": "Ecdlp.SemaevLeftFoldAffine.f3`, `f3_eq_S₃`, `localSlice_eq_eliminationOrder`, `C`, `S17At`, `HValue_affine_eq_f3`, `map_outputSlice_dehom`, `map_localSlice_dehom`, `dehom_frozenC_eq_semaevLeftFoldC`, `eval_dehom_eq_frozenSpecialize`, `S17At_eq_frozenSpecialize",
+      "short_name": "f3`,",
+      "module": "Ecdlp.Proved.SemaevLeftFoldAffine",
+      "modules": [
+        "Ecdlp.Proved.SemaevLeftFoldAffine"
+      ],
+      "file": "Ecdlp/Proved/SemaevLeftFoldAffine.lean",
+      "files": [
+        "Ecdlp/Proved/SemaevLeftFoldAffine.lean"
+      ],
+      "claim": "Semaev-2004 affine left-fold `f17` representative and exact unit-one frozen-family bridge (the displayed `f3` formula and the fixed `k=1` resultant recurrence define `C R s = f_(s+3)`, hence `C R 14` is a source-derived `f17` representative. Explicit dehomogenization sends every frozen denominator coordinate to one, commutes with both resultant operands, and identifies the full recursive families at every stage with coefficient unit exactly one; target specialization therefore equals the repository frozen specialization. Honest scope: this is the Semaev-2004 left-fold representative, not a unique normalization and not a claim that another paper prints these exact coefficients. The symbolic DAG is not expanded. It proves no root solver, multiplicity, ideal/radical equivalence, relation yield, recovery, descent, cost reduction, or ECDLP shortcut. The module contains no `native_decide` and introduces no compiler-trusted owner)",
+      "method": "literal source formula + fixed-degree `resultant_map_map` induction + explicit affine evaluation; zero new native owners",
+      "status": "proved",
+      "area": "other",
+      "family_id": "family-other",
+      "dependency_depth": 6,
+      "gated": true
+    },
+    {
+      "id": "thm-308",
+      "name": "Ecdlp.M16DirectSystemRootBridge.ChainEquations`, `chainEquations_iff`, `DirectSystem4`, `directSolEquivReduced`, `S17At_eq_zero_iff_chartPolynomialCover_over",
+      "short_name": "ChainEquations`,",
+      "module": "Ecdlp.Proved.M16DirectSystemRootBridge",
+      "modules": [
+        "Ecdlp.Proved.M16DirectSystemRootBridge"
+      ],
+      "file": "Ecdlp/Proved/M16DirectSystemRootBridge.lean",
+      "files": [
+        "Ecdlp/Proved/M16DirectSystemRootBridge.lean"
+      ],
+      "claim": "Exact set-level reduction of literal sixteen-row M16 System (4) and complete internal chart-root bridge (each four-coordinate row satisfies the three transitions and terminal equation iff it is the canonical extension of a source coordinate with `x^564522=1`. Consequently, an explicit subtype equivalence removes exactly 48 transition coordinates from the literal `16×4` system while preserving the target-specialized left-fold `f17` zero condition. After injective base change to an algebraically closed field, that condition is equivalent to the existing chart-polynomial cover with all fourteen internal affine/infinity masks retained. Honest scope: this is only an equivalence of distinct solution sets. It proves no curve lift, ideal/radical or multiplicity preservation, solver behavior, relation yield/rank, recovery, internal-witness descent, runtime/memory/total cost improvement, exact-target computation, or ECDLP shortcut. Both external inputs and the target remain affine. The module has zero new `native_decide` owners; its concrete `Fp` conclusions transitively inherit the existing compiler-trusted secp256k1 Pratt/primality leaves)",
+      "method": "exact exponent identity + explicit solution-subtype equivalence + existing full chart-cover theorem; zero new native owners, inherited secp256k1 compiler trust disclosed",
+      "status": "proved",
+      "area": "primality",
+      "family_id": "family-primality",
+      "dependency_depth": 7,
+      "gated": true
+    },
+    {
+      "id": "thm-309",
       "name": "Ecdlp.M16FactorBaseFinite.card_factorBaseX`, `Ecdlp.M16SolverGate.relationTermGate_at_max`, `relationTermGate_succ_max_fails`, `two_pow_114_le_maxRelationTermBudget`, `maxRelationTermBudget_lt_two_pow_115`, `factorBaseDegree_pow_five_le_maxRelationTermBudget`, `maxRelationTermBudget_lt_factorBaseDegree_pow_six`, `relationTermGate_fails_of_degree_six_lower_bound`, `Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_six`, `card_sym_factorBaseX_six_le_budget`, `card_sym_factorBaseX_seven`, `budget_lt_card_sym_factorBaseX_seven",
       "short_name": "card_factorBaseX`,",
       "module": "Ecdlp.Proved.M16FactorBaseFinite",
@@ -6410,7 +6452,7 @@
       "gated": true
     },
     {
-      "id": "thm-308",
+      "id": "thm-310",
       "name": "Ecdlp.M16FactorBaseLiftable.Certificates.factorBaseGenerator_certificate`, `representative_count_native`, `Ecdlp.M16FactorBaseLiftable.factorBaseGenerator_order`, `card_liftableGLVOrbitRep`, `card_nonliftableGLVOrbitRep`, `card_liftableFactorBaseX`, `card_nonliftableFactorBaseX`, `factorBaseCharacterSum_eq`, `card_liftFiber`, `card_signedAffineFactorBasePoint`, `toPoint_ne_zero",
       "short_name": "factorBaseGenerator_certificate`,",
       "module": "Ecdlp.Proved.M16FactorBaseLiftableDefs",
@@ -6436,7 +6478,7 @@
       "gated": true
     },
     {
-      "id": "thm-309",
+      "id": "thm-311",
       "name": "Ecdlp.M16SixWidthNoGo.ncard_coveredTargets_le`, `card_sym_factorBaseX_six_lt_two_pow_106`, `natCard_signedSixIndex_lt_two_pow_112`, `no_half_coverage_of_two_pow_141_probe_bound`, `half_coverage_requires_more_than_two_pow_141_probes",
       "short_name": "ncard_coveredTargets_le`,",
       "module": "Ecdlp.Proved.M16SixWidthNoGo",
@@ -6456,7 +6498,7 @@
       "gated": true
     },
     {
-      "id": "thm-310",
+      "id": "thm-312",
       "name": "Ecdlp.M16LiftableSixWidthNoGo.card_sym_liftableFactorBaseX_six`, `card_sym_liftableFactorBaseX_six_le_budget`, `card_sym_liftableFactorBaseX_seven`, `budget_lt_card_sym_liftableFactorBaseX_seven`, `natCard_liftableSignedSixIndex`, `no_half_coverage_of_two_pow_148_probe_bound`, `half_coverage_requires_more_than_two_pow_148_probes",
       "short_name": "card_sym_liftableFactorBaseX_six`,",
       "module": "Ecdlp.Proved.M16LiftableSixWidthNoGo",
@@ -10683,24 +10725,24 @@
       "exact_target_execution": false,
       "stream_digest_version": "rfc6962-binary-leaf-v2",
       "coverage_merkle_root_sha256": "dff1e8cb52594158fc94556cbef3025be647fab310132c34ee58aed3b8399207",
-      "instance_root_sha256": "b4d3c10a10dc49b715c0c1741c8203f3b692e4eb1f4a6bd00e076b46c42f27f7",
+      "instance_root_sha256": "e60d0f6678f9457d53258779b6f43f15cf921d869a92f1ef81bc3cfa89bd7e4a",
       "challenge_indices": [
-        5533,
-        97224,
-        160528,
-        200735,
-        226336,
-        243476,
-        304005,
-        329350,
-        331172,
-        376123,
-        537323,
-        627641,
-        715335,
-        760062,
-        897529,
-        951194
+        211524,
+        214758,
+        237118,
+        268979,
+        307638,
+        308507,
+        333326,
+        369088,
+        458050,
+        565908,
+        569082,
+        625413,
+        657732,
+        685034,
+        759674,
+        922554
       ]
     },
     "coverage_boundary": "Coverage is complete only for this frozen finite Cartesian projection. It is not coverage of all ECDLP ideas or literature.",
@@ -12596,6 +12638,16 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.M16DirectSystemRootBridge",
+      "to": "Ecdlp.Proved.SemaevLeftFoldAffine",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16DirectSystemRootBridge",
+      "to": "Ecdlp.Proved.M16FactorBaseFinite",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.M16FactorBaseFinite",
       "to": "Ecdlp.Proved.Secp256k1PMinusOneSmoothness",
       "type": "imports"
@@ -13022,6 +13074,16 @@
     },
     {
       "from": "Ecdlp.Proved.SemaevFour",
+      "to": "Ecdlp.Proved.SemaevThree",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SemaevLeftFoldAffine",
+      "to": "Ecdlp.Proved.FrozenProjectiveChartSystem",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.SemaevLeftFoldAffine",
       "to": "Ecdlp.Proved.SemaevThree",
       "type": "imports"
     },
@@ -14283,6 +14345,16 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.M16FactorBaseFinite",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.SemaevLeftFoldAffine",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.M16DirectSystemRootBridge",
       "type": "imports"
     },
     {
@@ -15927,7 +15999,7 @@
     },
     {
       "from": "thm-307",
-      "to": "family-primality",
+      "to": "family-other",
       "type": "member_of"
     },
     {
@@ -15942,6 +16014,16 @@
     },
     {
       "from": "thm-310",
+      "to": "family-primality",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-311",
+      "to": "family-primality",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-312",
       "to": "family-other",
       "type": "member_of"
     },
