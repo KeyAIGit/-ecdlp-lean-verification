@@ -184,9 +184,11 @@ import Ecdlp.Proved.FourTorsionBridgeBar
 import Ecdlp.Proved.FourTorsionStructure
 import Ecdlp.Proved.FourTorsionCount
 import Ecdlp.Proved.CompressedDivisionPoly
--- Exact secp256k1 M16 factor-base census, conditional point split, and narrow gates.
+-- Exact secp256k1 M16 factor-base census, local Kummer fiber, conditional point split,
+-- and narrow gates.
 import Ecdlp.Proved.M16FactorBaseFinite
 import Ecdlp.Proved.SemaevLeftFoldAffine
+import Ecdlp.Proved.FrozenProjectiveSecpLocalFiber
 import Ecdlp.Proved.M16DirectSystemRootBridge
 import Ecdlp.Proved.M16SolverGate
 import Ecdlp.Proved.M16FactorBaseSymmetricGate

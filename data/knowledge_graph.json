@@ -4,8 +4,8 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 314,
-    "ledger_rows": 314,
+    "theorems": 315,
+    "ledger_rows": 315,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
@@ -37,10 +37,10 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1227,
+    "edges": 1232,
     "by_edge_type": {
-      "imports": 558,
-      "member_of": 314,
+      "imports": 562,
+      "member_of": 315,
       "grounded_in_source_claim": 62,
       "requires_foundation": 41,
       "supports": 27,
@@ -210,11 +210,12 @@
       "exact GLV-orbit enumeration + two isolated new `native_decide` certificates + kernel composition with disclosed inherited compiler trust": 1,
       "finite-range counting + exact secp256k1 cardinality; one isolated new `native_decide` comparison plus disclosed inherited compiler trust": 1,
       "exact symmetric-power/range counting + one private new `native_decide` comparison plus disclosed inherited compiler trust": 1,
-      "canonical algebraic-closure Frobenius + explicit point descent/antifixed branch + base-change injection before the existing base-field two-torsion theorem; zero new native owners, inherited secp256k1 compiler trust and the final no-two-torsion chain disclosed": 1
+      "canonical algebraic-closure Frobenius + explicit point descent/antifixed branch + base-change injection before the existing base-field two-torsion theorem; zero new native owners, inherited secp256k1 compiler trust and the final no-two-torsion chain disclosed": 1,
+      "Mathlib curve group law + generic Semaev chord iff + explicit tangent/infinity factorization; zero new native owners, inherited 10 secp256k1 primality native-owner families disclosed": 1
     },
     "by_area": {
       "curve-torsion": 153,
-      "primality": 60,
+      "primality": 61,
       "other": 35,
       "generic-hardness": 30,
       "protocol-soundness": 23,
@@ -6537,6 +6538,26 @@
       "family_id": "family-primality",
       "dependency_depth": 11,
       "gated": true
+    },
+    {
+      "id": "thm-314",
+      "name": "Ecdlp.FrozenProjectiveSecpLocalFiber.barKummer`, `barKummer_eq_iff`, `HValue_barKummer_normalize_zero_iff`, `HValue_barKummer_zero_iff`, `HValue_barKummer_zero_iff_projectiveDet",
+      "short_name": "barKummer`,",
+      "module": "Ecdlp.Proved.FrozenProjectiveSecpLocalFiber",
+      "modules": [
+        "Ecdlp.Proved.FrozenProjectiveSecpLocalFiber"
+      ],
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+      "files": [
+        "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean"
+      ],
+      "claim": "Exact local secp256k1 Kummer fiber over the algebraic closure (`barKummer` sends the identity to projective infinity and an affine point to `[x:1]`; for arbitrary valid output representative `W`, `HValue_barKummer_zero_iff` identifies local vanishing exactly with the normalized Kummer class of `P+Q` or `P-Q`, with normalized-input and projective-determinant forms, while `barKummer_eq_iff` classifies equal Kummer classes as `P=Q` or `P=-Q`. The proof covers identity inputs, the unequal-`x` chord, equal-`x` tangent/cancellation, and nonzero two-torsion over the closure without using the base-field no-two-torsion theorem. Honest scope: this is a local relational fiber only. It proves neither that the two displayed outputs are distinct nor any root-multiplicity statement, and provides no recursive chain, root-to-point construction, descent, recovery, solver, yield/rank, cost, or ECDLP-shortcut result. The module adds 0 new `native_decide` owners; the audited public surface inherits the standard axioms plus 10 existing secp256k1 primality native-owner families through the concrete `Fp`/`FpBar` instances)",
+      "method": "Mathlib curve group law + generic Semaev chord iff + explicit tangent/infinity factorization; zero new native owners, inherited 10 secp256k1 primality native-owner families disclosed",
+      "status": "proved",
+      "area": "primality",
+      "family_id": "family-primality",
+      "dependency_depth": 7,
+      "gated": true
     }
   ],
   "barriers": [
@@ -12314,6 +12335,21 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.FrozenProjectiveSecpLocalFiber",
+      "to": "Ecdlp.Proved.FrozenProjectiveInfinityStrata",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FrozenProjectiveSecpLocalFiber",
+      "to": "Ecdlp.Proved.Secp256k1PrimeP",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.FrozenProjectiveSecpLocalFiber",
+      "to": "Ecdlp.Proved.SemaevLeftFoldAffine",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.FrozenRecursiveProjectiveSemaev",
       "to": "Ecdlp.Proved.TaskSylvesterConvention",
       "type": "imports"
@@ -14380,6 +14416,11 @@
     },
     {
       "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FrozenProjectiveSecpLocalFiber",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
       "to": "Ecdlp.Proved.M16DirectSystemRootBridge",
       "type": "imports"
     },
@@ -16060,6 +16101,11 @@
     },
     {
       "from": "thm-313",
+      "to": "family-primality",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-314",
       "to": "family-primality",
       "type": "member_of"
     },
