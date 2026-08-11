@@ -35,6 +35,23 @@ jobs:
             experiments/ecdlp_lab/core/__pycache__ \
             experiments/ecdlp_lab/tests/__pycache__
 
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path("experiments/ecdlp_lab/fixtures/build_fixtures.py")
+          text = path.read_text(encoding="utf-8")
+          old = "import copy\nimport json\nfrom pathlib import Path\n\nfrom experiments.ecdlp_lab"
+          new = (
+              "import copy\nimport json\nimport sys\nfrom pathlib import Path\n\n"
+              "REPO_ROOT = Path(__file__).resolve().parents[3]\n"
+              "if str(REPO_ROOT) not in sys.path:\n"
+              "    sys.path.insert(0, str(REPO_ROOT))\n\n"
+              "from experiments.ecdlp_lab"
+          )
+          if old not in text:
+              raise SystemExit("expected fixture-generator import block not found")
+          path.write_text(text.replace(old, new, 1), encoding="utf-8")
+          PY
+
       - name: Verify P01 before committing it
         shell: bash
         run: |
