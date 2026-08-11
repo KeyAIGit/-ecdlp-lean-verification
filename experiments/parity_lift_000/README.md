@@ -52,5 +52,6 @@ proves no parity oracle exists and makes no ECDLP speedup claim.
 
 The exploratory mathematical interpretation, exact mechanism classes closed,
 remaining hypothesis, and proof obligations are quarantined in
-`archive/parity_lift_000/PARITY_LIFT_000.md`. That location prevents this draft
-from silently changing canonical evidence or Research Engine state.
+`archive/untrusted_intake/parity_lift_000/PARITY_LIFT_000.md`. That location
+prevents this draft from silently changing canonical evidence or Research
+Engine state.
