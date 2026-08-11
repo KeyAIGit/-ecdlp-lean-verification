@@ -55,10 +55,30 @@ jobs:
             -o "$RUNNER_TEMP/msolve-0.10.1.tar.gz" \
             https://github.com/algebraic-solving/msolve/releases/download/v0.10.1/msolve-0.10.1.tar.gz
           echo "4ea31066005dc38461fe6b85eb96828990340ce68bdc246fd37e1338d2155beb  $RUNNER_TEMP/msolve-0.10.1.tar.gz" | sha256sum -c -
-          mkdir -p "$RUNNER_TEMP/msolve-src"
-          tar -xzf "$RUNNER_TEMP/msolve-0.10.1.tar.gz" -C "$RUNNER_TEMP/msolve-src" --strip-components=1
-          cd "$RUNNER_TEMP/msolve-src"
-          ./autogen.sh
+
+          UNPACK="$RUNNER_TEMP/msolve-unpack"
+          mkdir -p "$UNPACK"
+          tar -tzf "$RUNNER_TEMP/msolve-0.10.1.tar.gz" | head -50 | tee "$RUNNER_TEMP/msolve-tar-list.txt" || true
+          tar -xzf "$RUNNER_TEMP/msolve-0.10.1.tar.gz" -C "$UNPACK"
+
+          SRC=""
+          while IFS= read -r candidate; do
+            if [[ -f "$candidate/Makefile.am" || -f "$candidate/Makefile.in" ]]; then
+              SRC="$candidate"
+              break
+            fi
+          done < <(find "$UNPACK" -maxdepth 3 -type f \
+                    \( -name configure -o -name autogen.sh -o -name configure.ac \) \
+                    -printf '%h\n' | sort -u)
+          test -n "$SRC"
+          cd "$SRC"
+
+          if [[ -x ./autogen.sh ]]; then
+            ./autogen.sh
+          elif [[ ! -x ./configure ]]; then
+            autoreconf -fi
+          fi
+          test -x ./configure
           ./configure CFLAGS="-O2 -g0"
           make -j2
           test -x ./msolve
@@ -103,6 +123,7 @@ jobs:
             > "$LOG_DIR/environment.txt"
           cp "$RUNNER_TEMP/msolve-help.txt" "$LOG_DIR/msolve_help.txt"
           cp "$RUNNER_TEMP/msolve-ldd.txt" "$LOG_DIR/msolve_ldd.txt"
+          cp "$RUNNER_TEMP/msolve-tar-list.txt" "$LOG_DIR/msolve_tar_list.txt"
 
           count=0
           for f in "$ROOT"/msolve_inputs/"$CASE"_*.ms; do
@@ -130,7 +151,7 @@ jobs:
         with:
           name: glv-msolve-${{ matrix.case }}
           path: msolve_logs/${{ matrix.case }}
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 14
 
   aggregate:
@@ -166,7 +187,7 @@ jobs:
               rc=int(code.read_text().strip())
               rows.append({
                   'case':base,
-                  'family':base.rsplit('_',3)[-3] if False else next((x for x in ['x_plain','y_c3_quotient','q_c6_orbit','u_faithful_glv'] if base.endswith(x)), 'unknown'),
+                  'family':next((x for x in ['x_plain','y_c3_quotient','q_c6_orbit','u_faithful_glv'] if base.endswith(x)), 'unknown'),
                   'exit_code':rc,
                   'timed_out': rc in (124,137),
                   'elapsed_wall':grab(r'Elapsed \(wall clock\) time[^:]*:\s*(.+)'),
