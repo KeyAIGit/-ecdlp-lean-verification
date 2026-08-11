@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 321,
-  "ledger_reference_count": 854,
-  "ledger_named_declarations": 829,
+  "ledger_rows": 322,
+  "ledger_reference_count": 863,
+  "ledger_named_declarations": 838,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1485,
-  "distinct_qualified_names": 1485,
-  "verified_md_citations": 829,
+  "declaration_count": 1513,
+  "distinct_qualified_names": 1513,
+  "verified_md_citations": 838,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -607,6 +607,15 @@
     "Ecdlp.M16BaseRecoveryFiber.recoveryFiberEquivNormalizedFiberProdBool",
     "Ecdlp.M16BaseRecoveryFiber.recoveryFiberEquivRecoveryFinsetSubtype",
     "Ecdlp.M16BaseRecoveryFiber.recoveryGlobalNegate_ne",
+    "Ecdlp.M16CancellationBackpointerCollapse.anchorTarget_liesOver",
+    "Ecdlp.M16CancellationBackpointerCollapse.anchorTarget_ne_zero",
+    "Ecdlp.M16CancellationBackpointerCollapse.backpointerRow_cancellationRootWithRecovery",
+    "Ecdlp.M16CancellationBackpointerCollapse.cancellationCompatible",
+    "Ecdlp.M16CancellationBackpointerCollapse.cancellationRootWithRecovery_injective",
+    "Ecdlp.M16CancellationBackpointerCollapse.canonicalRow_cancellationRecovery",
+    "Ecdlp.M16CancellationBackpointerCollapse.card_constantRowPreimage_lower_bound",
+    "Ecdlp.M16CancellationBackpointerCollapse.coefficientVector_cancellationLiftTuple",
+    "Ecdlp.M16CancellationBackpointerCollapse.maxRelationTermBudget_lt_constantRowPreimage_card",
     "Ecdlp.M16CancellationRootLowerBound.DirectRoot",
     "Ecdlp.M16CancellationRootLowerBound.LiftableReducedRoot",
     "Ecdlp.M16CancellationRootLowerBound.ReducedRoot",
@@ -11616,6 +11625,90 @@
           "line": 451
         }
       ]
+    },
+    {
+      "id": "ledger-321",
+      "claim": "Explicit `283527^7` collapse of labelled M16 cancellation backpointers onto one canonical row (fix a liftable factor-base anchor `a` and its noncomputable lower-residue reference point `A`. The target `R = -(A+A)` is nonidentity, and a target coordinate `X` with `LiesOver X (includePoint R)` is chosen noncomputably. Each labelled seven-tuple of liftable factor-base coordinates fills seven fixed cancellation pairs after two positive anchor slots, producing an explicit compatible `false`-orientation recovery and liftable reduced root. Packaging the root with that retained recovery is injective in all seven choices, while the pair coefficients cancel exactly and every displayed normalized row is `Finsupp.single a (-2)`, even when pair coordinates repeat or equal `a`. Consequently the subtype of root-plus-recovery backpointers with that row has cardinality at least `283527^7`, and the existing desk ceiling is numerically smaller. Honest scope: this is an aggregate sigma-type preimage of constructed labelled root-plus-recovery pairs, not `283527^7` members of one fixed root's `RecoveryFiber` or `rowBackpointers`; it does not classify all roots, recoveries, or rows. It proves no row/recovery uniqueness, evaluation injectivity, efficient enumeration, `Recover`, PFPO, `AllRoots`, square-root/decompression/recovery algorithm, relation filtering, independence/yield/rank, sparse linear algebra, runtime/memory/solver-node/total-cost result, scalar recovery, or ECDLP shortcut. The module adds zero new `native_decide` owners; it inherits the existing secp256k1 parameter/primality, `rhs ≠ 0`, no-two-torsion, and factor-base/liftable-census families, while only the final numeric comparison additionally inherits the existing solver-budget owner)",
+      "theorem_cell": "`Ecdlp.M16CancellationBackpointerCollapse.anchorTarget_ne_zero`, `anchorTarget_liesOver`, `coefficientVector_cancellationLiftTuple`, `cancellationCompatible`, `cancellationRootWithRecovery_injective`, `canonicalRow_cancellationRecovery`, `backpointerRow_cancellationRootWithRecovery`, `card_constantRowPreimage_lower_bound`, `maxRelationTermBudget_lt_constantRowPreimage_card`",
+      "declared_files": [
+        "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean"
+      ],
+      "method": "noncomputable anchor/reference selection + explicit labelled cancellation recovery/root injection + exact repeated-coordinate `Finsupp` cancellation + constant-row subtype cardinality; zero new native owners, inherited curve/primality/no-two-torsion/factor-base census trust and existing budget owner disclosed",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.M16CancellationBackpointerCollapse.anchorTarget_ne_zero",
+          "canonical_name": "Ecdlp.M16CancellationBackpointerCollapse.anchorTarget_ne_zero",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+          "line": 63
+        },
+        {
+          "cited": "Ecdlp.M16CancellationBackpointerCollapse.anchorTarget_liesOver",
+          "canonical_name": "Ecdlp.M16CancellationBackpointerCollapse.anchorTarget_liesOver",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+          "line": 88
+        },
+        {
+          "cited": "Ecdlp.M16CancellationBackpointerCollapse.coefficientVector_cancellationLiftTuple",
+          "canonical_name": "Ecdlp.M16CancellationBackpointerCollapse.coefficientVector_cancellationLiftTuple",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+          "line": 133
+        },
+        {
+          "cited": "Ecdlp.M16CancellationBackpointerCollapse.cancellationCompatible",
+          "canonical_name": "Ecdlp.M16CancellationBackpointerCollapse.cancellationCompatible",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+          "line": 152
+        },
+        {
+          "cited": "Ecdlp.M16CancellationBackpointerCollapse.cancellationRootWithRecovery_injective",
+          "canonical_name": "Ecdlp.M16CancellationBackpointerCollapse.cancellationRootWithRecovery_injective",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+          "line": 209
+        },
+        {
+          "cited": "Ecdlp.M16CancellationBackpointerCollapse.canonicalRow_cancellationRecovery",
+          "canonical_name": "Ecdlp.M16CancellationBackpointerCollapse.canonicalRow_cancellationRecovery",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+          "line": 219
+        },
+        {
+          "cited": "Ecdlp.M16CancellationBackpointerCollapse.backpointerRow_cancellationRootWithRecovery",
+          "canonical_name": "Ecdlp.M16CancellationBackpointerCollapse.backpointerRow_cancellationRootWithRecovery",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+          "line": 232
+        },
+        {
+          "cited": "Ecdlp.M16CancellationBackpointerCollapse.card_constantRowPreimage_lower_bound",
+          "canonical_name": "Ecdlp.M16CancellationBackpointerCollapse.card_constantRowPreimage_lower_bound",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+          "line": 273
+        },
+        {
+          "cited": "Ecdlp.M16CancellationBackpointerCollapse.maxRelationTermBudget_lt_constantRowPreimage_card",
+          "canonical_name": "Ecdlp.M16CancellationBackpointerCollapse.maxRelationTermBudget_lt_constantRowPreimage_card",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+          "line": 288
+        }
+      ]
     }
   ],
   "declarations": {
@@ -17232,6 +17325,202 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/M16BaseRecoveryFiber.lean",
       "line": 216
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.BasePoint": {
+      "name": "BasePoint",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 47
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.ConstantRowPreimage": {
+      "name": "ConstantRowPreimage",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 243
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.Fp": {
+      "name": "Fp",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 46
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.RootWithRecovery": {
+      "name": "RootWithRecovery",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 181
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.anchorPoint": {
+      "name": "anchorPoint",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 52
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.anchorPoint_ne_zero": {
+      "name": "anchorPoint_ne_zero",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 55
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.anchorTarget": {
+      "name": "anchorTarget",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 60
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.anchorTarget_liesOver": {
+      "name": "anchorTarget_liesOver",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 88
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.anchorTarget_ne_zero": {
+      "name": "anchorTarget_ne_zero",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 63
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.anchorX": {
+      "name": "anchorX",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 83
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.backpointerRow": {
+      "name": "backpointerRow",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 186
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.backpointerRow_cancellationRootWithRecovery": {
+      "name": "backpointerRow_cancellationRootWithRecovery",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 232
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.cancellationCompatible": {
+      "name": "cancellationCompatible",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 152
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.cancellationLiftTuple": {
+      "name": "cancellationLiftTuple",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 111
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.cancellationRecovery": {
+      "name": "cancellationRecovery",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 162
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.cancellationRoot": {
+      "name": "cancellationRoot",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 170
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.cancellationRootWithRecovery": {
+      "name": "cancellationRootWithRecovery",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 191
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.cancellationRootWithRecovery_injective": {
+      "name": "cancellationRootWithRecovery_injective",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 209
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.cancellationSigns": {
+      "name": "cancellationSigns",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 106
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.cancellationTuple": {
+      "name": "cancellationTuple",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 98
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.canonicalRow_cancellationRecovery": {
+      "name": "canonicalRow_cancellationRecovery",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 219
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.card_constantRowPreimage_lower_bound": {
+      "name": "card_constantRowPreimage_lower_bound",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 273
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.coefficientVector_cancellationLiftTuple": {
+      "name": "coefficientVector_cancellationLiftTuple",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 133
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.constantRowFamily": {
+      "name": "constantRowFamily",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 259
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.constantRowFamily_injective": {
+      "name": "constantRowFamily_injective",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 264
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.constantRowPreimageFintype": {
+      "name": "constantRowPreimageFintype",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "instance",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 252
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.maxRelationTermBudget_lt_constantRowPreimage_card": {
+      "name": "maxRelationTermBudget_lt_constantRowPreimage_card",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 288
+    },
+    "Ecdlp.M16CancellationBackpointerCollapse.rootWithRecoveryFintype": {
+      "name": "rootWithRecoveryFintype",
+      "namespace": "Ecdlp.M16CancellationBackpointerCollapse",
+      "kind": "instance",
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "line": 247
     },
     "Ecdlp.M16CancellationRootLowerBound.BarCurve": {
       "name": "BarCurve",

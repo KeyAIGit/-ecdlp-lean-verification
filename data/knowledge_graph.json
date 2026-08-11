@@ -4,8 +4,8 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 321,
-    "ledger_rows": 321,
+    "theorems": 322,
+    "ledger_rows": 322,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
@@ -37,10 +37,10 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1254,
+    "edges": 1258,
     "by_edge_type": {
-      "imports": 578,
-      "member_of": 321,
+      "imports": 581,
+      "member_of": 322,
       "grounded_in_source_claim": 62,
       "requires_foundation": 41,
       "supports": 27,
@@ -217,11 +217,12 @@
       "exact finite partition + direct point semantics + existing conditional Frobenius/base-field two-torsion split; zero new native owners, inherited primality and no-two-torsion compiler trust disclosed": 1,
       "labelled finite-function injections + exact factor-base counts + point-sum semantics + reduced/direct root equivalence; zero new native owners, inherited certificate trust disclosed": 1,
       "exact square-root/actual-point equivalence + target-labelled global-negation quotient + direct point semantics and pointwise descent; zero new native owners, inherited discriminant/primality compiler trust only": 1,
-      "noncomputable lower-residue reference/sign classification + repeated-coordinate `Finsupp.linearCombination` evaluation + exact target-sign normalization + finite image/fiber cardinal partition; zero new native owners, inherited discriminant/rhs-support/primality trust disclosed": 1
+      "noncomputable lower-residue reference/sign classification + repeated-coordinate `Finsupp.linearCombination` evaluation + exact target-sign normalization + finite image/fiber cardinal partition; zero new native owners, inherited discriminant/rhs-support/primality trust disclosed": 1,
+      "noncomputable anchor/reference selection + explicit labelled cancellation recovery/root injection + exact repeated-coordinate `Finsupp` cancellation + constant-row subtype cardinality; zero new native owners, inherited curve/primality/no-two-torsion/factor-base census trust and existing budget owner disclosed": 1
     },
     "by_area": {
       "curve-torsion": 154,
-      "primality": 66,
+      "primality": 67,
       "other": 35,
       "generic-hardness": 30,
       "protocol-soundness": 23,
@@ -6684,6 +6685,26 @@
       "family_id": "family-primality",
       "dependency_depth": 14,
       "gated": true
+    },
+    {
+      "id": "thm-321",
+      "name": "Ecdlp.M16CancellationBackpointerCollapse.anchorTarget_ne_zero`, `anchorTarget_liesOver`, `coefficientVector_cancellationLiftTuple`, `cancellationCompatible`, `cancellationRootWithRecovery_injective`, `canonicalRow_cancellationRecovery`, `backpointerRow_cancellationRootWithRecovery`, `card_constantRowPreimage_lower_bound`, `maxRelationTermBudget_lt_constantRowPreimage_card",
+      "short_name": "anchorTarget_ne_zero`,",
+      "module": "Ecdlp.Proved.M16CancellationBackpointerCollapse",
+      "modules": [
+        "Ecdlp.Proved.M16CancellationBackpointerCollapse"
+      ],
+      "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
+      "files": [
+        "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean"
+      ],
+      "claim": "Explicit `283527^7` collapse of labelled M16 cancellation backpointers onto one canonical row (fix a liftable factor-base anchor `a` and its noncomputable lower-residue reference point `A`. The target `R = -(A+A)` is nonidentity, and a target coordinate `X` with `LiesOver X (includePoint R)` is chosen noncomputably. Each labelled seven-tuple of liftable factor-base coordinates fills seven fixed cancellation pairs after two positive anchor slots, producing an explicit compatible `false`-orientation recovery and liftable reduced root. Packaging the root with that retained recovery is injective in all seven choices, while the pair coefficients cancel exactly and every displayed normalized row is `Finsupp.single a (-2)`, even when pair coordinates repeat or equal `a`. Consequently the subtype of root-plus-recovery backpointers with that row has cardinality at least `283527^7`, and the existing desk ceiling is numerically smaller. Honest scope: this is an aggregate sigma-type preimage of constructed labelled root-plus-recovery pairs, not `283527^7` members of one fixed root's `RecoveryFiber` or `rowBackpointers`; it does not classify all roots, recoveries, or rows. It proves no row/recovery uniqueness, evaluation injectivity, efficient enumeration, `Recover`, PFPO, `AllRoots`, square-root/decompression/recovery algorithm, relation filtering, independence/yield/rank, sparse linear algebra, runtime/memory/solver-node/total-cost result, scalar recovery, or ECDLP shortcut. The module adds zero new `native_decide` owners; it inherits the existing secp256k1 parameter/primality, `rhs ≠ 0`, no-two-torsion, and factor-base/liftable-census families, while only the final numeric comparison additionally inherits the existing solver-budget owner)",
+      "method": "noncomputable anchor/reference selection + explicit labelled cancellation recovery/root injection + exact repeated-coordinate `Finsupp` cancellation + constant-row subtype cardinality; zero new native owners, inherited curve/primality/no-two-torsion/factor-base census trust and existing budget owner disclosed",
+      "status": "proved",
+      "area": "primality",
+      "family_id": "family-primality",
+      "dependency_depth": 15,
+      "gated": true
     }
   ],
   "barriers": [
@@ -12831,6 +12852,16 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.M16CancellationBackpointerCollapse",
+      "to": "Ecdlp.Proved.M16CanonicalRecoveryRows",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16CancellationBackpointerCollapse",
+      "to": "Ecdlp.Proved.M16CancellationRootLowerBound",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.M16CancellationRootLowerBound",
       "to": "Ecdlp.Proved.M16DirectPointSemantics",
       "type": "imports"
@@ -14667,6 +14698,11 @@
     },
     {
       "from": "Ecdlp",
+      "to": "Ecdlp.Proved.M16CancellationBackpointerCollapse",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
       "to": "Ecdlp.Proved.M16SixWidthNoGo",
       "type": "imports"
     },
@@ -16342,6 +16378,11 @@
     },
     {
       "from": "thm-320",
+      "to": "family-primality",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-321",
       "to": "family-primality",
       "type": "member_of"
     },
