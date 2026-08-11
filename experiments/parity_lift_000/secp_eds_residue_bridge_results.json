@@ -6,11 +6,11 @@
   "phi_g_hex": "0xee45a5d3582bcc343de09e2560a984ff1cbda1b74b117071860c29563f329c94",
   "chi_phi_g": -1,
   "bridge": "(-1)^k = chi(phi([k]G))*chi(W_G(k)), because chi(phi(G))=-1",
-  "normalization_check": {
-    "corrected_identity": "phi([k]G)=phi(G)^(k^2)*W_G(k)",
-    "printed_2008_equation_checked": "phi([k]G)=phi(G)^(k^2-1)*W_G(k)",
-    "printed_equation_passes_fixed_samples": false,
-    "interpretation": "The k^2 exponent is consistent with k=1, the net transformation law, the later 2k+1 ratio formula, and every fixed replay sample."
+  "normalization_alignment": {
+    "public_point_function": "phi([k]G)=phi(G)^(k^2)*W_G(k)",
+    "normalized_periodic_eds": "W_tilde_G(k)=phi([k]G)/phi(G)=phi(G)^(k^2-1)*W_G(k)",
+    "all_fixed_samples_pass_both_forms": true,
+    "interpretation": "The two exponents differ by the public global factor phi(G). Ratios are unchanged, but the distinction matters for an absolute residue bit."
   },
   "samples": [
     {
@@ -20,8 +20,8 @@
       "chi_w_k": 1,
       "product_equals_minus_one_pow_k": -1,
       "parity_sign": -1,
-      "corrected_k_squared_identity": true,
-      "displayed_k_squared_minus_one_identity": false
+      "point_function_k_squared_identity": true,
+      "normalized_eds_k_squared_minus_one_identity": true
     },
     {
       "scalar": "2",
@@ -30,8 +30,8 @@
       "chi_w_k": 1,
       "product_equals_minus_one_pow_k": 1,
       "parity_sign": 1,
-      "corrected_k_squared_identity": true,
-      "displayed_k_squared_minus_one_identity": false
+      "point_function_k_squared_identity": true,
+      "normalized_eds_k_squared_minus_one_identity": true
     },
     {
       "scalar": "3",
@@ -40,8 +40,8 @@
       "chi_w_k": -1,
       "product_equals_minus_one_pow_k": -1,
       "parity_sign": -1,
-      "corrected_k_squared_identity": true,
-      "displayed_k_squared_minus_one_identity": false
+      "point_function_k_squared_identity": true,
+      "normalized_eds_k_squared_minus_one_identity": true
     },
     {
       "scalar": "7",
@@ -50,8 +50,8 @@
       "chi_w_k": -1,
       "product_equals_minus_one_pow_k": -1,
       "parity_sign": -1,
-      "corrected_k_squared_identity": true,
-      "displayed_k_squared_minus_one_identity": false
+      "point_function_k_squared_identity": true,
+      "normalized_eds_k_squared_minus_one_identity": true
     },
     {
       "scalar": "11",
@@ -60,8 +60,8 @@
       "chi_w_k": 1,
       "product_equals_minus_one_pow_k": -1,
       "parity_sign": -1,
-      "corrected_k_squared_identity": true,
-      "displayed_k_squared_minus_one_identity": false
+      "point_function_k_squared_identity": true,
+      "normalized_eds_k_squared_minus_one_identity": true
     },
     {
       "scalar": "123456789",
@@ -70,8 +70,8 @@
       "chi_w_k": 1,
       "product_equals_minus_one_pow_k": -1,
       "parity_sign": -1,
-      "corrected_k_squared_identity": true,
-      "displayed_k_squared_minus_one_identity": false
+      "point_function_k_squared_identity": true,
+      "normalized_eds_k_squared_minus_one_identity": true
     },
     {
       "scalar": "115792089237316195423570985008687907852837564279074904382605163141518161494335",
@@ -80,8 +80,8 @@
       "chi_w_k": 1,
       "product_equals_minus_one_pow_k": -1,
       "parity_sign": -1,
-      "corrected_k_squared_identity": true,
-      "displayed_k_squared_minus_one_identity": false
+      "point_function_k_squared_identity": true,
+      "normalized_eds_k_squared_minus_one_identity": true
     },
     {
       "scalar": "115792089237316195423570985008687907852837564279074904382605163141518161494336",
@@ -90,8 +90,8 @@
       "chi_w_k": 1,
       "product_equals_minus_one_pow_k": 1,
       "parity_sign": 1,
-      "corrected_k_squared_identity": true,
-      "displayed_k_squared_minus_one_identity": false
+      "point_function_k_squared_identity": true,
+      "normalized_eds_k_squared_minus_one_identity": true
     }
   ],
   "claim_boundary": [
