@@ -1,0 +1,100 @@
+{
+  "scope": "five frozen prime-order toy curves y^2=x^3+7 only",
+  "maximum_product_or_ratio_weight": 4,
+  "division_multiplication_formula": "psi_m([k]G)=psi_(m*k)(G)/psi_k(G)^(m^2)",
+  "curves": [
+    {
+      "p": 43,
+      "order": 31,
+      "generator": [2, 12],
+      "multiplication_formula_checks": 900,
+      "distinct_division_character_vectors": 16,
+      "exact_single_for_any_index_generator_and_sign": false,
+      "exact_product_or_ratio_up_to_weight_four": false,
+      "best_single_matches": 24,
+      "best_single_total": 30,
+      "best_single_accuracy": 0.8,
+      "smallest_best_index": 2,
+      "smallest_best_generator_multiplier": 8,
+      "smallest_best_global_sign": 1,
+      "index_two_is_best": true
+    },
+    {
+      "p": 67,
+      "order": 79,
+      "generator": [2, 22],
+      "multiplication_formula_checks": 6084,
+      "distinct_division_character_vectors": 44,
+      "exact_single_for_any_index_generator_and_sign": false,
+      "exact_product_or_ratio_up_to_weight_four": false,
+      "best_single_matches": 50,
+      "best_single_total": 78,
+      "best_single_accuracy": 0.6410256410256411,
+      "smallest_best_index": 2,
+      "smallest_best_generator_multiplier": 22,
+      "smallest_best_global_sign": -1,
+      "index_two_is_best": true
+    },
+    {
+      "p": 79,
+      "order": 67,
+      "generator": [1, 18],
+      "multiplication_formula_checks": 4356,
+      "distinct_division_character_vectors": 38,
+      "exact_single_for_any_index_generator_and_sign": false,
+      "exact_product_or_ratio_up_to_weight_four": false,
+      "best_single_matches": 46,
+      "best_single_total": 66,
+      "best_single_accuracy": 0.696969696969697,
+      "smallest_best_index": 2,
+      "smallest_best_generator_multiplier": 10,
+      "smallest_best_global_sign": -1,
+      "index_two_is_best": true
+    },
+    {
+      "p": 127,
+      "order": 127,
+      "generator": [1, 32],
+      "multiplication_formula_checks": 15876,
+      "distinct_division_character_vectors": 72,
+      "exact_single_for_any_index_generator_and_sign": false,
+      "exact_product_or_ratio_up_to_weight_four": false,
+      "best_single_matches": 76,
+      "best_single_total": 126,
+      "best_single_accuracy": 0.6031746031746031,
+      "smallest_best_index": 2,
+      "smallest_best_generator_multiplier": 1,
+      "smallest_best_global_sign": -1,
+      "index_two_is_best": true
+    },
+    {
+      "p": 163,
+      "order": 139,
+      "generator": [2, 34],
+      "multiplication_formula_checks": 19044,
+      "distinct_division_character_vectors": 82,
+      "exact_single_for_any_index_generator_and_sign": false,
+      "exact_product_or_ratio_up_to_weight_four": false,
+      "best_single_matches": 84,
+      "best_single_total": 138,
+      "best_single_accuracy": 0.6086956521739131,
+      "smallest_best_index": 2,
+      "smallest_best_generator_multiplier": 9,
+      "smallest_best_global_sign": 1,
+      "index_two_is_best": true
+    }
+  ],
+  "aggregate": {
+    "all_multiplication_formula_checks_passed": true,
+    "exact_single_decoders_found": 0,
+    "exact_product_or_ratio_decoders_found": 0,
+    "index_two_reaches_the_best_single_accuracy_on_every_curve": true
+  },
+  "claim_boundary": [
+    "This is a bounded toy negative, not an asymptotic lower bound.",
+    "Quadratic character makes products and ratios equivalent at sign level.",
+    "The screen does not cover sums, shifted arguments, theta identities, or unbounded product weight.",
+    "No external or production-sized input is accepted.",
+    "High algebraic degree can still have low recurrence or circuit complexity."
+  ]
+}
