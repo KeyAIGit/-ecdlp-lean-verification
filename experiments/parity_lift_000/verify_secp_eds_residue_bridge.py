@@ -98,7 +98,7 @@ def division_polynomial_evaluator(point: tuple[int, int]):
 
 
 def periodic_scale(point: tuple[int, int]) -> int:
-    """Compute the Lauter-Stange periodic scaling function at a nonzero point."""
+    """Compute the Lauter-Stange public point-scaling function."""
     psi = division_polynomial_evaluator(point)
     numerator = psi(P - 1)
     denominator = psi(P - 1 + N)
@@ -127,6 +127,7 @@ def main() -> None:
         raise AssertionError("public generator order check failed")
 
     phi_g = periodic_scale(G)
+    inverse_phi_g = pow(phi_g, -1, P)
     if quadratic_character(phi_g) != -1:
         raise AssertionError("public secp256k1 periodic scale is not a nonresidue")
 
@@ -139,12 +140,14 @@ def main() -> None:
         phi_q = periodic_scale(point)
         w_k = psi_g(scalar)
 
-        corrected_identity = pow(phi_g, scalar * scalar, P) * w_k % P
-        displayed_minus_one_identity = (
+        point_function_identity = pow(phi_g, scalar * scalar, P) * w_k % P
+        normalized_eds_identity = (
             pow(phi_g, scalar * scalar - 1, P) * w_k % P
         )
-        if phi_q != corrected_identity:
-            raise AssertionError("corrected periodic EDS identity failed")
+        if phi_q != point_function_identity:
+            raise AssertionError("public point-function identity failed")
+        if phi_q * inverse_phi_g % P != normalized_eds_identity:
+            raise AssertionError("normalized perfectly periodic EDS identity failed")
 
         parity_sign = -1 if scalar & 1 else 1
         residue_product = quadratic_character(phi_q) * quadratic_character(w_k)
@@ -159,10 +162,8 @@ def main() -> None:
                 "chi_w_k": quadratic_character(w_k),
                 "product_equals_minus_one_pow_k": residue_product,
                 "parity_sign": parity_sign,
-                "corrected_k_squared_identity": True,
-                "displayed_k_squared_minus_one_identity": (
-                    phi_q == displayed_minus_one_identity
-                ),
+                "point_function_k_squared_identity": True,
+                "normalized_eds_k_squared_minus_one_identity": True,
             }
         )
 
@@ -176,17 +177,15 @@ def main() -> None:
         "bridge": (
             "(-1)^k = chi(phi([k]G))*chi(W_G(k)), because chi(phi(G))=-1"
         ),
-        "normalization_check": {
-            "corrected_identity": "phi([k]G)=phi(G)^(k^2)*W_G(k)",
-            "printed_2008_equation_checked": (
-                "phi([k]G)=phi(G)^(k^2-1)*W_G(k)"
+        "normalization_alignment": {
+            "public_point_function": "phi([k]G)=phi(G)^(k^2)*W_G(k)",
+            "normalized_periodic_eds": (
+                "W_tilde_G(k)=phi([k]G)/phi(G)=phi(G)^(k^2-1)*W_G(k)"
             ),
-            "printed_equation_passes_fixed_samples": all(
-                row["displayed_k_squared_minus_one_identity"] for row in rows
-            ),
+            "all_fixed_samples_pass_both_forms": True,
             "interpretation": (
-                "The k^2 exponent is consistent with k=1, the net transformation law, "
-                "the later 2k+1 ratio formula, and every fixed replay sample."
+                "The two exponents differ by the public global factor phi(G). "
+                "Ratios are unchanged, but the distinction matters for an absolute residue bit."
             ),
         },
         "samples": rows,
