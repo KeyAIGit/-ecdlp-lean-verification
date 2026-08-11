@@ -2,7 +2,7 @@
 
 > Counts here are a snapshot; the single canonical figure is **`STATUS.md`** (generated from `data/stats.json`). If they differ, STATUS.md wins.
 
-**Scope of the verified body.** `323 ledger rows / ~284 distinct kernel-verified
+**Scope of the verified body.** `324 ledger rows / ~285 distinct kernel-verified
 results`. A row may group several supporting declarations; the exact expansion is
 generated in `data/result_registry.json`. The built surface has **0 `sorry`, 0
 `admit`, and 0 custom axioms**. Open target stems are explicitly outside the built
@@ -319,6 +319,23 @@ describe ambient coefficient spaces, not collected relation rank or yield; no
 theorem identifies the census reference with the separate experimental
 minimum-point-encoding convention or supplies a recovery/solver/cost result.
 
+`M16FiniteGLVRelationRank.lean` adds **zero** `native_decide` owners. Its
+subgroup-valued mod-`n` row evaluator, certified-target and nonzero-row bridges,
+labelled coefficient and augmented matrices, `Finsupp` synthesis/range
+identities, matrix-rank equalities, rank-nullity formulas, one-column rank
+comparison, and distinct-row upper bounds are ordinary Lean/Mathlib
+composition. The sample type is abstract and finite: no recovery witness or
+matrix is constructed or enumerated, and repeated rows at different labels are
+not deduplicated. The audited declarations inherit the three standard axioms
+and only already catalogued native-owner families reached through their
+dependencies: secp256k1 parameter/primality and concrete subgroup structure,
+the full-group/GLV chains, the three `rhs ≠ 0` support owners, and the two
+liftable-census owners. Not every export reaches every listed family, and no
+new closed computation is introduced. Coefficient rank and augmented rank are
+separate conventions; the module proves no achieved rank, independence, yield,
+distribution, sparse-linear-algebra outcome, solver, recovery, runtime/memory/
+cost, minimum-encoding comparison, scalar recovery, or ECDLP shortcut.
+
 `M16PartitionedPointSemantics.lean` likewise adds **zero** `native_decide`
 owners, but its trust inheritance is deliberately stated separately: the
 partition theorem calls the existing final Frobenius split, so its audited
@@ -466,6 +483,22 @@ depends on `Lean.ofReduceBool`). These are the rows tagged "Mathlib + native_dec
   parameter/primality, GLV/full-group, `rhs`-support, and liftable-census
   certificate families described above; the three newly public
   `M16FactorBaseLiftable` wrappers likewise add no owner.
+- `Ecdlp/Proved/M16FiniteGLVRelationRank.lean` →
+  `coe_evalGLVRowModN_reduceModN`,
+  `evalGLVRowModN_certifiedRowModN`, `certifiedRowModN_ne_zero`,
+  `certifiedRelation_closes`, `coefficientMatrix`, `augmentedMatrix`,
+  `augmentedMatrix_row_closes`, `coefficientRank_add_finrank_ker`,
+  `augmentedRank_add_finrank_ker`,
+  `coefficientMatrix_rank_eq_coefficientRank`,
+  `augmentedMatrix_rank_eq_augmentedRank`,
+  `coefficientRank_le_augmentedRank`,
+  `augmentedRank_le_coefficientRank_add_one`,
+  `coefficientRank_le_distinctCoefficientRows_card`, and
+  `augmentedRank_le_distinctAugmentedRows_card`. Their proof bodies add no
+  `native_decide` owner. They inherit only the already catalogued secp256k1
+  parameter/primality, concrete subgroup, GLV/full-group, `rhs`-support, and
+  liftable-census families reached through their dependencies; no achieved-rank
+  or solver/cost conclusion is audited.
 - `Ecdlp/Proved/M16CancellationRootLowerBound.lean` →
   `cancellation_pair_root_lower_bounds`,
   `exists_nonzero_target_root_lower_bounds`,
@@ -540,7 +573,7 @@ Distinguishing *machine-enforced* (a red build blocks merge) from *documentation
 | `Ensure no incomplete proofs remain` | `grep -rniI --include='*.lean' --exclude-dir=Targets 'sorry' Ecdlp/` — fails if `sorry`/`admit` text appears in any **built** `.lean` file. `Ecdlp/Targets/` (open stems) is excluded by design. | **MACHINE-ENFORCED**, with the documented scope limit that it is a *text* grep over built files and deliberately skips `Targets/`. |
 | `Ensure no built file imports an open target stem` | `grep` for `import Ecdlp.Targets` outside `Targets/`. Closes the hole where a built file could pull a `sorry`-bearing stem into the build graph (since `sorry` is only a warning). | **MACHINE-ENFORCED.** This is the guard that makes the previous grep sound. |
 | `Fetch prebuilt Mathlib cache` + `Build and verify ALL proofs` — `lake build` | The **kernel** re-checks every built proof term. A `sorry` that reached the build graph, or any type error, fails here. | **MACHINE-ENFORCED.** This is the core verification: a green `lake build` means the kernel accepted every built theorem. |
-| `Axiom audit (no sorryAx, no custom axioms)` — `lake env lean Ecdlp/LedgerAxiomAudit.lean` → `scripts/check_axioms.py` | Generates `#print axioms` for every named declaration resolved from all 323 ledger rows. It fails on `sorryAx`, guard/custom axioms, unknown names, or any mismatch between Lean output and `data/result_registry.json`; compiler-trust markers from `native_decide` are disclosed. | **MACHINE-ENFORCED and exhaustive over the named ledger declaration set.** Seven anonymous instance targets are source-resolved exemptions because they have no source-level declaration name; their defining files are still built and their named load-bearing theorems are audited. |
+| `Axiom audit (no sorryAx, no custom axioms)` — `lake env lean Ecdlp/LedgerAxiomAudit.lean` → `scripts/check_axioms.py` | Generates `#print axioms` for every named declaration resolved from all 324 ledger rows. It fails on `sorryAx`, guard/custom axioms, unknown names, or any mismatch between Lean output and `data/result_registry.json`; compiler-trust markers from `native_decide` are disclosed. | **MACHINE-ENFORCED and exhaustive over the named ledger declaration set.** Seven anonymous instance targets are source-resolved exemptions because they have no source-level declaration name; their defining files are still built and their named load-bearing theorems are audited. |
 | `Typecheck open target stems (non-blocking)` | `lake env lean` over `Ecdlp/Targets/*.lean`; `continue-on-error: true`. | **DOCUMENTATION/INFO ONLY.** A stem failing to typecheck emits a warning, never blocks. |
 | `Featherless API smoke test`, `Prover target attempt`, report upload | All `continue-on-error: true` and skipped on PRs. | **DOCUMENTATION/INFO ONLY.** Prover orchestration; cannot affect the verification verdict. |
 

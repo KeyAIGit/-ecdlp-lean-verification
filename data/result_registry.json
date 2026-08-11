@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 323,
-  "ledger_reference_count": 879,
-  "ledger_named_declarations": 854,
+  "ledger_rows": 324,
+  "ledger_reference_count": 894,
+  "ledger_named_declarations": 869,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1564,
-  "distinct_qualified_names": 1564,
-  "verified_md_citations": 854,
+  "declaration_count": 1616,
+  "distinct_qualified_names": 1616,
+  "verified_md_citations": 869,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -677,6 +677,21 @@
     "Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_seven",
     "Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_six",
     "Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_six_le_budget",
+    "Ecdlp.M16FiniteGLVRelationRank.augmentedMatrix",
+    "Ecdlp.M16FiniteGLVRelationRank.augmentedMatrix_rank_eq_augmentedRank",
+    "Ecdlp.M16FiniteGLVRelationRank.augmentedMatrix_row_closes",
+    "Ecdlp.M16FiniteGLVRelationRank.augmentedRank_add_finrank_ker",
+    "Ecdlp.M16FiniteGLVRelationRank.augmentedRank_le_coefficientRank_add_one",
+    "Ecdlp.M16FiniteGLVRelationRank.augmentedRank_le_distinctAugmentedRows_card",
+    "Ecdlp.M16FiniteGLVRelationRank.certifiedRelation_closes",
+    "Ecdlp.M16FiniteGLVRelationRank.certifiedRowModN_ne_zero",
+    "Ecdlp.M16FiniteGLVRelationRank.coe_evalGLVRowModN_reduceModN",
+    "Ecdlp.M16FiniteGLVRelationRank.coefficientMatrix",
+    "Ecdlp.M16FiniteGLVRelationRank.coefficientMatrix_rank_eq_coefficientRank",
+    "Ecdlp.M16FiniteGLVRelationRank.coefficientRank_add_finrank_ker",
+    "Ecdlp.M16FiniteGLVRelationRank.coefficientRank_le_augmentedRank",
+    "Ecdlp.M16FiniteGLVRelationRank.coefficientRank_le_distinctCoefficientRows_card",
+    "Ecdlp.M16FiniteGLVRelationRank.evalGLVRowModN_certifiedRowModN",
     "Ecdlp.M16FrobeniusPointSplit.BarCurve",
     "Ecdlp.M16FrobeniusPointSplit.BarPoint",
     "Ecdlp.M16FrobeniusPointSplit.BasePoint",
@@ -11865,6 +11880,138 @@
           "line": 489
         }
       ]
+    },
+    {
+      "id": "ledger-323",
+      "claim": "Finite labelled GLV relation matrices with exact coefficient/augmented rank accounting (every certified M16 recovery gives a GLV-compressed coefficient row over `ZMod n` whose linear evaluation in the concrete subgroup `⟨G⟩` is the supplied fixed target. For a nonzero target the coefficient row is nonzero, and adjoining target coefficient `-1` closes an exact homogeneous relation. A finite sample is labelled by a function `ι → CertifiedRecovery R`, so equal rows at different labels remain distinct observations. The coefficient matrix uses the 94509 GLV factor-base columns and treats the target as a right-hand side; the augmented matrix adds one target column and treats each row as homogeneous. Both synthesis maps obey rank-nullity, and their span dimensions agree exactly with `Matrix.rank`. The coefficient rank is at most the augmented rank, which is at most coefficient rank plus one. Deduplicated coefficient and augmented row sets give upper bounds on the corresponding ranks only. Honest scope: the abstract finite sample is supplied rather than constructed or enumerated. The theorem package proves no sample existence or size, achieved rank, row independence, relation yield or distribution, sparse-linear-algebra outcome, root solver, `Recover`, PFPO, `AllRoots`, runtime/memory/solver-node/total-cost result, scalar recovery, experimental minimum-encoding equivalence, or ECDLP shortcut. Coefficient rank and augmented rank are deliberately separate conventions and are not both called relation rank. The module adds zero new `native_decide` owners and inherits only pre-existing secp256k1 parameter/primality, concrete-subgroup, GLV/full-group, `rhs`-support, and liftable-census certificate families reached through its dependencies)",
+      "theorem_cell": "`Ecdlp.M16FiniteGLVRelationRank.coe_evalGLVRowModN_reduceModN`, `evalGLVRowModN_certifiedRowModN`, `certifiedRowModN_ne_zero`, `certifiedRelation_closes`, `coefficientMatrix`, `augmentedMatrix`, `augmentedMatrix_row_closes`, `coefficientRank_add_finrank_ker`, `augmentedRank_add_finrank_ker`, `coefficientMatrix_rank_eq_coefficientRank`, `augmentedMatrix_rank_eq_augmentedRank`, `coefficientRank_le_augmentedRank`, `augmentedRank_le_coefficientRank_add_one`, `coefficientRank_le_distinctCoefficientRows_card`, `augmentedRank_le_distinctAugmentedRows_card`",
+      "declared_files": [
+        "Ecdlp/Proved/M16FiniteGLVRelationRank.lean"
+      ],
+      "method": "concrete subgroup-valued row evaluation + labelled `Finsupp` synthesis/span + finite-dimensional rank-nullity + matrix submatrix and one-column finrank bounds; zero new native owners, inherited trust disclosed",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.M16FiniteGLVRelationRank.coe_evalGLVRowModN_reduceModN",
+          "canonical_name": "Ecdlp.M16FiniteGLVRelationRank.coe_evalGLVRowModN_reduceModN",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+          "line": 77
+        },
+        {
+          "cited": "Ecdlp.M16FiniteGLVRelationRank.evalGLVRowModN_certifiedRowModN",
+          "canonical_name": "Ecdlp.M16FiniteGLVRelationRank.evalGLVRowModN_certifiedRowModN",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+          "line": 134
+        },
+        {
+          "cited": "Ecdlp.M16FiniteGLVRelationRank.certifiedRowModN_ne_zero",
+          "canonical_name": "Ecdlp.M16FiniteGLVRelationRank.certifiedRowModN_ne_zero",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+          "line": 150
+        },
+        {
+          "cited": "Ecdlp.M16FiniteGLVRelationRank.certifiedRelation_closes",
+          "canonical_name": "Ecdlp.M16FiniteGLVRelationRank.certifiedRelation_closes",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+          "line": 161
+        },
+        {
+          "cited": "Ecdlp.M16FiniteGLVRelationRank.coefficientMatrix",
+          "canonical_name": "Ecdlp.M16FiniteGLVRelationRank.coefficientMatrix",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+          "line": 193
+        },
+        {
+          "cited": "Ecdlp.M16FiniteGLVRelationRank.augmentedMatrix",
+          "canonical_name": "Ecdlp.M16FiniteGLVRelationRank.augmentedMatrix",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+          "line": 198
+        },
+        {
+          "cited": "Ecdlp.M16FiniteGLVRelationRank.augmentedMatrix_row_closes",
+          "canonical_name": "Ecdlp.M16FiniteGLVRelationRank.augmentedMatrix_row_closes",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+          "line": 219
+        },
+        {
+          "cited": "Ecdlp.M16FiniteGLVRelationRank.coefficientRank_add_finrank_ker",
+          "canonical_name": "Ecdlp.M16FiniteGLVRelationRank.coefficientRank_add_finrank_ker",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+          "line": 266
+        },
+        {
+          "cited": "Ecdlp.M16FiniteGLVRelationRank.augmentedRank_add_finrank_ker",
+          "canonical_name": "Ecdlp.M16FiniteGLVRelationRank.augmentedRank_add_finrank_ker",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+          "line": 276
+        },
+        {
+          "cited": "Ecdlp.M16FiniteGLVRelationRank.coefficientMatrix_rank_eq_coefficientRank",
+          "canonical_name": "Ecdlp.M16FiniteGLVRelationRank.coefficientMatrix_rank_eq_coefficientRank",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+          "line": 304
+        },
+        {
+          "cited": "Ecdlp.M16FiniteGLVRelationRank.augmentedMatrix_rank_eq_augmentedRank",
+          "canonical_name": "Ecdlp.M16FiniteGLVRelationRank.augmentedMatrix_rank_eq_augmentedRank",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+          "line": 313
+        },
+        {
+          "cited": "Ecdlp.M16FiniteGLVRelationRank.coefficientRank_le_augmentedRank",
+          "canonical_name": "Ecdlp.M16FiniteGLVRelationRank.coefficientRank_le_augmentedRank",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+          "line": 332
+        },
+        {
+          "cited": "Ecdlp.M16FiniteGLVRelationRank.augmentedRank_le_coefficientRank_add_one",
+          "canonical_name": "Ecdlp.M16FiniteGLVRelationRank.augmentedRank_le_coefficientRank_add_one",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+          "line": 367
+        },
+        {
+          "cited": "Ecdlp.M16FiniteGLVRelationRank.coefficientRank_le_distinctCoefficientRows_card",
+          "canonical_name": "Ecdlp.M16FiniteGLVRelationRank.coefficientRank_le_distinctCoefficientRows_card",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+          "line": 430
+        },
+        {
+          "cited": "Ecdlp.M16FiniteGLVRelationRank.augmentedRank_le_distinctAugmentedRows_card",
+          "canonical_name": "Ecdlp.M16FiniteGLVRelationRank.augmentedRank_le_distinctAugmentedRows_card",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+          "line": 443
+        }
+      ]
     }
   ],
   "declarations": {
@@ -18622,6 +18769,370 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/M16FactorBaseSymmetricGate.lean",
       "line": 32
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.BasePoint": {
+      "name": "BasePoint",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 45
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.CertifiedRecovery": {
+      "name": "CertifiedRecovery",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 104
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.K": {
+      "name": "K",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 44
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.PointN": {
+      "name": "PointN",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 46
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.Rep": {
+      "name": "Rep",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 47
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.asPointN": {
+      "name": "asPointN",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 53
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.augmentedMatrix": {
+      "name": "augmentedMatrix",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 198
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.augmentedMatrix_none": {
+      "name": "augmentedMatrix_none",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 207
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.augmentedMatrix_rank_eq_augmentedRank": {
+      "name": "augmentedMatrix_rank_eq_augmentedRank",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 313
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.augmentedMatrix_rank_eq_finrank_span_rows": {
+      "name": "augmentedMatrix_rank_eq_finrank_span_rows",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 295
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.augmentedMatrix_row_closes": {
+      "name": "augmentedMatrix_row_closes",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 219
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.augmentedMatrix_some": {
+      "name": "augmentedMatrix_some",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 212
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.augmentedRank": {
+      "name": "augmentedRank",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 261
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.augmentedRank_add_finrank_ker": {
+      "name": "augmentedRank_add_finrank_ker",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 276
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.augmentedRank_le_coefficientRank_add_one": {
+      "name": "augmentedRank_le_coefficientRank_add_one",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 367
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.augmentedRank_le_distinctAugmentedRows_card": {
+      "name": "augmentedRank_le_distinctAugmentedRows_card",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 443
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.augmentedRow": {
+      "name": "augmentedRow",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 177
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.augmentedRow_none": {
+      "name": "augmentedRow_none",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 182
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.augmentedRow_some": {
+      "name": "augmentedRow_some",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 186
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.augmentedSynthesis": {
+      "name": "augmentedSynthesis",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 234
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.certifiedRelation_closes": {
+      "name": "certifiedRelation_closes",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 161
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.certifiedRowModN": {
+      "name": "certifiedRowModN",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 113
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.certifiedRowModN_eq_reduceModN": {
+      "name": "certifiedRowModN_eq_reduceModN",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 119
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.certifiedRowModN_ne_zero": {
+      "name": "certifiedRowModN_ne_zero",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 150
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.certifiedRowZ": {
+      "name": "certifiedRowZ",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 108
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.certifiedRowZ_ne_zero": {
+      "name": "certifiedRowZ_ne_zero",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 143
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.coe_asPointN": {
+      "name": "coe_asPointN",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 56
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.coe_distinctAugmentedRows": {
+      "name": "coe_distinctAugmentedRows",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 419
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.coe_distinctCoefficientRows": {
+      "name": "coe_distinctCoefficientRows",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 410
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.coe_evalGLVRowModN_reduceModN": {
+      "name": "coe_evalGLVRowModN_reduceModN",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 77
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.coe_glvRepresentativePointN": {
+      "name": "coe_glvRepresentativePointN",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 65
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.coefficientMatrix": {
+      "name": "coefficientMatrix",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 193
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.coefficientMatrix_apply": {
+      "name": "coefficientMatrix_apply",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 202
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.coefficientMatrix_eq_augmented_submatrix": {
+      "name": "coefficientMatrix_eq_augmented_submatrix",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 325
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.coefficientMatrix_rank_eq_coefficientRank": {
+      "name": "coefficientMatrix_rank_eq_coefficientRank",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 304
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.coefficientMatrix_rank_eq_finrank_span_rows": {
+      "name": "coefficientMatrix_rank_eq_finrank_span_rows",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 287
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.coefficientRank": {
+      "name": "coefficientRank",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 256
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.coefficientRank_add_finrank_ker": {
+      "name": "coefficientRank_add_finrank_ker",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 266
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.coefficientRank_le_augmentedRank": {
+      "name": "coefficientRank_le_augmentedRank",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 332
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.coefficientRank_le_distinctCoefficientRows_card": {
+      "name": "coefficientRank_le_distinctCoefficientRows_card",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 430
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.coefficientRow": {
+      "name": "coefficientRow",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 171
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.coefficientSynthesis": {
+      "name": "coefficientSynthesis",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 228
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.distinctAugmentedRows": {
+      "name": "distinctAugmentedRows",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 404
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.distinctCoefficientRows": {
+      "name": "distinctCoefficientRows",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 396
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.evalGLVRowModN": {
+      "name": "evalGLVRowModN",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 71
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.evalGLVRowModN_certifiedRowModN": {
+      "name": "evalGLVRowModN_certifiedRowModN",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 134
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.evalGLVRow_certifiedRowZ": {
+      "name": "evalGLVRow_certifiedRowZ",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 127
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.glvRepresentativePointN": {
+      "name": "glvRepresentativePointN",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 62
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.range_augmentedMatrix_col": {
+      "name": "range_augmentedMatrix_col",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 347
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.range_augmentedSynthesis": {
+      "name": "range_augmentedSynthesis",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 247
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.range_coefficientSynthesis": {
+      "name": "range_coefficientSynthesis",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 239
+    },
+    "Ecdlp.M16FiniteGLVRelationRank.targetColumn": {
+      "name": "targetColumn",
+      "namespace": "Ecdlp.M16FiniteGLVRelationRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "line": 342
     },
     "Ecdlp.M16FrobeniusPointSplit.BarCurve": {
       "name": "BarCurve",

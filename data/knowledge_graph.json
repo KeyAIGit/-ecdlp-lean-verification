@@ -4,8 +4,8 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 323,
-    "ledger_rows": 323,
+    "theorems": 324,
+    "ledger_rows": 324,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
@@ -37,10 +37,10 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1263,
+    "edges": 1267,
     "by_edge_type": {
-      "imports": 585,
-      "member_of": 323,
+      "imports": 588,
+      "member_of": 324,
       "grounded_in_source_claim": 62,
       "requires_foundation": 41,
       "supports": 27,
@@ -219,11 +219,12 @@
       "exact square-root/actual-point equivalence + target-labelled global-negation quotient + direct point semantics and pointwise descent; zero new native owners, inherited discriminant/primality compiler trust only": 1,
       "noncomputable lower-residue reference/sign classification + repeated-coordinate `Finsupp.linearCombination` evaluation + exact target-sign normalization + finite image/fiber cardinal partition; zero new native owners, inherited discriminant/rhs-support/primality trust disclosed": 1,
       "noncomputable anchor/reference selection + explicit labelled cancellation recovery/root injection + exact repeated-coordinate `Finsupp` cancellation + constant-row subtype cardinality; zero new native owners, inherited curve/primality/no-two-torsion/factor-base census trust and existing budget owner disclosed": 1,
-      "exact census phase equivalence + noncomputable lower-residue GLV covariance + integral and mod-`n` linear-map identities + finite-dimensional rank-nullity; zero new native owners, inherited trust disclosed": 1
+      "exact census phase equivalence + noncomputable lower-residue GLV covariance + integral and mod-`n` linear-map identities + finite-dimensional rank-nullity; zero new native owners, inherited trust disclosed": 1,
+      "concrete subgroup-valued row evaluation + labelled `Finsupp` synthesis/span + finite-dimensional rank-nullity + matrix submatrix and one-column finrank bounds; zero new native owners, inherited trust disclosed": 1
     },
     "by_area": {
       "curve-torsion": 154,
-      "primality": 68,
+      "primality": 69,
       "other": 35,
       "generic-hardness": 30,
       "protocol-soundness": 23,
@@ -6726,6 +6727,26 @@
       "family_id": "family-primality",
       "dependency_depth": 15,
       "gated": true
+    },
+    {
+      "id": "thm-323",
+      "name": "Ecdlp.M16FiniteGLVRelationRank.coe_evalGLVRowModN_reduceModN`, `evalGLVRowModN_certifiedRowModN`, `certifiedRowModN_ne_zero`, `certifiedRelation_closes`, `coefficientMatrix`, `augmentedMatrix`, `augmentedMatrix_row_closes`, `coefficientRank_add_finrank_ker`, `augmentedRank_add_finrank_ker`, `coefficientMatrix_rank_eq_coefficientRank`, `augmentedMatrix_rank_eq_augmentedRank`, `coefficientRank_le_augmentedRank`, `augmentedRank_le_coefficientRank_add_one`, `coefficientRank_le_distinctCoefficientRows_card`, `augmentedRank_le_distinctAugmentedRows_card",
+      "short_name": "coe_evalGLVRowModN_reduceModN`,",
+      "module": "Ecdlp.Proved.M16FiniteGLVRelationRank",
+      "modules": [
+        "Ecdlp.Proved.M16FiniteGLVRelationRank"
+      ],
+      "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
+      "files": [
+        "Ecdlp/Proved/M16FiniteGLVRelationRank.lean"
+      ],
+      "claim": "Finite labelled GLV relation matrices with exact coefficient/augmented rank accounting (every certified M16 recovery gives a GLV-compressed coefficient row over `ZMod n` whose linear evaluation in the concrete subgroup `⟨G⟩` is the supplied fixed target. For a nonzero target the coefficient row is nonzero, and adjoining target coefficient `-1` closes an exact homogeneous relation. A finite sample is labelled by a function `ι → CertifiedRecovery R`, so equal rows at different labels remain distinct observations. The coefficient matrix uses the 94509 GLV factor-base columns and treats the target as a right-hand side; the augmented matrix adds one target column and treats each row as homogeneous. Both synthesis maps obey rank-nullity, and their span dimensions agree exactly with `Matrix.rank`. The coefficient rank is at most the augmented rank, which is at most coefficient rank plus one. Deduplicated coefficient and augmented row sets give upper bounds on the corresponding ranks only. Honest scope: the abstract finite sample is supplied rather than constructed or enumerated. The theorem package proves no sample existence or size, achieved rank, row independence, relation yield or distribution, sparse-linear-algebra outcome, root solver, `Recover`, PFPO, `AllRoots`, runtime/memory/solver-node/total-cost result, scalar recovery, experimental minimum-encoding equivalence, or ECDLP shortcut. Coefficient rank and augmented rank are deliberately separate conventions and are not both called relation rank. The module adds zero new `native_decide` owners and inherits only pre-existing secp256k1 parameter/primality, concrete-subgroup, GLV/full-group, `rhs`-support, and liftable-census certificate families reached through its dependencies)",
+      "method": "concrete subgroup-valued row evaluation + labelled `Finsupp` synthesis/span + finite-dimensional rank-nullity + matrix submatrix and one-column finrank bounds; zero new native owners, inherited trust disclosed",
+      "status": "proved",
+      "area": "primality",
+      "family_id": "family-primality",
+      "dependency_depth": 16,
+      "gated": true
     }
   ],
   "barriers": [
@@ -12978,6 +12999,16 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.M16FiniteGLVRelationRank",
+      "to": "Ecdlp.Proved.M16GLVCanonicalRows",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16FiniteGLVRelationRank",
+      "to": "Ecdlp.Proved.ProtocolInstantiation",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.M16FrobeniusPointSplit",
       "to": "Ecdlp.Proved.M16FactorBaseLiftable",
       "type": "imports"
@@ -14729,6 +14760,11 @@
     },
     {
       "from": "Ecdlp",
+      "to": "Ecdlp.Proved.M16FiniteGLVRelationRank",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
       "to": "Ecdlp.Proved.M16PartitionedPointSemantics",
       "type": "imports"
     },
@@ -16429,6 +16465,11 @@
     },
     {
       "from": "thm-322",
+      "to": "family-primality",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-323",
       "to": "family-primality",
       "type": "member_of"
     },
