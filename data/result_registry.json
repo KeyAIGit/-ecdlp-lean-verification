@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 315,
-  "ledger_reference_count": 786,
-  "ledger_named_declarations": 761,
+  "ledger_rows": 318,
+  "ledger_reference_count": 815,
+  "ledger_named_declarations": 790,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1328,
-  "distinct_qualified_names": 1328,
-  "verified_md_citations": 761,
+  "declaration_count": 1372,
+  "distinct_qualified_names": 1372,
+  "verified_md_citations": 790,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -368,6 +368,13 @@
     "Ecdlp.DLEQ.chaum_pedersen_verify",
     "Ecdlp.DivisionPoly.exists_common_root_of_not_isCoprime",
     "Ecdlp.EDS.isEllSequence_of_rec_one",
+    "Ecdlp.FrozenProjectiveSecpChainSemantics.SignedPointPrefix",
+    "Ecdlp.FrozenProjectiveSecpChainSemantics.applyPointSign",
+    "Ecdlp.FrozenProjectiveSecpChainSemantics.frozenChartCover_barKummer_iff_explicitSigns",
+    "Ecdlp.FrozenProjectiveSecpChainSemantics.frozenChartCover_barKummer_iff_signedPrefixSum",
+    "Ecdlp.FrozenProjectiveSecpChainSemantics.frozenProjectiveChain_barKummer_iff_explicitSigns",
+    "Ecdlp.FrozenProjectiveSecpChainSemantics.frozenProjectiveChain_barKummer_iff_signedPrefixSum",
+    "Ecdlp.FrozenProjectiveSecpChainSemantics.signedPrefixSum",
     "Ecdlp.FrozenProjectiveSecpLocalFiber.HValue_barKummer_normalize_zero_iff",
     "Ecdlp.FrozenProjectiveSecpLocalFiber.HValue_barKummer_zero_iff",
     "Ecdlp.FrozenProjectiveSecpLocalFiber.HValue_barKummer_zero_iff_projectiveDet",
@@ -589,6 +596,15 @@
     "Ecdlp.GenericGroup.secp256k1_bsgs_steps_le",
     "Ecdlp.GenericGroup.secp256k1_generic_security",
     "Ecdlp.GenericGroup.two_pow_255_lt_secp256k1_n",
+    "Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_relation",
+    "Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_sum_add_target_eq_zero",
+    "Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_sum_eq_target_or_neg",
+    "Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_sum_liesOver",
+    "Ecdlp.M16DirectPointSemantics.closureLift",
+    "Ecdlp.M16DirectPointSemantics.exists_liesOver",
+    "Ecdlp.M16DirectPointSemantics.liesOver_closureLift",
+    "Ecdlp.M16DirectPointSemantics.liesOver_iff_barKummer_eq",
+    "Ecdlp.M16DirectPointSemantics.liesOver_neg_iff",
     "Ecdlp.M16DirectSystemRootBridge.ChainEquations",
     "Ecdlp.M16DirectSystemRootBridge.DirectSystem4",
     "Ecdlp.M16DirectSystemRootBridge.S17At_eq_zero_iff_chartPolynomialCover_over",
@@ -645,6 +661,19 @@
     "Ecdlp.M16LiftableSixWidthNoGo.half_coverage_requires_more_than_two_pow_148_probes",
     "Ecdlp.M16LiftableSixWidthNoGo.natCard_liftableSignedSixIndex",
     "Ecdlp.M16LiftableSixWidthNoGo.no_half_coverage_of_two_pow_148_probe_bound",
+    "Ecdlp.M16PartitionedPointSemantics.PartitionedPointWitness",
+    "Ecdlp.M16PartitionedPointSemantics.S17At_eq_zero_iff_partitionedPointWitness",
+    "Ecdlp.M16PartitionedPointSemantics.S17At_factorBase_eq_zero_iff_partitionedPointWitness",
+    "Ecdlp.M16PartitionedPointSemantics.exists_compatible_point_relation_of_partitionedPointWitness",
+    "Ecdlp.M16PartitionedPointSemantics.liftableSlots",
+    "Ecdlp.M16PartitionedPointSemantics.liftableSlots_disjoint_nonliftableSlots",
+    "Ecdlp.M16PartitionedPointSemantics.liftableSlots_union_nonliftableSlots",
+    "Ecdlp.M16PartitionedPointSemantics.mem_liftableSlots",
+    "Ecdlp.M16PartitionedPointSemantics.mem_nonliftableSlots",
+    "Ecdlp.M16PartitionedPointSemantics.nonliftableSlots",
+    "Ecdlp.M16PartitionedPointSemantics.partitionedPointWitness_iff_exists_compatible_point_relation",
+    "Ecdlp.M16PartitionedPointSemantics.partitionedPointWitness_of_compatible_point_relation",
+    "Ecdlp.M16PartitionedPointSemantics.sum_eq_sum_liftable_add_sum_nonliftable",
     "Ecdlp.M16SixWidthNoGo.card_sym_factorBaseX_six_lt_two_pow_106",
     "Ecdlp.M16SixWidthNoGo.half_coverage_requires_more_than_two_pow_141_probes",
     "Ecdlp.M16SixWidthNoGo.natCard_signedSixIndex_lt_two_pow_112",
@@ -10932,6 +10961,274 @@
           "line": 556
         }
       ]
+    },
+    {
+      "id": "ledger-315",
+      "claim": "Exact recursive Kummer point semantics of the frozen projective secp256k1 chain (at every stage `s`, a valid chain output `W` is characterized exactly by choosing either sign of each of the first `s+2` supplied closure points and equating `normalizeProjectivePair W` with the Kummer image of their finite sum. Equivalent Boolean-sign forms are proved, and the literal stage-fourteen chart cover specializes this equivalence to all sixteen seeds while retaining affine and infinity intermediate charts. Honest scope: the seed points are supplied; this theorem does not construct them from source coordinates or by solving an `S17At` equation. It asserts neither distinct local alternatives, root multiplicities, witness uniqueness/descent, factor-base membership, recovery, solver behavior, relation yield/rank, cost, nor an ECDLP shortcut. The module adds zero new `native_decide` owners and inherits only the existing secp256k1 primality native-owner families through its concrete `Fp`/`FpBar` instances)",
+      "theorem_cell": "`Ecdlp.FrozenProjectiveSecpChainSemantics.SignedPointPrefix`, `signedPrefixSum`, `frozenProjectiveChain_barKummer_iff_signedPrefixSum`, `applyPointSign`, `frozenProjectiveChain_barKummer_iff_explicitSigns`, `frozenChartCover_barKummer_iff_signedPrefixSum`, `frozenChartCover_barKummer_iff_explicitSigns`",
+      "declared_files": [
+        "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean"
+      ],
+      "method": "induction through the complete normalized local Kummer fiber + existing exact projective/chart-cover equivalence; zero new native owners, inherited secp256k1 primality families disclosed",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.FrozenProjectiveSecpChainSemantics.SignedPointPrefix",
+          "canonical_name": "Ecdlp.FrozenProjectiveSecpChainSemantics.SignedPointPrefix",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean",
+          "line": 40
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSecpChainSemantics.signedPrefixSum",
+          "canonical_name": "Ecdlp.FrozenProjectiveSecpChainSemantics.signedPrefixSum",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean",
+          "line": 45
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSecpChainSemantics.frozenProjectiveChain_barKummer_iff_signedPrefixSum",
+          "canonical_name": "Ecdlp.FrozenProjectiveSecpChainSemantics.frozenProjectiveChain_barKummer_iff_signedPrefixSum",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean",
+          "line": 100
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSecpChainSemantics.applyPointSign",
+          "canonical_name": "Ecdlp.FrozenProjectiveSecpChainSemantics.applyPointSign",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean",
+          "line": 210
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSecpChainSemantics.frozenProjectiveChain_barKummer_iff_explicitSigns",
+          "canonical_name": "Ecdlp.FrozenProjectiveSecpChainSemantics.frozenProjectiveChain_barKummer_iff_explicitSigns",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean",
+          "line": 222
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSecpChainSemantics.frozenChartCover_barKummer_iff_signedPrefixSum",
+          "canonical_name": "Ecdlp.FrozenProjectiveSecpChainSemantics.frozenChartCover_barKummer_iff_signedPrefixSum",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean",
+          "line": 264
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSecpChainSemantics.frozenChartCover_barKummer_iff_explicitSigns",
+          "canonical_name": "Ecdlp.FrozenProjectiveSecpChainSemantics.frozenChartCover_barKummer_iff_explicitSigns",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean",
+          "line": 278
+        }
+      ]
+    },
+    {
+      "id": "ledger-316",
+      "claim": "Exact existential point semantics of the direct M16 root equation over the algebraic closure (every base-field coordinate has a noncomputably chosen affine secp256k1 closure point above it, and `S17At x X = 0` holds exactly when sixteen closure points lie above the prescribed source coordinates and their sum lies above `X`. Relative to any supplied target lift `T`, the subtotal is exactly `T` or `-T`; equivalent fixed-sign zero-sum and separately named target-relation forms are proved. The reverse direction passes through the complete projective chart cover, so identity subtotals and infinity charts are retained. Honest scope: this is an existential set-level equivalence over `FpBar`. It proves no witness descent or uniqueness, preferred target sign, factor-base membership or liftability, partitioned Frobenius recovery, relation existence beyond a given root, yield/rank, root solver, sparse linear algebra, runtime/memory/total cost improvement, exact discrete-log recovery, or ECDLP shortcut. The module adds zero new `native_decide` owners and inherits only the existing secp256k1 primality native-owner families through its concrete `Fp`/`FpBar` instances)",
+      "theorem_cell": "`Ecdlp.M16DirectPointSemantics.exists_liesOver`, `closureLift`, `liesOver_closureLift`, `liesOver_iff_barKummer_eq`, `liesOver_neg_iff`, `S17At_eq_zero_iff_exists_point_sum_liesOver`, `S17At_eq_zero_iff_exists_point_sum_eq_target_or_neg`, `S17At_eq_zero_iff_exists_point_sum_add_target_eq_zero`, `S17At_eq_zero_iff_exists_point_relation`",
+      "declared_files": [
+        "Ecdlp/Proved/M16DirectPointSemantics.lean"
+      ],
+      "method": "algebraic-closure square-root existence + exact direct-system/chart bridge + recursive Kummer signed-sum semantics; zero new native owners, inherited secp256k1 primality families disclosed",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.M16DirectPointSemantics.exists_liesOver",
+          "canonical_name": "Ecdlp.M16DirectPointSemantics.exists_liesOver",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+          "line": 66
+        },
+        {
+          "cited": "Ecdlp.M16DirectPointSemantics.closureLift",
+          "canonical_name": "Ecdlp.M16DirectPointSemantics.closureLift",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+          "line": 79
+        },
+        {
+          "cited": "Ecdlp.M16DirectPointSemantics.liesOver_closureLift",
+          "canonical_name": "Ecdlp.M16DirectPointSemantics.liesOver_closureLift",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+          "line": 82
+        },
+        {
+          "cited": "Ecdlp.M16DirectPointSemantics.liesOver_iff_barKummer_eq",
+          "canonical_name": "Ecdlp.M16DirectPointSemantics.liesOver_iff_barKummer_eq",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+          "line": 88
+        },
+        {
+          "cited": "Ecdlp.M16DirectPointSemantics.liesOver_neg_iff",
+          "canonical_name": "Ecdlp.M16DirectPointSemantics.liesOver_neg_iff",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+          "line": 106
+        },
+        {
+          "cited": "Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_sum_liesOver",
+          "canonical_name": "Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_sum_liesOver",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+          "line": 139
+        },
+        {
+          "cited": "Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_sum_eq_target_or_neg",
+          "canonical_name": "Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_sum_eq_target_or_neg",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+          "line": 231
+        },
+        {
+          "cited": "Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_sum_add_target_eq_zero",
+          "canonical_name": "Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_sum_add_target_eq_zero",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+          "line": 256
+        },
+        {
+          "cited": "Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_relation",
+          "canonical_name": "Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_relation",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+          "line": 278
+        }
+      ]
+    },
+    {
+      "id": "ledger-317",
+      "claim": "Exact liftable/nonliftable partition semantics for compatible direct M16 point witnesses (`liftableSlots` and `nonliftableSlots` are complementary subsets of the sixteen indices. For a supplied base-field target point `R`, a compatible actual closure-point relation is equivalent to `PartitionedPointWitness`: the liftable subtotal is exactly `includePoint C` for a base point `C`, `C+R=0`, and the nonliftable subtotal is zero. Consequently, when `R` lies above the target coordinate, `S17At x X=0` is equivalent to that partitioned witness; the same statement is specialized to sixteen coordinates already packaged in `FactorBaseX`. Honest scope: nonliftable vanishing is derived only from compatible actual witnesses and the supplied base target, not for arbitrary choices of closure lifts. The theorem does not compute, descend, or uniquely select witnesses; establish unconditional relation existence; recover a scalar; prove independent relations, yield/rank, a root solver, sparse linear algebra, calibrated runtime/memory/total cost, or an ECDLP shortcut. The module adds zero new `native_decide` owners; through the reused final Frobenius split, its conclusions inherit both existing secp256k1 primality native-owner families and the existing base-field no-two-torsion certificate chain)",
+      "theorem_cell": "`Ecdlp.M16PartitionedPointSemantics.liftableSlots`, `nonliftableSlots`, `mem_liftableSlots`, `mem_nonliftableSlots`, `liftableSlots_disjoint_nonliftableSlots`, `liftableSlots_union_nonliftableSlots`, `sum_eq_sum_liftable_add_sum_nonliftable`, `PartitionedPointWitness`, `partitionedPointWitness_of_compatible_point_relation`, `exists_compatible_point_relation_of_partitionedPointWitness`, `partitionedPointWitness_iff_exists_compatible_point_relation`, `S17At_eq_zero_iff_partitionedPointWitness`, `S17At_factorBase_eq_zero_iff_partitionedPointWitness`",
+      "declared_files": [
+        "Ecdlp/Proved/M16PartitionedPointSemantics.lean"
+      ],
+      "method": "exact finite partition + direct point semantics + existing conditional Frobenius/base-field two-torsion split; zero new native owners, inherited primality and no-two-torsion compiler trust disclosed",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.M16PartitionedPointSemantics.liftableSlots",
+          "canonical_name": "Ecdlp.M16PartitionedPointSemantics.liftableSlots",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+          "line": 47
+        },
+        {
+          "cited": "Ecdlp.M16PartitionedPointSemantics.nonliftableSlots",
+          "canonical_name": "Ecdlp.M16PartitionedPointSemantics.nonliftableSlots",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+          "line": 53
+        },
+        {
+          "cited": "Ecdlp.M16PartitionedPointSemantics.mem_liftableSlots",
+          "canonical_name": "Ecdlp.M16PartitionedPointSemantics.mem_liftableSlots",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+          "line": 57
+        },
+        {
+          "cited": "Ecdlp.M16PartitionedPointSemantics.mem_nonliftableSlots",
+          "canonical_name": "Ecdlp.M16PartitionedPointSemantics.mem_nonliftableSlots",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+          "line": 62
+        },
+        {
+          "cited": "Ecdlp.M16PartitionedPointSemantics.liftableSlots_disjoint_nonliftableSlots",
+          "canonical_name": "Ecdlp.M16PartitionedPointSemantics.liftableSlots_disjoint_nonliftableSlots",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+          "line": 67
+        },
+        {
+          "cited": "Ecdlp.M16PartitionedPointSemantics.liftableSlots_union_nonliftableSlots",
+          "canonical_name": "Ecdlp.M16PartitionedPointSemantics.liftableSlots_union_nonliftableSlots",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+          "line": 72
+        },
+        {
+          "cited": "Ecdlp.M16PartitionedPointSemantics.sum_eq_sum_liftable_add_sum_nonliftable",
+          "canonical_name": "Ecdlp.M16PartitionedPointSemantics.sum_eq_sum_liftable_add_sum_nonliftable",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+          "line": 81
+        },
+        {
+          "cited": "Ecdlp.M16PartitionedPointSemantics.PartitionedPointWitness",
+          "canonical_name": "Ecdlp.M16PartitionedPointSemantics.PartitionedPointWitness",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+          "line": 102
+        },
+        {
+          "cited": "Ecdlp.M16PartitionedPointSemantics.partitionedPointWitness_of_compatible_point_relation",
+          "canonical_name": "Ecdlp.M16PartitionedPointSemantics.partitionedPointWitness_of_compatible_point_relation",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+          "line": 112
+        },
+        {
+          "cited": "Ecdlp.M16PartitionedPointSemantics.exists_compatible_point_relation_of_partitionedPointWitness",
+          "canonical_name": "Ecdlp.M16PartitionedPointSemantics.exists_compatible_point_relation_of_partitionedPointWitness",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+          "line": 144
+        },
+        {
+          "cited": "Ecdlp.M16PartitionedPointSemantics.partitionedPointWitness_iff_exists_compatible_point_relation",
+          "canonical_name": "Ecdlp.M16PartitionedPointSemantics.partitionedPointWitness_iff_exists_compatible_point_relation",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+          "line": 158
+        },
+        {
+          "cited": "Ecdlp.M16PartitionedPointSemantics.S17At_eq_zero_iff_partitionedPointWitness",
+          "canonical_name": "Ecdlp.M16PartitionedPointSemantics.S17At_eq_zero_iff_partitionedPointWitness",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+          "line": 171
+        },
+        {
+          "cited": "Ecdlp.M16PartitionedPointSemantics.S17At_factorBase_eq_zero_iff_partitionedPointWitness",
+          "canonical_name": "Ecdlp.M16PartitionedPointSemantics.S17At_factorBase_eq_zero_iff_partitionedPointWitness",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+          "line": 183
+        }
+      ]
     }
   ],
   "declarations": {
@@ -14197,6 +14494,97 @@
       "file": "Ecdlp/Proved/FrontierGroupFacts.lean",
       "line": 36
     },
+    "Ecdlp.FrozenProjectiveSecpChainSemantics.BarCurve": {
+      "name": "BarCurve",
+      "namespace": "Ecdlp.FrozenProjectiveSecpChainSemantics",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean",
+      "line": 29
+    },
+    "Ecdlp.FrozenProjectiveSecpChainSemantics.BarPoint": {
+      "name": "BarPoint",
+      "namespace": "Ecdlp.FrozenProjectiveSecpChainSemantics",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean",
+      "line": 30
+    },
+    "Ecdlp.FrozenProjectiveSecpChainSemantics.Fp": {
+      "name": "Fp",
+      "namespace": "Ecdlp.FrozenProjectiveSecpChainSemantics",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean",
+      "line": 27
+    },
+    "Ecdlp.FrozenProjectiveSecpChainSemantics.FpBar": {
+      "name": "FpBar",
+      "namespace": "Ecdlp.FrozenProjectiveSecpChainSemantics",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean",
+      "line": 28
+    },
+    "Ecdlp.FrozenProjectiveSecpChainSemantics.SignedPointPrefix": {
+      "name": "SignedPointPrefix",
+      "namespace": "Ecdlp.FrozenProjectiveSecpChainSemantics",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean",
+      "line": 40
+    },
+    "Ecdlp.FrozenProjectiveSecpChainSemantics.applyPointSign": {
+      "name": "applyPointSign",
+      "namespace": "Ecdlp.FrozenProjectiveSecpChainSemantics",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean",
+      "line": 210
+    },
+    "Ecdlp.FrozenProjectiveSecpChainSemantics.applyPointSign_false": {
+      "name": "applyPointSign_false",
+      "namespace": "Ecdlp.FrozenProjectiveSecpChainSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean",
+      "line": 217
+    },
+    "Ecdlp.FrozenProjectiveSecpChainSemantics.applyPointSign_true": {
+      "name": "applyPointSign_true",
+      "namespace": "Ecdlp.FrozenProjectiveSecpChainSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean",
+      "line": 214
+    },
+    "Ecdlp.FrozenProjectiveSecpChainSemantics.frozenChartCover_barKummer_iff_explicitSigns": {
+      "name": "frozenChartCover_barKummer_iff_explicitSigns",
+      "namespace": "Ecdlp.FrozenProjectiveSecpChainSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean",
+      "line": 278
+    },
+    "Ecdlp.FrozenProjectiveSecpChainSemantics.frozenChartCover_barKummer_iff_signedPrefixSum": {
+      "name": "frozenChartCover_barKummer_iff_signedPrefixSum",
+      "namespace": "Ecdlp.FrozenProjectiveSecpChainSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean",
+      "line": 264
+    },
+    "Ecdlp.FrozenProjectiveSecpChainSemantics.frozenProjectiveChain_barKummer_iff_explicitSigns": {
+      "name": "frozenProjectiveChain_barKummer_iff_explicitSigns",
+      "namespace": "Ecdlp.FrozenProjectiveSecpChainSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean",
+      "line": 222
+    },
+    "Ecdlp.FrozenProjectiveSecpChainSemantics.frozenProjectiveChain_barKummer_iff_signedPrefixSum": {
+      "name": "frozenProjectiveChain_barKummer_iff_signedPrefixSum",
+      "namespace": "Ecdlp.FrozenProjectiveSecpChainSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean",
+      "line": 100
+    },
+    "Ecdlp.FrozenProjectiveSecpChainSemantics.signedPrefixSum": {
+      "name": "signedPrefixSum",
+      "namespace": "Ecdlp.FrozenProjectiveSecpChainSemantics",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean",
+      "line": 45
+    },
     "Ecdlp.FrozenProjectiveSecpLocalFiber.BarCurve": {
       "name": "BarCurve",
       "namespace": "Ecdlp.FrozenProjectiveSecpLocalFiber",
@@ -16115,6 +16503,97 @@
       "file": "Ecdlp/Proved/Secp256k1GenericSecurity.lean",
       "line": 28
     },
+    "Ecdlp.M16DirectPointSemantics.BarCurve": {
+      "name": "BarCurve",
+      "namespace": "Ecdlp.M16DirectPointSemantics",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+      "line": 37
+    },
+    "Ecdlp.M16DirectPointSemantics.BarPoint": {
+      "name": "BarPoint",
+      "namespace": "Ecdlp.M16DirectPointSemantics",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+      "line": 38
+    },
+    "Ecdlp.M16DirectPointSemantics.Fp": {
+      "name": "Fp",
+      "namespace": "Ecdlp.M16DirectPointSemantics",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+      "line": 35
+    },
+    "Ecdlp.M16DirectPointSemantics.FpBar": {
+      "name": "FpBar",
+      "namespace": "Ecdlp.M16DirectPointSemantics",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+      "line": 36
+    },
+    "Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_relation": {
+      "name": "S17At_eq_zero_iff_exists_point_relation",
+      "namespace": "Ecdlp.M16DirectPointSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+      "line": 278
+    },
+    "Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_sum_add_target_eq_zero": {
+      "name": "S17At_eq_zero_iff_exists_point_sum_add_target_eq_zero",
+      "namespace": "Ecdlp.M16DirectPointSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+      "line": 256
+    },
+    "Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_sum_eq_target_or_neg": {
+      "name": "S17At_eq_zero_iff_exists_point_sum_eq_target_or_neg",
+      "namespace": "Ecdlp.M16DirectPointSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+      "line": 231
+    },
+    "Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_sum_liesOver": {
+      "name": "S17At_eq_zero_iff_exists_point_sum_liesOver",
+      "namespace": "Ecdlp.M16DirectPointSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+      "line": 139
+    },
+    "Ecdlp.M16DirectPointSemantics.closureLift": {
+      "name": "closureLift",
+      "namespace": "Ecdlp.M16DirectPointSemantics",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+      "line": 79
+    },
+    "Ecdlp.M16DirectPointSemantics.exists_liesOver": {
+      "name": "exists_liesOver",
+      "namespace": "Ecdlp.M16DirectPointSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+      "line": 66
+    },
+    "Ecdlp.M16DirectPointSemantics.liesOver_closureLift": {
+      "name": "liesOver_closureLift",
+      "namespace": "Ecdlp.M16DirectPointSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+      "line": 82
+    },
+    "Ecdlp.M16DirectPointSemantics.liesOver_iff_barKummer_eq": {
+      "name": "liesOver_iff_barKummer_eq",
+      "namespace": "Ecdlp.M16DirectPointSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+      "line": 88
+    },
+    "Ecdlp.M16DirectPointSemantics.liesOver_neg_iff": {
+      "name": "liesOver_neg_iff",
+      "namespace": "Ecdlp.M16DirectPointSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+      "line": 106
+    },
     "Ecdlp.M16DirectSystemRootBridge.ChainEquations": {
       "name": "ChainEquations",
       "namespace": "Ecdlp.M16DirectSystemRootBridge",
@@ -16751,6 +17230,132 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/M16LiftableSixWidthNoGo.lean",
       "line": 91
+    },
+    "Ecdlp.M16PartitionedPointSemantics.BarCurve": {
+      "name": "BarCurve",
+      "namespace": "Ecdlp.M16PartitionedPointSemantics",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+      "line": 36
+    },
+    "Ecdlp.M16PartitionedPointSemantics.BarPoint": {
+      "name": "BarPoint",
+      "namespace": "Ecdlp.M16PartitionedPointSemantics",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+      "line": 37
+    },
+    "Ecdlp.M16PartitionedPointSemantics.BasePoint": {
+      "name": "BasePoint",
+      "namespace": "Ecdlp.M16PartitionedPointSemantics",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+      "line": 35
+    },
+    "Ecdlp.M16PartitionedPointSemantics.Fp": {
+      "name": "Fp",
+      "namespace": "Ecdlp.M16PartitionedPointSemantics",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+      "line": 33
+    },
+    "Ecdlp.M16PartitionedPointSemantics.FpBar": {
+      "name": "FpBar",
+      "namespace": "Ecdlp.M16PartitionedPointSemantics",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+      "line": 34
+    },
+    "Ecdlp.M16PartitionedPointSemantics.PartitionedPointWitness": {
+      "name": "PartitionedPointWitness",
+      "namespace": "Ecdlp.M16PartitionedPointSemantics",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+      "line": 102
+    },
+    "Ecdlp.M16PartitionedPointSemantics.S17At_eq_zero_iff_partitionedPointWitness": {
+      "name": "S17At_eq_zero_iff_partitionedPointWitness",
+      "namespace": "Ecdlp.M16PartitionedPointSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+      "line": 171
+    },
+    "Ecdlp.M16PartitionedPointSemantics.S17At_factorBase_eq_zero_iff_partitionedPointWitness": {
+      "name": "S17At_factorBase_eq_zero_iff_partitionedPointWitness",
+      "namespace": "Ecdlp.M16PartitionedPointSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+      "line": 183
+    },
+    "Ecdlp.M16PartitionedPointSemantics.exists_compatible_point_relation_of_partitionedPointWitness": {
+      "name": "exists_compatible_point_relation_of_partitionedPointWitness",
+      "namespace": "Ecdlp.M16PartitionedPointSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+      "line": 144
+    },
+    "Ecdlp.M16PartitionedPointSemantics.liftableSlots": {
+      "name": "liftableSlots",
+      "namespace": "Ecdlp.M16PartitionedPointSemantics",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+      "line": 47
+    },
+    "Ecdlp.M16PartitionedPointSemantics.liftableSlots_disjoint_nonliftableSlots": {
+      "name": "liftableSlots_disjoint_nonliftableSlots",
+      "namespace": "Ecdlp.M16PartitionedPointSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+      "line": 67
+    },
+    "Ecdlp.M16PartitionedPointSemantics.liftableSlots_union_nonliftableSlots": {
+      "name": "liftableSlots_union_nonliftableSlots",
+      "namespace": "Ecdlp.M16PartitionedPointSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+      "line": 72
+    },
+    "Ecdlp.M16PartitionedPointSemantics.mem_liftableSlots": {
+      "name": "mem_liftableSlots",
+      "namespace": "Ecdlp.M16PartitionedPointSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+      "line": 57
+    },
+    "Ecdlp.M16PartitionedPointSemantics.mem_nonliftableSlots": {
+      "name": "mem_nonliftableSlots",
+      "namespace": "Ecdlp.M16PartitionedPointSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+      "line": 62
+    },
+    "Ecdlp.M16PartitionedPointSemantics.nonliftableSlots": {
+      "name": "nonliftableSlots",
+      "namespace": "Ecdlp.M16PartitionedPointSemantics",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+      "line": 53
+    },
+    "Ecdlp.M16PartitionedPointSemantics.partitionedPointWitness_iff_exists_compatible_point_relation": {
+      "name": "partitionedPointWitness_iff_exists_compatible_point_relation",
+      "namespace": "Ecdlp.M16PartitionedPointSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+      "line": 158
+    },
+    "Ecdlp.M16PartitionedPointSemantics.partitionedPointWitness_of_compatible_point_relation": {
+      "name": "partitionedPointWitness_of_compatible_point_relation",
+      "namespace": "Ecdlp.M16PartitionedPointSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+      "line": 112
+    },
+    "Ecdlp.M16PartitionedPointSemantics.sum_eq_sum_liftable_add_sum_nonliftable": {
+      "name": "sum_eq_sum_liftable_add_sum_nonliftable",
+      "namespace": "Ecdlp.M16PartitionedPointSemantics",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+      "line": 81
     },
     "Ecdlp.M16SixWidthNoGo.SecpPoint": {
       "name": "SecpPoint",

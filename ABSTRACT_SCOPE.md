@@ -7,7 +7,7 @@
 
 ## Canonical accounting
 
-- **315 ledger rows / ~276 distinct kernel-verified results** (39 rows are
+- **318 ledger rows / ~279 distinct kernel-verified results** (39 rows are
   alternate-form / supporting restatements of an already-counted result).
 - **0 `sorry`** anywhere in the built (`Ecdlp/`-minus-`Targets/`) tree.
 - **No CUSTOM axioms.** Everything depends only on Lean/Mathlib's standard
@@ -26,6 +26,20 @@
   nonemptiness, and genericity are not proved. The result proves no unique
   witness, relation yield or rank, solver improvement, runtime or memory
   reduction, total-cost bound, or secp256k1 discrete-log shortcut.
+- **The direct M16 root now has exact existential point semantics only over
+  `FpBar`.** The complete projective chain is equivalent to signed sums of
+  supplied closure points, and `S17At x X = 0` is equivalent to the existence
+  of sixteen closure points above the prescribed coordinates whose sum lies
+  above `X` (equivalently, relative to a supplied target lift, the sum is that
+  lift or its inverse). This proves no witness descent, uniqueness,
+  factor-base membership, recovery, relation yield/rank, solver behavior,
+  calibrated cost, or ECDLP shortcut.
+- **The liftable/nonliftable split is exact only for compatible actual point
+  witnesses and a supplied base-field target point.** On that input, the
+  liftable subtotal is the image of a base point, the nonliftable subtotal is
+  zero, and the base subtotal cancels the target. A thin `FactorBaseX`
+  specialization changes no scope: arbitrary closure lifts, witness recovery
+  or uniqueness, relation production, rank, solving, and cost remain unproved.
 
 ## 1. Honest framing (one paragraph)
 
