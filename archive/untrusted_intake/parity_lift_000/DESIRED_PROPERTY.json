@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.1-untrusted",
+  "schema_version": "0.2-untrusted",
   "parked_id": "PARKED-M-GENERATOR-RELATIVE-PARITY-LIFT",
   "research_line": "PARITY-LIFT-000",
   "status": "desired_properties_only",
@@ -7,22 +7,31 @@
   "threat_model": "classical-single-target-plain",
   "target_family": "odd-prime-order elliptic-curve groups",
   "primary_instance": "secp256k1 point group",
-  "question": "Does there exist a public sign-sensitive lift and nonlinear decoder, jointly evaluable below the matched generic square-root baseline, that returns the parity of the canonical generator-relative discrete logarithm?",
+  "question": "Given public G and Q=[k]G, can the absolute EDS residue rho_G(Q)=chi(psi_k(G)) be computed below the matched generic square-root baseline without first recovering k?",
+  "exact_reduction": {
+    "public_point_function": "Phi(Q)=(W_Q(q-1)/W_Q(q-1+n))^(1/n^2)",
+    "hidden_orientation_bit": "rho_G(Q)=chi(W_G(k))=chi(psi_k(G))",
+    "general_bridge": "chi(Phi(Q))=chi(Phi(G))^(k^2)*rho_G(Q)",
+    "secp256k1_condition": "chi(Phi(G))=-1",
+    "secp256k1_parity_decoder": "(-1)^k=chi(Phi(Q))*rho_G(Q)",
+    "normalization_note": "Phi([k]G)=Phi(G)^(k^2)W_G(k), while the normalized periodic EDS divides by Phi(G) and uses exponent k^2-1"
+  },
   "required_interface": {
     "input": [
       "curve parameters",
       "odd-prime-order generator G",
       "public point Q in <G>"
     ],
-    "lift_output": "a deterministic sign-sensitive, gauge-resolved representation of Q",
-    "decoder_output": "rep_G(Q) mod 2",
+    "lift_output": "the public periodic point value Phi(Q), or an explicitly equivalent sign-sensitive normalization",
+    "decoder_output": "rho_G(Q), and therefore rep_G(Q) mod 2 on the secp256k1 instance",
     "correctness": "exact on every canonical scalar representative 0 <= k < ord(G)",
     "recovery": "bind the exact adaptive parity-to-full-DLP reduction",
-    "cost": "price lift, decoder, precision, preprocessing, memory, exceptions, and all adaptive calls"
+    "cost": "price lift, residue decoder, precision, preprocessing, memory, exceptions, and all adaptive calls"
   },
   "hard_gates": [
     "does not identify Q with -Q",
     "normalization is computable without the hidden scalar",
+    "computes an absolute EDS residue rather than only relative consecutive residues",
     "does not hide an exponential table or a k-step orbit walk",
     "covers zeros, poles, chart changes, extension fields, and exceptional points",
     "supplies an independent recovery validator",
@@ -50,22 +59,37 @@
       "id": "BOUNDED-DEGREE-DIRECT-SIGN-FUNCTION",
       "scope": "rational functions taking exactly +1 or -1 on every group point",
       "reason": "the pole degree is at least ceil(ord(G)/2)"
+    },
+    {
+      "id": "FIXED-INDEX-DIVISION-POLYNOMIAL-PRODUCTS",
+      "scope": "finite products or ratios of fixed-index values psi_m(Q)",
+      "reason": "the elliptic-net transformation exponent is quadratically balanced and cancels the absolute k^2 orientation term"
+    },
+    {
+      "id": "GLV-RELATIVE-EDS-CYCLE",
+      "scope": "relations obtained only by evaluating fixed division-polynomial indices around the order-three GLV orbit",
+      "reason": "the resulting equations remain relative and balanced and do not determine the absolute EDS residue"
     }
   ],
   "surviving_mechanism_classes": [
-    "finite-field character of a structured rational, division-polynomial, or theta expression",
-    "p-adic or analytic theta observable with exact precision and truncation cost",
-    "nonlinear cocycle with a global evaluation algorithm that avoids secret-length traversal",
-    "high algebraic degree with provably low circuit or recurrence complexity"
+    "an unbalanced theta, sigma, or elliptic-net section whose public evaluation retains the absolute k^2 scale",
+    "a statistic or correlation that fixes the absolute EDS residue from publicly computable relative residues",
+    "a p-adic or analytic normalization with exact precision and truncation cost",
+    "a nonlocal multi-point or multi-model relation that breaks balance without supplying equivalent hidden input",
+    "high algebraic degree with provably low circuit or recurrence complexity and an exact absolute-residue theorem"
   ],
   "next_packages": [
     {
-      "id": "CHAR-PARITY-001",
-      "goal": "derive a scoped conductor or degree lower bound for exact finite-field-character parity decoders"
+      "id": "EDS-RESIDUE-BALANCE-001",
+      "goal": "kernel-check the fixed-index quadratic balance obstruction"
     },
     {
-      "id": "STRUCTURED-CHAR-PARITY-002",
-      "goal": "test division-polynomial, EDS, and theta-multiplication observables that may have high degree but fast evaluation"
+      "id": "EDS-RESIDUE-SOURCE-002",
+      "goal": "independently audit the point-function and normalized-periodic-EDS conventions and replay the secp256k1 public nonresidue condition"
+    },
+    {
+      "id": "EDS-RESIDUE-ABSOLUTE-003",
+      "goal": "search only for mechanisms that compute the absolute residue bit rather than another balanced relative identity"
     }
   ],
   "lifecycle": {
