@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~282 distinct results / 321 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~283 distinct results / 322 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -240,6 +240,19 @@ exact `Θ` statements.
   image-membership criterion is proved. The partition supplies no efficient
   enumeration, useful relation yield, independence, rank,
   sparse-linear-algebra, recovery, or cost bridge.
+  The explicit cancellation backpointer layer now sharpens one collision:
+  after fixing a liftable anchor and its noncomputable lower-residue reference,
+  seven labelled factor-base choices inject into root-plus-recovery
+  backpointers, but all displayed recoveries have the same canonical row
+  `-2[a]`, even with repeated pair coordinates or a pair equal to the anchor.
+  Hence one constant-row subtype has at least `283527^7` members. This subtype
+  aggregates roots together with one retained recovery; it is not a fiber of
+  `RecoveryFiber` or `rowBackpointers` for one fixed root, and it does not
+  classify every recovery or prove row uniqueness or evaluation injectivity.
+  The cardinality and its desk-budget comparison imply no enumeration
+  requirement, PFPO/node charge, useful relation yield, independence, rank,
+  sparse-linear-algebra result, runtime/memory/total cost, scalar recovery, or
+  ECDLP shortcut.
   `CELL-M-PKC-SMOOTH-M16` remains `open_non_executable`,
   `CQ-SEMAEV-S17-SYSTEM-COST` remains `partial`, and
   `B-PKC-M16-COMPLETE-COST-BRIDGE` remains open on establishing a nonempty

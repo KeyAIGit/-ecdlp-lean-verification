@@ -7,7 +7,7 @@
 
 ## Canonical accounting
 
-- **321 ledger rows / ~282 distinct kernel-verified results** (39 rows are
+- **322 ledger rows / ~283 distinct kernel-verified results** (39 rows are
   alternate-form / supporting restatements of an already-counted result).
 - **0 `sorry`** anywhere in the built (`Ecdlp/`-minus-`Targets/`) tree.
 - **No CUSTOM axioms.** Everything depends only on Lean/Mathlib's standard
@@ -75,6 +75,22 @@
   deliberately degenerate, however: it contributes zero to the point sum.
   The cardinality comparison is not a PFPO, runtime, memory, relation-yield,
   independence, rank, recovery, or ECDLP result.
+- **One explicit cancellation family collapses to one canonical row without
+  making roots or recoveries unique.** Fixing a liftable anchor `a`, its
+  noncomputably chosen lower-residue reference point, and the nonidentity
+  target `R = -(A+A)`, seven freely chosen labelled factor-base coordinates
+  produce compatible base-field recovery witnesses and liftable reduced
+  roots. The resulting root-plus-recovery map is injective, while every
+  retained recovery has the same row `Finsupp.single a (-2)`, even when pair
+  coordinates repeat or equal `a`. Thus the corresponding constant-row
+  backpointer subtype has cardinality at least `283527^7`. This counts
+  explicitly constructed labelled root-plus-recovery pairs, not `283527^7`
+  recoveries of one fixed root and not all roots or recoveries above that row.
+  It proves no row uniqueness, evaluation injectivity, efficient enumeration,
+  `Recover`, PFPO, `AllRoots`, square-root/decompression algorithm,
+  relation filtering, independence/yield/rank, sparse-linear-algebra result,
+  runtime/memory/solver-node/total-cost result, scalar recovery, or ECDLP
+  shortcut.
 
 ## 1. Honest framing (one paragraph)
 
