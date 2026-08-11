@@ -11,7 +11,8 @@ import hashlib
 import json
 from pathlib import Path
 
-from sage.all import GF, Integer, PolynomialRing, version
+from sage.all import GF, Integer, PolynomialRing
+from sage.version import version as sage_version
 
 
 P = Integer(2) ** 256 - Integer(2) ** 32 - Integer(977)
@@ -58,13 +59,13 @@ for raw_x in sample_x:
     z_glv = (b * x - alpha) / scale
 
     row = {
-        "x": raw_x,
-        "z_frobenius": z**P == b**2 * (z - one),
-        "z_frobenius_squared": z ** (P**2) == one + b * z,
-        "glv_equals_frobenius_squared": z_glv == z ** (P**2),
-        "fixed_point_shift": z_glv - z0 == b * w,
-        "shift_equals_scaled_x": scale * w == x,
-        "cubic_invariant": scale**3 * w**3 == x**3,
+        "x": int(raw_x),
+        "z_frobenius": bool(z**P == b**2 * (z - one)),
+        "z_frobenius_squared": bool(z ** (P**2) == one + b * z),
+        "glv_equals_frobenius_squared": bool(z_glv == z ** (P**2)),
+        "fixed_point_shift": bool(z_glv - z0 == b * w),
+        "shift_equals_scaled_x": bool(scale * w == x),
+        "cubic_invariant": bool(scale**3 * w**3 == x**3),
     }
     assert all(value for key, value in row.items() if key != "x")
     checks.append(row)
@@ -72,7 +73,7 @@ for raw_x in sample_x:
 source_sha256 = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
 payload = {
     "scope": "independent native-Sage structural replay; no ECDLP target",
-    "sage_version": version(),
+    "sage_version": sage_version,
     "script_sha256": source_sha256,
     "p": str(P),
     "beta_hex": hex(BETA_REPO),
