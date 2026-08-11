@@ -4,8 +4,8 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 307,
-    "ledger_rows": 307,
+    "theorems": 311,
+    "ledger_rows": 311,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
@@ -37,10 +37,10 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1187,
+    "edges": 1216,
     "by_edge_type": {
-      "imports": 525,
-      "member_of": 307,
+      "imports": 550,
+      "member_of": 311,
       "grounded_in_source_claim": 62,
       "requires_foundation": 41,
       "supports": 27,
@@ -203,12 +203,16 @@
       "literal finite guarded `MvPolynomial` family + TASK-021 chain equivalence + injective base change; `native_decide` only for two finite-cardinality facts": 1,
       "exact two-chart normalization + literal fixed-mask `MvPolynomial` family + TASK-021/TASK-022 equivalences + injective base change; `native_decide` only for `card_chartEquation": 1,
       "local projective `H` identities + exact TASK-023 cover restriction + path-independent-set counts; `native_decide` only for the three cardinalities": 1,
-      "exact local substitution + fixed-degree projective-resultant forward implication + balanced prefix/suffix frozen specializations + exact chart-cover restriction; `native_decide` only for the four mask cardinalities": 1
+      "exact local substitution + fixed-degree projective-resultant forward implication + balanced prefix/suffix frozen specializations + exact chart-cover restriction; `native_decide` only for the four mask cardinalities": 1,
+      "roots of unity + exact symmetric-power arithmetic; six isolated new `native_decide` arithmetic owners plus disclosed inherited compiler trust": 1,
+      "exact GLV-orbit enumeration + two isolated new `native_decide` certificates + kernel composition with disclosed inherited compiler trust": 1,
+      "finite-range counting + exact secp256k1 cardinality; one isolated new `native_decide` comparison plus disclosed inherited compiler trust": 1,
+      "exact symmetric-power/range counting + one private new `native_decide` comparison plus disclosed inherited compiler trust": 1
     },
     "by_area": {
       "curve-torsion": 153,
-      "primality": 55,
-      "other": 33,
+      "primality": 58,
+      "other": 34,
       "generic-hardness": 30,
       "protocol-soundness": 23,
       "attack-resistance": 7,
@@ -6380,6 +6384,96 @@
       "family_id": "family-generic-hardness",
       "dependency_depth": 7,
       "gated": true
+    },
+    {
+      "id": "thm-307",
+      "name": "Ecdlp.M16FactorBaseFinite.card_factorBaseX`, `Ecdlp.M16SolverGate.relationTermGate_at_max`, `relationTermGate_succ_max_fails`, `two_pow_114_le_maxRelationTermBudget`, `maxRelationTermBudget_lt_two_pow_115`, `factorBaseDegree_pow_five_le_maxRelationTermBudget`, `maxRelationTermBudget_lt_factorBaseDegree_pow_six`, `relationTermGate_fails_of_degree_six_lower_bound`, `Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_six`, `card_sym_factorBaseX_six_le_budget`, `card_sym_factorBaseX_seven`, `budget_lt_card_sym_factorBaseX_seven",
+      "short_name": "card_factorBaseX`,",
+      "module": "Ecdlp.Proved.M16FactorBaseFinite",
+      "modules": [
+        "Ecdlp.Proved.M16FactorBaseFinite",
+        "Ecdlp.Proved.M16SolverGate",
+        "Ecdlp.Proved.M16FactorBaseSymmetricGate"
+      ],
+      "file": "Ecdlp/Proved/M16FactorBaseFinite.lean",
+      "files": [
+        "Ecdlp/Proved/M16FactorBaseFinite.lean",
+        "Ecdlp/Proved/M16SolverGate.lean",
+        "Ecdlp/Proved/M16FactorBaseSymmetricGate.lean"
+      ],
+      "claim": "Exact root-based M16 factor-base size and narrow representation gates (`card_factorBaseX` proves that `x^564522 = 1` has exactly 564522 solutions in the secp256k1 base field. The solver gate records the exact uncalibrated desk ceiling and its `2^114/2^115` and `D^5/D^6` windows. The width-six and width-seven multiset counts are exact. Honest scope: these are finite-field cardinality and representation-size facts only. They do not prove liftability, relation yield, solving degree, a solver runtime, a calibrated cost, a lower bound for M16, or an ECDLP shortcut/lower bound. Exactly six new closed arithmetic owners in `M16SolverGate.lean` use `native_decide`; the root-count and symmetric-power proof bodies add no new native owner, but their public conclusions transitively inherit pre-existing compiler-trusted secp256k1 factorization/primality certificates)",
+      "method": "roots of unity + exact symmetric-power arithmetic; six isolated new `native_decide` arithmetic owners plus disclosed inherited compiler trust",
+      "status": "proved",
+      "area": "primality",
+      "family_id": "family-primality",
+      "dependency_depth": 4,
+      "gated": true
+    },
+    {
+      "id": "thm-308",
+      "name": "Ecdlp.M16FactorBaseLiftable.Certificates.factorBaseGenerator_certificate`, `representative_count_native`, `Ecdlp.M16FactorBaseLiftable.factorBaseGenerator_order`, `card_liftableGLVOrbitRep`, `card_nonliftableGLVOrbitRep`, `card_liftableFactorBaseX`, `card_nonliftableFactorBaseX`, `factorBaseCharacterSum_eq`, `card_liftFiber`, `card_signedAffineFactorBasePoint`, `toPoint_ne_zero",
+      "short_name": "factorBaseGenerator_certificate`,",
+      "module": "Ecdlp.Proved.M16FactorBaseLiftableDefs",
+      "modules": [
+        "Ecdlp.Proved.M16FactorBaseLiftableDefs",
+        "Ecdlp.Proved.M16FactorBaseLiftableGeneratorCertificate",
+        "Ecdlp.Proved.M16FactorBaseLiftableCountCertificate",
+        "Ecdlp.Proved.M16FactorBaseLiftable"
+      ],
+      "file": "Ecdlp/Proved/M16FactorBaseLiftableDefs.lean",
+      "files": [
+        "Ecdlp/Proved/M16FactorBaseLiftableDefs.lean",
+        "Ecdlp/Proved/M16FactorBaseLiftableGeneratorCertificate.lean",
+        "Ecdlp/Proved/M16FactorBaseLiftableCountCertificate.lean",
+        "Ecdlp/Proved/M16FactorBaseLiftable.lean"
+      ],
+      "claim": "Exact liftable M16 factor-base census on secp256k1 (an exact-order generator partitions all 564522 coordinates into 188174 free three-coordinate GLV orbits; exactly 94509 representative orbits and 283527 coordinates lift, 93665 representative orbits and 280995 coordinates do not, the quadratic-character sum is 2532, every lift fiber has size two, and the signed affine factor-base type has size 567054. Honest scope: this is a finite-field and affine-point census only. It proves no relation existence or distribution, rank, solver, recovery, cost, complexity improvement, or ECDLP shortcut/lower bound. Exactly two new native certificate owners are used: the generator certificate and the representative counter; the facade contains no `native_decide`, while public conclusions also transitively inherit pre-existing compiler-trusted secp256k1 parameter/primality leaves)",
+      "method": "exact GLV-orbit enumeration + two isolated new `native_decide` certificates + kernel composition with disclosed inherited compiler trust",
+      "status": "proved",
+      "area": "primality",
+      "family_id": "family-primality",
+      "dependency_depth": 10,
+      "gated": true
+    },
+    {
+      "id": "thm-309",
+      "name": "Ecdlp.M16SixWidthNoGo.ncard_coveredTargets_le`, `card_sym_factorBaseX_six_lt_two_pow_106`, `natCard_signedSixIndex_lt_two_pow_112`, `no_half_coverage_of_two_pow_141_probe_bound`, `half_coverage_requires_more_than_two_pow_141_probes",
+      "short_name": "ncard_coveredTargets_le`,",
+      "module": "Ecdlp.Proved.M16SixWidthNoGo",
+      "modules": [
+        "Ecdlp.Proved.M16SixWidthNoGo"
+      ],
+      "file": "Ecdlp/Proved/M16SixWidthNoGo.lean",
+      "files": [
+        "Ecdlp/Proved/M16SixWidthNoGo.lean"
+      ],
+      "claim": "Six-width fixed-oblivious translated-image coverage obstruction (the full root-based signed width-six index has fewer than `2^112` entries. For an arbitrary table payload indexed by that type and a fixed target-independent residual list, `q <= 2^141` covers strictly less than half of the secp256k1 point group, so half coverage requires `q > 2^141`. Honest scope: this is only the explicitly defined fixed, oblivious translated-image model. `q` counts literal residual slots, not time, memory, field/group operations, or calibrated cost. The result excludes no target-adaptive, implicit/streaming, multilevel/Wagner, nontranslation, Groebner, rank, recovery, sparse-linear-algebra, general M16, or general ECDLP method. Exactly one new closed comparison uses `native_decide`; public conclusions also inherit existing compiler-trusted root/cardinality/primality leaves)",
+      "method": "finite-range counting + exact secp256k1 cardinality; one isolated new `native_decide` comparison plus disclosed inherited compiler trust",
+      "status": "proved",
+      "area": "primality",
+      "family_id": "family-primality",
+      "dependency_depth": 10,
+      "gated": true
+    },
+    {
+      "id": "thm-310",
+      "name": "Ecdlp.M16LiftableSixWidthNoGo.card_sym_liftableFactorBaseX_six`, `card_sym_liftableFactorBaseX_six_le_budget`, `card_sym_liftableFactorBaseX_seven`, `budget_lt_card_sym_liftableFactorBaseX_seven`, `natCard_liftableSignedSixIndex`, `no_half_coverage_of_two_pow_148_probe_bound`, `half_coverage_requires_more_than_two_pow_148_probes",
+      "short_name": "card_sym_liftableFactorBaseX_six`,",
+      "module": "Ecdlp.Proved.M16LiftableSixWidthNoGo",
+      "modules": [
+        "Ecdlp.Proved.M16LiftableSixWidthNoGo"
+      ],
+      "file": "Ecdlp/Proved/M16LiftableSixWidthNoGo.lean",
+      "files": [
+        "Ecdlp/Proved/M16LiftableSixWidthNoGo.lean"
+      ],
+      "claim": "Liftability-aware six-width fixed-oblivious translated-image obstruction (the 283527-coordinate liftable factor base has exactly 721534357111870307687559424092 width-six multisets and 46178198855159699692003803141888 signed indices; width six fits the uncalibrated desk ceiling while width seven exceeds it. In the same fixed target-independent translated-image model, `q <= 2^148` covers strictly less than half of secp256k1, so half coverage requires `q > 2^148`. Honest scope: the same representation/counting-only boundary applies: this is not a runtime or memory lower bound, not a general M16 or ECDLP lower bound, and it does not cover adaptive, implicit/streaming, multilevel, algebraic-solving, rank, or recovery mechanisms. Exactly one new private closed comparison uses `native_decide`; public conclusions also inherit the two liftable-census owners and pre-existing compiler-trusted secp256k1 leaves)",
+      "method": "exact symmetric-power/range counting + one private new `native_decide` comparison plus disclosed inherited compiler trust",
+      "status": "proved",
+      "area": "other",
+      "family_id": "family-other",
+      "dependency_depth": 11,
+      "gated": true
     }
   ],
   "barriers": [
@@ -12502,6 +12596,86 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.M16FactorBaseFinite",
+      "to": "Ecdlp.Proved.Secp256k1PMinusOneSmoothness",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16FactorBaseLiftable",
+      "to": "Ecdlp.Proved.CurveCardinalityExact",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16FactorBaseLiftable",
+      "to": "Ecdlp.Proved.M16FactorBaseLiftableCountCertificate",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16FactorBaseLiftable",
+      "to": "Ecdlp.Proved.Secp256k1Params",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16FactorBaseLiftable",
+      "to": "Ecdlp.Proved.SevenNonResidue",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16FactorBaseLiftableCountCertificate",
+      "to": "Ecdlp.Proved.M16FactorBaseLiftableGeneratorCertificate",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16FactorBaseLiftableDefs",
+      "to": "Ecdlp.Proved.M16FactorBaseFinite",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16FactorBaseLiftableGeneratorCertificate",
+      "to": "Ecdlp.Proved.M16FactorBaseLiftableDefs",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16FactorBaseSymmetricGate",
+      "to": "Ecdlp.Proved.M16FactorBaseFinite",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16FactorBaseSymmetricGate",
+      "to": "Ecdlp.Proved.M16SolverGate",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16LiftableSixWidthNoGo",
+      "to": "Ecdlp.Proved.M16FactorBaseLiftable",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16LiftableSixWidthNoGo",
+      "to": "Ecdlp.Proved.M16SixWidthNoGo",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16LiftableSixWidthNoGo",
+      "to": "Ecdlp.Proved.M16SolverGate",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16SixWidthNoGo",
+      "to": "Ecdlp.Proved.M16FactorBaseSymmetricGate",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16SixWidthNoGo",
+      "to": "Ecdlp.Proved.CurveCardinalityExact",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16SixWidthNoGo",
+      "to": "Ecdlp.Proved.Secp256k1GenericSecurity",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.MillerDivisionPolynomialBridge",
       "to": "Ecdlp.Proved.WeilDivisorClass",
       "type": "imports"
@@ -14107,6 +14281,51 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.M16FactorBaseFinite",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.M16SolverGate",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.M16FactorBaseSymmetricGate",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.M16FactorBaseLiftableDefs",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.M16FactorBaseLiftableGeneratorCertificate",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.M16FactorBaseLiftableCountCertificate",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.M16FactorBaseLiftable",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.M16SixWidthNoGo",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.M16LiftableSixWidthNoGo",
+      "type": "imports"
+    },
+    {
       "from": "thm-015",
       "to": "B1-cost-model",
       "type": "frontier_of"
@@ -15704,6 +15923,26 @@
     {
       "from": "thm-306",
       "to": "family-generic-hardness",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-307",
+      "to": "family-primality",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-308",
+      "to": "family-primality",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-309",
+      "to": "family-primality",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-310",
+      "to": "family-other",
       "type": "member_of"
     },
     {

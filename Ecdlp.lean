@@ -184,3 +184,13 @@ import Ecdlp.Proved.FourTorsionBridgeBar
 import Ecdlp.Proved.FourTorsionStructure
 import Ecdlp.Proved.FourTorsionCount
 import Ecdlp.Proved.CompressedDivisionPoly
+-- Exact secp256k1 M16 factor-base census and narrow counting-only gates.
+import Ecdlp.Proved.M16FactorBaseFinite
+import Ecdlp.Proved.M16SolverGate
+import Ecdlp.Proved.M16FactorBaseSymmetricGate
+import Ecdlp.Proved.M16FactorBaseLiftableDefs
+import Ecdlp.Proved.M16FactorBaseLiftableGeneratorCertificate
+import Ecdlp.Proved.M16FactorBaseLiftableCountCertificate
+import Ecdlp.Proved.M16FactorBaseLiftable
+import Ecdlp.Proved.M16SixWidthNoGo
+import Ecdlp.Proved.M16LiftableSixWidthNoGo

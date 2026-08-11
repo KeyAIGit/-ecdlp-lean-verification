@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 307,
-  "ledger_reference_count": 702,
-  "ledger_named_declarations": 677,
+  "ledger_rows": 311,
+  "ledger_reference_count": 737,
+  "ledger_named_declarations": 712,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1176,
-  "distinct_qualified_names": 1176,
-  "verified_md_citations": 677,
+  "declaration_count": 1254,
+  "distinct_qualified_names": 1254,
+  "verified_md_citations": 712,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -584,6 +584,41 @@
     "Ecdlp.GenericGroup.secp256k1_bsgs_steps_le",
     "Ecdlp.GenericGroup.secp256k1_generic_security",
     "Ecdlp.GenericGroup.two_pow_255_lt_secp256k1_n",
+    "Ecdlp.M16FactorBaseFinite.card_factorBaseX",
+    "Ecdlp.M16FactorBaseLiftable.Certificates.factorBaseGenerator_certificate",
+    "Ecdlp.M16FactorBaseLiftable.Certificates.representative_count_native",
+    "Ecdlp.M16FactorBaseLiftable.card_liftFiber",
+    "Ecdlp.M16FactorBaseLiftable.card_liftableFactorBaseX",
+    "Ecdlp.M16FactorBaseLiftable.card_liftableGLVOrbitRep",
+    "Ecdlp.M16FactorBaseLiftable.card_nonliftableFactorBaseX",
+    "Ecdlp.M16FactorBaseLiftable.card_nonliftableGLVOrbitRep",
+    "Ecdlp.M16FactorBaseLiftable.card_signedAffineFactorBasePoint",
+    "Ecdlp.M16FactorBaseLiftable.factorBaseCharacterSum_eq",
+    "Ecdlp.M16FactorBaseLiftable.factorBaseGenerator_order",
+    "Ecdlp.M16FactorBaseLiftable.toPoint_ne_zero",
+    "Ecdlp.M16FactorBaseSymmetricGate.budget_lt_card_sym_factorBaseX_seven",
+    "Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_seven",
+    "Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_six",
+    "Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_six_le_budget",
+    "Ecdlp.M16LiftableSixWidthNoGo.budget_lt_card_sym_liftableFactorBaseX_seven",
+    "Ecdlp.M16LiftableSixWidthNoGo.card_sym_liftableFactorBaseX_seven",
+    "Ecdlp.M16LiftableSixWidthNoGo.card_sym_liftableFactorBaseX_six",
+    "Ecdlp.M16LiftableSixWidthNoGo.card_sym_liftableFactorBaseX_six_le_budget",
+    "Ecdlp.M16LiftableSixWidthNoGo.half_coverage_requires_more_than_two_pow_148_probes",
+    "Ecdlp.M16LiftableSixWidthNoGo.natCard_liftableSignedSixIndex",
+    "Ecdlp.M16LiftableSixWidthNoGo.no_half_coverage_of_two_pow_148_probe_bound",
+    "Ecdlp.M16SixWidthNoGo.card_sym_factorBaseX_six_lt_two_pow_106",
+    "Ecdlp.M16SixWidthNoGo.half_coverage_requires_more_than_two_pow_141_probes",
+    "Ecdlp.M16SixWidthNoGo.natCard_signedSixIndex_lt_two_pow_112",
+    "Ecdlp.M16SixWidthNoGo.ncard_coveredTargets_le",
+    "Ecdlp.M16SixWidthNoGo.no_half_coverage_of_two_pow_141_probe_bound",
+    "Ecdlp.M16SolverGate.factorBaseDegree_pow_five_le_maxRelationTermBudget",
+    "Ecdlp.M16SolverGate.maxRelationTermBudget_lt_factorBaseDegree_pow_six",
+    "Ecdlp.M16SolverGate.maxRelationTermBudget_lt_two_pow_115",
+    "Ecdlp.M16SolverGate.relationTermGate_at_max",
+    "Ecdlp.M16SolverGate.relationTermGate_fails_of_degree_six_lower_bound",
+    "Ecdlp.M16SolverGate.relationTermGate_succ_max_fails",
+    "Ecdlp.M16SolverGate.two_pow_114_le_maxRelationTermBudget",
     "Ecdlp.MovReduction.mov_random_q_success_probability",
     "Ecdlp.NormEDS.normEDS_not_consecutive_zeros",
     "Ecdlp.NormEDS.normEDS_somos4",
@@ -10075,6 +10110,339 @@
           "line": 613
         }
       ]
+    },
+    {
+      "id": "ledger-307",
+      "claim": "Exact root-based M16 factor-base size and narrow representation gates (`card_factorBaseX` proves that `x^564522 = 1` has exactly 564522 solutions in the secp256k1 base field. The solver gate records the exact uncalibrated desk ceiling and its `2^114/2^115` and `D^5/D^6` windows. The width-six and width-seven multiset counts are exact. Honest scope: these are finite-field cardinality and representation-size facts only. They do not prove liftability, relation yield, solving degree, a solver runtime, a calibrated cost, a lower bound for M16, or an ECDLP shortcut/lower bound. Exactly six new closed arithmetic owners in `M16SolverGate.lean` use `native_decide`; the root-count and symmetric-power proof bodies add no new native owner, but their public conclusions transitively inherit pre-existing compiler-trusted secp256k1 factorization/primality certificates)",
+      "theorem_cell": "`Ecdlp.M16FactorBaseFinite.card_factorBaseX`, `Ecdlp.M16SolverGate.relationTermGate_at_max`, `relationTermGate_succ_max_fails`, `two_pow_114_le_maxRelationTermBudget`, `maxRelationTermBudget_lt_two_pow_115`, `factorBaseDegree_pow_five_le_maxRelationTermBudget`, `maxRelationTermBudget_lt_factorBaseDegree_pow_six`, `relationTermGate_fails_of_degree_six_lower_bound`, `Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_six`, `card_sym_factorBaseX_six_le_budget`, `card_sym_factorBaseX_seven`, `budget_lt_card_sym_factorBaseX_seven`",
+      "declared_files": [
+        "Ecdlp/Proved/M16FactorBaseFinite.lean",
+        "Ecdlp/Proved/M16SolverGate.lean",
+        "Ecdlp/Proved/M16FactorBaseSymmetricGate.lean"
+      ],
+      "method": "roots of unity + exact symmetric-power arithmetic; six isolated new `native_decide` arithmetic owners plus disclosed inherited compiler trust",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.M16FactorBaseFinite.card_factorBaseX",
+          "canonical_name": "Ecdlp.M16FactorBaseFinite.card_factorBaseX",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FactorBaseFinite.lean",
+          "line": 50
+        },
+        {
+          "cited": "Ecdlp.M16SolverGate.relationTermGate_at_max",
+          "canonical_name": "Ecdlp.M16SolverGate.relationTermGate_at_max",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16SolverGate.lean",
+          "line": 34
+        },
+        {
+          "cited": "Ecdlp.M16SolverGate.relationTermGate_succ_max_fails",
+          "canonical_name": "Ecdlp.M16SolverGate.relationTermGate_succ_max_fails",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16SolverGate.lean",
+          "line": 39
+        },
+        {
+          "cited": "Ecdlp.M16SolverGate.two_pow_114_le_maxRelationTermBudget",
+          "canonical_name": "Ecdlp.M16SolverGate.two_pow_114_le_maxRelationTermBudget",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16SolverGate.lean",
+          "line": 56
+        },
+        {
+          "cited": "Ecdlp.M16SolverGate.maxRelationTermBudget_lt_two_pow_115",
+          "canonical_name": "Ecdlp.M16SolverGate.maxRelationTermBudget_lt_two_pow_115",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16SolverGate.lean",
+          "line": 61
+        },
+        {
+          "cited": "Ecdlp.M16SolverGate.factorBaseDegree_pow_five_le_maxRelationTermBudget",
+          "canonical_name": "Ecdlp.M16SolverGate.factorBaseDegree_pow_five_le_maxRelationTermBudget",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16SolverGate.lean",
+          "line": 73
+        },
+        {
+          "cited": "Ecdlp.M16SolverGate.maxRelationTermBudget_lt_factorBaseDegree_pow_six",
+          "canonical_name": "Ecdlp.M16SolverGate.maxRelationTermBudget_lt_factorBaseDegree_pow_six",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16SolverGate.lean",
+          "line": 78
+        },
+        {
+          "cited": "Ecdlp.M16SolverGate.relationTermGate_fails_of_degree_six_lower_bound",
+          "canonical_name": "Ecdlp.M16SolverGate.relationTermGate_fails_of_degree_six_lower_bound",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16SolverGate.lean",
+          "line": 91
+        },
+        {
+          "cited": "Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_six",
+          "canonical_name": "Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_six",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FactorBaseSymmetricGate.lean",
+          "line": 24
+        },
+        {
+          "cited": "Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_six_le_budget",
+          "canonical_name": "Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_six_le_budget",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FactorBaseSymmetricGate.lean",
+          "line": 32
+        },
+        {
+          "cited": "Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_seven",
+          "canonical_name": "Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_seven",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FactorBaseSymmetricGate.lean",
+          "line": 38
+        },
+        {
+          "cited": "Ecdlp.M16FactorBaseSymmetricGate.budget_lt_card_sym_factorBaseX_seven",
+          "canonical_name": "Ecdlp.M16FactorBaseSymmetricGate.budget_lt_card_sym_factorBaseX_seven",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FactorBaseSymmetricGate.lean",
+          "line": 46
+        }
+      ]
+    },
+    {
+      "id": "ledger-308",
+      "claim": "Exact liftable M16 factor-base census on secp256k1 (an exact-order generator partitions all 564522 coordinates into 188174 free three-coordinate GLV orbits; exactly 94509 representative orbits and 283527 coordinates lift, 93665 representative orbits and 280995 coordinates do not, the quadratic-character sum is 2532, every lift fiber has size two, and the signed affine factor-base type has size 567054. Honest scope: this is a finite-field and affine-point census only. It proves no relation existence or distribution, rank, solver, recovery, cost, complexity improvement, or ECDLP shortcut/lower bound. Exactly two new native certificate owners are used: the generator certificate and the representative counter; the facade contains no `native_decide`, while public conclusions also transitively inherit pre-existing compiler-trusted secp256k1 parameter/primality leaves)",
+      "theorem_cell": "`Ecdlp.M16FactorBaseLiftable.Certificates.factorBaseGenerator_certificate`, `representative_count_native`, `Ecdlp.M16FactorBaseLiftable.factorBaseGenerator_order`, `card_liftableGLVOrbitRep`, `card_nonliftableGLVOrbitRep`, `card_liftableFactorBaseX`, `card_nonliftableFactorBaseX`, `factorBaseCharacterSum_eq`, `card_liftFiber`, `card_signedAffineFactorBasePoint`, `toPoint_ne_zero`",
+      "declared_files": [
+        "Ecdlp/Proved/M16FactorBaseLiftableDefs.lean",
+        "Ecdlp/Proved/M16FactorBaseLiftableGeneratorCertificate.lean",
+        "Ecdlp/Proved/M16FactorBaseLiftableCountCertificate.lean",
+        "Ecdlp/Proved/M16FactorBaseLiftable.lean"
+      ],
+      "method": "exact GLV-orbit enumeration + two isolated new `native_decide` certificates + kernel composition with disclosed inherited compiler trust",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.M16FactorBaseLiftable.Certificates.factorBaseGenerator_certificate",
+          "canonical_name": "Ecdlp.M16FactorBaseLiftable.Certificates.factorBaseGenerator_certificate",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FactorBaseLiftableGeneratorCertificate.lean",
+          "line": 7
+        },
+        {
+          "cited": "Ecdlp.M16FactorBaseLiftable.Certificates.representative_count_native",
+          "canonical_name": "Ecdlp.M16FactorBaseLiftable.Certificates.representative_count_native",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FactorBaseLiftableCountCertificate.lean",
+          "line": 19
+        },
+        {
+          "cited": "Ecdlp.M16FactorBaseLiftable.factorBaseGenerator_order",
+          "canonical_name": "Ecdlp.M16FactorBaseLiftable.factorBaseGenerator_order",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+          "line": 92
+        },
+        {
+          "cited": "Ecdlp.M16FactorBaseLiftable.card_liftableGLVOrbitRep",
+          "canonical_name": "Ecdlp.M16FactorBaseLiftable.card_liftableGLVOrbitRep",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+          "line": 276
+        },
+        {
+          "cited": "Ecdlp.M16FactorBaseLiftable.card_nonliftableGLVOrbitRep",
+          "canonical_name": "Ecdlp.M16FactorBaseLiftable.card_nonliftableGLVOrbitRep",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+          "line": 292
+        },
+        {
+          "cited": "Ecdlp.M16FactorBaseLiftable.card_liftableFactorBaseX",
+          "canonical_name": "Ecdlp.M16FactorBaseLiftable.card_liftableFactorBaseX",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+          "line": 320
+        },
+        {
+          "cited": "Ecdlp.M16FactorBaseLiftable.card_nonliftableFactorBaseX",
+          "canonical_name": "Ecdlp.M16FactorBaseLiftable.card_nonliftableFactorBaseX",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+          "line": 330
+        },
+        {
+          "cited": "Ecdlp.M16FactorBaseLiftable.factorBaseCharacterSum_eq",
+          "canonical_name": "Ecdlp.M16FactorBaseLiftable.factorBaseCharacterSum_eq",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+          "line": 347
+        },
+        {
+          "cited": "Ecdlp.M16FactorBaseLiftable.card_liftFiber",
+          "canonical_name": "Ecdlp.M16FactorBaseLiftable.card_liftFiber",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+          "line": 453
+        },
+        {
+          "cited": "Ecdlp.M16FactorBaseLiftable.card_signedAffineFactorBasePoint",
+          "canonical_name": "Ecdlp.M16FactorBaseLiftable.card_signedAffineFactorBasePoint",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+          "line": 461
+        },
+        {
+          "cited": "Ecdlp.M16FactorBaseLiftable.toPoint_ne_zero",
+          "canonical_name": "Ecdlp.M16FactorBaseLiftable.toPoint_ne_zero",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+          "line": 484
+        }
+      ]
+    },
+    {
+      "id": "ledger-309",
+      "claim": "Six-width fixed-oblivious translated-image coverage obstruction (the full root-based signed width-six index has fewer than `2^112` entries. For an arbitrary table payload indexed by that type and a fixed target-independent residual list, `q <= 2^141` covers strictly less than half of the secp256k1 point group, so half coverage requires `q > 2^141`. Honest scope: this is only the explicitly defined fixed, oblivious translated-image model. `q` counts literal residual slots, not time, memory, field/group operations, or calibrated cost. The result excludes no target-adaptive, implicit/streaming, multilevel/Wagner, nontranslation, Groebner, rank, recovery, sparse-linear-algebra, general M16, or general ECDLP method. Exactly one new closed comparison uses `native_decide`; public conclusions also inherit existing compiler-trusted root/cardinality/primality leaves)",
+      "theorem_cell": "`Ecdlp.M16SixWidthNoGo.ncard_coveredTargets_le`, `card_sym_factorBaseX_six_lt_two_pow_106`, `natCard_signedSixIndex_lt_two_pow_112`, `no_half_coverage_of_two_pow_141_probe_bound`, `half_coverage_requires_more_than_two_pow_141_probes`",
+      "declared_files": [
+        "Ecdlp/Proved/M16SixWidthNoGo.lean"
+      ],
+      "method": "finite-range counting + exact secp256k1 cardinality; one isolated new `native_decide` comparison plus disclosed inherited compiler trust",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.M16SixWidthNoGo.ncard_coveredTargets_le",
+          "canonical_name": "Ecdlp.M16SixWidthNoGo.ncard_coveredTargets_le",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16SixWidthNoGo.lean",
+          "line": 53
+        },
+        {
+          "cited": "Ecdlp.M16SixWidthNoGo.card_sym_factorBaseX_six_lt_two_pow_106",
+          "canonical_name": "Ecdlp.M16SixWidthNoGo.card_sym_factorBaseX_six_lt_two_pow_106",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16SixWidthNoGo.lean",
+          "line": 69
+        },
+        {
+          "cited": "Ecdlp.M16SixWidthNoGo.natCard_signedSixIndex_lt_two_pow_112",
+          "canonical_name": "Ecdlp.M16SixWidthNoGo.natCard_signedSixIndex_lt_two_pow_112",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16SixWidthNoGo.lean",
+          "line": 76
+        },
+        {
+          "cited": "Ecdlp.M16SixWidthNoGo.no_half_coverage_of_two_pow_141_probe_bound",
+          "canonical_name": "Ecdlp.M16SixWidthNoGo.no_half_coverage_of_two_pow_141_probe_bound",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16SixWidthNoGo.lean",
+          "line": 89
+        },
+        {
+          "cited": "Ecdlp.M16SixWidthNoGo.half_coverage_requires_more_than_two_pow_141_probes",
+          "canonical_name": "Ecdlp.M16SixWidthNoGo.half_coverage_requires_more_than_two_pow_141_probes",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16SixWidthNoGo.lean",
+          "line": 121
+        }
+      ]
+    },
+    {
+      "id": "ledger-310",
+      "claim": "Liftability-aware six-width fixed-oblivious translated-image obstruction (the 283527-coordinate liftable factor base has exactly 721534357111870307687559424092 width-six multisets and 46178198855159699692003803141888 signed indices; width six fits the uncalibrated desk ceiling while width seven exceeds it. In the same fixed target-independent translated-image model, `q <= 2^148` covers strictly less than half of secp256k1, so half coverage requires `q > 2^148`. Honest scope: the same representation/counting-only boundary applies: this is not a runtime or memory lower bound, not a general M16 or ECDLP lower bound, and it does not cover adaptive, implicit/streaming, multilevel, algebraic-solving, rank, or recovery mechanisms. Exactly one new private closed comparison uses `native_decide`; public conclusions also inherit the two liftable-census owners and pre-existing compiler-trusted secp256k1 leaves)",
+      "theorem_cell": "`Ecdlp.M16LiftableSixWidthNoGo.card_sym_liftableFactorBaseX_six`, `card_sym_liftableFactorBaseX_six_le_budget`, `card_sym_liftableFactorBaseX_seven`, `budget_lt_card_sym_liftableFactorBaseX_seven`, `natCard_liftableSignedSixIndex`, `no_half_coverage_of_two_pow_148_probe_bound`, `half_coverage_requires_more_than_two_pow_148_probes`",
+      "declared_files": [
+        "Ecdlp/Proved/M16LiftableSixWidthNoGo.lean"
+      ],
+      "method": "exact symmetric-power/range counting + one private new `native_decide` comparison plus disclosed inherited compiler trust",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.M16LiftableSixWidthNoGo.card_sym_liftableFactorBaseX_six",
+          "canonical_name": "Ecdlp.M16LiftableSixWidthNoGo.card_sym_liftableFactorBaseX_six",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16LiftableSixWidthNoGo.lean",
+          "line": 37
+        },
+        {
+          "cited": "Ecdlp.M16LiftableSixWidthNoGo.card_sym_liftableFactorBaseX_six_le_budget",
+          "canonical_name": "Ecdlp.M16LiftableSixWidthNoGo.card_sym_liftableFactorBaseX_six_le_budget",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16LiftableSixWidthNoGo.lean",
+          "line": 45
+        },
+        {
+          "cited": "Ecdlp.M16LiftableSixWidthNoGo.card_sym_liftableFactorBaseX_seven",
+          "canonical_name": "Ecdlp.M16LiftableSixWidthNoGo.card_sym_liftableFactorBaseX_seven",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16LiftableSixWidthNoGo.lean",
+          "line": 51
+        },
+        {
+          "cited": "Ecdlp.M16LiftableSixWidthNoGo.budget_lt_card_sym_liftableFactorBaseX_seven",
+          "canonical_name": "Ecdlp.M16LiftableSixWidthNoGo.budget_lt_card_sym_liftableFactorBaseX_seven",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16LiftableSixWidthNoGo.lean",
+          "line": 59
+        },
+        {
+          "cited": "Ecdlp.M16LiftableSixWidthNoGo.natCard_liftableSignedSixIndex",
+          "canonical_name": "Ecdlp.M16LiftableSixWidthNoGo.natCard_liftableSignedSixIndex",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16LiftableSixWidthNoGo.lean",
+          "line": 72
+        },
+        {
+          "cited": "Ecdlp.M16LiftableSixWidthNoGo.no_half_coverage_of_two_pow_148_probe_bound",
+          "canonical_name": "Ecdlp.M16LiftableSixWidthNoGo.no_half_coverage_of_two_pow_148_probe_bound",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16LiftableSixWidthNoGo.lean",
+          "line": 91
+        },
+        {
+          "cited": "Ecdlp.M16LiftableSixWidthNoGo.half_coverage_requires_more_than_two_pow_148_probes",
+          "canonical_name": "Ecdlp.M16LiftableSixWidthNoGo.half_coverage_requires_more_than_two_pow_148_probes",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16LiftableSixWidthNoGo.lean",
+          "line": 115
+        }
+      ]
     }
   ],
   "declarations": {
@@ -15138,6 +15506,552 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/Secp256k1GenericSecurity.lean",
       "line": 28
+    },
+    "Ecdlp.M16FactorBaseFinite.FactorBaseX": {
+      "name": "FactorBaseX",
+      "namespace": "Ecdlp.M16FactorBaseFinite",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FactorBaseFinite.lean",
+      "line": 23
+    },
+    "Ecdlp.M16FactorBaseFinite.card_factorBaseX": {
+      "name": "card_factorBaseX",
+      "namespace": "Ecdlp.M16FactorBaseFinite",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseFinite.lean",
+      "line": 50
+    },
+    "Ecdlp.M16FactorBaseLiftable.Certificates.boolCountAcc": {
+      "name": "boolCountAcc",
+      "namespace": "Ecdlp.M16FactorBaseLiftable.Certificates",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftableDefs.lean",
+      "line": 61
+    },
+    "Ecdlp.M16FactorBaseLiftable.Certificates.boolCountAcc_eq": {
+      "name": "boolCountAcc_eq",
+      "namespace": "Ecdlp.M16FactorBaseLiftable.Certificates",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftableDefs.lean",
+      "line": 70
+    },
+    "Ecdlp.M16FactorBaseLiftable.Certificates.factorBaseGenerator_certificate": {
+      "name": "factorBaseGenerator_certificate",
+      "namespace": "Ecdlp.M16FactorBaseLiftable.Certificates",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftableGeneratorCertificate.lean",
+      "line": 7
+    },
+    "Ecdlp.M16FactorBaseLiftable.Certificates.representativeCountRuntime": {
+      "name": "representativeCountRuntime",
+      "namespace": "Ecdlp.M16FactorBaseLiftable.Certificates",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftableCountCertificate.lean",
+      "line": 16
+    },
+    "Ecdlp.M16FactorBaseLiftable.Certificates.representativeEulerPositive": {
+      "name": "representativeEulerPositive",
+      "namespace": "Ecdlp.M16FactorBaseLiftable.Certificates",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftableDefs.lean",
+      "line": 53
+    },
+    "Ecdlp.M16FactorBaseLiftable.Certificates.representativeEulerPositive_count": {
+      "name": "representativeEulerPositive_count",
+      "namespace": "Ecdlp.M16FactorBaseLiftable.Certificates",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftableCountCertificate.lean",
+      "line": 23
+    },
+    "Ecdlp.M16FactorBaseLiftable.Certificates.representative_count_native": {
+      "name": "representative_count_native",
+      "namespace": "Ecdlp.M16FactorBaseLiftable.Certificates",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftableCountCertificate.lean",
+      "line": 19
+    },
+    "Ecdlp.M16FactorBaseLiftable.Fp": {
+      "name": "Fp",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftableDefs.lean",
+      "line": 18
+    },
+    "Ecdlp.M16FactorBaseLiftable.GLVOrbitRep": {
+      "name": "GLVOrbitRep",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftableDefs.lean",
+      "line": 48
+    },
+    "Ecdlp.M16FactorBaseLiftable.IsLiftable": {
+      "name": "IsLiftable",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftableDefs.lean",
+      "line": 24
+    },
+    "Ecdlp.M16FactorBaseLiftable.LiftFiber": {
+      "name": "LiftFiber",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 393
+    },
+    "Ecdlp.M16FactorBaseLiftable.LiftableFactorBaseX": {
+      "name": "LiftableFactorBaseX",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftableDefs.lean",
+      "line": 27
+    },
+    "Ecdlp.M16FactorBaseLiftable.LiftableGLVOrbitRep": {
+      "name": "LiftableGLVOrbitRep",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 235
+    },
+    "Ecdlp.M16FactorBaseLiftable.NonliftableFactorBaseX": {
+      "name": "NonliftableFactorBaseX",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftableDefs.lean",
+      "line": 31
+    },
+    "Ecdlp.M16FactorBaseLiftable.NonliftableGLVOrbitRep": {
+      "name": "NonliftableGLVOrbitRep",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 239
+    },
+    "Ecdlp.M16FactorBaseLiftable.SignedAffineFactorBasePoint": {
+      "name": "SignedAffineFactorBasePoint",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 397
+    },
+    "Ecdlp.M16FactorBaseLiftable.card_glvOrbitRep": {
+      "name": "card_glvOrbitRep",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 270
+    },
+    "Ecdlp.M16FactorBaseLiftable.card_liftFiber": {
+      "name": "card_liftFiber",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 453
+    },
+    "Ecdlp.M16FactorBaseLiftable.card_liftableFactorBaseX": {
+      "name": "card_liftableFactorBaseX",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 320
+    },
+    "Ecdlp.M16FactorBaseLiftable.card_liftableGLVOrbitRep": {
+      "name": "card_liftableGLVOrbitRep",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 276
+    },
+    "Ecdlp.M16FactorBaseLiftable.card_nonliftableFactorBaseX": {
+      "name": "card_nonliftableFactorBaseX",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 330
+    },
+    "Ecdlp.M16FactorBaseLiftable.card_nonliftableGLVOrbitRep": {
+      "name": "card_nonliftableGLVOrbitRep",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 292
+    },
+    "Ecdlp.M16FactorBaseLiftable.card_signedAffineFactorBasePoint": {
+      "name": "card_signedAffineFactorBasePoint",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 461
+    },
+    "Ecdlp.M16FactorBaseLiftable.factorBaseCharacterSum": {
+      "name": "factorBaseCharacterSum",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 340
+    },
+    "Ecdlp.M16FactorBaseLiftable.factorBaseCharacterSum_eq": {
+      "name": "factorBaseCharacterSum_eq",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 347
+    },
+    "Ecdlp.M16FactorBaseLiftable.factorBaseGenerator": {
+      "name": "factorBaseGenerator",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftableDefs.lean",
+      "line": 41
+    },
+    "Ecdlp.M16FactorBaseLiftable.factorBaseGenerator_glv": {
+      "name": "factorBaseGenerator_glv",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 109
+    },
+    "Ecdlp.M16FactorBaseLiftable.factorBaseGenerator_glv_square": {
+      "name": "factorBaseGenerator_glv_square",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 103
+    },
+    "Ecdlp.M16FactorBaseLiftable.factorBaseGenerator_order": {
+      "name": "factorBaseGenerator_order",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 92
+    },
+    "Ecdlp.M16FactorBaseLiftable.factorBaseOrbitCount": {
+      "name": "factorBaseOrbitCount",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftableDefs.lean",
+      "line": 45
+    },
+    "Ecdlp.M16FactorBaseLiftable.glvOrbitLayer": {
+      "name": "glvOrbitLayer",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 153
+    },
+    "Ecdlp.M16FactorBaseLiftable.glvOrbitLayer_injective": {
+      "name": "glvOrbitLayer_injective",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 189
+    },
+    "Ecdlp.M16FactorBaseLiftable.glvOrbitLayer_one": {
+      "name": "glvOrbitLayer_one",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 171
+    },
+    "Ecdlp.M16FactorBaseLiftable.glvOrbitLayer_two": {
+      "name": "glvOrbitLayer_two",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 179
+    },
+    "Ecdlp.M16FactorBaseLiftable.isLiftable_iff_eulerCriterion": {
+      "name": "isLiftable_iff_eulerCriterion",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 66
+    },
+    "Ecdlp.M16FactorBaseLiftable.liftY": {
+      "name": "liftY",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 400
+    },
+    "Ecdlp.M16FactorBaseLiftable.orbitRepresentative": {
+      "name": "orbitRepresentative",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 157
+    },
+    "Ecdlp.M16FactorBaseLiftable.rhs": {
+      "name": "rhs",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftableDefs.lean",
+      "line": 21
+    },
+    "Ecdlp.M16FactorBaseLiftable.secp256k1_rhs_ne_zero": {
+      "name": "secp256k1_rhs_ne_zero",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 46
+    },
+    "Ecdlp.M16FactorBaseLiftable.toPoint": {
+      "name": "toPoint",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 479
+    },
+    "Ecdlp.M16FactorBaseLiftable.toPoint_ne_zero": {
+      "name": "toPoint_ne_zero",
+      "namespace": "Ecdlp.M16FactorBaseLiftable",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseLiftable.lean",
+      "line": 484
+    },
+    "Ecdlp.M16FactorBaseSymmetricGate.budget_lt_card_sym_factorBaseX_seven": {
+      "name": "budget_lt_card_sym_factorBaseX_seven",
+      "namespace": "Ecdlp.M16FactorBaseSymmetricGate",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseSymmetricGate.lean",
+      "line": 46
+    },
+    "Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_seven": {
+      "name": "card_sym_factorBaseX_seven",
+      "namespace": "Ecdlp.M16FactorBaseSymmetricGate",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseSymmetricGate.lean",
+      "line": 38
+    },
+    "Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_six": {
+      "name": "card_sym_factorBaseX_six",
+      "namespace": "Ecdlp.M16FactorBaseSymmetricGate",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseSymmetricGate.lean",
+      "line": 24
+    },
+    "Ecdlp.M16FactorBaseSymmetricGate.card_sym_factorBaseX_six_le_budget": {
+      "name": "card_sym_factorBaseX_six_le_budget",
+      "namespace": "Ecdlp.M16FactorBaseSymmetricGate",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FactorBaseSymmetricGate.lean",
+      "line": 32
+    },
+    "Ecdlp.M16LiftableSixWidthNoGo.LiftableSignedSixIndex": {
+      "name": "LiftableSignedSixIndex",
+      "namespace": "Ecdlp.M16LiftableSixWidthNoGo",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16LiftableSixWidthNoGo.lean",
+      "line": 68
+    },
+    "Ecdlp.M16LiftableSixWidthNoGo.budget_lt_card_sym_liftableFactorBaseX_seven": {
+      "name": "budget_lt_card_sym_liftableFactorBaseX_seven",
+      "namespace": "Ecdlp.M16LiftableSixWidthNoGo",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16LiftableSixWidthNoGo.lean",
+      "line": 59
+    },
+    "Ecdlp.M16LiftableSixWidthNoGo.card_sym_liftableFactorBaseX_seven": {
+      "name": "card_sym_liftableFactorBaseX_seven",
+      "namespace": "Ecdlp.M16LiftableSixWidthNoGo",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16LiftableSixWidthNoGo.lean",
+      "line": 51
+    },
+    "Ecdlp.M16LiftableSixWidthNoGo.card_sym_liftableFactorBaseX_six": {
+      "name": "card_sym_liftableFactorBaseX_six",
+      "namespace": "Ecdlp.M16LiftableSixWidthNoGo",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16LiftableSixWidthNoGo.lean",
+      "line": 37
+    },
+    "Ecdlp.M16LiftableSixWidthNoGo.card_sym_liftableFactorBaseX_six_le_budget": {
+      "name": "card_sym_liftableFactorBaseX_six_le_budget",
+      "namespace": "Ecdlp.M16LiftableSixWidthNoGo",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16LiftableSixWidthNoGo.lean",
+      "line": 45
+    },
+    "Ecdlp.M16LiftableSixWidthNoGo.half_coverage_requires_more_than_two_pow_148_probes": {
+      "name": "half_coverage_requires_more_than_two_pow_148_probes",
+      "namespace": "Ecdlp.M16LiftableSixWidthNoGo",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16LiftableSixWidthNoGo.lean",
+      "line": 115
+    },
+    "Ecdlp.M16LiftableSixWidthNoGo.natCard_liftableSignedSixIndex": {
+      "name": "natCard_liftableSignedSixIndex",
+      "namespace": "Ecdlp.M16LiftableSixWidthNoGo",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16LiftableSixWidthNoGo.lean",
+      "line": 72
+    },
+    "Ecdlp.M16LiftableSixWidthNoGo.no_half_coverage_of_two_pow_148_probe_bound": {
+      "name": "no_half_coverage_of_two_pow_148_probe_bound",
+      "namespace": "Ecdlp.M16LiftableSixWidthNoGo",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16LiftableSixWidthNoGo.lean",
+      "line": 91
+    },
+    "Ecdlp.M16SixWidthNoGo.SecpPoint": {
+      "name": "SecpPoint",
+      "namespace": "Ecdlp.M16SixWidthNoGo",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16SixWidthNoGo.lean",
+      "line": 32
+    },
+    "Ecdlp.M16SixWidthNoGo.SignedSixIndex": {
+      "name": "SignedSixIndex",
+      "namespace": "Ecdlp.M16SixWidthNoGo",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16SixWidthNoGo.lean",
+      "line": 38
+    },
+    "Ecdlp.M16SixWidthNoGo.card_sym_factorBaseX_six_lt_two_pow_106": {
+      "name": "card_sym_factorBaseX_six_lt_two_pow_106",
+      "namespace": "Ecdlp.M16SixWidthNoGo",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16SixWidthNoGo.lean",
+      "line": 69
+    },
+    "Ecdlp.M16SixWidthNoGo.coveredTargets": {
+      "name": "coveredTargets",
+      "namespace": "Ecdlp.M16SixWidthNoGo",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16SixWidthNoGo.lean",
+      "line": 43
+    },
+    "Ecdlp.M16SixWidthNoGo.half_coverage_requires_more_than_two_pow_141_probes": {
+      "name": "half_coverage_requires_more_than_two_pow_141_probes",
+      "namespace": "Ecdlp.M16SixWidthNoGo",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16SixWidthNoGo.lean",
+      "line": 121
+    },
+    "Ecdlp.M16SixWidthNoGo.natCard_signedSixIndex_lt_two_pow_112": {
+      "name": "natCard_signedSixIndex_lt_two_pow_112",
+      "namespace": "Ecdlp.M16SixWidthNoGo",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16SixWidthNoGo.lean",
+      "line": 76
+    },
+    "Ecdlp.M16SixWidthNoGo.ncard_coveredTargets_le": {
+      "name": "ncard_coveredTargets_le",
+      "namespace": "Ecdlp.M16SixWidthNoGo",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16SixWidthNoGo.lean",
+      "line": 53
+    },
+    "Ecdlp.M16SixWidthNoGo.no_half_coverage_of_two_pow_141_probe_bound": {
+      "name": "no_half_coverage_of_two_pow_141_probe_bound",
+      "namespace": "Ecdlp.M16SixWidthNoGo",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16SixWidthNoGo.lean",
+      "line": 89
+    },
+    "Ecdlp.M16SolverGate.factorBaseDegree": {
+      "name": "factorBaseDegree",
+      "namespace": "Ecdlp.M16SolverGate",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16SolverGate.lean",
+      "line": 19
+    },
+    "Ecdlp.M16SolverGate.factorBaseDegree_pow_five_le_maxRelationTermBudget": {
+      "name": "factorBaseDegree_pow_five_le_maxRelationTermBudget",
+      "namespace": "Ecdlp.M16SolverGate",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16SolverGate.lean",
+      "line": 73
+    },
+    "Ecdlp.M16SolverGate.maxRelationTermBudget": {
+      "name": "maxRelationTermBudget",
+      "namespace": "Ecdlp.M16SolverGate",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16SolverGate.lean",
+      "line": 22
+    },
+    "Ecdlp.M16SolverGate.maxRelationTermBudget_bit_window": {
+      "name": "maxRelationTermBudget_bit_window",
+      "namespace": "Ecdlp.M16SolverGate",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16SolverGate.lean",
+      "line": 66
+    },
+    "Ecdlp.M16SolverGate.maxRelationTermBudget_degree_window": {
+      "name": "maxRelationTermBudget_degree_window",
+      "namespace": "Ecdlp.M16SolverGate",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16SolverGate.lean",
+      "line": 83
+    },
+    "Ecdlp.M16SolverGate.maxRelationTermBudget_lt_factorBaseDegree_pow_six": {
+      "name": "maxRelationTermBudget_lt_factorBaseDegree_pow_six",
+      "namespace": "Ecdlp.M16SolverGate",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16SolverGate.lean",
+      "line": 78
+    },
+    "Ecdlp.M16SolverGate.maxRelationTermBudget_lt_two_pow_115": {
+      "name": "maxRelationTermBudget_lt_two_pow_115",
+      "namespace": "Ecdlp.M16SolverGate",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16SolverGate.lean",
+      "line": 61
+    },
+    "Ecdlp.M16SolverGate.relationTermGate": {
+      "name": "relationTermGate",
+      "namespace": "Ecdlp.M16SolverGate",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16SolverGate.lean",
+      "line": 26
+    },
+    "Ecdlp.M16SolverGate.relationTermGate_at_max": {
+      "name": "relationTermGate_at_max",
+      "namespace": "Ecdlp.M16SolverGate",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16SolverGate.lean",
+      "line": 34
+    },
+    "Ecdlp.M16SolverGate.relationTermGate_fails_of_degree_six_lower_bound": {
+      "name": "relationTermGate_fails_of_degree_six_lower_bound",
+      "namespace": "Ecdlp.M16SolverGate",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16SolverGate.lean",
+      "line": 91
+    },
+    "Ecdlp.M16SolverGate.relationTermGate_iff_le_exact": {
+      "name": "relationTermGate_iff_le_exact",
+      "namespace": "Ecdlp.M16SolverGate",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16SolverGate.lean",
+      "line": 50
+    },
+    "Ecdlp.M16SolverGate.relationTermGate_iff_le_max": {
+      "name": "relationTermGate_iff_le_max",
+      "namespace": "Ecdlp.M16SolverGate",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16SolverGate.lean",
+      "line": 44
+    },
+    "Ecdlp.M16SolverGate.relationTermGate_spec": {
+      "name": "relationTermGate_spec",
+      "namespace": "Ecdlp.M16SolverGate",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16SolverGate.lean",
+      "line": 30
+    },
+    "Ecdlp.M16SolverGate.relationTermGate_succ_max_fails": {
+      "name": "relationTermGate_succ_max_fails",
+      "namespace": "Ecdlp.M16SolverGate",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16SolverGate.lean",
+      "line": 39
+    },
+    "Ecdlp.M16SolverGate.two_pow_114_le_maxRelationTermBudget": {
+      "name": "two_pow_114_le_maxRelationTermBudget",
+      "namespace": "Ecdlp.M16SolverGate",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16SolverGate.lean",
+      "line": 56
     },
     "Ecdlp.MovReduction.mov_random_q_success_probability": {
       "name": "mov_random_q_success_probability",
