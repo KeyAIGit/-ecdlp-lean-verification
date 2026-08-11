@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 314,
-  "ledger_reference_count": 781,
-  "ledger_named_declarations": 756,
+  "ledger_rows": 315,
+  "ledger_reference_count": 786,
+  "ledger_named_declarations": 761,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1311,
-  "distinct_qualified_names": 1311,
-  "verified_md_citations": 756,
+  "declaration_count": 1328,
+  "distinct_qualified_names": 1328,
+  "verified_md_citations": 761,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -368,6 +368,11 @@
     "Ecdlp.DLEQ.chaum_pedersen_verify",
     "Ecdlp.DivisionPoly.exists_common_root_of_not_isCoprime",
     "Ecdlp.EDS.isEllSequence_of_rec_one",
+    "Ecdlp.FrozenProjectiveSecpLocalFiber.HValue_barKummer_normalize_zero_iff",
+    "Ecdlp.FrozenProjectiveSecpLocalFiber.HValue_barKummer_zero_iff",
+    "Ecdlp.FrozenProjectiveSecpLocalFiber.HValue_barKummer_zero_iff_projectiveDet",
+    "Ecdlp.FrozenProjectiveSecpLocalFiber.barKummer",
+    "Ecdlp.FrozenProjectiveSecpLocalFiber.barKummer_eq_iff",
     "Ecdlp.FrozenProjectiveSemaev.AdmissibleInfinityMask",
     "Ecdlp.FrozenProjectiveSemaev.AffineInputFamily",
     "Ecdlp.FrozenProjectiveSemaev.BalancedPropagatedRegular",
@@ -10875,6 +10880,58 @@
           "line": 78
         }
       ]
+    },
+    {
+      "id": "ledger-314",
+      "claim": "Exact local secp256k1 Kummer fiber over the algebraic closure (`barKummer` sends the identity to projective infinity and an affine point to `[x:1]`; for arbitrary valid output representative `W`, `HValue_barKummer_zero_iff` identifies local vanishing exactly with the normalized Kummer class of `P+Q` or `P-Q`, with normalized-input and projective-determinant forms, while `barKummer_eq_iff` classifies equal Kummer classes as `P=Q` or `P=-Q`. The proof covers identity inputs, the unequal-`x` chord, equal-`x` tangent/cancellation, and nonzero two-torsion over the closure without using the base-field no-two-torsion theorem. Honest scope: this is a local relational fiber only. It proves neither that the two displayed outputs are distinct nor any root-multiplicity statement, and provides no recursive chain, root-to-point construction, descent, recovery, solver, yield/rank, cost, or ECDLP-shortcut result. The module adds 0 new `native_decide` owners; the audited public surface inherits the standard axioms plus 10 existing secp256k1 primality native-owner families through the concrete `Fp`/`FpBar` instances)",
+      "theorem_cell": "`Ecdlp.FrozenProjectiveSecpLocalFiber.barKummer`, `barKummer_eq_iff`, `HValue_barKummer_normalize_zero_iff`, `HValue_barKummer_zero_iff`, `HValue_barKummer_zero_iff_projectiveDet`",
+      "declared_files": [
+        "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean"
+      ],
+      "method": "Mathlib curve group law + generic Semaev chord iff + explicit tangent/infinity factorization; zero new native owners, inherited 10 secp256k1 primality native-owner families disclosed",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.FrozenProjectiveSecpLocalFiber.barKummer",
+          "canonical_name": "Ecdlp.FrozenProjectiveSecpLocalFiber.barKummer",
+          "resolution": "exact",
+          "kind": "def",
+          "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+          "line": 50
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSecpLocalFiber.barKummer_eq_iff",
+          "canonical_name": "Ecdlp.FrozenProjectiveSecpLocalFiber.barKummer_eq_iff",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+          "line": 199
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSecpLocalFiber.HValue_barKummer_normalize_zero_iff",
+          "canonical_name": "Ecdlp.FrozenProjectiveSecpLocalFiber.HValue_barKummer_normalize_zero_iff",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+          "line": 472
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSecpLocalFiber.HValue_barKummer_zero_iff",
+          "canonical_name": "Ecdlp.FrozenProjectiveSecpLocalFiber.HValue_barKummer_zero_iff",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+          "line": 547
+        },
+        {
+          "cited": "Ecdlp.FrozenProjectiveSecpLocalFiber.HValue_barKummer_zero_iff_projectiveDet",
+          "canonical_name": "Ecdlp.FrozenProjectiveSecpLocalFiber.HValue_barKummer_zero_iff_projectiveDet",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+          "line": 556
+        }
+      ]
     }
   ],
   "declarations": {
@@ -14139,6 +14196,125 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/FrontierGroupFacts.lean",
       "line": 36
+    },
+    "Ecdlp.FrozenProjectiveSecpLocalFiber.BarCurve": {
+      "name": "BarCurve",
+      "namespace": "Ecdlp.FrozenProjectiveSecpLocalFiber",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+      "line": 37
+    },
+    "Ecdlp.FrozenProjectiveSecpLocalFiber.BarPoint": {
+      "name": "BarPoint",
+      "namespace": "Ecdlp.FrozenProjectiveSecpLocalFiber",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+      "line": 40
+    },
+    "Ecdlp.FrozenProjectiveSecpLocalFiber.Fp": {
+      "name": "Fp",
+      "namespace": "Ecdlp.FrozenProjectiveSecpLocalFiber",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+      "line": 31
+    },
+    "Ecdlp.FrozenProjectiveSecpLocalFiber.FpBar": {
+      "name": "FpBar",
+      "namespace": "Ecdlp.FrozenProjectiveSecpLocalFiber",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+      "line": 34
+    },
+    "Ecdlp.FrozenProjectiveSecpLocalFiber.HValue_barKummer_normalize_zero_iff": {
+      "name": "HValue_barKummer_normalize_zero_iff",
+      "namespace": "Ecdlp.FrozenProjectiveSecpLocalFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+      "line": 472
+    },
+    "Ecdlp.FrozenProjectiveSecpLocalFiber.HValue_barKummer_zero_iff": {
+      "name": "HValue_barKummer_zero_iff",
+      "namespace": "Ecdlp.FrozenProjectiveSecpLocalFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+      "line": 547
+    },
+    "Ecdlp.FrozenProjectiveSecpLocalFiber.HValue_barKummer_zero_iff_projectiveDet": {
+      "name": "HValue_barKummer_zero_iff_projectiveDet",
+      "namespace": "Ecdlp.FrozenProjectiveSecpLocalFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+      "line": 556
+    },
+    "Ecdlp.FrozenProjectiveSecpLocalFiber.barKummer": {
+      "name": "barKummer",
+      "namespace": "Ecdlp.FrozenProjectiveSecpLocalFiber",
+      "kind": "def",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+      "line": 50
+    },
+    "Ecdlp.FrozenProjectiveSecpLocalFiber.barKummer_eq_iff": {
+      "name": "barKummer_eq_iff",
+      "namespace": "Ecdlp.FrozenProjectiveSecpLocalFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+      "line": 199
+    },
+    "Ecdlp.FrozenProjectiveSecpLocalFiber.barKummer_neg": {
+      "name": "barKummer_neg",
+      "namespace": "Ecdlp.FrozenProjectiveSecpLocalFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+      "line": 61
+    },
+    "Ecdlp.FrozenProjectiveSecpLocalFiber.barKummer_some": {
+      "name": "barKummer_some",
+      "namespace": "Ecdlp.FrozenProjectiveSecpLocalFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+      "line": 57
+    },
+    "Ecdlp.FrozenProjectiveSecpLocalFiber.barKummer_zero": {
+      "name": "barKummer_zero",
+      "namespace": "Ecdlp.FrozenProjectiveSecpLocalFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+      "line": 54
+    },
+    "Ecdlp.FrozenProjectiveSecpLocalFiber.normalizeProjectivePair_idem": {
+      "name": "normalizeProjectivePair_idem",
+      "namespace": "Ecdlp.FrozenProjectiveSecpLocalFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+      "line": 175
+    },
+    "Ecdlp.FrozenProjectiveSecpLocalFiber.normalize_barKummer": {
+      "name": "normalize_barKummer",
+      "namespace": "Ecdlp.FrozenProjectiveSecpLocalFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+      "line": 67
+    },
+    "Ecdlp.FrozenProjectiveSecpLocalFiber.projectiveDet_barKummer_eq_zero_iff": {
+      "name": "projectiveDet_barKummer_eq_zero_iff",
+      "namespace": "Ecdlp.FrozenProjectiveSecpLocalFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+      "line": 167
+    },
+    "Ecdlp.FrozenProjectiveSecpLocalFiber.projectiveDet_eq_zero_iff_normalize_eq_affine": {
+      "name": "projectiveDet_eq_zero_iff_normalize_eq_affine",
+      "namespace": "Ecdlp.FrozenProjectiveSecpLocalFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+      "line": 118
+    },
+    "Ecdlp.FrozenProjectiveSecpLocalFiber.projectiveDet_eq_zero_iff_normalize_eq_infinity": {
+      "name": "projectiveDet_eq_zero_iff_normalize_eq_infinity",
+      "namespace": "Ecdlp.FrozenProjectiveSecpLocalFiber",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpLocalFiber.lean",
+      "line": 150
     },
     "Ecdlp.FrozenProjectiveSemaev.AdmissibleInfinityMask": {
       "name": "AdmissibleInfinityMask",

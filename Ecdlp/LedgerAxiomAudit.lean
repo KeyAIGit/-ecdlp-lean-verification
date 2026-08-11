@@ -300,6 +300,11 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.DLEQ.chaum_pedersen_verify
 #print axioms Ecdlp.DivisionPoly.exists_common_root_of_not_isCoprime
 #print axioms Ecdlp.EDS.isEllSequence_of_rec_one
+#print axioms Ecdlp.FrozenProjectiveSecpLocalFiber.HValue_barKummer_normalize_zero_iff
+#print axioms Ecdlp.FrozenProjectiveSecpLocalFiber.HValue_barKummer_zero_iff
+#print axioms Ecdlp.FrozenProjectiveSecpLocalFiber.HValue_barKummer_zero_iff_projectiveDet
+#print axioms Ecdlp.FrozenProjectiveSecpLocalFiber.barKummer
+#print axioms Ecdlp.FrozenProjectiveSecpLocalFiber.barKummer_eq_iff
 #print axioms Ecdlp.FrozenProjectiveSemaev.AdmissibleInfinityMask
 #print axioms Ecdlp.FrozenProjectiveSemaev.AffineInputFamily
 #print axioms Ecdlp.FrozenProjectiveSemaev.BalancedPropagatedRegular
