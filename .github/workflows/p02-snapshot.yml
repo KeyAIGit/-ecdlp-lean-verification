@@ -1,0 +1,40 @@
+name: ECDLP lab P02 development snapshot
+
+on:
+  push:
+    branches:
+      - agent/ecdlp-lab-p02-curve-catalog-20260811
+    paths:
+      - .github/workflows/p02-snapshot.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Build focused source snapshot
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p snapshot
+          cp -a experiments/ecdlp_lab snapshot/ecdlp_lab
+          cp -a experiments/ml_structure_probe/p1_toy_scaling snapshot/p1_toy_scaling
+          mkdir -p snapshot/framework
+          cp experiments/framework/ec_oracle.py snapshot/framework/
+          cp experiments/framework/test_framework.py snapshot/framework/
+          cp tasks/ECDLP_LAB_BUILD.md snapshot/
+          cp tasks/ECDLP_LAB_REUSE_INVENTORY.json snapshot/
+          find snapshot -type f -print0 | sort -z | xargs -0 sha256sum > snapshot/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ecdlp-lab-p02-source-snapshot
+          path: snapshot
+          if-no-files-found: error
+          retention-days: 3
