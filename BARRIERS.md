@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~285 distinct results / 324 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~286 distinct results / 325 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -275,10 +275,21 @@ exact `Θ` statements.
   aggregates roots together with one retained recovery; it is not a fiber of
   `RecoveryFiber` or `rowBackpointers` for one fixed root, and it does not
   classify every recovery or prove row uniqueness or evaluation injectivity.
-  The cardinality and its desk-budget comparison imply no enumeration
-  requirement, PFPO/node charge, useful relation yield, independence, rank,
-  sparse-linear-algebra result, runtime/memory/total cost, scalar recovery, or
-  ECDLP shortcut.
+  The cardinality and its desk-budget comparison by themselves imply no
+  enumeration requirement, PFPO/node charge, useful relation yield,
+  independence, rank, sparse-linear-algebra result, runtime/memory/total cost,
+  scalar recovery, or ECDLP shortcut.
+  Feeding this explicit family into the finite rank layer makes its degeneracy
+  exact. The `283527^7` labels are injective as certified recovery observations,
+  yet all mod-`n` GLV coefficient rows coincide with one nonzero row and all
+  augmented rows coincide with one nonzero homogeneous row. Both coefficient
+  and augmented matrix ranks are therefore exactly one, and both labelled
+  synthesis kernels have dimension `283527^7 - 1`. This is maximal redundancy
+  for one constructed constant-row family, not useful relation yield,
+  independence, growing rank, a distribution theorem, or evidence for the rank
+  of other collected recoveries. It constructs no enumerator, filtering or
+  sparse-linear-algebra algorithm and supplies no PFPO, `AllRoots`, recovery,
+  runtime/memory/total-cost, scalar-recovery, or ECDLP consequence.
   `CELL-M-PKC-SMOOTH-M16` remains `open_non_executable`,
   `CQ-SEMAEV-S17-SYSTEM-COST` remains `partial`, and
   `B-PKC-M16-COMPLETE-COST-BRIDGE` remains open on establishing a nonempty

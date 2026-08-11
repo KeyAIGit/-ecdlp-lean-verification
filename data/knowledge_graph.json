@@ -4,8 +4,8 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 324,
-    "ledger_rows": 324,
+    "theorems": 325,
+    "ledger_rows": 325,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
@@ -37,10 +37,10 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1267,
+    "edges": 1271,
     "by_edge_type": {
-      "imports": 588,
-      "member_of": 324,
+      "imports": 591,
+      "member_of": 325,
       "grounded_in_source_claim": 62,
       "requires_foundation": 41,
       "supports": 27,
@@ -220,11 +220,12 @@
       "noncomputable lower-residue reference/sign classification + repeated-coordinate `Finsupp.linearCombination` evaluation + exact target-sign normalization + finite image/fiber cardinal partition; zero new native owners, inherited discriminant/rhs-support/primality trust disclosed": 1,
       "noncomputable anchor/reference selection + explicit labelled cancellation recovery/root injection + exact repeated-coordinate `Finsupp` cancellation + constant-row subtype cardinality; zero new native owners, inherited curve/primality/no-two-torsion/factor-base census trust and existing budget owner disclosed": 1,
       "exact census phase equivalence + noncomputable lower-residue GLV covariance + integral and mod-`n` linear-map identities + finite-dimensional rank-nullity; zero new native owners, inherited trust disclosed": 1,
-      "concrete subgroup-valued row evaluation + labelled `Finsupp` synthesis/span + finite-dimensional rank-nullity + matrix submatrix and one-column finrank bounds; zero new native owners, inherited trust disclosed": 1
+      "concrete subgroup-valued row evaluation + labelled `Finsupp` synthesis/span + finite-dimensional rank-nullity + matrix submatrix and one-column finrank bounds; zero new native owners, inherited trust disclosed": 1,
+      "noncomputable explicit cancellation sample + exact constant-row span/rank-nullity + finite-cardinality arithmetic; zero new native owners, inherited trust disclosed": 1
     },
     "by_area": {
       "curve-torsion": 154,
-      "primality": 69,
+      "primality": 70,
       "other": 35,
       "generic-hardness": 30,
       "protocol-soundness": 23,
@@ -6747,6 +6748,26 @@
       "family_id": "family-primality",
       "dependency_depth": 16,
       "gated": true
+    },
+    {
+      "id": "thm-324",
+      "name": "Ecdlp.M16CancellationRelationRank.cancellationRankSample_injective`, `certifiedRowModN_cancellationRankSample`, `cancellationRowModN_ne_zero`, `coefficientRank_cancellationRankSample`, `augmentedRank_cancellationRankSample`, `coefficientMatrix_rank_cancellationRankSample`, `augmentedMatrix_rank_cancellationRankSample`, `card_cancellationLabel`, `finrank_ker_coefficientSynthesis_cancellationRankSample`, `finrank_ker_augmentedSynthesis_cancellationRankSample",
+      "short_name": "cancellationRankSample_injective`,",
+      "module": "Ecdlp.Proved.M16CancellationRelationRank",
+      "modules": [
+        "Ecdlp.Proved.M16CancellationRelationRank"
+      ],
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "files": [
+        "Ecdlp/Proved/M16CancellationRelationRank.lean"
+      ],
+      "claim": "Exact rank one and `283527^7 - 1` labelled dependency dimension for the explicit M16 cancellation family (fix a liftable anchor `a` and the nonidentity target `R = -(A+A)` from its noncomputable lower-residue reference point. The seven freely selected liftable factor-base coordinates form `283527^7` labels, and the label-to-certified-recovery map is injective. Nevertheless every mod-`n` GLV coefficient row is the same nonzero compression of `Finsupp.single a (-2)`, and every augmented row is the same nonzero homogeneous relation with target coefficient `-1`. Thus both coefficient and augmented span ranks, and both corresponding `Matrix.rank` values, are exactly `1`; both labelled synthesis kernels have dimension exactly `283527^7 - 1`. Honest scope: this computes maximal redundancy for one deliberately degenerate, noncomputably constructed constant-row family. Distinct certified recoveries need not give distinct rows, and the large kernel is not useful relation yield, row independence, rank growth, a relation distribution, or evidence about the rank of other collected recoveries. Nothing is enumerated or filtered, and no `Recover`, PFPO, `AllRoots`, sparse-linear-algebra outcome, runtime/memory/solver-node/total-cost result, scalar recovery, minimum-encoding comparison, or ECDLP shortcut follows. The module adds zero new `native_decide` owners and inherits only pre-existing secp256k1 parameter/primality, concrete-subgroup/full-group/GLV, `rhs`-support, base-field no-two-torsion, and factor-base/liftable-census certificate families reached through its dependencies)",
+      "method": "noncomputable explicit cancellation sample + exact constant-row span/rank-nullity + finite-cardinality arithmetic; zero new native owners, inherited trust disclosed",
+      "status": "proved",
+      "area": "primality",
+      "family_id": "family-primality",
+      "dependency_depth": 17,
+      "gated": true
     }
   ],
   "barriers": [
@@ -12904,6 +12925,16 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.M16CancellationRelationRank",
+      "to": "Ecdlp.Proved.M16CancellationBackpointerCollapse",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16CancellationRelationRank",
+      "to": "Ecdlp.Proved.M16FiniteGLVRelationRank",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.M16CancellationRootLowerBound",
       "to": "Ecdlp.Proved.M16DirectPointSemantics",
       "type": "imports"
@@ -14780,6 +14811,11 @@
     },
     {
       "from": "Ecdlp",
+      "to": "Ecdlp.Proved.M16CancellationRelationRank",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
       "to": "Ecdlp.Proved.M16SixWidthNoGo",
       "type": "imports"
     },
@@ -16470,6 +16506,11 @@
     },
     {
       "from": "thm-323",
+      "to": "family-primality",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-324",
       "to": "family-primality",
       "type": "member_of"
     },

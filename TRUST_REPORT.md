@@ -2,7 +2,7 @@
 
 > Counts here are a snapshot; the single canonical figure is **`STATUS.md`** (generated from `data/stats.json`). If they differ, STATUS.md wins.
 
-**Scope of the verified body.** `324 ledger rows / ~285 distinct kernel-verified
+**Scope of the verified body.** `325 ledger rows / ~286 distinct kernel-verified
 results`. A row may group several supporting declarations; the exact expansion is
 generated in `data/result_registry.json`. The built surface has **0 `sorry`, 0
 `admit`, and 0 custom axioms**. Open target stems are explicitly outside the built
@@ -378,6 +378,22 @@ does not count recoveries of one fixed root, classify every recovery, make row
 evaluation injective, or supply a PFPO, enumeration, rank, recovery, cost, or
 ECDLP result.
 
+`M16CancellationRelationRank.lean` adds **zero** `native_decide` owners. It
+noncomputably packages the explicit seven-choice cancellation family as an
+injective labelled sample, proves that all coefficient and augmented rows are
+constant and nonzero, and uses ordinary Lean/Mathlib span and rank-nullity
+arguments to obtain both matrix ranks `1` and both exact kernel dimensions
+`283527^7 - 1`. The audited declarations inherit the three standard axioms and
+only already catalogued native-owner families reached through the two imported
+layers: secp256k1 parameter/primality and concrete-subgroup/full-group/GLV
+structure, the `rhs ≠ 0` support and base-field no-two-torsion chains, and the
+factor-base/liftable-census owners. No solver-budget owner is reached because no
+budget comparison is used, and no new closed computation is introduced. The
+large synthesis kernels certify duplicate-row dependencies in this one
+deliberately constant-row family; they do not supply useful relation yield,
+independence, rank growth, enumeration, sparse linear algebra, recovery, cost,
+scalar recovery, or an ECDLP shortcut.
+
 ### (c) Mathlib + `native_decide` MIX — kernel proof skeleton, compiler-checked leaves
 
 Here the *argument* is a kernel-checked Mathlib proof, but one or more small numeric
@@ -521,6 +537,20 @@ depends on `Lean.ofReduceBool`). These are the rows tagged "Mathlib + native_dec
   parameter/primality, `rhs ≠ 0`, base-field no-two-torsion, and
   factor-base/liftable-census certificate families; only the final numeric
   comparison also inherits the existing solver-budget arithmetic owner.
+- `Ecdlp/Proved/M16CancellationRelationRank.lean` →
+  `cancellationRankSample_injective`,
+  `certifiedRowModN_cancellationRankSample`, `cancellationRowModN_ne_zero`,
+  `coefficientRank_cancellationRankSample`,
+  `augmentedRank_cancellationRankSample`,
+  `coefficientMatrix_rank_cancellationRankSample`,
+  `augmentedMatrix_rank_cancellationRankSample`, `card_cancellationLabel`,
+  `finrank_ker_coefficientSynthesis_cancellationRankSample`, and
+  `finrank_ker_augmentedSynthesis_cancellationRankSample`. Their proof bodies
+  add no `native_decide` owner. They inherit only already catalogued secp256k1
+  parameter/primality, concrete-subgroup/full-group/GLV, `rhs`-support,
+  base-field no-two-torsion, and factor-base/liftable-census families reached
+  through their dependencies; no solver-budget owner or useful-rank/solver/cost
+  conclusion is audited.
 - `Ecdlp/Proved/M16FactorBaseLiftable.lean` → the public generator/orbit,
   liftable/nonliftable, character-sum, fiber, and signed-point counts, plus
   `rhs_beta_mul`, `liftableOrbitEquiv`, and
@@ -573,7 +603,7 @@ Distinguishing *machine-enforced* (a red build blocks merge) from *documentation
 | `Ensure no incomplete proofs remain` | `grep -rniI --include='*.lean' --exclude-dir=Targets 'sorry' Ecdlp/` — fails if `sorry`/`admit` text appears in any **built** `.lean` file. `Ecdlp/Targets/` (open stems) is excluded by design. | **MACHINE-ENFORCED**, with the documented scope limit that it is a *text* grep over built files and deliberately skips `Targets/`. |
 | `Ensure no built file imports an open target stem` | `grep` for `import Ecdlp.Targets` outside `Targets/`. Closes the hole where a built file could pull a `sorry`-bearing stem into the build graph (since `sorry` is only a warning). | **MACHINE-ENFORCED.** This is the guard that makes the previous grep sound. |
 | `Fetch prebuilt Mathlib cache` + `Build and verify ALL proofs` — `lake build` | The **kernel** re-checks every built proof term. A `sorry` that reached the build graph, or any type error, fails here. | **MACHINE-ENFORCED.** This is the core verification: a green `lake build` means the kernel accepted every built theorem. |
-| `Axiom audit (no sorryAx, no custom axioms)` — `lake env lean Ecdlp/LedgerAxiomAudit.lean` → `scripts/check_axioms.py` | Generates `#print axioms` for every named declaration resolved from all 324 ledger rows. It fails on `sorryAx`, guard/custom axioms, unknown names, or any mismatch between Lean output and `data/result_registry.json`; compiler-trust markers from `native_decide` are disclosed. | **MACHINE-ENFORCED and exhaustive over the named ledger declaration set.** Seven anonymous instance targets are source-resolved exemptions because they have no source-level declaration name; their defining files are still built and their named load-bearing theorems are audited. |
+| `Axiom audit (no sorryAx, no custom axioms)` — `lake env lean Ecdlp/LedgerAxiomAudit.lean` → `scripts/check_axioms.py` | Generates `#print axioms` for every named declaration resolved from all 325 ledger rows. It fails on `sorryAx`, guard/custom axioms, unknown names, or any mismatch between Lean output and `data/result_registry.json`; compiler-trust markers from `native_decide` are disclosed. | **MACHINE-ENFORCED and exhaustive over the named ledger declaration set.** Seven anonymous instance targets are source-resolved exemptions because they have no source-level declaration name; their defining files are still built and their named load-bearing theorems are audited. |
 | `Typecheck open target stems (non-blocking)` | `lake env lean` over `Ecdlp/Targets/*.lean`; `continue-on-error: true`. | **DOCUMENTATION/INFO ONLY.** A stem failing to typecheck emits a warning, never blocks. |
 | `Featherless API smoke test`, `Prover target attempt`, report upload | All `continue-on-error: true` and skipped on PRs. | **DOCUMENTATION/INFO ONLY.** Prover orchestration; cannot affect the verification verdict. |
 

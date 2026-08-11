@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 324,
-  "ledger_reference_count": 894,
-  "ledger_named_declarations": 869,
+  "ledger_rows": 325,
+  "ledger_reference_count": 904,
+  "ledger_named_declarations": 879,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1616,
-  "distinct_qualified_names": 1616,
-  "verified_md_citations": 869,
+  "declaration_count": 1639,
+  "distinct_qualified_names": 1639,
+  "verified_md_citations": 879,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -616,6 +616,16 @@
     "Ecdlp.M16CancellationBackpointerCollapse.card_constantRowPreimage_lower_bound",
     "Ecdlp.M16CancellationBackpointerCollapse.coefficientVector_cancellationLiftTuple",
     "Ecdlp.M16CancellationBackpointerCollapse.maxRelationTermBudget_lt_constantRowPreimage_card",
+    "Ecdlp.M16CancellationRelationRank.augmentedMatrix_rank_cancellationRankSample",
+    "Ecdlp.M16CancellationRelationRank.augmentedRank_cancellationRankSample",
+    "Ecdlp.M16CancellationRelationRank.cancellationRankSample_injective",
+    "Ecdlp.M16CancellationRelationRank.cancellationRowModN_ne_zero",
+    "Ecdlp.M16CancellationRelationRank.card_cancellationLabel",
+    "Ecdlp.M16CancellationRelationRank.certifiedRowModN_cancellationRankSample",
+    "Ecdlp.M16CancellationRelationRank.coefficientMatrix_rank_cancellationRankSample",
+    "Ecdlp.M16CancellationRelationRank.coefficientRank_cancellationRankSample",
+    "Ecdlp.M16CancellationRelationRank.finrank_ker_augmentedSynthesis_cancellationRankSample",
+    "Ecdlp.M16CancellationRelationRank.finrank_ker_coefficientSynthesis_cancellationRankSample",
     "Ecdlp.M16CancellationRootLowerBound.DirectRoot",
     "Ecdlp.M16CancellationRootLowerBound.LiftableReducedRoot",
     "Ecdlp.M16CancellationRootLowerBound.ReducedRoot",
@@ -12012,6 +12022,98 @@
           "line": 443
         }
       ]
+    },
+    {
+      "id": "ledger-324",
+      "claim": "Exact rank one and `283527^7 - 1` labelled dependency dimension for the explicit M16 cancellation family (fix a liftable anchor `a` and the nonidentity target `R = -(A+A)` from its noncomputable lower-residue reference point. The seven freely selected liftable factor-base coordinates form `283527^7` labels, and the label-to-certified-recovery map is injective. Nevertheless every mod-`n` GLV coefficient row is the same nonzero compression of `Finsupp.single a (-2)`, and every augmented row is the same nonzero homogeneous relation with target coefficient `-1`. Thus both coefficient and augmented span ranks, and both corresponding `Matrix.rank` values, are exactly `1`; both labelled synthesis kernels have dimension exactly `283527^7 - 1`. Honest scope: this computes maximal redundancy for one deliberately degenerate, noncomputably constructed constant-row family. Distinct certified recoveries need not give distinct rows, and the large kernel is not useful relation yield, row independence, rank growth, a relation distribution, or evidence about the rank of other collected recoveries. Nothing is enumerated or filtered, and no `Recover`, PFPO, `AllRoots`, sparse-linear-algebra outcome, runtime/memory/solver-node/total-cost result, scalar recovery, minimum-encoding comparison, or ECDLP shortcut follows. The module adds zero new `native_decide` owners and inherits only pre-existing secp256k1 parameter/primality, concrete-subgroup/full-group/GLV, `rhs`-support, base-field no-two-torsion, and factor-base/liftable-census certificate families reached through its dependencies)",
+      "theorem_cell": "`Ecdlp.M16CancellationRelationRank.cancellationRankSample_injective`, `certifiedRowModN_cancellationRankSample`, `cancellationRowModN_ne_zero`, `coefficientRank_cancellationRankSample`, `augmentedRank_cancellationRankSample`, `coefficientMatrix_rank_cancellationRankSample`, `augmentedMatrix_rank_cancellationRankSample`, `card_cancellationLabel`, `finrank_ker_coefficientSynthesis_cancellationRankSample`, `finrank_ker_augmentedSynthesis_cancellationRankSample`",
+      "declared_files": [
+        "Ecdlp/Proved/M16CancellationRelationRank.lean"
+      ],
+      "method": "noncomputable explicit cancellation sample + exact constant-row span/rank-nullity + finite-cardinality arithmetic; zero new native owners, inherited trust disclosed",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.M16CancellationRelationRank.cancellationRankSample_injective",
+          "canonical_name": "Ecdlp.M16CancellationRelationRank.cancellationRankSample_injective",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+          "line": 47
+        },
+        {
+          "cited": "Ecdlp.M16CancellationRelationRank.certifiedRowModN_cancellationRankSample",
+          "canonical_name": "Ecdlp.M16CancellationRelationRank.certifiedRowModN_cancellationRankSample",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+          "line": 71
+        },
+        {
+          "cited": "Ecdlp.M16CancellationRelationRank.cancellationRowModN_ne_zero",
+          "canonical_name": "Ecdlp.M16CancellationRelationRank.cancellationRowModN_ne_zero",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+          "line": 80
+        },
+        {
+          "cited": "Ecdlp.M16CancellationRelationRank.coefficientRank_cancellationRankSample",
+          "canonical_name": "Ecdlp.M16CancellationRelationRank.coefficientRank_cancellationRankSample",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+          "line": 168
+        },
+        {
+          "cited": "Ecdlp.M16CancellationRelationRank.augmentedRank_cancellationRankSample",
+          "canonical_name": "Ecdlp.M16CancellationRelationRank.augmentedRank_cancellationRankSample",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+          "line": 176
+        },
+        {
+          "cited": "Ecdlp.M16CancellationRelationRank.coefficientMatrix_rank_cancellationRankSample",
+          "canonical_name": "Ecdlp.M16CancellationRelationRank.coefficientMatrix_rank_cancellationRankSample",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+          "line": 183
+        },
+        {
+          "cited": "Ecdlp.M16CancellationRelationRank.augmentedMatrix_rank_cancellationRankSample",
+          "canonical_name": "Ecdlp.M16CancellationRelationRank.augmentedMatrix_rank_cancellationRankSample",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+          "line": 189
+        },
+        {
+          "cited": "Ecdlp.M16CancellationRelationRank.card_cancellationLabel",
+          "canonical_name": "Ecdlp.M16CancellationRelationRank.card_cancellationLabel",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+          "line": 197
+        },
+        {
+          "cited": "Ecdlp.M16CancellationRelationRank.finrank_ker_coefficientSynthesis_cancellationRankSample",
+          "canonical_name": "Ecdlp.M16CancellationRelationRank.finrank_ker_coefficientSynthesis_cancellationRankSample",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+          "line": 203
+        },
+        {
+          "cited": "Ecdlp.M16CancellationRelationRank.finrank_ker_augmentedSynthesis_cancellationRankSample",
+          "canonical_name": "Ecdlp.M16CancellationRelationRank.finrank_ker_augmentedSynthesis_cancellationRankSample",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+          "line": 215
+        }
+      ]
     }
   ],
   "declarations": {
@@ -17824,6 +17926,167 @@
       "kind": "instance",
       "file": "Ecdlp/Proved/M16CancellationBackpointerCollapse.lean",
       "line": 247
+    },
+    "Ecdlp.M16CancellationRelationRank.CancellationLabel": {
+      "name": "CancellationLabel",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 38
+    },
+    "Ecdlp.M16CancellationRelationRank.K": {
+      "name": "K",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 32
+    },
+    "Ecdlp.M16CancellationRelationRank.Rep": {
+      "name": "Rep",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 33
+    },
+    "Ecdlp.M16CancellationRelationRank.augmentedMatrix_rank_cancellationRankSample": {
+      "name": "augmentedMatrix_rank_cancellationRankSample",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 189
+    },
+    "Ecdlp.M16CancellationRelationRank.augmentedMatrix_row_cancellationRankSample": {
+      "name": "augmentedMatrix_row_cancellationRankSample",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 122
+    },
+    "Ecdlp.M16CancellationRelationRank.augmentedRank_cancellationRankSample": {
+      "name": "augmentedRank_cancellationRankSample",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 176
+    },
+    "Ecdlp.M16CancellationRelationRank.cancellationAugmentedRow": {
+      "name": "cancellationAugmentedRow",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 92
+    },
+    "Ecdlp.M16CancellationRelationRank.cancellationAugmentedRow_ne_zero": {
+      "name": "cancellationAugmentedRow_ne_zero",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 105
+    },
+    "Ecdlp.M16CancellationRelationRank.cancellationCoefficientRow": {
+      "name": "cancellationCoefficientRow",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 87
+    },
+    "Ecdlp.M16CancellationRelationRank.cancellationCoefficientRow_ne_zero": {
+      "name": "cancellationCoefficientRow_ne_zero",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 97
+    },
+    "Ecdlp.M16CancellationRelationRank.cancellationRankSample": {
+      "name": "cancellationRankSample",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 42
+    },
+    "Ecdlp.M16CancellationRelationRank.cancellationRankSample_injective": {
+      "name": "cancellationRankSample_injective",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 47
+    },
+    "Ecdlp.M16CancellationRelationRank.cancellationRowModN": {
+      "name": "cancellationRowModN",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 65
+    },
+    "Ecdlp.M16CancellationRelationRank.cancellationRowModN_ne_zero": {
+      "name": "cancellationRowModN_ne_zero",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 80
+    },
+    "Ecdlp.M16CancellationRelationRank.card_cancellationLabel": {
+      "name": "card_cancellationLabel",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 197
+    },
+    "Ecdlp.M16CancellationRelationRank.certifiedRowModN_cancellationRankSample": {
+      "name": "certifiedRowModN_cancellationRankSample",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 71
+    },
+    "Ecdlp.M16CancellationRelationRank.coefficientMatrix_rank_cancellationRankSample": {
+      "name": "coefficientMatrix_rank_cancellationRankSample",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 183
+    },
+    "Ecdlp.M16CancellationRelationRank.coefficientMatrix_row_cancellationRankSample": {
+      "name": "coefficientMatrix_row_cancellationRankSample",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 113
+    },
+    "Ecdlp.M16CancellationRelationRank.coefficientRank_cancellationRankSample": {
+      "name": "coefficientRank_cancellationRankSample",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 168
+    },
+    "Ecdlp.M16CancellationRelationRank.finrank_ker_augmentedSynthesis_cancellationRankSample": {
+      "name": "finrank_ker_augmentedSynthesis_cancellationRankSample",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 215
+    },
+    "Ecdlp.M16CancellationRelationRank.finrank_ker_coefficientSynthesis_cancellationRankSample": {
+      "name": "finrank_ker_coefficientSynthesis_cancellationRankSample",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 203
+    },
+    "Ecdlp.M16CancellationRelationRank.range_augmentedMatrix_row_cancellationRankSample": {
+      "name": "range_augmentedMatrix_row_cancellationRankSample",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 151
+    },
+    "Ecdlp.M16CancellationRelationRank.range_coefficientMatrix_row_cancellationRankSample": {
+      "name": "range_coefficientMatrix_row_cancellationRankSample",
+      "namespace": "Ecdlp.M16CancellationRelationRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16CancellationRelationRank.lean",
+      "line": 136
     },
     "Ecdlp.M16CancellationRootLowerBound.BarCurve": {
       "name": "BarCurve",
