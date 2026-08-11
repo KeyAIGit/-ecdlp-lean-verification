@@ -2,7 +2,7 @@
 
 > Counts here are a snapshot; the single canonical figure is **`STATUS.md`** (generated from `data/stats.json`). If they differ, STATUS.md wins.
 
-**Scope of the verified body.** `320 ledger rows / ~281 distinct kernel-verified
+**Scope of the verified body.** `321 ledger rows / ~282 distinct kernel-verified
 results`. A row may group several supporting declarations; the exact expansion is
 generated in `data/result_registry.json`. The built surface has **0 `sorry`, 0
 `admit`, and 0 custom axioms**. Open target stems are explicitly outside the built
@@ -280,6 +280,22 @@ new closed computations in this module. The finite enumeration remains a
 semantic specification, and the exact doubling counts Boolean orientation
 labels rather than necessarily distinct unlabelled recoveries.
 
+`M16CanonicalRecoveryRows.lean` adds **zero** `native_decide` owners. Its
+lower-residue reference/sign classification, repeated-coordinate `Finsupp`
+aggregation and evaluation, target-sign normalization, global-sign
+invariance, and finite image/backpointer/multiplicity partition are ordinary
+Lean/Mathlib composition. The reference is a noncomputable mathematical
+convention using `Classical.choice`, not an implemented square-root,
+point-decompression, or recovery procedure. The audited declarations inherit
+the existing secp256k1 discriminant owner, the three existing `rhs ≠ 0` support owners
+(`three_dvd_p_sub_one`, `secp256k1_seven_ne_zero`, and
+`secp256k1_neg7_pow_ne_one`), and the same **10 existing secp256k1 primality
+native-owner families**, in addition to the three standard axioms. They do not
+inherit the liftable-census owners or the base-field no-two-torsion chain.
+These are pre-existing transitive leaves, not new closed computations in this
+module; the finite `Finset` row-image specification is semantic rather than an
+enumeration or cost claim.
+
 `M16PartitionedPointSemantics.lean` likewise adds **zero** `native_decide`
 owners, but its trust inheritance is deliberately stated separately: the
 partition theorem calls the existing final Frobenius split, so its audited
@@ -379,6 +395,18 @@ depends on `Lean.ofReduceBool`). These are the rows tagged "Mathlib + native_dec
   the existing secp256k1 discriminant owner and ten primality native-owner
   families in addition to the standard axioms; they do not pull in the
   liftable-census or base-field no-two-torsion owners.
+- `Ecdlp/Proved/M16CanonicalRecoveryRows.lean` → `referenceLift`,
+  `existsUnique_lowerResidueLift`, `referenceSignEquiv`,
+  `coefficientVector_apply`, `evalRow_coefficientVector`,
+  `canonicalRow_globalNegate`, `evalRow_canonicalRow_of_compatible`,
+  `canonicalRow_recoveryGlobalNegate`,
+  `mem_canonicalRows_iff_backpointers_nonempty`,
+  `evalRow_eq_target_of_mem_canonicalRows`, and
+  `card_recoveryFiber_eq_sum_rowMultiplicity`. Their proof bodies add no
+  `native_decide` owner. The audited declarations inherit the existing
+  secp256k1 discriminant owner, three `rhs ≠ 0` support owners, and ten
+  primality native-owner families, but neither the liftable-census owners nor
+  the base-field no-two-torsion chain.
 - `Ecdlp/Proved/M16CancellationRootLowerBound.lean` →
   `cancellation_pair_root_lower_bounds`,
   `exists_nonzero_target_root_lower_bounds`,
@@ -439,7 +467,7 @@ Distinguishing *machine-enforced* (a red build blocks merge) from *documentation
 | `Ensure no incomplete proofs remain` | `grep -rniI --include='*.lean' --exclude-dir=Targets 'sorry' Ecdlp/` — fails if `sorry`/`admit` text appears in any **built** `.lean` file. `Ecdlp/Targets/` (open stems) is excluded by design. | **MACHINE-ENFORCED**, with the documented scope limit that it is a *text* grep over built files and deliberately skips `Targets/`. |
 | `Ensure no built file imports an open target stem` | `grep` for `import Ecdlp.Targets` outside `Targets/`. Closes the hole where a built file could pull a `sorry`-bearing stem into the build graph (since `sorry` is only a warning). | **MACHINE-ENFORCED.** This is the guard that makes the previous grep sound. |
 | `Fetch prebuilt Mathlib cache` + `Build and verify ALL proofs` — `lake build` | The **kernel** re-checks every built proof term. A `sorry` that reached the build graph, or any type error, fails here. | **MACHINE-ENFORCED.** This is the core verification: a green `lake build` means the kernel accepted every built theorem. |
-| `Axiom audit (no sorryAx, no custom axioms)` — `lake env lean Ecdlp/LedgerAxiomAudit.lean` → `scripts/check_axioms.py` | Generates `#print axioms` for every named declaration resolved from all 320 ledger rows. It fails on `sorryAx`, guard/custom axioms, unknown names, or any mismatch between Lean output and `data/result_registry.json`; compiler-trust markers from `native_decide` are disclosed. | **MACHINE-ENFORCED and exhaustive over the named ledger declaration set.** Seven anonymous instance targets are source-resolved exemptions because they have no source-level declaration name; their defining files are still built and their named load-bearing theorems are audited. |
+| `Axiom audit (no sorryAx, no custom axioms)` — `lake env lean Ecdlp/LedgerAxiomAudit.lean` → `scripts/check_axioms.py` | Generates `#print axioms` for every named declaration resolved from all 321 ledger rows. It fails on `sorryAx`, guard/custom axioms, unknown names, or any mismatch between Lean output and `data/result_registry.json`; compiler-trust markers from `native_decide` are disclosed. | **MACHINE-ENFORCED and exhaustive over the named ledger declaration set.** Seven anonymous instance targets are source-resolved exemptions because they have no source-level declaration name; their defining files are still built and their named load-bearing theorems are audited. |
 | `Typecheck open target stems (non-blocking)` | `lake env lean` over `Ecdlp/Targets/*.lean`; `continue-on-error: true`. | **DOCUMENTATION/INFO ONLY.** A stem failing to typecheck emits a warning, never blocks. |
 | `Featherless API smoke test`, `Prover target attempt`, report upload | All `continue-on-error: true` and skipped on PRs. | **DOCUMENTATION/INFO ONLY.** Prover orchestration; cannot affect the verification verdict. |
 
