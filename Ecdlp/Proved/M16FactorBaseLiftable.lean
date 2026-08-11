@@ -1,7 +1,8 @@
 import Mathlib
 import Mathlib.NumberTheory.LegendreSymbol.Basic
 import Ecdlp.Proved.CurveCardinalityExact
-import Ecdlp.Proved.M16FactorBaseFinite
+import Ecdlp.Proved.M16FactorBaseLiftableCountCertificate
+import Ecdlp.Proved.Secp256k1Params
 import Ecdlp.Proved.SevenNonResidue
 
 /-!
@@ -22,10 +23,10 @@ coordinate count from the curve-lift count and proves the exact census:
 The finite computation follows the checked desk artifact
 `experiments/engine/pkc_smooth_m16_regime_assurance_desk/artifact.json`.
 It uses the artifact's exact-order generator and enumerates one representative
-from each three-element GLV orbit.  To keep compiler memory bounded, the
-`188174` representatives are certified in twelve private chunks: eleven
-chunks of size `16384` and one final chunk of size `7950`.  The public counts
-are assembled from those leaves by ordinary kernel proofs.
+from each three-element GLV orbit.  A constant-stack tail-recursive accumulator
+certifies all `188174` representatives in one isolated native leaf; a second
+isolated native leaf certifies the generator.  This facade contains no native
+command and derives the public counts by ordinary kernel proofs.
 
 This is a finite-field and affine-point census only.  It proves no relation
 yield, rank, solver, recovery, cost, or ECDLP shortcut.
@@ -33,42 +34,10 @@ yield, rank, solver, recovery, cost, or ECDLP shortcut.
 
 namespace Ecdlp.M16FactorBaseLiftable
 
-open scoped Nat.Count
+open scoped Count
 open Ecdlp.M16FactorBaseFinite
 open WeierstrassCurve.Affine
-
-/-- The secp256k1 base field. -/
-abbrev Fp := ZMod Secp256k1.p
-
-/-- The right-hand side of the affine secp256k1 equation. -/
-def rhs (x : Fp) : Fp := x ^ 3 + 7
-
-/-- A coordinate lifts precisely when the curve right-hand side is a square. -/
-def IsLiftable (x : Fp) : Prop := IsSquare (rhs x)
-
-/-- Factor-base coordinates that lift to affine secp256k1 points. -/
-abbrev LiftableFactorBaseX :=
-  {x : FactorBaseX // IsLiftable x.1}
-
-/-- Factor-base coordinates that do not lift to affine secp256k1 points. -/
-abbrev NonliftableFactorBaseX :=
-  {x : FactorBaseX // ¬ IsLiftable x.1}
-
-noncomputable instance : Fintype LiftableFactorBaseX :=
-  Fintype.ofFinite LiftableFactorBaseX
-
-noncomputable instance : Fintype NonliftableFactorBaseX :=
-  Fintype.ofFinite NonliftableFactorBaseX
-
-/-- The exact-order subgroup generator used by the checked census artifact. -/
-def factorBaseGenerator : Fp :=
-  82848990384721873837542085774364474839392473759419163642662585798722904926012
-
-/-- The number of three-element GLV coordinate orbits in the factor base. -/
-def factorBaseOrbitCount : ℕ := 188174
-
-/-- Indices of the explicit GLV orbit representatives. -/
-abbrev GLVOrbitRep := Fin factorBaseOrbitCount
+open Certificates
 
 /-! ## No zero right-hand side and the Euler liftability test -/
 
@@ -78,7 +47,7 @@ theorem secp256k1_rhs_ne_zero (x : Fp) : rhs x ≠ 0 := by
   intro hzero
   have hx3 : x ^ 3 = -7 := by
     dsimp only [rhs] at hzero
-    linear_combination -hzero
+    linear_combination hzero
   have hxne : x ≠ 0 := by
     intro hx0
     rw [hx0] at hx3
@@ -99,19 +68,6 @@ theorem isLiftable_iff_eulerCriterion (x : Fp) :
   exact ZMod.euler_criterion Secp256k1.p (secp256k1_rhs_ne_zero x)
 
 /-! ## Exact-order generator and factor-base enumeration -/
-
-/-- One closed certificate leaf for the artifact generator.  Besides the
-order test at every prime divisor of `564522`, it binds the generator's
-order-three power to the published secp256k1 GLV constant `β`. -/
-private theorem factorBaseGenerator_certificate :
-    factorBaseGenerator ^ 564522 = 1 ∧
-    factorBaseGenerator ^ 282261 ≠ 1 ∧
-    factorBaseGenerator ^ 188174 ≠ 1 ∧
-    factorBaseGenerator ^ 80646 ≠ 1 ∧
-    factorBaseGenerator ^ 42 ≠ 1 ∧
-    factorBaseGenerator ^ 188174 = (Secp256k1.beta : Fp) ^ 2 ∧
-    factorBaseGenerator ^ 376348 = (Secp256k1.beta : Fp) := by
-  native_decide
 
 private theorem prime_dvd_factorBaseDegree {q : ℕ} (hq : q.Prime)
     (hqd : q ∣ 564522) : q = 2 ∨ q = 3 ∨ q = 7 ∨ q = 13441 := by
@@ -224,8 +180,10 @@ theorem glvOrbitLayer_two (i : GLVOrbitRep) :
     (glvOrbitLayer 2 i).1 =
       (Secp256k1.beta : Fp) * (orbitRepresentative i).1 := by
   rw [glvOrbitLayer_val, orbitRepresentative_val]
-  norm_num only [Fin.isValue, Fin.val_ofNat]
-  rw [pow_add, factorBaseGenerator_glv, mul_comm]
+  change factorBaseGenerator ^ ((i : ℕ) + factorBaseOrbitCount * 2) =
+    (Secp256k1.beta : Fp) * factorBaseGenerator ^ (i : ℕ)
+  rw [Nat.mul_comm factorBaseOrbitCount 2, pow_add,
+    factorBaseGenerator_glv, mul_comm]
 
 /-- The three coordinates in every enumerated GLV orbit are distinct. -/
 theorem glvOrbitLayer_injective (i : GLVOrbitRep) :
@@ -250,160 +208,28 @@ private theorem rhs_beta_mul (x : Fp) :
 
 private theorem isLiftable_beta_mul (x : Fp) :
     IsLiftable ((Secp256k1.beta : Fp) * x) ↔ IsLiftable x := by
-  rw [IsLiftable, rhs_beta_mul]
+  simp only [IsLiftable, rhs_beta_mul]
 
 private theorem glvOrbitLayer_isLiftable (j : Fin 3) (i : GLVOrbitRep) :
     IsLiftable (glvOrbitLayer j i).1 ↔
       IsLiftable (orbitRepresentative i).1 := by
-  fin_cases j
-  · rfl
-  · rw [glvOrbitLayer_one]
+  by_cases hzero : j = 0
+  · subst j
+    rfl
+  by_cases hone : j = 1
+  · subst j
+    rw [glvOrbitLayer_one]
     simpa only [pow_two, mul_assoc] using
       (isLiftable_beta_mul ((Secp256k1.beta : Fp) * (orbitRepresentative i).1)).trans
         (isLiftable_beta_mul (orbitRepresentative i).1)
-  · rw [glvOrbitLayer_two]
-    exact isLiftable_beta_mul (orbitRepresentative i).1
+  have htwo : j = 2 := by
+    apply Fin.ext
+    omega
+  subst j
+  rw [glvOrbitLayer_two]
+  exact isLiftable_beta_mul (orbitRepresentative i).1
 
 /-! ## Resource-bounded orbit-representative census -/
-
-/-- The computable Euler predicate used only by the finite certificate leaves. -/
-private def representativeEulerPositive (k : ℕ) : Prop :=
-  rhs (factorBaseGenerator ^ k) ^ (Secp256k1.p / 2) = 1
-
-/-- Count a consecutive chunk of explicit orbit representatives. -/
-private def representativeChunk (start width : ℕ) : ℕ :=
-  Nat.count (fun k ↦ representativeEulerPositive (start + k)) width
-
-private theorem representativeChunk_add (start a b : ℕ) :
-    representativeChunk start (a + b) =
-      representativeChunk start a + representativeChunk (start + a) b := by
-  rw [representativeChunk, Nat.count_add]
-  simp only [representativeChunk, Nat.add_assoc]
-
-private theorem representative_chunk_00 : representativeChunk 0 16384 = 8198 := by
-  native_decide
-
-private theorem representative_chunk_01 : representativeChunk 16384 16384 = 8180 := by
-  native_decide
-
-private theorem representative_chunk_02 : representativeChunk 32768 16384 = 8382 := by
-  native_decide
-
-private theorem representative_chunk_03 : representativeChunk 49152 16384 = 8194 := by
-  native_decide
-
-private theorem representative_chunk_04 : representativeChunk 65536 16384 = 8246 := by
-  native_decide
-
-private theorem representative_chunk_05 : representativeChunk 81920 16384 = 8354 := by
-  native_decide
-
-private theorem representative_chunk_06 : representativeChunk 98304 16384 = 8190 := by
-  native_decide
-
-private theorem representative_chunk_07 : representativeChunk 114688 16384 = 8118 := by
-  native_decide
-
-private theorem representative_chunk_08 : representativeChunk 131072 16384 = 8251 := by
-  native_decide
-
-private theorem representative_chunk_09 : representativeChunk 147456 16384 = 8232 := by
-  native_decide
-
-private theorem representative_chunk_10 : representativeChunk 163840 16384 = 8174 := by
-  native_decide
-
-private theorem representative_chunk_11 : representativeChunk 180224 7950 = 3990 := by
-  native_decide
-
-private theorem representativeEulerPositive_count :
-    Nat.count representativeEulerPositive factorBaseOrbitCount = 94509 := by
-  calc
-    Nat.count representativeEulerPositive factorBaseOrbitCount
-        = representativeChunk 0 factorBaseOrbitCount := by
-            simp [representativeChunk]
-    _ = representativeChunk 0 16384 + representativeChunk 16384 171790 := by
-          rw [show factorBaseOrbitCount = 16384 + 171790 by
-            norm_num [factorBaseOrbitCount], representativeChunk_add]
-          norm_num
-    _ = representativeChunk 0 16384 +
-          (representativeChunk 16384 16384 + representativeChunk 32768 155406) := by
-          rw [show 171790 = 16384 + 155406 by norm_num,
-            representativeChunk_add]
-          norm_num
-    _ = representativeChunk 0 16384 + representativeChunk 16384 16384 +
-          (representativeChunk 32768 16384 + representativeChunk 49152 139022) := by
-          rw [show 155406 = 16384 + 139022 by norm_num,
-            representativeChunk_add]
-          omega
-    _ = representativeChunk 0 16384 + representativeChunk 16384 16384 +
-          representativeChunk 32768 16384 +
-          (representativeChunk 49152 16384 + representativeChunk 65536 122638) := by
-          rw [show 139022 = 16384 + 122638 by norm_num,
-            representativeChunk_add]
-          omega
-    _ = representativeChunk 0 16384 + representativeChunk 16384 16384 +
-          representativeChunk 32768 16384 + representativeChunk 49152 16384 +
-          (representativeChunk 65536 16384 + representativeChunk 81920 106254) := by
-          rw [show 122638 = 16384 + 106254 by norm_num,
-            representativeChunk_add]
-          omega
-    _ = representativeChunk 0 16384 + representativeChunk 16384 16384 +
-          representativeChunk 32768 16384 + representativeChunk 49152 16384 +
-          representativeChunk 65536 16384 +
-          (representativeChunk 81920 16384 + representativeChunk 98304 89870) := by
-          rw [show 106254 = 16384 + 89870 by norm_num,
-            representativeChunk_add]
-          omega
-    _ = representativeChunk 0 16384 + representativeChunk 16384 16384 +
-          representativeChunk 32768 16384 + representativeChunk 49152 16384 +
-          representativeChunk 65536 16384 + representativeChunk 81920 16384 +
-          (representativeChunk 98304 16384 + representativeChunk 114688 73486) := by
-          rw [show 89870 = 16384 + 73486 by norm_num,
-            representativeChunk_add]
-          omega
-    _ = representativeChunk 0 16384 + representativeChunk 16384 16384 +
-          representativeChunk 32768 16384 + representativeChunk 49152 16384 +
-          representativeChunk 65536 16384 + representativeChunk 81920 16384 +
-          representativeChunk 98304 16384 +
-          (representativeChunk 114688 16384 + representativeChunk 131072 57102) := by
-          rw [show 73486 = 16384 + 57102 by norm_num,
-            representativeChunk_add]
-          omega
-    _ = representativeChunk 0 16384 + representativeChunk 16384 16384 +
-          representativeChunk 32768 16384 + representativeChunk 49152 16384 +
-          representativeChunk 65536 16384 + representativeChunk 81920 16384 +
-          representativeChunk 98304 16384 + representativeChunk 114688 16384 +
-          (representativeChunk 131072 16384 + representativeChunk 147456 40718) := by
-          rw [show 57102 = 16384 + 40718 by norm_num,
-            representativeChunk_add]
-          omega
-    _ = representativeChunk 0 16384 + representativeChunk 16384 16384 +
-          representativeChunk 32768 16384 + representativeChunk 49152 16384 +
-          representativeChunk 65536 16384 + representativeChunk 81920 16384 +
-          representativeChunk 98304 16384 + representativeChunk 114688 16384 +
-          representativeChunk 131072 16384 +
-          (representativeChunk 147456 16384 + representativeChunk 163840 24334) := by
-          rw [show 40718 = 16384 + 24334 by norm_num,
-            representativeChunk_add]
-          omega
-    _ = representativeChunk 0 16384 + representativeChunk 16384 16384 +
-          representativeChunk 32768 16384 + representativeChunk 49152 16384 +
-          representativeChunk 65536 16384 + representativeChunk 81920 16384 +
-          representativeChunk 98304 16384 + representativeChunk 114688 16384 +
-          representativeChunk 131072 16384 + representativeChunk 147456 16384 +
-          (representativeChunk 163840 16384 + representativeChunk 180224 7950) := by
-          rw [show 24334 = 16384 + 7950 by norm_num,
-            representativeChunk_add]
-          omega
-    _ = 94509 := by
-          rw [representative_chunk_00, representative_chunk_01,
-            representative_chunk_02, representative_chunk_03,
-            representative_chunk_04, representative_chunk_05,
-            representative_chunk_06, representative_chunk_07,
-            representative_chunk_08, representative_chunk_09,
-            representative_chunk_10, representative_chunk_11]
-          norm_num
 
 /-- Liftable representatives for the explicit free GLV coordinate orbits. -/
 abbrev LiftableGLVOrbitRep :=
@@ -421,15 +247,18 @@ noncomputable instance : Fintype NonliftableGLVOrbitRep :=
 
 private noncomputable def liftableRepEquivCountSet :
     LiftableGLVOrbitRep ≃
-      {k : ℕ // k < factorBaseOrbitCount ∧ representativeEulerPositive k} where
+      {k : ℕ // k < factorBaseOrbitCount ∧
+        representativeEulerPositive k = true} where
   toFun i :=
     ⟨i.1.1, i.1.isLt, by
-      rw [← orbitRepresentative_val]
-      exact (isLiftable_iff_eulerCriterion _).mp i.2⟩
+      simpa only [representativeEulerPositive, decide_eq_true_eq,
+        orbitRepresentative_val] using
+        (isLiftable_iff_eulerCriterion _).mp i.2⟩
   invFun k :=
     ⟨⟨k.1, k.2.1⟩, by
-      rw [orbitRepresentative_val]
-      exact (isLiftable_iff_eulerCriterion _).mpr k.2.2⟩
+      apply (isLiftable_iff_eulerCriterion _).mpr
+      simpa only [representativeEulerPositive, decide_eq_true_eq,
+        orbitRepresentative_val] using k.2.2⟩
   left_inv i := by
     apply Subtype.ext
     rfl
@@ -439,6 +268,8 @@ private noncomputable def liftableRepEquivCountSet :
 
 /-- There are exactly `188174` three-element coordinate GLV orbits. -/
 theorem card_glvOrbitRep : Fintype.card GLVOrbitRep = 188174 := by
+  change Fintype.card (Fin factorBaseOrbitCount) = 188174
+  rw [Fintype.card_fin]
   rfl
 
 /-- Exactly `94509` GLV coordinate orbits lift to affine points. -/
@@ -447,10 +278,14 @@ theorem card_liftableGLVOrbitRep :
   calc
     Fintype.card LiftableGLVOrbitRep =
         Fintype.card
-          {k : ℕ // k < factorBaseOrbitCount ∧ representativeEulerPositive k} :=
+          {k : ℕ // k < factorBaseOrbitCount ∧
+            representativeEulerPositive k = true} :=
       Fintype.card_congr liftableRepEquivCountSet
-    _ = Nat.count representativeEulerPositive factorBaseOrbitCount :=
-      (Nat.count_eq_card_fintype representativeEulerPositive factorBaseOrbitCount).symm
+    _ = Nat.count (fun k ↦ representativeEulerPositive k = true)
+        factorBaseOrbitCount :=
+      (Nat.count_eq_card_fintype
+        (fun k ↦ representativeEulerPositive k = true)
+        factorBaseOrbitCount).symm
     _ = 94509 := representativeEulerPositive_count
 
 /-- Exactly `93665` GLV coordinate orbits do not lift. -/
@@ -458,7 +293,6 @@ theorem card_nonliftableGLVOrbitRep :
     Fintype.card NonliftableGLVOrbitRep = 93665 := by
   rw [Fintype.card_subtype_compl, card_glvOrbitRep,
     card_liftableGLVOrbitRep]
-  norm_num
 
 private noncomputable def layerLiftableEquiv :
     Fin 3 × LiftableGLVOrbitRep ≃
@@ -491,14 +325,12 @@ theorem card_liftableFactorBaseX :
       (Fintype.card_congr liftableOrbitEquiv).symm
     _ = 283527 := by
       rw [Fintype.card_prod, Fintype.card_fin, card_liftableGLVOrbitRep]
-      norm_num
 
 /-- Exactly `280995` factor-base coordinates do not lift. -/
 theorem card_nonliftableFactorBaseX :
     Fintype.card NonliftableFactorBaseX = 280995 := by
   rw [Fintype.card_subtype_compl, card_factorBaseX,
     card_liftableFactorBaseX]
-  norm_num
 
 /-! ## Character sum and signed affine points -/
 
@@ -506,16 +338,54 @@ theorem card_nonliftableFactorBaseX :
 absent by `secp256k1_rhs_ne_zero`, so this is `+1` on liftable coordinates and
 `-1` on nonliftable coordinates. -/
 noncomputable def factorBaseCharacterSum : ℤ :=
-  ∑ x : FactorBaseX, if IsLiftable x.1 then (1 : ℤ) else -1
+  by
+    classical
+    exact ∑ x : FactorBaseX, if IsLiftable x.1 then (1 : ℤ) else -1
 
 /-- The exact quadratic-character sum over the coordinate factor base is
 `2532`. -/
 theorem factorBaseCharacterSum_eq : factorBaseCharacterSum = 2532 := by
   classical
+  let liftGlobal : Fintype LiftableFactorBaseX := inferInstance
+  let nonliftGlobal : Fintype NonliftableFactorBaseX := inferInstance
+  letI : Fintype LiftableFactorBaseX :=
+    Subtype.fintype (fun x : FactorBaseX ↦ IsLiftable x.1)
+  letI : Fintype NonliftableFactorBaseX :=
+    Subtype.fintype (fun x : FactorBaseX ↦ ¬IsLiftable x.1)
+  have hcardLift :
+      Fintype.card LiftableFactorBaseX =
+        @Fintype.card LiftableFactorBaseX liftGlobal :=
+    @Fintype.card_congr LiftableFactorBaseX LiftableFactorBaseX
+      inferInstance liftGlobal (Equiv.refl _)
+  have hcardNonlift :
+      Fintype.card NonliftableFactorBaseX =
+        @Fintype.card NonliftableFactorBaseX nonliftGlobal :=
+    @Fintype.card_congr NonliftableFactorBaseX NonliftableFactorBaseX
+      inferInstance nonliftGlobal (Equiv.refl _)
+  have hlift :
+      (∑ x : LiftableFactorBaseX,
+        if IsLiftable x.1.1 then (1 : ℤ) else -1) =
+        (Fintype.card LiftableFactorBaseX : ℤ) := by
+    calc
+      _ = ∑ _x : LiftableFactorBaseX, (1 : ℤ) := by
+        apply Finset.sum_congr rfl
+        intro x _
+        rw [if_pos x.2]
+      _ = (Fintype.card LiftableFactorBaseX : ℤ) := by simp
+  have hnonlift :
+      (∑ x : NonliftableFactorBaseX,
+        if IsLiftable x.1.1 then (1 : ℤ) else -1) =
+        -(Fintype.card NonliftableFactorBaseX : ℤ) := by
+    calc
+      _ = ∑ _x : NonliftableFactorBaseX, (-1 : ℤ) := by
+        apply Finset.sum_congr rfl
+        intro x _
+        rw [if_neg x.2]
+      _ = -(Fintype.card NonliftableFactorBaseX : ℤ) := by simp
   rw [factorBaseCharacterSum,
-    ← Fintype.sum_subtype_add_sum_subtype (p := fun x : FactorBaseX ↦ IsLiftable x.1)]
-  simp only [Subtype.forall, if_pos, if_neg, Finset.sum_const,
-    Finset.card_univ, nsmul_eq_mul]
+    ← Fintype.sum_subtype_add_sum_subtype
+      (p := fun x : FactorBaseX ↦ IsLiftable x.1)]
+  rw [hlift, hnonlift, hcardLift, hcardNonlift]
   rw [card_liftableFactorBaseX, card_nonliftableFactorBaseX]
   norm_num
 
@@ -532,7 +402,7 @@ noncomputable def liftY (x : LiftableFactorBaseX) : Fp :=
 
 private theorem liftY_mul_self (x : LiftableFactorBaseX) :
     liftY x * liftY x = rhs x.1.1 :=
-  Classical.choose_spec x.2.exists_mul_self
+  (Classical.choose_spec x.2.exists_mul_self).symm
 
 private theorem liftY_sq (x : LiftableFactorBaseX) :
     liftY x ^ 2 = rhs x.1.1 := by
@@ -545,6 +415,7 @@ private theorem liftY_ne_zero (x : LiftableFactorBaseX) : liftY x ≠ 0 := by
   exact secp256k1_rhs_ne_zero x.1.1 hsquare.symm
 
 private theorem two_ne_zero_fp : (2 : Fp) ≠ 0 := by
+  change ((2 : ℕ) : ZMod Secp256k1.p) ≠ 0
   rw [Ne, ZMod.natCast_eq_zero_iff]
   exact Nat.not_dvd_of_pos_of_lt (by norm_num)
     (by norm_num [Secp256k1.p])
@@ -592,13 +463,12 @@ theorem card_signedAffineFactorBasePoint :
   rw [Fintype.card_sigma]
   simp_rw [card_liftFiber]
   rw [Finset.sum_const, Finset.card_univ, card_liftableFactorBaseX]
-  norm_num
+  norm_num [nsmul_eq_mul]
 
 private theorem liftFiber_equation (x : LiftableFactorBaseX) (y : LiftFiber x) :
     Ecdlp.Curve.secp256k1.toAffine.Equation x.1.1 y.1 := by
   rw [WeierstrassCurve.Affine.equation_iff]
-  simp only [Ecdlp.Curve.secp256k1, zero_mul, mul_zero, add_zero, zero_add]
-  linear_combination y.2
+  simpa only [Ecdlp.Curve.secp256k1, rhs, zero_mul, add_zero] using y.2
 
 private theorem liftFiber_nonsingular (x : LiftableFactorBaseX) (y : LiftFiber x) :
     Ecdlp.Curve.secp256k1.toAffine.Nonsingular x.1.1 y.1 :=
