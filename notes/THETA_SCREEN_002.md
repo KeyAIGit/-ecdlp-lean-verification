@@ -102,28 +102,87 @@ Groebner degree.
 
 **Status:** negative at the current toy scale, but not an asymptotic closure.
 
-## 3. Factor-base degree compression
+## 3. Jacobi factor-base compression is a composed map
 
-A Jacobi-native factor base formed from `h` allowed values of `s^2` represents
-`4h` Weierstrass x-values. Its factor polynomial has degree `2h`, whereas the
-direct x-factor polynomial has degree `4h`.
+A Jacobi-native factor base formed from `h` allowed values of `r=s^2` represents
+`4h` Weierstrass x-values. In Jacobi variables its factor polynomial has degree
+`2h` in `s`, whereas the fully eliminated x-polynomial has degree `4h`.
 
-This is the strongest surviving algebraic mechanism.
+The apparent compression is not theta-specific. Eliminating `c` and `d` from
 
-SymPy results over `F_43`:
+```text
+s^2 + c^2 = 1,
+a*s^2 + d^2 = 1,
+x = (d-1)(1-a)/(a*c-d+1-a)
+```
+
+gives the exact rational map
+
+```text
+r = s^2 = 4*x*(x+1)*(x+1-a) / (((x+1)^2-a)^2).
+```
+
+Equivalently, away from the explicitly visible denominator locus,
+
+```text
+r*((x+1)^2-a)^2 - 4*x*(x+1)*(x+1-a) = 0.
+```
+
+Thus the factor base `r in {r_1,...,r_h}` pulls back to
+
+```text
+product_j(
+  4*x*(x+1)*(x+1-a) - r_j*((x+1)^2-a)^2
+) = 0,
+```
+
+which has degree `4h` in x. The degree-`2h` Jacobi condition is an extended
+formulation of a degree-four rational composed map, not a reduction in the
+eliminated relation degree.
+
+This observation permits a smaller comparison than the 13-variable full
+Jacobi system. Introduce only one auxiliary `r_i` for each factor variable and
+use
+
+```text
+r_i*((x_i+1)^2-a)^2 = 4*x_i*(x_i+1)*(x_i+1-a),
+product_j(r_i-r_j) = 0.
+```
+
+For the three-input `S4` fixture this gives six variables and seven equations.
+The exact pullback identity was checked symbolically and exhaustively on every
+mapped Jacobi point in the frozen `F_43`, `a=2` fixture.
+
+SymPy lex results over `F_43`:
+
+| h | x-base size | direct Semaev | composed map | outcome |
+|---:|---:|---:|---:|---|
+| 1 | 4 | 0.042 s | not needed | direct already dominates full Jacobi |
+| 2 | 8 | 1.90 s | 13.74 s | composed approximately 7.2 times slower |
+| 3 | 12 | 14.64 s | over 20 s | no crossover observed |
+
+At `h=2`, the composed system lowered the maximum degree of the final basis
+from 14 to 8, but increased solving time from approximately 1.90 seconds to
+13.74 seconds. This is another direct example of lower final degree failing to
+predict lower total cost.
+
+The full Jacobi timings previously obtained were:
 
 | h | x-base size | direct lex | direct grlex | projective grlex |
 |---:|---:|---:|---:|---:|
 | 1 | 4 | 0.042 s | 0.205 s | 1.74 s |
-| 2 | 8 | 1.58 s | over 20 s | over 20 s |
-| 3 | 12 | 14.63 s | not continued | over 20 s |
+| 2 | 8 | 1.58 to 1.90 s | over 20 s | over 20 s |
+| 3 | 12 | 14.63 to 14.64 s | not continued | over 20 s |
 
-These timings are implementation-specific. At `h >= 2`, SymPy no longer
-distinguishes whether the degree compression is useful because both grlex
-computations exceed the bounded screen. SageMath/Singular is therefore the
-proper independent next test.
+The timing differences between repeated direct runs are normal runtime noise;
+the frozen systems and qualitative ordering are unchanged.
 
-**Status:** open only as a solver-specific scaling question.
+**Status:** closed as a theta-specific compression mechanism. The remaining
+question is only whether a general-purpose solver can exploit this particular
+degree-four composed-map extended formulation. That belongs to the existing
+composed-map route family, not to a distinct theta route. A bounded
+SageMath/Singular replay remains useful as independent validation, not as route
+promotion.
 
 ## 4. p-adic canonical-theta boundary
 
@@ -164,14 +223,16 @@ mechanism remains unformulated.
 | x-only theta/Kummer coordinate change | closed: Mobius reparameterization |
 | theta/Kummer plus GLV or Frobenius | closed: exactly the existing x-cubing mechanism |
 | full-point Jacobi low-degree chain | toy negative |
-| Jacobi-native factor-base compression | bounded open question for Singular |
+| Jacobi-native factor-base compression | closed as theta-specific: exact degree-four composed map |
+| six-variable composed-map formulation | toy negative; independent Singular replay pending |
 | canonical-lift formal logarithm | closed on prime-to-p torsion |
 | other p-adic theta observable | not testable until an explicit map and precision model are supplied |
 
-The only scientific next step proposed by this note is a bounded, synthetic,
-independently reproducible Singular screen of factor-base scaling. It must not
-target secp256k1 and must not be interpreted as route promotion or as execution
-authorization under the repository decision substrate.
+The only next computation proposed by this note is a bounded, synthetic,
+independently reproducible Singular replay of the frozen direct, composed, and
+projective systems. It must not target secp256k1 and must not be interpreted as
+route promotion or as execution authorization under the repository decision
+substrate.
 
 ## Sources and relation to existing repository evidence
 
@@ -188,3 +249,6 @@ authorization under the repository decision substrate.
   coordinatewise `x_i^3` quotient is not the exact diagonal GLV quotient and
   loses relative phase. This screen shows that the split Kummer construction
   reduces to that same coordinatewise cubic mechanism up to invertible scaling.
+- The exact rational pullback above identifies the surviving Jacobi factor-base
+  premise with the repository's existing composed-map route family rather than
+  with a new theta-specific algebraic mechanism.
