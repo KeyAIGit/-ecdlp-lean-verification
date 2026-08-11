@@ -6,7 +6,7 @@ import Ecdlp.Proved.M16FactorBaseLiftableGeneratorCertificate
 This is intentionally the only native leaf for the representative count.
 The tail-recursive accumulator keeps native evaluation resource bounded; the
 second theorem bridges its result to the mathematical `Nat.count` by a kernel
-proof from `countAcc_eq`.
+proof from `boolCountAcc_eq`.
 -/
 
 namespace Ecdlp.M16FactorBaseLiftable.Certificates
