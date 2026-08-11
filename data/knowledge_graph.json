@@ -4,8 +4,8 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 315,
-    "ledger_rows": 315,
+    "theorems": 318,
+    "ledger_rows": 318,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
@@ -37,10 +37,10 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1232,
+    "edges": 1243,
     "by_edge_type": {
-      "imports": 562,
-      "member_of": 315,
+      "imports": 570,
+      "member_of": 318,
       "grounded_in_source_claim": 62,
       "requires_foundation": 41,
       "supports": 27,
@@ -211,11 +211,14 @@
       "finite-range counting + exact secp256k1 cardinality; one isolated new `native_decide` comparison plus disclosed inherited compiler trust": 1,
       "exact symmetric-power/range counting + one private new `native_decide` comparison plus disclosed inherited compiler trust": 1,
       "canonical algebraic-closure Frobenius + explicit point descent/antifixed branch + base-change injection before the existing base-field two-torsion theorem; zero new native owners, inherited secp256k1 compiler trust and the final no-two-torsion chain disclosed": 1,
-      "Mathlib curve group law + generic Semaev chord iff + explicit tangent/infinity factorization; zero new native owners, inherited 10 secp256k1 primality native-owner families disclosed": 1
+      "Mathlib curve group law + generic Semaev chord iff + explicit tangent/infinity factorization; zero new native owners, inherited 10 secp256k1 primality native-owner families disclosed": 1,
+      "induction through the complete normalized local Kummer fiber + existing exact projective/chart-cover equivalence; zero new native owners, inherited secp256k1 primality families disclosed": 1,
+      "algebraic-closure square-root existence + exact direct-system/chart bridge + recursive Kummer signed-sum semantics; zero new native owners, inherited secp256k1 primality families disclosed": 1,
+      "exact finite partition + direct point semantics + existing conditional Frobenius/base-field two-torsion split; zero new native owners, inherited primality and no-two-torsion compiler trust disclosed": 1
     },
     "by_area": {
       "curve-torsion": 153,
-      "primality": 61,
+      "primality": 64,
       "other": 35,
       "generic-hardness": 30,
       "protocol-soundness": 23,
@@ -6558,6 +6561,66 @@
       "family_id": "family-primality",
       "dependency_depth": 7,
       "gated": true
+    },
+    {
+      "id": "thm-315",
+      "name": "Ecdlp.FrozenProjectiveSecpChainSemantics.SignedPointPrefix`, `signedPrefixSum`, `frozenProjectiveChain_barKummer_iff_signedPrefixSum`, `applyPointSign`, `frozenProjectiveChain_barKummer_iff_explicitSigns`, `frozenChartCover_barKummer_iff_signedPrefixSum`, `frozenChartCover_barKummer_iff_explicitSigns",
+      "short_name": "SignedPointPrefix`,",
+      "module": "Ecdlp.Proved.FrozenProjectiveSecpChainSemantics",
+      "modules": [
+        "Ecdlp.Proved.FrozenProjectiveSecpChainSemantics"
+      ],
+      "file": "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean",
+      "files": [
+        "Ecdlp/Proved/FrozenProjectiveSecpChainSemantics.lean"
+      ],
+      "claim": "Exact recursive Kummer point semantics of the frozen projective secp256k1 chain (at every stage `s`, a valid chain output `W` is characterized exactly by choosing either sign of each of the first `s+2` supplied closure points and equating `normalizeProjectivePair W` with the Kummer image of their finite sum. Equivalent Boolean-sign forms are proved, and the literal stage-fourteen chart cover specializes this equivalence to all sixteen seeds while retaining affine and infinity intermediate charts. Honest scope: the seed points are supplied; this theorem does not construct them from source coordinates or by solving an `S17At` equation. It asserts neither distinct local alternatives, root multiplicities, witness uniqueness/descent, factor-base membership, recovery, solver behavior, relation yield/rank, cost, nor an ECDLP shortcut. The module adds zero new `native_decide` owners and inherits only the existing secp256k1 primality native-owner families through its concrete `Fp`/`FpBar` instances)",
+      "method": "induction through the complete normalized local Kummer fiber + existing exact projective/chart-cover equivalence; zero new native owners, inherited secp256k1 primality families disclosed",
+      "status": "proved",
+      "area": "primality",
+      "family_id": "family-primality",
+      "dependency_depth": 8,
+      "gated": true
+    },
+    {
+      "id": "thm-316",
+      "name": "Ecdlp.M16DirectPointSemantics.exists_liesOver`, `closureLift`, `liesOver_closureLift`, `liesOver_iff_barKummer_eq`, `liesOver_neg_iff`, `S17At_eq_zero_iff_exists_point_sum_liesOver`, `S17At_eq_zero_iff_exists_point_sum_eq_target_or_neg`, `S17At_eq_zero_iff_exists_point_sum_add_target_eq_zero`, `S17At_eq_zero_iff_exists_point_relation",
+      "short_name": "exists_liesOver`,",
+      "module": "Ecdlp.Proved.M16DirectPointSemantics",
+      "modules": [
+        "Ecdlp.Proved.M16DirectPointSemantics"
+      ],
+      "file": "Ecdlp/Proved/M16DirectPointSemantics.lean",
+      "files": [
+        "Ecdlp/Proved/M16DirectPointSemantics.lean"
+      ],
+      "claim": "Exact existential point semantics of the direct M16 root equation over the algebraic closure (every base-field coordinate has a noncomputably chosen affine secp256k1 closure point above it, and `S17At x X = 0` holds exactly when sixteen closure points lie above the prescribed source coordinates and their sum lies above `X`. Relative to any supplied target lift `T`, the subtotal is exactly `T` or `-T`; equivalent fixed-sign zero-sum and separately named target-relation forms are proved. The reverse direction passes through the complete projective chart cover, so identity subtotals and infinity charts are retained. Honest scope: this is an existential set-level equivalence over `FpBar`. It proves no witness descent or uniqueness, preferred target sign, factor-base membership or liftability, partitioned Frobenius recovery, relation existence beyond a given root, yield/rank, root solver, sparse linear algebra, runtime/memory/total cost improvement, exact discrete-log recovery, or ECDLP shortcut. The module adds zero new `native_decide` owners and inherits only the existing secp256k1 primality native-owner families through its concrete `Fp`/`FpBar` instances)",
+      "method": "algebraic-closure square-root existence + exact direct-system/chart bridge + recursive Kummer signed-sum semantics; zero new native owners, inherited secp256k1 primality families disclosed",
+      "status": "proved",
+      "area": "primality",
+      "family_id": "family-primality",
+      "dependency_depth": 12,
+      "gated": true
+    },
+    {
+      "id": "thm-317",
+      "name": "Ecdlp.M16PartitionedPointSemantics.liftableSlots`, `nonliftableSlots`, `mem_liftableSlots`, `mem_nonliftableSlots`, `liftableSlots_disjoint_nonliftableSlots`, `liftableSlots_union_nonliftableSlots`, `sum_eq_sum_liftable_add_sum_nonliftable`, `PartitionedPointWitness`, `partitionedPointWitness_of_compatible_point_relation`, `exists_compatible_point_relation_of_partitionedPointWitness`, `partitionedPointWitness_iff_exists_compatible_point_relation`, `S17At_eq_zero_iff_partitionedPointWitness`, `S17At_factorBase_eq_zero_iff_partitionedPointWitness",
+      "short_name": "liftableSlots`,",
+      "module": "Ecdlp.Proved.M16PartitionedPointSemantics",
+      "modules": [
+        "Ecdlp.Proved.M16PartitionedPointSemantics"
+      ],
+      "file": "Ecdlp/Proved/M16PartitionedPointSemantics.lean",
+      "files": [
+        "Ecdlp/Proved/M16PartitionedPointSemantics.lean"
+      ],
+      "claim": "Exact liftable/nonliftable partition semantics for compatible direct M16 point witnesses (`liftableSlots` and `nonliftableSlots` are complementary subsets of the sixteen indices. For a supplied base-field target point `R`, a compatible actual closure-point relation is equivalent to `PartitionedPointWitness`: the liftable subtotal is exactly `includePoint C` for a base point `C`, `C+R=0`, and the nonliftable subtotal is zero. Consequently, when `R` lies above the target coordinate, `S17At x X=0` is equivalent to that partitioned witness; the same statement is specialized to sixteen coordinates already packaged in `FactorBaseX`. Honest scope: nonliftable vanishing is derived only from compatible actual witnesses and the supplied base target, not for arbitrary choices of closure lifts. The theorem does not compute, descend, or uniquely select witnesses; establish unconditional relation existence; recover a scalar; prove independent relations, yield/rank, a root solver, sparse linear algebra, calibrated runtime/memory/total cost, or an ECDLP shortcut. The module adds zero new `native_decide` owners; through the reused final Frobenius split, its conclusions inherit both existing secp256k1 primality native-owner families and the existing base-field no-two-torsion certificate chain)",
+      "method": "exact finite partition + direct point semantics + existing conditional Frobenius/base-field two-torsion split; zero new native owners, inherited primality and no-two-torsion compiler trust disclosed",
+      "status": "proved",
+      "area": "primality",
+      "family_id": "family-primality",
+      "dependency_depth": 13,
+      "gated": true
     }
   ],
   "barriers": [
@@ -12335,6 +12398,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.FrozenProjectiveSecpChainSemantics",
+      "to": "Ecdlp.Proved.FrozenProjectiveSecpLocalFiber",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.FrozenProjectiveSecpLocalFiber",
       "to": "Ecdlp.Proved.FrozenProjectiveInfinityStrata",
       "type": "imports"
@@ -12695,6 +12763,21 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.M16DirectPointSemantics",
+      "to": "Ecdlp.Proved.FrozenProjectiveSecpChainSemantics",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16DirectPointSemantics",
+      "to": "Ecdlp.Proved.M16DirectSystemRootBridge",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16DirectPointSemantics",
+      "to": "Ecdlp.Proved.M16FrobeniusPointSplit",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.M16DirectSystemRootBridge",
       "to": "Ecdlp.Proved.SemaevLeftFoldAffine",
       "type": "imports"
@@ -12772,6 +12855,11 @@
     {
       "from": "Ecdlp.Proved.M16LiftableSixWidthNoGo",
       "to": "Ecdlp.Proved.M16SolverGate",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16PartitionedPointSemantics",
+      "to": "Ecdlp.Proved.M16DirectPointSemantics",
       "type": "imports"
     },
     {
@@ -14421,6 +14509,11 @@
     },
     {
       "from": "Ecdlp",
+      "to": "Ecdlp.Proved.FrozenProjectiveSecpChainSemantics",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
       "to": "Ecdlp.Proved.M16DirectSystemRootBridge",
       "type": "imports"
     },
@@ -14457,6 +14550,16 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.M16FrobeniusPointSplit",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.M16DirectPointSemantics",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.M16PartitionedPointSemantics",
       "type": "imports"
     },
     {
@@ -16106,6 +16209,21 @@
     },
     {
       "from": "thm-314",
+      "to": "family-primality",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-315",
+      "to": "family-primality",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-316",
+      "to": "family-primality",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-317",
       "to": "family-primality",
       "type": "member_of"
     },
