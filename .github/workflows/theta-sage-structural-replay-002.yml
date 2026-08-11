@@ -44,10 +44,13 @@ jobs:
             -v "$PWD:/work" -w /work sagemath/sagemath:10.9 \
             sage experiments/theta_screen_002/verify_secp_independent.sage
           test -f experiments/theta_screen_002/sage_replay/independent_verify_result.json
-          mv experiments/theta_screen_002/sage_replay/independent_verify_result.json \
+          sudo mv experiments/theta_screen_002/sage_replay/independent_verify_result.json \
             experiments/theta_screen_002/sage_structural_replay/result.json
           mv sage-image-digests.json \
             experiments/theta_screen_002/sage_structural_replay/image_digests.json
+          sudo chown -R "$(id -u):$(id -g)" \
+            experiments/theta_screen_002/sage_structural_replay
+          sudo rm -rf experiments/theta_screen_002/sage_replay
           python3 - <<'PY'
           import hashlib, json, pathlib
           root = pathlib.Path('experiments/theta_screen_002/sage_structural_replay')
