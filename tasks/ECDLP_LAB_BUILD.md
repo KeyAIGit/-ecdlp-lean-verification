@@ -315,7 +315,8 @@ Deliverables:
 - Distinguish `field_bits` and `subgroup_order_bits`.
 - Define precise families:
   - `j0_glv_like`: secp-shaped toy curves with verified public beta/lambda;
-  - `random_non_cm_prime_subgroup`: non-j=0 controls with subgroup and cofactor;
+  - `random_generic_j_prime_subgroup`: controls with
+    `j not in {0,1728}`, subgroup, and cofactor;
   - `j0_no_fp_glv_control`: a named j=0 control where the expected base-field
     efficient-endomorphism property is absent and validated.
 - Record full curve order when certified, subgroup order, cofactor, generator,
@@ -326,9 +327,18 @@ Validation rules:
 - producer arithmetic may adapt P1 `curve_math.py`;
 - validator arithmetic must use `experiments/framework/ec_oracle.py` or another
   producer-independent implementation;
-- for a cofactor-one prime order `N`, verify primality, nonzero `G`, `[N]G=O`,
-  and the Hasse uniqueness condition `2N > upper` instead of enumerating all
-  points at 28 or 32 bits;
+- `[ell]G=O` with prime `ell` and nonzero `G` certifies the point order only;
+  it does not by itself certify the reported full curve order or cofactor;
+- `prime_order_hasse_unique_v1` requires `full_order=ell`, cofactor one,
+  prime `ell`, nonzero `G`, `[ell]G=O`, membership in the Hasse interval, and
+  `2*ell > hasse_upper`;
+- `exact_legendre_sum_v1` independently recomputes the full order and is
+  permitted only for committed CI fields at most 16 bits;
+- `j0_p_plus_one_v1` requires `a=0`, nonsingularity, `p mod 3 = 2`,
+  `full_order=p+1`, and `full_order=cofactor*ell`; CI also exact-counts it;
+- the `j0_no_fp_glv_control` claim is only that `gcd(3,p-1)=1` leaves no
+  nontrivial cube root in the base field, not that extensions have no
+  endomorphisms;
 - the program does not execute or commit new 28/32-bit scientific catalogs;
   those sizes may be represented only as future configuration.
 
@@ -367,6 +377,10 @@ Exit criteria:
   bounded-memory failures are covered;
 - golden differential comparison with legacy BSGS/rho results passes;
 - no method receives target-generation secrets.
+
+Here `timeout` and memory are deterministic algorithm budgets such as
+`max_steps` and `max_table_entries`. OS process timeout and RSS enforcement
+belong to P04.
 
 Kangaroo and endomorphism-quotient rho are not part of this phase:
 
