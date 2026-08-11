@@ -1,0 +1,316 @@
+{
+  "baseline": {
+    "main_commit": "61842fe336f85518fccab7a470bbb9b699126f2d",
+    "merged_contract_pr": 362,
+    "repository_gates": {
+      "agent_bundle": "pass",
+      "artifact_map": "pass",
+      "framework_tests": "pass",
+      "generated_fixpoint": "pass",
+      "scientific_semantics": "pass",
+      "source_registry": "pass",
+      "status_consistency": "pass"
+    },
+    "workflow_runs": [
+      {
+        "conclusion": "success",
+        "id": 31537416216,
+        "name": "Docs sync"
+      },
+      {
+        "conclusion": "success",
+        "id": 31537416340,
+        "name": "Verify Lean proofs"
+      }
+    ]
+  },
+  "entries": [
+    {
+      "id": "framework_candidate_schema",
+      "mutation_policy": "hash_frozen_read_only",
+      "owning_validator": "experiments/framework/candidate_contract.py",
+      "path": "experiments/framework/candidate_run.schema.json",
+      "role": "canonical candidate evidence schema; vocabulary reference only",
+      "sha256": "520b24f45c11546f468ac4cf43328d57bb18abd6573ff3f6f0e3421559317080"
+    },
+    {
+      "id": "framework_candidate_validator",
+      "mutation_policy": "hash_frozen_read_only",
+      "owning_validator": null,
+      "path": "experiments/framework/candidate_contract.py",
+      "role": "candidate boundary and provenance-validation pattern",
+      "sha256": "9b411cbea6ca8713b84441f05bb9b7d4890838b772500e1e2350a9114a58bb7a"
+    },
+    {
+      "id": "framework_ec_oracle",
+      "mutation_policy": "hash_frozen_read_only",
+      "owning_validator": null,
+      "path": "experiments/framework/ec_oracle.py",
+      "role": "independent prime-field curve and scalar-result validator",
+      "sha256": "7acc852df5a927a7954f56bd9548ec021ef0b0c92f5435e8f213363f71c72792"
+    },
+    {
+      "id": "engine_cost_schema",
+      "mutation_policy": "hash_frozen_vocabulary_reference",
+      "owning_validator": null,
+      "path": "experiments/engine/cost_contract.schema.json",
+      "role": "existing cost vocabulary; no Engine writer is reused",
+      "sha256": "b0b50540af4f0bdea92231cff08847f93586a01d3350b2a876b1eb9075a1af79"
+    },
+    {
+      "id": "engine_run_schema",
+      "mutation_policy": "hash_frozen_vocabulary_reference",
+      "owning_validator": null,
+      "path": "experiments/engine/run.schema.json",
+      "role": "current M16-specific run schema; gap mapping only",
+      "sha256": "def7b853da44731d5fdff0ee3affe52c83d45c3551258e9ee98b2f6ae565884f"
+    },
+    {
+      "id": "engine_instance_result_schema",
+      "mutation_policy": "hash_frozen_vocabulary_reference",
+      "owning_validator": null,
+      "path": "experiments/engine/instance_result.schema.json",
+      "role": "result vocabulary reference",
+      "sha256": "eafacf5aac354665cc611b381c5b8d6a84f5ea64d00ba2eeb067c46130d21c35"
+    },
+    {
+      "id": "engine_instance_validation_schema",
+      "mutation_policy": "hash_frozen_vocabulary_reference",
+      "owning_validator": null,
+      "path": "experiments/engine/instance_validation.schema.json",
+      "role": "validation vocabulary reference",
+      "sha256": "d07396b524a881c8af842e9ec4c64ae8a2c2000c3fed4483c7b6d048d2dd3b43"
+    },
+    {
+      "id": "engine_validator_contract_schema",
+      "mutation_policy": "hash_frozen_vocabulary_reference",
+      "owning_validator": null,
+      "path": "experiments/engine/validator_contract.schema.json",
+      "role": "validator independence vocabulary reference",
+      "sha256": "b3d51ac7dd115829c9e2a4e43b6ea2830f9f52616bcbe8cb8e4376024fe7246e"
+    },
+    {
+      "id": "engine_validator_request_schema",
+      "mutation_policy": "hash_frozen_vocabulary_reference",
+      "owning_validator": null,
+      "path": "experiments/engine/validator_request.schema.json",
+      "role": "validator request vocabulary reference",
+      "sha256": "ec1e728dd316a5632ecd42ff1ec2bd291ebc0b4481e7f66907fdf99d74fc42d0"
+    },
+    {
+      "id": "engine_validator_output_schema",
+      "mutation_policy": "hash_frozen_vocabulary_reference",
+      "owning_validator": null,
+      "path": "experiments/engine/validator_output.schema.json",
+      "role": "validator output vocabulary reference",
+      "sha256": "1f07a9a28ad5b3a347ee13f9967f4b1a5a0fae61179549d1dcdc14350d9cae38"
+    },
+    {
+      "id": "p1_curve_arithmetic",
+      "mutation_policy": "hash_frozen_import_adapter",
+      "owning_validator": "experiments/ml_structure_probe/p1_toy_scaling/validate_curves.py",
+      "path": "experiments/ml_structure_probe/p1_toy_scaling/curve_math.py",
+      "role": "deterministic toy-curve producer primitives",
+      "sha256": "c18d954aa637198cfc43ce54819448cc41bc12678a00f4e8fa1ba8e9fc661dd2"
+    },
+    {
+      "id": "p1_curve_validator_pattern",
+      "mutation_policy": "hash_frozen_read_only",
+      "owning_validator": null,
+      "path": "experiments/ml_structure_probe/p1_toy_scaling/validate_curves.py",
+      "role": "legacy curve-validation pattern; not the lab producer",
+      "sha256": "0a33a4c1c62242a1a271822323b47c5baa876dec17dcaf2fb847aee15ab0e859"
+    },
+    {
+      "id": "p1_curve_catalog",
+      "mutation_policy": "hash_frozen_read_only_artifact",
+      "owning_validator": "experiments/ml_structure_probe/p1_toy_scaling/validate_curves.py",
+      "path": "experiments/ml_structure_probe/reports/p1_toy_scaling/curve_catalog.json",
+      "role": "40 retained synthetic curves at 13, 16, 20, and 24 field bits",
+      "sha256": "d293afa7e5b614f39ed00356e35ee81a400b57ee9656907170193cb3aca0bbd7"
+    },
+    {
+      "id": "p1_solver_source",
+      "mutation_policy": "hash_frozen_read_only_locator",
+      "owning_validator": "experiments/ml_structure_probe/p1_toy_scaling/validate_results.py",
+      "path": "experiments/ml_structure_probe/p1_toy_scaling/run_assay.py",
+      "role": "historical BSGS and seeded-rho semantics for differential replay",
+      "sha256": "6ab905adf8187729e818a92b047c83ff5f6b12d61fca95cfcd512cc3e24820c0"
+    },
+    {
+      "id": "p1_solver_result",
+      "mutation_policy": "hash_frozen_read_only_artifact",
+      "owning_validator": "experiments/ml_structure_probe/p1_toy_scaling/validate_results.py",
+      "path": "experiments/ml_structure_probe/reports/p1_toy_scaling/assay_result.json",
+      "role": "64 retained solver rows and summaries for golden replay",
+      "sha256": "6a4a6b8302877a9b6505d70fc246677c741c7b26cda314bdc17ac36a4edd044f"
+    },
+    {
+      "id": "p1_result_validator",
+      "mutation_policy": "hash_frozen_read_only",
+      "owning_validator": null,
+      "path": "experiments/ml_structure_probe/p1_toy_scaling/validate_results.py",
+      "role": "legacy result validation and audit locator",
+      "sha256": "5153adcaae3e22f2fdf562d700930866c20d180f752b63c8d2c655422b3ad91d"
+    },
+    {
+      "id": "campaign_receipt_pattern",
+      "mutation_policy": "hash_frozen_pattern_only_no_runtime_import",
+      "owning_validator": null,
+      "path": "scripts/hypothesis_space_campaign.py",
+      "role": "create-only receipt, lock, replay, and recovery patterns",
+      "sha256": "9c21ac7afece151c7a043f873e0198a0e826198c6158e1fe66e7aa79c567a0b0"
+    },
+    {
+      "id": "p0_manifest_pattern",
+      "mutation_policy": "hash_frozen_pattern_only",
+      "owning_validator": "experiments/p0_glv_semaev/validate_run.py",
+      "path": "experiments/p0_glv_semaev/manifest.py",
+      "role": "legacy provenance-manifest pattern",
+      "sha256": "f91f12819fcbefed720e7096560fa3b2abff6dcc8fda74efad3ff1189abe5f07"
+    },
+    {
+      "id": "p0_run_validator",
+      "mutation_policy": "hash_frozen_read_only",
+      "owning_validator": null,
+      "path": "experiments/p0_glv_semaev/validate_run.py",
+      "role": "legacy independent replay locator",
+      "sha256": "9a8e6f8d9fb462d7f8524ff643c4fe5a055a2af536ff464419d0245d44096811"
+    },
+    {
+      "id": "symmetry_producer",
+      "mutation_policy": "hash_frozen_wrapper_only",
+      "owning_validator": "experiments/glv_semaev_symmetry/validate.py",
+      "path": "experiments/glv_semaev_symmetry/generate.py",
+      "role": "existing exact symbolic producer",
+      "sha256": "92132016abeadd7becf66a65ab5c499bd5f6f013a4f6c8e521a04235aac7d267"
+    },
+    {
+      "id": "symmetry_validator",
+      "mutation_policy": "hash_frozen_read_only",
+      "owning_validator": null,
+      "path": "experiments/glv_semaev_symmetry/validate.py",
+      "role": "existing exact symbolic replay",
+      "sha256": "9b96a420d4bf2c4fcf09c2a83fe54188415299daaf9c1ffc75e21db3d88f8a8d"
+    },
+    {
+      "id": "fixed_target_producer",
+      "mutation_policy": "hash_frozen_wrapper_only",
+      "owning_validator": "experiments/glv_semaev_symmetry/validate_fixed_target.py",
+      "path": "experiments/glv_semaev_symmetry/generate_fixed_target.py",
+      "role": "existing fixed-target symbolic producer",
+      "sha256": "93c74ae228c8b8518721a96e228144a1326fdd2d1cd9ca470ddc138b300cd8b2"
+    },
+    {
+      "id": "fixed_target_validator",
+      "mutation_policy": "hash_frozen_read_only",
+      "owning_validator": null,
+      "path": "experiments/glv_semaev_symmetry/validate_fixed_target.py",
+      "role": "existing fixed-target symbolic replay",
+      "sha256": "552c796d84ffc8dd7722fea8ca9a84c6c700556d9e7ce6c5584a0bf1d534129a"
+    },
+    {
+      "id": "division_doubling_replay",
+      "mutation_policy": "hash_frozen_wrapper_only",
+      "owning_validator": null,
+      "path": "scripts/certs/division_doubling_secp.py",
+      "role": "existing exact formula replay",
+      "sha256": "4851a7f4422eaadd9a4041086248669c3d10951d9dade882e49ff66da7d72d30"
+    },
+    {
+      "id": "division_resultant_replay",
+      "mutation_policy": "hash_frozen_wrapper_only",
+      "owning_validator": null,
+      "path": "scripts/certs/division_resultant_formula.py",
+      "role": "existing exact resultant replay",
+      "sha256": "5af28a2912775ce2b546215dc8010aedfcb552ea4fcd05e92d28362e297c7ae8"
+    },
+    {
+      "id": "triple_formula_replay",
+      "mutation_policy": "hash_frozen_wrapper_only",
+      "owning_validator": null,
+      "path": "scripts/certs/triple_mult_formula_check.py",
+      "role": "existing exact multiplication-formula replay",
+      "sha256": "a4d8b6750c4fb96d0532e8b9eea54a1321e46ec99d6d3c1c0374989afbd8bd9f"
+    },
+    {
+      "id": "quad_formula_replay",
+      "mutation_policy": "hash_frozen_wrapper_only",
+      "owning_validator": null,
+      "path": "scripts/certs/quad_mult_formula_check.py",
+      "role": "existing exact multiplication-formula replay",
+      "sha256": "6095436d77c370d7c9f18eb3195a160d816b22ec2a81addaf30d1ff5109b46a4"
+    },
+    {
+      "id": "quint_formula_replay",
+      "mutation_policy": "hash_frozen_wrapper_only",
+      "owning_validator": null,
+      "path": "scripts/certs/quint_mult_formula_check.py",
+      "role": "existing exact multiplication-formula replay",
+      "sha256": "12ac3550a56bc74d14a25c40bf0b10e35c62bf7f2fefe871a09de7ba974daa32"
+    }
+  ],
+  "excluded_legacy_surfaces": [
+    {
+      "digest_algorithm": "git_tree_sha1",
+      "digest_value": "f1a0ad790fc2b2c6c3d4e5c3487c4f4d850d496d",
+      "mutation_policy": "denylisted_immutable",
+      "path": "experiments/p0_glv_semaev/runs",
+      "reason": "historical run outputs are never imported or rewritten by the lab"
+    },
+    {
+      "mutation_policy": "denylisted_immutable",
+      "path": "experiments/engine",
+      "reason": "schemas may be read as vocabulary references; state writers and outcomes are never imported"
+    }
+  ],
+  "inventory_id": "ECDLP-LAB-REUSE-INVENTORY-V1",
+  "schema_version": "1.0",
+  "upstream_theta_screen": {
+    "base_commit": "ea324de7c5aa2aa8fd828a2658cd1226d90dc2b0",
+    "ci": [
+      {
+        "conclusion": "failure",
+        "id": 31526657994,
+        "name": "Docs sync"
+      },
+      {
+        "conclusion": "failure",
+        "id": 31526657938,
+        "name": "Verify Lean proofs"
+      }
+    ],
+    "disposition": "upstream_pending",
+    "files": [
+      {
+        "path": "experiments/theta_screen_002/README.md",
+        "sha256": "7033a2809ed335713616398a5d69a5db7cc5d74517da50d5df58578373bb1ca5"
+      },
+      {
+        "path": "experiments/theta_screen_002/run_sage.ps1",
+        "sha256": "8e1585075342b539aaac793d34fa424fe86bcb289e02d68179f72a0d1914d02d"
+      },
+      {
+        "path": "experiments/theta_screen_002/singular_factorbase.py",
+        "sha256": "58dc3a2dc92e8ff6c1c346b8009690e3d6760cf3d978a1388311c944ada45559"
+      },
+      {
+        "path": "experiments/theta_screen_002/sympy_screen_results.json",
+        "sha256": "bf9d569e45c1c5837a16827f6feaa39ee7bf66129ac2d2771ef6f432fa545217"
+      },
+      {
+        "path": "experiments/theta_screen_002/verify_secp.py",
+        "sha256": "467eb36ff7dbf650eec880601d486a78d89b7f38ab452f093c1a360d63356592"
+      },
+      {
+        "path": "notes/THETA_SCREEN_002.md",
+        "sha256": "7ec9167ba06d386123307ec5ddaae5269da0ec8534027f08cce770be71e54403"
+      }
+    ],
+    "head_commit": "7a76a73949492c547b3ce4fd0ee7e376bf687ed2",
+    "independent_sage_replay": "missing",
+    "merge_authorized": false,
+    "pr": 356,
+    "state": "open_draft"
+  }
+}

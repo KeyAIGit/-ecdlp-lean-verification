@@ -161,7 +161,19 @@
         "path": "tasks/ECDLP_LAB_BUILD.md",
         "reason": "owner-directed sequential ECDLP lab engineering contract and safety gates",
         "exists": true,
-        "bytes": 38327
+        "bytes": 38831
+      },
+      {
+        "path": "tasks/ECDLP_LAB_REUSE_INVENTORY.json",
+        "reason": "digest-bound frozen inputs and upstream state for the ECDLP lab",
+        "exists": true,
+        "bytes": 13038
+      },
+      {
+        "path": "scripts/lab_check_reuse_inventory.py",
+        "reason": "offline integrity gate for the ECDLP lab frozen-input inventory",
+        "exists": true,
+        "bytes": 8218
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -337,7 +349,19 @@
         "path": "tasks/ECDLP_LAB_BUILD.md",
         "reason": "owner-directed sequential ECDLP lab engineering contract and safety gates",
         "exists": true,
-        "bytes": 38327
+        "bytes": 38831
+      },
+      {
+        "path": "tasks/ECDLP_LAB_REUSE_INVENTORY.json",
+        "reason": "digest-bound frozen inputs and upstream state for the ECDLP lab",
+        "exists": true,
+        "bytes": 13038
+      },
+      {
+        "path": "scripts/lab_check_reuse_inventory.py",
+        "reason": "offline integrity gate for the ECDLP lab frozen-input inventory",
+        "exists": true,
+        "bytes": 8218
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -367,7 +391,7 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 19885
+        "bytes": 19953
       },
       {
         "path": "domains/riemann-hypothesis/corpus.md",
@@ -729,7 +753,19 @@
         "path": "tasks/ECDLP_LAB_BUILD.md",
         "reason": "owner-directed sequential ECDLP lab engineering contract and safety gates",
         "exists": true,
-        "bytes": 38327
+        "bytes": 38831
+      },
+      {
+        "path": "tasks/ECDLP_LAB_REUSE_INVENTORY.json",
+        "reason": "digest-bound frozen inputs and upstream state for the ECDLP lab",
+        "exists": true,
+        "bytes": 13038
+      },
+      {
+        "path": "scripts/lab_check_reuse_inventory.py",
+        "reason": "offline integrity gate for the ECDLP lab frozen-input inventory",
+        "exists": true,
+        "bytes": 8218
       },
       {
         "path": "tasks/KEYAI_PRODUCT.md",
@@ -759,7 +795,7 @@
         "path": "AGENTS.md",
         "reason": "agent operating rules, invariants, and forbidden moves",
         "exists": true,
-        "bytes": 19885
+        "bytes": 19953
       },
       {
         "path": "domains/riemann-hypothesis/corpus.md",
