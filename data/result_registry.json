@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 325,
-  "ledger_reference_count": 904,
-  "ledger_named_declarations": 879,
+  "ledger_rows": 326,
+  "ledger_reference_count": 917,
+  "ledger_named_declarations": 892,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1639,
-  "distinct_qualified_names": 1639,
-  "verified_md_citations": 879,
+  "declaration_count": 1685,
+  "distinct_qualified_names": 1685,
+  "verified_md_citations": 892,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -743,6 +743,19 @@
     "Ecdlp.M16GLVCanonicalRows.glvCompress_single_phase",
     "Ecdlp.M16GLVCanonicalRows.liftableGLVPhaseEquiv",
     "Ecdlp.M16GLVCanonicalRows.referencePoint_glvPhase",
+    "Ecdlp.M16GLVSectionChangeRank.card_rebasedDistinctAugmentedRows",
+    "Ecdlp.M16GLVSectionChangeRank.card_rebasedDistinctCoefficientRows",
+    "Ecdlp.M16GLVSectionChangeRank.evalSectionRowModN_rebase",
+    "Ecdlp.M16GLVSectionChangeRank.finrank_ker_rebasedAugmentedSynthesis_cancellationRankSample",
+    "Ecdlp.M16GLVSectionChangeRank.finrank_ker_rebasedCoefficientSynthesis_cancellationRankSample",
+    "Ecdlp.M16GLVSectionChangeRank.ker_rebasedAugmentedSynthesis",
+    "Ecdlp.M16GLVSectionChangeRank.ker_rebasedCoefficientSynthesis",
+    "Ecdlp.M16GLVSectionChangeRank.rank_rebaseMatrix",
+    "Ecdlp.M16GLVSectionChangeRank.rebasedAugmentedMatrix_rank_cancellationRankSample",
+    "Ecdlp.M16GLVSectionChangeRank.rebasedAugmentedMatrix_rank_eq",
+    "Ecdlp.M16GLVSectionChangeRank.rebasedCertifiedRelation_closes",
+    "Ecdlp.M16GLVSectionChangeRank.rebasedCoefficientMatrix_rank_cancellationRankSample",
+    "Ecdlp.M16GLVSectionChangeRank.rebasedCoefficientMatrix_rank_eq",
     "Ecdlp.M16LiftableSixWidthNoGo.budget_lt_card_sym_liftableFactorBaseX_seven",
     "Ecdlp.M16LiftableSixWidthNoGo.card_sym_liftableFactorBaseX_seven",
     "Ecdlp.M16LiftableSixWidthNoGo.card_sym_liftableFactorBaseX_six",
@@ -12114,6 +12127,122 @@
           "line": 215
         }
       ]
+    },
+    {
+      "id": "ledger-325",
+      "claim": "Invariance of finite GLV relation accounting under a supplied uniform section change (a generic `MonomialRebase` applies one column equivalence and one unit-diagonal scaling uniformly to every row, with coefficients transported by the inverse units and the augmented target column fixed at coefficient `-1`. For any supplied `SignedGLVSection` whose phase, sign, and unit data satisfy `scale_spec`, changed-section evaluation agrees exactly with canonical GLV evaluation, certified rows still close at the same target, coefficient and augmented matrix ranks are unchanged, labelled synthesis kernels are equal, and deduplicated coefficient/augmented row cardinalities are unchanged. Consequently the already-degenerate explicit cancellation family remains rank `1` in both matrix conventions and both labelled kernel dimensions remain `283527^7 - 1` after any such supplied rebase. Honest scope: `SignedGLVSection` is a conditional certificate interface; the module constructs no section implementing the separate experimental minimum-point-encoding convention and proves no equivalence to it. It constructs no sample and proves no achieved rank for an experimental or collected relation set, row independence, useful relation yield or distribution, PFPO, `AllRoots`, root solving, sparse-linear-algebra outcome, runtime, memory, solver-node or total-cost improvement, scalar recovery, ECDLP shortcut, or attack. The module adds zero new `native_decide` owners and inherits only already catalogued secp256k1 parameter/primality, GLV/full-group, concrete-subgroup, `rhs`-support, base-field no-two-torsion, and factor-base/liftable-census families as applicable; no solver-budget owner is introduced)",
+      "theorem_cell": "`Ecdlp.M16GLVSectionChangeRank.rank_rebaseMatrix`, `evalSectionRowModN_rebase`, `rebasedCertifiedRelation_closes`, `rebasedCoefficientMatrix_rank_eq`, `rebasedAugmentedMatrix_rank_eq`, `ker_rebasedCoefficientSynthesis`, `ker_rebasedAugmentedSynthesis`, `card_rebasedDistinctCoefficientRows`, `card_rebasedDistinctAugmentedRows`, `rebasedCoefficientMatrix_rank_cancellationRankSample`, `rebasedAugmentedMatrix_rank_cancellationRankSample`, `finrank_ker_rebasedCoefficientSynthesis_cancellationRankSample`, `finrank_ker_rebasedAugmentedSynthesis_cancellationRankSample`",
+      "declared_files": [
+        "Ecdlp/Proved/M16GLVSectionChangeRank.lean"
+      ],
+      "method": "uniform permutation-by-unit-diagonal linear equivalence + fixed augmented target column + exact evaluation/kernel/image transport + reuse of the existing cancellation-family rank/kernel theorems; zero new native owners, inherited trust disclosed",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.M16GLVSectionChangeRank.rank_rebaseMatrix",
+          "canonical_name": "Ecdlp.M16GLVSectionChangeRank.rank_rebaseMatrix",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+          "line": 138
+        },
+        {
+          "cited": "Ecdlp.M16GLVSectionChangeRank.evalSectionRowModN_rebase",
+          "canonical_name": "Ecdlp.M16GLVSectionChangeRank.evalSectionRowModN_rebase",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+          "line": 202
+        },
+        {
+          "cited": "Ecdlp.M16GLVSectionChangeRank.rebasedCertifiedRelation_closes",
+          "canonical_name": "Ecdlp.M16GLVSectionChangeRank.rebasedCertifiedRelation_closes",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+          "line": 243
+        },
+        {
+          "cited": "Ecdlp.M16GLVSectionChangeRank.rebasedCoefficientMatrix_rank_eq",
+          "canonical_name": "Ecdlp.M16GLVSectionChangeRank.rebasedCoefficientMatrix_rank_eq",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+          "line": 298
+        },
+        {
+          "cited": "Ecdlp.M16GLVSectionChangeRank.rebasedAugmentedMatrix_rank_eq",
+          "canonical_name": "Ecdlp.M16GLVSectionChangeRank.rebasedAugmentedMatrix_rank_eq",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+          "line": 306
+        },
+        {
+          "cited": "Ecdlp.M16GLVSectionChangeRank.ker_rebasedCoefficientSynthesis",
+          "canonical_name": "Ecdlp.M16GLVSectionChangeRank.ker_rebasedCoefficientSynthesis",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+          "line": 364
+        },
+        {
+          "cited": "Ecdlp.M16GLVSectionChangeRank.ker_rebasedAugmentedSynthesis",
+          "canonical_name": "Ecdlp.M16GLVSectionChangeRank.ker_rebasedAugmentedSynthesis",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+          "line": 374
+        },
+        {
+          "cited": "Ecdlp.M16GLVSectionChangeRank.card_rebasedDistinctCoefficientRows",
+          "canonical_name": "Ecdlp.M16GLVSectionChangeRank.card_rebasedDistinctCoefficientRows",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+          "line": 402
+        },
+        {
+          "cited": "Ecdlp.M16GLVSectionChangeRank.card_rebasedDistinctAugmentedRows",
+          "canonical_name": "Ecdlp.M16GLVSectionChangeRank.card_rebasedDistinctAugmentedRows",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+          "line": 435
+        },
+        {
+          "cited": "Ecdlp.M16GLVSectionChangeRank.rebasedCoefficientMatrix_rank_cancellationRankSample",
+          "canonical_name": "Ecdlp.M16GLVSectionChangeRank.rebasedCoefficientMatrix_rank_cancellationRankSample",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+          "line": 469
+        },
+        {
+          "cited": "Ecdlp.M16GLVSectionChangeRank.rebasedAugmentedMatrix_rank_cancellationRankSample",
+          "canonical_name": "Ecdlp.M16GLVSectionChangeRank.rebasedAugmentedMatrix_rank_cancellationRankSample",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+          "line": 476
+        },
+        {
+          "cited": "Ecdlp.M16GLVSectionChangeRank.finrank_ker_rebasedCoefficientSynthesis_cancellationRankSample",
+          "canonical_name": "Ecdlp.M16GLVSectionChangeRank.finrank_ker_rebasedCoefficientSynthesis_cancellationRankSample",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+          "line": 483
+        },
+        {
+          "cited": "Ecdlp.M16GLVSectionChangeRank.finrank_ker_rebasedAugmentedSynthesis_cancellationRankSample",
+          "canonical_name": "Ecdlp.M16GLVSectionChangeRank.finrank_ker_rebasedAugmentedSynthesis_cancellationRankSample",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+          "line": 493
+        }
+      ]
     }
   ],
   "declarations": {
@@ -19928,6 +20057,328 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/M16GLVCanonicalRows.lean",
       "line": 98
+    },
+    "Ecdlp.M16GLVSectionChangeRank.BasePoint": {
+      "name": "BasePoint",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 35
+    },
+    "Ecdlp.M16GLVSectionChangeRank.K": {
+      "name": "K",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 34
+    },
+    "Ecdlp.M16GLVSectionChangeRank.MonomialRebase": {
+      "name": "MonomialRebase",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "structure",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 44
+    },
+    "Ecdlp.M16GLVSectionChangeRank.MonomialRebase.finsuppEquiv": {
+      "name": "finsuppEquiv",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank.MonomialRebase",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 87
+    },
+    "Ecdlp.M16GLVSectionChangeRank.MonomialRebase.finsuppEquiv_apply": {
+      "name": "finsuppEquiv_apply",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank.MonomialRebase",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 94
+    },
+    "Ecdlp.M16GLVSectionChangeRank.MonomialRebase.finsuppEquiv_single": {
+      "name": "finsuppEquiv_single",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank.MonomialRebase",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 101
+    },
+    "Ecdlp.M16GLVSectionChangeRank.MonomialRebase.rowEquiv": {
+      "name": "rowEquiv",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank.MonomialRebase",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 60
+    },
+    "Ecdlp.M16GLVSectionChangeRank.MonomialRebase.rowEquiv_apply": {
+      "name": "rowEquiv_apply",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank.MonomialRebase",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 66
+    },
+    "Ecdlp.M16GLVSectionChangeRank.MonomialRebase.withFixedTarget": {
+      "name": "withFixedTarget",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank.MonomialRebase",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 52
+    },
+    "Ecdlp.M16GLVSectionChangeRank.MonomialRebase.withFixedTarget_rowEquiv_none": {
+      "name": "withFixedTarget_rowEquiv_none",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank.MonomialRebase",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 72
+    },
+    "Ecdlp.M16GLVSectionChangeRank.MonomialRebase.withFixedTarget_rowEquiv_some": {
+      "name": "withFixedTarget_rowEquiv_some",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank.MonomialRebase",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 79
+    },
+    "Ecdlp.M16GLVSectionChangeRank.PointN": {
+      "name": "PointN",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 36
+    },
+    "Ecdlp.M16GLVSectionChangeRank.Rep": {
+      "name": "Rep",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 37
+    },
+    "Ecdlp.M16GLVSectionChangeRank.SignedGLVSection": {
+      "name": "SignedGLVSection",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "structure",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 166
+    },
+    "Ecdlp.M16GLVSectionChangeRank.card_rebasedDistinctAugmentedRows": {
+      "name": "card_rebasedDistinctAugmentedRows",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 435
+    },
+    "Ecdlp.M16GLVSectionChangeRank.card_rebasedDistinctCoefficientRows": {
+      "name": "card_rebasedDistinctCoefficientRows",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 402
+    },
+    "Ecdlp.M16GLVSectionChangeRank.evalSectionRowModN": {
+      "name": "evalSectionRowModN",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 189
+    },
+    "Ecdlp.M16GLVSectionChangeRank.evalSectionRowModN_rebase": {
+      "name": "evalSectionRowModN_rebase",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 202
+    },
+    "Ecdlp.M16GLVSectionChangeRank.evalSectionRowModN_rebasedCertifiedRowModN": {
+      "name": "evalSectionRowModN_rebasedCertifiedRowModN",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 232
+    },
+    "Ecdlp.M16GLVSectionChangeRank.finrank_ker_rebasedAugmentedSynthesis_cancellationRankSample": {
+      "name": "finrank_ker_rebasedAugmentedSynthesis_cancellationRankSample",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 493
+    },
+    "Ecdlp.M16GLVSectionChangeRank.finrank_ker_rebasedCoefficientSynthesis_cancellationRankSample": {
+      "name": "finrank_ker_rebasedCoefficientSynthesis_cancellationRankSample",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 483
+    },
+    "Ecdlp.M16GLVSectionChangeRank.ker_rebasedAugmentedSynthesis": {
+      "name": "ker_rebasedAugmentedSynthesis",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 374
+    },
+    "Ecdlp.M16GLVSectionChangeRank.ker_rebasedCoefficientSynthesis": {
+      "name": "ker_rebasedCoefficientSynthesis",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 364
+    },
+    "Ecdlp.M16GLVSectionChangeRank.rank_rebaseMatrix": {
+      "name": "rank_rebaseMatrix",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 138
+    },
+    "Ecdlp.M16GLVSectionChangeRank.rebaseMatrix": {
+      "name": "rebaseMatrix",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 127
+    },
+    "Ecdlp.M16GLVSectionChangeRank.rebaseMatrix_apply": {
+      "name": "rebaseMatrix_apply",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 131
+    },
+    "Ecdlp.M16GLVSectionChangeRank.rebasedAugmentedMatrix": {
+      "name": "rebasedAugmentedMatrix",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 261
+    },
+    "Ecdlp.M16GLVSectionChangeRank.rebasedAugmentedMatrix_none": {
+      "name": "rebasedAugmentedMatrix_none",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 274
+    },
+    "Ecdlp.M16GLVSectionChangeRank.rebasedAugmentedMatrix_rank_cancellationRankSample": {
+      "name": "rebasedAugmentedMatrix_rank_cancellationRankSample",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 476
+    },
+    "Ecdlp.M16GLVSectionChangeRank.rebasedAugmentedMatrix_rank_eq": {
+      "name": "rebasedAugmentedMatrix_rank_eq",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 306
+    },
+    "Ecdlp.M16GLVSectionChangeRank.rebasedAugmentedMatrix_row_closes": {
+      "name": "rebasedAugmentedMatrix_row_closes",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 290
+    },
+    "Ecdlp.M16GLVSectionChangeRank.rebasedAugmentedMatrix_some": {
+      "name": "rebasedAugmentedMatrix_some",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 280
+    },
+    "Ecdlp.M16GLVSectionChangeRank.rebasedAugmentedSynthesis": {
+      "name": "rebasedAugmentedSynthesis",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 324
+    },
+    "Ecdlp.M16GLVSectionChangeRank.rebasedAugmentedSynthesis_eq_comp": {
+      "name": "rebasedAugmentedSynthesis_eq_comp",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 346
+    },
+    "Ecdlp.M16GLVSectionChangeRank.rebasedCertifiedRelation_closes": {
+      "name": "rebasedCertifiedRelation_closes",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 243
+    },
+    "Ecdlp.M16GLVSectionChangeRank.rebasedCertifiedRowModN": {
+      "name": "rebasedCertifiedRowModN",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 226
+    },
+    "Ecdlp.M16GLVSectionChangeRank.rebasedCoefficientMatrix": {
+      "name": "rebasedCoefficientMatrix",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 254
+    },
+    "Ecdlp.M16GLVSectionChangeRank.rebasedCoefficientMatrix_apply": {
+      "name": "rebasedCoefficientMatrix_apply",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 267
+    },
+    "Ecdlp.M16GLVSectionChangeRank.rebasedCoefficientMatrix_rank_cancellationRankSample": {
+      "name": "rebasedCoefficientMatrix_rank_cancellationRankSample",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 469
+    },
+    "Ecdlp.M16GLVSectionChangeRank.rebasedCoefficientMatrix_rank_eq": {
+      "name": "rebasedCoefficientMatrix_rank_eq",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 298
+    },
+    "Ecdlp.M16GLVSectionChangeRank.rebasedCoefficientSynthesis": {
+      "name": "rebasedCoefficientSynthesis",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 317
+    },
+    "Ecdlp.M16GLVSectionChangeRank.rebasedCoefficientSynthesis_eq_comp": {
+      "name": "rebasedCoefficientSynthesis_eq_comp",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 330
+    },
+    "Ecdlp.M16GLVSectionChangeRank.rebasedDistinctAugmentedRows": {
+      "name": "rebasedDistinctAugmentedRows",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 393
+    },
+    "Ecdlp.M16GLVSectionChangeRank.rebasedDistinctCoefficientRows": {
+      "name": "rebasedDistinctCoefficientRows",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 386
+    },
+    "Ecdlp.M16GLVSectionChangeRank.sectionPointN": {
+      "name": "sectionPointN",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 175
+    },
+    "Ecdlp.M16GLVSectionChangeRank.sectionPointN_eq_signedPhase": {
+      "name": "sectionPointN_eq_signedPhase",
+      "namespace": "Ecdlp.M16GLVSectionChangeRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "line": 180
     },
     "Ecdlp.M16LiftableSixWidthNoGo.LiftableSignedSixIndex": {
       "name": "LiftableSignedSixIndex",

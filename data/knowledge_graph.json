@@ -4,8 +4,8 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 325,
-    "ledger_rows": 325,
+    "theorems": 326,
+    "ledger_rows": 326,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
@@ -37,10 +37,10 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1271,
+    "edges": 1274,
     "by_edge_type": {
-      "imports": 591,
-      "member_of": 325,
+      "imports": 593,
+      "member_of": 326,
       "grounded_in_source_claim": 62,
       "requires_foundation": 41,
       "supports": 27,
@@ -221,11 +221,12 @@
       "noncomputable anchor/reference selection + explicit labelled cancellation recovery/root injection + exact repeated-coordinate `Finsupp` cancellation + constant-row subtype cardinality; zero new native owners, inherited curve/primality/no-two-torsion/factor-base census trust and existing budget owner disclosed": 1,
       "exact census phase equivalence + noncomputable lower-residue GLV covariance + integral and mod-`n` linear-map identities + finite-dimensional rank-nullity; zero new native owners, inherited trust disclosed": 1,
       "concrete subgroup-valued row evaluation + labelled `Finsupp` synthesis/span + finite-dimensional rank-nullity + matrix submatrix and one-column finrank bounds; zero new native owners, inherited trust disclosed": 1,
-      "noncomputable explicit cancellation sample + exact constant-row span/rank-nullity + finite-cardinality arithmetic; zero new native owners, inherited trust disclosed": 1
+      "noncomputable explicit cancellation sample + exact constant-row span/rank-nullity + finite-cardinality arithmetic; zero new native owners, inherited trust disclosed": 1,
+      "uniform permutation-by-unit-diagonal linear equivalence + fixed augmented target column + exact evaluation/kernel/image transport + reuse of the existing cancellation-family rank/kernel theorems; zero new native owners, inherited trust disclosed": 1
     },
     "by_area": {
       "curve-torsion": 154,
-      "primality": 70,
+      "primality": 71,
       "other": 35,
       "generic-hardness": 30,
       "protocol-soundness": 23,
@@ -6768,6 +6769,26 @@
       "family_id": "family-primality",
       "dependency_depth": 17,
       "gated": true
+    },
+    {
+      "id": "thm-325",
+      "name": "Ecdlp.M16GLVSectionChangeRank.rank_rebaseMatrix`, `evalSectionRowModN_rebase`, `rebasedCertifiedRelation_closes`, `rebasedCoefficientMatrix_rank_eq`, `rebasedAugmentedMatrix_rank_eq`, `ker_rebasedCoefficientSynthesis`, `ker_rebasedAugmentedSynthesis`, `card_rebasedDistinctCoefficientRows`, `card_rebasedDistinctAugmentedRows`, `rebasedCoefficientMatrix_rank_cancellationRankSample`, `rebasedAugmentedMatrix_rank_cancellationRankSample`, `finrank_ker_rebasedCoefficientSynthesis_cancellationRankSample`, `finrank_ker_rebasedAugmentedSynthesis_cancellationRankSample",
+      "short_name": "rank_rebaseMatrix`,",
+      "module": "Ecdlp.Proved.M16GLVSectionChangeRank",
+      "modules": [
+        "Ecdlp.Proved.M16GLVSectionChangeRank"
+      ],
+      "file": "Ecdlp/Proved/M16GLVSectionChangeRank.lean",
+      "files": [
+        "Ecdlp/Proved/M16GLVSectionChangeRank.lean"
+      ],
+      "claim": "Invariance of finite GLV relation accounting under a supplied uniform section change (a generic `MonomialRebase` applies one column equivalence and one unit-diagonal scaling uniformly to every row, with coefficients transported by the inverse units and the augmented target column fixed at coefficient `-1`. For any supplied `SignedGLVSection` whose phase, sign, and unit data satisfy `scale_spec`, changed-section evaluation agrees exactly with canonical GLV evaluation, certified rows still close at the same target, coefficient and augmented matrix ranks are unchanged, labelled synthesis kernels are equal, and deduplicated coefficient/augmented row cardinalities are unchanged. Consequently the already-degenerate explicit cancellation family remains rank `1` in both matrix conventions and both labelled kernel dimensions remain `283527^7 - 1` after any such supplied rebase. Honest scope: `SignedGLVSection` is a conditional certificate interface; the module constructs no section implementing the separate experimental minimum-point-encoding convention and proves no equivalence to it. It constructs no sample and proves no achieved rank for an experimental or collected relation set, row independence, useful relation yield or distribution, PFPO, `AllRoots`, root solving, sparse-linear-algebra outcome, runtime, memory, solver-node or total-cost improvement, scalar recovery, ECDLP shortcut, or attack. The module adds zero new `native_decide` owners and inherits only already catalogued secp256k1 parameter/primality, GLV/full-group, concrete-subgroup, `rhs`-support, base-field no-two-torsion, and factor-base/liftable-census families as applicable; no solver-budget owner is introduced)",
+      "method": "uniform permutation-by-unit-diagonal linear equivalence + fixed augmented target column + exact evaluation/kernel/image transport + reuse of the existing cancellation-family rank/kernel theorems; zero new native owners, inherited trust disclosed",
+      "status": "proved",
+      "area": "primality",
+      "family_id": "family-primality",
+      "dependency_depth": 18,
+      "gated": true
     }
   ],
   "barriers": [
@@ -13060,6 +13081,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.M16GLVSectionChangeRank",
+      "to": "Ecdlp.Proved.M16CancellationRelationRank",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.M16LiftableSixWidthNoGo",
       "to": "Ecdlp.Proved.M16FactorBaseLiftable",
       "type": "imports"
@@ -14816,6 +14842,11 @@
     },
     {
       "from": "Ecdlp",
+      "to": "Ecdlp.Proved.M16GLVSectionChangeRank",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
       "to": "Ecdlp.Proved.M16SixWidthNoGo",
       "type": "imports"
     },
@@ -16511,6 +16542,11 @@
     },
     {
       "from": "thm-324",
+      "to": "family-primality",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-325",
       "to": "family-primality",
       "type": "member_of"
     },

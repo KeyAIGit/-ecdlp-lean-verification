@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~286 distinct results / 325 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~287 distinct results / 326 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -290,6 +290,21 @@ exact `Θ` statements.
   of other collected recoveries. It constructs no enumerator, filtering or
   sparse-linear-algebra algorithm and supplies no PFPO, `AllRoots`, recovery,
   runtime/memory/total-cost, scalar-recovery, or ECDLP consequence.
+  A uniform permutation-by-unit-diagonal change of the GLV columns now has an
+  exact transport theorem: inverse coefficient scaling, with the augmented
+  target column fixed at coefficient `-1`, preserves matrix rank. For any
+  supplied `SignedGLVSection` whose phase/sign/unit metadata satisfy
+  `scale_spec`, evaluation and certified relation closure are preserved, as
+  are coefficient and augmented ranks, labelled synthesis kernels, and the
+  cardinalities of deduplicated row sets. Thus the already-degenerate explicit
+  cancellation family remains rank one with both labelled kernel dimensions
+  `283527^7 - 1` under any such supplied rebase. The signed section remains a
+  conditional certificate interface: no theorem constructs the experimental
+  minimum-point-encoding section or identifies it with this abstraction. This
+  proves no achieved rank for an experimental or collected relation set,
+  independence, useful relation yield/distribution, PFPO, `AllRoots`, solver,
+  sparse-linear-algebra outcome, runtime/memory/solver-node/total cost, scalar
+  recovery, ECDLP shortcut, or attack.
   `CELL-M-PKC-SMOOTH-M16` remains `open_non_executable`,
   `CQ-SEMAEV-S17-SYSTEM-COST` remains `partial`, and
   `B-PKC-M16-COMPLETE-COST-BRIDGE` remains open on establishing a nonempty

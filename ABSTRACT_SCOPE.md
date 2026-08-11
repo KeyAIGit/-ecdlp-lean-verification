@@ -7,7 +7,7 @@
 
 ## Canonical accounting
 
-- **325 ledger rows / ~286 distinct kernel-verified results** (39 rows are
+- **326 ledger rows / ~287 distinct kernel-verified results** (39 rows are
   alternate-form / supporting restatements of an already-counted result).
 - **0 `sorry`** anywhere in the built (`Ecdlp/`-minus-`Targets/`) tree.
 - **No CUSTOM axioms.** Everything depends only on Lean/Mathlib's standard
@@ -134,6 +134,23 @@
   construction, not an enumeration, filtering or sparse-linear-algebra
   algorithm, and it supplies no `Recover`, PFPO, `AllRoots`, runtime/memory/
   cost, scalar recovery, or ECDLP shortcut.
+- **A supplied uniform GLV section change preserves exact relation accounting,
+  not an experimental encoding.** A `MonomialRebase` uses one column
+  equivalence and one unit-diagonal scaling uniformly across every row, with
+  inverse coefficient transport and the augmented target column fixed at
+  coefficient `-1`. For any supplied `SignedGLVSection` whose phase, sign, and
+  unit metadata satisfy `scale_spec`, changed-section evaluation agrees with
+  canonical GLV evaluation, certified relations still close, coefficient and
+  augmented matrix ranks are unchanged, labelled synthesis kernels are equal,
+  and deduplicated row cardinalities are unchanged. The explicit cancellation
+  family therefore remains rank `1` with both labelled kernel dimensions
+  `283527^7 - 1` after such a rebase. `SignedGLVSection` is only a conditional
+  certificate interface: no section implementing the separate experimental
+  minimum-point-encoding convention is constructed or proved equivalent. No
+  sample is constructed and no achieved rank for an experimental or collected
+  relation set, independence, useful yield/distribution, PFPO, `AllRoots`, root
+  solving, sparse-linear-algebra outcome, runtime/memory/solver-node/total-cost
+  improvement, scalar recovery, ECDLP shortcut, or attack follows.
 
 ## 1. Honest framing (one paragraph)
 
