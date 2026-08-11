@@ -24,6 +24,7 @@
       "note": "The open IACR manuscript and publication metadata were inspected. It is prior art for proposal design, not evidence that P4 implemented the method.",
       "where_used": [
         "notes/GLV_SEMAEV_ITERATION_001.md",
+        "notes/SECP256K1_M16_ALLROOTS_COST_BRACKET_2026_08_10.md",
         "notes/reviews/HYP_SELECT_002.md",
         "notes/reviews/HYP_SELECT_003.md",
         "notes/reviews/TASK014_PRIME_FIELD_COMPARISON.md",
@@ -488,6 +489,7 @@
         "experiments/p4_petit/README.md",
         "experiments/p4_petit/RESULTS.md",
         "notes/GLV_SEMAEV_ITERATION_001.md",
+        "notes/SECP256K1_M16_ALLROOTS_COST_BRACKET_2026_08_10.md",
         "notes/reviews/HYP_SELECT_002.md",
         "notes/reviews/HYP_SELECT_003.md",
         "notes/reviews/TASK014_PRIME_FIELD_COMPARISON.md",
@@ -550,6 +552,7 @@
         "experiments/ml_structure_probe/reports/p1_toy_scaling/QUALIFICATION_SUMMARY.md",
         "notes/GLV_SEMAEV_ITERATION_001.md",
         "notes/RESEARCH_MAP.md",
+        "notes/SECP256K1_M16_ALLROOTS_COST_BRACKET_2026_08_10.md",
         "notes/SECURITY_SCOPE.md",
         "notes/reviews/HYP_SELECT_003.md",
         "tasks/ECDLP_RESEARCH.md"
@@ -661,6 +664,7 @@
         "notes/GLV_SEMAEV_ITERATION_001.md",
         "notes/HYPOTHESIS_PIPELINE_AUDIT_2026-08-01.md",
         "notes/RESEARCH_MAP.md",
+        "notes/SECP256K1_M16_ALLROOTS_COST_BRACKET_2026_08_10.md",
         "notes/UPSTREAM_SCAN.md",
         "notes/reviews/GEOMETRIC_TORSION_AUDIT.md",
         "notes/reviews/HYP_SELECT_002.md",
@@ -723,6 +727,7 @@
         "PUBLISHABLE_UNITS.md",
         "README.md",
         "VERIFIED.md",
+        "notes/SECP256K1_M16_ALLROOTS_COST_BRACKET_2026_08_10.md",
         "notes/SECURITY_SCOPE.md",
         "notes/reviews/HYP_SELECT_002.md"
       ]
