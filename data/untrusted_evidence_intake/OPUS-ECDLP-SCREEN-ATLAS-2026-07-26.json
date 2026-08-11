@@ -257,8 +257,44 @@
         "scripts",
         "repo",
         "data",
+        "experiments",
         ".github/workflows"
-      ]
+      ],
+      "scan_suffixes": [
+        ".bat",
+        ".c",
+        ".cmd",
+        ".cpp",
+        ".go",
+        ".h",
+        ".ipynb",
+        ".js",
+        ".json",
+        ".jsx",
+        ".lean",
+        ".ps1",
+        ".py",
+        ".rs",
+        ".sh",
+        ".toml",
+        ".ts",
+        ".tsx",
+        ".yaml",
+        ".yml"
+      ],
+      "reference_tokens": [
+        "all_mechanisms.json",
+        "all_properties.json",
+        "archive/untrusted_intake",
+        "archive/untrusted_intake/opus-ecdlp-screen-atlas-2026-07-26",
+        "build_untrusted_evidence_intake",
+        "data/untrusted_evidence_intake",
+        "data/untrusted_evidence_intake/opus-ecdlp-screen-atlas-2026-07-26.json",
+        "ecdlp_screen_atlas_report.md",
+        "opus-ecdlp-screen-atlas-2026-07-26",
+        "untrusted_evidence_intake"
+      ],
+      "boundary": "This is a repository-wide lexical path guard over executable and configuration files, not a proof of information-flow noninterference."
     },
     "boundary": "Every mechanism, property, requirement, heat label, source status, and conclusion remains an untrusted annotation pending a separate producer, independent replay, and canonical review."
   },

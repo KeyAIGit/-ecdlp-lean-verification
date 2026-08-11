@@ -26,11 +26,16 @@ not upgraded claims. Each source is bound by both SHA-256 and its Git blob ID.
 After the first protected-main acceptance, the reviewed source fields are
 compared with the `origin/main` receipt and cannot be silently rewritten.
 
-The intake gate also scans code, policy, generated-data, and workflow roots for
-quarantine references. Only the builder, its tests, artifact registry,
-fixpoint gate, generated quarantine output, and invoking workflows are allowed
-to name this layer. A ranker, selector, canonical claim builder, or other
-scientific consumer that starts reading it makes the gate fail closed.
+The intake gate also scans code, experiments, policy, generated-data, and
+workflow roots for quarantine references. It binds both the generated intake
+path and the direct archive path, intake ID, and source filenames, including
+Windows path separators and executable shell/configuration suffixes. Only the
+builder, its tests, artifact registry, fixpoint gate, generated quarantine
+output, and invoking workflows are allowed to name this layer. A ranker,
+selector, experiment, canonical claim builder, or other scientific consumer
+that starts reading it makes the gate fail closed. This is a lexical path guard,
+not a proof of information-flow noninterference; independently recreated facts
+still require normal provenance and review.
 
 ## Reproduced Structure
 
