@@ -4,8 +4,8 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 326,
-    "ledger_rows": 326,
+    "theorems": 327,
+    "ledger_rows": 327,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
@@ -37,10 +37,10 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1274,
+    "edges": 1277,
     "by_edge_type": {
-      "imports": 593,
-      "member_of": 326,
+      "imports": 595,
+      "member_of": 327,
       "grounded_in_source_claim": 62,
       "requires_foundation": 41,
       "supports": 27,
@@ -222,10 +222,11 @@
       "exact census phase equivalence + noncomputable lower-residue GLV covariance + integral and mod-`n` linear-map identities + finite-dimensional rank-nullity; zero new native owners, inherited trust disclosed": 1,
       "concrete subgroup-valued row evaluation + labelled `Finsupp` synthesis/span + finite-dimensional rank-nullity + matrix submatrix and one-column finrank bounds; zero new native owners, inherited trust disclosed": 1,
       "noncomputable explicit cancellation sample + exact constant-row span/rank-nullity + finite-cardinality arithmetic; zero new native owners, inherited trust disclosed": 1,
-      "uniform permutation-by-unit-diagonal linear equivalence + fixed augmented target column + exact evaluation/kernel/image transport + reuse of the existing cancellation-family rank/kernel theorems; zero new native owners, inherited trust disclosed": 1
+      "uniform permutation-by-unit-diagonal linear equivalence + fixed augmented target column + exact evaluation/kernel/image transport + reuse of the existing cancellation-family rank/kernel theorems; zero new native owners, inherited trust disclosed": 1,
+      "fixed-target subgroup evaluation + exact linear-map kernel intersection + supplied section-rebase transport + global-negation/Boolean-fiber normalization + finite-dimensional rank-nullity; zero new native owners, inherited trust disclosed": 1
     },
     "by_area": {
-      "curve-torsion": 154,
+      "curve-torsion": 155,
       "primality": 71,
       "other": 35,
       "generic-hardness": 30,
@@ -6789,6 +6790,26 @@
       "family_id": "family-primality",
       "dependency_depth": 18,
       "gated": true
+    },
+    {
+      "id": "thm-326",
+      "name": "Ecdlp.M16FixedFiberMultiplicityRank.ker_augmentedSynthesis_eq_inf_ker_coefficientSynthesis_ker_labelSum`, `ker_augmentedSynthesis_eq_ker_coefficientSynthesis_of_target_ne_zero`, `coefficientRank_eq_augmentedRank_of_target_ne_zero`, `coefficientMatrix_rank_eq_augmentedMatrix_rank_of_target_ne_zero`, `ker_rebasedAugmentedSynthesis_eq_ker_rebasedCoefficientSynthesis_of_target_ne_zero`, `rebasedCoefficientMatrix_rank_eq_rebasedAugmentedMatrix_rank_of_target_ne_zero`, `range_coefficientMatrix_row_fixedFiberSample`, `range_augmentedMatrix_row_fixedFiberSample`, `coefficientRank_fixedFiberSample_eq_normalizedFiberSample`, `augmentedRank_fixedFiberSample_eq_normalizedFiberSample`, `finrank_ker_coefficientSynthesis_fixedFiberSample`, `finrank_ker_augmentedSynthesis_fixedFiberSample`, `coefficientRank_fixedFiberSample_le_card_normalizedFiber`, `augmentedRank_fixedFiberSample_le_card_normalizedFiber`, `card_normalizedFiber_le_finrank_ker_coefficientSynthesis_fixedFiberSample`, `card_normalizedFiber_le_finrank_ker_augmentedSynthesis_fixedFiberSample",
+      "short_name": "ker_augmentedSynthesis_eq_inf_ker_coefficientSynthesis_ker_labelSum`,",
+      "module": "Ecdlp.Proved.M16FixedFiberMultiplicityRank",
+      "modules": [
+        "Ecdlp.Proved.M16FixedFiberMultiplicityRank"
+      ],
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "files": [
+        "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean"
+      ],
+      "claim": "Exact augmented-kernel boundary and normalized-fiber dependency accounting for fixed M16 samples (for every fixed target, including zero, the augmented synthesis kernel is exactly the intersection of the coefficient synthesis kernel with the zero-label-sum kernel. For a nonzero target, every coefficient dependency has zero label sum, so coefficient and augmented kernels, span ranks, and matrix ranks agree; the same kernel and matrix-rank equalities hold after any supplied `SignedGLVSection` rebase. For one fixed factor-base tuple, the complete target-labelled semantic fiber and its normalized sample have identical coefficient and augmented row ranges and span ranks. Retaining the Boolean target label adds exactly `card NormalizedFiber` to each synthesis-kernel finrank; consequently each full-fiber rank is at most that cardinality and each full-fiber kernel finrank is at least it. Honest scope: at target zero only the kernel-intersection identity is claimed; no coefficient/augmented kernel or rank equality follows. The full and normalized fibers are not claimed equal or equicardinal. `SignedGLVSection` remains a supplied conditional certificate. Raw integral canonical (`C`) row and GLV/mod-`n` row multiplicity, coarsening, and partition theorems are deferred; any future multiplicity must count target-labelled semantic witnesses, not algebraic-root multiplicity. No experimental minimum-point-encoding convention is defined or compared, and no achieved rank, independence, useful relation yield, PFPO, `AllRoots`, root solving, sparse-linear-algebra result, runtime, memory, cost, scalar recovery, ECDLP shortcut, or attack is proved. The module adds zero new `native_decide` owners; all audited declarations are transitively compiler-backed only through already catalogued dependencies, with no new solver-budget owner)",
+      "method": "fixed-target subgroup evaluation + exact linear-map kernel intersection + supplied section-rebase transport + global-negation/Boolean-fiber normalization + finite-dimensional rank-nullity; zero new native owners, inherited trust disclosed",
+      "status": "proved",
+      "area": "curve-torsion",
+      "family_id": "family-curve-torsion",
+      "dependency_depth": 19,
+      "gated": true
     }
   ],
   "barriers": [
@@ -13061,6 +13082,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.M16FixedFiberMultiplicityRank",
+      "to": "Ecdlp.Proved.M16GLVSectionChangeRank",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.M16FrobeniusPointSplit",
       "to": "Ecdlp.Proved.M16FactorBaseLiftable",
       "type": "imports"
@@ -14847,6 +14873,11 @@
     },
     {
       "from": "Ecdlp",
+      "to": "Ecdlp.Proved.M16FixedFiberMultiplicityRank",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
       "to": "Ecdlp.Proved.M16SixWidthNoGo",
       "type": "imports"
     },
@@ -16548,6 +16579,11 @@
     {
       "from": "thm-325",
       "to": "family-primality",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-326",
+      "to": "family-curve-torsion",
       "type": "member_of"
     },
     {

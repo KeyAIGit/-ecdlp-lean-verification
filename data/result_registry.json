@@ -1,15 +1,15 @@
 {
   "schema_version": 2,
   "source": "VERIFIED.md + built public Lean source (Targets excluded)",
-  "ledger_rows": 326,
-  "ledger_reference_count": 917,
-  "ledger_named_declarations": 892,
+  "ledger_rows": 327,
+  "ledger_reference_count": 933,
+  "ledger_named_declarations": 908,
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1685,
-  "distinct_qualified_names": 1685,
-  "verified_md_citations": 892,
+  "declaration_count": 1725,
+  "distinct_qualified_names": 1725,
+  "verified_md_citations": 908,
   "unresolved_references": [],
   "resolution_exemptions": [
     {
@@ -702,6 +702,22 @@
     "Ecdlp.M16FiniteGLVRelationRank.coefficientRank_le_augmentedRank",
     "Ecdlp.M16FiniteGLVRelationRank.coefficientRank_le_distinctCoefficientRows_card",
     "Ecdlp.M16FiniteGLVRelationRank.evalGLVRowModN_certifiedRowModN",
+    "Ecdlp.M16FixedFiberMultiplicityRank.augmentedRank_fixedFiberSample_eq_normalizedFiberSample",
+    "Ecdlp.M16FixedFiberMultiplicityRank.augmentedRank_fixedFiberSample_le_card_normalizedFiber",
+    "Ecdlp.M16FixedFiberMultiplicityRank.card_normalizedFiber_le_finrank_ker_augmentedSynthesis_fixedFiberSample",
+    "Ecdlp.M16FixedFiberMultiplicityRank.card_normalizedFiber_le_finrank_ker_coefficientSynthesis_fixedFiberSample",
+    "Ecdlp.M16FixedFiberMultiplicityRank.coefficientMatrix_rank_eq_augmentedMatrix_rank_of_target_ne_zero",
+    "Ecdlp.M16FixedFiberMultiplicityRank.coefficientRank_eq_augmentedRank_of_target_ne_zero",
+    "Ecdlp.M16FixedFiberMultiplicityRank.coefficientRank_fixedFiberSample_eq_normalizedFiberSample",
+    "Ecdlp.M16FixedFiberMultiplicityRank.coefficientRank_fixedFiberSample_le_card_normalizedFiber",
+    "Ecdlp.M16FixedFiberMultiplicityRank.finrank_ker_augmentedSynthesis_fixedFiberSample",
+    "Ecdlp.M16FixedFiberMultiplicityRank.finrank_ker_coefficientSynthesis_fixedFiberSample",
+    "Ecdlp.M16FixedFiberMultiplicityRank.ker_augmentedSynthesis_eq_inf_ker_coefficientSynthesis_ker_labelSum",
+    "Ecdlp.M16FixedFiberMultiplicityRank.ker_augmentedSynthesis_eq_ker_coefficientSynthesis_of_target_ne_zero",
+    "Ecdlp.M16FixedFiberMultiplicityRank.ker_rebasedAugmentedSynthesis_eq_ker_rebasedCoefficientSynthesis_of_target_ne_zero",
+    "Ecdlp.M16FixedFiberMultiplicityRank.range_augmentedMatrix_row_fixedFiberSample",
+    "Ecdlp.M16FixedFiberMultiplicityRank.range_coefficientMatrix_row_fixedFiberSample",
+    "Ecdlp.M16FixedFiberMultiplicityRank.rebasedCoefficientMatrix_rank_eq_rebasedAugmentedMatrix_rank_of_target_ne_zero",
     "Ecdlp.M16FrobeniusPointSplit.BarCurve",
     "Ecdlp.M16FrobeniusPointSplit.BarPoint",
     "Ecdlp.M16FrobeniusPointSplit.BasePoint",
@@ -12243,6 +12259,146 @@
           "line": 493
         }
       ]
+    },
+    {
+      "id": "ledger-326",
+      "claim": "Exact augmented-kernel boundary and normalized-fiber dependency accounting for fixed M16 samples (for every fixed target, including zero, the augmented synthesis kernel is exactly the intersection of the coefficient synthesis kernel with the zero-label-sum kernel. For a nonzero target, every coefficient dependency has zero label sum, so coefficient and augmented kernels, span ranks, and matrix ranks agree; the same kernel and matrix-rank equalities hold after any supplied `SignedGLVSection` rebase. For one fixed factor-base tuple, the complete target-labelled semantic fiber and its normalized sample have identical coefficient and augmented row ranges and span ranks. Retaining the Boolean target label adds exactly `card NormalizedFiber` to each synthesis-kernel finrank; consequently each full-fiber rank is at most that cardinality and each full-fiber kernel finrank is at least it. Honest scope: at target zero only the kernel-intersection identity is claimed; no coefficient/augmented kernel or rank equality follows. The full and normalized fibers are not claimed equal or equicardinal. `SignedGLVSection` remains a supplied conditional certificate. Raw integral canonical (`C`) row and GLV/mod-`n` row multiplicity, coarsening, and partition theorems are deferred; any future multiplicity must count target-labelled semantic witnesses, not algebraic-root multiplicity. No experimental minimum-point-encoding convention is defined or compared, and no achieved rank, independence, useful relation yield, PFPO, `AllRoots`, root solving, sparse-linear-algebra result, runtime, memory, cost, scalar recovery, ECDLP shortcut, or attack is proved. The module adds zero new `native_decide` owners; all audited declarations are transitively compiler-backed only through already catalogued dependencies, with no new solver-budget owner)",
+      "theorem_cell": "`Ecdlp.M16FixedFiberMultiplicityRank.ker_augmentedSynthesis_eq_inf_ker_coefficientSynthesis_ker_labelSum`, `ker_augmentedSynthesis_eq_ker_coefficientSynthesis_of_target_ne_zero`, `coefficientRank_eq_augmentedRank_of_target_ne_zero`, `coefficientMatrix_rank_eq_augmentedMatrix_rank_of_target_ne_zero`, `ker_rebasedAugmentedSynthesis_eq_ker_rebasedCoefficientSynthesis_of_target_ne_zero`, `rebasedCoefficientMatrix_rank_eq_rebasedAugmentedMatrix_rank_of_target_ne_zero`, `range_coefficientMatrix_row_fixedFiberSample`, `range_augmentedMatrix_row_fixedFiberSample`, `coefficientRank_fixedFiberSample_eq_normalizedFiberSample`, `augmentedRank_fixedFiberSample_eq_normalizedFiberSample`, `finrank_ker_coefficientSynthesis_fixedFiberSample`, `finrank_ker_augmentedSynthesis_fixedFiberSample`, `coefficientRank_fixedFiberSample_le_card_normalizedFiber`, `augmentedRank_fixedFiberSample_le_card_normalizedFiber`, `card_normalizedFiber_le_finrank_ker_coefficientSynthesis_fixedFiberSample`, `card_normalizedFiber_le_finrank_ker_augmentedSynthesis_fixedFiberSample`",
+      "declared_files": [
+        "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean"
+      ],
+      "method": "fixed-target subgroup evaluation + exact linear-map kernel intersection + supplied section-rebase transport + global-negation/Boolean-fiber normalization + finite-dimensional rank-nullity; zero new native owners, inherited trust disclosed",
+      "status": "proved",
+      "references": [
+        {
+          "cited": "Ecdlp.M16FixedFiberMultiplicityRank.ker_augmentedSynthesis_eq_inf_ker_coefficientSynthesis_ker_labelSum",
+          "canonical_name": "Ecdlp.M16FixedFiberMultiplicityRank.ker_augmentedSynthesis_eq_inf_ker_coefficientSynthesis_ker_labelSum",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+          "line": 134
+        },
+        {
+          "cited": "Ecdlp.M16FixedFiberMultiplicityRank.ker_augmentedSynthesis_eq_ker_coefficientSynthesis_of_target_ne_zero",
+          "canonical_name": "Ecdlp.M16FixedFiberMultiplicityRank.ker_augmentedSynthesis_eq_ker_coefficientSynthesis_of_target_ne_zero",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+          "line": 176
+        },
+        {
+          "cited": "Ecdlp.M16FixedFiberMultiplicityRank.coefficientRank_eq_augmentedRank_of_target_ne_zero",
+          "canonical_name": "Ecdlp.M16FixedFiberMultiplicityRank.coefficientRank_eq_augmentedRank_of_target_ne_zero",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+          "line": 185
+        },
+        {
+          "cited": "Ecdlp.M16FixedFiberMultiplicityRank.coefficientMatrix_rank_eq_augmentedMatrix_rank_of_target_ne_zero",
+          "canonical_name": "Ecdlp.M16FixedFiberMultiplicityRank.coefficientMatrix_rank_eq_augmentedMatrix_rank_of_target_ne_zero",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+          "line": 195
+        },
+        {
+          "cited": "Ecdlp.M16FixedFiberMultiplicityRank.ker_rebasedAugmentedSynthesis_eq_ker_rebasedCoefficientSynthesis_of_target_ne_zero",
+          "canonical_name": "Ecdlp.M16FixedFiberMultiplicityRank.ker_rebasedAugmentedSynthesis_eq_ker_rebasedCoefficientSynthesis_of_target_ne_zero",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+          "line": 205
+        },
+        {
+          "cited": "Ecdlp.M16FixedFiberMultiplicityRank.rebasedCoefficientMatrix_rank_eq_rebasedAugmentedMatrix_rank_of_target_ne_zero",
+          "canonical_name": "Ecdlp.M16FixedFiberMultiplicityRank.rebasedCoefficientMatrix_rank_eq_rebasedAugmentedMatrix_rank_of_target_ne_zero",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+          "line": 216
+        },
+        {
+          "cited": "Ecdlp.M16FixedFiberMultiplicityRank.range_coefficientMatrix_row_fixedFiberSample",
+          "canonical_name": "Ecdlp.M16FixedFiberMultiplicityRank.range_coefficientMatrix_row_fixedFiberSample",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+          "line": 307
+        },
+        {
+          "cited": "Ecdlp.M16FixedFiberMultiplicityRank.range_augmentedMatrix_row_fixedFiberSample",
+          "canonical_name": "Ecdlp.M16FixedFiberMultiplicityRank.range_augmentedMatrix_row_fixedFiberSample",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+          "line": 323
+        },
+        {
+          "cited": "Ecdlp.M16FixedFiberMultiplicityRank.coefficientRank_fixedFiberSample_eq_normalizedFiberSample",
+          "canonical_name": "Ecdlp.M16FixedFiberMultiplicityRank.coefficientRank_fixedFiberSample_eq_normalizedFiberSample",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+          "line": 340
+        },
+        {
+          "cited": "Ecdlp.M16FixedFiberMultiplicityRank.augmentedRank_fixedFiberSample_eq_normalizedFiberSample",
+          "canonical_name": "Ecdlp.M16FixedFiberMultiplicityRank.augmentedRank_fixedFiberSample_eq_normalizedFiberSample",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+          "line": 349
+        },
+        {
+          "cited": "Ecdlp.M16FixedFiberMultiplicityRank.finrank_ker_coefficientSynthesis_fixedFiberSample",
+          "canonical_name": "Ecdlp.M16FixedFiberMultiplicityRank.finrank_ker_coefficientSynthesis_fixedFiberSample",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+          "line": 375
+        },
+        {
+          "cited": "Ecdlp.M16FixedFiberMultiplicityRank.finrank_ker_augmentedSynthesis_fixedFiberSample",
+          "canonical_name": "Ecdlp.M16FixedFiberMultiplicityRank.finrank_ker_augmentedSynthesis_fixedFiberSample",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+          "line": 401
+        },
+        {
+          "cited": "Ecdlp.M16FixedFiberMultiplicityRank.coefficientRank_fixedFiberSample_le_card_normalizedFiber",
+          "canonical_name": "Ecdlp.M16FixedFiberMultiplicityRank.coefficientRank_fixedFiberSample_le_card_normalizedFiber",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+          "line": 426
+        },
+        {
+          "cited": "Ecdlp.M16FixedFiberMultiplicityRank.augmentedRank_fixedFiberSample_le_card_normalizedFiber",
+          "canonical_name": "Ecdlp.M16FixedFiberMultiplicityRank.augmentedRank_fixedFiberSample_le_card_normalizedFiber",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+          "line": 434
+        },
+        {
+          "cited": "Ecdlp.M16FixedFiberMultiplicityRank.card_normalizedFiber_le_finrank_ker_coefficientSynthesis_fixedFiberSample",
+          "canonical_name": "Ecdlp.M16FixedFiberMultiplicityRank.card_normalizedFiber_le_finrank_ker_coefficientSynthesis_fixedFiberSample",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+          "line": 442
+        },
+        {
+          "cited": "Ecdlp.M16FixedFiberMultiplicityRank.card_normalizedFiber_le_finrank_ker_augmentedSynthesis_fixedFiberSample",
+          "canonical_name": "Ecdlp.M16FixedFiberMultiplicityRank.card_normalizedFiber_le_finrank_ker_augmentedSynthesis_fixedFiberSample",
+          "resolution": "exact",
+          "kind": "theorem",
+          "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+          "line": 450
+        }
+      ]
     }
   ],
   "declarations": {
@@ -19525,6 +19681,286 @@
       "kind": "def",
       "file": "Ecdlp/Proved/M16FiniteGLVRelationRank.lean",
       "line": 342
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.BasePoint": {
+      "name": "BasePoint",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 52
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.FixedFiberLabel": {
+      "name": "FixedFiberLabel",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 230
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.K": {
+      "name": "K",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 51
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.PointN": {
+      "name": "PointN",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 53
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.Rep": {
+      "name": "Rep",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "abbrev",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 54
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.augmentedMatrix_rank_fixedFiberSample_eq_normalizedFiberSample": {
+      "name": "augmentedMatrix_rank_fixedFiberSample_eq_normalizedFiberSample",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 365
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.augmentedMatrix_row_normalizedFiberSample_normalizeFixedFiber": {
+      "name": "augmentedMatrix_row_normalizedFiberSample_normalizeFixedFiber",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 294
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.augmentedRank_fixedFiberSample_eq_normalizedFiberSample": {
+      "name": "augmentedRank_fixedFiberSample_eq_normalizedFiberSample",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 349
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.augmentedRank_fixedFiberSample_le_card_normalizedFiber": {
+      "name": "augmentedRank_fixedFiberSample_le_card_normalizedFiber",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 434
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.augmentedSynthesis_none": {
+      "name": "augmentedSynthesis_none",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 121
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.augmentedSynthesis_some": {
+      "name": "augmentedSynthesis_some",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 109
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.canonicalRow_normalizeFixedFiber": {
+      "name": "canonicalRow_normalizeFixedFiber",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 262
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.card_normalizedFiber_le_finrank_ker_augmentedSynthesis_fixedFiberSample": {
+      "name": "card_normalizedFiber_le_finrank_ker_augmentedSynthesis_fixedFiberSample",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 450
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.card_normalizedFiber_le_finrank_ker_coefficientSynthesis_fixedFiberSample": {
+      "name": "card_normalizedFiber_le_finrank_ker_coefficientSynthesis_fixedFiberSample",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 442
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.certifiedRowModN_normalizedFiberSample_normalizeFixedFiber": {
+      "name": "certifiedRowModN_normalizedFiberSample_normalizeFixedFiber",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 276
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.coefficientMatrix_rank_eq_augmentedMatrix_rank_of_target_ne_zero": {
+      "name": "coefficientMatrix_rank_eq_augmentedMatrix_rank_of_target_ne_zero",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 195
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.coefficientMatrix_rank_fixedFiberSample_eq_normalizedFiberSample": {
+      "name": "coefficientMatrix_rank_fixedFiberSample_eq_normalizedFiberSample",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 357
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.coefficientMatrix_row_normalizedFiberSample_normalizeFixedFiber": {
+      "name": "coefficientMatrix_row_normalizedFiberSample_normalizeFixedFiber",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 285
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.coefficientRank_eq_augmentedRank_of_target_ne_zero": {
+      "name": "coefficientRank_eq_augmentedRank_of_target_ne_zero",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 185
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.coefficientRank_fixedFiberSample_eq_normalizedFiberSample": {
+      "name": "coefficientRank_fixedFiberSample_eq_normalizedFiberSample",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 340
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.coefficientRank_fixedFiberSample_le_card_normalizedFiber": {
+      "name": "coefficientRank_fixedFiberSample_le_card_normalizedFiber",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 426
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.evalCoefficientFunctionModN": {
+      "name": "evalCoefficientFunctionModN",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 68
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.evalCoefficientFunctionModN_coefficientMatrix_row": {
+      "name": "evalCoefficientFunctionModN_coefficientMatrix_row",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 83
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.evalCoefficientFunctionModN_coefficientRow": {
+      "name": "evalCoefficientFunctionModN_coefficientRow",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 73
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.evalCoefficientFunctionModN_coefficientSynthesis": {
+      "name": "evalCoefficientFunctionModN_coefficientSynthesis",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 92
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.finrank_ker_augmentedSynthesis_fixedFiberSample": {
+      "name": "finrank_ker_augmentedSynthesis_fixedFiberSample",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 401
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.finrank_ker_coefficientSynthesis_fixedFiberSample": {
+      "name": "finrank_ker_coefficientSynthesis_fixedFiberSample",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 375
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.fixedFiberSample": {
+      "name": "fixedFiberSample",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 234
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.ker_augmentedSynthesis_eq_inf_ker_coefficientSynthesis_ker_labelSum": {
+      "name": "ker_augmentedSynthesis_eq_inf_ker_coefficientSynthesis_ker_labelSum",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 134
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.ker_augmentedSynthesis_eq_ker_coefficientSynthesis_of_target_ne_zero": {
+      "name": "ker_augmentedSynthesis_eq_ker_coefficientSynthesis_of_target_ne_zero",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 176
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.ker_coefficientSynthesis_le_ker_labelSum_of_target_ne_zero": {
+      "name": "ker_coefficientSynthesis_le_ker_labelSum_of_target_ne_zero",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 156
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.ker_rebasedAugmentedSynthesis_eq_ker_rebasedCoefficientSynthesis_of_target_ne_zero": {
+      "name": "ker_rebasedAugmentedSynthesis_eq_ker_rebasedCoefficientSynthesis_of_target_ne_zero",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 205
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.labelSum": {
+      "name": "labelSum",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 59
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.labelSum_single": {
+      "name": "labelSum_single",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 62
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.normalizeFixedFiber": {
+      "name": "normalizeFixedFiber",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 247
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.normalizeFixedFiber_surjective": {
+      "name": "normalizeFixedFiber_surjective",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 253
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.normalizedFiberSample": {
+      "name": "normalizedFiberSample",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "def",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 240
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.range_augmentedMatrix_row_fixedFiberSample": {
+      "name": "range_augmentedMatrix_row_fixedFiberSample",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 323
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.range_coefficientMatrix_row_fixedFiberSample": {
+      "name": "range_coefficientMatrix_row_fixedFiberSample",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 307
+    },
+    "Ecdlp.M16FixedFiberMultiplicityRank.rebasedCoefficientMatrix_rank_eq_rebasedAugmentedMatrix_rank_of_target_ne_zero": {
+      "name": "rebasedCoefficientMatrix_rank_eq_rebasedAugmentedMatrix_rank_of_target_ne_zero",
+      "namespace": "Ecdlp.M16FixedFiberMultiplicityRank",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/M16FixedFiberMultiplicityRank.lean",
+      "line": 216
     },
     "Ecdlp.M16FrobeniusPointSplit.BarCurve": {
       "name": "BarCurve",
