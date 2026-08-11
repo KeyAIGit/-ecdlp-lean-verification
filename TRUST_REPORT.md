@@ -2,7 +2,7 @@
 
 > Counts here are a snapshot; the single canonical figure is **`STATUS.md`** (generated from `data/stats.json`). If they differ, STATUS.md wins.
 
-**Scope of the verified body.** `311 ledger rows / ~272 distinct kernel-verified
+**Scope of the verified body.** `313 ledger rows / ~274 distinct kernel-verified
 results`. A row may group several supporting declarations; the exact expansion is
 generated in `data/result_registry.json`. The built surface has **0 `sorry`, 0
 `admit`, and 0 custom axioms**. Open target stems are explicitly outside the built
@@ -138,6 +138,13 @@ ring-identity curve invariants. Representative theorems (file → theorem):
   (the local implications and the one-way resultant propagation hold over any
   field; the final source bridge reuses the injective algebraically closed
   target assumption; none of these structural results uses `native_decide`)
+- `Ecdlp/Proved/SemaevLeftFoldAffine.lean` → `f3_eq_S₃`,
+  `localSlice_eq_eliminationOrder`, `HValue_affine_eq_f3`, the two explicit
+  slice-map lemmas, `dehom_frozenC_eq_semaevLeftFoldC`,
+  `eval_dehom_eq_frozenSpecialize`, and `S17At_eq_frozenSpecialize` (the
+  independently transcribed Semaev-2004 left fold and its coefficient-unit-one
+  bridge are generic kernel/Mathlib proofs; the file contains no
+  `native_decide` and introduces no compiler-trusted owner)
 - `Ecdlp/Proved/M16FactorBaseLiftableDefs.lean` → `boolCountAcc_eq` (the
   predicate-abstract accumulator proof is a generic kernel/Mathlib argument and
   introduces no closed secp256k1 computation)
@@ -224,6 +231,14 @@ secp256k1 parameter, factorization, primality, and cardinality leaves; the
 full-ledger audit reports those dependencies rather than misclassifying the
 conclusions as pure-kernel results.
 
+The new `SemaevLeftFoldAffine.lean` and `M16DirectSystemRootBridge.lean`
+modules add **zero** `native_decide` owners. The latter's concrete `Fp`
+statements, including `chainEquations_iff`, `directSolEquivReduced`, and
+`S17At_eq_zero_iff_chartPolynomialCover_over`, nevertheless transitively
+inherit the repository's pre-existing compiler-trusted secp256k1 Pratt and
+primality leaves through the canonical finite-field instances. This is
+inherited trust, not a new closed computation in either module.
+
 ### (c) Mathlib + `native_decide` MIX — kernel proof skeleton, compiler-checked leaves
 
 Here the *argument* is a kernel-checked Mathlib proof, but one or more small numeric
@@ -251,6 +266,12 @@ depends on `Lean.ofReduceBool`). These are the rows tagged "Mathlib + native_dec
   public conclusions transitively inherit the existing compiler-trusted
   secp256k1 factorization/primality leaves used by the root cardinality; solver
   budget conclusions additionally inherit the six new owners catalogued above.
+- `Ecdlp/Proved/M16DirectSystemRootBridge.lean` → `chainEquations_iff`,
+  `directSolEquivReduced`, and
+  `S17At_eq_zero_iff_chartPolynomialCover_over`. Their proof bodies are
+  ordinary kernel/Mathlib composition and the source file contains no
+  `native_decide`; the concrete `Fp` specialization inherits only the existing
+  compiler-trusted secp256k1 Pratt/primality dependency chain.
 - `Ecdlp/Proved/M16FactorBaseLiftable.lean` → the public generator/orbit,
   liftable/nonliftable, character-sum, fiber, and signed-point counts. Kernel
   composition surrounds exactly the two new census owners catalogued above and
@@ -301,7 +322,7 @@ Distinguishing *machine-enforced* (a red build blocks merge) from *documentation
 | `Ensure no incomplete proofs remain` | `grep -rniI --include='*.lean' --exclude-dir=Targets 'sorry' Ecdlp/` — fails if `sorry`/`admit` text appears in any **built** `.lean` file. `Ecdlp/Targets/` (open stems) is excluded by design. | **MACHINE-ENFORCED**, with the documented scope limit that it is a *text* grep over built files and deliberately skips `Targets/`. |
 | `Ensure no built file imports an open target stem` | `grep` for `import Ecdlp.Targets` outside `Targets/`. Closes the hole where a built file could pull a `sorry`-bearing stem into the build graph (since `sorry` is only a warning). | **MACHINE-ENFORCED.** This is the guard that makes the previous grep sound. |
 | `Fetch prebuilt Mathlib cache` + `Build and verify ALL proofs` — `lake build` | The **kernel** re-checks every built proof term. A `sorry` that reached the build graph, or any type error, fails here. | **MACHINE-ENFORCED.** This is the core verification: a green `lake build` means the kernel accepted every built theorem. |
-| `Axiom audit (no sorryAx, no custom axioms)` — `lake env lean Ecdlp/LedgerAxiomAudit.lean` → `scripts/check_axioms.py` | Generates `#print axioms` for every named declaration resolved from all 311 ledger rows. It fails on `sorryAx`, guard/custom axioms, unknown names, or any mismatch between Lean output and `data/result_registry.json`; compiler-trust markers from `native_decide` are disclosed. | **MACHINE-ENFORCED and exhaustive over the named ledger declaration set.** Seven anonymous instance targets are source-resolved exemptions because they have no source-level declaration name; their defining files are still built and their named load-bearing theorems are audited. |
+| `Axiom audit (no sorryAx, no custom axioms)` — `lake env lean Ecdlp/LedgerAxiomAudit.lean` → `scripts/check_axioms.py` | Generates `#print axioms` for every named declaration resolved from all 313 ledger rows. It fails on `sorryAx`, guard/custom axioms, unknown names, or any mismatch between Lean output and `data/result_registry.json`; compiler-trust markers from `native_decide` are disclosed. | **MACHINE-ENFORCED and exhaustive over the named ledger declaration set.** Seven anonymous instance targets are source-resolved exemptions because they have no source-level declaration name; their defining files are still built and their named load-bearing theorems are audited. |
 | `Typecheck open target stems (non-blocking)` | `lake env lean` over `Ecdlp/Targets/*.lean`; `continue-on-error: true`. | **DOCUMENTATION/INFO ONLY.** A stem failing to typecheck emits a warning, never blocks. |
 | `Featherless API smoke test`, `Prover target attempt`, report upload | All `continue-on-error: true` and skipped on PRs. | **DOCUMENTATION/INFO ONLY.** Prover orchestration; cannot affect the verification verdict. |
 

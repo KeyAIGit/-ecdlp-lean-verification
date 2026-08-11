@@ -186,6 +186,8 @@ import Ecdlp.Proved.FourTorsionCount
 import Ecdlp.Proved.CompressedDivisionPoly
 -- Exact secp256k1 M16 factor-base census and narrow counting-only gates.
 import Ecdlp.Proved.M16FactorBaseFinite
+import Ecdlp.Proved.SemaevLeftFoldAffine
+import Ecdlp.Proved.M16DirectSystemRootBridge
 import Ecdlp.Proved.M16SolverGate
 import Ecdlp.Proved.M16FactorBaseSymmetricGate
 import Ecdlp.Proved.M16FactorBaseLiftableDefs
