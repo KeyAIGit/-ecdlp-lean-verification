@@ -82,9 +82,11 @@ jobs:
           ./configure CFLAGS="-O2 -g0"
           make -j2
           test -x ./msolve
+          test -x ./.libs/msolve
           ./msolve --help > "$RUNNER_TEMP/msolve-help.txt" 2>&1 || true
-          ldd ./msolve | tee "$RUNNER_TEMP/msolve-ldd.txt"
-          cp ./msolve "$RUNNER_TEMP/msolve"
+          file ./.libs/msolve | tee "$RUNNER_TEMP/msolve-file.txt"
+          ldd ./.libs/msolve | tee "$RUNNER_TEMP/msolve-ldd.txt" || true
+          printf '%s\n' "$SRC/msolve" > "$RUNNER_TEMP/msolve-path.txt"
 
       - name: Decode and verify the frozen 52-system bundle
         shell: bash
@@ -116,13 +118,14 @@ jobs:
           set -uo pipefail
           ROOT="$RUNNER_TEMP/glv-suite"
           LOG_DIR="$GITHUB_WORKSPACE/msolve_logs/$CASE"
-          MSOLVE="$RUNNER_TEMP/msolve"
+          MSOLVE="$(cat "$RUNNER_TEMP/msolve-path.txt")"
           mkdir -p "$LOG_DIR"
           printf 'case=%s\nmsolve=%s\nthreads=%s\ntimeout_seconds=%s\nrunner=%s\nsha=%s\n' \
             "$CASE" "$MSOLVE" "$THREADS" "$TIMEOUT_SECONDS" "$RUNNER_OS" "$GITHUB_SHA" \
             > "$LOG_DIR/environment.txt"
           cp "$RUNNER_TEMP/msolve-help.txt" "$LOG_DIR/msolve_help.txt"
           cp "$RUNNER_TEMP/msolve-ldd.txt" "$LOG_DIR/msolve_ldd.txt"
+          cp "$RUNNER_TEMP/msolve-file.txt" "$LOG_DIR/msolve_file.txt"
           cp "$RUNNER_TEMP/msolve-tar-list.txt" "$LOG_DIR/msolve_tar_list.txt"
 
           count=0
@@ -196,7 +199,7 @@ jobs:
                   'log_tail':'\n'.join(log.splitlines()[-30:]),
               })
           rows.sort(key=lambda r:r['case'])
-          pathlib.Path('combined').mkdir()
+          pathlib.Path('combined').mkdir(exist_ok=True)
           pathlib.Path('combined/combined_summary.json').write_text(json.dumps({'expected':52,'observed':len(rows),'rows':rows},indent=2)+'\n')
           with pathlib.Path('combined/combined_summary.csv').open('w',newline='') as f:
               w=csv.DictWriter(f,fieldnames=['case','family','exit_code','timed_out','elapsed_wall','max_rss_kb'])
