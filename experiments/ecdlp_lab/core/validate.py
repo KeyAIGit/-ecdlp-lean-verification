@@ -1,4 +1,4 @@
-"""One-command offline validation for the P01 lab contract boundary."""
+"""One-command offline validation for the ECDLP lab contract boundary."""
 
 from __future__ import annotations
 
@@ -15,10 +15,16 @@ from .canonical import (
     StrictJSONError,
     canonical_json_bytes,
     load_json,
-    is_sha256,
     sha256_file,
     sha256_json,
     strict_loads,
+)
+from .catalog_registry import (
+    CI_CATALOG_ID,
+    LEGACY_CATALOG_ID,
+    CatalogAuthority,
+    CatalogRegistryError,
+    load_catalog_registry,
 )
 from .contracts import (
     PRIMARY_ID_FIELDS,
@@ -37,12 +43,6 @@ SCHEMA_ROOT = LAB_ROOT / "contracts"
 FIXTURE_ROOT = LAB_ROOT / "fixtures" / "contracts"
 VALID_MANIFEST = FIXTURE_ROOT / "valid_manifest_v1.json"
 INVALID_MANIFEST = FIXTURE_ROOT / "invalid_cases_v1.json"
-REUSE_INVENTORY = REPO_ROOT / "tasks" / "ECDLP_LAB_REUSE_INVENTORY.json"
-LEGACY_CATALOG_ID = "p1_curve_catalog"
-LEGACY_CATALOG_PATH = (
-    "experiments/ml_structure_probe/reports/p1_toy_scaling/curve_catalog.json"
-)
-
 SEMANTIC_CASE_CODES = {
     "self_validation": "contract.validation.self_validator",
     "external_target_point": "contract.method_request.target_binding",
@@ -200,62 +200,206 @@ def _schema_issues() -> tuple[dict[str, dict[str, Any]], list[Issue]]:
     return schemas, issues
 
 
-def _trusted_catalog_sha256s() -> tuple[frozenset[str], list[Issue]]:
-    """Load and verify the one P01 catalog authority from the frozen inventory."""
+def _catalog_authorities() -> tuple[tuple[CatalogAuthority, ...], list[Issue]]:
+    """Return entries only after the complete P02 registry verifies."""
 
     try:
-        inventory = load_json(REUSE_INVENTORY)
-    except (OSError, ValueError) as error:
-        return frozenset(), [
-            _problem("inventory.load", str(REUSE_INVENTORY), str(error))
+        return load_catalog_registry(repo_root=REPO_ROOT), []
+    except (CatalogRegistryError, OSError, TypeError, ValueError) as error:
+        return (), [
+            _problem("catalog_registry", str(REPO_ROOT), str(error))
         ]
-    if (
-        not isinstance(inventory, dict)
-        or inventory.get("inventory_id") != "ECDLP-LAB-REUSE-INVENTORY-V1"
-        or not isinstance(inventory.get("entries"), list)
+
+
+def _trusted_catalog_sha256s() -> tuple[frozenset[str], list[Issue]]:
+    """Compatibility helper returning only fully verified raw digests."""
+
+    authorities, issues = _catalog_authorities()
+    return frozenset(authority.sha256 for authority in authorities), issues
+
+
+def _catalog_result_issues(
+    authority: CatalogAuthority, result: Any
+) -> list[Issue]:
+    issues: list[Issue] = []
+    result_issues = getattr(result, "issues", None)
+    if not isinstance(result_issues, tuple) or any(
+        not isinstance(issue, Issue) for issue in result_issues
     ):
-        return frozenset(), [
-            _problem("inventory.shape", str(REUSE_INVENTORY), "unexpected inventory")
-        ]
-    matches = [
-        row
-        for row in inventory["entries"]
-        if isinstance(row, dict) and row.get("id") == LEGACY_CATALOG_ID
-    ]
-    if len(matches) != 1:
-        return frozenset(), [
+        return [
             _problem(
-                "inventory.catalog",
-                str(REUSE_INVENTORY),
-                "expected exactly one frozen P1 catalog entry",
+                "catalog_validator.shape",
+                authority.path,
+                "validator issues must be a tuple of Issue values",
             )
         ]
-    row = matches[0]
-    digest = row.get("sha256")
-    if row.get("path") != LEGACY_CATALOG_PATH or not is_sha256(digest):
-        return frozenset(), [
+    issues.extend(result_issues)
+    if getattr(result, "passed", None) is not True:
+        issues.append(
             _problem(
-                "inventory.catalog",
-                str(REUSE_INVENTORY),
-                "frozen P1 catalog path/digest declaration drifted",
+                "catalog_validator.failed",
+                authority.path,
+                "independent catalog validation did not pass",
+            )
+        )
+    if getattr(result, "catalog_sha256", None) != authority.sha256:
+        issues.append(
+            _problem(
+                "catalog_validator.digest",
+                authority.path,
+                "validator result does not bind the registry-authorized raw digest",
+            )
+        )
+    fixture_count = getattr(result, "fixture_count", None)
+    if type(fixture_count) is not int or fixture_count != authority.curve_count:
+        issues.append(
+            _problem(
+                "catalog_validator.count",
+                authority.path,
+                "validator fixture count differs from registry authority",
+            )
+        )
+    fixture_results = getattr(result, "fixture_results", None)
+    if not isinstance(fixture_results, tuple) or len(fixture_results) != authority.curve_count:
+        issues.append(
+            _problem(
+                "catalog_validator.results",
+                authority.path,
+                "validator must return one immutable result per curve fixture",
+            )
+        )
+    if getattr(result, "passed", None) is True and result_issues:
+        issues.append(
+            _problem(
+                "catalog_validator.contradiction",
+                authority.path,
+                "validator cannot pass while reporting issues",
+            )
+        )
+    return issues
+
+
+def _catalog_schema_issues(authority: CatalogAuthority) -> list[Issue]:
+    schema_location = "experiments/ecdlp_lab/curves/catalog_schema.json"
+    try:
+        schema_path = resolve_artifact_path(
+            REPO_ROOT, schema_location, must_exist=True
+        )
+        schema = load_json(schema_path)
+        catalog = load_json(authority.resolved_path)
+    except (OSError, PathSafetyError, TypeError, ValueError) as error:
+        return [_problem("catalog_schema.load", schema_location, str(error))]
+    if not isinstance(schema, dict):
+        return [_problem("catalog_schema.type", schema_location, "schema is not an object")]
+    issues = [
+        _problem(
+            "catalog_schema.definition",
+            f"{schema_location}:{issue.path}",
+            str(issue),
+        )
+        for issue in schema_definition_issues(schema)
+    ]
+    issues.extend(
+        _problem(
+            "catalog_schema.validation",
+            f"{authority.path}:{issue.path}",
+            str(issue),
+        )
+        for issue in validate_schema(catalog, schema)
+    )
+    return issues
+
+
+def _registered_catalog_issues(
+    authorities: tuple[CatalogAuthority, ...],
+) -> list[Issue]:
+    """Exercise generation, legacy projection, and independent validation."""
+
+    if not authorities:
+        return []
+    by_id = {authority.catalog_id: authority for authority in authorities}
+    if set(by_id) != {CI_CATALOG_ID, LEGACY_CATALOG_ID}:
+        return [
+            _problem(
+                "catalog_registry.coverage",
+                str(REPO_ROOT),
+                "verified registry lacks the exact CI/legacy authority pair",
             )
         ]
     try:
-        path = resolve_artifact_path(REPO_ROOT, LEGACY_CATALOG_PATH, must_exist=True)
-        actual = sha256_file(path)
-    except (OSError, ValueError, PathSafetyError) as error:
-        return frozenset(), [
-            _problem("inventory.catalog", LEGACY_CATALOG_PATH, str(error))
-        ]
-    if actual != digest:
-        return frozenset(), [
+        from experiments.ecdlp_lab.curves.generate_ci_catalog import (
+            check_committed_catalog,
+        )
+        from experiments.ecdlp_lab.curves.p1_adapter import load_legacy_catalog
+        from experiments.ecdlp_lab.curves.validate_catalog import (
+            validate_catalog_bytes,
+            validate_legacy_catalog_bytes,
+        )
+    except ImportError as error:
+        return [
             _problem(
-                "inventory.catalog_hash",
-                LEGACY_CATALOG_PATH,
-                "catalog bytes differ from the frozen P00 inventory",
+                "catalog_validator.import",
+                str(LAB_ROOT / "curves"),
+                str(error),
             )
         ]
-    return frozenset({digest}), []
+
+    issues: list[Issue] = []
+    ci_authority = by_id[CI_CATALOG_ID]
+    legacy_authority = by_id[LEGACY_CATALOG_ID]
+    issues.extend(_catalog_schema_issues(ci_authority))
+    try:
+        generated_ok, generated_detail = check_committed_catalog()
+    except (OSError, RuntimeError, TypeError, ValueError) as error:
+        issues.append(_problem("catalog_fixpoint", ci_authority.path, str(error)))
+    else:
+        if not generated_ok:
+            issues.append(
+                _problem("catalog_fixpoint", ci_authority.path, generated_detail)
+            )
+        elif generated_detail != ci_authority.sha256:
+            issues.append(
+                _problem(
+                    "catalog_fixpoint.digest",
+                    ci_authority.path,
+                    "fresh generation digest differs from registry authority",
+                )
+            )
+
+    try:
+        ci_raw = ci_authority.resolved_path.read_bytes()
+        ci_result = validate_catalog_bytes(
+            ci_raw,
+            expected_spec_sha256=ci_authority.spec_sha256,
+            exact_count_authorized=True,
+        )
+    except (OSError, RuntimeError, TypeError, ValueError) as error:
+        issues.append(_problem("catalog_validator.ci", ci_authority.path, str(error)))
+    else:
+        issues.extend(_catalog_result_issues(ci_authority, ci_result))
+
+    try:
+        legacy_raw = legacy_authority.resolved_path.read_bytes()
+        legacy = load_legacy_catalog(
+            catalog_path=legacy_authority.path,
+            catalog_sha256=legacy_authority.sha256,
+            repo_root=REPO_ROOT,
+        )
+        if legacy.raw_sha256 != legacy_authority.sha256:
+            raise ValueError("legacy projection lost its raw registry binding")
+        if len(legacy.curves) != legacy_authority.curve_count:
+            raise ValueError("legacy projection curve count drifted")
+        legacy_result = validate_legacy_catalog_bytes(
+            legacy_raw,
+            expected_catalog_sha256=legacy_authority.sha256,
+        )
+    except (OSError, RuntimeError, TypeError, ValueError) as error:
+        issues.append(
+            _problem("catalog_validator.legacy", legacy_authority.path, str(error))
+        )
+    else:
+        issues.extend(_catalog_result_issues(legacy_authority, legacy_result))
+    return issues
 
 
 def _symlink_case(
@@ -394,13 +538,17 @@ def _adversarial_issues(
 
 
 def validate_offline() -> tuple[dict[str, int], list[Issue]]:
-    """Run every dependency-free P01 validation and return a stable report."""
+    """Run every dependency-free lab validation and return a stable report."""
 
     schemas, issues = _schema_issues()
     records, record_hashes, fixture_issues = _load_valid_bundle()
     issues.extend(fixture_issues)
-    trusted_catalogs, inventory_issues = _trusted_catalog_sha256s()
-    issues.extend(inventory_issues)
+    catalog_authorities, registry_issues = _catalog_authorities()
+    issues.extend(registry_issues)
+    trusted_catalogs = frozenset(
+        authority.sha256 for authority in catalog_authorities
+    )
+    issues.extend(_registered_catalog_issues(catalog_authorities))
     trusted_targets = frozenset(
         record["target_vector_id"]
         for record in records
@@ -443,7 +591,7 @@ def validate_offline() -> tuple[dict[str, int], list[Issue]]:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Validate ECDLP lab P01 offline.")
+    parser = argparse.ArgumentParser(description="Validate the ECDLP lab offline.")
     parser.add_argument(
         "--offline",
         action="store_true",

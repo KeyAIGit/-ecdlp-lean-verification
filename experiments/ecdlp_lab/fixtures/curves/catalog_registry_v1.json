@@ -1,0 +1,24 @@
+{
+  "catalogs": [
+    {
+      "catalog_id": "ecdlp_lab_ci_curve_catalog_v1",
+      "curve_count": 6,
+      "path": "experiments/ecdlp_lab/fixtures/curves/ci_curve_catalog_v1.json",
+      "sha256": "7f125738007c5399a545ae4d0309335f0362d6feb5431c05e3d17665cdf03a0a",
+      "source_kind": "committed_lab_catalog",
+      "spec_path": "experiments/ecdlp_lab/fixtures/curves/ci_catalog_spec_v1.json",
+      "spec_sha256": "430bad69f03521ccab5cd12a7cf70175b4cd5923755166641a40cc3e050836ef"
+    },
+    {
+      "catalog_id": "legacy_p1_curve_catalog",
+      "curve_count": 40,
+      "path": "experiments/ml_structure_probe/reports/p1_toy_scaling/curve_catalog.json",
+      "sha256": "d293afa7e5b614f39ed00356e35ee81a400b57ee9656907170193cb3aca0bbd7",
+      "source_kind": "read_only_legacy_catalog",
+      "spec_path": null,
+      "spec_sha256": null
+    }
+  ],
+  "registry_kind": "ecdlp_lab_curve_catalog_registry_v1",
+  "schema_version": 1
+}
