@@ -7,7 +7,7 @@
 
 ## Canonical accounting
 
-- **319 ledger rows / ~280 distinct kernel-verified results** (39 rows are
+- **320 ledger rows / ~281 distinct kernel-verified results** (39 rows are
   alternate-form / supporting restatements of an already-counted result).
 - **0 `sorry`** anywhere in the built (`Ecdlp/`-minus-`Targets/`) tree.
 - **No CUSTOM axioms.** Everything depends only on Lean/Mathlib's standard
@@ -40,6 +40,17 @@
   zero, and the base subtotal cancels the target. A thin `FactorBaseX`
   specialization changes no scope: arbitrary closure lifts, witness recovery
   or uniqueness, relation production, rank, solving, and cost remain unproved.
+- **The base-field recovery fiber is an exact finite specification, not a
+  recovery algorithm.** Its square-root tuples retain both target orientations
+  as explicit Boolean labels; global negation gives
+  `RecoveryFiber ≃ NormalizedFiber × Bool`, and the canonical filtered
+  `Finset` contains exactly those labelled witnesses. For an affine supplied
+  target above `X`, the fiber is nonempty exactly when `S17At x X = 0` and all
+  sixteen coordinates lift. The affine hypothesis excludes target point zero,
+  although the labelled structural equivalence remains zero-target safe. The
+  doubling counts labels, not necessarily distinct unlabelled recoveries, and
+  proves no efficient `Recover`, PFPO, `AllRoots`, solver, enumeration cost,
+  yield/rank, runtime/memory/total cost, scalar recovery, or ECDLP shortcut.
 - **Cancellation pairs give a large root-output family, not a solver or cost
   lower bound.** For a proved nonidentity target, seven independently chosen
   labelled pairs inject `283527^7` liftable assignments and `564522^7`
