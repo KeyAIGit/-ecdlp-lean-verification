@@ -13,7 +13,7 @@ base. This is a living document; counts are for the v1 corpus.
 
 | Status | Count | Meaning |
 |---|---|---|
-| **Proved** | see `VERIFIED.md` (~283 distinct results / 322 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
+| **Proved** | see `VERIFIED.md` (~284 distinct results / 323 rows) | accepted by the Lean kernel, no `sorry`, no custom axioms |
 | **Tractable now** | ~55 | `GroupTheory.OrderOfElement / Subgroup` — structural group facts |
 | **Barrier: no cost model** | ~55 | complexity claims; Lean has no "group-operation count" framework |
 | **Barrier: not in Mathlib** | ~62 | 38 quantum-circuit cost model, 24 lattice reduction |
@@ -240,6 +240,19 @@ exact `Θ` statements.
   image-membership criterion is proved. The partition supplies no efficient
   enumeration, useful relation yield, independence, rank,
   sparse-linear-algebra, recovery, or cost bridge.
+  The GLV row layer then reorganizes the 283527 liftable columns into three
+  phases over 94509 census orbit representatives and folds phase `j` by the
+  published scalar `lambda^j`. This preserves exact integral row evaluation;
+  modulo the group order it is split surjective with ambient raw/orbit/kernel
+  dimensions `283527`, `94509`, and `189018`, while an explicit integral alias
+  proves noninjectivity. These are ambient coefficient-space dimensions, not
+  the rank, independence, or yield of a collected relation matrix. The census
+  and lower-residue references are noncomputable conventions rather than an
+  enumerator, square-root, decompression, or recovery implementation, and no
+  comparison theorem identifies them with the experimental minimum-point-
+  encoding convention. No `Recover`, PFPO, `AllRoots`, solver, relation
+  distribution, sparse-linear-algebra, runtime/memory/total-cost, scalar-
+  recovery, or ECDLP consequence follows.
   The explicit cancellation backpointer layer now sharpens one collision:
   after fixing a liftable anchor and its noncomputable lower-residue reference,
   seven labelled factor-base choices inject into root-plus-recovery

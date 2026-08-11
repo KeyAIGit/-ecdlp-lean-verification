@@ -202,7 +202,9 @@ private theorem beta_cube : (Secp256k1.beta : Fp) ^ 3 = 1 := by
     linear_combination h0
   linear_combination ((Secp256k1.beta : Fp) - 1) * hbeta
 
-private theorem rhs_beta_mul (x : Fp) :
+/-- Multiplication of an x-coordinate by the secp256k1 GLV field eigenvalue
+preserves the curve right-hand side. -/
+theorem rhs_beta_mul (x : Fp) :
     rhs ((Secp256k1.beta : Fp) * x) = rhs x := by
   simp only [rhs, mul_pow, beta_cube, one_mul]
 
@@ -312,9 +314,16 @@ private noncomputable def indexedLiftableEquiv :
       IsLiftable (glvOrbitLayer z.1 z.2).1} ≃ LiftableFactorBaseX :=
   glvOrbitIndexEquiv.subtypeEquiv (fun _ ↦ Iff.rfl)
 
-private noncomputable def liftableOrbitEquiv :
+/-- The explicit three-layer GLV census restricts to an equivalence between
+liftable orbit layers and liftable factor-base coordinates. -/
+noncomputable def liftableOrbitEquiv :
     Fin 3 × LiftableGLVOrbitRep ≃ LiftableFactorBaseX :=
   layerLiftableEquiv.trans indexedLiftableEquiv
+
+@[simp] theorem liftableOrbitEquiv_apply_fst
+    (j : Fin 3) (i : LiftableGLVOrbitRep) :
+    (liftableOrbitEquiv (j, i)).1 = glvOrbitLayer j i.1 :=
+  rfl
 
 /-- Exactly `283527` of the `564522` factor-base coordinates lift. -/
 theorem card_liftableFactorBaseX :
