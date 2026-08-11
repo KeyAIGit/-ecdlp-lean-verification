@@ -200,5 +200,6 @@ import Ecdlp.Proved.M16FactorBaseLiftable
 import Ecdlp.Proved.M16FrobeniusPointSplit
 import Ecdlp.Proved.M16DirectPointSemantics
 import Ecdlp.Proved.M16PartitionedPointSemantics
+import Ecdlp.Proved.M16CancellationRootLowerBound
 import Ecdlp.Proved.M16SixWidthNoGo
 import Ecdlp.Proved.M16LiftableSixWidthNoGo

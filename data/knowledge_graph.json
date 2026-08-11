@@ -4,8 +4,8 @@
   "purpose": "A machine-readable, navigable index of the machine-checked (Lean 4 + Mathlib, no sorry or project-defined axioms) structure of the ECDLP landscape for secp256k1: verified ledger rows, their declaration and import dependencies, the corpus claims they verify, the formalization barriers that bound them, and the target-specific route/foundation decisions. It also carries the generated Research Engine v0 selection and retained outcome state, while keeping bounded exploration distinct from route promotion. Built for a future automated reasoner to load the known-and-verified frontier without re-deriving it.",
   "invariant": "Every ledger row resolves to declarations accepted by the Lean kernel with no sorry or project-defined axioms; compiler-trusted native_decide use is disclosed separately. This graph is derived evidence, not a proof.",
   "counts": {
-    "theorems": 318,
-    "ledger_rows": 318,
+    "theorems": 319,
+    "ledger_rows": 319,
     "barriers": 6,
     "families": 8,
     "critical_nodes": 17,
@@ -37,10 +37,10 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1243,
+    "edges": 1247,
     "by_edge_type": {
-      "imports": 570,
-      "member_of": 318,
+      "imports": 573,
+      "member_of": 319,
       "grounded_in_source_claim": 62,
       "requires_foundation": 41,
       "supports": 27,
@@ -214,10 +214,11 @@
       "Mathlib curve group law + generic Semaev chord iff + explicit tangent/infinity factorization; zero new native owners, inherited 10 secp256k1 primality native-owner families disclosed": 1,
       "induction through the complete normalized local Kummer fiber + existing exact projective/chart-cover equivalence; zero new native owners, inherited secp256k1 primality families disclosed": 1,
       "algebraic-closure square-root existence + exact direct-system/chart bridge + recursive Kummer signed-sum semantics; zero new native owners, inherited secp256k1 primality families disclosed": 1,
-      "exact finite partition + direct point semantics + existing conditional Frobenius/base-field two-torsion split; zero new native owners, inherited primality and no-two-torsion compiler trust disclosed": 1
+      "exact finite partition + direct point semantics + existing conditional Frobenius/base-field two-torsion split; zero new native owners, inherited primality and no-two-torsion compiler trust disclosed": 1,
+      "labelled finite-function injections + exact factor-base counts + point-sum semantics + reduced/direct root equivalence; zero new native owners, inherited certificate trust disclosed": 1
     },
     "by_area": {
-      "curve-torsion": 153,
+      "curve-torsion": 154,
       "primality": 64,
       "other": 35,
       "generic-hardness": 30,
@@ -6621,6 +6622,26 @@
       "family_id": "family-primality",
       "dependency_depth": 13,
       "gated": true
+    },
+    {
+      "id": "thm-318",
+      "name": "Ecdlp.M16CancellationRootLowerBound.LiftableReducedRoot`, `ReducedRoot`, `DirectRoot`, `cancellation_pair_root_lower_bounds`, `exists_nonzero_target_root_lower_bounds`, `maxRelationTermBudget_lt_liftable_cancellation_family`, `exists_target_budget_lt_directRoot_card",
+      "short_name": "LiftableReducedRoot`,",
+      "module": "Ecdlp.Proved.M16CancellationRootLowerBound",
+      "modules": [
+        "Ecdlp.Proved.M16CancellationRootLowerBound"
+      ],
+      "file": "Ecdlp/Proved/M16CancellationRootLowerBound.lean",
+      "files": [
+        "Ecdlp/Proved/M16CancellationRootLowerBound.lean"
+      ],
+      "claim": "Explicit cancellation-pair lower bounds for distinct direct M16 root outputs (fixing any signed liftable factor-base point `A` gives the nonidentity target `R = -(A+A)`. Seven arbitrary ordered factor-base choices are repeated in fixed labelled source-slot pairs and witnessed by points `B_i,-B_i`; the slot labels make the assignment map injective even when values repeat. Hence one target has at least `283527^7` fully liftable reduced roots and at least `564522^7` complete reduced roots, with the latter bound transported through the exact reduced/direct equivalence to literal sixteen-row System-(4) roots. An unconditional existential nonzero-target form is proved, as are comparisons placing the optimistic desk ceiling below the liftable family and the corresponding direct-root set. Honest scope: these are distinct output-cardinality and witness-backpointer facts only. Every added pair cancels tautologically, so the family proves no PFPO or solver-node charge, enumeration requirement, runtime or memory bound, relation usefulness/yield, independence or rank, recovery, sparse linear algebra, total cost, or ECDLP shortcut/lower bound. The module adds zero new `native_decide` owners; its conclusions transitively reuse existing secp256k1/factor-base certificates, the two liftable-census owners, and the base-field no-two-torsion chain, while the budget corollaries additionally reuse the existing `maxRelationTermBudget_lt_two_pow_115` arithmetic owner)",
+      "method": "labelled finite-function injections + exact factor-base counts + point-sum semantics + reduced/direct root equivalence; zero new native owners, inherited certificate trust disclosed",
+      "status": "proved",
+      "area": "curve-torsion",
+      "family_id": "family-curve-torsion",
+      "dependency_depth": 13,
+      "gated": true
     }
   ],
   "barriers": [
@@ -12763,6 +12784,16 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.M16CancellationRootLowerBound",
+      "to": "Ecdlp.Proved.M16DirectPointSemantics",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp.Proved.M16CancellationRootLowerBound",
+      "to": "Ecdlp.Proved.M16SolverGate",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.M16DirectPointSemantics",
       "to": "Ecdlp.Proved.FrozenProjectiveSecpChainSemantics",
       "type": "imports"
@@ -14564,6 +14595,11 @@
     },
     {
       "from": "Ecdlp",
+      "to": "Ecdlp.Proved.M16CancellationRootLowerBound",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
       "to": "Ecdlp.Proved.M16SixWidthNoGo",
       "type": "imports"
     },
@@ -16225,6 +16261,11 @@
     {
       "from": "thm-317",
       "to": "family-primality",
+      "type": "member_of"
+    },
+    {
+      "from": "thm-318",
+      "to": "family-curve-torsion",
       "type": "member_of"
     },
     {

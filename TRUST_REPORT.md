@@ -2,7 +2,7 @@
 
 > Counts here are a snapshot; the single canonical figure is **`STATUS.md`** (generated from `data/stats.json`). If they differ, STATUS.md wins.
 
-**Scope of the verified body.** `318 ledger rows / ~279 distinct kernel-verified
+**Scope of the verified body.** `319 ledger rows / ~280 distinct kernel-verified
 results`. A row may group several supporting declarations; the exact expansion is
 generated in `data/result_registry.json`. The built surface has **0 `sorry`, 0
 `admit`, and 0 custom axioms**. Open target stems are explicitly outside the built
@@ -276,6 +276,16 @@ families and the existing base-field no-two-torsion certificate chain. This is
 transitive reuse of previously catalogued compiler-trusted leaves, not a new
 closed computation or a new native owner in the partition module.
 
+`M16CancellationRootLowerBound.lean` adds **zero** `native_decide` owners. Its
+labelled-pair injections and cardinal inequalities are ordinary Lean/Mathlib
+composition. The root lower bounds transitively reuse the existing secp256k1
+parameter/primality and factor-base certificate families, the two existing
+liftable-census native owners, and the existing base-field no-two-torsion
+certificate chain. The budget corollaries additionally reuse the already
+catalogued `M16SolverGate.maxRelationTermBudget_lt_two_pow_115` arithmetic
+owner. These are inherited leaves, not new closed computations in this module;
+the comparison remains output cardinality rather than a PFPO or runtime charge.
+
 ### (c) Mathlib + `native_decide` MIX — kernel proof skeleton, compiler-checked leaves
 
 Here the *argument* is a kernel-checked Mathlib proof, but one or more small numeric
@@ -347,6 +357,16 @@ depends on `Lean.ofReduceBool`). These are the rows tagged "Mathlib + native_dec
   conclusions transitively inherit the secp256k1 primality native-owner
   families **and** the pre-existing base-field no-two-torsion certificate
   chain.
+- `Ecdlp/Proved/M16CancellationRootLowerBound.lean` →
+  `cancellation_pair_root_lower_bounds`,
+  `exists_nonzero_target_root_lower_bounds`,
+  `maxRelationTermBudget_lt_liftable_cancellation_family`, and
+  `exists_target_budget_lt_directRoot_card`. Their proof bodies add no
+  `native_decide` owner. The root-cardinality conclusions inherit the existing
+  secp256k1 parameter/primality and factor-base certificate families, the two
+  liftable-census owners, and the base-field no-two-torsion certificate chain;
+  the two desk-budget conclusions additionally inherit the existing
+  `maxRelationTermBudget_lt_two_pow_115` arithmetic owner.
 - `Ecdlp/Proved/M16FactorBaseLiftable.lean` → the public generator/orbit,
   liftable/nonliftable, character-sum, fiber, and signed-point counts. Kernel
   composition surrounds exactly the two new census owners catalogued above and
@@ -397,7 +417,7 @@ Distinguishing *machine-enforced* (a red build blocks merge) from *documentation
 | `Ensure no incomplete proofs remain` | `grep -rniI --include='*.lean' --exclude-dir=Targets 'sorry' Ecdlp/` — fails if `sorry`/`admit` text appears in any **built** `.lean` file. `Ecdlp/Targets/` (open stems) is excluded by design. | **MACHINE-ENFORCED**, with the documented scope limit that it is a *text* grep over built files and deliberately skips `Targets/`. |
 | `Ensure no built file imports an open target stem` | `grep` for `import Ecdlp.Targets` outside `Targets/`. Closes the hole where a built file could pull a `sorry`-bearing stem into the build graph (since `sorry` is only a warning). | **MACHINE-ENFORCED.** This is the guard that makes the previous grep sound. |
 | `Fetch prebuilt Mathlib cache` + `Build and verify ALL proofs` — `lake build` | The **kernel** re-checks every built proof term. A `sorry` that reached the build graph, or any type error, fails here. | **MACHINE-ENFORCED.** This is the core verification: a green `lake build` means the kernel accepted every built theorem. |
-| `Axiom audit (no sorryAx, no custom axioms)` — `lake env lean Ecdlp/LedgerAxiomAudit.lean` → `scripts/check_axioms.py` | Generates `#print axioms` for every named declaration resolved from all 318 ledger rows. It fails on `sorryAx`, guard/custom axioms, unknown names, or any mismatch between Lean output and `data/result_registry.json`; compiler-trust markers from `native_decide` are disclosed. | **MACHINE-ENFORCED and exhaustive over the named ledger declaration set.** Seven anonymous instance targets are source-resolved exemptions because they have no source-level declaration name; their defining files are still built and their named load-bearing theorems are audited. |
+| `Axiom audit (no sorryAx, no custom axioms)` — `lake env lean Ecdlp/LedgerAxiomAudit.lean` → `scripts/check_axioms.py` | Generates `#print axioms` for every named declaration resolved from all 319 ledger rows. It fails on `sorryAx`, guard/custom axioms, unknown names, or any mismatch between Lean output and `data/result_registry.json`; compiler-trust markers from `native_decide` are disclosed. | **MACHINE-ENFORCED and exhaustive over the named ledger declaration set.** Seven anonymous instance targets are source-resolved exemptions because they have no source-level declaration name; their defining files are still built and their named load-bearing theorems are audited. |
 | `Typecheck open target stems (non-blocking)` | `lake env lean` over `Ecdlp/Targets/*.lean`; `continue-on-error: true`. | **DOCUMENTATION/INFO ONLY.** A stem failing to typecheck emits a warning, never blocks. |
 | `Featherless API smoke test`, `Prover target attempt`, report upload | All `continue-on-error: true` and skipped on PRs. | **DOCUMENTATION/INFO ONLY.** Prover orchestration; cannot affect the verification verdict. |
 

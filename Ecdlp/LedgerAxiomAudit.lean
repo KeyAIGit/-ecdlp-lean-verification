@@ -528,6 +528,13 @@ CI elaborates it standalone and validates the output with
 #print axioms Ecdlp.GenericGroup.secp256k1_bsgs_steps_le
 #print axioms Ecdlp.GenericGroup.secp256k1_generic_security
 #print axioms Ecdlp.GenericGroup.two_pow_255_lt_secp256k1_n
+#print axioms Ecdlp.M16CancellationRootLowerBound.DirectRoot
+#print axioms Ecdlp.M16CancellationRootLowerBound.LiftableReducedRoot
+#print axioms Ecdlp.M16CancellationRootLowerBound.ReducedRoot
+#print axioms Ecdlp.M16CancellationRootLowerBound.cancellation_pair_root_lower_bounds
+#print axioms Ecdlp.M16CancellationRootLowerBound.exists_nonzero_target_root_lower_bounds
+#print axioms Ecdlp.M16CancellationRootLowerBound.exists_target_budget_lt_directRoot_card
+#print axioms Ecdlp.M16CancellationRootLowerBound.maxRelationTermBudget_lt_liftable_cancellation_family
 #print axioms Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_relation
 #print axioms Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_sum_add_target_eq_zero
 #print axioms Ecdlp.M16DirectPointSemantics.S17At_eq_zero_iff_exists_point_sum_eq_target_or_neg
