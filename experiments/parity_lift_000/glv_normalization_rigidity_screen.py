@@ -160,17 +160,19 @@ def run_case(p: int, order: int, generator: tuple[int, int]) -> CaseResult:
             exact_single = name
             break
 
-    # An exact weight-two candidate can be detected without enumerating all
-    # O(p^2) pairs: target/y must be the XOR of two retained factor vectors.
+    # An exact non-degenerate weight-two candidate can be detected without
+    # enumerating all O(p^2) pairs. Repeating the same factor is excluded:
+    # its quadratic character squares to the constant +1 on the admitted
+    # nonvanishing domain and therefore does not constitute a second factor.
     desired = target ^ y_vector
     exact_pair: tuple[int, int, int] | None = None
     for vector, first_shift in invariant_factors.items():
         positive = desired ^ vector
-        if positive in invariant_factors:
+        if positive != vector and positive in invariant_factors:
             exact_pair = (first_shift, invariant_factors[positive], 1)
             break
         negative = desired ^ complement ^ vector
-        if negative in invariant_factors:
+        if negative != vector and negative in invariant_factors:
             exact_pair = (first_shift, invariant_factors[negative], -1)
             break
 
