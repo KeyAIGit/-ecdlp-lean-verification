@@ -67,10 +67,21 @@ jobs:
             exit 1
           fi
 
-      - name: Install elan
+      - name: Install elan with transient-download retries
         run: |
-          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
-            | sh -s -- -y --default-toolchain none
+          installed=false
+          for attempt in 1 2 3 4 5; do
+            echo "Elan installation attempt ${attempt}/5"
+            if curl --retry 4 --retry-delay 2 --retry-all-errors -fsSL \
+                https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+                | sh -s -- -y --default-toolchain none; then
+              installed=true
+              break
+            fi
+            rm -rf "$HOME/.elan"
+            sleep $((attempt * 3))
+          done
+          test "$installed" = true
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
 
       - name: Fetch Mathlib cache
@@ -108,7 +119,9 @@ jobs:
             -f body="$(cat /tmp/comment.md)"
 
       - name: Upload normalized-period artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: normalized-period-blackbox-results
           path: /tmp/normalized_period_blackbox_results.json
+          if-no-files-found: error
