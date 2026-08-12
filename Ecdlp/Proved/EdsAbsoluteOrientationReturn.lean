@@ -23,11 +23,11 @@ namespace Ecdlp.ParityLift
 /-- A binary coboundary plus a constant bit telescopes over a finite segment. -/
 theorem binaryCocycle_sum_range
     (constant : ZMod 2)
-    (public : ℕ → ZMod 2) :
+    (publicBit : ℕ → ZMod 2) :
     ∀ length : ℕ,
       (∑ index ∈ Finset.range length,
-          (constant + public (index + 1) + public index)) =
-        (length : ZMod 2) * constant + public length + public 0 := by
+          (constant + publicBit (index + 1) + publicBit index)) =
+        (length : ZMod 2) * constant + publicBit length + publicBit 0 := by
   intro length
   induction length with
   | zero => simp
@@ -40,27 +40,27 @@ theorem binaryCocycle_sum_range
 canonical scalar, the residue is recovered from the public bit and that scalar
 bit. -/
 theorem residue_eq_public_add_scalarBit
-    (residue public constant scalarBit : ZMod 2)
-    (hpublic : public = constant * scalarBit + residue) :
-    residue = public + constant * scalarBit := by
+    (residue publicBit constant scalarBit : ZMod 2)
+    (hpublic : publicBit = constant * scalarBit + residue) :
+    residue = publicBit + constant * scalarBit := by
   rw [hpublic]
   ring
 
 /-- In the secp-like branch where the constant bit is one, absolute EDS residue
 and scalar parity differ only by the public point-function bit. -/
 theorem secpLike_residue_parity_equivalence
-    (residue public parity : ZMod 2)
-    (hpublic : public = parity + residue) :
-    residue = public + parity := by
+    (residue publicBit parity : ZMod 2)
+    (hpublic : publicBit = parity + residue) :
+    residue = publicBit + parity := by
   rw [hpublic]
   ring
 
 /-- Any decoder for one of two bits related by a public xor immediately gives a
 decoder for the other. -/
 theorem publicXor_transfersDecoder
-    (public hidden output : ZMod 2)
-    (houtput : output = public + hidden) :
-    hidden = public + output := by
+    (publicBit hidden output : ZMod 2)
+    (houtput : output = publicBit + hidden) :
+    hidden = publicBit + output := by
   rw [houtput]
   ring
 
