@@ -27,7 +27,7 @@ theorem squareEquivalent_refl
     {K : Type*} [CommRing K] (x : K) :
     SquareEquivalent x x := by
   refine ⟨1, ?_⟩
-  simp [SquareEquivalent]
+  simp
 
 /-- Multiplication combines two square-equivalence witnesses. -/
 theorem squareEquivalent_mul
@@ -47,7 +47,8 @@ theorem evenPower_squareEquivalent_one
     (x : K) (m : ℕ) :
     SquareEquivalent (x ^ (2 * m)) 1 := by
   refine ⟨x ^ m, ?_⟩
-  simp [SquareEquivalent, pow_mul]
+  simp only [one_mul]
+  rw [show 2 * m = m * 2 by omega, pow_mul]
 
 /-- Every odd power is square-equivalent to the original value. -/
 theorem oddPower_squareEquivalent_self
@@ -55,7 +56,7 @@ theorem oddPower_squareEquivalent_self
     (x : K) (m : ℕ) :
     SquareEquivalent (x ^ (2 * m + 1)) x := by
   refine ⟨x ^ m, ?_⟩
-  rw [pow_add, pow_one, pow_mul]
+  rw [show 2 * m + 1 = m * 2 + 1 by omega, pow_add, pow_mul, pow_one]
   ring
 
 /-- In a field, inversion preserves square class for nonzero values. -/
