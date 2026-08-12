@@ -39,8 +39,9 @@ theorem antiFixed_div_antiFixed_isFixed
     (htau : IsAntiFixedBy sigma tau) :
     IsFixedBy sigma (x / tau) := by
   change sigma (x / tau) = x / tau
-  rw [map_div, hx, htau]
-  simp
+  change sigma x = -x at hx
+  change sigma tau = -tau at htau
+  simp [div_eq_mul_inv, hx, htau]
 
 /-- A fixed scalar times an anti-invariant seed is anti-invariant. -/
 theorem fixed_mul_antiFixed_isAntiFixed
