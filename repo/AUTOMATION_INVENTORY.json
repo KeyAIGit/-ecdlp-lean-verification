@@ -166,6 +166,22 @@
       "disposition": "park",
       "spends_external_budget": true,
       "reason": "No target is currently registered in the paid attempt queue."
+    },
+    {
+      "file": ".github/workflows/parity-lift-focused.yml",
+      "class": "experiment_gate",
+      "trigger_policy": "target_push_or_manual",
+      "disposition": "keep_conditional",
+      "spends_external_budget": false,
+      "reason": "Replays the frozen toy-only parity-lift, rigidity, monodromy, and mixed-weight research gates on the isolated parity branch."
+    },
+    {
+      "file": ".github/workflows/direct-glv-carry-descent.yml",
+      "class": "experiment_gate",
+      "trigger_policy": "target_push_or_manual",
+      "disposition": "keep_conditional",
+      "spends_external_budget": false,
+      "reason": "Replays the frozen toy-only direct GLV carry-descent screen on its isolated research branch."
     }
   ]
 }
