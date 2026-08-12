@@ -1,0 +1,23 @@
+{
+  "claim_boundary": "Finite replay of the combinatorial witness only; not an EDS-specific, coordinate-circuit, or unconditional ECDLP lower bound.",
+  "date": "2026-08-12",
+  "deterministic_large_samples": {
+    "all_checks_passed": true,
+    "ambiguous_transcripts_witnessed": 90204,
+    "odd_n_max": 127,
+    "odd_n_min": 5,
+    "query_transcripts_checked": 96720,
+    "seed": 20260812
+  },
+  "exact_exhaustive": {
+    "all_ambiguity_iff_side_not_covered": true,
+    "all_minimum_query_sizes_equal_min_cut_complement": true,
+    "cut_instances": 91,
+    "largest_exact_minimum_query_size": 7,
+    "n_max": 14,
+    "n_min": 2,
+    "query_sets_checked": 393220
+  },
+  "package": "GENERIC-COCYCLE-INTEGRATION-003",
+  "schema_version": "0.1-untrusted"
+}
