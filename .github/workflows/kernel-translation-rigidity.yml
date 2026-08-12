@@ -1,0 +1,41 @@
+name: Kernel translation rigidity
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - Ecdlp/Proved/KernelTranslationRigidity.lean
+      - .github/workflows/kernel-translation-rigidity.yml
+  workflow_dispatch:
+
+concurrency:
+  group: kernel-translation-rigidity-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Reject incomplete proof
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/KernelTranslationRigidity.lean; then
+            echo "::error::Kernel translation proof contains sorry"
+            exit 1
+          fi
+
+      - name: Install elan
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check theorem
+        run: lake build Ecdlp.Proved.KernelTranslationRigidity
