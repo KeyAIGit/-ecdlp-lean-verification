@@ -1,20 +1,23 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "date": "2026-08-12",
   "instance": "secp256k1 ordered generator G with order-three GLV endomorphism",
-  "master_target": "compute g_G(Q), R3_G(Q), or h_G(x(Q)^3) exactly and reutilizably",
+  "master_target": "compute g_G(Q), R3_G(Q), h_G(x(Q)^3), or the equivalent Gaussian-period orientation exactly and reutilizably",
   "equivalences": [
     "C3_G(Q) = g_G(Q) * R3_G(Q)",
     "h_G(x(Q)^3) = g_G(Q) * chi(y(Q))",
-    "g_G(Q) = B_G(chi_G(Q)) for the faithful generator-oriented order-n phase"
+    "g_G(Q) = B_G(chi_G(Q)) for the faithful generator-oriented order-n phase",
+    "g_G(Q) = -sign(Im eta_G(Q)), eta_G(Q)=z+z^lambda+z^(lambda^2), z=chi_G(Q)"
   ],
   "existence": {
     "exact_public_function": true,
     "exact_linear_size_lookup_or_interpolation": true,
     "exact_generator_oriented_half_kernel": true,
     "exact_full_order_n_phase_plus_nonlinear_cut": true,
+    "exact_gaussian_period_orientation": true,
     "known_sub_sqrt_admissible_decoder": false,
-    "universal_nonexistence_proved": false
+    "universal_nonexistence_proved": false,
+    "pure_generic_sub_sqrt_decoder_excluded_conditionally": true
   },
   "admissibility": {
     "exact_on_all_nonzero_subgroup_points": true,
@@ -24,6 +27,7 @@
     "all_preprocessing_memory_advice_counted": true,
     "no_scalar_lift_or_hidden_branch": true,
     "no_materialized_order_n_dual_phase": true,
+    "no_materialized_period_field_or_conjugate_pair_table": true,
     "target_total_cost": "O(n^(1/2-epsilon))",
     "strong_target": "poly(log p, log n)"
   },
@@ -37,31 +41,34 @@
     "pure level-n cyclotomic Frobenius descent",
     "kernel-only generator-blind CM half-factor selection",
     "standard multiplicative bit-only theta or sigma splitting",
+    "purely generic exact reusable sub-sqrt carry decoding under the registered reduction",
     "polylog field-Fourier-L1 x-coordinate predicates",
     "split quotient characters with support at most four on frozen corpus",
     "rational square classes of total degree at most two on frozen corpus",
     "tested order-13441 lookup, spectrum and bounded nonlinear families"
   ],
   "open_classes": [
-    "direct nonlinear GLV triple-cut evaluator without faithful phase materialization",
+    "bounded-rank generator-sensitive conjugation-anti-invariant period resolvent",
     "high-degree low-circuit uniform base-field expressions",
-    "canonical p-adic or analytic exact descent",
+    "canonical p-adic or analytic exact orientation descent",
     "nonlocal order-dependent EDS section outside C_quad",
     "new generator-sensitive public field-character identity"
   ],
   "exact_large_representations": {
     "half_kernel": "H_G(Y)=product over carry-positive C3 orbits; degree (n-1)/6",
-    "cyclotomic_cut": "B_G(z)=sign Im((1-z)(1-z^lambda)(1-z^(lambda^2))) evaluated at z=chi_G(Q)"
+    "cyclotomic_cut": "B_G(z)=sign Im((1-z)(1-z^lambda)(1-z^(lambda^2))) evaluated at z=chi_G(Q)",
+    "gaussian_period": "eta_G(Q)=z+z^lambda+z^(lambda^2); g_G(Q)=-sign(Im eta_G(Q)); degree (n-1)/3 with (n-1)/6 conjugate pairs"
   },
-  "next_question": "Can the nonlinear GLV triple cut B_G(chi_G(Q)) be evaluated exactly below sqrt(n) without evaluating or storing a faithful order-n character, materializing the equivalent half-kernel partition, or hiding either object in advice or branch choice?",
+  "next_question": "Can the orientation sign of A_G(Q)=eta_G(Q)-conjugate(eta_G(Q)) be evaluated exactly below sqrt(n) without constructing eta_G, mu_n, the degree-(n-1)/3 period field, the (n-1)/6 conjugate-pair state, the equivalent half-kernel partition, or hidden equivalent advice?",
   "source_branches": [
     "research/parity-lift-000",
     "research/direct-glv-carry-descent-010"
   ],
   "source_packages": [
+    "DIRECT-GLV-CARRY-DESCENT-010",
     "GENERATOR-ORIENTED-HALF-KERNEL-027",
     "THETA-SPLITTING-DUALITY-028",
-    "DIRECT-GLV-CARRY-DESCENT-010"
+    "GLV-GAUSSIAN-PERIOD-CUT-029"
   ],
   "claim_boundary": "No unknown production target is accepted and no sub-square-root ECDLP algorithm is claimed."
 }
