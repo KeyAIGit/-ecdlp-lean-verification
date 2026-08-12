@@ -1,0 +1,95 @@
+name: Cross-curve public carry ML screen
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - experiments/parity_lift_000/cross_curve_carry_ml_screen.py
+      - .github/workflows/cross-curve-carry-ml.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: cross-curve-carry-ml-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Install ML dependencies
+        run: python3 -m pip install --disable-pip-version-check numpy scikit-learn
+
+      - name: Run held-out cross-curve screen
+        run: |
+          python3 experiments/parity_lift_000/cross_curve_carry_ml_screen.py \
+            --out cross_curve_carry_ml_results.json \
+            > /tmp/cross-curve-carry-ml.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('cross_curve_carry_ml_results.json').read_text())
+          print(json.dumps(data['aggregate'], indent=2))
+          print(json.dumps(data['model_summary'], indent=2))
+          for row in data['evaluations']:
+              print({
+                  'model': row['model'],
+                  'test_order': row['test_order'],
+                  'accuracy': row['observed_accuracy'],
+                  'advantage': row['observed_advantage'],
+                  'null_q95': row['null_q95_accuracy'],
+                  'above_q95': row['strictly_above_null_q95'],
+              })
+          PY
+
+      - name: Post decision to PR 365
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY' > /tmp/comment.md
+          import json
+          import os
+          from pathlib import Path
+          data = json.loads(Path('cross_curve_carry_ml_results.json').read_text())
+          admitted = data['aggregate']['admitted_models']
+          print('## CROSS-CURVE-CARRY-ML-018 held-out decision')
+          print()
+          print(f"Commit: `{os.environ['GITHUB_SHA']}`")
+          print()
+          print('```json')
+          print(json.dumps(data['model_summary'], indent=2))
+          print('```')
+          print()
+          print('| model | test order | accuracy | advantage | matched null 95% | above null |')
+          print('|---|---:|---:|---:|---:|---|')
+          for row in data['evaluations']:
+              print(
+                  f"| `{row['model']}` | {row['test_order']} | "
+                  f"{row['observed_accuracy']:.6f} | {row['observed_advantage']:.6f} | "
+                  f"{row['null_q95_accuracy']:.6f} | {row['strictly_above_null_q95']} |"
+              )
+          print()
+          if admitted:
+              print('Decision: **held-out public-predicate gate passed** for: ' + ', '.join(f'`{name}`' for name in admitted))
+              print('Next required steps are fixed-circuit export, independent frozen replay, Fourier measurement, and a literal local-SFT recovery proof. No secp256k1 claim is made yet.')
+          else:
+              print('Decision: **no fixed model passed the predeclared held-out gate**. This does not exclude other public circuits.')
+          PY
+          gh api --method POST \
+            repos/${GITHUB_REPOSITORY}/issues/365/comments \
+            -f body="$(cat /tmp/comment.md)"
+
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: cross-curve-carry-ml-results
+          path: cross_curve_carry_ml_results.json
