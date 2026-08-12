@@ -1,0 +1,75 @@
+name: Dual C3 orbit selector
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/DUAL_C3_ORBIT_SELECTOR_033.md'
+      - 'experiments/parity_lift_000/dual_c3_orbit_selector.py'
+      - 'Ecdlp/Proved/DualC3OrbitSelector.lean'
+      - '.github/workflows/dual-c3-orbit-selector.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact Frobenius orbit replay
+        run: |
+          python3 experiments/parity_lift_000/dual_c3_orbit_selector.py \
+            --out /tmp/dual_c3_orbit_selector_results.json \
+            > /tmp/dual-c3-orbit-selector.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('/tmp/dual_c3_orbit_selector_results.json').read_text())
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert aggregate['screened_cases'] >= 14
+          assert aggregate['all_quotient_orbit_sizes_match']
+          assert secp['frobenius_order'] == (secp['n'] - 1) // 6
+          assert secp['point_field_degree'] == (secp['n'] - 1) // 6
+          assert secp['c3_orbit_field_degree'] == (secp['n'] - 1) // 6
+          assert secp['pm_c3_orbit_field_degree'] == (secp['n'] - 1) // 12
+          assert secp['frobenius_orbits_on_c6_quotient'] == 2
+          assert secp['nonzero_point_frobenius_orbits'] == 6
+          assert secp['frobenius_times_c6_is_square_subgroup']
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/DualC3OrbitSelector.lean; then
+            echo '::error::Dual-orbit theorem contains sorry'
+            exit 1
+          fi
+
+      - name: Install elan
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check selector obstruction
+        run: lake build Ecdlp.Proved.DualC3OrbitSelector
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dual-c3-orbit-selector-results
+          path: |
+            /tmp/dual_c3_orbit_selector_results.json
+            /tmp/dual-c3-orbit-selector.log
+          retention-days: 90
