@@ -84,8 +84,14 @@ def run_case(
 
     if order % 6 != 1:
         raise AssertionError("prime GLV order was not 1 mod 6")
-    if tuple(sorted({order - 1, (-lam) % order, (-lam2) % order})) in coset_set:
+    positive_c3 = tuple(sorted({1, lam, lam2}))
+    negative_c3 = tuple(
+        sorted({order - 1, (-lam) % order, (-lam2) % order})
+    )
+    if positive_c3 == negative_c3:
         raise AssertionError("-C3 unexpectedly equaled C3")
+    if positive_c3 not in coset_set or negative_c3 not in coset_set:
+        raise AssertionError("distinguished C3 cosets were absent")
 
     conjugate_pairs: set[tuple[tuple[int, int, int], tuple[int, int, int]]] = set()
     for coset in cosets:
