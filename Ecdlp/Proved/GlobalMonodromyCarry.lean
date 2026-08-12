@@ -1,12 +1,13 @@
 import Mathlib
 import Ecdlp.Secp256k1Verified
 import Ecdlp.Proved.GlvNormalizationRigidity
+import Ecdlp.Proved.GlobalMonodromyBoundary
 
 /-!
 # Global monodromy carry boundary
 
-This file records the theorem-only arithmetic core of
-`GLOBAL-MONODROMY-SECTION-009`.
+This file records the theorem-only arithmetic core of the cyclotomic carry
+identity in `GLOBAL-MONODROMY-SECTION-009`.
 
 The analytic package constructs, on the cyclotomic cover, the phase
 
@@ -17,10 +18,11 @@ For canonical representatives `k₀,k₁,k₂` with
 
 `M(k) = 8*i*(-1)^γ*∏ sin(π*k_j/n)`.
 
-Thus the sign of the imaginary part is exactly the GLV carry.  Lean below
-formalizes the integer parity, sign-complement, dependent-pairing, odd-order
-binary-character, and standard theta-degree boundaries.  It does not formalize
-complex positivity, Weil pairings, theta groups, or a public carry oracle.
+Thus the sign of the imaginary part is exactly the GLV carry. Lean below
+formalizes the integer parity, sign complement, dependent-pairing, odd-order
+binary-character, anti-conjugate descent, and standard theta-degree boundaries.
+It does not formalize complex positivity, Weil pairings, theta groups, or a
+public carry oracle.
 -/
 
 namespace Ecdlp.ParityLift
@@ -41,9 +43,9 @@ theorem complementaryCarry_difference_odd
   rcases h with ⟨r, hr⟩
   omega
 
-/-- A binary phase cannot be a nontrivial character of an odd cyclic group.
-If an element has order dividing both `2` and `2*m+1`, it is the identity. -/
-theorem oddOrderBinaryPhase_trivial
+/-- A multiplicative binary phase cannot be a nontrivial character of an odd
+cyclic group. If its order divides both `2` and `2*m+1`, it is the identity. -/
+theorem oddOrderBinaryPairingPhase_trivial
     {K : Type*} [CommGroup K]
     (u : K) (m : ℕ)
     (h₂ : u ^ 2 = 1)
@@ -56,7 +58,7 @@ theorem oddOrderBinaryPhase_trivial
     _ = 1 := hodd
 
 /-- An alternating bilinear pairing is trivial when its second input is a
-known scalar multiple of the first.  This is the abstract obstruction behind
+known scalar multiple of the first. This is the abstract obstruction behind
 `e_n(Q, φ(Q)) = 1` when `φ(Q) = [λ]Q`. -/
 theorem dependentPairing_trivial
     {A K : Type*} [AddCommMonoid A] [CommMonoid K]
@@ -87,20 +89,9 @@ theorem standardThetaDegree_atLeastOrder
     n ≤ d :=
   Nat.le_of_dvd hd hdiv
 
-/-- Fixed secp256k1 multiplicative-order candidate used by the external exact
-certificate. -/
-def secp256k1EmbeddingDegree : ℕ :=
-  19298681539552699237261830834781317975472927379845817397100860523586360249056
-
-/-- The candidate is exactly `(n-1)/6`. -/
-theorem secp256k1EmbeddingDegree_times_six :
-    6 * secp256k1EmbeddingDegree = Secp256k1.n - 1 := by
-  native_decide
-
-/-- Any explicit representation with one base-field coordinate per extension
-basis element is already far larger than the square-root scale. -/
-theorem secp256k1EmbeddingDegree_gt_twoPow253 :
-    2 ^ 253 < secp256k1EmbeddingDegree := by
+/-- The exact monodromy embedding degree already exceeds `2^253`. -/
+theorem secp256k1MonodromyEmbeddingDegree_gt_twoPow253 :
+    2 ^ 253 < secp256k1MonodromyEmbeddingDegree := by
   native_decide
 
 end Ecdlp.ParityLift
