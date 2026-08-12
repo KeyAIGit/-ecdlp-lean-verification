@@ -65,19 +65,19 @@ jobs:
 
       - name: Install elan with retries
         run: |
-          curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+          curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
             https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
             -o /tmp/elan-init.sh
-          for attempt in 1 2 3 4; do
+          for attempt in 1 2 3 4 5 6 7 8; do
             if sh /tmp/elan-init.sh -y --default-toolchain none; then
               break
             fi
-            if [ "$attempt" = 4 ]; then
+            if [ "$attempt" = 8 ]; then
               echo '::error::elan installation failed after retries'
               exit 1
             fi
             rm -rf "$HOME/.elan"
-            sleep $((attempt * 3))
+            sleep $((attempt * 5))
           done
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
 
