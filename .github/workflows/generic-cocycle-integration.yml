@@ -5,11 +5,13 @@ on:
     branches:
       - research/generic-cocycle-integration-003
     paths:
+      - Ecdlp/Proved/CocycleIntegration.lean
       - Ecdlp/Proved/CocycleQueryAmbiguity.lean
       - experiments/cocycle_integration_003/**
       - .github/workflows/generic-cocycle-integration.yml
   pull_request:
     paths:
+      - Ecdlp/Proved/CocycleIntegration.lean
       - Ecdlp/Proved/CocycleQueryAmbiguity.lean
       - experiments/cocycle_integration_003/**
       - .github/workflows/generic-cocycle-integration.yml
@@ -40,8 +42,9 @@ jobs:
           lake build Ecdlp.Proved.CocycleQueryAmbiguity
           lake env lean Ecdlp/Proved/CocycleQueryAmbiguity.lean
           if grep -nE '^[[:space:]]*(sorry|admit)([[:space:]]|$)' \
+              Ecdlp/Proved/CocycleIntegration.lean \
               Ecdlp/Proved/CocycleQueryAmbiguity.lean; then
-            echo "::error::The proved file contains sorry/admit"
+            echo "::error::A proved file contains sorry/admit"
             exit 1
           fi
 
