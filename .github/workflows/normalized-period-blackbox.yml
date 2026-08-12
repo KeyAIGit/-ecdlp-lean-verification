@@ -39,10 +39,11 @@ jobs:
           assert aggregate['all_dual_signatures_distinct']
           assert aggregate['total_identity_checks'] == aggregate['total_carry_sign_checks']
           assert aggregate['total_identity_checks'] == aggregate['total_pairing_blackbox_checks']
-          assert aggregate['maximum_identity_residual'] < 3.0e-9
-          assert aggregate['maximum_pairing_residual'] < 3.0e-10
-          assert aggregate['maximum_recurrence_residual'] < 2.0e-8
-          assert aggregate['maximum_reality_residual'] < 3.0e-10
+          assert aggregate['maximum_identity_absolute_residual'] < 3.0e-10
+          assert aggregate['maximum_pairing_absolute_residual'] < 3.0e-10
+          assert aggregate['maximum_recurrence_absolute_residual'] < 2.0e-8
+          assert aggregate['maximum_reality_absolute_residual'] < 3.0e-10
+          assert aggregate['maximum_symmetry_relative_residual'] < 3.0e-10
           assert (
               data['secp256k1']['dual_pm_c3_orbit_choices']
               == data['secp256k1']['generator_oriented_half_kernel_degree']
