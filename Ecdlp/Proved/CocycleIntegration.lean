@@ -21,6 +21,8 @@ query-complexity lower bound. They formalize only the exact local-to-global
 obligation that any proposed theta/EDS phase lift must discharge.
 -/
 
+open scoped BigOperators
+
 namespace Ecdlp.CocycleIntegration
 
 variable {A : Type*} [AddCommGroup A]
