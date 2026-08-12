@@ -79,18 +79,42 @@ def run_case(p: int, n: int, generator: tuple[int, int]) -> dict[str, object]:
     evaluators = [None] + [
         dpe(points[scalar], p) for scalar in range(1, n)
     ]
-    point_characters = [0] + [
-        qc(raw_from_evaluator(evaluators[scalar], p, n), p)
+    raw_values = [0] + [
+        raw_from_evaluator(evaluators[scalar], p, n)
         for scalar in range(1, n)
+    ]
+    point_characters = [0] + [
+        qc(raw_values[scalar], p) for scalar in range(1, n)
     ]
     if any(value not in (-1, 1) for value in point_characters[1:]):
         raise AssertionError("point-function character was not binary")
 
     indices = index_family(n)
+    raw_field_checks = 0
     single_factor_checks = 0
     for scalar in range(1, n):
         evaluate = evaluators[scalar]
         for index in indices:
+            field_left = raw_values[(index * scalar) % n]
+            field_right = (
+                pow(raw_values[scalar], index * index, p)
+                * evaluate(index)
+                % p
+            )
+            if field_left != field_right:
+                raise AssertionError(
+                    (
+                        "raw_field",
+                        p,
+                        n,
+                        scalar,
+                        index,
+                        field_left,
+                        field_right,
+                    )
+                )
+            raw_field_checks += 1
+
             left = qc(evaluate(index), p)
             right = point_characters[(index * scalar) % n]
             if index & 1:
@@ -201,6 +225,7 @@ def run_case(p: int, n: int, generator: tuple[int, int]) -> dict[str, object]:
         "beta": beta,
         "lambda": eigenvalue,
         "indices_tested": len(indices),
+        "raw_field_checks": raw_field_checks,
         "single_factor_checks": single_factor_checks,
         "multiplicative_section_checks": multiplicative_section_checks,
         "glv_orbit_checks": glv_orbit_checks,
@@ -230,6 +255,10 @@ def main() -> None:
         ),
         "package": "POINT-FUNCTION-COBOUNDARY-005A",
         "point_character": "C(P)=chi(phi_raw(P))",
+        "raw_field_identity": (
+            "phi_raw([m]P)=phi_raw(P)^(m^2)*psi_m(P), "
+            "for P != O and n not dividing m"
+        ),
         "single_factor_identity": (
             "chi(psi_m(P))=C([m]P)*C(P)^(m mod 2), "
             "for P != O and n not dividing m"
@@ -258,6 +287,9 @@ def main() -> None:
         "cases": cases,
         "aggregate": {
             "cases": len(cases),
+            "raw_field_checks": sum(
+                case["raw_field_checks"] for case in cases
+            ),
             "single_factor_checks": sum(
                 case["single_factor_checks"] for case in cases
             ),
@@ -275,9 +307,9 @@ def main() -> None:
         },
         "claim_boundary": [
             (
-                "The theorem is conditional on the raw point-function "
-                "transport law while its source-normalization discrepancy "
-                "remains under review."
+                "The frozen full-field replay supports the raw transport "
+                "law, but its source-normalization discrepancy remains under "
+                "independent review."
             ),
             (
                 "Zeros are excluded: P and [m]P must be nonidentity so the "
