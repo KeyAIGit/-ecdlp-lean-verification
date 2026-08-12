@@ -1,0 +1,25 @@
+{
+  "binary_split": {
+    "all_valid_corrections_equal_parity": true,
+    "all_valid_midpoints_are_floor_halves": true,
+    "candidate_splits_checked": 16512,
+    "k_max": 127,
+    "k_min": 0,
+    "valid_splits_checked": 128
+  },
+  "claim_boundary": "Integer and cyclic-index arithmetic only; not an unconditional EDS, theta, coordinate-circuit, or ECDLP lower bound.",
+  "date": "2026-08-12",
+  "odd_cycle_half": {
+    "all_half_corrections_equal_parity_times_half_order": true,
+    "all_public_halves_are_canonical_representatives": true,
+    "all_public_halves_double_to_targets_mod_order": true,
+    "even_branch_equalities_checked": 2079,
+    "odd_branch_corrections_checked": 2016,
+    "odd_n_max": 127,
+    "odd_n_min": 3,
+    "odd_orders_checked": 63,
+    "scalar_cases_checked": 4095
+  },
+  "package": "CANONICAL-MIDPOINT-CIRCULARITY-005",
+  "schema_version": "0.1-untrusted"
+}
