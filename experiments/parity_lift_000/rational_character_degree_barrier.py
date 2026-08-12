@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Frozen replay for RATIONAL-CHARACTER-DEGREE-BARRIER-033.
+"""Frozen replay for RATIONAL-CHARACTER-DEGREE-BARRIER-035.
 
 This script verifies the exact j=1 Fourier coefficient of the scalar GLV carry
 on the fifteen frozen toy subgroups and evaluates the source-pinned rational
@@ -171,7 +171,7 @@ def main() -> None:
     secp = secp_block()
 
     payload = {
-        "package": "RATIONAL-CHARACTER-DEGREE-BARRIER-033",
+        "package": "RATIONAL-CHARACTER-DEGREE-BARRIER-035",
         "scope": (
             "frozen toy carry Fourier replay plus fixed-public secp256k1 "
             "numerical specialization; no external point or production target"
