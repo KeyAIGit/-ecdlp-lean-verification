@@ -1,5 +1,5 @@
 {
-  "schema_version": 5,
+  "schema_version": 6,
   "date": "2026-08-12",
   "instance": "secp256k1 ordered generator G with order-three GLV endomorphism",
   "master_target": "compute g_G(Q), R3_G(Q), h_G(x(Q)^3), or the equivalent normalized Gaussian-period orientation exactly and reutilizably",
@@ -17,6 +17,7 @@
     "exact_full_order_n_phase_plus_nonlinear_cut": true,
     "exact_gaussian_period_orientation": true,
     "exact_generator_normalized_period_observable": true,
+    "exact_bounded_rank_pairing_formula_with_dual_input": true,
     "exact_order_six_recurrence_over_large_coefficient_field": true,
     "known_sub_sqrt_admissible_decoder": false,
     "universal_nonexistence_proved": false,
@@ -32,6 +33,7 @@
     "all_preprocessing_memory_advice_counted": true,
     "no_scalar_lift_or_hidden_branch": true,
     "no_materialized_order_n_dual_phase": true,
+    "no_materialized_dual_C3_orbit_selector": true,
     "no_materialized_period_field_or_conjugate_pair_table": true,
     "no_translation_linear_state_of_linear_base_field_size": true,
     "target_total_cost": "O(n^(1/2-epsilon))",
@@ -48,6 +50,7 @@
     "Frobenius-invariant Gaussian-period trace norm and symmetric descent",
     "kernel-only generator-blind CM half-factor selection",
     "standard multiplicative bit-only theta or sigma splitting",
+    "standard bounded-rank pairing blackbox without a compact dual-C3 orbit selector",
     "purely generic exact reusable sub-sqrt carry decoding under the registered reduction",
     "explicit finite-field linear-output normalized-period recurrences below linear state",
     "explicit finite-field translation-linear state with arbitrary exact readout below linear state",
@@ -61,6 +64,7 @@
   "open_classes": [
     "high-degree low-size square-class arithmetic circuits",
     "direct nonlinear normalized-period coordinate circuit without translation-linear state",
+    "dual-orbit quadratic resolvent and possible scalar-Legendre route",
     "canonical p-adic or analytic exact orientation descent",
     "nonlocal order-dependent EDS section outside C_quad",
     "new generator-sensitive public field-character identity",
@@ -71,7 +75,13 @@
     "cyclotomic_cut": "B_G(z)=sign Im((1-z)(1-z^lambda)(1-z^(lambda^2))) evaluated at z=chi_G(Q)",
     "gaussian_period": "eta_G(Q)=z+z^lambda+z^(lambda^2); g_G(Q)=-sign(Im eta_G(Q)); degree (n-1)/3 with (n-1)/6 conjugate pairs",
     "normalized_period": "U_G(Q)=A_G(Q)/A_G(G); exact carry sign with natural (n-1)/6 quotient state",
+    "pairing_blackbox": "three normalized pairing factors after supplying one selected dual C3 orbit",
     "order_six_recurrence": "rank 6 over an extension of degree (n-1)/12; total linear-output state (n-1)/2 base-field words"
+  },
+  "dual_orbit_bounds": {
+    "nonzero_dual_point_field_degree": "(n-1)/6",
+    "plus_minus_C3_orbit_field_degree": "(n-1)/12",
+    "scope": "ordinary explicit extension representation on fixed secp256k1 parameters"
   },
   "state_lower_bounds": {
     "normalized_period_linear_output_recurrence": "at least (n-1)/2 base-field words",
@@ -83,7 +93,7 @@
     "quotient_R_of_x_cubed": "degree greater than 2^122.763 for f(Q)=y(Q)R(x(Q)^3)",
     "scope": "geometrically non-power rational functions; this is not an arithmetic-circuit-size lower bound"
   },
-  "next_question": "Can a uniformly generated polylog-size arithmetic circuit create the required square class despite the square-root rational-map degree barrier, without encoding the carry partition in constants, advice, a faithful dual character, or a large translation state?",
+  "next_question": "Can a uniformly generated polylog-size arithmetic circuit create the required square class despite the square-root rational-map degree barrier, without encoding the carry partition in constants, advice, a faithful dual character, a selected dual-C3 orbit, or a large translation state?",
   "source_branches": [
     "research/parity-lift-000",
     "research/direct-glv-carry-descent-010"
@@ -96,7 +106,9 @@
     "FROBENIUS-ORIENTATION-OBSTRUCTION-030",
     "ANTI-FROBENIUS-ORIENTATION-SEED-031",
     "NORMALIZED-PERIOD-BLACKBOX-032",
-    "RATIONAL-CHARACTER-DEGREE-BARRIER-033"
+    "DUAL-C3-ORBIT-SELECTOR-033",
+    "NORMALIZED-PERIOD-LINEAR-STATE-BARRIER-035",
+    "RATIONAL-CHARACTER-DEGREE-BARRIER-036"
   ],
   "claim_boundary": "No unknown production target is accepted, no universal nonlinear circuit lower bound is claimed, and no sub-square-root ECDLP algorithm is claimed."
 }
