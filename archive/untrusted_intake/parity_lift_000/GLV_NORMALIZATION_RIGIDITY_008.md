@@ -291,7 +291,7 @@ Results:
 
 ```text
 exact single decoders:                         2
-exact nondegenerate degree-two decoders:       2
+exact nondegenerate degree-two decoders:       3
 exact decoder at order >=271:                  0
 cases strictly above matched 95% null:         0
 ```
