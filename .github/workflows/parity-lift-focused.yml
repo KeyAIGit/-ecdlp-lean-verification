@@ -12,6 +12,7 @@ on:
       - experiments/parity_lift_000/glv_normalization_rigidity_screen.py
       - experiments/parity_lift_000/glv_normalization_rigidity_results.json
       - experiments/parity_lift_000/global_monodromy_embedding_degree.py
+      - experiments/parity_lift_000/mixed_weight_pencil_screen.py
       - .github/workflows/parity-lift-focused.yml
   workflow_dispatch:
 
@@ -76,6 +77,14 @@ jobs:
           python3 experiments/parity_lift_000/global_monodromy_embedding_degree.py \
             > /tmp/global-monodromy.log
           tail -n 40 /tmp/global-monodromy.log
+
+      - name: Run mixed-weight section pencil screen
+        run: |
+          python3 -c 'import numpy; print("numpy", numpy.__version__)'
+          python3 experiments/parity_lift_000/mixed_weight_pencil_screen.py \
+            --out /tmp/mixed_weight_pencil_results.json \
+            > /tmp/mixed-weight.log
+          tail -n 100 /tmp/mixed-weight.log
 
       - name: Reject incomplete focused proofs
         run: |
