@@ -1,0 +1,24 @@
+{
+  "claim_boundary": "Directed checkpoint-plus-local-offset coverage only; not a general EDS, theta, coordinate-circuit, or ECDLP lower bound.",
+  "date": "2026-08-12",
+  "deterministic_large_samples": {
+    "all_sampled_coverings_passed": true,
+    "covering_samples": 21960,
+    "odd_n_max": 127,
+    "odd_n_min": 15,
+    "samples_checked": 45100,
+    "seed": 20260812
+  },
+  "exact_exhaustive": {
+    "all_coverings_satisfy_order_le_storage_times_offsets": true,
+    "all_minimum_storage_values_equal_ceiling_order_div_offsets": true,
+    "covering_pairs_checked": 315419,
+    "largest_minimum_storage": 14,
+    "n_max": 14,
+    "n_min": 2,
+    "order_offset_instances": 104,
+    "subset_offset_pairs_checked": 425984
+  },
+  "package": "STRUCTURED-SEGMENT-PRIMITIVE-004",
+  "schema_version": "0.1-untrusted"
+}
