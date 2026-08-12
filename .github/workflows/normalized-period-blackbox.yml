@@ -7,7 +7,7 @@ on:
     paths:
       - 'Ecdlp/Proved/NormalizedPeriodBlackbox.lean'
       - 'experiments/parity_lift_000/normalized_period_blackbox.py'
-      - 'archive/untrusted_intake/parity_lift_000/NORMALIZED_PERIOD_BLACKBOX_032.md'
+      - 'notes/reviews/PARITY_PHASE_CHAIN_CHECKPOINT_032.md'
       - '.github/workflows/normalized-period-blackbox.yml'
   workflow_dispatch:
 
