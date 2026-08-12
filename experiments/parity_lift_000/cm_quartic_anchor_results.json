@@ -1,0 +1,69 @@
+{
+  "scope": "four frozen toy j=1728 curves only; no secp256k1 target",
+  "observable": "kappa(P)=x(P)^((p-1)/4) in {+1,-1}",
+  "target": "rho_G([k]G)=chi(psi_k(G))",
+  "cases": [
+    {
+      "id": "J1728-P569-A1-R17",
+      "p": 569,
+      "A": 1,
+      "B": 0,
+      "order": 17,
+      "generator": [562, 315],
+      "exact_generator_multipliers": [1, 2, 4, 8, 9, 13, 15, 16],
+      "exact_multipliers_are_quadratic_residues_mod_order": true,
+      "maximum_accuracy": 1.0,
+      "best_matches": 16,
+      "total": 16
+    },
+    {
+      "id": "J1728-P953-A4-R29",
+      "p": 953,
+      "A": 4,
+      "B": 0,
+      "order": 29,
+      "generator": [142, 278],
+      "exact_generator_multipliers": [],
+      "maximum_accuracy": 0.8571428571428571,
+      "best_matches": 24,
+      "total": 28
+    },
+    {
+      "id": "J1728-P2477-A1-R37",
+      "p": 2477,
+      "A": 1,
+      "B": 0,
+      "order": 37,
+      "generator": [948, 2124],
+      "exact_generator_multipliers": [],
+      "maximum_accuracy": 0.8888888888888888,
+      "best_matches": 32,
+      "total": 36
+    },
+    {
+      "id": "J1728-P569-A3-R53",
+      "p": 569,
+      "A": 3,
+      "B": 0,
+      "order": 53,
+      "generator": [319, 470],
+      "exact_generator_multipliers": [],
+      "maximum_accuracy": 0.7692307692307693,
+      "best_matches": 40,
+      "total": 52
+    }
+  ],
+  "aggregate": {
+    "positive_case_order": 17,
+    "positive_case_exact_generators": 8,
+    "larger_control_orders": [29, 37, 53],
+    "larger_controls_with_exact_generator": 0
+  },
+  "claim_boundary": [
+    "This is bounded positive toy evidence, not an asymptotic result.",
+    "The exact order-17 match does not persist in the three frozen larger controls.",
+    "The construction uses j=1728, rational 2-torsion, and a quartic character.",
+    "secp256k1 has j=0, no rational 2-torsion, and p congruent to 3 modulo 4.",
+    "No external curve, key, wallet, or production-sized target is accepted."
+  ]
+}
