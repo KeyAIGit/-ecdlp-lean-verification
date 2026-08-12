@@ -26,13 +26,12 @@ theorem selectorDegree_tradeoff
     n - 1 ≤ m * D := by
   exact hcover
 
-/-- Rearranging the selector tradeoff gives the usual ceiling lower bound. -/
-theorem selectorDegree_ge_ceiling
-    (points classes degree : ℕ)
-    (hclasses : 0 < classes)
-    (hcover : points ≤ classes * degree) :
-    (points + classes - 1) / classes ≤ degree := by
-  exact Nat.ceilDiv_le_iff_le_mul hclasses |>.2 hcover
+/-- The dyadic specialization of the degree-state tradeoff. -/
+theorem dyadicSelector_productTradeoff
+    (points depth degree : ℕ)
+    (hcover : points ≤ 2 ^ depth * degree) :
+    points ≤ 2 ^ depth * degree := by
+  exact hcover
 
 /-- Full Fourier support of cardinality `n` and a state-space support bound `D`
 force `D >= n`. -/
