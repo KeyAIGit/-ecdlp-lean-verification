@@ -25,7 +25,7 @@ theorem addition_as_single_innovation
     (a b : K)
     (ha : a ≠ 0) :
     a + b = a * (1 + b / a) := by
-  field_simp [ha] <;> ring
+  field_simp [ha]
 
 /-- The same factorization expressed through the repository's explicit
 square-equivalence relation. -/
@@ -62,10 +62,8 @@ theorem squareTower_eq_pow_two
   induction m with
   | zero => simp [squareTower]
   | succ m ih =>
-      rw [show Nat.succ m = m + 1 by omega]
       rw [squareTower_succ, ih]
-      rw [show 2 ^ (m + 1) = (2 ^ m) * 2 by omega]
-      rw [pow_mul]
+      rw [pow_succ, pow_mul]
       simp [pow_two]
 
 /-- The uniform counterfamily uses one subtraction after the squaring tower. -/
