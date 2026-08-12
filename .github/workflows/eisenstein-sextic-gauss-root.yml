@@ -1,0 +1,90 @@
+name: Eisenstein sextic Gauss root
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/EISENSTEIN_SEXTIC_GAUSS_ROOT_036.md'
+      - 'experiments/parity_lift_000/eisenstein_sextic_gauss_root.py'
+      - 'Ecdlp/Proved/EisensteinSexticGaussRoot.lean'
+      - '.github/workflows/eisenstein-sextic-gauss-root.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact sextic-projector replay
+        run: |
+          python3 experiments/parity_lift_000/eisenstein_sextic_gauss_root.py \
+            --out /tmp/eisenstein_sextic_gauss_root_results.json \
+            > /tmp/eisenstein-sextic-gauss-root.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('/tmp/eisenstein_sextic_gauss_root_results.json').read_text())
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert aggregate['screened_cases'] == 4
+          assert aggregate['structural_exclusions'] == 2
+          assert aggregate['all_primary_projectors_nonzero']
+          assert aggregate['all_natural_x_power_projectors_nonzero']
+          assert aggregate['total_scaling_checks'] > 0
+          assert aggregate['total_scaling_checks'] == aggregate['total_cube_character_checks']
+          assert aggregate['total_scaling_checks'] == aggregate['total_sixth_power_checks']
+          assert secp['n_mod_9'] == 7
+          assert secp['n_mod_12'] == 1
+          assert secp['v3_n_minus_one'] == 1
+          assert secp['eisenstein_norm'] == secp['n']
+          assert secp['annihilator_residue'] == 0
+          assert secp['lambda_cubic_residue'] == secp['lambda_squared']
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/EisensteinSexticGaussRoot.lean; then
+            echo '::error::Sextic-Gauss theorem contains sorry'
+            exit 1
+          fi
+
+      - name: Install elan
+        run: |
+          curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+            https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            -o /tmp/elan-init.sh
+          for attempt in 1 2 3 4; do
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              break
+            fi
+            if [ "$attempt" = 4 ]; then
+              echo '::error::elan installation failed after retries'
+              exit 1
+            fi
+            sleep $((attempt * 3))
+          done
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check sextic identities
+        run: lake build Ecdlp.Proved.EisensteinSexticGaussRoot
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: eisenstein-sextic-gauss-root-results
+          path: |
+            /tmp/eisenstein_sextic_gauss_root_results.json
+            /tmp/eisenstein-sextic-gauss-root.log
+          retention-days: 90
