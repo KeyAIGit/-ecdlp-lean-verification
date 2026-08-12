@@ -971,6 +971,13 @@ def _log2_decimal_12(value: int) -> str:
 def _uncertainty_bounds_valid(value: Any) -> bool:
     if not isinstance(value, Mapping):
         return False
+    if value.get("status") == "unavailable":
+        return (
+            value.get("lower_decimal") is None
+            and value.get("upper_decimal") is None
+        )
+    if value.get("status") not in (None, "computed"):
+        return False
     try:
         return Decimal(value.get("lower_decimal")) <= Decimal(
             value.get("upper_decimal")
@@ -1762,7 +1769,7 @@ def validate_cross_record_bundle(
                         )
                     )
                 if protocol == "equal_success_scaling_v1" and (
-                    comparison.get("independent_seed_count") != expected_seed_count
+                    comparison.get("seed_cluster_count") != expected_seed_count
                     or comparison.get("algorithm_seed_set_sha256")
                     != expected_seed_digest
                 ):
@@ -1771,6 +1778,20 @@ def validate_cross_record_bundle(
                             "cross.analysis.seed_binding",
                             f"$.comparisons[{index}]",
                             "comparison seed count or digest differs from campaign seeds",
+                        )
+                    )
+                expected_trial_semantics = {
+                    "bsgs_v1": "deterministic_replicates_v1",
+                    "ordinary_rho_xmod3_v1": "independent_seed_trials_v1",
+                }.get(method_id)
+                if protocol == "equal_success_scaling_v1" and comparison.get(
+                    "trial_semantics"
+                ) != expected_trial_semantics:
+                    issues.append(
+                        _link_issue(
+                            "cross.analysis.trial_semantics",
+                            f"$.comparisons[{index}].trial_semantics",
+                            "trial semantics must match the frozen method behavior",
                         )
                     )
             if protocol == "equal_success_scaling_v1" and isinstance(matrix, dict):

@@ -43,15 +43,15 @@
   "native_research_outcome": false,
   "provenance": {
     "config_sha256": "730bee5abac7016810134755c27c014e5d47bf5c141d96044f4e0930875b30a8",
-    "diff_sha256": "49e8d1e688dd93e3d13c194c150de18e29165f1472e9bc9edf17d453843edc5a",
+    "diff_sha256": "9814f0f1aa77466e9a187cfa797c371fa989e4bbdf9aa30b4fa9217d2af07543",
     "producer_dependency_sha256s": [
-      "159d4ae6ca80698c1fe0baaeb8df4fcba7d8bc0782a01012699e492aa31eda3b"
+      "9de3f4b83e99b29025da783ee1d35af075fc693f1ceccb22f49db42c0b27434c"
     ],
     "source_commit": "1aba9f025950af687d9a0e5104c8642e018aeb2e",
-    "source_snapshot_sha256": "6b1de837e5981602259bcfd00d48fd2eee30253851422f86c93151cfd5da76fa",
+    "source_snapshot_sha256": "aa3c0f5d8a76c410854b1432558dbd3a9aa1bd3a690fbcfe24b9577a5779ca40",
     "source_tree_clean": false,
     "validator_dependency_sha256s": [
-      "ffce28ae3a194429bbb8a068d7bb8e4048fdc99321c85f1f34edca5e4d859bad"
+      "66523700f69fd1ee3ca405242be7d435fdb1b901bec4d784044f89337e18526b"
     ]
   },
   "record_kind": "lab_engineering_fixture",

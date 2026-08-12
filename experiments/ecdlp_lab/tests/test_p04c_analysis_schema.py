@@ -19,7 +19,11 @@ SEED_SET_ID = sha256_json([7, 11])
 def _uncertainty() -> dict[str, object]:
     return {
         "method": "delete_one_cluster_envelope_v1",
+        "estimand": "mean_observed_uncensored_group_operations_v1",
+        "unit": "group_law_invocations",
+        "status": "computed",
         "cluster_count": 2,
+        "unreachable_delete_one_count": 0,
         "lower_decimal": "90",
         "upper_decimal": "112",
     }
@@ -52,7 +56,8 @@ def _comparison(base: dict[str, object], target: str) -> dict[str, object]:
             "subgroup_order": 5827,
             "log2_subgroup_order_decimal": "12.508537595347",
             "success_target_decimal": target,
-            "independent_seed_count": 2,
+            "trial_semantics": "deterministic_replicates_v1",
+            "seed_cluster_count": 2,
             "algorithm_seed_set_sha256": SEED_SET_ID,
             "clustered_uncertainty": _uncertainty(),
         }
@@ -65,7 +70,16 @@ def _comparison(base: dict[str, object], target: str) -> dict[str, object]:
                 "expected_attempts_decimal": "2",
                 "conservative_normalized_group_operations_decimal": "202",
                 "optimistic_normalized_group_operations_decimal": "190",
+                "normalized_expected_group_operations_decimal": "202",
                 "equal_success_full_cost": deepcopy(comparison["full_cost"]),
+                "censoring_sensitivity": {
+                    "policy_id": "censored_as_failures_v1",
+                    "probability_decimal": "0.5",
+                    "expected_attempts_decimal": "1",
+                    "integer_attempts": 1,
+                    "equal_success_status": "reached",
+                    "normalized_group_operations_decimal": "101",
+                },
             }
         )
     else:
@@ -76,7 +90,16 @@ def _comparison(base: dict[str, object], target: str) -> dict[str, object]:
                 "expected_attempts_decimal": None,
                 "conservative_normalized_group_operations_decimal": None,
                 "optimistic_normalized_group_operations_decimal": None,
+                "normalized_expected_group_operations_decimal": None,
                 "equal_success_full_cost": None,
+                "censoring_sensitivity": {
+                    "policy_id": "censored_as_failures_v1",
+                    "probability_decimal": "0.5",
+                    "expected_attempts_decimal": None,
+                    "integer_attempts": None,
+                    "equal_success_status": "unreachable_within_budget",
+                    "normalized_group_operations_decimal": None,
+                },
             }
         )
     return comparison
@@ -94,7 +117,9 @@ def _fit(target: str) -> dict[str, object]:
         "residuals": [
             {
                 "curve_fixture_id": "toy-secp-j0-b13-c0-p5923",
+                "field_bits": 13,
                 "subgroup_order": 5827,
+                "algorithm_seed": None,
                 "observed_log2_cost_decimal": "7.658",
                 "predicted_log2_cost_decimal": "7.658",
                 "residual_decimal": "0",
@@ -102,11 +127,36 @@ def _fit(target: str) -> dict[str, object]:
         ],
         "leave_one_size_out": [
             {
-                "omitted_subgroup_order": 5827,
+                "omitted_field_bits": 13,
+                "omitted_subgroup_orders": [5827],
                 "status": "insufficient_data",
                 "alpha_decimal": None,
                 "beta_decimal": None,
             }
+        ],
+        "candidate_model_evidence": [
+            {
+                "model_id": "constant_factor_v1",
+                "status": "invalid",
+                "observation_count": 1,
+                "parameter_count": 2,
+                "design_full_rank": False,
+                "rss_decimal": None,
+                "aicc_decimal": None,
+                "delta_aicc_decimal": None,
+                "invalid_reason": "insufficient_observations",
+            },
+            {
+                "model_id": "log2_t_alpha_log2_n_beta_log2log2_n_v1",
+                "status": "invalid",
+                "observation_count": 1,
+                "parameter_count": 4,
+                "design_full_rank": False,
+                "rss_decimal": None,
+                "aicc_decimal": None,
+                "delta_aicc_decimal": None,
+                "invalid_reason": "insufficient_observations",
+            },
         ],
     }
 
@@ -155,6 +205,39 @@ class P04CAnalysisSchemaTests(unittest.TestCase):
         self.assertEqual(self.protocol["success_targets_decimal"], ["0.50", "0.95"])
         self.assertFalse(self.protocol["cost"]["bsgs_reusable_setup"])
         self.assertIsNone(self.protocol["cost"]["secondary_cost_fields"])
+        self.assertEqual(
+            self.protocol["classification"]["unknown_or_mismatched_status_code_action"],
+            "abort_analysis",
+        )
+        self.assertNotIn(
+            "table_budget_exhausted",
+            self.protocol["classification"]["method_failure_actions"]
+            ["ordinary_rho_xmod3_v1"],
+        )
+        self.assertEqual(
+            self.protocol["classification"]["method_failure_actions"]["bsgs_v1"]
+            ["no_solution"],
+            "abort_analysis",
+        )
+        self.assertEqual(
+            self.protocol["classification"]["method_failure_actions"]
+            ["ordinary_rho_xmod3_v1"]["restart_budget_exhausted"],
+            "algorithmic_failure",
+        )
+        self.assertIn(
+            "C",
+            self.protocol["estimation"]["conservative_probability_formula"],
+        )
+        self.assertEqual(
+            self.protocol["inference"][
+                "minimum_authenticated_field_bit_rungs_for_fit"
+            ],
+            6,
+        )
+        self.assertEqual(
+            self.protocol["inference"]["x_variable_after_rung_gate"],
+            "exact_log2_subgroup_order",
+        )
         self.assertEqual(
             self.protocol["uncertainty"]["bounds_unit"],
             "group_law_invocations",
@@ -219,12 +302,46 @@ class P04CAnalysisSchemaTests(unittest.TestCase):
             ("model_fits", 0, "clustered_uncertainty"),
             ("model_fits", 0, "residuals"),
             ("model_fits", 0, "leave_one_size_out"),
+            ("model_fits", 0, "candidate_model_evidence"),
+            ("comparisons", 0, "censoring_sensitivity"),
         )
         for collection, index, field in mutations:
             with self.subTest(field=field):
                 summary = equal_success_summary()
                 del summary[collection][index][field]
                 self.assertNotEqual(validate_schema(summary, self.schema), [])
+
+    def test_unavailable_uncertainty_is_explicit_and_never_fake_zero(self) -> None:
+        summary = equal_success_summary()
+        uncertainty = summary["comparisons"][0]["clustered_uncertainty"]
+        uncertainty["status"] = "unavailable"
+        uncertainty["lower_decimal"] = None
+        uncertainty["upper_decimal"] = None
+        self.assertEqual(validate_schema(summary, self.schema), [])
+
+        uncertainty["lower_decimal"] = "0"
+        self.assertNotEqual(validate_schema(summary, self.schema), [])
+
+    def test_model_selection_evidence_and_censor_sensitivity_are_typed(self) -> None:
+        summary = equal_success_summary()
+        evidence = summary["model_fits"][0]["candidate_model_evidence"]
+        evidence[0]["status"] = "valid"
+        evidence[0]["design_full_rank"] = True
+        evidence[0]["rss_decimal"] = "0"
+        evidence[0]["aicc_decimal"] = "-12.5"
+        evidence[0]["delta_aicc_decimal"] = "0"
+        evidence[0]["invalid_reason"] = None
+        self.assertEqual(validate_schema(summary, self.schema), [])
+
+        forged = equal_success_summary()
+        forged["model_fits"][0]["candidate_model_evidence"][0][
+            "aicc_decimal"
+        ] = "-12.5"
+        self.assertNotEqual(validate_schema(forged, self.schema), [])
+
+        untyped = equal_success_summary()
+        del untyped["comparisons"][0]["censoring_sensitivity"]["policy_id"]
+        self.assertNotEqual(validate_schema(untyped, self.schema), [])
 
     def test_nonfitted_leave_one_size_out_cannot_claim_coefficients(self) -> None:
         summary = equal_success_summary()

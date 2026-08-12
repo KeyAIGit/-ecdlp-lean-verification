@@ -179,7 +179,10 @@
         "success_target_decimal": {
           "enum": ["0.50", "0.95"]
         },
-        "independent_seed_count": {"type": "integer", "minimum": 2},
+        "trial_semantics": {
+          "enum": ["deterministic_replicates_v1", "independent_seed_trials_v1"]
+        },
+        "seed_cluster_count": {"type": "integer", "minimum": 1},
         "algorithm_seed_set_sha256": {"$ref": "#/$defs/sha256"},
         "equal_success_status": {
           "enum": ["reached", "unreachable_within_budget"]
@@ -214,6 +217,7 @@
             {"type": "null"}
           ]
         },
+        "censoring_sensitivity": {"$ref": "#/$defs/censoringSensitivity"},
         "clustered_uncertainty": {"$ref": "#/$defs/clusteredUncertainty"},
         "field_bits": {"type": "integer", "minimum": 3, "maximum": 32},
         "subgroup_order_bits": {"type": "integer", "minimum": 2, "maximum": 32},
@@ -221,9 +225,24 @@
         "successes": {"type": "integer", "minimum": 0},
         "failures": {"type": "integer", "minimum": 0},
         "censored": {"type": "integer", "minimum": 0},
-        "empirical_success_probability_decimal": {"$ref": "#/$defs/probabilityDecimal"},
-        "normalized_expected_group_operations_decimal": {"$ref": "#/$defs/unsignedDecimal"},
-        "median_online_group_operations_decimal": {"$ref": "#/$defs/unsignedDecimal"},
+        "empirical_success_probability_decimal": {
+          "oneOf": [
+            {"$ref": "#/$defs/probabilityDecimal"},
+            {"type": "null"}
+          ]
+        },
+        "normalized_expected_group_operations_decimal": {
+          "oneOf": [
+            {"$ref": "#/$defs/unsignedDecimal"},
+            {"type": "null"}
+          ]
+        },
+        "median_online_group_operations_decimal": {
+          "oneOf": [
+            {"$ref": "#/$defs/unsignedDecimal"},
+            {"type": "null"}
+          ]
+        },
         "offline_group_operations": {"type": "integer", "minimum": 0},
         "estimated_algorithmic_memory_bytes": {"type": "integer", "minimum": 0},
         "workers": {"type": "integer", "minimum": 1},
@@ -257,13 +276,125 @@
     "clusteredUncertainty": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["method", "cluster_count", "lower_decimal", "upper_decimal"],
+      "required": [
+        "method",
+        "estimand",
+        "unit",
+        "status",
+        "cluster_count",
+        "unreachable_delete_one_count",
+        "lower_decimal",
+        "upper_decimal"
+      ],
       "properties": {
         "method": {"const": "delete_one_cluster_envelope_v1"},
-        "cluster_count": {"type": "integer", "minimum": 2},
-        "lower_decimal": {"$ref": "#/$defs/signedDecimal"},
-        "upper_decimal": {"$ref": "#/$defs/signedDecimal"}
-      }
+        "estimand": {
+          "const": "mean_observed_uncensored_group_operations_v1"
+        },
+        "unit": {"const": "group_law_invocations"},
+        "status": {"enum": ["computed", "unavailable"]},
+        "cluster_count": {"type": "integer", "minimum": 1},
+        "unreachable_delete_one_count": {"type": "integer", "minimum": 0},
+        "lower_decimal": {
+          "oneOf": [
+            {"$ref": "#/$defs/signedDecimal"},
+            {"type": "null"}
+          ]
+        },
+        "upper_decimal": {
+          "oneOf": [
+            {"$ref": "#/$defs/signedDecimal"},
+            {"type": "null"}
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": ["status"],
+            "properties": {"status": {"const": "computed"}}
+          },
+          "then": {
+            "properties": {
+              "lower_decimal": {"$ref": "#/$defs/signedDecimal"},
+              "upper_decimal": {"$ref": "#/$defs/signedDecimal"}
+            }
+          },
+          "else": {
+            "properties": {
+              "lower_decimal": {"type": "null"},
+              "upper_decimal": {"type": "null"}
+            }
+          }
+        }
+      ]
+    },
+    "censoringSensitivity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_id",
+        "probability_decimal",
+        "expected_attempts_decimal",
+        "integer_attempts",
+        "equal_success_status",
+        "normalized_group_operations_decimal"
+      ],
+      "properties": {
+        "policy_id": {"const": "censored_as_failures_v1"},
+        "probability_decimal": {
+          "oneOf": [
+            {"$ref": "#/$defs/probabilityDecimal"},
+            {"type": "null"}
+          ]
+        },
+        "expected_attempts_decimal": {
+          "oneOf": [
+            {"$ref": "#/$defs/positiveDecimal"},
+            {"type": "null"}
+          ]
+        },
+        "integer_attempts": {
+          "oneOf": [
+            {"type": "integer", "minimum": 1},
+            {"type": "null"}
+          ]
+        },
+        "equal_success_status": {
+          "enum": ["reached", "unreachable_within_budget"]
+        },
+        "normalized_group_operations_decimal": {
+          "oneOf": [
+            {"$ref": "#/$defs/unsignedDecimal"},
+            {"type": "null"}
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": ["equal_success_status"],
+            "properties": {"equal_success_status": {"const": "reached"}}
+          },
+          "then": {
+            "properties": {
+              "probability_decimal": {"$ref": "#/$defs/probabilityDecimal"},
+              "expected_attempts_decimal": {"$ref": "#/$defs/positiveDecimal"},
+              "integer_attempts": {"type": "integer", "minimum": 1},
+              "normalized_group_operations_decimal": {
+                "$ref": "#/$defs/unsignedDecimal"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "expected_attempts_decimal": {"type": "null"},
+              "integer_attempts": {"type": "null"},
+              "normalized_group_operations_decimal": {"type": "null"}
+            }
+          }
+        }
+      ]
     },
     "equalSuccessComparison": {
       "required": [
@@ -272,7 +403,8 @@
         "subgroup_order",
         "log2_subgroup_order_decimal",
         "success_target_decimal",
-        "independent_seed_count",
+        "trial_semantics",
+        "seed_cluster_count",
         "algorithm_seed_set_sha256",
         "equal_success_status",
         "equal_success_attempts",
@@ -280,6 +412,7 @@
         "conservative_normalized_group_operations_decimal",
         "optimistic_normalized_group_operations_decimal",
         "equal_success_full_cost",
+        "censoring_sensitivity",
         "clustered_uncertainty"
       ],
       "allOf": [
@@ -299,6 +432,9 @@
                 "$ref": "#/$defs/unsignedDecimal"
               },
               "equal_success_full_cost": {"$ref": "#/$defs/equalSuccessFullCost"},
+              "normalized_expected_group_operations_decimal": {
+                "$ref": "#/$defs/unsignedDecimal"
+              },
               "full_cost": {"$ref": "#/$defs/equalSuccessFullCost"}
             }
           },
@@ -313,6 +449,8 @@
                 "type": "null"
               },
               "equal_success_full_cost": {"type": "null"}
+              ,
+              "normalized_expected_group_operations_decimal": {"type": "null"}
             }
           }
         }
@@ -325,7 +463,8 @@
         {"not": {"required": ["subgroup_order"]}},
         {"not": {"required": ["log2_subgroup_order_decimal"]}},
         {"not": {"required": ["success_target_decimal"]}},
-        {"not": {"required": ["independent_seed_count"]}},
+        {"not": {"required": ["trial_semantics"]}},
+        {"not": {"required": ["seed_cluster_count"]}},
         {"not": {"required": ["algorithm_seed_set_sha256"]}},
         {"not": {"required": ["equal_success_status"]}},
         {"not": {"required": ["equal_success_attempts"]}},
@@ -341,6 +480,7 @@
           }
         },
         {"not": {"required": ["equal_success_full_cost"]}},
+        {"not": {"required": ["censoring_sensitivity"]}},
         {"not": {"required": ["clustered_uncertainty"]}}
       ]
     },
@@ -473,6 +613,12 @@
           "minItems": 1,
           "items": {"$ref": "#/$defs/leaveOneSizeOut"}
         },
+        "candidate_model_evidence": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {"$ref": "#/$defs/modelCandidateEvidence"}
+        },
         "model_id": {
           "enum": [
             "log2_t_alpha_log2_n_beta_log2log2_n_v1",
@@ -492,22 +638,111 @@
         }
       }
     },
+    "modelCandidateEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model_id",
+        "status",
+        "observation_count",
+        "parameter_count",
+        "design_full_rank",
+        "rss_decimal",
+        "aicc_decimal",
+        "delta_aicc_decimal",
+        "invalid_reason"
+      ],
+      "properties": {
+        "model_id": {
+          "enum": [
+            "constant_factor_v1",
+            "log2_t_alpha_log2_n_beta_log2log2_n_v1"
+          ]
+        },
+        "status": {"enum": ["valid", "invalid"]},
+        "observation_count": {"type": "integer", "minimum": 0},
+        "parameter_count": {"enum": [2, 4]},
+        "design_full_rank": {"type": "boolean"},
+        "rss_decimal": {
+          "oneOf": [
+            {"$ref": "#/$defs/unsignedDecimal"},
+            {"type": "null"}
+          ]
+        },
+        "aicc_decimal": {
+          "oneOf": [
+            {"$ref": "#/$defs/signedDecimal"},
+            {"type": "null"}
+          ]
+        },
+        "delta_aicc_decimal": {
+          "oneOf": [
+            {"$ref": "#/$defs/unsignedDecimal"},
+            {"type": "null"}
+          ]
+        },
+        "invalid_reason": {
+          "oneOf": [
+            {
+              "enum": [
+                "insufficient_observations",
+                "rank_deficient",
+                "non_finite"
+              ]
+            },
+            {"type": "null"}
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": ["status"],
+            "properties": {"status": {"const": "valid"}}
+          },
+          "then": {
+            "properties": {
+              "design_full_rank": {"const": true},
+              "rss_decimal": {"$ref": "#/$defs/unsignedDecimal"},
+              "aicc_decimal": {"$ref": "#/$defs/signedDecimal"},
+              "delta_aicc_decimal": {"$ref": "#/$defs/unsignedDecimal"},
+              "invalid_reason": {"type": "null"}
+            }
+          },
+          "else": {
+            "properties": {
+              "aicc_decimal": {"type": "null"},
+              "delta_aicc_decimal": {"type": "null"}
+            }
+          }
+        }
+      ]
+    },
     "residual": {
       "type": "object",
       "additionalProperties": false,
       "required": [
         "curve_fixture_id",
+        "field_bits",
         "subgroup_order",
+        "algorithm_seed",
         "observed_log2_cost_decimal",
         "predicted_log2_cost_decimal",
         "residual_decimal"
       ],
       "properties": {
         "curve_fixture_id": {"$ref": "#/$defs/identifier"},
+        "field_bits": {"type": "integer", "minimum": 3, "maximum": 32},
         "subgroup_order": {
           "type": "integer",
           "minimum": 2,
           "maximum": 4294967295
+        },
+        "algorithm_seed": {
+          "oneOf": [
+            {"type": "integer", "minimum": 0},
+            {"type": "null"}
+          ]
         },
         "observed_log2_cost_decimal": {"$ref": "#/$defs/signedDecimal"},
         "predicted_log2_cost_decimal": {"$ref": "#/$defs/signedDecimal"},
@@ -518,16 +753,27 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "omitted_subgroup_order",
+        "omitted_field_bits",
+        "omitted_subgroup_orders",
         "status",
         "alpha_decimal",
         "beta_decimal"
       ],
       "properties": {
-        "omitted_subgroup_order": {
+        "omitted_field_bits": {
           "type": "integer",
-          "minimum": 2,
-          "maximum": 4294967295
+          "minimum": 3,
+          "maximum": 32
+        },
+        "omitted_subgroup_orders": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 4294967295
+          }
         },
         "status": {"enum": ["fitted", "undecided", "insufficient_data"]},
         "alpha_decimal": {
@@ -570,7 +816,8 @@
         "success_target_decimal",
         "clustered_uncertainty",
         "residuals",
-        "leave_one_size_out"
+        "leave_one_size_out",
+        "candidate_model_evidence"
       ]
     },
     "noEqualSuccessModelFitFields": {
@@ -579,7 +826,8 @@
         {"not": {"required": ["success_target_decimal"]}},
         {"not": {"required": ["clustered_uncertainty"]}},
         {"not": {"required": ["residuals"]}},
-        {"not": {"required": ["leave_one_size_out"]}}
+        {"not": {"required": ["leave_one_size_out"]}},
+        {"not": {"required": ["candidate_model_evidence"]}}
       ]
     },
     "warning": {

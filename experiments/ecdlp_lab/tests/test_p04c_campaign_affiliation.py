@@ -180,7 +180,8 @@ def equal_success_bundle() -> tuple[list[dict[str, object]], ValidationContext]:
                 "subgroup_order": payload["subgroup_order"],
                 "log2_subgroup_order_decimal": "12.508537595347",
                 "success_target_decimal": success_target,
-                "independent_seed_count": 2,
+                "trial_semantics": "deterministic_replicates_v1",
+                "seed_cluster_count": 2,
                 "algorithm_seed_set_sha256": seed_digest,
                 "equal_success_status": "reached",
                 "equal_success_attempts": 1,
@@ -188,9 +189,21 @@ def equal_success_bundle() -> tuple[list[dict[str, object]], ValidationContext]:
                 "conservative_normalized_group_operations_decimal": "101",
                 "optimistic_normalized_group_operations_decimal": "101",
                 "equal_success_full_cost": deepcopy(row["full_cost"]),
+                "censoring_sensitivity": {
+                    "policy_id": "censored_as_failures_v1",
+                    "probability_decimal": "1",
+                    "expected_attempts_decimal": "1",
+                    "integer_attempts": 1,
+                    "equal_success_status": "reached",
+                    "normalized_group_operations_decimal": "101",
+                },
                 "clustered_uncertainty": {
                     "method": "delete_one_cluster_envelope_v1",
+                    "estimand": "mean_observed_uncensored_group_operations_v1",
+                    "unit": "group_law_invocations",
+                    "status": "computed",
                     "cluster_count": 2,
+                    "unreachable_delete_one_count": 0,
                     "lower_decimal": "101",
                     "upper_decimal": "101",
                 },
@@ -208,14 +221,20 @@ def equal_success_bundle() -> tuple[list[dict[str, object]], ValidationContext]:
                 "success_target_decimal": success_target,
                 "clustered_uncertainty": {
                     "method": "delete_one_cluster_envelope_v1",
+                    "estimand": "mean_observed_uncensored_group_operations_v1",
+                    "unit": "group_law_invocations",
+                    "status": "computed",
                     "cluster_count": 2,
+                    "unreachable_delete_one_count": 0,
                     "lower_decimal": "0",
                     "upper_decimal": "0",
                 },
                 "residuals": [
                     {
                         "curve_fixture_id": payload["curve_fixture_id"],
+                        "field_bits": payload["field_bits"],
                         "subgroup_order": payload["subgroup_order"],
+                        "algorithm_seed": None,
                         "observed_log2_cost_decimal": "6",
                         "predicted_log2_cost_decimal": "6",
                         "residual_decimal": "0",
@@ -223,11 +242,36 @@ def equal_success_bundle() -> tuple[list[dict[str, object]], ValidationContext]:
                 ],
                 "leave_one_size_out": [
                     {
-                        "omitted_subgroup_order": payload["subgroup_order"],
+                        "omitted_field_bits": payload["field_bits"],
+                        "omitted_subgroup_orders": [payload["subgroup_order"]],
                         "status": "insufficient_data",
                         "alpha_decimal": None,
                         "beta_decimal": None,
                     }
+                ],
+                "candidate_model_evidence": [
+                    {
+                        "model_id": "constant_factor_v1",
+                        "status": "invalid",
+                        "observation_count": 1,
+                        "parameter_count": 2,
+                        "design_full_rank": False,
+                        "rss_decimal": None,
+                        "aicc_decimal": None,
+                        "delta_aicc_decimal": None,
+                        "invalid_reason": "insufficient_observations",
+                    },
+                    {
+                        "model_id": "log2_t_alpha_log2_n_beta_log2log2_n_v1",
+                        "status": "invalid",
+                        "observation_count": 1,
+                        "parameter_count": 4,
+                        "design_full_rank": False,
+                        "rss_decimal": None,
+                        "aicc_decimal": None,
+                        "delta_aicc_decimal": None,
+                        "invalid_reason": "insufficient_observations",
+                    },
                 ],
             }
         )
@@ -333,7 +377,7 @@ class AnalysisCampaignAffiliationTests(unittest.TestCase):
         records, trusted = equal_success_bundle()
         comparison = one(records, "analysis_summary_v1")["comparisons"][0]
         comparison["log2_subgroup_order_decimal"] = "12.508537595346"
-        comparison["independent_seed_count"] = 3
+        comparison["seed_cluster_count"] = 3
         comparison["algorithm_seed_set_sha256"] = "f" * 64
         codes = {
             issue.code for issue in validate_cross_record_bundle(records, trusted)

@@ -212,7 +212,7 @@
     "success_target_rule": "comparison and model-fit success_target_decimal is one of the exact ordered targets 0.50 and 0.95",
     "comparison_coverage": "exact Cartesian set of campaign method IDs * selected authenticated public target IDs * {0.50,0.95}",
     "model_fit_coverage": "exact Cartesian set of campaign method IDs * {0.50,0.95}; residual rows carry the linked per-fixture subgroup observations",
-    "seed_rule": "independent_seed_count is the length of the distinct campaign algorithm-seed set; algorithm_seed_set_sha256 = sha256(canonical_json(sorted(set(campaign.matrix.algorithm_seeds))))",
+    "seed_rule": "seed_cluster_count is the length of the distinct campaign algorithm-seed set inside a (method_id, public_target_vector_sha256) partition; algorithm_seed_set_sha256 = sha256(canonical_json(sorted(set(campaign.matrix.algorithm_seeds)))); trial_semantics distinguishes deterministic BSGS replicates from independent rho seed trials",
     "log2_order_rule": {
       "implementation": "Python stdlib Decimal only",
       "working_precision_decimal_digits": 80,

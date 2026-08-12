@@ -660,9 +660,11 @@ Completion evidence (2026-08-11):
   clustered uncertainty, residuals, leave-one-size-out diagnostics, and
   inference policies while the P01 legacy corpus remains valid;
 - protocol artifact SHA-256
-  `17ad1a15a157ac1add620783426226e843e5a8519e3cf6287b730b3338298ee9`
+  `689972344d706a5a4fa5e174981600338458786d01609b51a57faea4954af708`
   freezes probability/attempt formulas, cluster semantics, per-target BSGS
-  setup, model-selection thresholds, and a truthful `not_measured_v1` policy
+  setup, method-specific failure/censor actions, integer-attempt cost mapping,
+  AICc/rank/tie rules, delete-one and censor-sensitivity evidence, and a
+  truthful `not_measured_v1` policy
   whose secondary time/storage/money/effort fields are null rather than fake
   zeroes;
 - the public analysis index binds field size, exact subgroup order, method,
@@ -675,9 +677,9 @@ Completion evidence (2026-08-11):
   expected scalar, derivation seed, or validator-private payload enters the
   public handoff;
 - the frozen source snapshot is
-  `6b1de837e5981602259bcfd00d48fd2eee30253851422f86c93151cfd5da76fa`
+  `aa3c0f5d8a76c410854b1432558dbd3a9aa1bd3a690fbcfe24b9577a5779ca40`
   relative to merged P04 commit
-  `1aba9f025950af687d9a0e5104c8642e018aeb2e`, and 276 stdlib-only lab tests
+  `1aba9f025950af687d9a0e5104c8642e018aeb2e`, and 279 stdlib-only lab tests
   pass in under 23 seconds with a 512 MiB outer address-space limit.
 
 ### P05: equal-success comparison and scaling diagnostics

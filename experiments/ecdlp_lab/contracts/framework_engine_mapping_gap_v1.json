@@ -186,7 +186,7 @@
     },
     {
       "lab_contract_kind": "analysis_summary_v1",
-      "lab_field": "comparisons.equal_success_status,comparisons.equal_success_full_cost",
+      "lab_field": "comparisons.trial_semantics,comparisons.equal_success_status,comparisons.equal_success_full_cost,comparisons.censoring_sensitivity",
       "existing_schema": "experiments/engine/cost_contract.schema.json",
       "existing_field": "cost at success probability",
       "relationship": "related_not_equivalent",
@@ -194,7 +194,7 @@
     },
     {
       "lab_contract_kind": "analysis_summary_v1",
-      "lab_field": "analysis_policies,comparisons.clustered_uncertainty,model_fits.residuals,model_fits.leave_one_size_out",
+      "lab_field": "analysis_policies,comparisons.clustered_uncertainty,model_fits.candidate_model_evidence,model_fits.residuals,model_fits.leave_one_size_out",
       "existing_schema": "experiments/engine/cost_contract.schema.json",
       "existing_field": "none",
       "relationship": "lab_diagnostic_only",

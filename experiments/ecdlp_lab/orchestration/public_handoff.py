@@ -147,6 +147,16 @@ class VerifiedPublicAnalysisHandoff:
         if not isinstance(summary, Mapping):
             raise PublicHandoffError("analysis summary must be an object")
         record = deepcopy(dict(summary))
+        linked = record.get("input_validation_receipt_sha256s")
+        if (
+            record.get("campaign_id") != self.campaign_id
+            or record.get("provenance") != self._campaign_provenance
+            or not isinstance(linked, list)
+            or linked != sorted(self.validation_receipt_sha256s)
+        ):
+            raise PublicHandoffError(
+                "analysis must bind the exact campaign provenance and complete receipt set"
+            )
         context = ValidationContext.from_records(
             self._validation_records,
             repo_root=repo_root,

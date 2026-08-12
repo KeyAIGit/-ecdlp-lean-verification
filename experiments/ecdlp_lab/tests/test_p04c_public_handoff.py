@@ -84,10 +84,16 @@ class P04CPublicHandoffTests(unittest.TestCase):
             changed = handoff.entries[0]
             changed["method_budgets"]["max_steps"] = 1
             self.assertNotEqual(changed, handoff.entries[0])
-            issues = handoff.validate_analysis_summary(
-                {"contract_kind": "analysis_summary_v1"}, repo_root=REPO_ROOT
-            )
-            self.assertTrue(issues)
+            with self.assertRaisesRegex(PublicHandoffError, "complete receipt set"):
+                handoff.validate_analysis_summary(
+                    {
+                        "contract_kind": "analysis_summary_v1",
+                        "campaign_id": handoff.campaign_id,
+                        "provenance": handoff.campaign_provenance,
+                        "input_validation_receipt_sha256s": [],
+                    },
+                    repo_root=REPO_ROOT,
+                )
 
     def test_out_of_band_summary_is_required_and_exact(self) -> None:
         with tempfile.TemporaryDirectory(prefix="p04c-summary-") as raw:
