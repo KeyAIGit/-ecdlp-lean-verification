@@ -50,15 +50,13 @@ norm recover the carry bit. -/
 theorem r3_nontrivialPointScale_recoversCarry
     (gammaBit r3Bit : ZMod 2) :
     r3Bit + r3PublicOrbitNormBit 1 gammaBit r3Bit = gammaBit := by
-  fin_cases gammaBit <;> fin_cases r3Bit <;>
-    norm_num [r3PublicOrbitNormBit]
+  fin_cases gammaBit <;> fin_cases r3Bit <;> native_decide
 
 /-- In the trivial point-scale case, comparing `R3` with the public orbit norm
 returns zero and therefore exposes no carry bit. -/
 theorem r3_trivialPointScale_exposesNoCarry
     (gammaBit r3Bit : ZMod 2) :
     r3Bit + r3PublicOrbitNormBit 0 gammaBit r3Bit = 0 := by
-  fin_cases gammaBit <;> fin_cases r3Bit <;>
-    norm_num [r3PublicOrbitNormBit]
+  fin_cases gammaBit <;> fin_cases r3Bit <;> native_decide
 
 end Ecdlp.ParityLift
