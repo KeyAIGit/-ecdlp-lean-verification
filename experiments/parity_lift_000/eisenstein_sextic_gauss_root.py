@@ -203,8 +203,10 @@ def run_case(
     if any(value == 0 for value in base_sums.values()):
         raise AssertionError("a frozen natural sextic x-power projector vanished")
 
+    # A sextic character splits canonically into its order-three and order-two
+    # components as psi = psi^4 * psi^3, since 4+3 is congruent to 1 modulo 6.
     cubic_component = [0] + [
-        pow(psi[scalar], 2, field_prime) for scalar in range(1, order)
+        pow(psi[scalar], 4, field_prime) for scalar in range(1, order)
     ]
     quadratic_component = [0] + [
         pow(psi[scalar], 3, field_prime) for scalar in range(1, order)
