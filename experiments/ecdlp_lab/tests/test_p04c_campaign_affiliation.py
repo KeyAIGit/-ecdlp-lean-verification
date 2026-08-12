@@ -197,6 +197,8 @@ def equal_success_bundle() -> tuple[list[dict[str, object]], ValidationContext]:
                     "equal_success_status": "reached",
                     "normalized_group_operations_decimal": "101",
                 },
+                "restart_total": 0,
+                "restart_max": 0,
                 "clustered_uncertainty": {
                     "method": "delete_one_cluster_envelope_v1",
                     "estimand": "mean_observed_uncensored_group_operations_v1",
@@ -219,16 +221,6 @@ def equal_success_bundle() -> tuple[list[dict[str, object]], ValidationContext]:
             {
                 "method_id": "bsgs_v1",
                 "success_target_decimal": success_target,
-                "clustered_uncertainty": {
-                    "method": "delete_one_cluster_envelope_v1",
-                    "estimand": "mean_observed_uncensored_group_operations_v1",
-                    "unit": "group_law_invocations",
-                    "status": "computed",
-                    "cluster_count": 2,
-                    "unreachable_delete_one_count": 0,
-                    "lower_decimal": "0",
-                    "upper_decimal": "0",
-                },
                 "residuals": [
                     {
                         "curve_fixture_id": payload["curve_fixture_id"],
@@ -245,8 +237,10 @@ def equal_success_bundle() -> tuple[list[dict[str, object]], ValidationContext]:
                         "omitted_field_bits": payload["field_bits"],
                         "omitted_subgroup_orders": [payload["subgroup_order"]],
                         "status": "insufficient_data",
+                        "model_id": "model_undecided_v1",
                         "alpha_decimal": None,
                         "beta_decimal": None,
+                        "c_decimal": None,
                     }
                 ],
                 "candidate_model_evidence": [
@@ -406,6 +400,19 @@ class AnalysisCampaignAffiliationTests(unittest.TestCase):
             issue.code for issue in validate_cross_record_bundle(records, trusted)
         }
         self.assertIn("cross.analysis.uncertainty_binding", codes)
+
+    def test_full_cost_duplicate_and_restart_aggregate_are_exact(self) -> None:
+        records, trusted = equal_success_bundle()
+        comparison = one(records, "analysis_summary_v1")["comparisons"][0]
+        comparison["equal_success_full_cost"] = deepcopy(comparison["full_cost"])
+        comparison["equal_success_full_cost"]["amortization_target_count"] = 2
+        comparison["restart_total"] = 0
+        comparison["restart_max"] = 1
+        codes = {
+            issue.code for issue in validate_cross_record_bundle(records, trusted)
+        }
+        self.assertIn("cross.analysis.cost_binding", codes)
+        self.assertIn("cross.analysis.restart_binding", codes)
 
 
 if __name__ == "__main__":

@@ -219,6 +219,8 @@
         },
         "censoring_sensitivity": {"$ref": "#/$defs/censoringSensitivity"},
         "clustered_uncertainty": {"$ref": "#/$defs/clusteredUncertainty"},
+        "restart_total": {"type": "integer", "minimum": 0},
+        "restart_max": {"type": "integer", "minimum": 0},
         "field_bits": {"type": "integer", "minimum": 3, "maximum": 32},
         "subgroup_order_bits": {"type": "integer", "minimum": 2, "maximum": 32},
         "target_count": {"type": "integer", "minimum": 1},
@@ -413,7 +415,9 @@
         "optimistic_normalized_group_operations_decimal",
         "equal_success_full_cost",
         "censoring_sensitivity",
-        "clustered_uncertainty"
+        "clustered_uncertainty",
+        "restart_total",
+        "restart_max"
       ],
       "allOf": [
         {
@@ -481,7 +485,9 @@
         },
         {"not": {"required": ["equal_success_full_cost"]}},
         {"not": {"required": ["censoring_sensitivity"]}},
-        {"not": {"required": ["clustered_uncertainty"]}}
+        {"not": {"required": ["clustered_uncertainty"]}},
+        {"not": {"required": ["restart_total"]}},
+        {"not": {"required": ["restart_max"]}}
       ]
     },
     "fullCost": {
@@ -603,7 +609,6 @@
       "properties": {
         "method_id": {"$ref": "#/$defs/methodId"},
         "success_target_decimal": {"enum": ["0.50", "0.95"]},
-        "clustered_uncertainty": {"$ref": "#/$defs/clusteredUncertainty"},
         "residuals": {
           "type": "array",
           "items": {"$ref": "#/$defs/residual"}
@@ -756,8 +761,10 @@
         "omitted_field_bits",
         "omitted_subgroup_orders",
         "status",
+        "model_id",
         "alpha_decimal",
-        "beta_decimal"
+        "beta_decimal",
+        "c_decimal"
       ],
       "properties": {
         "omitted_field_bits": {
@@ -776,6 +783,13 @@
           }
         },
         "status": {"enum": ["fitted", "undecided", "insufficient_data"]},
+        "model_id": {
+          "enum": [
+            "log2_t_alpha_log2_n_beta_log2log2_n_v1",
+            "constant_factor_v1",
+            "model_undecided_v1"
+          ]
+        },
         "alpha_decimal": {
           "oneOf": [
             {"$ref": "#/$defs/signedDecimal"},
@@ -783,6 +797,12 @@
           ]
         },
         "beta_decimal": {
+          "oneOf": [
+            {"$ref": "#/$defs/signedDecimal"},
+            {"type": "null"}
+          ]
+        },
+        "c_decimal": {
           "oneOf": [
             {"$ref": "#/$defs/signedDecimal"},
             {"type": "null"}
@@ -797,14 +817,38 @@
           },
           "then": {
             "properties": {
+              "model_id": {
+                "enum": [
+                  "log2_t_alpha_log2_n_beta_log2log2_n_v1",
+                  "constant_factor_v1"
+                ]
+              },
               "alpha_decimal": {"$ref": "#/$defs/signedDecimal"},
-              "beta_decimal": {"$ref": "#/$defs/signedDecimal"}
+              "beta_decimal": {"$ref": "#/$defs/signedDecimal"},
+              "c_decimal": {"$ref": "#/$defs/signedDecimal"}
             }
           },
           "else": {
             "properties": {
               "alpha_decimal": {"type": "null"},
-              "beta_decimal": {"type": "null"}
+              "beta_decimal": {"type": "null"},
+              "c_decimal": {"type": "null"},
+              "model_id": {"const": "model_undecided_v1"}
+            }
+          }
+        },
+        {
+          "if": {
+            "required": ["status", "model_id"],
+            "properties": {
+              "status": {"const": "fitted"},
+              "model_id": {"const": "constant_factor_v1"}
+            }
+          },
+          "then": {
+            "properties": {
+              "alpha_decimal": {"const": "0.500000000000"},
+              "beta_decimal": {"const": "0.000000000000"}
             }
           }
         }
@@ -814,7 +858,6 @@
       "required": [
         "method_id",
         "success_target_decimal",
-        "clustered_uncertainty",
         "residuals",
         "leave_one_size_out",
         "candidate_model_evidence"
@@ -824,7 +867,6 @@
       "allOf": [
         {"not": {"required": ["method_id"]}},
         {"not": {"required": ["success_target_decimal"]}},
-        {"not": {"required": ["clustered_uncertainty"]}},
         {"not": {"required": ["residuals"]}},
         {"not": {"required": ["leave_one_size_out"]}},
         {"not": {"required": ["candidate_model_evidence"]}}

@@ -49,6 +49,8 @@
     "shared_setup_id": null,
     "total_group_law_invocations_formula": "offline_setup + online_target + method_self_check",
     "optimistic_equal_success_cost_formula": "ceil(optimistic_expected_attempts_real) * arithmetic_mean_uncensored_total_group_law_invocations"
+    ,
+    "full_cost_field_rule": "full_cost is always the exact not_measured_v1 one-attempt metadata object with all eight secondary quantities null, preprocessing included, none_single_target, target count 1, reusable_setup=false, shared_setup_id=null; when reached equal_success_full_cost equals full_cost byte-for-byte, and when unreachable equal_success_full_cost is null"
   },
   "decimal_policy": {
     "precision_digits": 80,
@@ -78,6 +80,8 @@
       "optimistic_normalized_group_operations_decimal": "K_emp * arithmetic_mean_uncensored_total_group_law_invocations"
       ,
       "estimated_algorithmic_memory_bytes": "maximum estimated_algorithmic_table_bytes over all authenticated clusters in the partition",
+      "restart_max": "maximum counters.restarts over all authenticated clusters in the partition",
+      "restart_total": "sum counters.restarts over all authenticated clusters in the partition",
       "seed_cluster_count": "B",
       "successes_failures_censored": "S,F,C respectively",
       "target_count": "authenticated public target payload target_count",
@@ -104,6 +108,7 @@
       "log2_t_alpha_log2_n_beta_log2log2_n_v1"
     ],
     "model_selection": "minimum_AICc_only_if_both_candidates_valid_and_delta_AICc_at_least_2_else_model_undecided_v1",
+    "model_uncertainty_representation": "clustered uncertainty is reported only on each method-target comparison; model_fits use candidate_model_evidence plus exact leave_one_size_out rows and have no second ambiguous scalar uncertainty field",
     "narrow_order_range_warning_rule": "emit narrow_order_range when max(exact_log2_subgroup_order)-min(exact_log2_subgroup_order) < 4; exact boundary 4 does not warn",
     "numeric_algorithm": "Sort observations by (field_bits,subgroup_order,curve_fixture_id,algorithm_seed with null before integers). Build Decimal precision-80 design X and y. Determine rank by row-reducing X with maximum-absolute pivot and lowest-row tie break. Build A=X^T*X and b=X^T*y in that order and solve A*theta=b by the same elimination. In each calculation the fixed tolerance is 1e-60*max(1,maximum absolute entry of the original matrix being reduced).",
     "no_coefficients_for_statuses": ["insufficient_data", "undecided"],
@@ -133,8 +138,13 @@
   },
   "sensitivity": {
     "censored_as_failures_probability_formula": "successes / (successes + algorithmic_failures + censored)",
+    "bsgs_rule": "If every cluster is a deterministic verified success, probability=1, r=K=1 and reached; if any BSGS cluster is censored, sensitivity is unreachable with attempts and cost null; mixed or impossible outcomes abort analysis",
     "censored_partial_counters_enter_cost_mean": false,
+    "expected_attempts_formula": "Apply the same Decimal precision-80 repeat-requirement r function to the sensitivity probability and quantize r to 12 places only for serialization",
+    "integer_attempts_formula": "K_sensitivity=ceil(unquantized precision-80 r_sensitivity)",
+    "normalized_cost_formula": "K_sensitivity * the same arithmetic mean of uncensored total group-law invocations used by the primary estimate; censored partial counters remain excluded",
     "policy_id": "censored_as_failures_v1",
+    "reached_condition": "probability > 0 and K_sensitivity <= B; otherwise attempts and normalized cost are null",
     "required_machine_readable_result": true
   },
   "trial_semantics": {

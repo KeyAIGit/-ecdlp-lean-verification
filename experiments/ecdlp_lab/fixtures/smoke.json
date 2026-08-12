@@ -43,15 +43,15 @@
   "native_research_outcome": false,
   "provenance": {
     "config_sha256": "730bee5abac7016810134755c27c014e5d47bf5c141d96044f4e0930875b30a8",
-    "diff_sha256": "9814f0f1aa77466e9a187cfa797c371fa989e4bbdf9aa30b4fa9217d2af07543",
+    "diff_sha256": "68dbb92221d515d48ece76e387060f07bc411b208679de3a117b7c5462928878",
     "producer_dependency_sha256s": [
-      "9de3f4b83e99b29025da783ee1d35af075fc693f1ceccb22f49db42c0b27434c"
+      "4a78b413a7fc5813c61c19ff5a39106a11f330a42e6e5813b788943b4fdd17a0"
     ],
     "source_commit": "1aba9f025950af687d9a0e5104c8642e018aeb2e",
-    "source_snapshot_sha256": "aa3c0f5d8a76c410854b1432558dbd3a9aa1bd3a690fbcfe24b9577a5779ca40",
+    "source_snapshot_sha256": "98f80f20042e4078e2ac88ec4a9e8db4d719b2ca50550315a956f195d09b85c4",
     "source_tree_clean": false,
     "validator_dependency_sha256s": [
-      "66523700f69fd1ee3ca405242be7d435fdb1b901bec4d784044f89337e18526b"
+      "e5e6907826e980654c1261ba97b60c1729c5d59784e68a4a8af0f3f4cdff3920"
     ]
   },
   "record_kind": "lab_engineering_fixture",

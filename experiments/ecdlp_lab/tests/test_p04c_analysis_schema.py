@@ -60,6 +60,8 @@ def _comparison(base: dict[str, object], target: str) -> dict[str, object]:
             "seed_cluster_count": 2,
             "algorithm_seed_set_sha256": SEED_SET_ID,
             "clustered_uncertainty": _uncertainty(),
+            "restart_total": 0,
+            "restart_max": 0,
         }
     )
     if target == "0.50":
@@ -113,7 +115,6 @@ def _fit(target: str) -> dict[str, object]:
         "status": "insufficient_data",
         "coefficients": [],
         "warning_codes": ["too_few_sizes"],
-        "clustered_uncertainty": _uncertainty(),
         "residuals": [
             {
                 "curve_fixture_id": "toy-secp-j0-b13-c0-p5923",
@@ -130,8 +131,10 @@ def _fit(target: str) -> dict[str, object]:
                 "omitted_field_bits": 13,
                 "omitted_subgroup_orders": [5827],
                 "status": "insufficient_data",
+                "model_id": "model_undecided_v1",
                 "alpha_decimal": None,
                 "beta_decimal": None,
+                "c_decimal": None,
             }
         ],
         "candidate_model_evidence": [
@@ -242,6 +245,13 @@ class P04CAnalysisSchemaTests(unittest.TestCase):
             self.protocol["uncertainty"]["bounds_unit"],
             "group_law_invocations",
         )
+        self.assertIn(
+            "K_sensitivity",
+            self.protocol["sensitivity"]["integer_attempts_formula"],
+        )
+        self.assertIn(
+            "restart_total", self.protocol["estimation"]["output_mapping"]
+        )
         stack = [self.protocol]
         while stack:
             value = stack.pop()
@@ -299,7 +309,6 @@ class P04CAnalysisSchemaTests(unittest.TestCase):
     def test_uncertainty_residual_and_leave_one_size_out_are_mandatory(self) -> None:
         mutations = (
             ("comparisons", 0, "clustered_uncertainty"),
-            ("model_fits", 0, "clustered_uncertainty"),
             ("model_fits", 0, "residuals"),
             ("model_fits", 0, "leave_one_size_out"),
             ("model_fits", 0, "candidate_model_evidence"),
@@ -347,6 +356,26 @@ class P04CAnalysisSchemaTests(unittest.TestCase):
         summary = equal_success_summary()
         summary["model_fits"][0]["leave_one_size_out"][0]["alpha_decimal"] = "0.5"
         self.assertNotEqual(validate_schema(summary, self.schema), [])
+
+    def test_loso_fitted_model_requires_exact_model_coefficients(self) -> None:
+        summary = equal_success_summary()
+        row = summary["model_fits"][0]["leave_one_size_out"][0]
+        row.update(
+            {
+                "status": "fitted",
+                "model_id": "constant_factor_v1",
+                "alpha_decimal": "0.500000000000",
+                "beta_decimal": "0.000000000000",
+                "c_decimal": "1.250000000000",
+            }
+        )
+        self.assertEqual(validate_schema(summary, self.schema), [])
+        row["alpha_decimal"] = "0.51"
+        self.assertNotEqual(validate_schema(summary, self.schema), [])
+
+        ambiguous = equal_success_summary()
+        ambiguous["model_fits"][0]["clustered_uncertainty"] = _uncertainty()
+        self.assertNotEqual(validate_schema(ambiguous, self.schema), [])
 
     def test_protocol_fields_are_forbidden_without_protocol_id(self) -> None:
         summary = equal_success_summary()

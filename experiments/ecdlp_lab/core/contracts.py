@@ -1794,6 +1794,50 @@ def validate_cross_record_bundle(
                             "trial semantics must match the frozen method behavior",
                         )
                     )
+                if protocol == "equal_success_scaling_v1":
+                    full_cost = comparison.get("full_cost")
+                    equal_cost = comparison.get("equal_success_full_cost")
+                    status = comparison.get("equal_success_status")
+                    expected_cost_shape = {
+                        "measurement_status": "not_measured_v1",
+                        "online_cpu_hours_decimal": None,
+                        "online_gpu_hours_decimal": None,
+                        "offline_cpu_hours_decimal": None,
+                        "offline_gpu_hours_decimal": None,
+                        "storage_gb_decimal": None,
+                        "money_usd_decimal": None,
+                        "implementation_hours_decimal": None,
+                        "reviewer_hours_decimal": None,
+                        "preprocessing_included_in_totals": True,
+                        "amortization_class": "none_single_target",
+                        "amortization_target_count": 1,
+                        "reusable_setup": False,
+                        "shared_setup_id": None,
+                    }
+                    if full_cost != expected_cost_shape or (
+                        status == "reached" and equal_cost != full_cost
+                    ) or (status == "unreachable_within_budget" and equal_cost is not None):
+                        issues.append(
+                            _link_issue(
+                                "cross.analysis.cost_binding",
+                                f"$.comparisons[{index}].full_cost",
+                                "full cost must be the frozen not-measured one-attempt shape and reached equal-success cost must match it exactly",
+                            )
+                        )
+                    restart_total = comparison.get("restart_total")
+                    restart_max = comparison.get("restart_max")
+                    if not (
+                        type(restart_total) is int
+                        and type(restart_max) is int
+                        and 0 <= restart_max <= restart_total
+                    ):
+                        issues.append(
+                            _link_issue(
+                                "cross.analysis.restart_binding",
+                                f"$.comparisons[{index}]",
+                                "restart maximum must be bounded by the aggregate restart total",
+                            )
+                        )
             if protocol == "equal_success_scaling_v1" and isinstance(matrix, dict):
                 campaign_methods = matrix.get("method_ids")
                 campaign_targets = matrix.get("target_vector_sha256s")
@@ -1835,16 +1879,6 @@ def validate_cross_record_bundle(
                             model_fit.get("success_target_decimal"),
                         )
                         model_keys.append(model_key)
-                        if not _uncertainty_bounds_valid(
-                            model_fit.get("clustered_uncertainty")
-                        ):
-                            issues.append(
-                                _link_issue(
-                                    "cross.analysis.uncertainty_binding",
-                                    f"$.model_fits[{index}].clustered_uncertainty",
-                                    "clustered uncertainty lower bound must not exceed upper bound",
-                                )
-                            )
                         allowed_observations = target_observations_by_method.get(
                             model_key[0], set()
                         )
