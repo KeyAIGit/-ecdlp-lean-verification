@@ -35,10 +35,10 @@ jobs:
           print(json.dumps(aggregate, indent=2))
           print(json.dumps(secp, indent=2))
           assert aggregate['cases'] == 6
-          assert aggregate['total_classes'] == 504
-          assert aggregate['total_frequency_nonvanishing_checks'] == 128030
-          assert aggregate['total_full_period_checks'] == 504
-          assert aggregate['total_degree_product_checks'] == 39
+          assert aggregate['total_classes'] == 1812
+          assert aggregate['total_frequency_nonvanishing_checks'] == 585072
+          assert aggregate['total_full_period_checks'] == 1812
+          assert aggregate['total_degree_product_checks'] == 40
           assert aggregate['all_fourier_supports_full']
           assert aggregate['all_cyclic_periods_full']
           assert aggregate['all_degree_tradeoffs_passed']
