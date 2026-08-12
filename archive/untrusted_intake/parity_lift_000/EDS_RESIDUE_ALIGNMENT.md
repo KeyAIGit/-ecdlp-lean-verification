@@ -1,236 +1,246 @@
-# EDS-RESIDUE-ALIGNMENT-001
+# PARITY-LIFT-000: EDS residue alignment and normalization audit
 
 Date: 2026-08-11
+Status: untrusted, non-executable research intake
 
-Status: **untrusted source alignment and public-parameter verification**. This
-file is quarantined from canonical evidence and Research Engine state. It
-authorizes no unknown-target computation and claims no ECDLP improvement.
+This note aligns the generator-relative parity question with the existing
+elliptic-divisibility-sequence literature. It records a source-level
+normalization discrepancy explicitly rather than hiding it inside notation.
+Nothing here computes an unknown-target discrete logarithm or EDS residue.
 
-## 1. The central parity question already has a precise EDS form
+## 1. Exact target bit
 
-Lauter and Stange, *The elliptic curve discrete logarithm problem and equivalent
-hard problems for elliptic divisibility sequences*, arXiv:0803.0728 and SAC
-2008, define the EDS Residue problem.
-
-Let
+Let `G` generate a cyclic subgroup of odd order `n`, and let
 
 ```text
-Q = [k]G,
-W_G(t) = psi_t(G),
+Q = [k]G,   0 < k < n.
 ```
 
-where `psi_t` is the elliptic division polynomial. The EDS Residue problem asks
-for the quadratic character
+Write
 
 ```text
-rho_G(Q) = chi(W_G(k))
+W_G(k) = psi_k(G)
 ```
 
-without knowing `k`.
-
-The same paper proves that an exact parity oracle recovers the full ECDLP by
-repeated halving, and that EDS Residue is subexponentially equivalent to ECDLP
-under the stated hypotheses. It also observes that ratios of consecutive EDS
-residues can be computed from the public point, while the absolute initial
-residue remains hidden.
-
-This is the concrete version of the previously vague phrase "hidden theta
-orientation bit".
-
-## 2. Public point function and normalized periodic EDS
-
-For a point `P` of order `n` with `gcd(n,q-1)=1`, define the public point-scaling
-function
+for the associated elliptic divisibility sequence and let `chi` be the quadratic
+character of the base field. The EDS Residue bit is
 
 ```text
-Phi(P) = (
-  W_P(q-1) / W_P(q-1+n)
-)^(1/n^2).
+rho_G(Q) = chi(W_G(k)).
 ```
 
-The root is unique because `n^2` is invertible modulo `q-1`. The value `Phi(Q)`
-is computable from the public point `Q` without knowing its scalar.
+The surviving algorithmic question is therefore:
 
-The elliptic-net transformation law gives the point-function identity
+> Given only public `(G,Q)`, compute `rho_G(Q)` below the matched generic
+> square-root baseline without first recovering `k`.
+
+This is narrower and more exact than asking for an unspecified theta phase.
+
+## 2. Raw point function
+
+For a nonzero point `P` of order `m` relatively prime to `q-1`, define the raw
+public point function
 
 ```text
-Phi([k]P) = Phi(P)^(k^2) W_P(k).
+phi_raw(P) =
+  (W_P(q-1) / W_P(q-1+m))^(1/m^2).
 ```
 
-A normalized perfectly periodic EDS is obtained by dividing by the public
-global value `Phi(P)`:
+The inverse exponent exists when `gcd(m,q-1)=1`. The value is computed from the
+point `P`; it does not require knowing a scalar representation of `P`.
+
+The rank-one elliptic-net transport identity gives the unnormalised point
+function law
 
 ```text
-W_tilde_P(k)
-  = Phi([k]P) / Phi(P)
-  = Phi(P)^(k^2-1) W_P(k).
+phi_raw([k]P) = phi_raw(P)^(k^2) W_P(k).       (R)
 ```
 
-Thus the `k^2` and `k^2-1` exponents describe two conventions for the same
-construction:
+The branch replays (R) on fixed toy curves and on fixed known secp256k1 scalar
+multiples. This is still only bounded computational evidence until an
+independent CAS replay and formal source-level derivation are attached.
 
-- `k^2` belongs to the public point function `Q -> Phi(Q)`;
-- `k^2-1` belongs to the EDS normalized so that its first term is one.
+## 3. Normalized perfectly periodic sequence
 
-They differ only by the public scalar `Phi(P)`. Ratios of periodic terms are
-unchanged. The distinction matters when one tracks an absolute quadratic
-character rather than only ratios.
-
-The fixed toy and secp256k1 replays verify both forms simultaneously. This is a
-normalization alignment, not a claimed erratum.
-
-## 3. Exact secp256k1 specialization
-
-For the public secp256k1 parameters,
+Divide the raw point function by its public value at the base point:
 
 ```text
-gcd(n,p-1) = 1.
+W_tilde_P(k) = phi_raw([k]P) / phi_raw(P).
 ```
 
-The fixed public-parameter verifier computes
+Then (R) is equivalent to
 
 ```text
-Phi(G) =
-0xee45a5d3582bcc343de09e2560a984ff1cbda1b74b117071860c29563f329c94
+W_tilde_P(k) = phi_raw(P)^(k^2-1) W_P(k).     (N)
 ```
 
-and finds
+Thus the `k^2` and `k^2-1` exponents are not interchangeable on an absolute
+quadratic-character bit. They describe respectively:
+
+- the raw public point function `phi_raw([k]P)`; and
+- the normalized sequence `W_tilde_P(k)`.
+
+Ratios of neighbouring terms cancel the global factor, but absolute residue
+claims must name the chosen normalization.
+
+## 4. Published-display discrepancy
+
+Lauter and Stange define the same ratio-root point function and then display
 
 ```text
-chi(Phi(G)) = -1.
+phi([k]P) = phi(P)^(k^2-1) W_P(k).
 ```
 
-Therefore, for `Q=[k]G`, the public point-function identity gives
+Taken literally at `k=1`, this would imply `phi(P)=W_P(1)=1`. That is not true
+for the fixed secp256k1 replay, where the ratio-root value is a nontrivial field
+element and a quadratic non-residue.
+
+The surrounding construction immediately before the theorem describes the
+`k^2-1` expression as a normalized equivalent sequence, while the raw point
+function naturally carries `k^2`. The safest current interpretation is:
+
+- equation (R) for the raw point function;
+- equation (N) for the normalized perfectly periodic EDS;
+- the published display contains a normalization mismatch or omitted global
+  factor.
+
+This branch does **not** label the source an erratum without author confirmation.
+It records the discrepancy as an explicit review blocker.
+
+## 5. Exact parity bridge
+
+Assume
 
 ```text
-chi(Phi(Q)) = chi(Phi(G))^(k^2) chi(W_G(k))
-            = (-1)^k rho_G(Q),
+chi(phi_raw(G)) = -1.
 ```
 
-because `k^2` and `k` have the same parity. Equivalently,
+Taking quadratic characters in (R) gives
 
 ```text
-boxed: (-1)^k = chi(Phi(Q)) rho_G(Q).
+chi(phi_raw(Q))
+  = chi(phi_raw(G))^(k^2) chi(W_G(k))
+  = (-1)^k rho_G(Q),
 ```
 
-The first factor is publicly computable from `Q`. The second factor is exactly
-the EDS Residue bit.
-
-This is the sharpest current answer to the parity-lift question:
+because `k^2` and `k` have the same parity. Therefore
 
 ```text
-canonical public lift = Phi(Q),
-hidden orientation bit = rho_G(Q)=chi(psi_k(G)),
-parity decoder = chi(Phi(Q))*rho_G(Q).
+boxed:  (-1)^k = chi(phi_raw(Q)) rho_G(Q).     (B_raw)
 ```
 
-The fixed verifier is
+Using the normalized sequence instead gives
 
 ```text
-experiments/parity_lift_000/verify_secp_eds_residue_bridge.py
+chi(W_tilde_G(k))
+  = (-1)^(k^2-1) rho_G(Q)
+  = -(-1)^k rho_G(Q),
 ```
 
-and accepts no external point or scalar.
-
-## 4. Why evaluating a fixed division polynomial at Q does not expose rho_G(Q)
-
-The elliptic-net transformation law gives, for every fixed public integer `m`,
+hence
 
 ```text
-psi_m([k]G) = W_G(m*k) / W_G(k)^(m^2).
+boxed:  (-1)^k = -chi(W_tilde_G(k)) rho_G(Q). (B_norm)
 ```
 
-Taking quadratic characters yields
+The two bridges agree after the known global factor is handled correctly.
+
+## 6. secp256k1 fixed-public condition
+
+For the standard secp256k1 field size `p`, subgroup order `n`, and generator
+`G`, the frozen verifier records
 
 ```text
-chi(psi_m(Q))
- = chi(W_G(m*k)) rho_G(Q)^(m^2).
+gcd(n,p-1) = 1,
+chi(phi_raw(G)) = -1.
 ```
 
-This supplies relations among EDS residue bits, but a multiplicative expression
-made only from fixed-index values `psi_m(Q)` is automatically balanced.
+It checks (R), (N), (B_raw), and (B_norm) only on a fixed list of known public
+scalars. It accepts no external point and never computes `rho_G(Q)` for an
+unknown target.
 
-For exponents `e_i` and fixed indices `m_i`, the corresponding EDS exponent
-polynomial is
+Consequently, on secp256k1 the parity problem is exactly aligned with the
+absolute EDS residue problem:
 
 ```text
-sum_i e_i (m_i*k)^2
-- (sum_i e_i m_i^2) k^2
-= 0.
+publicly computable factor  x  hidden EDS residue  =  scalar parity sign.
 ```
 
-In the terminology of Proposition 3 of Lauter and Stange, the parity-sensitive
-quadratic exponent `t(k)` is constant. The factor `Phi(G)^(k^2)` cancels
-exactly.
+This is a reduction of the unknown, not a shortcut.
 
-Consequences:
+## 7. Why the public point function alone is insufficient
 
-- a fixed product or ratio of division-polynomial evaluations at `Q` cannot use
-  this EDS-residue mechanism to reveal parity;
-- high algebraic degree alone is not useful when the expression remains
-  balanced;
-- the toy negative for products or ratios of up to four `chi(psi_m(Q))` values
-  is explained structurally rather than only empirically.
+The value `phi_raw(Q)` is computable from `Q`, but (B_raw) contains the unknown
+factor `rho_G(Q)`. Computing only the public side does not determine parity.
 
-The balance identity is the next small Lean theorem package.
+Conversely, an exact algorithm for `rho_G(Q)` gives exact parity; the existing
+bit-peeling reduction then recovers the entire canonical scalar in at most
+`ceil(log2 n)` oracle calls.
 
-## 5. GLV consequence
+Therefore a successful EDS-residue decoder would be a full ECDLP breakthrough,
+not a weak auxiliary statistic.
 
-The secp256k1 GLV eigenvalue `lambda` has order three modulo `n` and its
-canonical integer representative is even. Hence
+## 8. Fixed-index balance obstruction
+
+For fixed public index `m`, elliptic-net transport has the schematic form
 
 ```text
-chi(psi_lambda(Q)) = chi(Phi([lambda]Q)).
+W_Q(m) = W_G(mk) / W_G(k)^(m^2).
 ```
 
-The denominator contribution has even exponent and disappears. Both sides are
-publicly computable. This gives no absolute EDS residue bit.
+After perfect-periodic normalization, the quadratic exponent contributions
+cancel. Finite products and ratios of a fixed collection of such observations
+remain balanced unless a construction introduces an absolute, unbalanced
+section or equivalent extra information.
 
-More generally, walking around the three-point GLV orbit supplies balanced
-relative equations. Without an unbalanced EDS residue observable, the cycle
-does not determine `rho_G(Q)`.
+`Ecdlp/Proved/EdsResidueBalance.lean` formalizes the elementary exponent
+cancellation used by this obstruction. It does not formalize the full elliptic
+net identity or prove EDS Residue hard.
 
-This explains why the existing GLV phase-elimination work and the parity line
-can share algebraic infrastructure while remaining scientifically distinct.
+## 9. Surviving mechanism classes
 
-## 6. What remains genuinely open
+The simple classes screened so far do not recover `rho_G(Q)`:
 
-The central target is now:
+- a single low-index `chi(psi_m(Q))`;
+- finite products or ratios of several fixed low indices;
+- sign-erasing Kummer/even-theta/orbit invariants;
+- a global order-two translation character on the odd-order point cycle.
 
-```text
-Given public (G,Q), compute rho_G(Q)=chi(psi_k(G)) for Q=[k]G
-without recovering k first and below the square-root generic baseline.
-```
+The remaining meaningful classes are:
 
-Promising surviving mechanism classes are narrower than before:
+1. an unbalanced theta, sigma, or elliptic-net section whose absolute
+   normalization is public and cheap;
+2. a p-adic or analytic observable with an exact precision and total-cost
+   theorem;
+3. a nonlocal relation that fixes the absolute EDS sign from public relative
+   residues;
+4. a character-sum construction outside the bounded fixed-index family and
+   with a demonstrated sub-square-root scaling law.
 
-1. an unbalanced theta, sigma, or elliptic-net section whose evaluation from
-   `Q` does not cancel the `k^2` scaling factor;
-2. a statistic or correlation that identifies the absolute sign of the EDS
-   residue sequence from the publicly computable relative sequence;
-3. a p-adic or analytic normalization that fixes this sign with a proved
-   precision and cost bound;
-4. a nonlocal relation involving several independently chosen points or curve
-   models that breaks the balance identity without supplying equivalent hidden
-   input.
+Each candidate must expose where the missing absolute sign enters and why its
+evaluation does not already solve ECDLP internally.
 
-A fixed coordinate change, fixed-index division polynomial, Kummer quotient,
-or GLV orbit norm is not sufficient.
+## 10. Current disposition
 
-## 7. Current completion metric
+| Item | Status |
+|---|---|
+| EDS Residue is the exact surviving bit | source-backed |
+| parity-to-ECDLP reduction | proved in Lean |
+| raw `k^2` point-function law | derived and bounded-replayed; independent replay pending |
+| normalized `k^2-1` law | algebraically equivalent to raw law |
+| published equation normalization | discrepancy recorded; author confirmation absent |
+| `gcd(n,p-1)=1` for secp256k1 | fixed-public exact computation |
+| `chi(phi_raw(G))=-1` | fixed-public replay; independent CAS pending |
+| unknown-target `rho_G(Q)` algorithm | absent |
+| sub-Pollard complexity claim | absent |
 
-These percentages measure completion of declared obligations, not probability
-of solving ECDLP.
+## Sources
 
-| obligation | completion |
-|---|---:|
-| identify exact EDS formulation of hidden bit | 100% |
-| derive parity bridge | 100% mathematically |
-| verify public secp256k1 nonresidue condition | 100% in fixed Python replay |
-| independently replay the public condition in Sage or a second CAS | 0% |
-| source-level normalization alignment | about 85% |
-| Lean proof of the four generic parity foundations | committed, CI pending |
-| Lean proof of fixed-index balance identity | next small package |
-| mechanism computing EDS Residue below square-root cost | no positive evidence |
-
-The result is a major narrowing of the question, not a practical attack.
+- Kristin E. Lauter and Katherine E. Stange, *The elliptic curve discrete
+  logarithm problem and equivalent hard problems for elliptic divisibility
+  sequences*, SAC 2008 / LNCS 5381, 2009.
+- Katherine E. Stange, *Elliptic nets and elliptic curves*, Algebra & Number
+  Theory 5 (2011), for elliptic-net transformation laws.
+- Repository anchors: `Ecdlp/Proved/ScalarParity.lean`,
+  `Ecdlp/Proved/EdsResidueBalance.lean`, and
+  `experiments/parity_lift_000/verify_secp_eds_residue_bridge.py`.
