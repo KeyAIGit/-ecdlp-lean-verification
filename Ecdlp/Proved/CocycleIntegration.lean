@@ -42,7 +42,7 @@ theorem pathIntegral_succ (δ : ℕ → A) (k : ℕ) :
 
 /-- The recursive prefix integral agrees with the finite sum over the path. -/
 theorem pathIntegral_eq_sum_range (δ : ℕ → A) (k : ℕ) :
-    pathIntegral δ k = ∑ i in Finset.range k, δ i := by
+    pathIntegral δ k = Finset.sum (Finset.range k) δ := by
   induction k with
   | zero =>
       simp
