@@ -30,11 +30,13 @@ theorem binaryCocycle_sum_range
         (length : ZMod 2) * constant + publicBit length + publicBit 0 := by
   intro length
   induction length with
-  | zero => simp
+  | zero =>
+      simp
+      ring_nf
   | succ length ih =>
       rw [Finset.sum_range_succ, ih]
       push_cast
-      ring
+      ring_nf
 
 /-- If the public point-function bit is the residue plus a constant times the
 canonical scalar, the residue is recovered from the public bit and that scalar
@@ -44,7 +46,7 @@ theorem residue_eq_public_add_scalarBit
     (hpublic : publicBit = constant * scalarBit + residue) :
     residue = publicBit + constant * scalarBit := by
   rw [hpublic]
-  ring
+  ring_nf
 
 /-- In the secp-like branch where the constant bit is one, absolute EDS residue
 and scalar parity differ only by the public point-function bit. -/
@@ -53,7 +55,7 @@ theorem secpLike_residue_parity_equivalence
     (hpublic : publicBit = parity + residue) :
     residue = publicBit + parity := by
   rw [hpublic]
-  ring
+  ring_nf
 
 /-- Any decoder for one of two bits related by a public xor immediately gives a
 decoder for the other. -/
@@ -62,6 +64,6 @@ theorem publicXor_transfersDecoder
     (houtput : output = publicBit + hidden) :
     hidden = publicBit + output := by
   rw [houtput]
-  ring
+  ring_nf
 
 end Ecdlp.ParityLift
