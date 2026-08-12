@@ -15,6 +15,7 @@ from typing import Any, Iterable, Mapping
 from experiments.ecdlp_lab.core.canonical import is_sha256, sha256_json
 from experiments.ecdlp_lab.core.catalog_registry import trusted_catalog_sha256s
 from experiments.ecdlp_lab.core.contracts import (
+    ContractIssue,
     ValidationContext,
     validate_cross_record_bundle,
 )
@@ -102,7 +103,11 @@ class PublicHandoffError(ValueError):
 @dataclass(frozen=True)
 class VerifiedPublicAnalysisHandoff:
     campaign_id: str
+    _campaign_provenance: dict[str, Any] = field(repr=False)
     _entries: tuple[dict[str, Any], ...] = field(repr=False)
+    _validation_records: tuple[dict[str, Any], ...] = field(repr=False)
+    _known_catalog_sha256s: frozenset[str] = field(repr=False)
+    _known_target_vector_sha256s: frozenset[str] = field(repr=False)
     validation_receipt_sha256s: frozenset[str]
     index_sha256: str
     event_head_sha256: str
@@ -110,6 +115,50 @@ class VerifiedPublicAnalysisHandoff:
     @property
     def entries(self) -> tuple[dict[str, Any], ...]:
         return tuple(deepcopy(entry) for entry in self._entries)
+
+    @property
+    def campaign_provenance(self) -> dict[str, Any]:
+        return deepcopy(self._campaign_provenance)
+
+    def as_analysis_process_payload(self) -> dict[str, Any]:
+        """Return the only payload authorized to cross into P05 analysis."""
+
+        return {
+            "schema_version": 1,
+            "handoff_kind": "ecdlp_lab_verified_public_analysis_handoff_v1",
+            "campaign_id": self.campaign_id,
+            "campaign_provenance": self.campaign_provenance,
+            "validation_receipt_sha256s": sorted(
+                self.validation_receipt_sha256s
+            ),
+            "public_analysis_index_sha256": self.index_sha256,
+            "event_chain_head_sha256": self.event_head_sha256,
+            "entries": list(self.entries),
+        }
+
+    def validate_analysis_summary(
+        self,
+        summary: Mapping[str, Any],
+        *,
+        repo_root: Path | str,
+    ) -> tuple[ContractIssue, ...]:
+        """Validate a P05 result without exposing decisive retained records."""
+
+        if not isinstance(summary, Mapping):
+            raise PublicHandoffError("analysis summary must be an object")
+        record = deepcopy(dict(summary))
+        context = ValidationContext.from_records(
+            self._validation_records,
+            repo_root=repo_root,
+            known_catalog_sha256s=self._known_catalog_sha256s,
+            known_target_vector_sha256s=self._known_target_vector_sha256s,
+            known_validation_receipt_sha256s=self.validation_receipt_sha256s,
+            verify_artifacts=False,
+        )
+        issues = validate_cross_record_bundle(
+            (*self._validation_records, record), context
+        )
+        return tuple(issues)
 
 
 def _object(value: Any, keys: frozenset[str], label: str) -> dict[str, Any]:
@@ -442,10 +491,11 @@ def load_verified_public_analysis_handoff(
                 raise PublicHandoffError("public index differs from retained authenticated records")
             if finish_payload.get("validation_receipt_sha256s") != sorted(receipt_digests):
                 raise PublicHandoffError("terminal event receipt set drifted")
+            known_catalogs = trusted_catalog_sha256s(repo_root=root)
             context = ValidationContext.from_records(
                 bundle_records,
                 repo_root=root,
-                known_catalog_sha256s=trusted_catalog_sha256s(repo_root=root),
+                known_catalog_sha256s=known_catalogs,
                 known_target_vector_sha256s=target_ids,
                 known_validation_receipt_sha256s=receipt_digests,
                 verify_artifacts=False,
@@ -487,7 +537,11 @@ def load_verified_public_analysis_handoff(
     assert replay.head_sha256 is not None
     return VerifiedPublicAnalysisHandoff(
         campaign_id=campaign_id,
+        _campaign_provenance=deepcopy(plan.campaign["provenance"]),
         _entries=tuple(deepcopy(index_entries)),
+        _validation_records=tuple(deepcopy(bundle_records)),
+        _known_catalog_sha256s=frozenset(known_catalogs),
+        _known_target_vector_sha256s=frozenset(target_ids),
         validation_receipt_sha256s=frozenset(receipt_digests),
         index_sha256=index_sha256,
         event_head_sha256=replay.head_sha256,

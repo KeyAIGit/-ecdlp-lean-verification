@@ -152,7 +152,7 @@
       "existing_schema": "experiments/engine/cost_contract.schema.json",
       "existing_field": "online,offline,storage_gb,money_usd,implementation_hours,reviewer_hours,preprocessing,amortization,shared_setup",
       "relationship": "same_cost_vocabulary_different_encoding",
-      "gap": "lab hashed payload uses decimal strings for non-integral quantities and cannot be substituted directly for an Engine cost contract"
+      "gap": "lab hashed payload uses decimal strings for measured quantities; equal_success_scaling_v1 uses measurement_status=not_measured_v1 and null secondary quantities when no authenticated telemetry exists, so it cannot be substituted directly for an Engine cost contract"
     },
     {
       "lab_contract_kind": "artifact_ref_v1",

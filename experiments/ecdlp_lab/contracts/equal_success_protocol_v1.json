@@ -1,0 +1,68 @@
+{
+  "classification": {
+    "censored_statuses": ["bounded_failure"],
+    "explicit_failure_statuses": ["internal_error", "invalid_request"],
+    "success_statuses": ["success"]
+  },
+  "clustering": {
+    "cluster_key": ["curve_fixture_id", "algorithm_seed"],
+    "repetitions_with_same_seed_are_independent": false
+  },
+  "cost": {
+    "bsgs_reusable_setup": false,
+    "equal_success_cost_formula": "expected_attempts_real * arithmetic_mean_total_group_law_invocations",
+    "field_counters_comparable_across_backends": false,
+    "full_cost_measurement_status": "not_measured_v1",
+    "offline_setup_included_per_target": true,
+    "primary_unit": "group_law_invocations",
+    "secondary_cost_fields": null,
+    "total_group_law_invocations_formula": "offline_setup + online_target + method_self_check"
+  },
+  "decimal_policy": {
+    "precision_digits": 80,
+    "quantum": "0.000000000001",
+    "rounding": "ROUND_HALF_EVEN"
+  },
+  "estimation": {
+    "conservative_probability_formula": "successes / (successes + explicit_failures + 2)",
+    "empirical_probability_formula": "successes / (successes + explicit_failures)",
+    "expected_attempts_formula": "ln(1 - success_target) / ln(1 - probability)",
+    "integer_attempts_formula": "ceil(expected_attempts)",
+    "zero_probability_status": "unreachable_within_budget"
+  },
+  "inference": {
+    "minimum_distinct_subgroup_orders_for_fit": 6,
+    "model_candidates": [
+      "constant_factor_v1",
+      "log2_t_alpha_log2_n_beta_log2log2_n_v1"
+    ],
+    "model_selection": "minimum_AICc_if_finite_full_rank_else_model_undecided_v1",
+    "narrow_log2_order_range_threshold_decimal": "4.000000000000",
+    "required_inference_status": "insufficient_for_asymptotic_inference",
+    "rss_floor_decimal": "0.000000000000000000000001",
+    "secp256k1_extrapolation": false
+  },
+  "protocol_kind": "ecdlp_lab_equal_success_protocol_v1",
+  "schema_version": 1,
+  "success_targets_decimal": ["0.50", "0.95"],
+  "uncertainty": {
+    "bounds_estimand": "arithmetic_mean_observed_per_attempt_total_group_law_invocations",
+    "bounds_unit": "group_law_invocations",
+    "method": "delete_one_cluster_envelope_v1",
+    "unreachable_replicates_affect_equal_success_fit": false
+  },
+  "unreachable": {
+    "available_attempt_budget": "distinct_algorithm_seed_clusters",
+    "condition": "conservative_probability_is_zero_or_integer_attempts_exceed_available_attempt_budget",
+    "equal_success_fields_are_null": true
+  },
+  "warnings": [
+    "censored_observations",
+    "constant_factor_behavior",
+    "model_unstable",
+    "narrow_order_range",
+    "secondary_cost_not_measured",
+    "too_few_sizes",
+    "unreachable_success_target"
+  ]
+}

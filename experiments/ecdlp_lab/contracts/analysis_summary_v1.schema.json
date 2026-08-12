@@ -210,7 +210,7 @@
         },
         "equal_success_full_cost": {
           "oneOf": [
-            {"$ref": "#/$defs/fullCost"},
+            {"$ref": "#/$defs/equalSuccessFullCost"},
             {"type": "null"}
           ]
         },
@@ -298,7 +298,8 @@
               "optimistic_normalized_group_operations_decimal": {
                 "$ref": "#/$defs/unsignedDecimal"
               },
-              "equal_success_full_cost": {"$ref": "#/$defs/fullCost"}
+              "equal_success_full_cost": {"$ref": "#/$defs/equalSuccessFullCost"},
+              "full_cost": {"$ref": "#/$defs/equalSuccessFullCost"}
             }
           },
           "else": {
@@ -362,14 +363,33 @@
         "shared_setup_id"
       ],
       "properties": {
-        "online_cpu_hours_decimal": {"$ref": "#/$defs/unsignedDecimal"},
-        "online_gpu_hours_decimal": {"$ref": "#/$defs/unsignedDecimal"},
-        "offline_cpu_hours_decimal": {"$ref": "#/$defs/unsignedDecimal"},
-        "offline_gpu_hours_decimal": {"$ref": "#/$defs/unsignedDecimal"},
-        "storage_gb_decimal": {"$ref": "#/$defs/unsignedDecimal"},
-        "money_usd_decimal": {"$ref": "#/$defs/unsignedDecimal"},
-        "implementation_hours_decimal": {"$ref": "#/$defs/unsignedDecimal"},
-        "reviewer_hours_decimal": {"$ref": "#/$defs/unsignedDecimal"},
+        "measurement_status": {
+          "enum": ["measured_v1", "not_measured_v1"]
+        },
+        "online_cpu_hours_decimal": {
+          "oneOf": [{"$ref": "#/$defs/unsignedDecimal"}, {"type": "null"}]
+        },
+        "online_gpu_hours_decimal": {
+          "oneOf": [{"$ref": "#/$defs/unsignedDecimal"}, {"type": "null"}]
+        },
+        "offline_cpu_hours_decimal": {
+          "oneOf": [{"$ref": "#/$defs/unsignedDecimal"}, {"type": "null"}]
+        },
+        "offline_gpu_hours_decimal": {
+          "oneOf": [{"$ref": "#/$defs/unsignedDecimal"}, {"type": "null"}]
+        },
+        "storage_gb_decimal": {
+          "oneOf": [{"$ref": "#/$defs/unsignedDecimal"}, {"type": "null"}]
+        },
+        "money_usd_decimal": {
+          "oneOf": [{"$ref": "#/$defs/unsignedDecimal"}, {"type": "null"}]
+        },
+        "implementation_hours_decimal": {
+          "oneOf": [{"$ref": "#/$defs/unsignedDecimal"}, {"type": "null"}]
+        },
+        "reviewer_hours_decimal": {
+          "oneOf": [{"$ref": "#/$defs/unsignedDecimal"}, {"type": "null"}]
+        },
         "preprocessing_included_in_totals": {"const": true},
         "amortization_class": {
           "enum": ["none_single_target", "fixed_batch", "multi_target", "reusable_setup"]
@@ -387,7 +407,45 @@
             {"type": "null"}
           ]
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": ["measurement_status"],
+            "properties": {"measurement_status": {"const": "not_measured_v1"}}
+          },
+          "then": {
+            "properties": {
+              "online_cpu_hours_decimal": {"type": "null"},
+              "online_gpu_hours_decimal": {"type": "null"},
+              "offline_cpu_hours_decimal": {"type": "null"},
+              "offline_gpu_hours_decimal": {"type": "null"},
+              "storage_gb_decimal": {"type": "null"},
+              "money_usd_decimal": {"type": "null"},
+              "implementation_hours_decimal": {"type": "null"},
+              "reviewer_hours_decimal": {"type": "null"}
+            }
+          },
+          "else": {
+            "properties": {
+              "online_cpu_hours_decimal": {"$ref": "#/$defs/unsignedDecimal"},
+              "online_gpu_hours_decimal": {"$ref": "#/$defs/unsignedDecimal"},
+              "offline_cpu_hours_decimal": {"$ref": "#/$defs/unsignedDecimal"},
+              "offline_gpu_hours_decimal": {"$ref": "#/$defs/unsignedDecimal"},
+              "storage_gb_decimal": {"$ref": "#/$defs/unsignedDecimal"},
+              "money_usd_decimal": {"$ref": "#/$defs/unsignedDecimal"},
+              "implementation_hours_decimal": {"$ref": "#/$defs/unsignedDecimal"},
+              "reviewer_hours_decimal": {"$ref": "#/$defs/unsignedDecimal"}
+            }
+          }
+        }
+      ]
+    },
+    "equalSuccessFullCost": {
+      "allOf": [
+        {"$ref": "#/$defs/fullCost"},
+        {"required": ["measurement_status"]}
+      ]
     },
     "coefficient": {
       "type": "object",

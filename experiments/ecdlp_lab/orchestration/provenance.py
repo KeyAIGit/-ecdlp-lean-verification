@@ -80,6 +80,7 @@ _VALIDATOR_EXECUTION_PATHS = tuple(
 )
 _SOURCE_SNAPSHOT_PATHS = (
     "experiments/ecdlp_lab/__init__.py",
+    "experiments/ecdlp_lab/contracts/analysis_summary_v1.schema.json",
     "experiments/ecdlp_lab/contracts/campaign_config_v1.schema.json",
     "experiments/ecdlp_lab/contracts/method_request_v1.schema.json",
     "experiments/ecdlp_lab/contracts/method_result_v1.schema.json",

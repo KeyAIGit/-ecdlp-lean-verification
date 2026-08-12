@@ -57,6 +57,9 @@ class P04CPublicHandoffTests(unittest.TestCase):
                 handoff.validation_receipt_sha256s,
                 frozenset(summary.validation_receipt_sha256s),
             )
+            payload = handoff.as_analysis_process_payload()
+            self.assertEqual(payload["campaign_provenance"], campaign["provenance"])
+            self.assertEqual(payload["entries"], list(handoff.entries))
             forbidden = {
                 "candidate_scalar",
                 "derivation_seed",
@@ -70,9 +73,21 @@ class P04CPublicHandoffTests(unittest.TestCase):
             for entry in handoff.entries:
                 self.assertFalse(forbidden & set(entry))
                 self.assertIn(entry["method_status"], {"success", "bounded_failure"})
+            stack = [payload]
+            while stack:
+                value = stack.pop()
+                if isinstance(value, dict):
+                    self.assertFalse(forbidden & set(value))
+                    stack.extend(value.values())
+                elif isinstance(value, list):
+                    stack.extend(value)
             changed = handoff.entries[0]
             changed["method_budgets"]["max_steps"] = 1
             self.assertNotEqual(changed, handoff.entries[0])
+            issues = handoff.validate_analysis_summary(
+                {"contract_kind": "analysis_summary_v1"}, repo_root=REPO_ROOT
+            )
+            self.assertTrue(issues)
 
     def test_out_of_band_summary_is_required_and_exact(self) -> None:
         with tempfile.TemporaryDirectory(prefix="p04c-summary-") as raw:

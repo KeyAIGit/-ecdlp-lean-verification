@@ -10,6 +10,7 @@ from experiments.ecdlp_lab.core.schema import schema_definition_issues, validate
 
 LAB_ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = LAB_ROOT / "contracts" / "analysis_summary_v1.schema.json"
+PROTOCOL_PATH = LAB_ROOT / "contracts" / "equal_success_protocol_v1.json"
 FIXTURE_PATH = LAB_ROOT / "fixtures" / "contracts" / "valid" / "analysis_summary_v1.json"
 TARGET_ID = "f530af54bbc7c68523bef1abcf97853d7c635244c15f5c071f91857ecf8083d8"
 SEED_SET_ID = sha256_json([7, 11])
@@ -24,8 +25,26 @@ def _uncertainty() -> dict[str, object]:
     }
 
 
+def _unmeasured_cost(value: dict[str, object]) -> dict[str, object]:
+    cost = deepcopy(value)
+    cost["measurement_status"] = "not_measured_v1"
+    for field in (
+        "online_cpu_hours_decimal",
+        "online_gpu_hours_decimal",
+        "offline_cpu_hours_decimal",
+        "offline_gpu_hours_decimal",
+        "storage_gb_decimal",
+        "money_usd_decimal",
+        "implementation_hours_decimal",
+        "reviewer_hours_decimal",
+    ):
+        cost[field] = None
+    return cost
+
+
 def _comparison(base: dict[str, object], target: str) -> dict[str, object]:
     comparison = deepcopy(base["comparisons"][0])
+    comparison["full_cost"] = _unmeasured_cost(comparison["full_cost"])
     comparison.update(
         {
             "public_target_vector_sha256": TARGET_ID,
@@ -121,12 +140,33 @@ class P04CAnalysisSchemaTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.schema = load_json(SCHEMA_PATH)
+        cls.protocol = load_json(PROTOCOL_PATH)
         cls.legacy = load_json(FIXTURE_PATH)
 
     def test_schema_is_supported_and_legacy_p01_summary_remains_valid(self) -> None:
         self.assertEqual(schema_definition_issues(self.schema), [])
         self.assertNotIn("analysis_protocol_id", self.legacy)
         self.assertEqual(validate_schema(self.legacy, self.schema), [])
+
+    def test_equal_success_protocol_freezes_estimands_and_no_reuse_policy(self) -> None:
+        self.assertEqual(
+            self.protocol["protocol_kind"], "ecdlp_lab_equal_success_protocol_v1"
+        )
+        self.assertEqual(self.protocol["success_targets_decimal"], ["0.50", "0.95"])
+        self.assertFalse(self.protocol["cost"]["bsgs_reusable_setup"])
+        self.assertIsNone(self.protocol["cost"]["secondary_cost_fields"])
+        self.assertEqual(
+            self.protocol["uncertainty"]["bounds_unit"],
+            "group_law_invocations",
+        )
+        stack = [self.protocol]
+        while stack:
+            value = stack.pop()
+            self.assertNotIsInstance(value, float)
+            if isinstance(value, dict):
+                stack.extend(value.values())
+            elif isinstance(value, list):
+                stack.extend(value)
 
     def test_equal_success_protocol_accepts_reached_and_unreachable_targets(self) -> None:
         summary = equal_success_summary()
@@ -162,6 +202,16 @@ class P04CAnalysisSchemaTests(unittest.TestCase):
             "conservative_normalized_group_operations_decimal"
         ] = "999"
         self.assertNotEqual(validate_schema(unreachable_with_cost, self.schema), [])
+
+        false_zero = equal_success_summary()
+        false_zero["comparisons"][0]["full_cost"][
+            "online_cpu_hours_decimal"
+        ] = "0"
+        self.assertNotEqual(validate_schema(false_zero, self.schema), [])
+
+        unlabelled = equal_success_summary()
+        del unlabelled["comparisons"][0]["full_cost"]["measurement_status"]
+        self.assertNotEqual(validate_schema(unlabelled, self.schema), [])
 
     def test_uncertainty_residual_and_leave_one_size_out_are_mandatory(self) -> None:
         mutations = (

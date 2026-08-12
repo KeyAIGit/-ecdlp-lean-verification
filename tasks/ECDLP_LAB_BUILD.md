@@ -659,6 +659,12 @@ Completion evidence (2026-08-11):
   0.50/0.95 targets, exact target/order/log2 bindings, unreachable state,
   clustered uncertainty, residuals, leave-one-size-out diagnostics, and
   inference policies while the P01 legacy corpus remains valid;
+- protocol artifact SHA-256
+  `17ad1a15a157ac1add620783426226e843e5a8519e3cf6287b730b3338298ee9`
+  freezes probability/attempt formulas, cluster semantics, per-target BSGS
+  setup, model-selection thresholds, and a truthful `not_measured_v1` policy
+  whose secondary time/storage/money/effort fields are null rather than fake
+  zeroes;
 - the public analysis index binds field size, exact subgroup order, method,
   seed, repetition, budgets, status/failure, counters, result, and receipt.  Its
   verifier requires the out-of-band P04 run summary, replays exact event
@@ -669,7 +675,7 @@ Completion evidence (2026-08-11):
   expected scalar, derivation seed, or validator-private payload enters the
   public handoff;
 - the frozen source snapshot is
-  `ef5be8a2f7ac09b70f4eec3cad0fe95632ef841852cfc0eb1dca092d103d5416`
+  `6b1de837e5981602259bcfd00d48fd2eee30253851422f86c93151cfd5da76fa`
   relative to merged P04 commit
   `1aba9f025950af687d9a0e5104c8642e018aeb2e`, and 276 stdlib-only lab tests
   pass in under 23 seconds with a 512 MiB outer address-space limit.
