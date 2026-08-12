@@ -286,7 +286,9 @@ be conflated with Units 1–3:
 
 - **"0 axioms" means no axioms beyond `{propext, Classical.choice, Quot.sound}`** — not axiom-free
   foundations. Machine-enforced by the axiom-audit gate on a headline set (not the whole ledger).
-- **~33 load-bearing 256-bit facts use `native_decide`** and therefore trust the Lean compiler via
+- **Compiler-trusted facts using `native_decide` are exhaustively catalogued in
+  `TRUST_REPORT.md` and emitted by the full-ledger axiom audit**; they therefore
+  trust the Lean compiler via
   `Lean.ofReduceBool` (TCB beyond the kernel). This includes the two primality theorems, where the
   trust is minimized to bounded leaves (Unit 2). `TRUST_REPORT.md` is the disclosure.
 - **`#E(𝔽_p) = n` is proved** (curve-specifically, no Schoof — `CurveCardinalityExact.lean`: `#E≤2p+1<3n`
