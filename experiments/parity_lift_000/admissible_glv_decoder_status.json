@@ -1,11 +1,11 @@
 {
-  "schema_version": 6,
+  "schema_version": 7,
   "date": "2026-08-12",
   "instance": "secp256k1 ordered generator G with order-three GLV endomorphism",
   "master_target": "compute g_G(Q), R3_G(Q), h_G(x(Q)^3), or the equivalent normalized Gaussian-period orientation exactly and reutilizably",
   "equivalences": [
     "C3_G(Q) = g_G(Q) * R3_G(Q)",
-    "h_G(x(Q)^3) = g_G(Q) * chi(y(Q))",
+    "h_G(x(Q)^3) = g_G(Q) * chi_p(y(Q))",
     "g_G(Q) = B_G(chi_G(Q)) for the faithful generator-oriented order-n phase",
     "g_G(Q) = -sign(Im eta_G(Q)), eta_G(Q)=z+z^lambda+z^(lambda^2), z=chi_G(Q)",
     "g_G(Q) = g_G(G) * sign(U_G(Q)), U_G(Q)=A_G(Q)/A_G(G)"
@@ -19,7 +19,9 @@
     "exact_generator_normalized_period_observable": true,
     "exact_bounded_rank_pairing_formula_with_dual_input": true,
     "exact_order_six_recurrence_over_large_coefficient_field": true,
-    "known_sub_sqrt_admissible_decoder": false,
+    "exact_scalar_legendre_projector_with_linear_orbit_sum": true,
+    "known_sub_sqrt_admissible_carry_decoder": false,
+    "known_sub_sqrt_scalar_legendre_projector": false,
     "universal_nonexistence_proved": false,
     "pure_generic_sub_sqrt_decoder_excluded_conditionally": true,
     "explicit_finite_field_translation_linear_sub_sqrt_state_excluded": true,
@@ -36,6 +38,7 @@
     "no_materialized_dual_C3_orbit_selector": true,
     "no_materialized_period_field_or_conjugate_pair_table": true,
     "no_translation_linear_state_of_linear_base_field_size": true,
+    "no_oriented_factor_or_projector_table_of_linear_size": true,
     "target_total_cost": "O(n^(1/2-epsilon))",
     "strong_target": "poly(log p, log n)"
   },
@@ -56,15 +59,19 @@
     "explicit finite-field translation-linear state with arbitrary exact readout below linear state",
     "exact geometrically non-power rational-character carry decoders of degree o(sqrt(n))",
     "ordinary low-degree line-bundle or explicit divisor sections followed by quadratic character",
+    "exact bounded C6-invariant polynomial scalar-Legendre decoders below degree (n-1)/12",
+    "exact bounded curve-rational scalar-Legendre decoders below degree (n-1)/2",
+    "standard generator-blind quadratic elliptic-Gauss invariant S_3(G)^2 as an oriented sign source",
     "polylog field-Fourier-L1 x-coordinate predicates",
     "split quotient characters with support at most four on frozen corpus",
     "rational square classes of total degree at most two on frozen corpus",
     "tested order-13441 lookup, spectrum and bounded nonlinear families"
   ],
   "open_classes": [
-    "high-degree low-size square-class arithmetic circuits",
+    "high-degree low-size square-class arithmetic circuits for carry",
     "direct nonlinear normalized-period coordinate circuit without translation-linear state",
-    "dual-orbit quadratic resolvent and possible scalar-Legendre route",
+    "Eisenstein-CM oriented square root of the elliptic Gauss projector",
+    "compact scalar-Legendre projector followed by a separately proved classical recovery",
     "canonical p-adic or analytic exact orientation descent",
     "nonlocal order-dependent EDS section outside C_quad",
     "new generator-sensitive public field-character identity",
@@ -76,7 +83,8 @@
     "gaussian_period": "eta_G(Q)=z+z^lambda+z^(lambda^2); g_G(Q)=-sign(Im eta_G(Q)); degree (n-1)/3 with (n-1)/6 conjugate pairs",
     "normalized_period": "U_G(Q)=A_G(Q)/A_G(G); exact carry sign with natural (n-1)/6 quotient state",
     "pairing_blackbox": "three normalized pairing factors after supplying one selected dual C3 orbit",
-    "order_six_recurrence": "rank 6 over an extension of degree (n-1)/12; total linear-output state (n-1)/2 base-field words"
+    "order_six_recurrence": "rank 6 over an extension of degree (n-1)/12; total linear-output state (n-1)/2 base-field words",
+    "scalar_legendre_projector": "S_3(P)=sum_{a=1}^{n-1} chi_n(a)x([a]P)^3; S_3([k]G)=chi_n(k)S_3(G); direct cost Theta(n)"
   },
   "dual_orbit_bounds": {
     "nonzero_dual_point_field_degree": "(n-1)/6",
@@ -91,9 +99,11 @@
   "degree_lower_bounds": {
     "exact_rational_character_carry_decoder": "degree greater than 2^125.348 on fixed secp256k1 parameters under the Kummer-covering hypotheses",
     "quotient_R_of_x_cubed": "degree greater than 2^122.763 for f(Q)=y(Q)R(x(Q)^3)",
-    "scope": "geometrically non-power rational functions; this is not an arithmetic-circuit-size lower bound"
+    "scalar_legendre_C6_polynomial": "degree at least (n-1)/12",
+    "scalar_legendre_curve_rational": "degree at least (n-1)/2",
+    "scope": "representation degree; these are not arithmetic-circuit-size lower bounds"
   },
-  "next_question": "Can a uniformly generated polylog-size arithmetic circuit create the required square class despite the square-root rational-map degree barrier, without encoding the carry partition in constants, advice, a faithful dual character, a selected dual-C3 orbit, or a large translation state?",
+  "next_question": "Can a uniformly generated polylog-size nonlinear circuit evaluate either the carry orientation sign(U_G(Q)) or an oriented Eisenstein-CM Gauss root, despite the degree and state barriers, without encoding an orientation table, faithful dual character, selected dual orbit, or linear-size projector in constants or advice?",
   "source_branches": [
     "research/parity-lift-000",
     "research/direct-glv-carry-descent-010"
@@ -107,8 +117,10 @@
     "ANTI-FROBENIUS-ORIENTATION-SEED-031",
     "NORMALIZED-PERIOD-BLACKBOX-032",
     "DUAL-C3-ORBIT-SELECTOR-033",
-    "NORMALIZED-PERIOD-LINEAR-STATE-BARRIER-035",
-    "RATIONAL-CHARACTER-DEGREE-BARRIER-036"
+    "DUAL-ORBIT-QUADRATIC-RESOLVENT-034",
+    "ELLIPTIC-GAUSS-PROJECTOR-035",
+    "NORMALIZED-PERIOD-LINEAR-STATE-BARRIER-035-SUPPLEMENT",
+    "RATIONAL-CHARACTER-DEGREE-BARRIER-036-SUPPLEMENT"
   ],
-  "claim_boundary": "No unknown production target is accepted, no universal nonlinear circuit lower bound is claimed, and no sub-square-root ECDLP algorithm is claimed."
+  "claim_boundary": "No unknown production target is accepted, scalar-Legendre is not identified with carry, no classical sub-square-root shifted-Legendre recovery is claimed, no universal nonlinear circuit lower bound is claimed, and no sub-square-root ECDLP algorithm is claimed."
 }
