@@ -1,0 +1,128 @@
+name: Normalized period linear-state barrier
+
+on:
+  push:
+    branches:
+      - research/direct-glv-carry-descent-010
+    paths:
+      - 'Ecdlp/Proved/NormalizedPeriodLinearStateBarrier.lean'
+      - 'experiments/parity_lift_000/normalized_period_linear_state_barrier.py'
+      - 'notes/reviews/PARITY_PHASE_CHAIN_CHECKPOINT_035.md'
+      - '.github/workflows/normalized-period-linear-state-barrier.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run normalized-period recurrence and state replay
+        run: |
+          python3 experiments/parity_lift_000/normalized_period_linear_state_barrier.py \
+            --out /tmp/normalized_period_linear_state_barrier_results.json \
+            > /tmp/normalized-period-linear-state-barrier.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/normalized_period_linear_state_barrier_results.json').read_text()
+          )
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+
+          assert data['package'] == 'NORMALIZED-PERIOD-LINEAR-STATE-BARRIER-035'
+          assert aggregate['cases'] == 15
+          assert aggregate['cyclotomic_compatible_cases'] == 14
+          assert aggregate['total_recurrence_checks'] == 14313
+          assert aggregate['total_frobenius_tradeoff_formula_checks'] == 12401
+          assert aggregate['maximum_recurrence_residual'] < 1.0e-8
+          assert aggregate['maximum_coefficient_imaginary_residual'] < 1.0e-8
+          assert aggregate['all_toy_linear_state_minima_positive']
+
+          n = secp['order']
+          d = secp['frobenius_order_d']
+          assert d == (n - 1) // 6
+          assert secp['linear_output_base_field_word_lower_bound'] == (n - 1) // 2
+          assert (
+              secp['translation_linear_arbitrary_readout_base_field_word_lower_bound']
+              == d
+          )
+          assert all(secp['checks'].values())
+          PY
+          tail -n 80 /tmp/normalized-period-linear-state-barrier.log
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/NormalizedPeriodLinearStateBarrier.lean; then
+            echo "::error::Normalized-period linear-state theorem contains sorry"
+            exit 1
+          fi
+
+      - name: Install elan with transient-download retries
+        run: |
+          installed=false
+          for attempt in 1 2 3 4 5; do
+            echo "Elan installation attempt ${attempt}/5"
+            if curl --retry 4 --retry-delay 2 --retry-all-errors -fsSL \
+                https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+                | sh -s -- -y --default-toolchain none; then
+              installed=true
+              break
+            fi
+            rm -rf "$HOME/.elan"
+            sleep $((attempt * 3))
+          done
+          test "$installed" = true
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check normalized-period tradeoff core
+        run: lake build Ecdlp.Proved.NormalizedPeriodLinearStateBarrier
+
+      - name: Post decision to synchronized research PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY' > /tmp/comment.md
+          import json
+          import os
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/normalized_period_linear_state_barrier_results.json').read_text()
+          )
+          print('## NORMALIZED-PERIOD-LINEAR-STATE-BARRIER-035')
+          print()
+          print(f"Commit: `{os.environ['GITHUB_SHA']}`")
+          print()
+          print('```json')
+          print(json.dumps(data['aggregate'], indent=2))
+          print('```')
+          print()
+          print('Decision: **the exact order-six normalized-period recurrence hides an extension of degree `(n-1)/12`. Every explicit finite-field linear-output recurrence needs at least `(n-1)/2` base-field words, and every translation-linear state with arbitrary exact readout needs at least `(n-1)/6`.**')
+          print()
+          print('Successor: `RATIONAL-CHARACTER-DEGREE-BARRIER-036`.')
+          PY
+          gh api --method POST \
+            repos/${GITHUB_REPOSITORY}/issues/373/comments \
+            -f body="$(cat /tmp/comment.md)"
+
+      - name: Upload normalized-period artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: normalized-period-linear-state-barrier-results
+          path: /tmp/normalized_period_linear_state_barrier_results.json
+          if-no-files-found: error
