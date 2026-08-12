@@ -8,6 +8,7 @@ production-sized instances. It reuses the frozen arithmetic helpers from
 from __future__ import annotations
 
 import argparse
+import cmath
 import json
 import math
 from dataclasses import asdict, dataclass
@@ -37,6 +38,9 @@ class CurveResult:
     negation_checks: int
     all_negation_checks_passed: bool
     rho_kummer_invariant: bool
+    rho_fourier_nonzero_coefficients: int
+    rho_fourier_max_abs: float
+    rho_fourier_max_over_sqrt_order: float
     valid_x_linear_character_vectors: int | None
     exact_x_linear_product_up_to_weight_four: bool | None
     best_single_matches: int | None
@@ -61,6 +65,22 @@ def raw_point_scale(point: tuple[int, int], p: int, order: int) -> int:
     if pow(value, order * order, p) != ratio:
         raise AssertionError("raw point-scale root check failed")
     return value
+
+
+def rho_fourier_stats(rho: list[int], order: int) -> tuple[int, float, float]:
+    """DFT of the residue trace with value zero at the identity."""
+    trace = [0, *rho]
+    coefficients = [
+        sum(
+            trace[k] * cmath.exp(-2j * math.pi * frequency * k / order)
+            for k in range(order)
+        )
+        for frequency in range(order)
+    ]
+    magnitudes = [abs(value) for value in coefficients]
+    nonzero = sum(value > 1e-9 for value in magnitudes)
+    maximum = max(magnitudes)
+    return nonzero, maximum, maximum / math.sqrt(order)
 
 
 def x_linear_character_vectors(
@@ -99,6 +119,7 @@ def run_curve(p: int, order: int, generator: tuple[int, int]) -> CurveResult:
             raise AssertionError("EDS-residue negation law failed")
         negation_checks += 1
 
+    fourier_nonzero, fourier_max, fourier_scaled = rho_fourier_stats(rho, order)
     kummer_invariant = predicted_multiplier == 1
     if not kummer_invariant:
         return CurveResult(
@@ -112,6 +133,9 @@ def run_curve(p: int, order: int, generator: tuple[int, int]) -> CurveResult:
             negation_checks=negation_checks,
             all_negation_checks_passed=True,
             rho_kummer_invariant=False,
+            rho_fourier_nonzero_coefficients=fourier_nonzero,
+            rho_fourier_max_abs=fourier_max,
+            rho_fourier_max_over_sqrt_order=fourier_scaled,
             valid_x_linear_character_vectors=None,
             exact_x_linear_product_up_to_weight_four=None,
             best_single_matches=None,
@@ -156,6 +180,9 @@ def run_curve(p: int, order: int, generator: tuple[int, int]) -> CurveResult:
         negation_checks=negation_checks,
         all_negation_checks_passed=True,
         rho_kummer_invariant=True,
+        rho_fourier_nonzero_coefficients=fourier_nonzero,
+        rho_fourier_max_abs=fourier_max,
+        rho_fourier_max_over_sqrt_order=fourier_scaled,
         valid_x_linear_character_vectors=len(representatives),
         exact_x_linear_product_up_to_weight_four=exact,
         best_single_matches=best_matches,
@@ -182,6 +209,9 @@ def main() -> None:
         "negation_law": (
             "rho_G(-Q)=chi(-1)*chi(phi_raw(G))*rho_G(Q)"
         ),
+        "fourier_convention": (
+            "rho(0)=0; DFT over the complete cyclic order"
+        ),
         "maximum_x_linear_product_weight": MAX_X_LINEAR_PRODUCT_WEIGHT,
         "curves": [asdict(result) for result in results],
         "aggregate": {
@@ -203,6 +233,7 @@ def main() -> None:
         "claim_boundary": [
             "This is a frozen toy structural screen, not an asymptotic theorem.",
             "Kummer invariance depends on chi(-1)*chi(phi_raw(G)), not on p mod 4 alone.",
+            "The residue Fourier maxima are square-root scale in these toys; the linear-size parity Fourier spike does not transfer automatically to rho.",
             "The x-linear product search is applied only when the target residue bit is Kummer-invariant.",
             "No external curve, public key, wallet, or production-sized target is accepted.",
             "Failure up to weight four does not rule out higher-degree or fast-recursive theta/EDS observables.",
