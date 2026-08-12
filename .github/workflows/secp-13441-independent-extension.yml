@@ -1,0 +1,149 @@
+name: Secp factor 13441 independent nonlinear extension
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - experiments/parity_lift_000/secp_13441_independent_extension.py
+      - experiments/parity_lift_000/secp_13441_independent_extension_runner.py
+      - experiments/parity_lift_000/secp_13441_canonical_orbit_ml_cv.py
+      - experiments/parity_lift_000/secp_13441_character_screen.py
+      - experiments/parity_lift_000/secp_13441_within_curve_cv.py
+      - Ecdlp/Proved/Secp13441WithinCurveBoundary.lean
+      - .github/workflows/secp-13441-independent-extension.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: secp-13441-independent-extension-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  confirm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Install exact and ML dependencies
+        run: >-
+          python3 -m pip install --disable-pip-version-check
+          numpy sympy scikit-learn
+
+      - name: Run frozen independent extension
+        run: |
+          python3 experiments/parity_lift_000/secp_13441_independent_extension_runner.py \
+            --out /tmp/secp_13441_independent_extension_results.json \
+            > /tmp/secp-13441-independent-extension.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/secp_13441_independent_extension_results.json').read_text()
+          )
+          print(json.dumps(data['aggregate'], indent=2))
+          print('extension cases:')
+          for row in data['evaluations']:
+              print({
+                  'p': row['p'],
+                  'order': row['order'],
+                  'orbits': row['orbit_count'],
+                  'balanced_accuracy': row['observed_balanced_accuracy'],
+                  'balanced_advantage': row['observed_balanced_advantage'],
+                  'null_q99': row['null_q99_balanced_accuracy'],
+                  'empirical_upper_p': row['empirical_upper_p'],
+                  'z_score': row['z_score'],
+                  'above_q99': row['strictly_above_null_q99'],
+              })
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/Secp13441WithinCurveBoundary.lean; then
+            echo "::error::Independent-extension boundary theorem contains sorry"
+            exit 1
+          fi
+
+      - name: Install elan
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check orientation boundary
+        run: lake build Ecdlp.Proved.Secp13441WithinCurveBoundary
+
+      - name: Post independent decision to research PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY' > /tmp/comment.md
+          import json
+          import os
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/secp_13441_independent_extension_results.json').read_text()
+          )
+          aggregate = data['aggregate']
+          print('## SECP-13441-INDEPENDENT-EXTENSION-026')
+          print()
+          print(f"Commit: `{os.environ['GITHUB_SHA']}`")
+          print()
+          print('Preselected construction: `carry_half_y : public_hist_gb_depth3 : all_public_features`.')
+          print()
+          print('```json')
+          print(json.dumps(aggregate, indent=2))
+          print('```')
+          print()
+          print('| p | subgroup order | C6 orbits | balanced accuracy | advantage | null q99 | empirical upper p | z | above q99 |')
+          print('|---:|---:|---:|---:|---:|---:|---:|---:|---|')
+          for row in data['evaluations']:
+              print(
+                  f"| {row['p']} | {row['order']} | {row['orbit_count']} | "
+                  f"{row['observed_balanced_accuracy']:.6f} | "
+                  f"{row['observed_balanced_advantage']:.6f} | "
+                  f"{row['null_q99_balanced_accuracy']:.6f} | "
+                  f"{row['empirical_upper_p']:.6f} | "
+                  f"{row['z_score']:.3f} | "
+                  f"{row['strictly_above_null_q99']} |"
+              )
+          print()
+          if aggregate['admitted_signal']:
+              print(
+                  'Decision: **the independent extension gate passed.** '
+                  'The next mandatory work is feature ablation, repeated-fold '
+                  'replay, fixed-circuit extraction, cross-order scaling, and '
+                  'a literal recovery reduction. No secp256k1 claim is made.'
+              )
+          else:
+              print(
+                  'Decision: **the preselected nonlinear signal did not '
+                  'replicate on the independent extension set.**'
+              )
+          print()
+          print(
+              'Boundary: extension cases were selected by public field and '
+              'subgroup arithmetic before classifier replay. A failed gate is '
+              'not a lower bound against arbitrary public circuits.'
+          )
+          PY
+          gh api --method POST \
+            repos/${GITHUB_REPOSITORY}/issues/365/comments \
+            -f body="$(cat /tmp/comment.md)"
+
+      - name: Upload independent extension artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: secp-13441-independent-extension-results
+          path: /tmp/secp_13441_independent_extension_results.json
