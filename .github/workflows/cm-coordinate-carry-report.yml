@@ -1,0 +1,75 @@
+name: CM coordinate carry decision report
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - .github/workflows/cm-coordinate-carry-report.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run screen and build decision
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 experiments/parity_lift_000/cm_coordinate_carry_screen.py \
+            --out cm_coordinate_carry_results.json > /tmp/cm-coordinate.log
+          python3 - <<'PY' > /tmp/comment.md
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('cm_coordinate_carry_results.json').read_text())
+          agg = data['aggregate']
+          positive = (
+              agg['exact_carry_decoders'] > 0
+              or agg['carry_cases_strictly_above_matched_null_q95'] >= 2
+              or agg['exact_r3_decoders_on_kummer_cases'] > 0
+              or agg['r3_cases_strictly_above_matched_null_q95'] >= 2
+          )
+          print('## CM-COORDINATE-CARRY-010 automated decision')
+          print()
+          print(f"Commit: `{__import__('os').environ['GITHUB_SHA']}`")
+          print()
+          print('```json')
+          print(json.dumps(agg, indent=2))
+          print('```')
+          print()
+          print('Largest frozen cases:')
+          print()
+          print('| order | carry best | carry null 95% | candidate | R3 best | R3 null 95% |')
+          print('|---:|---:|---:|---|---:|---:|')
+          for case in sorted(data['cases'], key=lambda row: row['order'])[-6:]:
+              print(
+                  f"| {case['order']} | {case['carry_best_accuracy']:.6f} | "
+                  f"{case['carry_null_q95']:.6f} | `{case['carry_best_candidate']}` | "
+                  f"{case['r3_best_accuracy']:.6f} | {case['r3_null_q95']:.6f} |"
+              )
+          print()
+          if positive:
+              print('Decision: **positive follow-up required**. At least one predeclared exact or repeated matched-null gate fired. This is not yet a secp256k1 claim.')
+          else:
+              print('Decision: **no admitted scaling signal** in this frozen public coordinate-carry family. The route remains a bounded negative, not an asymptotic lower bound.')
+          PY
+          gh api \
+            --method POST \
+            repos/${GITHUB_REPOSITORY}/issues/365/comments \
+            -f body="$(cat /tmp/comment.md)"
+
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: cm-coordinate-carry-decision
+          path: cm_coordinate_carry_results.json
