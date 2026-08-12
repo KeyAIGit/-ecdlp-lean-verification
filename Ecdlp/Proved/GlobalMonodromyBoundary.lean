@@ -64,9 +64,9 @@ theorem coprimeFinitePhase_trivial
   refine ⟨u * q + v * z, ?_⟩
   calc
     z = (u * n + v * m) * z := by rw [hbezout]; ring
-    _ = m * (u * q + v * z) := by
-      rw [hq]
-      ring
+    _ = u * (n * z) + v * (m * z) := by ring
+    _ = u * (m * q) + v * (m * z) := by rw [hq]
+    _ = m * (u * q + v * z) := by ring
 
 /-- Candidate exact embedding degree for the secp256k1 prime-order subgroup. -/
 def secp256k1MonodromyEmbeddingDegree : ℕ :=
