@@ -1,0 +1,93 @@
+name: GLV Gaussian-period cut
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - 'Ecdlp/Proved/GlvGaussianPeriodCut.lean'
+      - 'experiments/parity_lift_000/glv_gaussian_period_cut.py'
+      - 'archive/untrusted_intake/parity_lift_000/GLV_GAUSSIAN_PERIOD_CUT_029.md'
+      - '.github/workflows/glv-gaussian-period-cut.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run Gaussian-period replay
+        run: |
+          python3 experiments/parity_lift_000/glv_gaussian_period_cut.py \
+            --out /tmp/glv_gaussian_period_cut_results.json \
+            > /tmp/glv-gaussian-period-cut.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('/tmp/glv_gaussian_period_cut_results.json').read_text())
+          print(json.dumps(data['aggregate'], indent=2))
+          print(json.dumps(data['secp256k1'], indent=2))
+          aggregate = data['aggregate']
+          assert aggregate['all_c3_counts_exact']
+          assert aggregate['all_conjugate_pair_counts_exact']
+          assert aggregate['total_identity_checks'] == aggregate['total_carry_orientation_checks']
+          assert aggregate['maximum_complex_residual'] < 2.0e-10
+          assert data['secp256k1']['conjugate_orientation_pairs'] == data['secp256k1']['half_kernel_degree']
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/GlvGaussianPeriodCut.lean; then
+            echo "::error::Gaussian-period theorem contains sorry"
+            exit 1
+          fi
+
+      - name: Install elan
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check Gaussian-period identities
+        run: lake build Ecdlp.Proved.GlvGaussianPeriodCut
+
+      - name: Post decision to research PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY' > /tmp/comment.md
+          import json
+          import os
+          from pathlib import Path
+          data = json.loads(Path('/tmp/glv_gaussian_period_cut_results.json').read_text())
+          print('## GLV-GAUSSIAN-PERIOD-CUT-029')
+          print()
+          print(f"Commit: `{os.environ['GITHUB_SHA']}`")
+          print()
+          print('```json')
+          print(json.dumps(data['aggregate'], indent=2))
+          print('```')
+          print()
+          print('Decision: **the carry phase is exactly the conjugate orientation of one C3 Gaussian period. The explicit period degree is `(n-1)/3`, with `(n-1)/6` conjugate orientation pairs; no public sub-square-root orientation evaluator is obtained.**')
+          print()
+          print('Successor: `PERIOD-ORIENTATION-RESOLVENT-030`.')
+          PY
+          gh api --method POST \
+            repos/${GITHUB_REPOSITORY}/issues/365/comments \
+            -f body="$(cat /tmp/comment.md)"
+
+      - name: Upload Gaussian-period artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: glv-gaussian-period-cut-results
+          path: /tmp/glv_gaussian_period_cut_results.json
