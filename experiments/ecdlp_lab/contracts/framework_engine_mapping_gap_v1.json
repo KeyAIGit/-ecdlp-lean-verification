@@ -7,6 +7,7 @@
     "automatic_framework_candidate_conversion": false,
     "automatic_engine_run_conversion": false,
     "engine_event_write_allowed": false,
+    "analysis_trusted_receipt_authority": "verified_p04_public_index_and_terminal_event_only",
     "scientific_route_effect": "none",
     "separate_owner_review_required_for_any_adapter": true
   },
@@ -166,6 +167,38 @@
       "existing_schema": "experiments/engine/instance_validation.schema.json",
       "existing_field": "independent,shares_decisive_logic,passed",
       "relationship": "same_validation_meaning_no_engine_lifecycle_effect"
+    },
+    {
+      "lab_contract_kind": "validation_receipt_v1",
+      "lab_field": "subject_status,candidate_scalar,candidate_relation_valid",
+      "existing_schema": "experiments/engine/instance_validation.schema.json",
+      "existing_field": "subject status and validation outcome",
+      "relationship": "status_mapping_only",
+      "gap": "a passed non-success lab receipt validates bounded status, counters, provenance, and bindings; it does not claim a solved instance or authorize an Engine lifecycle transition"
+    },
+    {
+      "lab_contract_kind": "analysis_summary_v1",
+      "lab_field": "analysis_protocol_id,success_targets_decimal,comparisons.success_target_decimal",
+      "existing_schema": "experiments/engine/cost_contract.schema.json",
+      "existing_field": "success_probability",
+      "relationship": "same_probability_meaning_different_protocol_and_encoding",
+      "gap": "equal_success_scaling_v1 reports exact decimal-string targets 0.50 and 0.95 separately and has no Engine submission effect"
+    },
+    {
+      "lab_contract_kind": "analysis_summary_v1",
+      "lab_field": "comparisons.equal_success_status,comparisons.equal_success_full_cost",
+      "existing_schema": "experiments/engine/cost_contract.schema.json",
+      "existing_field": "cost at success probability",
+      "relationship": "related_not_equivalent",
+      "gap": "unreachable_within_budget uses null equal-success cost rather than fabricating or extrapolating a value"
+    },
+    {
+      "lab_contract_kind": "analysis_summary_v1",
+      "lab_field": "analysis_policies,comparisons.clustered_uncertainty,model_fits.residuals,model_fits.leave_one_size_out",
+      "existing_schema": "experiments/engine/cost_contract.schema.json",
+      "existing_field": "none",
+      "relationship": "lab_diagnostic_only",
+      "gap": "clustered uncertainty, residuals, censoring sensitivity, and leave-one-size-out diagnostics remain engineering evidence only"
     }
   ],
   "intentional_gaps": [
@@ -192,6 +225,12 @@
       "lab_value": null,
       "existing_fields": ["decisive_measurement"],
       "reason": "lab summaries are engineering diagnostics and cannot support or falsify a research candidate"
+    },
+    {
+      "gap_id": "trusted_public_receipt_index_required",
+      "lab_value": "verified P04 public index and terminal-event receipt digest allowlist",
+      "existing_fields": ["result_artifacts", "validation"],
+      "reason": "equal-success analysis cannot grant authority to receipt digests supplied by its own untrusted bundle"
     },
     {
       "gap_id": "no_float_in_hashed_payload",

@@ -43,15 +43,15 @@
   "native_research_outcome": false,
   "provenance": {
     "config_sha256": "730bee5abac7016810134755c27c014e5d47bf5c141d96044f4e0930875b30a8",
-    "diff_sha256": "1cad82f5d74aeb6ca0c82dc925b76015038ebd230803eaa4ae5eee3a168c236a",
+    "diff_sha256": "9e54d6eb059124e19fab773b0a7aee0c002182b8eed697cc087296e1de4460c0",
     "producer_dependency_sha256s": [
-      "a87e4a97d1e54214decb6dfb432b92c552c43fe3e0c3c3f4f673b7c8bd391951"
+      "159d4ae6ca80698c1fe0baaeb8df4fcba7d8bc0782a01012699e492aa31eda3b"
     ],
-    "source_commit": "dc3a69a303bec1048ccf92d55be253daf8b9d6d5",
-    "source_snapshot_sha256": "691fd0345f60b1ab3af42bb58e791b418f281dc8255908f46f2a4c9c7c9f59b7",
+    "source_commit": "1aba9f025950af687d9a0e5104c8642e018aeb2e",
+    "source_snapshot_sha256": "ef5be8a2f7ac09b70f4eec3cad0fe95632ef841852cfc0eb1dca092d103d5416",
     "source_tree_clean": false,
     "validator_dependency_sha256s": [
-      "2ee2219669cbf7f892f8678ef48777da30d0c87131e3a2a98112c4447ec3c401"
+      "ffce28ae3a194429bbb8a068d7bb8e4048fdc99321c85f1f34edca5e4d859bad"
     ]
   },
   "record_kind": "lab_engineering_fixture",

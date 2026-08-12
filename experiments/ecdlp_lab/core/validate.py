@@ -810,6 +810,73 @@ def _p03_replay_issues() -> list[Issue]:
     return sorted(set(issues))
 
 
+def _p04c_target_issues() -> list[Issue]:
+    """Verify the committed split targets and sole target-registry authority."""
+
+    try:
+        from experiments.ecdlp_lab.core.target_registry import (
+            TARGET_REGISTRY_RAW_SHA256,
+            load_target_pairs,
+            load_target_registry,
+        )
+        from experiments.ecdlp_lab.orchestration.generate_ci_targets import (
+            REGISTRY_PATH,
+            generate,
+        )
+    except ImportError as error:
+        return [_problem("p04c.import", str(LAB_ROOT), str(error))]
+
+    issues: list[Issue] = []
+    try:
+        outputs = generate(repo_root=REPO_ROOT)
+    except (OSError, RuntimeError, TypeError, ValueError) as error:
+        return [_problem("p04c.generate", str(REPO_ROOT), str(error))]
+    for relative_path, expected in sorted(outputs.items()):
+        path = REPO_ROOT / relative_path
+        try:
+            actual = path.read_bytes()
+        except OSError as error:
+            issues.append(_problem("p04c.fixture", relative_path, str(error)))
+            continue
+        if actual != expected:
+            issues.append(
+                _problem(
+                    "p04c.fixture_fixpoint",
+                    relative_path,
+                    "committed target bytes differ from deterministic generation",
+                )
+            )
+    registry_bytes = outputs.get(REGISTRY_PATH)
+    try:
+        from .canonical import sha256_bytes
+
+        if registry_bytes is None or sha256_bytes(registry_bytes) != TARGET_REGISTRY_RAW_SHA256:
+            issues.append(
+                _problem(
+                    "p04c.registry_raw",
+                    REGISTRY_PATH,
+                    "target registry raw trust root drifted",
+                )
+            )
+        authorities = load_target_registry(repo_root=REPO_ROOT)
+        pairs = load_target_pairs(
+            [authority.public_target_vector_sha256 for authority in authorities],
+            repo_root=REPO_ROOT,
+        )
+    except (OSError, RuntimeError, TypeError, ValueError) as error:
+        issues.append(_problem("p04c.registry", REGISTRY_PATH, str(error)))
+        return sorted(set(issues))
+    if len(authorities) != 7 or len(pairs) != 7:
+        issues.append(
+            _problem(
+                "p04c.registry_count",
+                REGISTRY_PATH,
+                "target registry must authorize one legacy and six CI pairs",
+            )
+        )
+    return sorted(set(issues))
+
+
 def _symlink_case(
     base: dict[str, Any], mutation: dict[str, Any], context: ValidationContext
 ) -> list[Issue]:
@@ -958,6 +1025,7 @@ def validate_offline() -> tuple[dict[str, int], list[Issue]]:
     )
     issues.extend(_registered_catalog_issues(catalog_authorities))
     issues.extend(_p03_replay_issues())
+    issues.extend(_p04c_target_issues())
     trusted_targets = frozenset(
         record["target_vector_id"]
         for record in records

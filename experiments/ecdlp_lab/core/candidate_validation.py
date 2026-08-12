@@ -151,6 +151,31 @@ class CandidateValidation:
         }
 
 
+@dataclass(frozen=True)
+class PublicInputValidation:
+    """Independent subgroup validation when a method returns no candidate."""
+
+    issues: tuple[Issue, ...]
+    counters: ValidatorCounters = ValidatorCounters()
+
+    @property
+    def passed(self) -> bool:
+        return not self.issues
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "schema_version": 1,
+            "report_kind": "ecdlp_lab_public_input_validation_v1",
+            "public_input_valid": self.passed,
+            "passed": self.passed,
+            "validator_counters": self.counters.to_dict(),
+            "issues": [
+                {"code": issue.code, "path": issue.path, "message": issue.message}
+                for issue in self.issues
+            ],
+        }
+
+
 def _problem(code: str, path: str, message: str) -> Issue:
     return Issue(f"candidate.{code}", path, message)
 
@@ -399,9 +424,86 @@ def validate_candidate(
     )
 
 
+def validate_public_input(
+    public_input: PublicCandidateInput | Any,
+) -> PublicInputValidation:
+    """Validate curve, points, and subgroup without inventing a scalar check.
+
+    This is the validator path for a bounded/non-success method result.  It
+    deliberately performs no candidate multiplication, so its independent
+    ``candidate_relation_check`` counter is exactly zero.
+    """
+
+    issues: list[Issue] = []
+    fields = _public_fields(public_input)
+    if fields is None:
+        issues.append(
+            _problem(
+                "input.shape",
+                "$",
+                "public input must expose exactly the structural p/a/b/G/Q/ell boundary",
+            )
+        )
+        return PublicInputValidation(tuple(issues))
+    raw_p, raw_a, raw_b, raw_g, raw_q, raw_ell = fields
+    p = _integer(raw_p, path="$.p", minimum=5, maximum=MAX_TOY_FIELD, issues=issues)
+    if p is None:
+        return PublicInputValidation(tuple(sorted(set(issues))))
+    a = _integer(raw_a, path="$.a", minimum=0, maximum=p - 1, issues=issues)
+    b = _integer(raw_b, path="$.b", minimum=0, maximum=p - 1, issues=issues)
+    ell = _integer(
+        raw_ell,
+        path="$.ell",
+        minimum=2,
+        maximum=MAX_TOY_FIELD,
+        issues=issues,
+    )
+    g = _point(raw_g, path="$.G", p=p, allow_infinity=False, issues=issues)
+    q = _point(raw_q, path="$.Q", p=p, allow_infinity=True, issues=issues)
+    if a is None or b is None or ell is None or g is _INVALID or q is _INVALID:
+        return PublicInputValidation(tuple(sorted(set(issues))))
+    if not is_prime(ell):
+        issues.append(_problem("order.prime", "$.ell", "subgroup order must be prime"))
+    try:
+        curve = _CountingOracleCurve(p=p, a=a, b=b)
+    except (TypeError, ValueError) as error:
+        issues.append(_problem("curve", "$", str(error)))
+        return PublicInputValidation(tuple(sorted(set(issues))))
+    if not curve.is_on_curve(g):
+        issues.append(_problem("point.off_curve", "$.G", "generator is not on the curve"))
+    if not curve.is_on_curve(q):
+        issues.append(_problem("point.off_curve", "$.Q", "target is not on the curve"))
+    if issues:
+        return PublicInputValidation(tuple(sorted(set(issues))), curve.validator_counters())
+    try:
+        if curve.scalar_mul_counted("generator_subgroup_check", ell, g) is not None:
+            issues.append(
+                _problem(
+                    "order.generator",
+                    "$.ell",
+                    "declared subgroup order does not annihilate the generator",
+                )
+            )
+        if curve.scalar_mul_counted("target_subgroup_check", ell, q) is not None:
+            issues.append(
+                _problem(
+                    "order.target",
+                    "$.Q",
+                    "target is not in the declared subgroup",
+                )
+            )
+    except (TypeError, ValueError, ArithmeticError) as error:
+        issues.append(_problem("oracle", "$", f"subgroup check failed: {error}"))
+    return PublicInputValidation(
+        tuple(sorted(set(issues))), curve.validator_counters()
+    )
+
+
 __all__ = [
     "CandidateValidation",
+    "PublicInputValidation",
     "PublicCandidateInput",
     "ValidatorCounters",
     "validate_candidate",
+    "validate_public_input",
 ]

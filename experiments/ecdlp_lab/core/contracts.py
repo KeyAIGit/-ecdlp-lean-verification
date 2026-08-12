@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field, replace
-from itertools import product
+from decimal import Decimal, ROUND_HALF_EVEN, localcontext
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
@@ -37,14 +37,19 @@ class ValidationContext:
     """Immutable external facts needed by fail-closed semantic validation.
 
     Digest allowlists are authority inputs, never facts inferred from a bundle
-    being validated.  Empty defaults therefore fail closed for any record that
-    references a catalog or public target vector.
+    being validated.  Receipt authority must come from a verified public P04
+    index and terminal event, not from receipt records in this bundle.  Empty
+    defaults therefore fail closed wherever the corresponding authority is
+    required.
     """
 
     repo_root: Path = field(default_factory=lambda: DEFAULT_REPO_ROOT)
     schema_root: Path = field(default_factory=lambda: DEFAULT_SCHEMA_ROOT)
     known_catalog_sha256s: frozenset[str] = field(default_factory=frozenset)
     known_target_vector_sha256s: frozenset[str] = field(default_factory=frozenset)
+    known_validation_receipt_sha256s: frozenset[str] = field(
+        default_factory=frozenset
+    )
     public_target_payloads: Mapping[str, Mapping[str, Any]] = field(
         default_factory=dict
     )
@@ -60,11 +65,13 @@ class ValidationContext:
         schema_root: Path | str | None = None,
         known_catalog_sha256s: Iterable[str] = (),
         known_target_vector_sha256s: Iterable[str] = (),
+        known_validation_receipt_sha256s: Iterable[str] = (),
         record_sha256s_by_id: Mapping[str, str] | None = None,
         verify_artifacts: bool = True,
     ) -> "ValidationContext":
         catalogs = frozenset(known_catalog_sha256s)
         vectors = frozenset(known_target_vector_sha256s)
+        receipts = frozenset(known_validation_receipt_sha256s)
         payloads: dict[str, Mapping[str, Any]] = {}
         for record in records:
             if not isinstance(record, dict):
@@ -83,6 +90,7 @@ class ValidationContext:
             ),
             known_catalog_sha256s=catalogs,
             known_target_vector_sha256s=vectors,
+            known_validation_receipt_sha256s=receipts,
             public_target_payloads=payloads,
             record_sha256s_by_id=dict(record_sha256s_by_id or {}),
             verify_artifacts=verify_artifacts,
@@ -289,18 +297,69 @@ def _work_identity_issues(record: dict[str, Any]) -> list[Issue]:
     return issues
 
 
-def _campaign_issues(record: dict[str, Any]) -> list[Issue]:
+def _authenticated_target_bindings(
+    matrix: Mapping[str, Any], context: ValidationContext
+) -> tuple[dict[str, tuple[Any, Any]], list[Issue]]:
+    """Return target -> (catalog, fixture) only for digest-authenticated payloads."""
+
+    issues: list[Issue] = []
+    bindings: dict[str, tuple[Any, Any]] = {}
+    target_ids = matrix.get("target_vector_sha256s")
+    if not isinstance(target_ids, list):
+        return bindings, issues
+    for index, target_id in enumerate(target_ids):
+        try:
+            payload = context.public_target_payloads.get(target_id)
+        except TypeError:
+            payload = None
+        authenticated = isinstance(payload, Mapping)
+        if authenticated:
+            try:
+                authenticated = sha256_json(payload) == target_id
+            except (TypeError, ValueError):
+                authenticated = False
+        if not authenticated:
+            issues.append(
+                Issue(
+                    "contract.campaign.target_payload",
+                    f"$.matrix.target_vector_sha256s[{index}]",
+                    "campaign target has no digest-authenticated public payload",
+                )
+            )
+            continue
+        try:
+            bindings[target_id] = (
+                payload.get("curve_catalog_sha256"),
+                payload.get("curve_fixture_id"),
+            )
+        except TypeError:
+            issues.append(
+                Issue(
+                    "contract.campaign.target_payload",
+                    f"$.matrix.target_vector_sha256s[{index}]",
+                    "campaign target identity must be hashable",
+                )
+            )
+    return bindings, issues
+
+
+def _exact_axis_set(actual: Any, expected: set[Any]) -> bool:
+    if not isinstance(actual, list) or len(actual) != len(expected):
+        return False
+    try:
+        return set(actual) == expected
+    except TypeError:
+        return False
+
+
+def _campaign_issues(
+    record: dict[str, Any], context: ValidationContext
+) -> list[Issue]:
     matrix = record.get("matrix")
     if not isinstance(matrix, dict):
         return []
     count = 1
-    for key in (
-        "curve_catalog_sha256s",
-        "curve_fixture_ids",
-        "target_vector_sha256s",
-        "method_ids",
-        "algorithm_seeds",
-    ):
+    for key in ("target_vector_sha256s", "method_ids", "algorithm_seeds"):
         axis = matrix.get(key)
         if not isinstance(axis, list):
             return []
@@ -310,12 +369,39 @@ def _campaign_issues(record: dict[str, Any]) -> list[Issue]:
         return []
     count *= repetitions
     issues = _campaign_identity_issues(record)
+    bindings, binding_issues = _authenticated_target_bindings(matrix, context)
+    issues.extend(binding_issues)
+    if len(bindings) == len(matrix["target_vector_sha256s"]):
+        try:
+            expected_catalogs = {binding[0] for binding in bindings.values()}
+            expected_fixtures = {binding[1] for binding in bindings.values()}
+        except TypeError:
+            expected_catalogs = set()
+            expected_fixtures = set()
+        if not _exact_axis_set(
+            matrix.get("curve_catalog_sha256s"), expected_catalogs
+        ):
+            issues.append(
+                Issue(
+                    "contract.campaign.catalog_allowlist",
+                    "$.matrix.curve_catalog_sha256s",
+                    "catalog axis must be exactly the set authorized by campaign targets",
+                )
+            )
+        if not _exact_axis_set(matrix.get("curve_fixture_ids"), expected_fixtures):
+            issues.append(
+                Issue(
+                    "contract.campaign.fixture_allowlist",
+                    "$.matrix.curve_fixture_ids",
+                    "fixture axis must be exactly the set authorized by campaign targets",
+                )
+            )
     if record.get("expected_work_unit_count") != count:
         issues.append(
             Issue(
                 "contract.campaign.work_count",
                 "$.expected_work_unit_count",
-                "expected count must equal the full matrix product times repetitions",
+                "expected count must equal targets times methods times seeds times repetitions",
             )
         )
     return issues
@@ -335,6 +421,132 @@ _PRIVATE_METHOD_KEYS = frozenset(
         "lookup_table",
     }
 )
+
+_FAILURE_DETAILS = {
+    "group_operation_budget_exhausted": "group-operation budget exhausted",
+    "table_budget_exhausted": "table-entry budget exhausted",
+    "step_budget_exhausted": "deterministic step budget exhausted",
+    "restart_budget_exhausted": "frozen restart budget exhausted",
+    "memory_budget_exhausted": "algorithmic memory-estimate budget exhausted",
+    "process_timeout": "cooperative cancellation requested",
+    "process_terminated": "method process terminated",
+    "no_solution": "no discrete logarithm found within the frozen walk",
+    "invalid_public_input": "public method input rejected",
+    "backend_error": "curve backend failed",
+}
+
+
+def _expected_failure_status(code: Any) -> str | None:
+    if code == "invalid_public_input":
+        return "invalid_request"
+    if code == "backend_error":
+        return "internal_error"
+    if code in _FAILURE_DETAILS:
+        return "bounded_failure"
+    return None
+
+
+def _result_counter_issues(
+    result: Mapping[str, Any], request: Mapping[str, Any]
+) -> list[Issue]:
+    issues: list[Issue] = []
+    failure = result.get("failure")
+    status = result.get("status")
+    if status != "success" and isinstance(failure, Mapping):
+        code = failure.get("code")
+        if (
+            status != _expected_failure_status(code)
+            or failure.get("detail") != _FAILURE_DETAILS.get(code)
+        ):
+            issues.append(
+                Issue(
+                    "cross.result.failure",
+                    "$.failure",
+                    "failure code, fixed detail, and result status are inconsistent",
+                )
+            )
+    counters = result.get("counters")
+    budgets = request.get("budgets")
+    if not isinstance(counters, Mapping) or not isinstance(budgets, Mapping):
+        return issues
+    if counters.get("counter_semantics_id") != "affine_group_calls_v1":
+        issues.append(
+            Issue(
+                "cross.result.counters",
+                "$.counters.counter_semantics_id",
+                "method counters use an unknown semantic vocabulary",
+            )
+        )
+    phases: list[Mapping[str, Any]] = []
+    for phase_name in ("offline_setup", "online_target", "method_self_check"):
+        phase = counters.get(phase_name)
+        if not isinstance(phase, Mapping):
+            continue
+        phases.append(phase)
+        group_calls = phase.get("group_law_invocations")
+        additions = phase.get("nontrivial_additions")
+        doublings = phase.get("doublings")
+        if all(type(value) is int for value in (group_calls, additions, doublings)) and (
+            additions + doublings > group_calls
+        ):
+            issues.append(
+                Issue(
+                    "cross.result.counters",
+                    f"$.counters.{phase_name}",
+                    "addition and doubling counts exceed group-law invocations",
+                )
+            )
+    if counters.get("field_counter_semantics") == "not_instrumented" and any(
+        phase.get(field_name) is not None
+        for phase in phases
+        for field_name in (
+            "field_inversions",
+            "field_multiplications",
+            "field_squarings",
+        )
+    ):
+        issues.append(
+            Issue(
+                "cross.result.counters",
+                "$.counters.field_counter_semantics",
+                "un-instrumented field counters must all be null",
+            )
+        )
+    collisions = counters.get("collisions")
+    noninvertible = counters.get("noninvertible_collisions")
+    if type(collisions) is int and type(noninvertible) is int and noninvertible > collisions:
+        issues.append(
+            Issue(
+                "cross.result.counters",
+                "$.counters.noninvertible_collisions",
+                "noninvertible collisions must be a collision subset",
+            )
+        )
+    total_group_calls = sum(
+        phase.get("group_law_invocations", 0)
+        for phase in phases
+        if type(phase.get("group_law_invocations")) is int
+    )
+    ceiling_pairs = (
+        (total_group_calls, "max_group_law_invocations", "group-law count"),
+        (counters.get("table_entries"), "max_table_entries", "table entries"),
+        (
+            counters.get("estimated_algorithmic_table_bytes"),
+            "max_memory_bytes",
+            "algorithmic memory estimate",
+        ),
+    )
+    for observed, budget_name, label in ceiling_pairs:
+        ceiling = budgets.get(budget_name)
+        if type(observed) is int and type(ceiling) is int and observed > ceiling:
+            issues.append(
+                Issue(
+                    "cross.result.budgets",
+                    f"$.counters.{budget_name}",
+                    f"{label} exceeds the bound method-request budget",
+                )
+            )
+    return issues
 
 
 def _method_request_issues(
@@ -442,6 +654,8 @@ def _receipt_issues(record: dict[str, Any]) -> list[Issue]:
         for check in checks
     )
     passed = record.get("passed") is True
+    subject_kind = record.get("subject_contract_kind")
+    subject_status = record.get("subject_status")
     if passed and record.get("provenance_valid") is not True:
         issues.append(
             Issue(
@@ -460,7 +674,12 @@ def _receipt_issues(record: dict[str, Any]) -> list[Issue]:
         )
     if (
         passed
-        and record.get("subject_contract_kind") == "method_result_v1"
+        and subject_kind == "method_result_v1"
+        and subject_status not in {
+            "bounded_failure",
+            "invalid_request",
+            "internal_error",
+        }
         and record.get("candidate_relation_valid") is not True
     ):
         issues.append(
@@ -470,7 +689,31 @@ def _receipt_issues(record: dict[str, Any]) -> list[Issue]:
                 "a passed method-result receipt requires a valid candidate relation",
             )
         )
-    if record.get("subject_contract_kind") != "method_result_v1":
+    if subject_kind == "method_result_v1" and subject_status == "success":
+        candidate = record.get("candidate_scalar")
+        if not isinstance(candidate, int) or isinstance(candidate, bool):
+            issues.append(
+                Issue(
+                    "contract.validation.success_candidate",
+                    "$.candidate_scalar",
+                    "a successful method result receipt requires an integer candidate",
+                )
+            )
+    elif subject_kind == "method_result_v1" and subject_status in {
+        "bounded_failure",
+        "invalid_request",
+        "internal_error",
+    }:
+        for field_name in ("candidate_scalar", "candidate_relation_valid"):
+            if record.get(field_name) is not None:
+                issues.append(
+                    Issue(
+                        "contract.validation.non_success_candidate",
+                        f"$.{field_name}",
+                        "a non-success method result receipt cannot carry candidate material",
+                    )
+                )
+    if subject_kind != "method_result_v1":
         for field_name in (
             "candidate_scalar",
             "candidate_relation_valid",
@@ -608,7 +851,7 @@ def validate_contract(
 
     issues.extend(_known_digest_issues(record, active))
     if kind == "campaign_config_v1":
-        issues.extend(_campaign_issues(record))
+        issues.extend(_campaign_issues(record, active))
     elif kind == "target_vector_v1":
         issues.extend(_target_identity_issues(record))
     elif kind == "work_unit_v1":
@@ -679,6 +922,61 @@ def _context_for_bundle(
 
 def _link_issue(code: str, path: str, message: str) -> Issue:
     return Issue(code, path, message)
+
+
+_SUCCESS_RECEIPT_CHECK_IDS = frozenset(
+    {
+        "candidate_relation_v1",
+        "private_target_binding_v1",
+        "provenance_binding_v1",
+    }
+)
+_LEGACY_SUCCESS_RECEIPT_CHECK_IDS = frozenset(
+    {"candidate_relation_v1", "provenance_binding_v1"}
+)
+_NON_SUCCESS_RECEIPT_CHECK_IDS = frozenset(
+    {
+        "subject_status_binding_v1",
+        "public_input_validation_v1",
+        "counters_binding_v1",
+        "private_target_binding_v1",
+        "provenance_binding_v1",
+    }
+)
+
+
+def _receipt_check_map(receipt: Mapping[str, Any]) -> dict[str, Mapping[str, Any]]:
+    checks = receipt.get("checks")
+    if not isinstance(checks, list):
+        return {}
+    mapped: dict[str, Mapping[str, Any]] = {}
+    for check in checks:
+        if not isinstance(check, Mapping):
+            continue
+        check_id = check.get("check_id")
+        if isinstance(check_id, str) and check_id not in mapped:
+            mapped[check_id] = check
+    return mapped
+
+
+def _log2_decimal_12(value: int) -> str:
+    with localcontext() as context:
+        context.prec = 80
+        result = (Decimal(value).ln() / Decimal(2).ln()).quantize(
+            Decimal("0.000000000001"), rounding=ROUND_HALF_EVEN
+        )
+    return format(result, ".12f")
+
+
+def _uncertainty_bounds_valid(value: Any) -> bool:
+    if not isinstance(value, Mapping):
+        return False
+    try:
+        return Decimal(value.get("lower_decimal")) <= Decimal(
+            value.get("upper_decimal")
+        )
+    except (ArithmeticError, TypeError, ValueError):
+        return False
 
 
 def validate_cross_record_bundle(
@@ -756,25 +1054,40 @@ def validate_cross_record_bundle(
         if not isinstance(matrix, dict):
             continue
         repetitions = matrix.get("repetitions")
-        axes = [
-            matrix.get("curve_catalog_sha256s"),
-            matrix.get("curve_fixture_ids"),
-            matrix.get("target_vector_sha256s"),
-            matrix.get("method_ids"),
-            matrix.get("algorithm_seeds"),
-        ]
-        if not all(isinstance(axis, list) for axis in axes) or not isinstance(
-            repetitions, int
-        ):
+        target_ids = matrix.get("target_vector_sha256s")
+        method_ids = matrix.get("method_ids")
+        algorithm_seeds = matrix.get("algorithm_seeds")
+        if not all(
+            isinstance(axis, list)
+            for axis in (target_ids, method_ids, algorithm_seeds)
+        ) or not isinstance(repetitions, int):
+            continue
+        target_bindings, _binding_issues = _authenticated_target_bindings(
+            matrix, active
+        )
+        if len(target_bindings) != len(target_ids):
             continue
         try:
-            expected_tuples = set(product(*axes, range(repetitions)))
+            expected_tuples = {
+                (
+                    target_bindings[target_id][0],
+                    target_bindings[target_id][1],
+                    target_id,
+                    method_id,
+                    algorithm_seed,
+                    repetition,
+                )
+                for target_id in target_ids
+                for method_id in method_ids
+                for algorithm_seed in algorithm_seeds
+                for repetition in range(repetitions)
+            }
         except (TypeError, ValueError):
             issues.append(
                 _link_issue(
                     "cross.campaign.coverage_type",
                     "$.matrix",
-                    "campaign axes must contain hashable scalar values",
+                    "campaign target bindings and execution axes must be hashable",
                 )
             )
             continue
@@ -807,7 +1120,7 @@ def validate_cross_record_bundle(
                 _link_issue(
                     "cross.campaign.coverage",
                     "$.matrix",
-                    "work units do not cover the complete campaign Cartesian product",
+                    "work units do not cover each authorized target/execution tuple",
                 )
             )
 
@@ -833,7 +1146,8 @@ def validate_cross_record_bundle(
                 ("algorithm_seed", "algorithm_seeds"),
             )
             for identity_key, matrix_key in membership:
-                if identity.get(identity_key) not in matrix.get(matrix_key, []):
+                axis = matrix.get(matrix_key)
+                if not isinstance(axis, list) or identity.get(identity_key) not in axis:
                     issues.append(
                         _link_issue(
                             "cross.work.matrix",
@@ -841,6 +1155,26 @@ def validate_cross_record_bundle(
                             "work identity is outside the campaign matrix",
                         )
                     )
+            target_id = identity.get("public_target_vector_sha256")
+            try:
+                target_payload = active.public_target_payloads.get(target_id)
+            except TypeError:
+                target_payload = None
+            target_binding = (
+                target_payload.get("curve_catalog_sha256"),
+                target_payload.get("curve_fixture_id"),
+            ) if isinstance(target_payload, Mapping) else None
+            if target_binding is None or (
+                identity.get("curve_catalog_sha256"),
+                identity.get("curve_fixture_id"),
+            ) != target_binding:
+                issues.append(
+                    _link_issue(
+                        "cross.work.target_binding",
+                        "$.identity.public_target_vector_sha256",
+                        "work catalog and fixture are not authorized by its target payload",
+                    )
+                )
             repetition = identity.get("repetition_ordinal")
             repetitions = matrix.get("repetitions")
             if (
@@ -957,6 +1291,7 @@ def validate_cross_record_bundle(
                     "result does not bind canonical method-request JSON",
                 )
             )
+        issues.extend(_result_counter_issues(result, request))
         if result.get("status") == "success":
             scalar = result.get("candidate_scalar")
             subgroup_order = request.get("subgroup_order")
@@ -988,8 +1323,8 @@ def validate_cross_record_bundle(
                 )
             )
 
-    private_hashes = {
-        record.get("target_vector_id")
+    private_by_id = {
+        record["target_vector_id"]: record
         for record in private_vectors
         if isinstance(record.get("target_vector_id"), str)
     }
@@ -1027,6 +1362,64 @@ def validate_cross_record_bundle(
                 )
             )
         if subject.get("contract_kind") == "method_result_v1":
+            subject_status = subject.get("status")
+            receipt_status = receipt.get("subject_status")
+            has_receipt_status = "subject_status" in receipt
+            if subject_status != "success" and not has_receipt_status:
+                receipt_valid = False
+                issues.append(
+                    _link_issue(
+                        "cross.receipt.subject_status",
+                        "$.subject_status",
+                        "non-success result receipts require an explicit subject status",
+                    )
+                )
+            if has_receipt_status and receipt_status != subject_status:
+                receipt_valid = False
+                issues.append(
+                    _link_issue(
+                        "cross.receipt.subject_status",
+                        "$.subject_status",
+                        "receipt status differs from its method-result subject",
+                    )
+                )
+            check_map = _receipt_check_map(receipt)
+            if not has_receipt_status and subject_status == "success":
+                required_check_ids = _LEGACY_SUCCESS_RECEIPT_CHECK_IDS
+            elif subject_status == "success":
+                required_check_ids = _SUCCESS_RECEIPT_CHECK_IDS
+            else:
+                required_check_ids = _NON_SUCCESS_RECEIPT_CHECK_IDS
+            checks = receipt.get("checks")
+            listed_ids = [
+                check.get("check_id")
+                for check in checks
+                if isinstance(check, Mapping)
+            ] if isinstance(checks, list) else []
+            if (
+                len(listed_ids) != len(set(listed_ids))
+                or set(listed_ids) != required_check_ids
+            ):
+                receipt_valid = False
+                issues.append(
+                    _link_issue(
+                        "cross.receipt.decisive_checks",
+                        "$.checks",
+                        "receipt lacks the unique decisive checks required by subject status",
+                    )
+                )
+            if receipt.get("passed") is True and any(
+                check_map.get(check_id, {}).get("status") != "passed"
+                for check_id in required_check_ids
+            ):
+                receipt_valid = False
+                issues.append(
+                    _link_issue(
+                        "cross.receipt.decisive_checks",
+                        "$.checks",
+                        "a passed receipt requires every decisive status-specific check to pass",
+                    )
+                )
             if receipt.get("candidate_scalar") != subject.get("candidate_scalar"):
                 receipt_valid = False
                 issues.append(
@@ -1036,7 +1429,57 @@ def validate_cross_record_bundle(
                         "validator scalar differs from producer result",
                     )
                 )
-            if receipt.get("private_target_receipt_sha256") not in private_hashes:
+            if subject_status == "success":
+                candidate = receipt.get("candidate_scalar")
+                if not isinstance(candidate, int) or isinstance(candidate, bool):
+                    receipt_valid = False
+                    issues.append(
+                        _link_issue(
+                            "cross.receipt.success_candidate",
+                            "$.candidate_scalar",
+                            "successful result receipt requires an integer candidate",
+                        )
+                    )
+                if receipt.get("candidate_relation_valid") not in {True, False}:
+                    receipt_valid = False
+                    issues.append(
+                        _link_issue(
+                            "cross.receipt.relation",
+                            "$.candidate_relation_valid",
+                            "successful result receipt requires a validator relation decision",
+                        )
+                    )
+                elif (
+                    receipt.get("candidate_relation_valid") is False
+                    and receipt.get("passed") is True
+                ):
+                    receipt_valid = False
+                    issues.append(
+                        _link_issue(
+                            "cross.receipt.relation",
+                            "$.passed",
+                            "validator disagreement cannot produce a passed receipt",
+                        )
+                    )
+            elif subject_status in {
+                "bounded_failure",
+                "invalid_request",
+                "internal_error",
+            } and (
+                receipt.get("candidate_scalar") is not None
+                or receipt.get("candidate_relation_valid") is not None
+            ):
+                receipt_valid = False
+                issues.append(
+                    _link_issue(
+                        "cross.receipt.non_success_candidate",
+                        "$.candidate_scalar",
+                        "non-success result receipt must carry null candidate and relation",
+                    )
+                )
+            private_id = receipt.get("private_target_receipt_sha256")
+            private_target = private_by_id.get(private_id)
+            if private_target is None:
                 receipt_valid = False
                 issues.append(
                     _link_issue(
@@ -1057,6 +1500,50 @@ def validate_cross_record_bundle(
                     )
                 )
             else:
+                if (
+                    receipt.get("provenance") != subject.get("provenance")
+                    or subject.get("provenance") != work.get("provenance")
+                    or not isinstance(receipt.get("provenance"), dict)
+                    or receipt["provenance"].get("config_sha256")
+                    != work.get("campaign_id")
+                ):
+                    receipt_valid = False
+                    issues.append(
+                        _link_issue(
+                            "cross.receipt.provenance",
+                            "$.provenance",
+                            "receipt, result, work, and campaign provenance bindings differ",
+                        )
+                    )
+                private_payload = (
+                    private_target.get("private_payload")
+                    if isinstance(private_target, dict)
+                    else None
+                )
+                if not isinstance(private_payload, dict) or private_payload.get(
+                    "public_target_vector_sha256"
+                ) != identity.get("public_target_vector_sha256"):
+                    receipt_valid = False
+                    issues.append(
+                        _link_issue(
+                            "cross.receipt.private_target_binding",
+                            "$.private_target_receipt_sha256",
+                            "receipt private target does not bind the work public target",
+                        )
+                    )
+                elif (
+                    subject_status == "success"
+                    and private_payload.get("expected_scalar")
+                    != receipt.get("candidate_scalar")
+                ):
+                    receipt_valid = False
+                    issues.append(
+                        _link_issue(
+                            "cross.receipt.private_target_binding",
+                            "$.candidate_scalar",
+                            "successful receipt candidate differs from the private target authority",
+                        )
+                    )
                 if receipt.get("producer_implementation_sha256") != identity.get(
                     "method_implementation_sha256"
                 ):
@@ -1089,11 +1576,13 @@ def validate_cross_record_bundle(
                 (subject_key[0], subject_key[1], expected_hash)
             )
 
-    receipt_hashes = {sha256_json(receipt) for receipt in receipts.values()}
+    receipts_by_hash = {sha256_json(receipt): receipt for receipt in receipts.values()}
     for analysis in (
         record for record in typed if record.get("contract_kind") == "analysis_summary_v1"
     ):
-        if analysis.get("campaign_id") not in campaigns:
+        analysis_campaign_id = analysis.get("campaign_id")
+        analysis_campaign = campaigns.get(analysis_campaign_id)
+        if analysis_campaign is None:
             issues.append(
                 _link_issue(
                     "cross.analysis.campaign",
@@ -1101,8 +1590,24 @@ def validate_cross_record_bundle(
                     "analysis references a missing campaign",
                 )
             )
-        linked = set(analysis.get("input_validation_receipt_sha256s", []))
-        if not linked.issubset(receipt_hashes):
+        elif (
+            analysis.get("provenance") != analysis_campaign.get("provenance")
+            or not isinstance(analysis.get("provenance"), dict)
+            or analysis["provenance"].get("config_sha256") != analysis_campaign_id
+        ):
+            issues.append(
+                _link_issue(
+                    "cross.analysis.provenance",
+                    "$.provenance",
+                    "analysis provenance must exactly bind its campaign provenance",
+                )
+            )
+        linked_values = analysis.get("input_validation_receipt_sha256s")
+        try:
+            linked = set(linked_values) if isinstance(linked_values, list) else set()
+        except TypeError:
+            linked = set()
+        if not linked.issubset(receipts_by_hash):
             issues.append(
                 _link_issue(
                     "cross.analysis.receipts",
@@ -1110,6 +1615,256 @@ def validate_cross_record_bundle(
                     "analysis contains an unknown validation receipt digest",
                 )
             )
+        if analysis.get("analysis_protocol_id") == "equal_success_scaling_v1" and (
+            not active.known_validation_receipt_sha256s
+            or not linked.issubset(active.known_validation_receipt_sha256s)
+        ):
+            issues.append(
+                _link_issue(
+                    "cross.analysis.receipt_authority",
+                    "$.input_validation_receipt_sha256s",
+                    "equal-success analysis requires receipts authorized by a verified public index",
+                )
+            )
+        for receipt_hash in linked.intersection(receipts_by_hash):
+            receipt = receipts_by_hash[receipt_hash]
+            if (
+                receipt.get("passed") is not True
+                or receipt.get("provenance_valid") is not True
+            ):
+                issues.append(
+                    _link_issue(
+                        "cross.analysis.receipt_validation",
+                        "$.input_validation_receipt_sha256s",
+                        "analysis inputs require passed, provenance-valid receipts",
+                    )
+                )
+            subject = subjects.get(
+                (receipt.get("subject_contract_kind"), receipt.get("subject_id"))
+            )
+            work = (
+                works.get(subject.get("work_unit_id"))
+                if isinstance(subject, dict)
+                and subject.get("contract_kind") == "method_result_v1"
+                else None
+            )
+            if not isinstance(work, dict) or work.get("campaign_id") != analysis_campaign_id:
+                issues.append(
+                    _link_issue(
+                        "cross.analysis.receipt_campaign",
+                        "$.input_validation_receipt_sha256s",
+                        "analysis receipt does not traverse to a work in the same campaign",
+                    )
+                )
+
+        comparisons = analysis.get("comparisons")
+        if isinstance(comparisons, list):
+            linked_identities = []
+            for receipt_hash in linked.intersection(receipts_by_hash):
+                receipt = receipts_by_hash[receipt_hash]
+                subject = subjects.get(
+                    (receipt.get("subject_contract_kind"), receipt.get("subject_id"))
+                )
+                work = works.get(subject.get("work_unit_id")) if isinstance(subject, dict) else None
+                identity = work.get("identity") if isinstance(work, dict) else None
+                if isinstance(identity, dict) and work.get("campaign_id") == analysis_campaign_id:
+                    linked_identities.append(identity)
+            campaign = campaigns.get(analysis_campaign_id)
+            matrix = campaign.get("matrix") if isinstance(campaign, dict) else None
+            protocol = analysis.get("analysis_protocol_id")
+            comparison_keys: list[tuple[Any, Any, Any]] = []
+            target_observations_by_method: dict[Any, set[tuple[Any, Any]]] = {}
+            expected_seed_digest = None
+            expected_seed_count = None
+            if protocol == "equal_success_scaling_v1" and isinstance(matrix, dict):
+                seeds = matrix.get("algorithm_seeds")
+                if isinstance(seeds, list):
+                    try:
+                        distinct_seeds = sorted(set(seeds))
+                    except TypeError:
+                        distinct_seeds = []
+                    expected_seed_count = len(distinct_seeds)
+                    expected_seed_digest = sha256_json(distinct_seeds)
+            for index, comparison in enumerate(comparisons):
+                if not isinstance(comparison, dict):
+                    continue
+                method_id = comparison.get("method_id")
+                target_id = comparison.get("public_target_vector_sha256")
+                fixture_id = comparison.get("curve_fixture_id")
+                if target_id is None and fixture_id is None:
+                    # Backward-compatible P01 summary vocabulary has no target axis.
+                    continue
+                comparison_keys.append(
+                    (method_id, target_id, comparison.get("success_target_decimal"))
+                )
+                if not any(
+                    identity.get("method_id") == method_id
+                    and identity.get("public_target_vector_sha256") == target_id
+                    and identity.get("curve_fixture_id") == fixture_id
+                    for identity in linked_identities
+                ):
+                    issues.append(
+                        _link_issue(
+                            "cross.analysis.comparison_binding",
+                            f"$.comparisons[{index}]",
+                            "comparison method and target have no linked same-campaign receipt",
+                        )
+                    )
+                try:
+                    payload = active.public_target_payloads.get(target_id)
+                except TypeError:
+                    payload = None
+                expected_log2 = None
+                if isinstance(payload, Mapping):
+                    subgroup_order = payload.get("subgroup_order")
+                    if type(subgroup_order) is int and subgroup_order >= 2:
+                        expected_log2 = _log2_decimal_12(subgroup_order)
+                if not isinstance(payload, Mapping) or (
+                    comparison.get("curve_fixture_id") != payload.get("curve_fixture_id")
+                    or comparison.get("subgroup_order") != payload.get("subgroup_order")
+                    or comparison.get("field_bits") != payload.get("field_bits")
+                    or comparison.get("subgroup_order_bits")
+                    != payload.get("subgroup_order_bits")
+                    or comparison.get("target_count") != payload.get("target_count")
+                    or expected_log2 is None
+                    or comparison.get("log2_subgroup_order_decimal") != expected_log2
+                ):
+                    issues.append(
+                        _link_issue(
+                            "cross.analysis.order_binding",
+                            f"$.comparisons[{index}]",
+                            "comparison fixture, order, or log2 order differs from target payload",
+                        )
+                    )
+                if not _uncertainty_bounds_valid(
+                    comparison.get("clustered_uncertainty")
+                ):
+                    issues.append(
+                        _link_issue(
+                            "cross.analysis.uncertainty_binding",
+                            f"$.comparisons[{index}].clustered_uncertainty",
+                            "clustered uncertainty lower bound must not exceed upper bound",
+                        )
+                    )
+                else:
+                    target_observations_by_method.setdefault(method_id, set()).add(
+                        (payload.get("curve_fixture_id"), payload.get("subgroup_order"))
+                    )
+                success_targets = analysis.get("success_targets_decimal")
+                if not isinstance(success_targets, list) or comparison.get(
+                    "success_target_decimal"
+                ) not in success_targets:
+                    issues.append(
+                        _link_issue(
+                            "cross.analysis.success_targets",
+                            f"$.comparisons[{index}].success_target_decimal",
+                            "comparison target is not declared by the analysis",
+                        )
+                    )
+                if protocol == "equal_success_scaling_v1" and (
+                    comparison.get("independent_seed_count") != expected_seed_count
+                    or comparison.get("algorithm_seed_set_sha256")
+                    != expected_seed_digest
+                ):
+                    issues.append(
+                        _link_issue(
+                            "cross.analysis.seed_binding",
+                            f"$.comparisons[{index}]",
+                            "comparison seed count or digest differs from campaign seeds",
+                        )
+                    )
+            if protocol == "equal_success_scaling_v1" and isinstance(matrix, dict):
+                campaign_methods = matrix.get("method_ids")
+                campaign_targets = matrix.get("target_vector_sha256s")
+                if not isinstance(campaign_methods, list):
+                    campaign_methods = []
+                if not isinstance(campaign_targets, list):
+                    campaign_targets = []
+                try:
+                    expected_comparison_keys = {
+                        (method_id, target_id, success_target)
+                        for method_id in campaign_methods
+                        for target_id in campaign_targets
+                        for success_target in ("0.50", "0.95")
+                    }
+                    actual_comparison_keys = set(comparison_keys)
+                    comparison_coverage_valid = (
+                        len(comparison_keys) == len(actual_comparison_keys)
+                        and actual_comparison_keys == expected_comparison_keys
+                    )
+                except TypeError:
+                    comparison_coverage_valid = False
+                if not comparison_coverage_valid:
+                    issues.append(
+                        _link_issue(
+                            "cross.analysis.success_targets",
+                            "$.comparisons",
+                            "comparisons must exactly cover method, target, and success-target axes",
+                        )
+                    )
+
+                model_fits = analysis.get("model_fits")
+                model_keys: list[tuple[Any, Any]] = []
+                if isinstance(model_fits, list):
+                    for index, model_fit in enumerate(model_fits):
+                        if not isinstance(model_fit, dict):
+                            continue
+                        model_key = (
+                            model_fit.get("method_id"),
+                            model_fit.get("success_target_decimal"),
+                        )
+                        model_keys.append(model_key)
+                        if not _uncertainty_bounds_valid(
+                            model_fit.get("clustered_uncertainty")
+                        ):
+                            issues.append(
+                                _link_issue(
+                                    "cross.analysis.uncertainty_binding",
+                                    f"$.model_fits[{index}].clustered_uncertainty",
+                                    "clustered uncertainty lower bound must not exceed upper bound",
+                                )
+                            )
+                        allowed_observations = target_observations_by_method.get(
+                            model_key[0], set()
+                        )
+                        residuals = model_fit.get("residuals")
+                        if isinstance(residuals, list) and any(
+                            (
+                                residual.get("curve_fixture_id"),
+                                residual.get("subgroup_order"),
+                            )
+                            not in allowed_observations
+                            for residual in residuals
+                            if isinstance(residual, dict)
+                        ):
+                            issues.append(
+                                _link_issue(
+                                    "cross.analysis.model_binding",
+                                    f"$.model_fits[{index}].residuals",
+                                    "model residual references an unlinked method/target observation",
+                                )
+                            )
+                try:
+                    expected_model_keys = {
+                        (method_id, success_target)
+                        for method_id in campaign_methods
+                        for success_target in ("0.50", "0.95")
+                    }
+                    actual_model_keys = set(model_keys)
+                    model_coverage_valid = (
+                        len(model_keys) == len(actual_model_keys)
+                        and actual_model_keys == expected_model_keys
+                    )
+                except TypeError:
+                    model_coverage_valid = False
+                if not model_coverage_valid:
+                    issues.append(
+                        _link_issue(
+                            "cross.analysis.model_binding",
+                            "$.model_fits",
+                            "model fits must exactly cover method and success-target axes",
+                        )
+                    )
 
     artifacts = [
         record for record in typed if record.get("contract_kind") == "artifact_ref_v1"

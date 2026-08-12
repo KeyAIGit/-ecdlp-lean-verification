@@ -64,6 +64,14 @@
         "artifact_ref_v1"
       ]
     },
+    "subject_status": {
+      "enum": [
+        "success",
+        "bounded_failure",
+        "invalid_request",
+        "internal_error"
+      ]
+    },
     "subject_id": {"$ref": "#/$defs/sha256"},
     "subject_sha256": {"$ref": "#/$defs/sha256"},
     "validator_id": {
@@ -133,13 +141,73 @@
       "if": {
         "properties": {
           "passed": {"const": true},
-          "subject_contract_kind": {"const": "method_result_v1"}
+          "subject_contract_kind": {"const": "method_result_v1"},
+          "subject_status": {"const": "success"}
         },
-        "required": ["passed", "subject_contract_kind"]
+        "required": ["passed", "subject_contract_kind", "subject_status"]
       },
       "then": {
         "properties": {"candidate_relation_valid": {"const": true}}
       }
+    },
+    {
+      "if": {
+        "properties": {
+          "passed": {"const": true},
+          "subject_contract_kind": {"const": "method_result_v1"}
+        },
+        "required": ["passed", "subject_contract_kind"],
+        "not": {"required": ["subject_status"]}
+      },
+      "then": {
+        "properties": {"candidate_relation_valid": {"const": true}}
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "subject_contract_kind": {"const": "method_result_v1"},
+          "subject_status": {"const": "success"}
+        },
+        "required": ["subject_contract_kind", "subject_status"]
+      },
+      "then": {
+        "properties": {
+          "candidate_scalar": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          },
+          "candidate_relation_valid": {"type": "boolean"}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "subject_contract_kind": {"const": "method_result_v1"},
+          "subject_status": {
+            "enum": ["bounded_failure", "invalid_request", "internal_error"]
+          }
+        },
+        "required": ["subject_contract_kind", "subject_status"]
+      },
+      "then": {
+        "properties": {
+          "candidate_scalar": {"type": "null"},
+          "candidate_relation_valid": {"type": "null"}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "subject_contract_kind": {"const": "method_result_v1"},
+          "candidate_relation_valid": {"const": false}
+        },
+        "required": ["subject_contract_kind", "candidate_relation_valid"]
+      },
+      "then": {"properties": {"passed": {"const": false}}}
     },
     {
       "if": {
@@ -149,6 +217,7 @@
         "required": ["subject_contract_kind"]
       },
       "then": {
+        "not": {"required": ["subject_status"]},
         "properties": {
           "candidate_scalar": {"type": "null"},
           "candidate_relation_valid": {"type": "null"},

@@ -52,6 +52,8 @@
       "uniqueItems": true,
       "items": {"$ref": "#/$defs/sha256"}
     },
+    "analysis_protocol_id": {"const": "equal_success_scaling_v1"},
+    "analysis_policies": {"$ref": "#/$defs/analysisPolicies"},
     "primary_scaling_variable": {"const": "log2_subgroup_order"},
     "primary_cost_unit": {"const": "group_law_invocations"},
     "success_targets_decimal": {
@@ -76,7 +78,46 @@
     "inference_status": {"const": "insufficient_for_asymptotic_inference"},
     "secp256k1_extrapolation": {"const": false}
   },
-  "allOf": [{"$ref": "#/$defs/retentionInvariant"}],
+  "allOf": [
+    {"$ref": "#/$defs/retentionInvariant"},
+    {
+      "if": {"required": ["analysis_protocol_id"]},
+      "then": {
+        "required": ["analysis_policies"],
+        "properties": {
+          "success_targets_decimal": {
+            "type": "array",
+            "prefixItems": [
+              {"const": "0.50"},
+              {"const": "0.95"}
+            ],
+            "items": false
+          },
+          "comparisons": {
+            "type": "array",
+            "minItems": 2,
+            "items": {"$ref": "#/$defs/equalSuccessComparison"}
+          },
+          "model_fits": {
+            "type": "array",
+            "minItems": 2,
+            "items": {"$ref": "#/$defs/equalSuccessModelFit"}
+          }
+        }
+      },
+      "else": {
+        "not": {"required": ["analysis_policies"]},
+        "properties": {
+          "comparisons": {
+            "items": {"$ref": "#/$defs/noEqualSuccessComparisonFields"}
+          },
+          "model_fits": {
+            "items": {"$ref": "#/$defs/noEqualSuccessModelFitFields"}
+          }
+        }
+      }
+    }
+  ],
   "$defs": {
     "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "gitCommit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
@@ -84,9 +125,19 @@
       "type": "string",
       "pattern": "^[a-z][a-z0-9_]*_v[0-9]+$"
     },
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
     "unsignedDecimal": {
       "type": "string",
       "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+    },
+    "positiveDecimal": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]*(\\.[0-9]+)?$"
     },
     "signedDecimal": {
       "type": "string",
@@ -117,6 +168,53 @@
       ],
       "properties": {
         "method_id": {"$ref": "#/$defs/methodId"},
+        "public_target_vector_sha256": {"$ref": "#/$defs/sha256"},
+        "curve_fixture_id": {"$ref": "#/$defs/identifier"},
+        "subgroup_order": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 4294967295
+        },
+        "log2_subgroup_order_decimal": {"$ref": "#/$defs/unsignedDecimal"},
+        "success_target_decimal": {
+          "enum": ["0.50", "0.95"]
+        },
+        "independent_seed_count": {"type": "integer", "minimum": 2},
+        "algorithm_seed_set_sha256": {"$ref": "#/$defs/sha256"},
+        "equal_success_status": {
+          "enum": ["reached", "unreachable_within_budget"]
+        },
+        "equal_success_attempts": {
+          "oneOf": [
+            {"type": "integer", "minimum": 1},
+            {"type": "null"}
+          ]
+        },
+        "expected_attempts_decimal": {
+          "oneOf": [
+            {"$ref": "#/$defs/positiveDecimal"},
+            {"type": "null"}
+          ]
+        },
+        "conservative_normalized_group_operations_decimal": {
+          "oneOf": [
+            {"$ref": "#/$defs/unsignedDecimal"},
+            {"type": "null"}
+          ]
+        },
+        "optimistic_normalized_group_operations_decimal": {
+          "oneOf": [
+            {"$ref": "#/$defs/unsignedDecimal"},
+            {"type": "null"}
+          ]
+        },
+        "equal_success_full_cost": {
+          "oneOf": [
+            {"$ref": "#/$defs/fullCost"},
+            {"type": "null"}
+          ]
+        },
+        "clustered_uncertainty": {"$ref": "#/$defs/clusteredUncertainty"},
         "field_bits": {"type": "integer", "minimum": 3, "maximum": 32},
         "subgroup_order_bits": {"type": "integer", "minimum": 2, "maximum": 32},
         "target_count": {"type": "integer", "minimum": 1},
@@ -131,6 +229,119 @@
         "workers": {"type": "integer", "minimum": 1},
         "full_cost": {"$ref": "#/$defs/fullCost"}
       }
+    },
+    "analysisPolicies": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "success_estimation",
+        "censoring",
+        "unreachable",
+        "uncertainty",
+        "clustering",
+        "residuals",
+        "outliers",
+        "cross_validation"
+      ],
+      "properties": {
+        "success_estimation": {"const": "conservative_empirical_v1"},
+        "censoring": {"const": "exclude_primary_fit_report_sensitivity_v1"},
+        "unreachable": {"const": "null_cost_with_budget_bound_v1"},
+        "uncertainty": {"const": "delete_one_cluster_envelope_v1"},
+        "clustering": {"const": "curve_and_algorithm_seed_v1"},
+        "residuals": {"const": "log2_cost_v1"},
+        "outliers": {"const": "report_no_silent_drop_v1"},
+        "cross_validation": {"const": "leave_one_distinct_size_out_v1"}
+      }
+    },
+    "clusteredUncertainty": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method", "cluster_count", "lower_decimal", "upper_decimal"],
+      "properties": {
+        "method": {"const": "delete_one_cluster_envelope_v1"},
+        "cluster_count": {"type": "integer", "minimum": 2},
+        "lower_decimal": {"$ref": "#/$defs/signedDecimal"},
+        "upper_decimal": {"$ref": "#/$defs/signedDecimal"}
+      }
+    },
+    "equalSuccessComparison": {
+      "required": [
+        "public_target_vector_sha256",
+        "curve_fixture_id",
+        "subgroup_order",
+        "log2_subgroup_order_decimal",
+        "success_target_decimal",
+        "independent_seed_count",
+        "algorithm_seed_set_sha256",
+        "equal_success_status",
+        "equal_success_attempts",
+        "expected_attempts_decimal",
+        "conservative_normalized_group_operations_decimal",
+        "optimistic_normalized_group_operations_decimal",
+        "equal_success_full_cost",
+        "clustered_uncertainty"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {"equal_success_status": {"const": "reached"}},
+            "required": ["equal_success_status"]
+          },
+          "then": {
+            "properties": {
+              "equal_success_attempts": {"type": "integer", "minimum": 1},
+              "expected_attempts_decimal": {"$ref": "#/$defs/positiveDecimal"},
+              "conservative_normalized_group_operations_decimal": {
+                "$ref": "#/$defs/unsignedDecimal"
+              },
+              "optimistic_normalized_group_operations_decimal": {
+                "$ref": "#/$defs/unsignedDecimal"
+              },
+              "equal_success_full_cost": {"$ref": "#/$defs/fullCost"}
+            }
+          },
+          "else": {
+            "properties": {
+              "equal_success_attempts": {"type": "null"},
+              "expected_attempts_decimal": {"type": "null"},
+              "conservative_normalized_group_operations_decimal": {
+                "type": "null"
+              },
+              "optimistic_normalized_group_operations_decimal": {
+                "type": "null"
+              },
+              "equal_success_full_cost": {"type": "null"}
+            }
+          }
+        }
+      ]
+    },
+    "noEqualSuccessComparisonFields": {
+      "allOf": [
+        {"not": {"required": ["public_target_vector_sha256"]}},
+        {"not": {"required": ["curve_fixture_id"]}},
+        {"not": {"required": ["subgroup_order"]}},
+        {"not": {"required": ["log2_subgroup_order_decimal"]}},
+        {"not": {"required": ["success_target_decimal"]}},
+        {"not": {"required": ["independent_seed_count"]}},
+        {"not": {"required": ["algorithm_seed_set_sha256"]}},
+        {"not": {"required": ["equal_success_status"]}},
+        {"not": {"required": ["equal_success_attempts"]}},
+        {"not": {"required": ["expected_attempts_decimal"]}},
+        {
+          "not": {
+            "required": ["conservative_normalized_group_operations_decimal"]
+          }
+        },
+        {
+          "not": {
+            "required": ["optimistic_normalized_group_operations_decimal"]
+          }
+        },
+        {"not": {"required": ["equal_success_full_cost"]}},
+        {"not": {"required": ["clustered_uncertainty"]}}
+      ]
     },
     "fullCost": {
       "type": "object",
@@ -192,6 +403,18 @@
       "additionalProperties": false,
       "required": ["model_id", "status", "coefficients", "warning_codes"],
       "properties": {
+        "method_id": {"$ref": "#/$defs/methodId"},
+        "success_target_decimal": {"enum": ["0.50", "0.95"]},
+        "clustered_uncertainty": {"$ref": "#/$defs/clusteredUncertainty"},
+        "residuals": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/residual"}
+        },
+        "leave_one_size_out": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/leaveOneSizeOut"}
+        },
         "model_id": {
           "enum": [
             "log2_t_alpha_log2_n_beta_log2log2_n_v1",
@@ -210,6 +433,96 @@
           "items": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"}
         }
       }
+    },
+    "residual": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "curve_fixture_id",
+        "subgroup_order",
+        "observed_log2_cost_decimal",
+        "predicted_log2_cost_decimal",
+        "residual_decimal"
+      ],
+      "properties": {
+        "curve_fixture_id": {"$ref": "#/$defs/identifier"},
+        "subgroup_order": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 4294967295
+        },
+        "observed_log2_cost_decimal": {"$ref": "#/$defs/signedDecimal"},
+        "predicted_log2_cost_decimal": {"$ref": "#/$defs/signedDecimal"},
+        "residual_decimal": {"$ref": "#/$defs/signedDecimal"}
+      }
+    },
+    "leaveOneSizeOut": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "omitted_subgroup_order",
+        "status",
+        "alpha_decimal",
+        "beta_decimal"
+      ],
+      "properties": {
+        "omitted_subgroup_order": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 4294967295
+        },
+        "status": {"enum": ["fitted", "undecided", "insufficient_data"]},
+        "alpha_decimal": {
+          "oneOf": [
+            {"$ref": "#/$defs/signedDecimal"},
+            {"type": "null"}
+          ]
+        },
+        "beta_decimal": {
+          "oneOf": [
+            {"$ref": "#/$defs/signedDecimal"},
+            {"type": "null"}
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {"status": {"const": "fitted"}},
+            "required": ["status"]
+          },
+          "then": {
+            "properties": {
+              "alpha_decimal": {"$ref": "#/$defs/signedDecimal"},
+              "beta_decimal": {"$ref": "#/$defs/signedDecimal"}
+            }
+          },
+          "else": {
+            "properties": {
+              "alpha_decimal": {"type": "null"},
+              "beta_decimal": {"type": "null"}
+            }
+          }
+        }
+      ]
+    },
+    "equalSuccessModelFit": {
+      "required": [
+        "method_id",
+        "success_target_decimal",
+        "clustered_uncertainty",
+        "residuals",
+        "leave_one_size_out"
+      ]
+    },
+    "noEqualSuccessModelFitFields": {
+      "allOf": [
+        {"not": {"required": ["method_id"]}},
+        {"not": {"required": ["success_target_decimal"]}},
+        {"not": {"required": ["clustered_uncertainty"]}},
+        {"not": {"required": ["residuals"]}},
+        {"not": {"required": ["leave_one_size_out"]}}
+      ]
     },
     "warning": {
       "type": "object",

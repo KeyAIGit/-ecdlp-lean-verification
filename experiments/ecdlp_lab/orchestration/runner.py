@@ -11,13 +11,14 @@ public analysis handoff.
 from __future__ import annotations
 
 import tempfile
+from copy import deepcopy
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Mapping
 
 from experiments.ecdlp_lab.core.canonical import canonical_json_bytes, sha256_json
 from experiments.ecdlp_lab.core.contracts import validate_contract
-from experiments.ecdlp_lab.core.target_registry import TargetPair, load_target_pair
+from experiments.ecdlp_lab.core.target_registry import TargetPair, load_target_pairs
 from experiments.ecdlp_lab.methods.python.model import SolverOutcome
 
 from .events import (
@@ -607,10 +608,10 @@ def _run_attempt(
             "stdout_sha256": method_process.stdout_sha256,
         },
     )
-    if outcome.status != "success":
-        return None, None, state, outcome.failure.code if outcome.failure else "method_failed"
-
-    validator_request = make_validator_request(request, outcome.candidate_scalar)
+    # A bounded/non-success method outcome is still a scientific observation.
+    # Validate its public input, status, failure mapping, and counter/budget
+    # binding independently instead of conflating it with validator failure.
+    validator_request = make_validator_request(request, result)
     validator_request_artifact = _create_or_verify_json(
         store,
         _attempt_path(work_id, attempt_id, "validator_request.json"),
@@ -697,18 +698,93 @@ def _run_attempt(
 def _analysis_index(
     campaign_id: str,
     receipts: Mapping[str, tuple[dict[str, Any], str]],
+    plan: CampaignPlan,
+    target_pairs: Mapping[str, TargetPair],
+    store: ArtifactStore,
+    state: EventLogReplay,
 ) -> dict[str, Any]:
-    entries = [
-        {
-            "work_unit_id": work_id,
-            "validation_id": receipt["validation_id"],
-            "validation_receipt_sha256": digest,
-        }
-        for work_id, (receipt, digest) in sorted(receipts.items())
-    ]
+    work_by_id = {work["work_unit_id"]: work for work in plan.work_units}
+    entries: list[dict[str, Any]] = []
+    for work_id, (receipt, digest) in sorted(receipts.items()):
+        work = work_by_id.get(work_id)
+        identity = work.get("identity") if isinstance(work, Mapping) else None
+        if not isinstance(identity, Mapping):
+            raise RunnerError(
+                "orchestration.analysis_index", "receipt has no campaign work identity"
+            )
+        target_id = identity.get("public_target_vector_sha256")
+        pair = target_pairs.get(target_id)
+        if pair is None:
+            raise RunnerError(
+                "orchestration.analysis_index", "work target has no public authority"
+            )
+        public = pair.public_payload
+        final_event = _final_event_for(state, work_id)
+        if final_event is None or not isinstance(final_event.get("attempt_id"), str):
+            raise RunnerError(
+                "orchestration.analysis_index",
+                "final receipt has no authenticated final attempt",
+            )
+        attempt_id = final_event["attempt_id"]
+        request_value = store.read_json(
+            _attempt_path(work_id, attempt_id, "method_request.json")
+        )
+        result_value = store.read_json(
+            _attempt_path(work_id, attempt_id, "method_result.json")
+        )
+        if not isinstance(request_value, dict) or not isinstance(result_value, dict):
+            raise RunnerError(
+                "orchestration.analysis_index",
+                "final method request/result must be canonical objects",
+            )
+        if (
+            result_value.get("result_id") != receipt.get("subject_id")
+            or sha256_json(result_value) != receipt.get("subject_sha256")
+            or result_value.get("status") != receipt.get("subject_status")
+            or result_value.get("method_request_sha256") != sha256_json(request_value)
+            or request_value.get("work_unit_id") != work_id
+            or request_value.get("attempt_id") != attempt_id
+            or request_value.get("budgets") != identity.get("budgets")
+        ):
+            raise RunnerError(
+                "orchestration.analysis_index",
+                "final public observation differs from its authenticated chain",
+            )
+        counters = result_value.get("counters")
+        failure = result_value.get("failure")
+        if not isinstance(counters, dict) or not (
+            failure is None or isinstance(failure, dict)
+        ):
+            raise RunnerError(
+                "orchestration.analysis_index",
+                "final public status payload is malformed",
+            )
+        entries.append(
+            {
+                "work_unit_id": work_id,
+                "validation_id": receipt["validation_id"],
+                "validation_receipt_sha256": digest,
+                "method_result_id": receipt["subject_id"],
+                "method_result_sha256": receipt["subject_sha256"],
+                "subject_status": receipt.get("subject_status"),
+                "public_target_vector_sha256": target_id,
+                "curve_catalog_sha256": identity["curve_catalog_sha256"],
+                "curve_fixture_id": identity["curve_fixture_id"],
+                "field_bits": public["field_bits"],
+                "subgroup_order": public["subgroup_order"],
+                "subgroup_order_bits": public["subgroup_order_bits"],
+                "method_id": identity["method_id"],
+                "algorithm_seed": identity["algorithm_seed"],
+                "repetition_ordinal": identity["repetition_ordinal"],
+                "method_budgets": deepcopy(request_value["budgets"]),
+                "method_status": result_value["status"],
+                "method_failure": deepcopy(failure),
+                "method_counters": deepcopy(counters),
+            }
+        )
     return {
         "schema_version": 1,
-        "index_kind": "ecdlp_lab_public_analysis_index_v1",
+        "index_kind": "ecdlp_lab_public_analysis_index_v2",
         "campaign_id": campaign_id,
         "entries": entries,
     }
@@ -754,8 +830,23 @@ def run_campaign(
         raise RunnerError("orchestration.artifact_root", str(error)) from error
     scratch_context: tempfile.TemporaryDirectory[str] | None = None
     try:
-        target_pair = load_target_pair(repo_root=root)
-        plan = expand_campaign(campaign, target_pair=target_pair, repo_root=root)
+        matrix = campaign.get("matrix")
+        target_ids = (
+            matrix.get("target_vector_sha256s")
+            if isinstance(matrix, Mapping)
+            else None
+        )
+        if not isinstance(target_ids, list):
+            raise RunnerError(
+                "orchestration.target", "campaign target axis must be an array"
+            )
+        target_pair_values = load_target_pairs(target_ids, repo_root=root)
+        target_pairs = {
+            pair.public_target_vector_sha256: pair for pair in target_pair_values
+        }
+        plan = expand_campaign(
+            campaign, target_pairs=target_pair_values, repo_root=root
+        )
         _validate_plan(plan, max_parallel, max_retries)
         source_snapshot = plan.campaign["provenance"]["source_snapshot_sha256"]
         campaign_id = plan.campaign["campaign_id"]
@@ -816,6 +907,12 @@ def run_campaign(
             campaign_writer(store, "campaign.json", plan.campaign)
             for base_work in plan.work_units:
                 work_id = base_work["work_unit_id"]
+                target_id = base_work["identity"]["public_target_vector_sha256"]
+                target_pair = target_pairs.get(target_id)
+                if target_pair is None:
+                    raise RunnerError(
+                        "orchestration.target", "work target is not campaign-authorized"
+                    )
                 campaign_writer(store, _work_path(work_id), base_work)
                 recovered = _resume_receipt(
                     store,
@@ -897,7 +994,9 @@ def run_campaign(
                         f"work {work_id} exhausted its retry budget",
                     )
 
-            index = _analysis_index(campaign_id, receipts)
+            index = _analysis_index(
+                campaign_id, receipts, plan, target_pairs, store, state
+            )
             index_artifact = campaign_writer(store, PUBLIC_ANALYSIS_INDEX_PATH, index)
             finished = [
                 event for event in state.events if event["event_type"] == "campaign_finished"
