@@ -1,0 +1,53 @@
+name: CM coordinate carry screen
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - experiments/parity_lift_000/cm_coordinate_carry_screen.py
+      - .github/workflows/cm-coordinate-carry.yml
+  workflow_dispatch:
+
+concurrency:
+  group: cm-coordinate-carry-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run frozen CM coordinate carry screen
+        run: |
+          python3 experiments/parity_lift_000/cm_coordinate_carry_screen.py \
+            --out cm_coordinate_carry_results.json \
+            > cm_coordinate_carry.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('cm_coordinate_carry_results.json').read_text())
+          print(json.dumps(data['aggregate'], indent=2))
+          print('\nLargest cases:')
+          for case in sorted(data['cases'], key=lambda row: row['order'])[-5:]:
+              print({
+                  'order': case['order'],
+                  'carry_best': case['carry_best_accuracy'],
+                  'carry_null_q95': case['carry_null_q95'],
+                  'carry_candidate': case['carry_best_candidate'],
+                  'rho_kummer': case['rho_kummer_invariant'],
+                  'r3_best': case['r3_best_accuracy'],
+                  'r3_null_q95': case['r3_null_q95'],
+              })
+          PY
+
+      - name: Upload frozen result
+        uses: actions/upload-artifact@v4
+        with:
+          name: cm-coordinate-carry-results
+          path: |
+            cm_coordinate_carry_results.json
+            cm_coordinate_carry.log
