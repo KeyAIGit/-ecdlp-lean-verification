@@ -11,6 +11,7 @@ on:
       - Ecdlp/Proved/GlobalMonodromyBoundary.lean
       - Ecdlp/Proved/GlobalMonodromyCarry.lean
       - Ecdlp/Proved/FrobeniusCmSectionRigidity.lean
+      - Ecdlp/Proved/SesquilinearCmPairingBoundary.lean
       - experiments/parity_lift_000/glv_normalization_rigidity_screen.py
       - experiments/parity_lift_000/glv_normalization_rigidity_results.json
       - experiments/parity_lift_000/global_monodromy_embedding_degree.py
@@ -21,6 +22,8 @@ on:
       - experiments/parity_lift_000/mixed_weight_pencil_screen.py
       - experiments/parity_lift_000/mixed_weight_pencil_runner.py
       - experiments/parity_lift_000/frobenius_cm_section_boundary.py
+      - experiments/parity_lift_000/sesquilinear_cm_pairing_boundary.py
+      - experiments/parity_lift_000/sesquilinear_cm_pairing_results.json
       - .github/workflows/parity-lift-focused.yml
   workflow_dispatch:
 
@@ -137,6 +140,25 @@ jobs:
             /tmp/frobenius_cm_section_boundary_results.json
           tail -n 80 /tmp/frobenius-cm.log
 
+      - name: Replay sesquilinear CM pairing boundary
+        run: |
+          python3 experiments/parity_lift_000/sesquilinear_cm_pairing_boundary.py \
+            --out /tmp/sesquilinear_cm_pairing_results.json \
+            > /tmp/sesquilinear-cm.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          replay = json.loads(Path('/tmp/sesquilinear_cm_pairing_results.json').read_text())
+          frozen = json.loads(Path(
+              'experiments/parity_lift_000/sesquilinear_cm_pairing_results.json'
+          ).read_text())
+          if replay != frozen:
+              raise SystemExit('sesquilinear CM replay differs from frozen result')
+          print('sesquilinear CM pairing replay: PASS')
+          PY
+          tail -n 50 /tmp/sesquilinear-cm.log
+
       - name: Run mixed-weight section pencil screen
         run: |
           python3 experiments/parity_lift_000/mixed_weight_pencil_runner.py \
@@ -153,6 +175,7 @@ jobs:
             /tmp/global_monodromy_section_results.json
             /tmp/ordered_coordinate_carry_results.json
             /tmp/frobenius_cm_section_boundary_results.json
+            /tmp/sesquilinear_cm_pairing_results.json
             /tmp/mixed_weight_pencil_results.json
           if-no-files-found: error
 
@@ -163,7 +186,8 @@ jobs:
             Ecdlp/Proved/GlvNormalizationRigidityScope.lean \
             Ecdlp/Proved/GlobalMonodromyBoundary.lean \
             Ecdlp/Proved/GlobalMonodromyCarry.lean \
-            Ecdlp/Proved/FrobeniusCmSectionRigidity.lean; then
+            Ecdlp/Proved/FrobeniusCmSectionRigidity.lean \
+            Ecdlp/Proved/SesquilinearCmPairingBoundary.lean; then
             echo "::error::Focused parity-lift proof contains sorry"
             exit 1
           fi
@@ -185,3 +209,4 @@ jobs:
           lake build Ecdlp.Proved.GlobalMonodromyBoundary
           lake build Ecdlp.Proved.GlobalMonodromyCarry
           lake build Ecdlp.Proved.FrobeniusCmSectionRigidity
+          lake build Ecdlp.Proved.SesquilinearCmPairingBoundary
