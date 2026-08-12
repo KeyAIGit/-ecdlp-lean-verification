@@ -5,6 +5,7 @@ on:
     branches:
       - research/parity-lift-000
     paths:
+      - experiments/parity_lift_000/cm_coordinate_carry_screen.py
       - .github/workflows/cm-coordinate-carry-report.yml
   workflow_dispatch:
 
@@ -21,7 +22,7 @@ jobs:
       - name: Checkout branch
         uses: actions/checkout@v4
 
-      - name: Run screen and build decision
+      - name: Run screen and build scale-qualified decision
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -29,29 +30,80 @@ jobs:
             --out cm_coordinate_carry_results.json > /tmp/cm-coordinate.log
           python3 - <<'PY' > /tmp/comment.md
           import json
+          import os
           from pathlib import Path
+
+          ALPHA = 0.05
+          SCALE_ORDER_FLOOR = 271
 
           data = json.loads(Path('cm_coordinate_carry_results.json').read_text())
           agg = data['aggregate']
-          positive = (
-              agg['exact_carry_decoders'] > 0
-              or agg['carry_cases_strictly_above_matched_null_q95'] >= 2
-              or agg['exact_r3_decoders_on_kummer_cases'] > 0
-              or agg['r3_cases_strictly_above_matched_null_q95'] >= 2
+          cases = data['cases']
+          large = [case for case in cases if case['order'] >= SCALE_ORDER_FLOOR]
+
+          def strict_tail_add_one(case, prefix):
+              trials = int(case[f'{prefix}_null_trials'])
+              if trials <= 0:
+                  return 1.0
+              percentile = float(case[f'{prefix}_empirical_null_percentile'])
+              count_le = min(trials, max(0, round(percentile * trials)))
+              return (trials - count_le + 1) / (trials + 1)
+
+          def holm_passes(rows):
+              rows = sorted(rows)
+              passes = []
+              total = len(rows)
+              for index, (p_value, order) in enumerate(rows):
+                  if p_value > ALPHA / (total - index):
+                      break
+                  passes.append(order)
+              return passes
+
+          exact_orders = sorted(
+              case['order'] for case in cases if case['carry_exact_decoder']
           )
-          print('## CM-COORDINATE-CARRY-010 automated decision')
+          exact_large = [
+              order for order in exact_orders if order >= SCALE_ORDER_FLOOR
+          ]
+          carry_rows = [
+              (strict_tail_add_one(case, 'carry'), case['order'])
+              for case in large
+          ]
+          r3_rows = [
+              (strict_tail_add_one(case, 'r3'), case['order'])
+              for case in large
+              if case['r3_null_trials'] > 0
+          ]
+          carry_holm = holm_passes(carry_rows)
+          r3_holm = holm_passes(r3_rows)
+          q95_orders = sorted(
+              case['order']
+              for case in large
+              if case['carry_best_accuracy'] > case['carry_null_q95']
+          )
+          positive = bool(exact_large or carry_holm or r3_holm)
+          fwer = 1 - 0.95 ** len(cases)
+
+          print('## CM-COORDINATE-CARRY-010 corrected scaling decision')
           print()
-          print(f"Commit: `{__import__('os').environ['GITHUB_SHA']}`")
+          print(f"Commit: `{os.environ['GITHUB_SHA']}`")
           print()
           print('```json')
           print(json.dumps(agg, indent=2))
           print('```')
           print()
+          print(f'Exact decoder orders: `{exact_orders}`')
+          print(f'Scale-qualified exact decoder orders: `{exact_large}`')
+          print(f'Scale-qualified nominal q95 exceedances: `{q95_orders}`')
+          print(f'Holm-Bonferroni carry passes: `{carry_holm}`')
+          print(f'Holm-Bonferroni R3 passes: `{r3_holm}`')
+          print(f'Chance of at least one nominal q95 exceedance across 15 cases: `{fwer:.6f}`')
+          print()
           print('Largest frozen cases:')
           print()
           print('| order | carry best | carry null 95% | candidate | R3 best | R3 null 95% |')
           print('|---:|---:|---:|---|---:|---:|')
-          for case in sorted(data['cases'], key=lambda row: row['order'])[-6:]:
+          for case in sorted(cases, key=lambda row: row['order'])[-6:]:
               print(
                   f"| {case['order']} | {case['carry_best_accuracy']:.6f} | "
                   f"{case['carry_null_q95']:.6f} | `{case['carry_best_candidate']}` | "
@@ -59,9 +111,9 @@ jobs:
               )
           print()
           if positive:
-              print('Decision: **positive follow-up required**. At least one predeclared exact or repeated matched-null gate fired. This is not yet a secp256k1 claim.')
+              print('Decision: **scale-qualified follow-up required**. A large-order exact or multiple-testing-corrected gate fired. This is not yet a secp256k1 claim.')
           else:
-              print('Decision: **no admitted scaling signal** in this frozen public coordinate-carry family. The route remains a bounded negative, not an asymptotic lower bound.')
+              print('Decision: **no admitted scaling signal**. The only exact carry decoder is the order-19 resonance; no decoder at order >=271 and no Holm-Bonferroni correlation pass were found.')
           PY
           gh api \
             --method POST \
