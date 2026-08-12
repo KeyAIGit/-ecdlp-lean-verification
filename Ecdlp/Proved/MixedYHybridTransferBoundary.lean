@@ -50,7 +50,16 @@ theorem tensorFourierL1_factor
     (a : ι → ℝ) (b : κ → ℝ) :
     (∑ i, ∑ k, |a i * b k|) =
       (∑ i, |a i|) * ∑ k, |b k| := by
-  simp [abs_mul, Finset.mul_sum, Finset.sum_mul]
+  calc
+    (∑ i, ∑ k, |a i * b k|) =
+        ∑ i, ∑ k, |a i| * |b k| := by
+      simp only [abs_mul]
+    _ = ∑ i, |a i| * ∑ k, |b k| := by
+      apply Finset.sum_congr rfl
+      intro i hi
+      rw [Finset.mul_sum]
+    _ = (∑ i, |a i|) * ∑ k, |b k| := by
+      rw [Finset.sum_mul]
 
 /-- If two nonnegative field-Fourier `L1` bounds are known separately, their
 product observable has the product bound. -/
@@ -61,7 +70,7 @@ theorem tensorFourierL1_bound
     (hA : actualA ≤ boundA)
     (hB : actualB ≤ boundB) :
     actualA * actualB ≤ boundA * boundB := by
-  exact mul_le_mul hA hB hactualB hactualA
+  exact mul_le_mul hA hB hactualB (le_trans hactualA hA)
 
 /-- Multiplying an inverse-square-root coefficient by a logarithmic field `L1`
 bound preserves a square-root denominator.  This theorem is intentionally an
