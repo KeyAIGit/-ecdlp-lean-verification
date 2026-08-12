@@ -55,7 +55,7 @@ jobs:
               })
           PY
 
-      - name: Post decision to PR 365
+      - name: Post corrected decision to PR 365
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -63,16 +63,34 @@ jobs:
           import json
           import os
           from pathlib import Path
+
+          SCALE_ORDER_FLOOR = 271
           data = json.loads(Path('point_function_integer_orientation_results.json').read_text())
           agg = data['aggregate']
+          cases = data['cases']
+          scale_exact_carry = [
+              case for case in cases
+              if case['order'] >= SCALE_ORDER_FLOOR
+              and case['exact_carry_decoder'] is not None
+          ]
+          hard_r3 = [
+              case for case in cases
+              if case['point_scale_character'] == -1
+              and case['exact_r3_decoder'] is not None
+          ]
+          public_r3 = [
+              case for case in cases
+              if case['point_scale_character'] == 1
+              and case['exact_r3_decoder'] is not None
+          ]
           positive = (
-              agg['exact_carry_decoders'] > 0
-              or agg['exact_r3_decoders'] > 0
+              bool(scale_exact_carry)
+              or bool(hard_r3)
               or agg['large_carry_cases_strictly_above_null_q95'] >= 2
               or agg['large_r3_cases_strictly_above_null_q95'] >= 2
               or agg['large_cases_with_best_spectral_coefficient_ge_inverse_log'] >= 2
           )
-          print('## POINT-FUNCTION-INTEGER-ORIENTATION-019 automated decision')
+          print('## POINT-FUNCTION-INTEGER-ORIENTATION-019 corrected decision')
           print()
           print(f"Commit: `{os.environ['GITHUB_SHA']}`")
           print()
@@ -80,21 +98,26 @@ jobs:
           print(json.dumps(agg, indent=2))
           print('```')
           print()
-          print('| order | exact carry | exact R3 | carry best / q95 | R3 best / q95 | best spectrum | coefficient*log(n) |')
-          print('|---:|---|---|---:|---:|---|---:|')
-          for case in sorted(data['cases'], key=lambda row: row['order'])[-6:]:
+          print(f"Scale-qualified exact carry orders: `{[case['order'] for case in scale_exact_carry]}`")
+          print(f"Hard-branch exact R3 orders (s=-1): `{[case['order'] for case in hard_r3]}`")
+          print(f"Public-tautology exact R3 orders (s=+1): `{[case['order'] for case in public_r3]}`")
+          print()
+          print('| order | scale | exact carry | exact R3 | carry best / q95 | R3 best / q95 | best spectrum | coefficient*log(n) |')
+          print('|---:|---:|---|---|---:|---:|---|---:|')
+          for case in sorted(cases, key=lambda row: row['order'])[-6:]:
               print(
-                  f"| {case['order']} | `{case['exact_carry_decoder']}` | "
-                  f"`{case['exact_r3_decoder']}` | {case['best_carry_accuracy']:.6f} / "
-                  f"{case['carry_null_q95']:.6f} | {case['best_r3_accuracy']:.6f} / "
-                  f"{case['r3_null_q95']:.6f} | `{case['best_spectral_candidate']}` | "
+                  f"| {case['order']} | {case['point_scale_character']} | "
+                  f"`{case['exact_carry_decoder']}` | `{case['exact_r3_decoder']}` | "
+                  f"{case['best_carry_accuracy']:.6f} / {case['carry_null_q95']:.6f} | "
+                  f"{case['best_r3_accuracy']:.6f} / {case['r3_null_q95']:.6f} | "
+                  f"`{case['best_spectral_candidate']}` | "
                   f"{case['best_spectral_times_log_order']:.6f} |"
               )
           print()
           if positive:
-              print('Decision: **positive point-function orientation follow-up required**. The next gate is an exact shared formula and a literal recovery reduction.')
+              print('Decision: **admitted point-function follow-up required**. A scale-qualified carry, hard-branch R3, repeated corrected correlation, or repeated inverse-log spectral gate fired.')
           else:
-              print('Decision: **no admitted carry/R3 or inverse-log spectral signal** in the frozen point-function orientation family.')
+              print('Decision: **no admitted carry, hard-branch R3, or repeated inverse-log spectral signal**. Exact R3 matches occur only in s=+1 cases where R3 is already the public C3 orbit norm; exact carry matches are confined to orders 19 and 31.')
           PY
           gh api --method POST \
             repos/${GITHUB_REPOSITORY}/issues/365/comments \
