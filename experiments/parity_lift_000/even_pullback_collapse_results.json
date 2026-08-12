@@ -1,0 +1,72 @@
+{
+  "scope": "five frozen prime-order toy curves y^2=x^3+7 only",
+  "identity": "chi(psi_m([m^(-1)]Q))=chi(phi_raw(Q)) for every even invertible m",
+  "curves": [
+    {
+      "p": 43,
+      "order": 31,
+      "generator": [2, 12],
+      "chi_phi_raw_g": 1,
+      "even_indices": 15,
+      "nonzero_scalars": 30,
+      "carry_parity_checks": 450,
+      "division_pullback_checks": 450,
+      "all_checks_passed": true
+    },
+    {
+      "p": 67,
+      "order": 79,
+      "generator": [2, 22],
+      "chi_phi_raw_g": 1,
+      "even_indices": 39,
+      "nonzero_scalars": 78,
+      "carry_parity_checks": 3042,
+      "division_pullback_checks": 3042,
+      "all_checks_passed": true
+    },
+    {
+      "p": 79,
+      "order": 67,
+      "generator": [1, 18],
+      "chi_phi_raw_g": 1,
+      "even_indices": 33,
+      "nonzero_scalars": 66,
+      "carry_parity_checks": 2178,
+      "division_pullback_checks": 2178,
+      "all_checks_passed": true
+    },
+    {
+      "p": 127,
+      "order": 127,
+      "generator": [1, 32],
+      "chi_phi_raw_g": -1,
+      "even_indices": 63,
+      "nonzero_scalars": 126,
+      "carry_parity_checks": 7938,
+      "division_pullback_checks": 7938,
+      "all_checks_passed": true
+    },
+    {
+      "p": 163,
+      "order": 139,
+      "generator": [2, 34],
+      "chi_phi_raw_g": 1,
+      "even_indices": 69,
+      "nonzero_scalars": 138,
+      "carry_parity_checks": 9522,
+      "division_pullback_checks": 9522,
+      "all_checks_passed": true
+    }
+  ],
+  "aggregate": {
+    "all_checks_passed": true,
+    "carry_parity_checks": 23130,
+    "division_pullback_checks": 23130
+  },
+  "claim_boundary": [
+    "This replay checks a derived identity on frozen toy curves; it is not an asymptotic theorem.",
+    "The identity returns the already-public point-function character, not rho_G or scalar parity separately.",
+    "No external curve, public key, wallet, or production-sized target is accepted.",
+    "The result does not close odd-index, nonlocal, p-adic, or unbalanced theta/elliptic-net constructions."
+  ]
+}
