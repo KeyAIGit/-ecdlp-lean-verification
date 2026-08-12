@@ -70,8 +70,11 @@ theorem canonical_midpoint_residual_eq_parity (k : ℕ) :
 theorem point_canonical_binary_split
     {A : Type*} [AddMonoid A] (G : A) (k : ℕ) :
     k • G = (k / 2) • G + (k / 2) • G + (k % 2) • G := by
-  rw [canonical_binary_split k]
-  simp [add_nsmul, mul_nsmul, two_nsmul, add_assoc]
+  calc
+    k • G = (2 * (k / 2) + k % 2) • G :=
+      congrArg (fun m : ℕ => m • G) (canonical_binary_split k)
+    _ = (k / 2) • G + (k / 2) • G + (k % 2) • G := by
+      simp [add_nsmul, mul_nsmul, two_nsmul, add_assoc]
 
 /-- Canonical representative of the public group half on an odd cycle. -/
 def oddCyclePublicHalf (n k : ℕ) : ℕ :=
