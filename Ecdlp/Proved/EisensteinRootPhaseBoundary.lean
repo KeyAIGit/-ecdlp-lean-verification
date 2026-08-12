@@ -21,7 +21,7 @@ coefficient pair. Thus an even integral Eisenstein norm forces both
 coefficients to be even and is consequently divisible by four. -/
 theorem eisensteinNorm_mod_two_zero_iff (a b : ZMod 2) :
     a ^ 2 - a * b + b ^ 2 = 0 ↔ a = 0 ∧ b = 0 := by
-  fin_cases a <;> fin_cases b <;> decide
+  fin_cases a <;> fin_cases b <;> simp
 
 /-- The secp256k1 field prime lies in the exact congruence class used by the
 canonical `F_{p^2}` cube-subgroup lift. -/
