@@ -24,7 +24,7 @@ namespace Ecdlp.ParityLift
 
 /-- The zero-sum triple product is the inverse-orbit resolvent. -/
 theorem tripleProduct_eq_inverseSum_sub_sum
-    {K : Type*} [CommField K]
+    {K : Type*} [Field K]
     (a b c : K)
     (ha : a ≠ 0) (hb : b ≠ 0) (hc : c ≠ 0)
     (hprod : a * b * c = 1) :
@@ -63,7 +63,7 @@ theorem tripleProduct_cycle
 /-- Inverting every phase element negates the zero-sum triple resolvent. On the
 unit circle this is the algebraic form of conjugation anti-invariance. -/
 theorem tripleProduct_inversion_neg
-    {K : Type*} [CommField K]
+    {K : Type*} [Field K]
     (a b c : K)
     (ha : a ≠ 0) (hb : b ≠ 0) (hc : c ≠ 0)
     (hprod : a * b * c = 1) :
