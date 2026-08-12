@@ -429,7 +429,7 @@ Completion evidence at baseline `1a2fecd31fe5b2d5c6cff85bb77ea991d4c37347`:
 
 ### P03: reference BSGS and ordinary seeded rho
 
-Status: ready
+Status: complete
 Allowed paths: `experiments/ecdlp_lab/methods/python/`,
 `experiments/ecdlp_lab/core/`, `experiments/ecdlp_lab/fixtures/`,
 `experiments/ecdlp_lab/tests/`
@@ -493,9 +493,38 @@ Kangaroo and endomorphism-quotient rho are not part of this phase:
   coefficient transport, and differential tests. A label-only `glv_rho`
   implementation is forbidden.
 
+Completion evidence at baseline `26c828970a4af25e263265b3c2550523d83c11fb`:
+
+- the method-process projection contains exactly nine fields: the allowlisted
+  method id, independent algorithm seed, `p,a,b,G,Q,ell`, and deterministic
+  budgets; request, work, catalog, fixture, target-vector, source-row, and
+  answer identifiers cannot cross that boundary;
+- the authenticated legacy locator has raw SHA-256
+  `56f21ebfdcf12e11ebeb803d230883fd143852c10572fd3dbe0253e3eddf058a`
+  and canonical semantic SHA-256
+  `d5b1295f7e02aa3829aaa680786b9f39896f6dc77df0b8a5cec7828e6b39380d`;
+- all 64 retained rows replay exactly: 32 BSGS cases total 61,574 legacy
+  group operations and 32 ordinary-rho cases total 173,236, with 57,193 Floyd
+  iterations, 32 collisions, and zero restarts, noninvertible collisions, or
+  invalid-candidate collisions;
+- independent framework-oracle validation records its own 5,126 group-law
+  calls in separate generator-subgroup, target-subgroup, and candidate-relation
+  buckets; none are merged into method counters;
+- reusable BSGS tables are trusted in-process values only, cumulative setup
+  cost is re-derived before use, and the production dispatch accepts no
+  external precomputation table; adversarial mappings and forged setup costs
+  fail closed;
+- 158 stdlib-only lab tests pass in about seven seconds under a 512 MiB
+  address-space cap, covering all six current CI curve fixtures, exact golden
+  candidates and counters, wrong inputs/orders, secret channels, forced rho
+  collisions, cancellation, step/group/table/memory budgets, and the
+  quarantined counter-only schema example;
+- the frozen runner, assay, catalog, and independent-oracle raw hashes remain
+  `6ab905ad...`, `6a4a6b83...`, `d293afa7...`, and `7acc852d...`.
+
 ### P04: safe, resumable campaign runner
 
-Status: blocked_by_P03
+Status: ready
 Allowed paths: `experiments/ecdlp_lab/orchestration/`,
 `experiments/ecdlp_lab/core/`, `experiments/ecdlp_lab/fixtures/`,
 `experiments/ecdlp_lab/tests/`, `scripts/lab_*.py`
