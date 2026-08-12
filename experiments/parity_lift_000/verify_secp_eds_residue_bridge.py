@@ -4,6 +4,10 @@
 The program uses only fixed public curve parameters and fixed scalars whose
 values are already known. It accepts no external point, wallet, public key, or
 discrete-log target.
+
+The ratio-root point function and the normalized perfectly periodic EDS are
+named separately because an absolute quadratic-character bit changes by their
+known global factor.
 """
 from __future__ import annotations
 
@@ -97,8 +101,8 @@ def division_polynomial_evaluator(point: tuple[int, int]):
     return psi
 
 
-def periodic_scale(point: tuple[int, int]) -> int:
-    """Compute the Lauter-Stange public point-scaling function."""
+def raw_point_scale(point: tuple[int, int]) -> int:
+    """Compute the public ratio-root point function phi_raw(P)."""
     psi = division_polynomial_evaluator(point)
     numerator = psi(P - 1)
     denominator = psi(P - 1 + N)
@@ -108,7 +112,7 @@ def periodic_scale(point: tuple[int, int]) -> int:
     inverse_n_squared = pow(N * N % (P - 1), -1, P - 1)
     value = pow(ratio, inverse_n_squared, P)
     if pow(value, N * N, P) != ratio:
-        raise AssertionError("periodic scaling root check failed")
+        raise AssertionError("ratio-root point-function check failed")
     return value
 
 
@@ -126,10 +130,10 @@ def main() -> None:
     if ec_mul(N, G) is not None:
         raise AssertionError("public generator order check failed")
 
-    phi_g = periodic_scale(G)
-    inverse_phi_g = pow(phi_g, -1, P)
-    if quadratic_character(phi_g) != -1:
-        raise AssertionError("public secp256k1 periodic scale is not a nonresidue")
+    phi_raw_g = raw_point_scale(G)
+    inverse_phi_raw_g = pow(phi_raw_g, -1, P)
+    if quadratic_character(phi_raw_g) != -1:
+        raise AssertionError("public secp256k1 raw point scale is not a nonresidue")
 
     psi_g = division_polynomial_evaluator(G)
     rows = []
@@ -137,32 +141,42 @@ def main() -> None:
         point = ec_mul(scalar, G)
         if point is None:
             raise AssertionError("fixed sample unexpectedly reached infinity")
-        phi_q = periodic_scale(point)
+        phi_raw_q = raw_point_scale(point)
         w_k = psi_g(scalar)
 
-        point_function_identity = pow(phi_g, scalar * scalar, P) * w_k % P
+        raw_point_identity = pow(phi_raw_g, scalar * scalar, P) * w_k % P
         normalized_eds_identity = (
-            pow(phi_g, scalar * scalar - 1, P) * w_k % P
+            pow(phi_raw_g, scalar * scalar - 1, P) * w_k % P
         )
-        if phi_q != point_function_identity:
-            raise AssertionError("public point-function identity failed")
-        if phi_q * inverse_phi_g % P != normalized_eds_identity:
+        if phi_raw_q != raw_point_identity:
+            raise AssertionError("raw point-function identity failed")
+        if phi_raw_q * inverse_phi_raw_g % P != normalized_eds_identity:
             raise AssertionError("normalized perfectly periodic EDS identity failed")
 
         parity_sign = -1 if scalar & 1 else 1
-        residue_product = quadratic_character(phi_q) * quadratic_character(w_k)
+        residue_product = (
+            quadratic_character(phi_raw_q) * quadratic_character(w_k)
+        )
         if residue_product != parity_sign:
             raise AssertionError("EDS residue parity bridge failed")
+
+        normalized_character = quadratic_character(
+            phi_raw_q * inverse_phi_raw_g % P
+        )
+        normalized_bridge = -normalized_character * quadratic_character(w_k)
+        if normalized_bridge != parity_sign:
+            raise AssertionError("normalized EDS residue parity bridge failed")
 
         rows.append(
             {
                 "scalar": str(scalar),
-                "phi_q_hex": hex(phi_q),
-                "chi_phi_q": quadratic_character(phi_q),
+                "phi_raw_q_hex": hex(phi_raw_q),
+                "chi_phi_raw_q": quadratic_character(phi_raw_q),
                 "chi_w_k": quadratic_character(w_k),
-                "product_equals_minus_one_pow_k": residue_product,
+                "raw_product_equals_minus_one_pow_k": residue_product,
+                "normalized_bridge_equals_minus_one_pow_k": normalized_bridge,
                 "parity_sign": parity_sign,
-                "point_function_k_squared_identity": True,
+                "raw_point_k_squared_identity": True,
                 "normalized_eds_k_squared_minus_one_identity": True,
             }
         )
@@ -172,28 +186,36 @@ def main() -> None:
         "p_hex": hex(P),
         "n_hex": hex(N),
         "gcd_n_p_minus_one": math.gcd(N, P - 1),
-        "phi_g_hex": hex(phi_g),
-        "chi_phi_g": quadratic_character(phi_g),
-        "bridge": (
-            "(-1)^k = chi(phi([k]G))*chi(W_G(k)), because chi(phi(G))=-1"
+        "phi_raw_g_hex": hex(phi_raw_g),
+        "chi_phi_raw_g": quadratic_character(phi_raw_g),
+        "raw_bridge": (
+            "(-1)^k = chi(phi_raw([k]G))*chi(W_G(k)), "
+            "because chi(phi_raw(G))=-1"
         ),
-        "normalization_alignment": {
-            "public_point_function": "phi([k]G)=phi(G)^(k^2)*W_G(k)",
+        "normalized_bridge": (
+            "(-1)^k = -chi(W_tilde_G(k))*chi(W_G(k))"
+        ),
+        "normalization_audit": {
+            "raw_point_function": (
+                "phi_raw([k]G)=phi_raw(G)^(k^2)*W_G(k)"
+            ),
             "normalized_periodic_eds": (
-                "W_tilde_G(k)=phi([k]G)/phi(G)=phi(G)^(k^2-1)*W_G(k)"
+                "W_tilde_G(k)=phi_raw([k]G)/phi_raw(G)="
+                "phi_raw(G)^(k^2-1)*W_G(k)"
             ),
-            "all_fixed_samples_pass_both_forms": True,
-            "interpretation": (
-                "The two exponents differ by the public global factor phi(G). "
-                "Ratios are unchanged, but the distinction matters for an absolute residue bit."
+            "published_display": (
+                "Lauter-Stange prints the k^2-1 exponent directly on phi([k]P); "
+                "the branch treats this as a source-level normalization discrepancy"
             ),
+            "all_fixed_samples_pass_both_internal_forms": True,
         },
         "samples": rows,
         "claim_boundary": [
             "This verifies a public structural condition, not a discrete logarithm.",
             "The hidden value chi(W_G(k)) is not computed from an unknown target.",
             "The program accepts no external point or scalar.",
-            "Independent CAS and source-level review remain required before promotion."
+            "Independent CAS and source-level review remain required before promotion.",
+            "The source normalization discrepancy is not labelled an erratum without author confirmation."
         ],
     }
     args.out.write_text(json.dumps(payload, indent=2), encoding="utf-8")
