@@ -25,7 +25,6 @@ theorem affineQuery_factorization
     (ht : t ≠ 0) :
     t * k + a = t * (k + a / t) := by
   field_simp [ht]
-  ring
 
 /-- Once multiplicativity has supplied the public scale factor, an affine
 character query is exactly a scaled shifted query. -/
@@ -54,7 +53,7 @@ theorem uniqueCorrelationPeak
     (correlation : α → ℤ)
     (hidden : α)
     (peak offPeak : ℤ)
-    (hpeak : correlation hidden = peak)
+    (_hpeak : correlation hidden = peak)
     (hoff : ∀ candidate, candidate ≠ hidden → correlation candidate = offPeak)
     (hne : peak ≠ offPeak) :
     ∀ candidate, correlation candidate = peak → candidate = hidden := by
