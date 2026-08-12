@@ -2,9 +2,9 @@
 
 Date: 2026-08-11
 
-Status: **untrusted structural derivation**. This note is quarantined from
-canonical evidence and Research Engine state. It constructs no unknown-target
-oracle and claims no ECDLP improvement.
+Status: **untrusted structural derivation plus bounded toy screen**. This note is
+quarantined from canonical evidence and Research Engine state. It constructs no
+unknown-target oracle and claims no ECDLP improvement.
 
 ## 1. Why this question differs from direct parity
 
@@ -60,34 +60,50 @@ This is a deterministic public sign change, not the hidden scalar parity.
 
 ## 3. General EDS-residue negation law
 
+Put
+
+```text
+a = chi(phi_raw(G)) in {+1,-1}.
+```
+
 Assume the raw point-function bridge
 
 ```text
-chi(phi_raw([k]G))
-  = chi(phi_raw(G))^(k^2) rho_G([k]G).
+chi(phi_raw([k]G)) = a^(k^2) rho_G([k]G).
 ```
 
-When `chi(phi_raw(G))=-1`, compare this identity for `k` and `n-k`. Because `n`
-is odd, `k` and `n-k` have opposite parity, while equation (1) contributes the
-factor `chi(-1)`. Cancellation gives
+Compare this identity for `k` and `n-k`. Equation (1) contributes the factor
+`chi(-1)`. Moreover
 
 ```text
-rho_G(-Q) = -chi(-1) * rho_G(Q).              (2)
+k^2 - (n-k)^2 = n(2k-n)
 ```
 
-Hence the residual bit has two field-dependent behaviours:
+is odd because `n` and `2k-n` are odd. Hence the quotient of the two powers of
+`a` is exactly `a`. Cancellation gives the general law
 
 ```text
-q == 3 mod 4  ->  chi(-1)=-1  ->  rho_G(-Q)= rho_G(Q),
-q == 1 mod 4  ->  chi(-1)=+1  ->  rho_G(-Q)=-rho_G(Q).
+boxed: rho_G(-Q)
+     = chi(-1) * chi(phi_raw(G)) * rho_G(Q).   (2)
 ```
+
+Kummer behaviour therefore depends on **both** public characters:
+
+```text
+chi(-1) * chi(phi_raw(G)) = +1  ->  rho_G(-Q)= rho_G(Q),
+chi(-1) * chi(phi_raw(G)) = -1  ->  rho_G(-Q)=-rho_G(Q).
+```
+
+The field congruence `q mod 4` alone does not decide whether the residue bit
+descends to Kummer.
 
 ## 4. secp256k1 specialization
 
 The secp256k1 prime satisfies
 
 ```text
-p == 3 mod 4.
+p == 3 mod 4,
+chi(-1) = -1.
 ```
 
 The fixed-public branch replay also records
@@ -110,9 +126,38 @@ residue characters agree. A complete formal proof still requires the raw
 point-function identity and division-polynomial negation law to be bound to the
 repository's exact definitions.
 
-## 5. Revised central theta question
+## 5. Frozen toy classification
 
-The most precise surviving question is now
+`experiments/parity_lift_000/kummer_residue_toy_screen.py` checks equation (2)
+on the five existing frozen prime-order toy curves.
+
+All five have `p == 3 mod 4`, but only one has
+
+```text
+chi(phi_raw(G)) = -1.
+```
+
+The result is therefore:
+
+```text
+1 Kummer-invariant residue sequence,
+4 Kummer-anti-invariant residue sequences.
+```
+
+All declared negation checks pass. On the one invariant curve, over `F_127`, no
+product of at most four admissible character factors
+
+```text
+chi(x(Q)+c)
+```
+
+matches the exact EDS Residue sequence, even after allowing a global sign. The
+best single factor matches `84/126` nonidentity points. This is a bounded
+negative inside one tiny family, not evidence of cryptographic-scale hardness.
+
+## 6. Revised central theta question
+
+For secp256k1 the most precise surviving question is now
 
 ```text
 Given the Kummer class x(Q) of a nonzero public point Q=[k]G,
@@ -130,12 +175,16 @@ theorem, and total cost.
 
 This is a better target than a sign-sensitive theta lift for parity itself:
 
-- Kummer coordinates are allowed because the remaining bit is invariant;
+- Kummer coordinates are allowed on the secp256k1 instance because the
+  remaining bit is invariant;
 - the public factor `chi(phi_raw(Q))` restores the final scalar parity;
 - exact parity then recovers the full discrete logarithm by the proved bit-peel
   reduction.
 
-## 6. Direct algebraic Kummer-output barrier
+For a different curve or generator, equation (2) must be checked before a
+Kummer formulation is admitted.
+
+## 7. Direct algebraic Kummer-output barrier
 
 There are `(n-1)/2` nonidentity Kummer classes in an odd prime-order group. If a
 nonconstant rational function `r` on the Kummer line has no pole on those
@@ -165,9 +214,9 @@ chi(f(x(Q))) = rho_G(Q).
 
 That character-valued Kummer class is now the principal live algebraic target.
 
-## 7. Research consequences
+## 8. Research consequences
 
-The parity line should be split into two layers:
+The secp256k1 parity line should be split into two layers:
 
 1. **Public sign layer**
 
@@ -190,36 +239,38 @@ This changes the role of prior theta/Kummer work. Sign-erasing coordinates are
 not useful as direct parity decoders, but they may be exactly the natural space
 for the residual EDS bit.
 
-## 8. Highest-value next obligations
+## 9. Highest-value next obligations
 
 1. Formalize the division-polynomial negation law for the repository's exact
    `prePsi/psi` conventions.
 2. Formalize equation (2) as an abstract sign theorem and specialize it to
-   secp256k1 using `p mod 4 = 3`.
+   secp256k1 using the two public character values.
 3. Recast `CHAR-PARITY-001` as a Kummer-residue search:
 
    ```text
    chi(f(x(Q))) = rho_G(Q).
    ```
 
-4. Apply the mixed-character/conductor analysis to this even sequence rather
+4. Apply mixed-character/conductor analysis to the residual sequence rather
    than to direct scalar parity.
 5. Test structured x-only theta, division-polynomial, and elliptic-net
-   observables on independently held-out toy curves, measuring formula growth
-   rather than isolated interpolation success.
+   observables on independently held-out curves satisfying the secp-like
+   Kummer-invariance condition, measuring formula growth rather than isolated
+   interpolation success.
 
-## 9. Completion estimate
+## 10. Completion estimate
 
 These numbers measure completion of the stated subproblem, not probability of
 solving ECDLP.
 
 | obligation | completion |
 |---|---:|
-| derive residual negation law | about 90% |
-| secp256k1 Kummer-invariance specialization | about 85% |
+| derive general residual negation law | about 95% |
+| secp256k1 Kummer-invariance specialization | about 90% |
+| frozen toy classification | 100% inside the declared scope |
 | bind the proof to exact repository division-polynomial definitions | about 20% |
 | independent CAS/source replay | 0% |
-| identify the correct Kummer-residue decoder class | about 70% |
+| identify the correct Kummer-residue decoder class | about 75% |
 | construct a sub-square-root decoder | no positive evidence |
 
 ## Claim boundary
