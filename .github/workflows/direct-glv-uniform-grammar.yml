@@ -1,0 +1,73 @@
+name: Direct GLV uniform grammar
+
+on:
+  push:
+    branches:
+      - research/direct-glv-uniform-grammar-012
+    paths:
+      - experiments/parity_lift_000/direct_glv_carry_descent_screen.py
+      - experiments/parity_lift_000/direct_glv_uniform_grammar_screen.py
+      - experiments/parity_lift_000/direct_glv_uniform_grammar_results.json
+      - .github/workflows/direct-glv-uniform-grammar.yml
+  workflow_dispatch:
+
+concurrency:
+  group: direct-glv-uniform-grammar-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  frozen-screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Install exact screen dependency
+        run: python3 -m pip install --disable-pip-version-check numpy
+
+      - name: Compile screens
+        run: |
+          python3 -m py_compile \
+            experiments/parity_lift_000/direct_glv_carry_descent_screen.py \
+            experiments/parity_lift_000/direct_glv_uniform_grammar_screen.py
+
+      - name: Replay frozen uniform grammar screen
+        run: |
+          python3 experiments/parity_lift_000/direct_glv_uniform_grammar_screen.py \
+            --out /tmp/direct_glv_uniform_grammar_results.json \
+            > /tmp/direct-glv-uniform-grammar.log
+          tail -n 120 /tmp/direct-glv-uniform-grammar.log
+
+      - name: Compare semantic JSON and scoped gates
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          replay = json.loads(
+              Path('/tmp/direct_glv_uniform_grammar_results.json').read_text()
+          )
+          frozen = json.loads(
+              Path(
+                  'experiments/parity_lift_000/'
+                  'direct_glv_uniform_grammar_results.json'
+              ).read_text()
+          )
+          if replay != frozen:
+              raise SystemExit('direct GLV uniform grammar replay differs')
+
+          aggregate = replay['aggregate']
+          assert aggregate['exact_train_decoders'] == 0
+          assert aggregate['exact_all_nontrivial_decoders'] == 0
+          assert aggregate[
+              'all_observed_best_train_scores_below_familywise_random_union_gate'
+          ] is True
+          assert replay['split']['train_bits'] == 726
+          assert replay['split']['test_bits'] == 1248
+          assert replay['families']['power_affine_up_to_two'][
+              'joint_tiny_diagnostic_solution'
+          ] is not None
+          assert aggregate['maximum_top20_mean_test_accuracy'] < 0.51
+          print('direct GLV uniform grammar replay: PASS')
+          PY
