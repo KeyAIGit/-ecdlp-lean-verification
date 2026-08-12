@@ -44,21 +44,21 @@ theorem r3_nontrivialPointScale_differsByCarry
     (gammaBit r3Bit : ZMod 2) :
     r3PublicOrbitNormBit 1 gammaBit r3Bit = gammaBit + r3Bit := by
   simp [r3PublicOrbitNormBit]
-  ring
 
 /-- In the nontrivial point-scale case, an `R3` decoder and the public orbit
 norm recover the carry bit. -/
 theorem r3_nontrivialPointScale_recoversCarry
     (gammaBit r3Bit : ZMod 2) :
     r3Bit + r3PublicOrbitNormBit 1 gammaBit r3Bit = gammaBit := by
-  simp [r3PublicOrbitNormBit]
-  ring
+  fin_cases gammaBit <;> fin_cases r3Bit <;>
+    norm_num [r3PublicOrbitNormBit]
 
 /-- In the trivial point-scale case, comparing `R3` with the public orbit norm
 returns zero and therefore exposes no carry bit. -/
 theorem r3_trivialPointScale_exposesNoCarry
     (gammaBit r3Bit : ZMod 2) :
     r3Bit + r3PublicOrbitNormBit 0 gammaBit r3Bit = 0 := by
-  simp [r3PublicOrbitNormBit]
+  fin_cases gammaBit <;> fin_cases r3Bit <;>
+    norm_num [r3PublicOrbitNormBit]
 
 end Ecdlp.ParityLift
