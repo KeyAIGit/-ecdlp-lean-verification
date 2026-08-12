@@ -50,10 +50,16 @@ theorem preserveAndSwap_incompatible
     (htwo : (2 : K) ≠ 0)
     (hpreserve : subsetSum = -subsetSum) :
     False := by
+  have hsumSelf : subsetSum + subsetSum = 0 := by
+    calc
+      subsetSum + subsetSum = -subsetSum + subsetSum := by rw [hpreserve]
+      _ = 0 := neg_add_cancel subsetSum
   have hdouble : (2 : K) * subsetSum = 0 := by
     calc
       (2 : K) * subsetSum = subsetSum + subsetSum := by ring
-      _ = 0 := by rw [hpreserve]; ring
-  exact (mul_eq_zero.mp hdouble).resolve_left htwo hsum
+      _ = 0 := hsumSelf
+  rcases mul_eq_zero.mp hdouble with htwoZero | hsumZero
+  · exact htwo htwoZero
+  · exact hsum hsumZero
 
 end Ecdlp.ParityLift
