@@ -88,7 +88,6 @@ of its binary carry sign. -/
 theorem fieldCyclicOrientation_eq_neg_carry (γ : ℤ) :
     fieldCyclicOrientationSign γ = -fieldBinaryCarrySign γ := by
   simp [fieldCyclicOrientationSign, fieldBinaryCarrySign]
-  ring
 
 /-- On the two canonical wrap counts, the orientation is genuinely binary. -/
 theorem fieldCyclicOrientation_sign_dichotomy
