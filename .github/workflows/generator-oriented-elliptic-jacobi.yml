@@ -1,0 +1,105 @@
+name: Generator-oriented elliptic Jacobi
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/GENERATOR_ORIENTED_ELLIPTIC_JACOBI_037.md'
+      - 'experiments/parity_lift_000/generator_oriented_elliptic_jacobi.py'
+      - 'Ecdlp/Proved/GeneratorOrientedEllipticJacobi.lean'
+      - '.github/workflows/generator-oriented-elliptic-jacobi.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact oriented-Jacobi replay
+        run: |
+          python3 experiments/parity_lift_000/generator_oriented_elliptic_jacobi.py \
+            --out /tmp/generator_oriented_elliptic_jacobi_results.json \
+            > /tmp/generator-oriented-elliptic-jacobi.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('/tmp/generator_oriented_elliptic_jacobi_results.json').read_text())
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert aggregate['screened_cases'] == 4
+          assert aggregate['wrong_3_primary_exclusions'] == 2
+          assert aggregate['all_base_projectors_nonzero']
+          counts = [
+              aggregate['total_scaling_checks'],
+              aggregate['total_oriented_cube_checks'],
+              aggregate['total_cube_over_quadratic_checks'],
+              aggregate['total_mixed_jacobi_checks'],
+              aggregate['total_invariant_power_checks'],
+              aggregate['total_generator_orientation_checks'],
+          ]
+          assert counts[0] > 0
+          assert len(set(counts)) == 1
+          assert secp['n_mod_9'] == 7
+          assert secp['n_mod_12'] == 1
+          assert secp['v3_n_minus_one'] == 1
+          assert secp['eisenstein_norm'] == secp['n']
+          assert secp['annihilator_residue'] == 0
+          assert secp['generic_gamma0_level_degree'] == secp['quadratic_oriented_factor_degree']
+          assert secp['direct_projector_terms'] > secp['ceil_sqrt_n']
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/GeneratorOrientedEllipticJacobi.lean; then
+            echo '::error::Generator-oriented Jacobi theorem contains sorry'
+            exit 1
+          fi
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            for attempt in 1 2 3 4; do
+              if sh /tmp/elan-init.sh -y --default-toolchain none; then
+                installed=1
+                echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+                break
+              fi
+              sleep $((attempt * 3))
+            done
+          fi
+          if [ "$installed" = 0 ]; then
+            echo 'elan unavailable; downloading the pinned Lean distribution directly'
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check Jacobi cancellation identities
+        run: lake build Ecdlp.Proved.GeneratorOrientedEllipticJacobi
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: generator-oriented-elliptic-jacobi-results
+          path: |
+            /tmp/generator_oriented_elliptic_jacobi_results.json
+            /tmp/generator-oriented-elliptic-jacobi.log
+          retention-days: 90
