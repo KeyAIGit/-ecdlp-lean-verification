@@ -37,8 +37,9 @@ jobs:
       - name: Fetch prebuilt Mathlib cache
         run: lake exe cache get
 
-      - name: Kernel-check the query ambiguity theorem
+      - name: Build imports and kernel-check the query ambiguity theorem
         run: |
+          lake build Ecdlp.Proved.CocycleQueryAmbiguity
           lake env lean Ecdlp/Proved/CocycleQueryAmbiguity.lean
           if grep -nE '^[[:space:]]*(sorry|admit)([[:space:]]|$)' \
               Ecdlp/Proved/CocycleQueryAmbiguity.lean; then
