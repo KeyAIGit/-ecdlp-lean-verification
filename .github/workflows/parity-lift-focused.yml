@@ -9,10 +9,13 @@ on:
       - Ecdlp/Proved/GlvNormalizationRigidityScope.lean
       - Ecdlp/Proved/EisensteinRootPhaseBoundary.lean
       - Ecdlp/Proved/GlobalMonodromyBoundary.lean
+      - Ecdlp/Proved/FrobeniusCmSectionRigidity.lean
       - experiments/parity_lift_000/glv_normalization_rigidity_screen.py
       - experiments/parity_lift_000/glv_normalization_rigidity_results.json
       - experiments/parity_lift_000/global_monodromy_embedding_degree.py
       - experiments/parity_lift_000/mixed_weight_pencil_screen.py
+      - experiments/parity_lift_000/mixed_weight_pencil_runner.py
+      - experiments/parity_lift_000/frobenius_cm_section_boundary.py
       - .github/workflows/parity-lift-focused.yml
   workflow_dispatch:
 
@@ -23,7 +26,7 @@ concurrency:
 jobs:
   focused:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - name: Checkout branch
         uses: actions/checkout@v4
@@ -76,24 +79,45 @@ jobs:
         run: |
           python3 experiments/parity_lift_000/global_monodromy_embedding_degree.py \
             > /tmp/global-monodromy.log
+          cp experiments/parity_lift_000/global_monodromy_embedding_degree_results.json \
+            /tmp/global_monodromy_embedding_degree_results.json
           tail -n 40 /tmp/global-monodromy.log
+
+      - name: Verify secp256k1 Frobenius CM section collapse
+        run: |
+          python3 experiments/parity_lift_000/frobenius_cm_section_boundary.py \
+            > /tmp/frobenius-cm.log
+          cp experiments/parity_lift_000/frobenius_cm_section_boundary_results.json \
+            /tmp/frobenius_cm_section_boundary_results.json
+          tail -n 80 /tmp/frobenius-cm.log
 
       - name: Install mixed-weight screen dependency
         run: python3 -m pip install --disable-pip-version-check numpy
 
       - name: Run mixed-weight section pencil screen
         run: |
-          python3 experiments/parity_lift_000/mixed_weight_pencil_screen.py \
+          python3 experiments/parity_lift_000/mixed_weight_pencil_runner.py \
             --out /tmp/mixed_weight_pencil_results.json \
             > /tmp/mixed-weight.log
-          tail -n 100 /tmp/mixed-weight.log
+          tail -n 120 /tmp/mixed-weight.log
+
+      - name: Upload focused research results
+        uses: actions/upload-artifact@v4
+        with:
+          name: parity-lift-focused-results
+          path: |
+            /tmp/global_monodromy_embedding_degree_results.json
+            /tmp/frobenius_cm_section_boundary_results.json
+            /tmp/mixed_weight_pencil_results.json
+          if-no-files-found: error
 
       - name: Reject incomplete focused proofs
         run: |
           if grep -nI 'sorry' \
             Ecdlp/Proved/GlvNormalizationRigidity.lean \
             Ecdlp/Proved/GlvNormalizationRigidityScope.lean \
-            Ecdlp/Proved/GlobalMonodromyBoundary.lean; then
+            Ecdlp/Proved/GlobalMonodromyBoundary.lean \
+            Ecdlp/Proved/FrobeniusCmSectionRigidity.lean; then
             echo "::error::Focused parity-lift proof contains sorry"
             exit 1
           fi
@@ -113,3 +137,4 @@ jobs:
           lake build Ecdlp.Proved.GlvNormalizationRigidityScope
           lake build Ecdlp.Proved.EisensteinRootPhaseBoundary
           lake build Ecdlp.Proved.GlobalMonodromyBoundary
+          lake build Ecdlp.Proved.FrobeniusCmSectionRigidity
