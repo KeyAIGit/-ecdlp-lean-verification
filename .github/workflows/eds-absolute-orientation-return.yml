@@ -35,10 +35,12 @@ jobs:
           print(json.dumps(aggregate, indent=2))
           print(json.dumps(secp, indent=2))
           assert aggregate['cycles'] == 62
-          assert aggregate['total_edge_checks'] == 8184
+          assert aggregate['total_ordinary_edge_checks'] == 8060
+          assert aggregate['total_wrap_defect_checks'] == 124
           assert aggregate['total_prefix_checks'] == 8184
           assert aggregate['total_residue_equivalence_checks'] == 8184
           assert aggregate['all_telescoping_checks_passed']
+          assert aggregate['all_single_wrap_defects_passed']
           assert aggregate['secp_like_constant_minus_one_leaves_only_parity']
           assert secp['bit_length'] == 256
           assert secp['exact_parity_oracle_calls_upper_bound'] == 256
