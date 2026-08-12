@@ -1,0 +1,74 @@
+name: Direct GLV carry descent
+
+on:
+  push:
+    branches:
+      - research/direct-glv-carry-descent-010
+    paths:
+      - experiments/parity_lift_000/direct_glv_carry_descent_screen.py
+      - experiments/parity_lift_000/direct_glv_carry_descent_results.json
+      - archive/untrusted_intake/parity_lift_000/DIRECT_GLV_CARRY_DESCENT_010.md
+      - .github/workflows/direct-glv-carry-descent.yml
+  workflow_dispatch:
+
+concurrency:
+  group: direct-glv-carry-descent-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  frozen-screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Install exact screen dependency
+        run: python3 -m pip install --disable-pip-version-check numpy
+
+      - name: Compile screen
+        run: python3 -m py_compile experiments/parity_lift_000/direct_glv_carry_descent_screen.py
+
+      - name: Replay frozen direct-descent screen
+        run: |
+          python3 experiments/parity_lift_000/direct_glv_carry_descent_screen.py \
+            --out /tmp/direct_glv_carry_descent_results.json \
+            > /tmp/direct-glv-carry-descent.log
+          tail -n 80 /tmp/direct-glv-carry-descent.log
+
+      - name: Compare semantic JSON
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          replay = json.loads(
+              Path('/tmp/direct_glv_carry_descent_results.json').read_text()
+          )
+          frozen = json.loads(
+              Path(
+                  'experiments/parity_lift_000/'
+                  'direct_glv_carry_descent_results.json'
+              ).read_text()
+          )
+          if replay != frozen:
+              raise SystemExit('direct GLV carry descent replay differs')
+
+          aggregate = replay['aggregate']
+          assert aggregate['all_linear_factor_ranks_full'] is True
+          assert (
+              aggregate[
+                  'split_degree_at_most_four_exact_decoders_'
+                  'order_at_least_271'
+              ]
+              == 0
+          )
+          assert (
+              aggregate[
+                  'quadratic_square_class_exact_decoders_'
+                  'order_at_least_271'
+              ]
+              == 0
+          )
+          print('direct GLV carry descent replay: PASS')
+          PY
