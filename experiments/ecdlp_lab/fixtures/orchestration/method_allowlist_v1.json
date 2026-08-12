@@ -1,0 +1,12 @@
+{
+  "methods": [
+    {
+      "method_id": "bsgs_v1"
+    },
+    {
+      "method_id": "ordinary_rho_xmod3_v1"
+    }
+  ],
+  "registry_kind": "ecdlp_lab_method_allowlist_v1",
+  "schema_version": 1
+}

@@ -1,0 +1,62 @@
+{
+  "allowed_method_ids": [
+    "bsgs_v1",
+    "ordinary_rho_xmod3_v1"
+  ],
+  "authorization_id": null,
+  "budgets": {
+    "max_field_bits": 32,
+    "max_group_law_invocations": 100000,
+    "max_memory_bytes": 67108864,
+    "max_steps": 100000,
+    "max_subgroup_order_bits": 32,
+    "max_table_entries": 65536,
+    "timeout_ns": 5000000000,
+    "workers": 1
+  },
+  "campaign_id": "730bee5abac7016810134755c27c014e5d47bf5c141d96044f4e0930875b30a8",
+  "candidate_id": null,
+  "contract_kind": "campaign_config_v1",
+  "expected_work_unit_count": 2,
+  "framework_authorization_class": "fixture",
+  "hypothesis_id": null,
+  "internal_classification": "engineering_only",
+  "matrix": {
+    "algorithm_seeds": [
+      7
+    ],
+    "curve_catalog_sha256s": [
+      "d293afa7e5b614f39ed00356e35ee81a400b57ee9656907170193cb3aca0bbd7"
+    ],
+    "curve_fixture_ids": [
+      "toy-secp-j0-b13-c0-p5923"
+    ],
+    "method_ids": [
+      "bsgs_v1",
+      "ordinary_rho_xmod3_v1"
+    ],
+    "repetitions": 1,
+    "target_vector_sha256s": [
+      "f530af54bbc7c68523bef1abcf97853d7c635244c15f5c071f91857ecf8083d8"
+    ]
+  },
+  "native_research_outcome": false,
+  "provenance": {
+    "config_sha256": "730bee5abac7016810134755c27c014e5d47bf5c141d96044f4e0930875b30a8",
+    "diff_sha256": "1cad82f5d74aeb6ca0c82dc925b76015038ebd230803eaa4ae5eee3a168c236a",
+    "producer_dependency_sha256s": [
+      "a87e4a97d1e54214decb6dfb432b92c552c43fe3e0c3c3f4f673b7c8bd391951"
+    ],
+    "source_commit": "dc3a69a303bec1048ccf92d55be253daf8b9d6d5",
+    "source_snapshot_sha256": "691fd0345f60b1ab3af42bb58e791b418f281dc8255908f46f2a4c9c7c9f59b7",
+    "source_tree_clean": false,
+    "validator_dependency_sha256s": [
+      "2ee2219669cbf7f892f8678ef48777da30d0c87131e3a2a98112c4447ec3c401"
+    ]
+  },
+  "record_kind": "lab_engineering_fixture",
+  "retainable": false,
+  "retention_class": "engineering_only",
+  "route_effect": "none",
+  "schema_version": 1
+}
