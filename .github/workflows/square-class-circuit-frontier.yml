@@ -1,0 +1,52 @@
+name: Square-class circuit frontier
+
+on:
+  push:
+    branches:
+      - research/direct-glv-carry-descent-010
+    paths:
+      - 'Ecdlp/Proved/SquareClassCircuitFrontier.lean'
+      - 'notes/reviews/SQUARE_CLASS_CIRCUIT_FRONTIER_2026_08_12.md'
+      - '.github/workflows/square-class-circuit-frontier.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/SquareClassCircuitFrontier.lean; then
+            echo '::error::Square-class circuit theorem contains sorry'
+            exit 1
+          fi
+
+      - name: Install elan with retries
+        run: |
+          curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+            https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            -o /tmp/elan-init.sh
+          for attempt in 1 2 3 4; do
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              break
+            fi
+            if [ "$attempt" = 4 ]; then
+              echo '::error::elan installation failed after retries'
+              exit 1
+            fi
+            rm -rf "$HOME/.elan"
+            sleep $((attempt * 3))
+          done
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check square-class gate identities
+        run: lake build Ecdlp.Proved.SquareClassCircuitFrontier
