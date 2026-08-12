@@ -95,8 +95,10 @@ theorem fieldCyclicOrientation_sign_dichotomy
     (γ : ℤ) (hγ : γ = 1 ∨ γ = 2) :
     fieldCyclicOrientationSign γ = 1 ∨
       fieldCyclicOrientationSign γ = -1 := by
-  rcases hγ with rfl | rfl
-  · norm_num [fieldCyclicOrientationSign]
-  · norm_num [fieldCyclicOrientationSign]
+  rcases hγ with hγ | hγ
+  · subst γ
+    exact Or.inl (by norm_num [fieldCyclicOrientationSign])
+  · subst γ
+    exact Or.inr (by norm_num [fieldCyclicOrientationSign])
 
 end Ecdlp.ParityLift
