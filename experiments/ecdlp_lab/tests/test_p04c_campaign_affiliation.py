@@ -160,6 +160,18 @@ def equal_success_bundle() -> tuple[list[dict[str, object]], ValidationContext]:
     comparison_rows = []
     for success_target in ("0.50", "0.95"):
         row = deepcopy(base_comparison)
+        row["full_cost"]["measurement_status"] = "not_measured_v1"
+        for field in (
+            "online_cpu_hours_decimal",
+            "online_gpu_hours_decimal",
+            "offline_cpu_hours_decimal",
+            "offline_gpu_hours_decimal",
+            "storage_gb_decimal",
+            "money_usd_decimal",
+            "implementation_hours_decimal",
+            "reviewer_hours_decimal",
+        ):
+            row["full_cost"][field] = None
         row["successes"] = 2
         row.update(
             {
