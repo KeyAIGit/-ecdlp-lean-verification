@@ -21,7 +21,7 @@ Modulo two, the C3-orbit sum of this exponent is
 `q(k₀)+q(k₁)+q(k₂) = (a+b)*γ+c`.
 
 Thus the binary GLV carry coefficient is exactly the parity of the section's
-quadratic normalization weight `a+b`.  Odd-gauge sections inherit the same carry
+quadratic normalization weight `a+b`. Odd-gauge sections inherit the same carry
 as the perfectly periodic point function; even-gauge sections cannot contain an
 odd number of EDS-residue factors.
 -/
@@ -76,7 +76,7 @@ theorem glvOrbitLinearCarryParity
       rw [hrn]
       ring
 
-/-- **Quadratic orbit rigidity.**  A quadratic normalization exponent has C3
+/-- **Quadratic orbit rigidity.** A quadratic normalization exponent has C3
 carry coefficient `a+b`; all remaining dependence is an even integer and a
 fixed constant `c`. -/
 theorem quadraticNormalizationOrbitParity
@@ -130,7 +130,7 @@ theorem evenCarryWeight_killsCarry
       ring
 
 /-- Fixed affine pullback changes a quadratic weight by `b^2`, which has the
-same parity as `b`.  It cannot manufacture a new binary carry class. -/
+same parity as `b`. It cannot manufacture a new binary carry class. -/
 theorem affinePullbackWeightParity (w b : ℤ) :
     Even (w * b ^ 2 - w * b) := by
   rcases square_sub_self_even b with ⟨r, hr⟩
@@ -141,7 +141,31 @@ theorem affinePullbackWeightParity (w b : ℤ) :
       rw [hr]
       ring
 
-/-- Any order-three linearization scalar is already a square.  Consequently a
+/-- Per coordinate, the point-scale exponent in the fixed-rank elliptic-net
+transformation formula collapses to `v*(v+1)`. Here `s` denotes the sum of the
+other net-index coordinates. -/
+theorem netPullbackPointScaleCoefficient (v s : ℤ) :
+    v + (v ^ 2 - v * s) + v * s = v * (v + 1) := by
+  ring
+
+/-- The coefficient left after converting an integer-index net value to the
+perfectly periodic public point label is always even. Thus adding more fixed
+net rank creates no new binary normalization phase. -/
+theorem netPullbackPointScaleCoefficient_even (v s : ℤ) :
+    Even (v + (v ^ 2 - v * s) + v * s) := by
+  rw [netPullbackPointScaleCoefficient, Int.even_mul]
+  by_cases hv : Even v
+  · exact Or.inl hv
+  · exact Or.inr ((Int.even_add_one).2 hv)
+
+/-- The explicit rank-three net numerator vanishes whenever the three input
+points have a common `y` coordinate, as happens on a `j=0` GLV orbit. -/
+theorem rankThreeCommonYNumerator_zero
+    {R : Type*} [CommRing R] (x₀ x₁ x₂ y : R) :
+    y * (x₁ - x₂) + y * (x₂ - x₀) + y * (x₀ - x₁) = 0 := by
+  ring
+
+/-- Any order-three linearization scalar is already a square. Consequently a
 quadratic character cannot see a separate binary phase coming only from the
 GLV eigenvalue. -/
 theorem cubeRootLinearization_isSquare
