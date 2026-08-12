@@ -1,0 +1,98 @@
+name: Nonlinear dyadic selector
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - 'experiments/parity_lift_000/nonlinear_dyadic_selector.py'
+      - 'Ecdlp/Proved/NonlinearDyadicSelector.lean'
+      - '.github/workflows/nonlinear-dyadic-selector.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact nonlinear-selector replay
+        run: |
+          python3 experiments/parity_lift_000/nonlinear_dyadic_selector.py \
+            --out /tmp/nonlinear_dyadic_selector_results.json \
+            > /tmp/nonlinear-dyadic-selector.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('/tmp/nonlinear_dyadic_selector_results.json').read_text())
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert aggregate['cases'] == 6
+          assert aggregate['total_classes'] == 504
+          assert aggregate['total_frequency_nonvanishing_checks'] == 128030
+          assert aggregate['total_full_period_checks'] == 504
+          assert aggregate['total_degree_product_checks'] == 39
+          assert aggregate['all_fourier_supports_full']
+          assert aggregate['all_cyclic_periods_full']
+          assert aggregate['all_degree_tradeoffs_passed']
+          assert secp['bit_length'] == 256
+          assert secp['ceil_sqrt_n'] == 2**128
+          assert secp['translation_linear_dimension_lower_bound'] == secp['n']
+          assert secp['rows'][-1]['depth'] == 128
+          assert secp['rows'][-1]['rational_degree_lower_bound'] >= 2**127
+          assert secp['selected_successor'] == 'PARITY-DIVISOR-SYMMETRY-045'
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/NonlinearDyadicSelector.lean; then
+            echo '::error::Nonlinear dyadic theorem contains sorry'
+            exit 1
+          fi
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            for attempt in 1 2 3 4; do
+              if sh /tmp/elan-init.sh -y --default-toolchain none; then
+                installed=1
+                echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+                break
+              fi
+              sleep $((attempt * 3))
+            done
+          fi
+          if [ "$installed" = 0 ]; then
+            echo 'elan unavailable; downloading the pinned Lean distribution directly'
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check nonlinear selector identities
+        run: lake build Ecdlp.Proved.NonlinearDyadicSelector
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nonlinear-dyadic-selector-results
+          path: |
+            /tmp/nonlinear_dyadic_selector_results.json
+            /tmp/nonlinear-dyadic-selector.log
+          retention-days: 90
