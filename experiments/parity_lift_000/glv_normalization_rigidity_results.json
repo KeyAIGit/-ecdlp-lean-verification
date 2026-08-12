@@ -58,7 +58,7 @@
       "best_single_candidate": "y",
       "best_single_matches": 18,
       "exact_single_decoder": "y",
-      "exact_degree_two_decoder": null,
+      "exact_degree_two_decoder": [0, 5, -1],
       "null_trials": 200,
       "null_median": 1.0,
       "null_q95": 1.0,
@@ -309,7 +309,7 @@
     "cases": 15,
     "quadratic_orbit_parity_checks": 1072350,
     "exact_single_decoders": 2,
-    "exact_degree_two_decoders": 2,
+    "exact_degree_two_decoders": 3,
     "exact_decoders_order_at_least_271": 0,
     "cases_strictly_above_matched_null_q95": 0,
     "largest_order": 4021
