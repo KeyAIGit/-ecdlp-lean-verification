@@ -8,8 +8,10 @@ on:
       - Ecdlp/Proved/GlvNormalizationRigidity.lean
       - Ecdlp/Proved/GlvNormalizationRigidityScope.lean
       - Ecdlp/Proved/EisensteinRootPhaseBoundary.lean
+      - Ecdlp/Proved/GlobalMonodromyBoundary.lean
       - experiments/parity_lift_000/glv_normalization_rigidity_screen.py
       - experiments/parity_lift_000/glv_normalization_rigidity_results.json
+      - experiments/parity_lift_000/global_monodromy_embedding_degree.py
       - .github/workflows/parity-lift-focused.yml
   workflow_dispatch:
 
@@ -69,11 +71,18 @@ jobs:
           PY
           tail -n 20 /tmp/rigidity-screen.log
 
+      - name: Verify exact monodromy embedding-degree certificate
+        run: |
+          python3 experiments/parity_lift_000/global_monodromy_embedding_degree.py \
+            > /tmp/global-monodromy.log
+          tail -n 40 /tmp/global-monodromy.log
+
       - name: Reject incomplete focused proofs
         run: |
           if grep -nI 'sorry' \
             Ecdlp/Proved/GlvNormalizationRigidity.lean \
-            Ecdlp/Proved/GlvNormalizationRigidityScope.lean; then
+            Ecdlp/Proved/GlvNormalizationRigidityScope.lean \
+            Ecdlp/Proved/GlobalMonodromyBoundary.lean; then
             echo "::error::Focused parity-lift proof contains sorry"
             exit 1
           fi
@@ -87,8 +96,9 @@ jobs:
       - name: Fetch Mathlib cache
         run: lake exe cache get
 
-      - name: Kernel-check rigidity modules
+      - name: Kernel-check rigidity and monodromy modules
         run: |
           lake build Ecdlp.Proved.GlvNormalizationRigidity
           lake build Ecdlp.Proved.GlvNormalizationRigidityScope
           lake build Ecdlp.Proved.EisensteinRootPhaseBoundary
+          lake build Ecdlp.Proved.GlobalMonodromyBoundary
