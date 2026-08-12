@@ -190,6 +190,14 @@
       "disposition": "keep_conditional",
       "spends_external_budget": false,
       "reason": "Replays the frozen toy-only direct GLV low-circuit screen on its isolated research branch."
+    },
+    {
+      "file": ".github/workflows/direct-glv-uniform-grammar.yml",
+      "class": "experiment_gate",
+      "trigger_policy": "target_push_or_manual",
+      "disposition": "keep_conditional",
+      "spends_external_budget": false,
+      "reason": "Replays the frozen toy-only uniform direct GLV grammar screen with fixed cross-curve train, validation, and test splits."
     }
   ]
 }
