@@ -603,7 +603,7 @@ Completion evidence (2026-08-11):
 
 ### P04C: target-axis and analysis-contract correction
 
-Status: ready
+Status: complete
 Allowed paths: `experiments/ecdlp_lab/contracts/`,
 `experiments/ecdlp_lab/core/`, `experiments/ecdlp_lab/orchestration/`,
 `experiments/ecdlp_lab/fixtures/`, `experiments/ecdlp_lab/tests/`
@@ -641,9 +641,50 @@ Exit criteria:
 - the P01 singleton corpus and all nine contract families remain valid;
 - campaign/receipt injection and private-field leak tests fail closed.
 
+Completion evidence (2026-08-11):
+
+- `target_vector_sha256s` is the leading instance axis; the committed registry
+  authorizes the legacy P01 target plus six independently checked CI targets
+  across the three P02 curve families, and has raw SHA-256
+  `5e2619f0d91752d11adfc9a6035a8f8eebb218037b0125f1bcdfba29df663d78`;
+- target expansion derives catalog and fixture bindings from each authenticated
+  public payload, covers exactly
+  `targets * methods * algorithm_seeds * repetitions`, and rejects incomplete,
+  extra, duplicate, cross-campaign, or Cartesian-forged tuples;
+- independently validated `bounded_failure`, `invalid_request`, and
+  `internal_error` results have null candidates/relations and exact
+  status/failure/counter/budget checks; validator disagreement remains a failed
+  attempt and cannot enter the final receipt set;
+- `analysis_summary_v1` now conditionally fixes the equal-success protocol,
+  0.50/0.95 targets, exact target/order/log2 bindings, unreachable state,
+  clustered uncertainty, residuals, leave-one-size-out diagnostics, and
+  inference policies while the P01 legacy corpus remains valid;
+- protocol artifact SHA-256
+  `43a6db1f7c7f2dfc3c665d30536f395509e1e8facce4de0a962eca1af81281a6`
+  freezes probability/attempt formulas, cluster semantics, per-target BSGS
+  setup, method-specific failure/censor actions, integer-attempt cost mapping,
+  AICc/rank/tie rules, delete-one and censor-sensitivity evidence, and a
+  truthful `not_measured_v1` policy
+  whose secondary time/storage/money/effort fields are null rather than fake
+  zeroes;
+- the public analysis index binds field size, exact subgroup order, method,
+  seed, repetition, budgets, status/failure, counters, result, and receipt.  Its
+  verifier requires the out-of-band P04 run summary, replays exact event
+  semantics, reconstructs every receipt from fixed request/result/validator
+  artifacts, double-reads the event log, and returns only copy-out public
+  observations plus the trusted receipt-digest set;
+- no point coordinates, candidate scalar, private target identity/hash/path,
+  expected scalar, derivation seed, or validator-private payload enters the
+  public handoff;
+- the frozen source snapshot is
+  `98f80f20042e4078e2ac88ec4a9e8db4d719b2ca50550315a956f195d09b85c4`
+  relative to merged P04 commit
+  `1aba9f025950af687d9a0e5104c8642e018aeb2e`, and 281 stdlib-only lab tests
+  pass in under 23 seconds with a 512 MiB outer address-space limit.
+
 ### P05: equal-success comparison and scaling diagnostics
 
-Status: blocked_by_P04C
+Status: ready
 Allowed paths: `experiments/ecdlp_lab/analysis/`,
 `experiments/ecdlp_lab/fixtures/`, `experiments/ecdlp_lab/tests/`
 

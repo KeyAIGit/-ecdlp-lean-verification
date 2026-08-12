@@ -9,12 +9,20 @@ from experiments.ecdlp_lab.core.canonical import sha256_json
 from experiments.ecdlp_lab.core.catalog_registry import trusted_catalog_sha256s
 from experiments.ecdlp_lab.core.contracts import (
     ValidationContext,
+    derive_campaign_id,
     validate_contract,
     validate_cross_record_bundle,
 )
-from experiments.ecdlp_lab.core.target_registry import load_target_pair
+from experiments.ecdlp_lab.core.target_registry import (
+    load_target_pair,
+    load_target_pairs,
+    load_target_registry,
+)
 from experiments.ecdlp_lab.orchestration.model import OrchestrationError
-from experiments.ecdlp_lab.orchestration.provenance import P04_BASE_SOURCE_COMMIT
+from experiments.ecdlp_lab.orchestration.provenance import (
+    P04_BASE_SOURCE_COMMIT,
+    build_campaign_provenance,
+)
 from experiments.ecdlp_lab.orchestration.records import (
     expand_campaign,
     load_smoke_campaign,
@@ -29,6 +37,42 @@ class P04ExpansionTests(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.pair = load_target_pair(repo_root=REPO_ROOT)
         cls.campaign = load_smoke_campaign(repo_root=REPO_ROOT)
+        cls.campaign["provenance"] = build_campaign_provenance(
+            config_sha256=cls.campaign["campaign_id"],
+            source_commit=P04_BASE_SOURCE_COMMIT,
+            source_tree_clean=False,
+            diff_sha256=None,
+            method_ids=cls.campaign["matrix"]["method_ids"],
+            repo_root=REPO_ROOT,
+        )
+
+    def _multi_campaign(self, count: int = 2):
+        authorities = load_target_registry(repo_root=REPO_ROOT)[:count]
+        pairs = load_target_pairs(
+            sorted(row.public_target_vector_sha256 for row in authorities),
+            repo_root=REPO_ROOT,
+        )
+        campaign = deepcopy(self.campaign)
+        campaign["matrix"]["target_vector_sha256s"] = sorted(
+            pair.public_target_vector_sha256 for pair in pairs
+        )
+        campaign["matrix"]["curve_catalog_sha256s"] = sorted(
+            {pair.public_payload["curve_catalog_sha256"] for pair in pairs}
+        )
+        campaign["matrix"]["curve_fixture_ids"] = sorted(
+            {pair.public_payload["curve_fixture_id"] for pair in pairs}
+        )
+        campaign["expected_work_unit_count"] = 2 * len(pairs)
+        campaign["campaign_id"] = derive_campaign_id(campaign)
+        campaign["provenance"] = build_campaign_provenance(
+            config_sha256=campaign["campaign_id"],
+            source_commit=P04_BASE_SOURCE_COMMIT,
+            source_tree_clean=False,
+            diff_sha256=None,
+            method_ids=campaign["matrix"]["method_ids"],
+            repo_root=REPO_ROOT,
+        )
+        return campaign, pairs
 
     def test_smoke_is_one_target_times_two_methods_times_seed_seven(self) -> None:
         first = expand_campaign(
@@ -97,26 +141,51 @@ class P04ExpansionTests(unittest.TestCase):
             [],
         )
 
-    def test_incompatible_multi_target_cartesian_axes_fail_before_dependencies(self) -> None:
-        mutations = (
-            ("target_vector_sha256s", "e" * 64),
-            ("curve_catalog_sha256s", "e" * 64),
-            ("curve_fixture_ids", "second-fixture"),
+    def test_multi_target_axis_expands_bound_tuples_not_cartesian_pairs(self) -> None:
+        campaign, pairs = self._multi_campaign(3)
+        plan = expand_campaign(
+            campaign, target_pairs=pairs, repo_root=REPO_ROOT
         )
-        for axis, extra in mutations:
+        self.assertEqual(len(plan.work_units), 6)
+        expected = {
+            (
+                pair.public_target_vector_sha256,
+                pair.public_payload["curve_catalog_sha256"],
+                pair.public_payload["curve_fixture_id"],
+                method,
+            )
+            for pair in pairs
+            for method in campaign["matrix"]["method_ids"]
+        }
+        observed = {
+            (
+                work["identity"]["public_target_vector_sha256"],
+                work["identity"]["curve_catalog_sha256"],
+                work["identity"]["curve_fixture_id"],
+                work["identity"]["method_id"],
+            )
+            for work in plan.work_units
+        }
+        self.assertEqual(observed, expected)
+
+    def test_incomplete_or_extra_target_allowlists_fail_before_dependencies(self) -> None:
+        base, pairs = self._multi_campaign(2)
+        mutations = (
+            ("target_vector_sha256s", lambda axis: axis.pop()),
+            ("curve_catalog_sha256s", lambda axis: axis.append("e" * 64)),
+            ("curve_fixture_ids", lambda axis: axis.append("second-fixture")),
+        )
+        for axis, mutation in mutations:
             with self.subTest(axis=axis):
-                campaign = deepcopy(self.campaign)
-                campaign["matrix"][axis].append(extra)
-                campaign["expected_work_unit_count"] *= 2
+                campaign = deepcopy(base)
+                mutation(campaign["matrix"][axis])
                 with patch(
                     "experiments.ecdlp_lab.orchestration.records.allowed_method_ids",
                     side_effect=AssertionError("dependencies must not resolve"),
                 ):
-                    with self.assertRaisesRegex(
-                        OrchestrationError, "incompatible_cartesian"
-                    ):
+                    with self.assertRaises(OrchestrationError):
                         expand_campaign(
-                            campaign, target_pair=self.pair, repo_root=REPO_ROOT
+                            campaign, target_pairs=pairs, repo_root=REPO_ROOT
                         )
 
     def test_unknown_method_and_configured_executable_text_are_rejected(self) -> None:

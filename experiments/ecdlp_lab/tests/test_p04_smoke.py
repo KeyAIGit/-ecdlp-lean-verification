@@ -11,7 +11,10 @@ from unittest.mock import patch
 
 from experiments.ecdlp_lab.core.canonical import canonical_json_bytes, load_json, strict_loads
 from experiments.ecdlp_lab.orchestration.events import replay_event_bytes
-from experiments.ecdlp_lab.orchestration.provenance import build_campaign_provenance
+from experiments.ecdlp_lab.orchestration.provenance import (
+    P04_BASE_SOURCE_COMMIT,
+    build_campaign_provenance,
+)
 from experiments.ecdlp_lab.orchestration.records import SMOKE_CAMPAIGN_PATH
 from experiments.ecdlp_lab.orchestration.runner import EVENT_LOG_PATH, run_campaign
 from experiments.ecdlp_lab.orchestration.storage import ArtifactStore
@@ -33,10 +36,9 @@ PRIVATE_PUBLICATION_KEYS = {
 
 def current_campaign() -> dict[str, object]:
     campaign = load_json(REPO_ROOT / SMOKE_CAMPAIGN_PATH)
-    old = campaign["provenance"]
     campaign["provenance"] = build_campaign_provenance(
         config_sha256=campaign["campaign_id"],
-        source_commit=old["source_commit"],
+        source_commit=P04_BASE_SOURCE_COMMIT,
         source_tree_clean=True,
         diff_sha256=None,
         method_ids=campaign["matrix"]["method_ids"],
@@ -86,6 +88,21 @@ class P04SmokeTests(unittest.TestCase):
                 [entry["work_unit_id"] for entry in index["entries"]],
                 sorted(summary.completed_work_unit_ids),
             )
+            for entry in index["entries"]:
+                self.assertEqual(entry["method_status"], "success")
+                self.assertIsNone(entry["method_failure"])
+                self.assertEqual(
+                    entry["method_budgets"],
+                    next(
+                        record["identity"]["budgets"]
+                        for record in work_records
+                        if record["work_unit_id"] == entry["work_unit_id"]
+                    ),
+                )
+                self.assertEqual(
+                    entry["method_counters"]["counter_semantics_id"],
+                    "affine_group_calls_v1",
+                )
             self.assertFalse(PRIVATE_PUBLICATION_KEYS & walked_keys(index))
             with ArtifactStore(output) as store:
                 replay = replay_event_bytes(store.read_bytes(EVENT_LOG_PATH))

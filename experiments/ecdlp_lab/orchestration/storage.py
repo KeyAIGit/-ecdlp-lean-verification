@@ -182,6 +182,7 @@ class ArtifactStore:
         max_log_bytes: int = 64 * 1024 * 1024,
         max_log_record_bytes: int = 1024 * 1024,
         forbidden_root: Path | str | None = None,
+        create_root: bool = True,
     ) -> None:
         if not storage_primitives_available():
             raise StorageUnavailable("safe POSIX storage primitives are unavailable")
@@ -194,6 +195,8 @@ class ArtifactStore:
         )
         if self.max_log_record_bytes > self.max_log_bytes:
             raise StorageError("log record limit cannot exceed total log limit")
+        if type(create_root) is not bool:
+            raise StorageError("create_root must be a boolean")
 
         self._root_descriptor: int | None = None
         candidate = _absolute_path(root, "artifact root")
@@ -207,7 +210,7 @@ class ArtifactStore:
                 raise StorageError("artifact root must be outside the forbidden root")
         descriptor: int | None = None
         try:
-            descriptor = _open_absolute_directory(candidate, create_final=True)
+            descriptor = _open_absolute_directory(candidate, create_final=create_root)
             details = os.fstat(descriptor)
         except OSError as error:
             if descriptor is not None:

@@ -19,7 +19,7 @@ from .model import DependencyManifest, DependencyManifestEntry, OrchestrationErr
 
 LAB_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_REPO_ROOT = LAB_ROOT.parents[1]
-P04_BASE_SOURCE_COMMIT = "dc3a69a303bec1048ccf92d55be253daf8b9d6d5"
+P04_BASE_SOURCE_COMMIT = "1aba9f025950af687d9a0e5104c8642e018aeb2e"
 DEVELOPMENT_DIFF_KIND = "ecdlp_lab_development_snapshot_diff_v1"
 
 _COMMON_METHOD_PATHS = (
@@ -80,7 +80,9 @@ _VALIDATOR_EXECUTION_PATHS = tuple(
 )
 _SOURCE_SNAPSHOT_PATHS = (
     "experiments/ecdlp_lab/__init__.py",
+    "experiments/ecdlp_lab/contracts/analysis_summary_v1.schema.json",
     "experiments/ecdlp_lab/contracts/campaign_config_v1.schema.json",
+    "experiments/ecdlp_lab/contracts/equal_success_protocol_v1.json",
     "experiments/ecdlp_lab/contracts/method_request_v1.schema.json",
     "experiments/ecdlp_lab/contracts/method_result_v1.schema.json",
     "experiments/ecdlp_lab/contracts/target_vector_v1.schema.json",
@@ -103,6 +105,8 @@ _SOURCE_SNAPSHOT_PATHS = (
     "experiments/ecdlp_lab/fixtures/contracts/valid/target_vector_public_v1.json",
     "experiments/ecdlp_lab/fixtures/curves/catalog_registry_v1.json",
     "experiments/ecdlp_lab/fixtures/orchestration/method_allowlist_v1.json",
+    "experiments/ecdlp_lab/fixtures/targets/ci_target_spec_v1.json",
+    "experiments/ecdlp_lab/fixtures/targets/target_registry_v1.json",
     "experiments/ecdlp_lab/methods/python/__init__.py",
     "experiments/ecdlp_lab/methods/python/bsgs.py",
     "experiments/ecdlp_lab/methods/python/counting.py",
@@ -112,10 +116,12 @@ _SOURCE_SNAPSHOT_PATHS = (
     "experiments/ecdlp_lab/orchestration/__init__.py",
     "experiments/ecdlp_lab/orchestration/allowlist.py",
     "experiments/ecdlp_lab/orchestration/events.py",
+    "experiments/ecdlp_lab/orchestration/generate_ci_targets.py",
     "experiments/ecdlp_lab/orchestration/method_worker.py",
     "experiments/ecdlp_lab/orchestration/model.py",
     "experiments/ecdlp_lab/orchestration/process.py",
     "experiments/ecdlp_lab/orchestration/provenance.py",
+    "experiments/ecdlp_lab/orchestration/public_handoff.py",
     "experiments/ecdlp_lab/orchestration/records.py",
     "experiments/ecdlp_lab/orchestration/run_smoke.py",
     "experiments/ecdlp_lab/orchestration/runner.py",
@@ -245,7 +251,7 @@ def source_snapshot_manifest(
 
 
 def development_diff_sha256(source_snapshot_sha256: str) -> str:
-    """Bind the fixed merged-P03 base to one exact P04 source snapshot."""
+    """Bind the fixed merged-P04 base to one exact P04C source snapshot."""
 
     if not is_sha256(source_snapshot_sha256):
         raise _error(
@@ -324,18 +330,18 @@ def build_campaign_provenance(
     method_ids: Iterable[str],
     repo_root: Path | str = DEFAULT_REPO_ROOT,
 ) -> dict[str, object]:
-    """Build the fixed nonretainable P04 development provenance.
+    """Build the fixed nonretainable P04C development provenance.
 
     ``source_tree_clean`` and ``diff_sha256`` remain in the call signature for
     compatibility with the P01 provenance builder API.  They are never
     trusted: the returned campaign provenance is always dirty and its diff
-    digest is derived from the fixed merged-P03 base plus current source
+    digest is derived from the fixed merged-P04 base plus current source
     snapshot.
     """
 
     if source_commit != P04_BASE_SOURCE_COMMIT:
         raise _error(
-            "$.source_commit", "P04 must anchor the fixed merged-P03 base commit"
+            "$.source_commit", "P04C must anchor the fixed merged-P04 base commit"
         )
     if type(source_tree_clean) is not bool:
         raise _error("$.source_tree_clean", "must be a boolean")

@@ -155,6 +155,13 @@
     }
   ],
   "matrix_expansion": {
+    "instance_axis": {
+      "leading_axis": "campaign_config_v1.matrix.target_vector_sha256s",
+      "work_count_formula": "targets * methods * algorithm_seeds * repetitions",
+      "curve_binding_rule": "catalog and curve fixture are taken from each authenticated public target vector",
+      "catalog_allowlist_rule": "matrix.curve_catalog_sha256s is the exact set of catalogs referenced by selected targets",
+      "fixture_allowlist_rule": "matrix.curve_fixture_ids is the exact set of curve fixtures referenced by selected targets"
+    },
     "repetition_ordinal": {
       "location": "work_unit_v1.identity.repetition_ordinal",
       "range": "0 <= repetition_ordinal < campaign_config_v1.matrix.repetitions"
@@ -177,6 +184,44 @@
       ],
       "rule": "objects are exactly equal; no out-of-band or raised method budget"
     }
+  },
+  "validation_receipt_subject_semantics": {
+    "legacy_compatibility": "subject_status may be absent on an authenticated P01 receipt",
+    "new_method_receipts": "subject_status equals the bound method_result_v1.status",
+    "success": {
+      "candidate_scalar": "integer canonical representative from the subject result",
+      "candidate_relation_valid": "true for passed receipt; false requires passed=false",
+      "legacy_exact_check_ids": ["candidate_relation_v1", "provenance_binding_v1"],
+      "new_exact_check_ids": ["candidate_relation_v1", "private_target_binding_v1", "provenance_binding_v1"]
+    },
+    "non_success": {
+      "statuses": ["bounded_failure", "invalid_request", "internal_error"],
+      "candidate_scalar": null,
+      "candidate_relation_valid": null,
+      "exact_check_ids": ["subject_status_binding_v1", "public_input_validation_v1", "counters_binding_v1", "private_target_binding_v1", "provenance_binding_v1"],
+      "passed_meaning": "independent validation of status, counters, provenance, and digest bindings; not a solved instance"
+    },
+    "provenance_rule": "receipt.provenance equals the bound method result and work provenance exactly, and provenance.config_sha256 equals the work campaign_id"
+  },
+  "equal_success_analysis_bindings": {
+    "analysis_protocol_id": "equal_success_scaling_v1",
+    "campaign_rule": "every input validation receipt and comparison belongs to analysis_summary_v1.campaign_id",
+    "receipt_authority_rule": "equal_success_scaling_v1 requires every input validation receipt digest in a nonempty trusted ValidationContext allowlist sourced only from a verified P04 public index and terminal event; bundle contents never authorize their own receipt digests",
+    "target_rule": "each comparison public_target_vector_sha256 selects one authenticated campaign target and its exact curve_fixture_id and subgroup_order",
+    "method_rule": "each comparison and model fit method_id belongs to the campaign method allowlist",
+    "success_target_rule": "comparison and model-fit success_target_decimal is one of the exact ordered targets 0.50 and 0.95",
+    "comparison_coverage": "exact Cartesian set of campaign method IDs * selected authenticated public target IDs * {0.50,0.95}",
+    "model_fit_coverage": "exact Cartesian set of campaign method IDs * {0.50,0.95}; residual rows carry the linked per-fixture subgroup observations",
+    "seed_rule": "seed_cluster_count is the length of the distinct campaign algorithm-seed set inside a (method_id, public_target_vector_sha256) partition; algorithm_seed_set_sha256 = sha256(canonical_json(sorted(set(campaign.matrix.algorithm_seeds)))); trial_semantics distinguishes deterministic BSGS replicates from independent rho seed trials",
+    "log2_order_rule": {
+      "implementation": "Python stdlib Decimal only",
+      "working_precision_decimal_digits": 80,
+      "formula": "Decimal(subgroup_order).ln() / Decimal(2).ln()",
+      "quantum": "0.000000000001",
+      "rounding": "ROUND_HALF_EVEN",
+      "serialization": "fixed decimal with exactly 12 fractional digits"
+    },
+    "private_boundary": "no private target record, locator, payload, expected scalar, or derivation seed enters an analysis summary"
   },
   "pattern_only_identifiers": [
     "request_id",

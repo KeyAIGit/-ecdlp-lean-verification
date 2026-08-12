@@ -1,0 +1,177 @@
+{
+  "classification": {
+    "method_failure_actions": {
+      "bsgs_v1": {
+        "backend_error": "abort_analysis",
+        "group_operation_budget_exhausted": "censored",
+        "invalid_public_input": "abort_analysis",
+        "memory_budget_exhausted": "censored",
+        "no_solution": "abort_analysis",
+        "process_terminated": "censored",
+        "process_timeout": "censored",
+        "step_budget_exhausted": "censored",
+        "table_budget_exhausted": "censored"
+      },
+      "ordinary_rho_xmod3_v1": {
+        "backend_error": "abort_analysis",
+        "group_operation_budget_exhausted": "censored",
+        "invalid_public_input": "abort_analysis",
+        "memory_budget_exhausted": "censored",
+        "no_solution": "abort_analysis",
+        "process_terminated": "censored",
+        "process_timeout": "censored",
+        "restart_budget_exhausted": "algorithmic_failure",
+        "step_budget_exhausted": "censored"
+      }
+    },
+    "success_status": "success",
+    "status_code_pair_must_match_validated_method_result": true,
+    "unknown_method_or_failure_code_pair_action": "abort_analysis",
+    "unknown_or_mismatched_status_code_action": "abort_analysis"
+  },
+  "clustering": {
+    "cluster_key": ["curve_fixture_id", "algorithm_seed"],
+    "cluster_partition_key": ["method_id", "public_target_vector_sha256"],
+    "repetitions_with_same_seed_are_independent": false,
+    "same_cluster_required_equal_fields": ["status", "failure", "semantic_counters"],
+    "same_cluster_drift_action": "abort_analysis"
+  },
+  "cost": {
+    "amortization_class": "none_single_target",
+    "amortization_target_count": 1,
+    "bsgs_reusable_setup": false,
+    "conservative_equal_success_cost_formula": "ceil(conservative_expected_attempts_real) * arithmetic_mean_uncensored_total_group_law_invocations",
+    "field_counters_comparable_across_backends": false,
+    "full_cost_measurement_status": "not_measured_v1",
+    "offline_setup_included_per_target": true,
+    "primary_unit": "group_law_invocations",
+    "secondary_cost_fields": null,
+    "shared_setup_id": null,
+    "total_group_law_invocations_formula": "offline_setup + online_target + method_self_check",
+    "optimistic_equal_success_cost_formula": "ceil(optimistic_expected_attempts_real) * arithmetic_mean_uncensored_total_group_law_invocations"
+    ,
+    "full_cost_field_rule": "full_cost is always the exact not_measured_v1 one-attempt metadata object with all eight secondary quantities null, preprocessing included, none_single_target, target count 1, reusable_setup=false, shared_setup_id=null; when reached equal_success_full_cost equals full_cost byte-for-byte, and when unreachable equal_success_full_cost is null"
+  },
+  "decimal_policy": {
+    "precision_digits": 80,
+    "quantum": "0.000000000001",
+    "rounding": "ROUND_HALF_EVEN"
+  },
+  "estimation": {
+    "available_attempt_budget_formula": "distinct_algorithm_seed_clusters",
+    "cluster_count_formula": "B = S + F + C over distinct (curve_fixture_id, algorithm_seed) clusters after repetition agreement",
+    "conservative_probability_formula": "S / (S + F + C + 2)",
+    "conservative_expected_attempts_formula": "r_cons = r(conservative_probability, success_target)",
+    "conservative_integer_attempts_formula": "K_cons = ceil(unquantized_precision_80_r_cons)",
+    "deterministic_verified_success_rule": "For bsgs_v1, all authenticated seed clusters and repetitions for a target must have identical status, failure, and semantic counters; S=B>=1 and F=C=0 gives empirical_probability=conservative_probability=1 and r_emp=r_cons=K_emp=K_cons=1 for both targets; no_solution or mixed deterministic outcomes abort analysis; all resource-censored clusters are unreachable and never geometric retries",
+    "empirical_probability_formula": "S / (S + F)",
+    "empirical_probability_when_denominator_zero": null,
+    "expected_attempts_decimal_field": "conservative_expected_attempts_real",
+    "optimistic_expected_attempts_formula": "r_emp = r(empirical_probability, success_target)",
+    "optimistic_integer_attempts_formula": "K_emp = ceil(unquantized_precision_80_r_emp)",
+    "output_mapping": {
+      "conservative_normalized_group_operations_decimal": "K_cons * arithmetic_mean_uncensored_total_group_law_invocations",
+      "equal_success_attempts": "K_cons",
+      "empirical_success_probability_decimal": "quantize_12(p_emp), or null when S+F=0",
+      "expected_attempts_decimal": "quantize_12(r_cons)",
+      "median_online_group_operations_decimal": "quantize_12(the arithmetic median of online_target.group_law_invocations over uncensored clusters), or null when no uncensored cluster exists",
+      "normalized_expected_group_operations_decimal": "the same value as conservative_normalized_group_operations_decimal when reached, otherwise null",
+      "offline_group_operations": "maximum offline_setup.group_law_invocations over all authenticated clusters in the partition",
+      "optimistic_normalized_group_operations_decimal": "K_emp * arithmetic_mean_uncensored_total_group_law_invocations"
+      ,
+      "estimated_algorithmic_memory_bytes": "maximum estimated_algorithmic_table_bytes over all authenticated clusters in the partition",
+      "restart_max": "maximum counters.restarts over all authenticated clusters in the partition",
+      "restart_total": "sum counters.restarts over all authenticated clusters in the partition",
+      "seed_cluster_count": "B",
+      "successes_failures_censored": "S,F,C respectively",
+      "target_count": "authenticated public target payload target_count",
+      "workers": "campaign budgets.workers"
+    },
+    "reached_condition": "conservative_probability > 0 and K_cons <= B",
+    "repeat_requirement_function": "p=1 -> r=1; 0<p<1 -> r=ln(1-q)/ln(1-p); p=0 -> unreachable",
+    "unreachable_output_rule": "equal_success_attempts, expected_attempts_decimal, both normalized costs, and equal_success_full_cost are null",
+    "zero_probability_status": "unreachable_within_budget"
+  },
+  "inference": {
+    "aicc_formula": "n*ln(max(RSS,1e-24)/n) + 2*k + 2*k*(k+1)/(n-k-1)",
+    "candidate_parameter_counts_including_residual_variance": {
+      "constant_factor_v1": 2,
+      "log2_t_alpha_log2_n_beta_log2log2_n_v1": 4
+    },
+    "candidate_validity": "full_rank under decimal_gaussian_elimination_v1 and n > k + 1",
+    "constant_factor_model": "log2(T) = 0.5*log2(subgroup_order) + c",
+    "diagnostic_model": "log2(T) = alpha*log2(subgroup_order) + beta*log2(log2(subgroup_order)) + c",
+    "leave_one_size_out_coverage": "one row for every authenticated usable field_bits rung exactly once; omitted_field_bits is the rung and omitted_subgroup_orders is the sorted exact set of orders removed with that rung",
+    "minimum_authenticated_field_bit_rungs_for_fit": 6,
+    "model_candidates": [
+      "constant_factor_v1",
+      "log2_t_alpha_log2_n_beta_log2log2_n_v1"
+    ],
+    "model_selection": "minimum_AICc_only_if_both_candidates_valid_and_delta_AICc_at_least_2_else_model_undecided_v1",
+    "model_uncertainty_representation": "clustered uncertainty is reported only on each method-target comparison; model_fits use candidate_model_evidence plus exact leave_one_size_out rows and have no second ambiguous scalar uncertainty field",
+    "narrow_order_range_warning_rule": "emit narrow_order_range when max(exact_log2_subgroup_order)-min(exact_log2_subgroup_order) < 4; exact boundary 4 does not warn",
+    "numeric_algorithm": "Sort observations by (field_bits,subgroup_order,curve_fixture_id,algorithm_seed with null before integers). Build Decimal precision-80 design X and y. Determine rank by row-reducing X with maximum-absolute pivot and lowest-row tie break. Build A=X^T*X and b=X^T*y in that order and solve A*theta=b by the same elimination. In each calculation the fixed tolerance is 1e-60*max(1,maximum absolute entry of the original matrix being reduced).",
+    "no_coefficients_for_statuses": ["insufficient_data", "undecided"],
+    "narrow_log2_order_range_threshold_decimal": "4.000000000000",
+    "required_inference_status": "insufficient_for_asymptotic_inference",
+    "residual_formula": "observed_log2_cost - predicted_log2_cost after Decimal quantization",
+    "residual_formula_exact": "Compute predictions and residuals at Decimal precision 80 from unquantized x,y,theta; RSS=sum(residual_i^2) at precision 80; max(RSS,1e-24) applies only inside ln; quantize only serialized coefficients, RSS, AICc, delta, prediction, observation, and residual fields",
+    "rss_floor_decimal": "0.000000000000000000000001",
+    "selection_tie_delta_aicc_decimal": "2.000000000000",
+    "selection_tie_rule": "compare unquantized precision-80 AICc; delta < 2 is undecided with model_unstable; delta >= 2 selects the smaller AICc; exact boundary 2 selects",
+    "usable_observation_policy": "uncensored_and_reached_only. For rho, one unweighted observation per authenticated target-seed cluster. For BSGS, one unweighted observation per authenticated target after deterministic-replicate agreement; seeds never duplicate BSGS fit rows. x=log2(subgroup_order), y=log2(conservative_equal_success_group_operations). n is the resulting observation count.",
+    "secp256k1_extrapolation": false,
+    "x_variable_after_rung_gate": "exact_log2_subgroup_order"
+  },
+  "protocol_kind": "ecdlp_lab_equal_success_protocol_v1",
+  "schema_version": 1,
+  "success_targets_decimal": ["0.50", "0.95"],
+  "uncertainty": {
+    "bounds_estimand": "arithmetic_mean_observed_per_attempt_total_group_law_invocations",
+    "bounds_unit": "group_law_invocations",
+    "cluster_count_field": "B",
+    "delete_one_rule": "recompute S,F,C,probabilities,r,K and the statistic for the full sample and every one of B distinct-cluster deletions",
+    "method": "delete_one_cluster_envelope_v1",
+    "numeric_bounds_rule": "lower and upper exist only when the full estimate and all B delete-one estimates are reachable; otherwise uncertainty status is unavailable and both bounds are null",
+    "unreachable_delete_one_action": "The comparison full-sample status and costs remain determined only by the full sample. Emit unreachable_success_target, set unreachable_delete_one_count exactly, set clustered_uncertainty status=unavailable with null bounds, exclude this comparison from model inputs, and select model_undecided_v1.",
+    "unreachable_replicates_may_be_discarded": false
+  },
+  "sensitivity": {
+    "censored_as_failures_probability_formula": "successes / (successes + algorithmic_failures + censored)",
+    "bsgs_rule": "If every cluster is a deterministic verified success, probability=1, r=K=1 and reached; if any BSGS cluster is censored, sensitivity is unreachable with attempts and cost null; mixed or impossible outcomes abort analysis",
+    "censored_partial_counters_enter_cost_mean": false,
+    "expected_attempts_formula": "Apply the same Decimal precision-80 repeat-requirement r function to the sensitivity probability and quantize r to 12 places only for serialization",
+    "integer_attempts_formula": "K_sensitivity=ceil(unquantized precision-80 r_sensitivity)",
+    "normalized_cost_formula": "K_sensitivity * the same arithmetic mean of uncensored total group-law invocations used by the primary estimate; censored partial counters remain excluded",
+    "policy_id": "censored_as_failures_v1",
+    "reached_condition": "probability > 0 and K_sensitivity <= B; otherwise attempts and normalized cost are null",
+    "required_machine_readable_result": true
+  },
+  "trial_semantics": {
+    "bsgs_v1": "deterministic_replicates_v1",
+    "ordinary_rho_xmod3_v1": "independent_seed_trials_v1"
+  },
+  "warning_triggers": {
+    "censored_observations": "C > 0",
+    "constant_factor_behavior": "constant_factor_v1 selected",
+    "model_unstable": "delta_AICc < 2 or any required delete-one-size selection differs or is invalid",
+    "narrow_order_range": "usable exact log2 subgroup-order range < 4",
+    "secondary_cost_not_measured": "full_cost.measurement_status is not_measured_v1",
+    "too_few_sizes": "distinct authenticated usable field_bits rungs < 6",
+    "unreachable_success_target": "full estimate or any required delete-one-cluster estimate is unreachable"
+  },
+  "unreachable": {
+    "available_attempt_budget": "distinct_algorithm_seed_clusters",
+    "condition": "conservative_probability_is_zero_or_integer_attempts_exceed_available_attempt_budget",
+    "equal_success_fields_are_null": true
+  },
+  "warnings": [
+    "censored_observations",
+    "constant_factor_behavior",
+    "model_unstable",
+    "narrow_order_range",
+    "secondary_cost_not_measured",
+    "too_few_sizes",
+    "unreachable_success_target"
+  ]
+}

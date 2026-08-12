@@ -48,6 +48,7 @@ from experiments.ecdlp_lab.orchestration.validator_worker import (
     execute_request as execute_validator,
     make_validator_request,
 )
+from experiments.ecdlp_lab.methods.python.model import SolverOutcome
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -144,8 +145,17 @@ class P04RecordTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.pair = load_target_pair(repo_root=REPO_ROOT)
+        campaign = load_smoke_campaign(repo_root=REPO_ROOT)
+        campaign["provenance"] = build_campaign_provenance(
+            config_sha256=campaign["campaign_id"],
+            source_commit=P04_BASE_SOURCE_COMMIT,
+            source_tree_clean=False,
+            diff_sha256=None,
+            method_ids=campaign["matrix"]["method_ids"],
+            repo_root=REPO_ROOT,
+        )
         cls.plan = expand_campaign(
-            load_smoke_campaign(repo_root=REPO_ROOT),
+            campaign,
             target_pair=cls.pair,
             repo_root=REPO_ROOT,
         )
@@ -245,6 +255,61 @@ class P04RecordTests(unittest.TestCase):
         poisoned = deepcopy(validator_output)
         poisoned["validator_counters"]["total_group_law_invocations"] += 1
         with self.assertRaisesRegex(OrchestrationError, "counter totals"):
+            build_validation_receipt(
+                work,
+                request,
+                result,
+                validator_request,
+                poisoned,
+                self.pair,
+                repo_root=REPO_ROOT,
+            )
+
+    def test_bounded_failure_is_validated_without_becoming_validator_disagreement(self) -> None:
+        work = self.plan.work_units[0]
+        request = build_method_request(work, self.pair, repo_root=REPO_ROOT)
+        result = build_method_result(
+            work,
+            request,
+            SolverOutcome.failed("step_budget_exhausted"),
+            repo_root=REPO_ROOT,
+        )
+        validator_request = make_validator_request(request, result)
+        validator_output = execute_validator(validator_request)
+        self.assertTrue(validator_output["passed"])
+        self.assertTrue(validator_output["public_input_valid"])
+        self.assertTrue(validator_output["status_binding_valid"])
+        self.assertTrue(validator_output["counters_binding_valid"])
+        self.assertEqual(
+            validator_output["validator_counters"]["candidate_relation_check"], 0
+        )
+        receipt = build_validation_receipt(
+            work,
+            request,
+            result,
+            validator_request,
+            validator_output,
+            self.pair,
+            repo_root=REPO_ROOT,
+        )
+        self.assertTrue(receipt["passed"])
+        self.assertEqual(receipt["subject_status"], "bounded_failure")
+        self.assertIsNone(receipt["candidate_scalar"])
+        self.assertIsNone(receipt["candidate_relation_valid"])
+        self.assertEqual(
+            {check["check_id"] for check in receipt["checks"]},
+            {
+                "subject_status_binding_v1",
+                "public_input_validation_v1",
+                "counters_binding_v1",
+                "private_target_binding_v1",
+                "provenance_binding_v1",
+            },
+        )
+
+        poisoned = deepcopy(validator_output)
+        poisoned["method_counters_sha256"] = "0" * 64
+        with self.assertRaisesRegex(OrchestrationError, "non-success validator"):
             build_validation_receipt(
                 work,
                 request,

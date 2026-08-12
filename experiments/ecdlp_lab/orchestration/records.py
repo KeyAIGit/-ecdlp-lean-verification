@@ -3,9 +3,8 @@
 from __future__ import annotations
 
 from copy import deepcopy
-from itertools import product
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any, Iterable, Mapping
 
 from experiments.ecdlp_lab.core.canonical import is_sha256, load_json, sha256_json
 from experiments.ecdlp_lab.core.catalog_registry import trusted_catalog_sha256s
@@ -16,7 +15,12 @@ from experiments.ecdlp_lab.core.contracts import (
     validate_cross_record_bundle,
 )
 from experiments.ecdlp_lab.core.paths import PathSafetyError, resolve_artifact_path
-from experiments.ecdlp_lab.core.target_registry import TargetPair, load_target_pair
+from experiments.ecdlp_lab.core.target_registry import (
+    TargetPair,
+    TargetRegistryError,
+    load_target_pair,
+    load_target_pairs,
+)
 from experiments.ecdlp_lab.methods.python.model import (
     MAX_U64,
     MethodBudgets,
@@ -65,14 +69,40 @@ def _error(code: str, path: str, message: str) -> OrchestrationError:
     return OrchestrationError(code, path, message)
 
 
-def _context(pair: TargetPair, repo_root: Path | str) -> ValidationContext:
-    public = pair.public_record
-    private = pair.private_record
+def _materialize_pairs(value: TargetPair | Iterable[TargetPair]) -> tuple[TargetPair, ...]:
+    pairs = (value,) if isinstance(value, TargetPair) else tuple(value)
+    if not pairs or any(not isinstance(pair, TargetPair) for pair in pairs):
+        raise _error(
+            "orchestration.target.type",
+            "$.target",
+            "requires one or more TargetPair authorities",
+        )
+    public_ids = tuple(pair.public_target_vector_sha256 for pair in pairs)
+    if len(public_ids) != len(set(public_ids)):
+        raise _error(
+            "orchestration.target.duplicate",
+            "$.target",
+            "target authorities must have unique public identities",
+        )
+    return pairs
+
+
+def _context(
+    pair_or_pairs: TargetPair | Iterable[TargetPair], repo_root: Path | str
+) -> ValidationContext:
+    pairs = _materialize_pairs(pair_or_pairs)
+    records = tuple(
+        record
+        for pair in pairs
+        for record in (pair.public_record, pair.private_record)
+    )
     return ValidationContext.from_records(
-        (public, private),
+        records,
         repo_root=repo_root,
         known_catalog_sha256s=trusted_catalog_sha256s(repo_root=repo_root),
-        known_target_vector_sha256s=(pair.public_target_vector_sha256,),
+        known_target_vector_sha256s=tuple(
+            pair.public_target_vector_sha256 for pair in pairs
+        ),
         verify_artifacts=False,
     )
 
@@ -174,7 +204,7 @@ def derive_validation_id(
     )
 
 
-def _matrix_guard(campaign: Mapping[str, Any], pair: TargetPair) -> dict[str, Any]:
+def _matrix_shape(campaign: Mapping[str, Any]) -> dict[str, Any]:
     matrix = campaign.get("matrix")
     if not isinstance(matrix, dict):
         raise _error("orchestration.matrix.shape", "$.matrix", "must be an object")
@@ -187,32 +217,59 @@ def _matrix_guard(campaign: Mapping[str, Any], pair: TargetPair) -> dict[str, An
     )
     if any(not isinstance(matrix.get(name), list) for name in axes):
         raise _error("orchestration.matrix.shape", "$.matrix", "all matrix axes must be arrays")
-
-    # campaign_config_v1 is Cartesian.  Until a pair-aware contract revision,
-    # accepting multiple catalogs/fixtures/targets would manufacture invalid
-    # combinations.  Reject before any work request or process can be created.
-    for name in ("curve_catalog_sha256s", "curve_fixture_ids", "target_vector_sha256s"):
-        if len(matrix[name]) != 1:
+    for name in axes:
+        axis = matrix[name]
+        try:
+            unique = len(axis) == len(set(axis))
+        except TypeError:
+            unique = False
+        if not axis or not unique:
             raise _error(
-                "orchestration.matrix.incompatible_cartesian",
+                "orchestration.matrix.axis",
                 f"$.matrix.{name}",
-                "P04 requires one authorized catalog/fixture/target tuple",
-            )
-
-    public = pair.public_payload
-    expected_singletons = {
-        "curve_catalog_sha256s": public["curve_catalog_sha256"],
-        "curve_fixture_ids": public["curve_fixture_id"],
-        "target_vector_sha256s": pair.public_target_vector_sha256,
-    }
-    for name, expected in expected_singletons.items():
-        if matrix[name][0] != expected:
-            raise _error(
-                "orchestration.matrix.target_binding",
-                f"$.matrix.{name}[0]",
-                "matrix tuple differs from the fixed target authority",
+                "matrix axes must be non-empty and duplicate-free",
             )
     return matrix
+
+
+def _matrix_guard(
+    campaign: Mapping[str, Any], pairs: Iterable[TargetPair]
+) -> tuple[dict[str, Any], tuple[TargetPair, ...]]:
+    matrix = _matrix_shape(campaign)
+    materialized = _materialize_pairs(pairs)
+    by_public_id = {
+        pair.public_target_vector_sha256: pair for pair in materialized
+    }
+    target_ids = tuple(matrix["target_vector_sha256s"])
+    if tuple(sorted(target_ids)) != target_ids:
+        raise _error(
+            "orchestration.matrix.order",
+            "$.matrix.target_vector_sha256s",
+            "target identities must be sorted for deterministic expansion",
+        )
+    if set(target_ids) != set(by_public_id):
+        raise _error(
+            "orchestration.matrix.target_authority",
+            "$.matrix.target_vector_sha256s",
+            "matrix targets must exactly equal the supplied authenticated authorities",
+        )
+
+    expected_allowlists = {
+        "curve_catalog_sha256s": sorted(
+            {pair.public_payload["curve_catalog_sha256"] for pair in materialized}
+        ),
+        "curve_fixture_ids": sorted(
+            {pair.public_payload["curve_fixture_id"] for pair in materialized}
+        ),
+    }
+    for name, expected in expected_allowlists.items():
+        if matrix[name] != expected:
+            raise _error(
+                "orchestration.matrix.target_binding",
+                f"$.matrix.{name}",
+                "axis must be the exact sorted allowlist derived from target authorities",
+            )
+    return matrix, tuple(by_public_id[target_id] for target_id in target_ids)
 
 
 def _verify_campaign_provenance(
@@ -225,7 +282,7 @@ def _verify_campaign_provenance(
         raise _error(
             "orchestration.provenance",
             "$.provenance.source_commit",
-            "campaign must anchor the fixed merged-P03 base commit",
+            "campaign must anchor the fixed merged-P04 base commit",
         )
     if provenance.get("source_tree_clean") is not False:
         raise _error(
@@ -272,6 +329,7 @@ def expand_campaign(
     campaign_record: Mapping[str, Any],
     *,
     target_pair: TargetPair | None = None,
+    target_pairs: Iterable[TargetPair] | None = None,
     repo_root: Path | str = DEFAULT_REPO_ROOT,
 ) -> CampaignPlan:
     """Validate and fully expand one P01-schema campaign without spawning."""
@@ -279,10 +337,27 @@ def expand_campaign(
     if not isinstance(campaign_record, Mapping):
         raise _error("orchestration.config.type", "$", "campaign must be an object")
     campaign = deepcopy(dict(campaign_record))
-    pair = target_pair if target_pair is not None else load_target_pair(repo_root=repo_root)
-    if not isinstance(pair, TargetPair):
-        raise _error("orchestration.target.type", "$.target", "must be a TargetPair authority")
-    matrix = _matrix_guard(campaign, pair)
+    matrix = _matrix_shape(campaign)
+    if target_pair is not None and target_pairs is not None:
+        raise _error(
+            "orchestration.target.ambiguous",
+            "$.target",
+            "supply target_pair or target_pairs, not both",
+        )
+    try:
+        if target_pair is not None:
+            supplied_pairs = (target_pair,)
+        elif target_pairs is not None:
+            supplied_pairs = _materialize_pairs(target_pairs)
+        else:
+            supplied_pairs = load_target_pairs(
+                matrix["target_vector_sha256s"], repo_root=repo_root
+            )
+    except TargetRegistryError as error:
+        raise _error(
+            "orchestration.target.authority", "$.matrix.target_vector_sha256s", str(error)
+        ) from error
+    matrix, ordered_pairs = _matrix_guard(campaign, supplied_pairs)
 
     authority_ids = allowed_method_ids(repo_root=repo_root)
     allowed = campaign.get("allowed_method_ids")
@@ -346,9 +421,7 @@ def expand_campaign(
             "must be positive",
         )
     calculated_count = (
-        len(matrix["curve_catalog_sha256s"])
-        * len(matrix["curve_fixture_ids"])
-        * len(matrix["target_vector_sha256s"])
+        len(ordered_pairs)
         * len(methods)
         * len(matrix["algorithm_seeds"])
         * repetitions
@@ -357,7 +430,7 @@ def expand_campaign(
         raise _error(
             "orchestration.matrix.count",
             "$.expected_work_unit_count",
-            "does not equal the complete Cartesian expansion",
+            "does not equal targets times methods times seeds times repetitions",
         )
     if calculated_count > MAX_P04_WORK_UNITS:
         raise _error(
@@ -373,50 +446,58 @@ def expand_campaign(
         raise _error("orchestration.identity", "$.campaign_id", "campaign semantic ID drifted")
     _verify_campaign_provenance(campaign, methods, repo_root)
 
-    context = _context(pair, repo_root)
+    context = _context(ordered_pairs, repo_root)
     _raise_contract(validate_contract(campaign, context), "campaign")
     campaign_hash = sha256_json(campaign)
     validator_hash = validator_implementation_sha256(repo_root=repo_root)
     works: list[dict[str, Any]] = []
-    for catalog, fixture_id, target_id, method, seed, repetition in product(
-        matrix["curve_catalog_sha256s"],
-        matrix["curve_fixture_ids"],
-        matrix["target_vector_sha256s"],
-        methods,
-        matrix["algorithm_seeds"],
-        range(repetitions),
-    ):
-        identity = {
-            "campaign_config_sha256": campaign_hash,
-            "curve_catalog_sha256": catalog,
-            "curve_fixture_id": fixture_id,
-            "public_target_vector_sha256": target_id,
-            "method_id": method,
-            "algorithm_seed": seed,
-            "method_implementation_sha256": method_implementation_sha256(
-                method, repo_root=repo_root
-            ),
-            "validator_implementation_sha256": validator_hash,
-            "budgets": deepcopy(campaign["budgets"]),
-            "repetition_ordinal": repetition,
-        }
-        work_id = sha256_json(identity)
-        work = {
-            **deepcopy(_COMMON_BOUNDARY),
-            "contract_kind": "work_unit_v1",
-            "retainable": False,
-            "provenance": deepcopy(campaign["provenance"]),
-            "work_unit_id": work_id,
-            "campaign_id": campaign["campaign_id"],
-            "attempt_id": derive_attempt_id(work_id, 0),
-            "retry_ordinal": 0,
-            "identity": identity,
-        }
-        _raise_contract(validate_contract(work, context), "work unit")
-        works.append(work)
+    for pair in ordered_pairs:
+        public = pair.public_payload
+        catalog = public["curve_catalog_sha256"]
+        fixture_id = public["curve_fixture_id"]
+        target_id = pair.public_target_vector_sha256
+        for method in methods:
+            for seed in matrix["algorithm_seeds"]:
+                for repetition in range(repetitions):
+                    identity = {
+                        "campaign_config_sha256": campaign_hash,
+                        "curve_catalog_sha256": catalog,
+                        "curve_fixture_id": fixture_id,
+                        "public_target_vector_sha256": target_id,
+                        "method_id": method,
+                        "algorithm_seed": seed,
+                        "method_implementation_sha256": method_implementation_sha256(
+                            method, repo_root=repo_root
+                        ),
+                        "validator_implementation_sha256": validator_hash,
+                        "budgets": deepcopy(campaign["budgets"]),
+                        "repetition_ordinal": repetition,
+                    }
+                    work_id = sha256_json(identity)
+                    work = {
+                        **deepcopy(_COMMON_BOUNDARY),
+                        "contract_kind": "work_unit_v1",
+                        "retainable": False,
+                        "provenance": deepcopy(campaign["provenance"]),
+                        "work_unit_id": work_id,
+                        "campaign_id": campaign["campaign_id"],
+                        "attempt_id": derive_attempt_id(work_id, 0),
+                        "retry_ordinal": 0,
+                        "identity": identity,
+                    }
+                    _raise_contract(validate_contract(work, context), "work unit")
+                    works.append(work)
 
     works.sort(key=lambda value: value["work_unit_id"])
-    bundle = [campaign, pair.public_record, pair.private_record, *works]
+    bundle = [
+        campaign,
+        *(
+            record
+            for pair in ordered_pairs
+            for record in (pair.public_record, pair.private_record)
+        ),
+        *works,
+    ]
     _raise_contract(validate_cross_record_bundle(bundle, context), "campaign expansion")
     return CampaignPlan(campaign=campaign, work_units=tuple(works))
 
@@ -633,9 +714,7 @@ def build_validation_receipt(
             "$.method_request_sha256",
             "result does not bind the request",
         )
-    expected_validator_request = make_validator_request(
-        request, result.get("candidate_scalar")
-    )
+    expected_validator_request = make_validator_request(request, result)
     if validation_request != expected_validator_request:
         raise _error(
             "orchestration.receipt.binding",
@@ -643,21 +722,50 @@ def build_validation_receipt(
             "validator request drifted",
         )
 
-    expected_output_keys = frozenset(
-        {
-            "schema_version",
-            "report_kind",
-            "candidate",
-            "relation_verified",
-            "passed",
-            "validator_counters",
-            "issues",
-        }
+    subject_status = result.get("status")
+    success = subject_status == "success"
+    expected_output_keys = (
+        frozenset(
+            {
+                "schema_version",
+                "report_kind",
+                "candidate",
+                "relation_verified",
+                "passed",
+                "validator_counters",
+                "issues",
+            }
+        )
+        if success
+        else frozenset(
+            {
+                "schema_version",
+                "report_kind",
+                "subject_status",
+                "subject_sha256",
+                "candidate",
+                "public_input_valid",
+                "relation_verified",
+                "method_failure_sha256",
+                "method_counters_sha256",
+                "method_budgets_sha256",
+                "status_binding_valid",
+                "counters_binding_valid",
+                "passed",
+                "validator_counters",
+                "issues",
+            }
+        )
+    )
+    expected_report_kind = (
+        "ecdlp_lab_candidate_validation_v1"
+        if success
+        else "ecdlp_lab_non_success_validation_v1"
     )
     if (
         frozenset(validation_output) != expected_output_keys
         or validation_output.get("schema_version") != 1
-        or validation_output.get("report_kind") != "ecdlp_lab_candidate_validation_v1"
+        or validation_output.get("report_kind") != expected_report_kind
     ):
         raise _error(
             "orchestration.receipt.output",
@@ -719,22 +827,59 @@ def build_validation_receipt(
             "$.validator_output.issues",
             "validator issues drifted",
         )
-    if type(validation_output.get("passed")) is not bool or type(
-        validation_output.get("relation_verified")
-    ) is not bool:
+    if type(validation_output.get("passed")) is not bool:
         raise _error(
             "orchestration.receipt.output",
             "$.validator_output",
-            "validator booleans are invalid",
+            "validator pass flag is invalid",
         )
-    if validation_output["passed"] != (
-        validation_output["relation_verified"] and not output_issues
-    ):
-        raise _error(
-            "orchestration.receipt.output",
-            "$.validator_output.passed",
-            "validator pass invariant failed",
-        )
+    if success:
+        if type(validation_output.get("relation_verified")) is not bool or (
+            validation_output["passed"]
+            != (validation_output["relation_verified"] and not output_issues)
+        ):
+            raise _error(
+                "orchestration.receipt.output",
+                "$.validator_output.passed",
+                "successful validator pass invariant failed",
+            )
+    else:
+        expected_counters_sha256 = sha256_json(result.get("counters"))
+        expected_failure_sha256 = sha256_json(result.get("failure"))
+        expected_budgets_sha256 = sha256_json(request.get("budgets"))
+        expected_subject_sha256 = sha256_json(result)
+        public_input_valid = validation_output.get("public_input_valid")
+        status_binding_valid = validation_output.get("status_binding_valid")
+        counters_binding_valid = validation_output.get("counters_binding_valid")
+        if (
+            subject_status not in {"bounded_failure", "invalid_request", "internal_error"}
+            or validation_output.get("subject_status") != subject_status
+            or validation_output.get("subject_sha256") != expected_subject_sha256
+            or validation_output.get("candidate") is not None
+            or validation_output.get("relation_verified") is not None
+            or type(public_input_valid) is not bool
+            or type(status_binding_valid) is not bool
+            or type(counters_binding_valid) is not bool
+            or validation_output.get("method_failure_sha256")
+            != expected_failure_sha256
+            or validation_output.get("method_counters_sha256")
+            != expected_counters_sha256
+            or validation_output.get("method_budgets_sha256")
+            != expected_budgets_sha256
+            or validator_counters.get("candidate_relation_check") != 0
+            or validation_output["passed"]
+            != (
+                public_input_valid
+                and status_binding_valid
+                and counters_binding_valid
+                and not output_issues
+            )
+        ):
+            raise _error(
+                "orchestration.receipt.output",
+                "$.validator_output",
+                "non-success validator status, counters, or pass invariant failed",
+            )
 
     producer_hash = identity.get("method_implementation_sha256")
     validator_hash = identity.get("validator_implementation_sha256")
@@ -758,38 +903,93 @@ def build_validation_receipt(
     )
     candidate = result.get("candidate_scalar")
     relation_valid = (
-        result.get("status") == "success"
+        success
         and validation_output.get("passed") is True
         and validation_output.get("relation_verified") is True
         and validation_output.get("candidate") == candidate
     )
     private_binding_valid = (
-        result.get("status") == "success"
-        and candidate == target_pair.private_payload.get("expected_scalar")
-        and identity.get("public_target_vector_sha256")
+        identity.get("public_target_vector_sha256")
         == target_pair.public_target_vector_sha256
+        and target_pair.private_payload.get("public_target_vector_sha256")
+        == target_pair.public_target_vector_sha256
+        and (
+            not success
+            or candidate == target_pair.private_payload.get("expected_scalar")
+        )
     )
-    passed = bool(relation_valid and private_binding_valid and provenance_valid)
-    checks = [
-        {
-            "check_id": "candidate_relation_v1",
-            "status": "passed" if relation_valid else "failed",
-            "detail": "Independent affine oracle recomputed the public candidate relation.",
-        },
-        {
-            "check_id": "private_target_binding_v1",
-            "status": "passed" if private_binding_valid else "failed",
-            "detail": "Validator-only target receipt binds the canonical public fixture.",
-        },
-        {
-            "check_id": "provenance_binding_v1",
-            "status": "passed" if provenance_valid else "failed",
-            "detail": (
-                "Producer, validator, configuration, and source identities "
-                "are digest-bound."
-            ),
-        },
-    ]
+    if success:
+        passed = bool(relation_valid and private_binding_valid and provenance_valid)
+        checks = [
+            {
+                "check_id": "candidate_relation_v1",
+                "status": "passed" if relation_valid else "failed",
+                "detail": "Independent affine oracle recomputed the public candidate relation.",
+            },
+            {
+                "check_id": "private_target_binding_v1",
+                "status": "passed" if private_binding_valid else "failed",
+                "detail": "Validator-only target receipt binds the canonical public fixture.",
+            },
+            {
+                "check_id": "provenance_binding_v1",
+                "status": "passed" if provenance_valid else "failed",
+                "detail": (
+                    "Producer, validator, configuration, and source identities "
+                    "are digest-bound."
+                ),
+            },
+        ]
+        receipt_relation: bool | None = bool(relation_valid)
+    else:
+        status_valid = (
+            validation_output.get("subject_status") == subject_status
+            and validation_output.get("status_binding_valid") is True
+            and validation_output.get("subject_sha256") == sha256_json(result)
+            and validation_output.get("method_failure_sha256")
+            == sha256_json(result.get("failure"))
+        )
+        public_input_valid = validation_output.get("public_input_valid") is True
+        counters_valid = validation_output.get("counters_binding_valid") is True
+        passed = bool(
+            validation_output.get("passed") is True
+            and status_valid
+            and public_input_valid
+            and counters_valid
+            and private_binding_valid
+            and provenance_valid
+        )
+        checks = [
+            {
+                "check_id": "subject_status_binding_v1",
+                "status": "passed" if status_valid else "failed",
+                "detail": "Validator output binds the exact non-success method status.",
+            },
+            {
+                "check_id": "public_input_validation_v1",
+                "status": "passed" if public_input_valid else "failed",
+                "detail": "Independent affine oracle validated the public subgroup input.",
+            },
+            {
+                "check_id": "counters_binding_v1",
+                "status": "passed" if counters_valid else "failed",
+                "detail": "Method counters match the digest-bound non-success result.",
+            },
+            {
+                "check_id": "private_target_binding_v1",
+                "status": "passed" if private_binding_valid else "failed",
+                "detail": "Validator-only target receipt binds the canonical public fixture.",
+            },
+            {
+                "check_id": "provenance_binding_v1",
+                "status": "passed" if provenance_valid else "failed",
+                "detail": (
+                    "Producer, validator, configuration, and source identities "
+                    "are digest-bound."
+                ),
+            },
+        ]
+        receipt_relation = None
     subject_hash = sha256_json(result)
     validator_request_hash = sha256_json(validation_request)
     validator_output_hash = sha256_json(validation_output)
@@ -802,6 +1002,7 @@ def build_validation_receipt(
             subject_hash, validator_request_hash, validator_output_hash
         ),
         "subject_contract_kind": "method_result_v1",
+        "subject_status": subject_status,
         "subject_id": result.get("result_id"),
         "subject_sha256": subject_hash,
         "validator_id": "lab_ec_oracle_v1",
@@ -814,7 +1015,7 @@ def build_validation_receipt(
         "shares_decisive_logic": False,
         "passed": passed,
         "candidate_scalar": candidate,
-        "candidate_relation_valid": bool(relation_valid),
+        "candidate_relation_valid": receipt_relation,
         "provenance_valid": bool(provenance_valid),
         "checks": checks,
         "retention_decision": "development_only" if passed else "reject",

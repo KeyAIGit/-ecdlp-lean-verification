@@ -10,7 +10,10 @@ from unittest.mock import patch
 from experiments.ecdlp_lab.core.canonical import canonical_json_bytes, load_json, sha256_json
 from experiments.ecdlp_lab.orchestration.events import make_event, replay_event_bytes
 from experiments.ecdlp_lab.orchestration.process import ProcessResult
-from experiments.ecdlp_lab.orchestration.provenance import build_campaign_provenance
+from experiments.ecdlp_lab.orchestration.provenance import (
+    P04_BASE_SOURCE_COMMIT,
+    build_campaign_provenance,
+)
 from experiments.ecdlp_lab.orchestration.records import (
     SMOKE_CAMPAIGN_PATH,
     expand_campaign,
@@ -32,10 +35,9 @@ def current_campaign() -> dict[str, object]:
     """Keep runner fault tests usable while the committed fixture is regenerated."""
 
     campaign = load_json(REPO_ROOT / SMOKE_CAMPAIGN_PATH)
-    provenance = campaign["provenance"]
     campaign["provenance"] = build_campaign_provenance(
         config_sha256=campaign["campaign_id"],
-        source_commit=provenance["source_commit"],
+        source_commit=P04_BASE_SOURCE_COMMIT,
         source_tree_clean=True,
         diff_sha256=None,
         method_ids=campaign["matrix"]["method_ids"],
@@ -121,7 +123,7 @@ class P04ResumeTests(unittest.TestCase):
             ]
             self.assertEqual([event["payload"]["retry_ordinal"] for event in attempts], [0, 1])
 
-    def test_timeout_late_output_is_discarded_before_successful_retry(self) -> None:
+    def test_timeout_late_output_becomes_validated_censored_observation(self) -> None:
         real_run_worker = runner_module.run_worker
         injected = False
 
@@ -142,7 +144,32 @@ class P04ResumeTests(unittest.TestCase):
             ]
             self.assertIn("method_timeout", event_types)
             self.assertIn("late_result_discarded", event_types)
-            self.assertIn("work_failed", event_types)
+            self.assertNotIn("work_failed", event_types)
+            receipts = [
+                load_json(path) for path in (output / "receipts").glob("*.json")
+            ]
+            self.assertIn("bounded_failure", {item["subject_status"] for item in receipts})
+            self.assertTrue(all(item["passed"] is True for item in receipts))
+            index = load_json(output / "public_analysis_index.json")
+            censored = [
+                entry
+                for entry in index["entries"]
+                if entry["method_status"] == "bounded_failure"
+            ]
+            self.assertEqual(len(censored), 1)
+            self.assertEqual(censored[0]["method_failure"]["code"], "process_timeout")
+            self.assertIsNone(
+                censored[0]["method_counters"]["legacy_p1_group_operations"]
+            )
+            self.assertEqual(
+                sum(
+                    censored[0]["method_counters"][phase][
+                        "group_law_invocations"
+                    ]
+                    for phase in ("offline_setup", "online_target", "method_self_check")
+                ),
+                0,
+            )
 
     def test_validator_disagreement_is_not_final_and_is_retried(self) -> None:
         real_run_worker = runner_module.run_worker
