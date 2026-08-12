@@ -7,7 +7,6 @@ on:
     paths:
       - experiments/parity_lift_000/direct_glv_carry_descent_screen.py
       - experiments/parity_lift_000/direct_glv_carry_descent_results.json
-      - archive/untrusted_intake/parity_lift_000/DIRECT_GLV_CARRY_DESCENT_010.md
       - .github/workflows/direct-glv-carry-descent.yml
   workflow_dispatch:
 
