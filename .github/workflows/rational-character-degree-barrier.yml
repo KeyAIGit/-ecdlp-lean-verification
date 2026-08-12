@@ -42,6 +42,7 @@ jobs:
           print(json.dumps(aggregate, indent=2))
           print(json.dumps(secp, indent=2))
 
+          assert data['package'] == 'RATIONAL-CHARACTER-DEGREE-BARRIER-035'
           assert aggregate['cases'] == 15
           assert aggregate['total_fourier_formula_checks'] == 15
           assert aggregate['all_angle_sums_equal_pi']
@@ -96,7 +97,7 @@ jobs:
               Path('/tmp/rational_character_degree_barrier_results.json').read_text()
           )
           secp = data['secp256k1']
-          print('## RATIONAL-CHARACTER-DEGREE-BARRIER-033')
+          print('## RATIONAL-CHARACTER-DEGREE-BARRIER-035')
           print()
           print(f"Commit: `{os.environ['GITHUB_SHA']}`")
           print()
@@ -111,7 +112,7 @@ jobs:
           print()
           print('Decision: **an exact geometrically non-power rational-character carry decoder requires rational-map degree at the square-root scale. High-degree low-size nonlinear circuits remain open.**')
           print()
-          print('Successor: `SQUARE-CLASS-CIRCUIT-COMPLEXITY-034`.')
+          print('Successor: `SQUARE-CLASS-CIRCUIT-COMPLEXITY-036`.')
           PY
           gh api --method POST \
             repos/${GITHUB_REPOSITORY}/issues/373/comments \
