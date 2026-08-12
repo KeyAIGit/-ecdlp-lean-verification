@@ -44,6 +44,6 @@ theorem neg_orientation_sameSquare
     {K : Type*} [Ring K]
     (value : K) :
     (-value) ^ 2 = value ^ 2 := by
-  ring
+  simp [pow_two]
 
 end Ecdlp.ParityLift
