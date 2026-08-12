@@ -1,0 +1,95 @@
+name: Seventh-character point-function screen
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - experiments/parity_lift_000/seventh_character_point_function_screen.py
+      - .github/workflows/seventh-character-point-function.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: seventh-character-point-function-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run deterministic held-out seventh-character screen
+        run: |
+          python3 experiments/parity_lift_000/seventh_character_point_function_screen.py \
+            --out seventh_character_point_function_results.json \
+            > /tmp/seventh-character.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('seventh_character_point_function_results.json').read_text())
+          print(json.dumps(data['aggregate'], indent=2))
+          print(json.dumps(data['variant_summary'], indent=2))
+          for row in data['evaluations']:
+              print({
+                  'target': row['target'],
+                  'orientation': row['orientation'],
+                  'test_order': row['test_order'],
+                  'lookup': row['lookup'],
+                  'accuracy': row['observed_accuracy'],
+                  'advantage': row['observed_advantage'],
+                  'null_q95': row['null_q95_accuracy'],
+                  'above_q95': row['strictly_above_null_q95'],
+              })
+          PY
+
+      - name: Post decision to PR 365
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY' > /tmp/comment.md
+          import json
+          import os
+          from pathlib import Path
+          data = json.loads(Path('seventh_character_point_function_results.json').read_text())
+          admitted = data['aggregate']['admitted_variants']
+          print('## SEVENTH-CHARACTER-POINT-FUNCTION-020 held-out decision')
+          print()
+          print(f"Commit: `{os.environ['GITHUB_SHA']}`")
+          print()
+          print('```json')
+          print(json.dumps(data['variant_summary'], indent=2))
+          print('```')
+          print()
+          print('| target | orientation | test order | accuracy | advantage | null 95% | above null | lookup |')
+          print('|---|---|---:|---:|---:|---:|---|---|')
+          for row in data['evaluations']:
+              print(
+                  f"| `{row['target']}` | `{row['orientation']}` | {row['test_order']} | "
+                  f"{row['observed_accuracy']:.6f} | {row['observed_advantage']:.6f} | "
+                  f"{row['null_q95_accuracy']:.6f} | {row['strictly_above_null_q95']} | "
+                  f"`{row['lookup']}` |"
+              )
+          print()
+          if admitted:
+              print('Decision: **held-out seventh-character gate passed** for: ' + ', '.join(f'`{name}`' for name in admitted))
+              print('The lookup must next be converted into an exact residue-symbol identity and independently replayed before any secp256k1 claim.')
+          else:
+              print('Decision: **no seventh-character lookup passed the predeclared held-out gate**. The 13441st quotient remains a separate secp-specific question.')
+          PY
+          gh api --method POST \
+            repos/${GITHUB_REPOSITORY}/issues/365/comments \
+            -f body="$(cat /tmp/comment.md)"
+
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: seventh-character-point-function-results
+          path: seventh_character_point_function_results.json
