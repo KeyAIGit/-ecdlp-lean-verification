@@ -29,8 +29,18 @@ jobs:
         run: |
           python3 experiments/parity_lift_000/glv_normalization_rigidity_screen.py \
             --out /tmp/glv_normalization_rigidity_results.json > /tmp/rigidity-screen.log
-          cmp /tmp/glv_normalization_rigidity_results.json \
-            experiments/parity_lift_000/glv_normalization_rigidity_results.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          replay = json.loads(Path('/tmp/glv_normalization_rigidity_results.json').read_text())
+          frozen = json.loads(Path(
+              'experiments/parity_lift_000/glv_normalization_rigidity_results.json'
+          ).read_text())
+          if replay != frozen:
+              raise SystemExit('frozen rigidity result differs semantically from replay')
+          print('semantic rigidity replay: PASS')
+          PY
           tail -n 20 /tmp/rigidity-screen.log
 
       - name: Reject incomplete focused proofs
