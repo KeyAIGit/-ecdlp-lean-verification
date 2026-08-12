@@ -9,9 +9,10 @@ unconditional ECDLP-complexity claim.
 
 ## 1. Decision
 
-Within the homogeneous algebraic net/theta category defined below, a section
-with an odd number of hidden EDS-residue factors **cannot** have a GLV carry
-multiplier different from the perfectly periodic point-function multiplier.
+Within the homogeneous quadratic-normalization algebraic category `C_quad`
+defined below, a section with an odd residual EDS-residue factor **cannot** have
+a GLV carry multiplier different from the perfectly periodic point-function
+multiplier.
 
 Equivalently, in this category there is no public section `A` whose C3 orbit
 norm isolates
@@ -22,73 +23,80 @@ R3(Q)=rho(Q)rho(phi Q)rho(phi^2 Q)
 
 without the canonical carry factor.
 
-This is a scoped theorem, not a universal impossibility statement about
-arbitrary rational circuits, global analytic theta branches, p-adic
-continuations, or algorithms outside the category.
+This is a scoped theorem. It is not a universal impossibility statement about
+arbitrary mixed-weight rational circuits, global analytic theta branches,
+p-adic continuation, or algorithms outside the category.
 
-## 2. The current algebraic category
+## 2. Exact scope contract
 
-Let `C_quad` be the smallest class of scalar-valued homogeneous sections
-containing the ordinary division/net-polynomial sections and the perfectly
-periodic point section, and closed under:
+An admitted unary section `A` has a public transformation law with two pieces
+of binary bookkeeping:
+
+```text
+A([k]G)
+  = public_A(k) * s^q_A(k) * rho_G([k]G)^epsilon_A,
+
+q_A(k)=a_A*k^2+b_A*k+c_A,
+epsilon_A in {0,1}.
+```
+
+Here `s` is the fixed quadratic character of the chosen EDS normalization,
+`rho_G` is the residual EDS character, and `public_A(k)` is evaluable from the
+public point and fixed parameters.
+
+The category invariant is
+
+```text
+epsilon_A = a_A+b_A                 (mod 2).       (I)
+```
+
+Thus `epsilon_A=1` means that, after all multiplication-law and normalization
+cancellations, one genuinely nonpublic EDS character remains. It is not merely
+a count of raw division-polynomial factors: for example an even-index pullback
+may contain one written EDS term while its hidden base-residue exponent is even
+and therefore public.
+
+`C_quad` is the smallest class containing the perfectly periodic point section
+and ordinary homogeneous division/net-polynomial sections, together with
+public weight-zero rational factors, and closed under:
 
 1. tensor products and duals;
 2. fixed integral-index pullbacks and fixed public translations;
-3. GLV, Frobenius, and fixed bounded-isogeny pullbacks whose action on the
-   chosen prime-order subgroup is public;
-4. multiplication by already-admitted weight-zero rational factors;
-5. finite jets taken with an invariant local parameter or invariant
-   differential;
-6. homogeneous linear combinations of sections with the same normalization
-   law;
-7. fixed-rank elliptic-net constructions and the product over the order-three
-   GLV orbit.
+3. GLV, Frobenius, and fixed bounded-isogeny transports whose action on the
+   chosen subgroup is public;
+4. finite invariant jets;
+5. homogeneous sums of sections sharing one normalization law;
+6. fixed-rank elliptic-net constructions;
+7. products over the order-three GLV orbit.
 
-Every unary object in `C_quad` carries a quadratic normalization exponent
+The generators satisfy (I), and every closure operation preserves it:
 
-```text
-q_A(k)=a_A*k^2+b_A*k+c_A.
-```
+- tensor/dual add or negate both binary weights;
+- for `k -> r+t*k`, the hidden residue exponent is multiplied by `t^2`, while
+  the quadratic coefficient changes by the same parity because `t^2=t mod 2`;
+- invariant jets leave the index-dependent normalization scalar unchanged;
+- public weight-zero factors contribute zero to both sides;
+- fixed-rank net pullbacks have exact even source coefficients, proved below;
+- homogeneous sums are admitted only within one common linearization class.
 
-The coefficients may depend on the public curve, generator, chosen section,
-and fixed pullback, but not on the hidden scalar representative `k`.
+### Outside the theorem
 
-This quadratic law is not an extra heuristic assumption. It is the algebraic
-content of:
+The following are not in `C_quad`:
 
-- scale equivalence of elliptic nets by quadratic forms;
-- the sigma-function definition of net polynomials;
-- the integral-matrix transformation formula for net polynomials;
-- tensor/dual closure of the corresponding line bundles.
-
-Finite jets remain in the same normalization class because the normalization
-scalar is independent of the local coordinate. A GLV derivative may add a
-cube-root eigenvalue, but that phase is binary-trivial, as shown below.
-
-### Excluded from `C_quad`
-
-The following are deliberately not included:
-
-- sums of terms with different quadratic weights after an ad hoc
+- sums of different normalization weights supplied with a new public
   trivialization;
-- interpolation tables whose size grows with the subgroup order;
-- arbitrary rational functions whose evaluation circuit is not derived from
-  the stated operations;
+- interpolation tables growing with subgroup order;
+- arbitrary rational circuits not derived from the stated operations;
 - global theta/sigma monodromy with a new branch choice;
 - p-adic analytic continuation from the formal group to all prime-to-`p`
   torsion points.
 
-These exclusions are the exact boundary of the theorem.
+A positive construction must leave at least one of these scope assumptions.
 
-## 3. Exact unary parity theorem
+## 3. C3 parity theorem
 
-Let the canonical scalar representatives of a GLV orbit be
-
-```text
-k0,k1,k2 in {1,...,n-1},
-```
-
-with odd subgroup order `n`, and let
+Let `k0,k1,k2` be the canonical scalar representatives of one GLV orbit in an
+odd-order subgroup:
 
 ```text
 k0+k1+k2=gamma*n,
@@ -108,167 +116,117 @@ q(k0)+q(k1)+q(k2)
   = (a+b)*gamma+c                 (mod 2).       (R)
 ```
 
-The proof is elementary but decisive:
+Indeed,
 
 ```text
-ki^2 = ki                         (mod 2),
-k0+k1+k2 = gamma*n = gamma        (mod 2),
-3*c = c                           (mod 2).
+ki^2=ki mod 2,
+n=1 mod 2,
+3*c=c mod 2.
 ```
 
-Therefore the C3 carry coefficient is exactly
+Combining (R) with the category invariant (I):
 
 ```text
-epsilon_A = a_A+b_A               (mod 2).
+epsilon_A=1
+  -> C3 normalization contains gamma up to a fixed sign;
+
+epsilon_A=0
+  -> C3 normalization is carry-free, but no odd residual EDS factor remains.
 ```
 
-We call `epsilon_A` the binary normalization weight.
-
-### Odd weight
-
-If
+Therefore the forbidden combination
 
 ```text
-epsilon_A=1,
+odd residual EDS weight + no GLV carry
 ```
 
-then (R) gives
+cannot occur inside `C_quad`.
+
+## 4. Why the closure operations do not escape
+
+### Fixed affine pullbacks
+
+The quadratic weight changes by a square of the public slope. Since
 
 ```text
-sum_i q_A(ki)=gamma+constant       (mod 2).
+t^2=t mod 2,
 ```
 
-Thus every odd-gauge section has the same canonical GLV carry multiplier as
-the perfectly periodic point function, up to a fixed public global sign.
-
-### Even weight
-
-If
-
-```text
-epsilon_A=0,
-```
-
-then its orbit normalization is carry-free, but its EDS gauge weight is even.
-It cannot contain an odd number of nonpublic EDS-residue factors.
-
-Hence the forbidden combination is impossible inside `C_quad`:
-
-```text
-odd hidden EDS gauge weight
-+
-no GLV carry multiplier.
-```
-
-## 4. Closure under the allowed operations
-
-### Tensor products and duals
-
-Quadratic exponents add under tensor product and negate under duality. Their
-binary weights therefore add modulo two. The rigidity relation is preserved.
-
-### Fixed affine pullback
-
-For a fixed index map
-
-```text
-k -> r+s*k,
-```
-
-the quadratic coefficient is multiplied by `s^2`. Since
-
-```text
-s^2=s                           (mod 2),
-```
-
-the new binary weight is the old weight multiplied by `s mod 2`.
-
-An odd-slope pullback preserves the same carry. An even-slope pullback kills
-both the carry and the odd EDS gauge. It cannot switch to a new carry class.
+an odd-slope pullback preserves the same carry class, while an even-slope
+pullback removes both carry and odd residual EDS dependence.
 
 ### Fixed-rank joint elliptic nets
 
 Increasing net rank does not create a missing binary phase. In the
-integral-matrix transformation formula, the exponent attached to one source
-point with net-index coordinate `v` and with `s` equal to the sum of the other
-coordinates is
+integral-matrix net transformation law, the coefficient attached to one source
+point with net-index coordinate `v`, where `r` is the sum of the other
+coordinates, is
 
 ```text
-v + (v^2-v*s) + v*s
-  = v*(v+1).
+v + (v^2-v*r) + v*r
+  = v*(v+1),
 ```
 
-This is always even. The three pieces are respectively:
+which is always even. The three terms are respectively the conversion of the
+integer-index EDS term to a public point label, the unary source-point exponent,
+and all pair-source exponents involving that point.
 
-1. conversion of the integer-index EDS term to its public perfectly periodic
-   point label;
-2. the unary source-point exponent in the net transformation;
-3. all pair-source exponents involving that point.
-
-Thus every hidden source-scalar coefficient cancels modulo two. A fixed-rank
-net polynomial is already expressible through public point labels and fixed
-net data; increasing rank cannot generate an independent carry multiplier.
-
-The most tempting rank-three term is `Psi_(1,1,1)` on
+The tempting rank-three term `Psi_(1,1,1)` on
 
 ```text
-(Q,phi Q,phi^2 Q).
+(Q,phi Q,phi^2 Q)
 ```
 
-Its explicit numerator is
+also degenerates structurally. Its explicit numerator is
 
 ```text
 y0*(x1-x2)+y1*(x2-x0)+y2*(x0-x1).
 ```
 
-On a `j=0` GLV orbit all three `y` coordinates are equal, so this numerator
-vanishes identically. In the sigma presentation, the first derivative normal
-to the zero-sum divisor is a fixed unit after cancellation of the three sigma
-factors. It provides no new hidden bit.
+All three GLV-orbit points on `y^2=x^3+7` share the same `y`, so the numerator
+vanishes identically. The corresponding first normal derivative reduces to a
+fixed unit after sigma-factor cancellation and supplies no new binary phase.
 
 ### Finite jets
 
 Differentiating a homogeneous unary section does not differentiate its
-index-dependent normalization scalar. Every finite invariant jet has the same
-quadratic weight as the original section. The rank-three zero-sum first jet is
-covered separately by the cancellation above.
+index-dependent normalization scalar. Its finite invariant jets retain the same
+quadratic weight. The rank-three zero-sum case is covered by the cancellation
+above.
 
 ### GLV linearization
 
-Any scalar produced purely by an order-three GLV linearization satisfies
+A phase produced solely by an order-three GLV linearization satisfies
 
 ```text
 z^3=1.
 ```
 
-But then
+But
 
 ```text
 z=(z^2)^2.
 ```
 
-Thus every cube root of unity is already a square. A quadratic character cannot
-extract a new binary phase from the GLV eigenvalue itself.
+Every cube root of unity is therefore already a square, so quadratic character
+cannot read a new binary GLV eigenphase.
 
-### Bounded isogenies
+### Fixed bounded isogenies
 
-A fixed isogeny or root cover acts on the chosen prime-order subgroup through a
-public transport and, when applicable, a known scalar map. Its binary effect is
-therefore governed by the affine-pullback theorem above, not by an independent
-phase. The previously studied Eisenstein cubic root cover was explicitly
-identified with a public inverse 3-isogeny reparameterization and supplied no
-new normalization bit.
+On the chosen prime-order subgroup a fixed isogeny/root cover is a public
+transport, possibly followed by a known scalar map. Its binary effect is
+therefore governed by the affine-pullback theorem. The previously constructed
+Eisenstein cubic root was explicitly identified with a public inverse
+3-isogeny and supplied no independent phase.
 
 ### Homogeneous sums
 
-Sections may be added canonically only when they belong to the same linearized
-line bundle and hence share one quadratic normalization exponent. Their sum
-therefore remains in the same carry class.
+Sections can be added canonically only inside the same linearized line bundle,
+where they share one quadratic normalization. A sum of different weights
+requires a new trivialization and is outside `C_quad` rather than a
+counterexample within it.
 
-A sum of different weights requires a new trivialization. That is precisely a
-new absolute section and lies outside the category proved rigid here.
-
-## 5. Consequence for the known odd aggregate
+## 5. Consequence for the odd aggregate
 
 Recall
 
@@ -278,8 +236,8 @@ C3(Q)=g(Q)R3(Q),
 g(Q)=(-1)^gamma(Q).
 ```
 
-`R3` has odd EDS gauge weight. Therefore any homogeneous public section in
-`C_quad` whose raw law contains `R3` must have orbit character
+`R3` has odd residual EDS weight. Hence every homogeneous public section in
+`C_quad` whose raw law contains `R3` has orbit character
 
 ```text
 constant * g(Q) * R3(Q),
@@ -291,51 +249,34 @@ not
 constant * R3(Q).
 ```
 
-This explains, in one theorem, the exact coincidences already observed for:
+This unifies the exact collapses already found for the perfectly periodic point
+function, the first order-`n` torsion jet, `psi_(n+1)`, `psi_(n-1)`, fixed-rank
+net pullbacks, and finite tensor/dual products.
 
-```text
-perfectly periodic point function,
-first order-n torsion jet,
-psi_(n+1),
-psi_(n-1),
-fixed-rank net pullbacks,
-finite products and duals of these sections.
-```
+## 6. Weight-zero carry escape screen
 
-They are not unrelated failures. They are instances of one quadratic
-normalization law.
-
-## 6. Weight-zero escape check
-
-A logically different possibility is a public weight-zero function that
-decodes the carry `g(Q)` directly. Such a function would not contradict the
-rigidity theorem; it would solve the missing factor independently rather than
-change the line-bundle multiplier.
-
-The simplest overlooked candidate is
+A public weight-zero function could still decode `g(Q)` directly without
+changing a line-bundle multiplier. The simplest overlooked candidate was
 
 ```text
 chi(y(Q)).
 ```
 
-It has the correct symmetries:
+It has the right symmetries on the frozen fields:
 
 ```text
 chi(y(phi Q))=chi(y(Q)),
-chi(y(-Q))=-chi(y(Q))
+chi(y(-Q))=-chi(y(Q)).
 ```
 
-for the frozen fields with `chi(-1)=-1`, exactly like `g`.
-
-The bounded boundary screen therefore tested
+The bounded screen tested
 
 ```text
 chi(y(Q)),
-chi(y(Q)*(x(Q)^3+a)),             a in F_p,
+chi(y(Q)*(x(Q)^3+a)),              a in F_p,
 ```
 
-and detected exact products of two invariant linear factors without an
-`O(p^2)` enumeration.
+and nondegenerate products of two distinct invariant linear factors.
 
 Protocol:
 
@@ -350,29 +291,27 @@ Results:
 
 ```text
 exact single decoders:                         2
-exact degree-two decoders:                     3
+exact nondegenerate degree-two decoders:       2
 exact decoder at order >=271:                  0
 cases strictly above matched 95% null:         0
 ```
 
-The exact matches occurred only at orders `19`, `31`, and `67`. They are finite
-small-order resonances, not scaling evidence.
-
-Largest cases:
+Exact matches occur only at small orders `19`, `31`, and `67` and are classified
+as finite resonances. On the two largest groups:
 
 | order | best observed | matched null median | matched null 95% |
 |---:|---:|---:|---:|
 | 3469 | 0.584775 | 0.577855 | 0.588235 |
 | 4021 | 0.579104 | 0.571642 | 0.582090 |
 
-Neither crosses the predeclared strict 95-percent gate.
+Neither crosses the strict matched 95-percent gate.
 
 Artifacts:
 
 - `experiments/parity_lift_000/glv_normalization_rigidity_screen.py`;
 - `experiments/parity_lift_000/glv_normalization_rigidity_results.json`.
 
-## 7. Formalization
+## 7. Formalization boundary
 
 `Ecdlp/Proved/GlvNormalizationRigidity.lean` kernel-checks the arithmetic core:
 
@@ -390,57 +329,56 @@ rankThreeCommonYNumerator_zero
 cubeRootLinearization_isSquare
 ```
 
-The theorem file contains no `sorry` and no custom axiom.
+The file contains no `sorry` and no custom axiom.
 
-The Lean result is deliberately algebraic. The identification of the full
-geometric category with quadratic normalization sections is supported by the
-net-polynomial sigma, transformation, scale-equivalence, and unique
-normalization theorems and is recorded here as the scope contract. A full
-formalization of line bundles, linearizations, and jet bundles is not claimed.
+Lean formalizes the integer parity and fixed-rank cancellation statements. It
+does not formalize the cited papers, the inductive definition of `C_quad`, line
+bundles, theta groups, or jet bundles. The geometric identification and closure
+argument are the explicit scope contract of this research note, supported by
+the sigma, transformation, scale-equivalence, and normalization theorems in the
+source literature.
 
 ## 8. Exact answer
 
 ```text
-section with a different carry multiplier found in C_quad:   no
-scoped rigidity theorem for C_quad:                          yes
-order-three GLV eigenphase can change quadratic character:  no
-fixed affine/tensor/dual/unary-jet escape:                    no
-fixed-rank joint-net escape:                                 no
-simple weight-zero carry decoder:                            no scaling signal
-arbitrary mixed-weight/global analytic category:             open
-public R3 or carry decoder:                                  absent
-unconditional sub-square-root ECDLP algorithm:               absent
+section with a different carry multiplier in C_quad:   impossible by scope theorem
+order-three GLV eigenphase escape:                     impossible
+fixed affine/tensor/dual/unary-jet escape:              impossible
+fixed-rank joint-net escape:                           impossible
+simple weight-zero carry decoder:                      no scaling signal
+mixed-weight/global analytic category:                 open
+public R3 or carry decoder:                            absent
+unconditional sub-square-root ECDLP algorithm:         absent
 ```
 
-Thus the requested alternative has been resolved for the current homogeneous
-algebraic category: **such a section cannot exist there.**
+Thus the requested alternative is resolved for the current homogeneous
+algebraic category: **no such section exists there.**
 
-## 9. New constructive frontier
+## 9. Constructive frontier
 
-Further enumeration inside `C_quad` is now low-value. A successful section must
-leave at least one theorem assumption. The live possibilities are:
+Further enumeration inside `C_quad` is low-value. The next package should test
+only constructions that explicitly escape the theorem:
 
 1. a mixed-weight rational construction with a canonical public
    trivialization;
-2. a global theta/sigma monodromy section not equivalent to quadratic net
-   normalization;
-3. a p-adic sigma continuation with a public branch and precision theorem;
-4. a weight-zero carry decoder with nonlocal order-dependent structure.
+2. global theta/sigma monodromy not equivalent to quadratic net normalization;
+3. p-adic sigma continuation with a public branch and precision theorem;
+4. a nonlocal order-dependent weight-zero carry decoder.
 
-The highest-value successor is provisionally:
+Provisional successor:
 
 ```text
 GLOBAL-MONODROMY-SECTION-009.
 ```
 
-Its admission test is strict: it must state exactly which `C_quad` closure rule
-it escapes and why evaluation remains below the square-root baseline.
+Its admission test is strict: state exactly which `C_quad` rule is escaped and
+why evaluation remains below the square-root baseline.
 
-## Primary mathematical anchors
+## Primary anchors
 
 - Katherine E. Stange, *Elliptic Nets and Elliptic Curves*: sigma definition of
   net polynomials, integral-matrix transformation, scale equivalence by
-  quadratic forms, unique normalization, and explicit rank-three net
+  quadratic forms, unique normalization, and the explicit rank-three net
   polynomial.
 - Kristin Lauter and Katherine E. Stange, *The Elliptic Curve Discrete
   Logarithm Problem and Equivalent Hard Problems for Elliptic Divisibility
