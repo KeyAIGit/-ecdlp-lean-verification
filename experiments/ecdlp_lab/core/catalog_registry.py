@@ -10,10 +10,13 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from .canonical import is_sha256, load_json, sha256_file
 from .paths import PathSafetyError, resolve_artifact_path
+
+if TYPE_CHECKING:
+    from experiments.ecdlp_lab.curves.model import ResolvedCurveFixture
 
 
 LAB_ROOT = Path(__file__).resolve().parent.parent
@@ -299,6 +302,90 @@ def resolve_catalog(
     return matches[0]
 
 
+def resolve_curve_fixture(
+    catalog_sha256: str,
+    fixture_id: str,
+    *,
+    repo_root: Path | str = DEFAULT_REPO_ROOT,
+) -> "ResolvedCurveFixture":
+    """Resolve one public curve fixture through the complete registry authority.
+
+    The digest is resolved before catalog-specific projection.  Consequently a
+    caller cannot use a hard-coded P1 locator, an unregistered catalog copy, or
+    a catalog whose sibling registry entry has drifted.  Both the committed CI
+    fixtures and the frozen P1 generator/base-point locators project to the
+    shared :class:`ResolvedCurveFixture` model.
+    """
+
+    if not isinstance(fixture_id, str) or not fixture_id:
+        raise CatalogRegistryError("fixture identifier must be a non-empty string")
+    authority = resolve_catalog(catalog_sha256, repo_root=repo_root)
+    if authority.catalog_id == CI_CATALOG_ID:
+        try:
+            from experiments.ecdlp_lab.curves.model import ResolvedCurveFixture
+
+            document = load_json(authority.resolved_path)
+            fixtures = document.get("fixtures") if isinstance(document, dict) else None
+            if not isinstance(fixtures, list):
+                raise ValueError("CI catalog fixtures must be an array")
+            matches = tuple(
+                entry
+                for entry in fixtures
+                if isinstance(entry, dict) and entry.get("fixture_id") == fixture_id
+            )
+            if len(matches) != 1:
+                raise KeyError("unknown or duplicate CI curve fixture")
+            return ResolvedCurveFixture.from_catalog_entry(
+                matches[0],
+                catalog_sha256=authority.sha256,
+                source_kind=authority.source_kind,
+            )
+        except (KeyError, OSError, TypeError, ValueError) as error:
+            raise CatalogRegistryError(
+                f"CI curve fixture {fixture_id!r} cannot be resolved: {error}"
+            ) from error
+
+    if authority.catalog_id == LEGACY_CATALOG_ID:
+        try:
+            from experiments.ecdlp_lab.curves.p1_adapter import (
+                load_legacy_catalog,
+                resolve_legacy_base_point,
+                resolve_legacy_generator,
+            )
+
+            catalog = load_legacy_catalog(
+                catalog_path=authority.path,
+                catalog_sha256=authority.sha256,
+                repo_root=repo_root,
+            )
+            generator_matches = tuple(
+                (curve.field_bits, curve.curve_index, generator.generator_index)
+                for curve in catalog.curves
+                for generator in curve.generators
+                if generator.generator_id == fixture_id
+            )
+            curve_matches = tuple(
+                curve.curve_id for curve in catalog.curves if curve.curve_id == fixture_id
+            )
+            if len(generator_matches) + len(curve_matches) != 1:
+                raise KeyError("unknown or duplicate legacy curve fixture")
+            if generator_matches:
+                field_bits, curve_index, generator_index = generator_matches[0]
+                return resolve_legacy_generator(
+                    field_bits,
+                    curve_index,
+                    generator_index,
+                    catalog=catalog,
+                )
+            return resolve_legacy_base_point(curve_matches[0], catalog=catalog)
+        except (KeyError, OSError, TypeError, ValueError) as error:
+            raise CatalogRegistryError(
+                f"legacy curve fixture {fixture_id!r} cannot be resolved: {error}"
+            ) from error
+
+    raise CatalogRegistryError("registry contains an unsupported catalog authority")
+
+
 __all__ = [
     "CI_CATALOG_ID",
     "CI_CATALOG_PATH",
@@ -310,5 +397,6 @@ __all__ = [
     "CatalogRegistryError",
     "load_catalog_registry",
     "resolve_catalog",
+    "resolve_curve_fixture",
     "trusted_catalog_sha256s",
 ]

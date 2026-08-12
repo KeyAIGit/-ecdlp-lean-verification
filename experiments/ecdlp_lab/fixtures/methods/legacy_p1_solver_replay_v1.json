@@ -1,0 +1,93 @@
+{
+  "fixture_kind": "legacy_p1_solver_replay_locator_v1",
+  "golden": {
+    "bsgs": {
+      "case_count": 32,
+      "estimated_algorithmic_table_bytes": 2449472,
+      "legacy_group_operations": 61574,
+      "offline_setup_group_law_invocations": 38739,
+      "online_target_group_law_invocations": 22835,
+      "table_entries": 38273
+    },
+    "case_count": 64,
+    "case_identity_sha256": "6e78f08ed177e708074d41abd3c58d9576de9dd72ae6a6485bb801e2fb2c52f9",
+    "field_bits": [13, 16, 20, 24],
+    "legacy_group_operations_vector_sha256": "28e93e247296dd25a910314e7bc5fb28ae48466fde2804941d9dfa81ce49077e",
+    "ordinary_rho_xmod3": {
+      "case_count": 32,
+      "collisions": 32,
+      "floyd_iterations": 57193,
+      "invalid_candidate_collisions": 0,
+      "legacy_group_operations": 173236,
+      "noninvertible_collisions": 0,
+      "restarts": 0
+    },
+    "success_count": 64
+  },
+  "join": {
+    "assay_collection": "solver_baselines",
+    "catalog_collection": "curves",
+    "curve_keys": ["field_bits", "curve_index"],
+    "expected_scalar_visibility": "validator_only",
+    "generator_key": "generator_index",
+    "target_derivation": "independent_oracle_scalar_mul_v1"
+  },
+  "methods": [
+    {
+      "case_count": 32,
+      "legacy_method": "bsgs",
+      "method_id": "bsgs_v1",
+      "source_function": "bsgs_solve"
+    },
+    {
+      "case_count": 32,
+      "legacy_method": "pollard_rho",
+      "method_id": "ordinary_rho_xmod3_v1",
+      "source_function": "pollard_rho_solve"
+    }
+  ],
+  "schema_only_quarantine": {
+    "declared_counters": {
+      "legacy_p1_group_operations": 101,
+      "method_self_check_group_law_invocations": 0,
+      "offline_setup_group_law_invocations": 91,
+      "online_target_group_law_invocations": 10
+    },
+    "eligible_for_conformance": false,
+    "p03_expected_counters": {
+      "estimated_algorithmic_table_bytes": 4928,
+      "legacy_p1_group_operations": 88,
+      "method_self_check_group_law_invocations": 2,
+      "offline_setup_group_law_invocations": 88,
+      "online_target_group_law_invocations": 0,
+      "table_entries": 77
+    },
+    "path": "experiments/ecdlp_lab/fixtures/contracts/valid/method_result_v1.json",
+    "reason": "schema_example_counter_values_do_not_match_frozen_p1_bsgs",
+    "sha256": "f5e34283add6b49b58ab0ff81d7300b0e014efd99292a91c8082eecb7aae4ac1"
+  },
+  "schema_version": 1,
+  "sources": {
+    "assay_result": {
+      "path": "experiments/ml_structure_probe/reports/p1_toy_scaling/assay_result.json",
+      "sha256": "6a4a6b8302877a9b6505d70fc246677c741c7b26cda314bdc17ac36a4edd044f"
+    },
+    "catalog_registry": {
+      "path": "experiments/ecdlp_lab/fixtures/curves/catalog_registry_v1.json",
+      "sha256": "5b71f3a1070ebf360f5eb42a7383762a3501d4495098f94174960f0876ac7067"
+    },
+    "curve_catalog": {
+      "catalog_id": "legacy_p1_curve_catalog",
+      "path": "experiments/ml_structure_probe/reports/p1_toy_scaling/curve_catalog.json",
+      "sha256": "d293afa7e5b614f39ed00356e35ee81a400b57ee9656907170193cb3aca0bbd7"
+    },
+    "independent_oracle": {
+      "path": "experiments/framework/ec_oracle.py",
+      "sha256": "7acc852df5a927a7954f56bd9548ec021ef0b0c92f5435e8f213363f71c72792"
+    },
+    "legacy_runner": {
+      "path": "experiments/ml_structure_probe/p1_toy_scaling/run_assay.py",
+      "sha256": "6ab905adf8187729e818a92b047c83ff5f6b12d61fca95cfcd512cc3e24820c0"
+    }
+  }
+}

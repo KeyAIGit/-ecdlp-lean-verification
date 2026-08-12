@@ -25,6 +25,7 @@ from .catalog_registry import (
     CatalogAuthority,
     CatalogRegistryError,
     load_catalog_registry,
+    resolve_curve_fixture,
 )
 from .contracts import (
     PRIMARY_ID_FIELDS,
@@ -402,6 +403,413 @@ def _registered_catalog_issues(
     return issues
 
 
+def _p03_replay_issues() -> list[Issue]:
+    """Execute all authenticated P1 rows through the neutral P03 methods.
+
+    Replay secrets remain inside ``LegacyReplayCase.validator_only``.  The
+    method sees only a newly constructed ``PublicMethodInput``; candidate
+    verification happens afterwards through the independent framework oracle.
+    """
+
+    try:
+        from experiments.ecdlp_lab.methods.python.dispatch import run_method
+        from experiments.ecdlp_lab.methods.python.model import (
+            MethodBudgets,
+            PublicMethodInput,
+            SolverOutcome,
+        )
+
+        from .candidate_validation import ValidatorCounters, validate_candidate
+        from .legacy_solver_replay import (
+            LOCATOR_RAW_SHA256,
+            LOCATOR_SEMANTIC_SHA256,
+            LegacyReplayError,
+            load_legacy_replay,
+            validate_legacy_replay,
+        )
+    except ImportError as error:
+        return [_problem("p03.import", str(LAB_ROOT), str(error))]
+
+    try:
+        report = validate_legacy_replay(repo_root=REPO_ROOT)
+        cases = load_legacy_replay(repo_root=REPO_ROOT)
+    except (LegacyReplayError, OSError, RuntimeError, TypeError, ValueError) as error:
+        return [_problem("p03.authority", str(REPO_ROOT), str(error))]
+
+    issues: list[Issue] = []
+    report_issues = getattr(report, "issues", None)
+    if not isinstance(report_issues, tuple) or any(
+        not isinstance(issue, Issue) for issue in report_issues
+    ):
+        return [
+            _problem(
+                "p03.report.shape",
+                "$.p03_replay.issues",
+                "replay issues must be an immutable tuple of Issue values",
+            )
+        ]
+    issues.extend(report_issues)
+    expected_report_values = {
+        "passed": True,
+        "fixture_kind": "legacy_p1_solver_replay_locator_v1",
+        "locator_raw_sha256": LOCATOR_RAW_SHA256,
+        "locator_semantic_sha256": LOCATOR_SEMANTIC_SHA256,
+        "case_count": 64,
+        "success_count": 64,
+        "bsgs_case_count": 32,
+        "rho_case_count": 32,
+        "schema_only_quarantine_verified": True,
+    }
+    for name, expected in expected_report_values.items():
+        actual = getattr(report, name, None)
+        if type(actual) is not type(expected) or actual != expected:
+            issues.append(
+                _problem(
+                    "p03.report.anchor",
+                    f"$.p03_replay.{name}",
+                    f"expected {expected!r}, got {actual!r}",
+                )
+            )
+    if report.passed is True and report_issues:
+        issues.append(
+            _problem(
+                "p03.report.contradiction",
+                "$.p03_replay",
+                "a passing replay report cannot contain issues",
+            )
+        )
+    if not isinstance(cases, tuple) or len(cases) != 64:
+        issues.append(
+            _problem(
+                "p03.cases",
+                "$.p03_replay.cases",
+                "loader must return exactly 64 immutable replay cases",
+            )
+        )
+    if issues:
+        return sorted(set(issues))
+
+    case_ids = [getattr(case, "case_id", None) for case in cases]
+    if any(not isinstance(case_id, str) or not case_id for case_id in case_ids):
+        return [
+            _problem(
+                "p03.case_id",
+                "$.p03_replay.cases",
+                "every replay case requires a non-empty public identity",
+            )
+        ]
+    if len(set(case_ids)) != len(case_ids):
+        return [
+            _problem(
+                "p03.case_id",
+                "$.p03_replay.cases",
+                "replay case identities must be unique",
+            )
+        ]
+
+    budgets = MethodBudgets(
+        max_subgroup_order_bits=32,
+        max_field_bits=32,
+        max_group_law_invocations=1_000_000,
+        max_table_entries=65_536,
+        max_steps=1_000_000,
+        timeout_ns=5_000_000_000,
+        max_memory_bytes=64 * 1024 * 1024,
+        workers=1,
+    )
+    resolved_fixtures: dict[tuple[str, str], Any] = {}
+    outcomes: list[tuple[Any, Any]] = []
+    validator_group_law_invocations = 0
+    for case in cases:
+        case_path = f"$.p03_replay.cases[{case.case_id}]"
+        try:
+            replay_input = case.to_public_input()
+        except (AttributeError, RuntimeError, TypeError, ValueError) as error:
+            issues.append(_problem("p03.projection", case_path, str(error)))
+            continue
+        fixture_key = (
+            replay_input.curve_catalog_sha256,
+            replay_input.curve_fixture_id,
+        )
+        try:
+            fixture = resolved_fixtures.get(fixture_key)
+            if fixture is None:
+                fixture = resolve_curve_fixture(
+                    replay_input.curve_catalog_sha256,
+                    replay_input.curve_fixture_id,
+                    repo_root=REPO_ROOT,
+                )
+                resolved_fixtures[fixture_key] = fixture
+        except (
+            CatalogRegistryError,
+            OSError,
+            RuntimeError,
+            TypeError,
+            ValueError,
+        ) as error:
+            issues.append(_problem("p03.fixture", case_path, str(error)))
+            continue
+        fixture_binding = (
+            fixture.curve_id,
+            fixture.field_bits,
+            fixture.field_p,
+            fixture.curve_a,
+            fixture.curve_b,
+            fixture.generator,
+            fixture.subgroup_order,
+            fixture.subgroup_order_bits,
+        )
+        replay_binding = (
+            replay_input.curve_id,
+            replay_input.field_bits,
+            replay_input.p,
+            replay_input.a,
+            replay_input.b,
+            replay_input.G,
+            replay_input.ell,
+            replay_input.subgroup_order_bits,
+        )
+        if fixture_binding != replay_binding:
+            issues.append(
+                _problem(
+                    "p03.fixture_binding",
+                    case_path,
+                    "public replay input differs from its registry-resolved fixture",
+                )
+            )
+            continue
+
+        try:
+            public_input = PublicMethodInput(
+                method_id=replay_input.method_id,
+                algorithm_seed=replay_input.seed,
+                p=replay_input.p,
+                a=replay_input.a,
+                b=replay_input.b,
+                G=replay_input.G,
+                Q=replay_input.Q,
+                ell=replay_input.ell,
+                budgets=budgets,
+            )
+            outcome = run_method(public_input, self_check=True)
+        except (OSError, RuntimeError, TypeError, ValueError) as error:
+            issues.append(_problem("p03.method", case_path, str(error)))
+            continue
+        if not isinstance(outcome, SolverOutcome):
+            issues.append(
+                _problem(
+                    "p03.method.shape",
+                    case_path,
+                    "method must return the immutable SolverOutcome model",
+                )
+            )
+            continue
+        outcomes.append((case, outcome))
+        expectation = case.validator_only
+        if getattr(outcome, "status", None) != "success":
+            issues.append(
+                _problem(
+                    "p03.method.status",
+                    case_path,
+                    f"method returned {getattr(outcome, 'status', None)!r}",
+                )
+            )
+            continue
+        if outcome.candidate_scalar != expectation.legacy_candidate_scalar:
+            issues.append(
+                _problem(
+                    "p03.method.candidate",
+                    case_path,
+                    "candidate differs from the authenticated legacy baseline",
+                )
+            )
+        independent = validate_candidate(public_input, outcome.candidate_scalar)
+        if not isinstance(independent.counters, ValidatorCounters):
+            issues.append(
+                _problem(
+                    "p03.candidate.counters",
+                    case_path,
+                    "independent validator must return its own counter bucket",
+                )
+            )
+        else:
+            validator_group_law_invocations += (
+                independent.counters.total_group_law_invocations
+            )
+            if independent.counters.total_group_law_invocations <= 0:
+                issues.append(
+                    _problem(
+                        "p03.candidate.counters",
+                        case_path,
+                        "successful validation must record independent oracle work",
+                    )
+                )
+        if independent.passed is not True:
+            if not independent.issues:
+                issues.append(
+                    _problem(
+                        "p03.candidate",
+                        case_path,
+                        "independent candidate validator failed without an issue",
+                    )
+                )
+            for issue in independent.issues:
+                issues.append(
+                    _problem(
+                        f"p03.{issue.code}",
+                        f"{case_path}:{issue.path}",
+                        issue.message,
+                    )
+                )
+        counters = outcome.counters
+        if (
+            counters.legacy_p1_group_operations
+            != expectation.legacy_group_operations
+        ):
+            issues.append(
+                _problem(
+                    "p03.method.operations",
+                    case_path,
+                    "group-operation count differs from the legacy baseline",
+                )
+            )
+        if counters.legacy_p1_group_operations != (
+            counters.offline_setup.group_law_invocations
+            + counters.online_target.group_law_invocations
+        ):
+            issues.append(
+                _problem(
+                    "p03.method.phase_sum",
+                    case_path,
+                    "legacy operation count must exclude self-check and equal setup plus online",
+                )
+            )
+        if case.legacy_method == "bsgs":
+            observed = (
+                counters.offline_setup.group_law_invocations,
+                counters.online_target.group_law_invocations,
+                counters.table_entries,
+                counters.estimated_algorithmic_table_bytes,
+            )
+            expected = (
+                expectation.bsgs_offline_setup_group_law_invocations,
+                expectation.bsgs_online_target_group_law_invocations,
+                expectation.bsgs_table_entries,
+                expectation.legacy_memory_bytes,
+            )
+            if observed != expected:
+                issues.append(
+                    _problem(
+                        "p03.method.bsgs_phases",
+                        case_path,
+                        "cold BSGS setup/online/table estimates differ from legacy",
+                    )
+                )
+        elif case.legacy_method == "pollard_rho":
+            if (
+                counters.offline_setup.group_law_invocations != 0
+                or counters.table_entries != 0
+                or counters.estimated_algorithmic_table_bytes
+                != expectation.legacy_memory_bytes
+                or counters.distinguished_points != 0
+                or outcome.diagnostics.deterministic_steps
+                != outcome.diagnostics.floyd_iterations
+            ):
+                issues.append(
+                    _problem(
+                        "p03.method.rho_semantics",
+                        case_path,
+                        "ordinary rho counter/estimate semantics drifted",
+                    )
+                )
+        else:
+            issues.append(
+                _problem(
+                    "p03.method.mapping",
+                    case_path,
+                    f"unknown legacy method {case.legacy_method!r}",
+                )
+            )
+
+    if len(outcomes) != 64:
+        issues.append(
+            _problem(
+                "p03.method.coverage",
+                "$.p03_replay.cases",
+                f"expected 64 method outcomes, got {len(outcomes)}",
+            )
+        )
+        return sorted(set(issues))
+    if validator_group_law_invocations <= 0:
+        issues.append(
+            _problem(
+                "p03.candidate.counters",
+                "$.p03_replay.validator_work",
+                "independent validator work must remain separate and nonzero",
+            )
+        )
+
+    bsgs = tuple(outcome for case, outcome in outcomes if case.legacy_method == "bsgs")
+    rho = tuple(
+        outcome for case, outcome in outcomes if case.legacy_method == "pollard_rho"
+    )
+    aggregate_checks = {
+        "bsgs_legacy_group_operations": sum(
+            outcome.counters.legacy_p1_group_operations or 0 for outcome in bsgs
+        ),
+        "bsgs_offline_setup_group_law_invocations": sum(
+            outcome.counters.offline_setup.group_law_invocations for outcome in bsgs
+        ),
+        "bsgs_online_target_group_law_invocations": sum(
+            outcome.counters.online_target.group_law_invocations for outcome in bsgs
+        ),
+        "bsgs_table_entries": sum(
+            outcome.counters.table_entries for outcome in bsgs
+        ),
+        "bsgs_estimated_algorithmic_table_bytes": sum(
+            outcome.counters.estimated_algorithmic_table_bytes for outcome in bsgs
+        ),
+        "rho_legacy_group_operations": sum(
+            outcome.counters.legacy_p1_group_operations or 0 for outcome in rho
+        ),
+        "expected_rho_floyd_iterations": sum(
+            outcome.diagnostics.floyd_iterations for outcome in rho
+        ),
+        "expected_rho_restarts": sum(
+            outcome.counters.restarts for outcome in rho
+        ),
+        "expected_rho_collisions": sum(
+            outcome.counters.collisions for outcome in rho
+        ),
+        "expected_rho_noninvertible_collisions": sum(
+            outcome.counters.noninvertible_collisions for outcome in rho
+        ),
+        "expected_rho_invalid_candidate_collisions": sum(
+            outcome.diagnostics.invalid_candidate_collisions for outcome in rho
+        ),
+    }
+    for report_field, observed in aggregate_checks.items():
+        expected = getattr(report, report_field, None)
+        if type(expected) is not int or observed != expected:
+            issues.append(
+                _problem(
+                    "p03.method.aggregate",
+                    f"$.p03_replay.{report_field}",
+                    f"expected {expected!r}, got {observed!r}",
+                )
+            )
+    rho_attempts = sum(outcome.diagnostics.attempts for outcome in rho)
+    if rho_attempts != report.rho_case_count + report.expected_rho_restarts:
+        issues.append(
+            _problem(
+                "p03.method.rho_attempts",
+                "$.p03_replay.rho_attempts",
+                "rho attempts must equal cases plus actual restart transitions",
+            )
+        )
+    return sorted(set(issues))
+
+
 def _symlink_case(
     base: dict[str, Any], mutation: dict[str, Any], context: ValidationContext
 ) -> list[Issue]:
@@ -549,6 +957,7 @@ def validate_offline() -> tuple[dict[str, int], list[Issue]]:
         authority.sha256 for authority in catalog_authorities
     )
     issues.extend(_registered_catalog_issues(catalog_authorities))
+    issues.extend(_p03_replay_issues())
     trusted_targets = frozenset(
         record["target_vector_id"]
         for record in records
