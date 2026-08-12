@@ -74,7 +74,8 @@ theorem point_canonical_binary_split
     k • G = (2 * (k / 2) + k % 2) • G :=
       congrArg (fun m : ℕ => m • G) (canonical_binary_split k)
     _ = (k / 2) • G + (k / 2) • G + (k % 2) • G := by
-      simp [add_nsmul, mul_nsmul, two_nsmul, add_assoc]
+      rw [two_mul]
+      simp [add_nsmul, add_assoc]
 
 /-- Canonical representative of the public group half on an odd cycle. -/
 def oddCyclePublicHalf (n k : ℕ) : ℕ :=
