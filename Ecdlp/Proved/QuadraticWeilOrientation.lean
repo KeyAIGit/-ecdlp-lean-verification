@@ -30,7 +30,6 @@ theorem normalizedQuadraticWeilRatio_recoversCharacter
     projected / base = character := by
   rw [hprojected, hbase]
   field_simp [hdualScale, hgaussBase]
-  ring
 
 /-- A quadratic character disappears after squaring the oriented Weil value. -/
 theorem quadraticWeilSquare_generatorBlind
@@ -76,7 +75,9 @@ theorem selectorFreeContractionRatio_recoversCharacter
     (∑ index ∈ s, projected index * base index) /
         (∑ index ∈ s, base index * base index) = character := by
   rw [selectorFreeContraction_factor s projected base character hprojected]
-  field_simp [hbase]
+  have hbase' : (∑ index ∈ s, base index ^ 2) ≠ 0 := by
+    simpa [pow_two] using hbase
+  field_simp [hbase']
 
 /-- By contrast, an unweighted full-dual sum cancels whenever the reference
 sum is zero. -/
