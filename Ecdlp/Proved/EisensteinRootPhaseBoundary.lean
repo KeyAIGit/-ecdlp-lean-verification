@@ -16,12 +16,15 @@ formalize the extension-field cube-root lift, or make an asymptotic claim.
 
 namespace Ecdlp.ParityLift
 
-/-- The Eisenstein norm `a^2-a*b+b^2` is even modulo two only at the zero
-coefficient pair. Thus an even integral Eisenstein norm forces both
-coefficients to be even and is consequently divisible by four. -/
-theorem eisensteinNorm_mod_two_zero_iff (a b : ZMod 2) :
-    a ^ 2 - a * b + b ^ 2 = 0 ↔ a = 0 ∧ b = 0 := by
-  fin_cases a <;> fin_cases b <;> simp
+/-- For coefficient residues modulo two, the Eisenstein norm
+`a^2-a*b+b^2` vanishes only at the zero pair. Thus an even integral
+Eisenstein norm forces both coefficients to be even and is consequently
+divisible by four. The statement is a closed four-case finite check. -/
+theorem eisensteinNorm_mod_two_zero_iff (a b : Fin 2) :
+    ((((a.val : ℤ) ^ 2 - (a.val : ℤ) * (b.val : ℤ) + (b.val : ℤ) ^ 2) % 2 = 0)
+      ↔ a = 0 ∧ b = 0) := by
+  revert a b
+  native_decide
 
 /-- The secp256k1 field prime lies in the exact congruence class used by the
 canonical `F_{p^2}` cube-subgroup lift. -/
