@@ -34,15 +34,17 @@ periodic point section, and closed under:
 
 1. tensor products and duals;
 2. fixed integral-index pullbacks and fixed public translations;
-3. GLV, Frobenius, and fixed bounded-isogeny pullbacks;
-4. multiplication by public weight-zero rational functions;
+3. GLV, Frobenius, and fixed bounded-isogeny pullbacks whose action on the
+   chosen prime-order subgroup is public;
+4. multiplication by already-admitted weight-zero rational factors;
 5. finite jets taken with an invariant local parameter or invariant
    differential;
 6. homogeneous linear combinations of sections with the same normalization
    law;
-7. the product over the order-three GLV orbit.
+7. fixed-rank elliptic-net constructions and the product over the order-three
+   GLV orbit.
 
-Every object in `C_quad` carries a quadratic normalization exponent
+Every unary object in `C_quad` carries a quadratic normalization exponent
 
 ```text
 q_A(k)=a_A*k^2+b_A*k+c_A.
@@ -78,7 +80,7 @@ The following are deliberately not included:
 
 These exclusions are the exact boundary of the theorem.
 
-## 3. Exact parity theorem
+## 3. Exact unary parity theorem
 
 Let the canonical scalar representatives of a GLV orbit be
 
@@ -184,11 +186,52 @@ the new binary weight is the old weight multiplied by `s mod 2`.
 An odd-slope pullback preserves the same carry. An even-slope pullback kills
 both the carry and the odd EDS gauge. It cannot switch to a new carry class.
 
+### Fixed-rank joint elliptic nets
+
+Increasing net rank does not create a missing binary phase. In the
+integral-matrix transformation formula, the exponent attached to one source
+point with net-index coordinate `v` and with `s` equal to the sum of the other
+coordinates is
+
+```text
+v + (v^2-v*s) + v*s
+  = v*(v+1).
+```
+
+This is always even. The three pieces are respectively:
+
+1. conversion of the integer-index EDS term to its public perfectly periodic
+   point label;
+2. the unary source-point exponent in the net transformation;
+3. all pair-source exponents involving that point.
+
+Thus every hidden source-scalar coefficient cancels modulo two. A fixed-rank
+net polynomial is already expressible through public point labels and fixed
+net data; increasing rank cannot generate an independent carry multiplier.
+
+The most tempting rank-three term is `Psi_(1,1,1)` on
+
+```text
+(Q,phi Q,phi^2 Q).
+```
+
+Its explicit numerator is
+
+```text
+y0*(x1-x2)+y1*(x2-x0)+y2*(x0-x1).
+```
+
+On a `j=0` GLV orbit all three `y` coordinates are equal, so this numerator
+vanishes identically. In the sigma presentation, the first derivative normal
+to the zero-sum divisor is a fixed unit after cancellation of the three sigma
+factors. It provides no new hidden bit.
+
 ### Finite jets
 
-Differentiating a homogeneous section does not differentiate its
+Differentiating a homogeneous unary section does not differentiate its
 index-dependent normalization scalar. Every finite invariant jet has the same
-quadratic weight as the original section.
+quadratic weight as the original section. The rank-three zero-sum first jet is
+covered separately by the cancellation above.
 
 ### GLV linearization
 
@@ -209,10 +252,12 @@ extract a new binary phase from the GLV eigenvalue itself.
 
 ### Bounded isogenies
 
-An odd-degree pullback preserves odd weight and hence the same carry. An
-even-degree pullback has even binary weight and cannot retain an odd residue
-aggregate. The previously studied Eisenstein cubic root cover falls in the
-odd-degree case and was explicitly identified with an inverse 3-isogeny.
+A fixed isogeny or root cover acts on the chosen prime-order subgroup through a
+public transport and, when applicable, a known scalar map. Its binary effect is
+therefore governed by the affine-pullback theorem above, not by an independent
+phase. The previously studied Eisenstein cubic root cover was explicitly
+identified with a public inverse 3-isogeny reparameterization and supplied no
+new normalization bit.
 
 ### Homogeneous sums
 
@@ -253,6 +298,7 @@ perfectly periodic point function,
 first order-n torsion jet,
 psi_(n+1),
 psi_(n-1),
+fixed-rank net pullbacks,
 finite products and duals of these sections.
 ```
 
@@ -263,7 +309,8 @@ normalization law.
 
 A logically different possibility is a public weight-zero function that
 decodes the carry `g(Q)` directly. Such a function would not contradict the
-rigidity theorem; it would solve the missing factor independently.
+rigidity theorem; it would solve the missing factor independently rather than
+change the line-bundle multiplier.
 
 The simplest overlooked candidate is
 
@@ -337,6 +384,9 @@ quadraticNormalizationOrbitParity
 oddCarryWeight_forces_basicCarry
 evenCarryWeight_killsCarry
 affinePullbackWeightParity
+netPullbackPointScaleCoefficient
+netPullbackPointScaleCoefficient_even
+rankThreeCommonYNumerator_zero
 cubeRootLinearization_isSquare
 ```
 
@@ -344,9 +394,9 @@ The theorem file contains no `sorry` and no custom axiom.
 
 The Lean result is deliberately algebraic. The identification of the full
 geometric category with quadratic normalization sections is supported by the
-net-polynomial sigma and scale-equivalence theorems and is recorded here as the
-scope contract. A full formalization of line bundles, linearizations, and jet
-bundles is not claimed.
+net-polynomial sigma, transformation, scale-equivalence, and unique
+normalization theorems and is recorded here as the scope contract. A full
+formalization of line bundles, linearizations, and jet bundles is not claimed.
 
 ## 8. Exact answer
 
@@ -354,7 +404,8 @@ bundles is not claimed.
 section with a different carry multiplier found in C_quad:   no
 scoped rigidity theorem for C_quad:                          yes
 order-three GLV eigenphase can change quadratic character:  no
-fixed affine/tensor/dual/finite-jet escape:                   no
+fixed affine/tensor/dual/unary-jet escape:                    no
+fixed-rank joint-net escape:                                 no
 simple weight-zero carry decoder:                            no scaling signal
 arbitrary mixed-weight/global analytic category:             open
 public R3 or carry decoder:                                  absent
@@ -389,7 +440,8 @@ it escapes and why evaluation remains below the square-root baseline.
 
 - Katherine E. Stange, *Elliptic Nets and Elliptic Curves*: sigma definition of
   net polynomials, integral-matrix transformation, scale equivalence by
-  quadratic forms, and unique normalization.
+  quadratic forms, unique normalization, and explicit rank-three net
+  polynomial.
 - Kristin Lauter and Katherine E. Stange, *The Elliptic Curve Discrete
   Logarithm Problem and Equivalent Hard Problems for Elliptic Divisibility
   Sequences*: perfectly periodic point function, EDS-residue problem, and
