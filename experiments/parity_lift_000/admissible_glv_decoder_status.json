@@ -1,16 +1,18 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "date": "2026-08-12",
   "instance": "secp256k1 ordered generator G with order-three GLV endomorphism",
   "master_target": "compute g_G(Q), R3_G(Q), or h_G(x(Q)^3) exactly and reutilizably",
   "equivalences": [
     "C3_G(Q) = g_G(Q) * R3_G(Q)",
-    "h_G(x(Q)^3) = g_G(Q) * chi(y(Q))"
+    "h_G(x(Q)^3) = g_G(Q) * chi(y(Q))",
+    "g_G(Q) = B_G(chi_G(Q)) for the faithful generator-oriented order-n phase"
   ],
   "existence": {
     "exact_public_function": true,
     "exact_linear_size_lookup_or_interpolation": true,
     "exact_generator_oriented_half_kernel": true,
+    "exact_full_order_n_phase_plus_nonlinear_cut": true,
     "known_sub_sqrt_admissible_decoder": false,
     "universal_nonexistence_proved": false
   },
@@ -21,6 +23,7 @@
     "reusable_on_chosen_multiples": true,
     "all_preprocessing_memory_advice_counted": true,
     "no_scalar_lift_or_hidden_branch": true,
+    "no_materialized_order_n_dual_phase": true,
     "target_total_cost": "O(n^(1/2-epsilon))",
     "strong_target": "poly(log p, log n)"
   },
@@ -33,22 +36,32 @@
     "scoped homogeneous C_quad theta/net category",
     "pure level-n cyclotomic Frobenius descent",
     "kernel-only generator-blind CM half-factor selection",
+    "standard multiplicative bit-only theta or sigma splitting",
     "polylog field-Fourier-L1 x-coordinate predicates",
     "split quotient characters with support at most four on frozen corpus",
     "rational square classes of total degree at most two on frozen corpus",
     "tested order-13441 lookup, spectrum and bounded nonlinear families"
   ],
   "open_classes": [
-    "generator-sensitive bit-only theta or sigma splitting",
+    "direct nonlinear GLV triple-cut evaluator without faithful phase materialization",
     "high-degree low-circuit uniform base-field expressions",
     "canonical p-adic or analytic exact descent",
     "nonlocal order-dependent EDS section outside C_quad",
     "new generator-sensitive public field-character identity"
   ],
-  "next_question": "Can membership in the carry-positive generator-oriented half-kernel be evaluated below sqrt(n) without materializing its (n-1)/6 roots or coefficients, an order-n dual character, equivalent advice, or a hidden ECDLP branch?",
+  "exact_large_representations": {
+    "half_kernel": "H_G(Y)=product over carry-positive C3 orbits; degree (n-1)/6",
+    "cyclotomic_cut": "B_G(z)=sign Im((1-z)(1-z^lambda)(1-z^(lambda^2))) evaluated at z=chi_G(Q)"
+  },
+  "next_question": "Can the nonlinear GLV triple cut B_G(chi_G(Q)) be evaluated exactly below sqrt(n) without evaluating or storing a faithful order-n character, materializing the equivalent half-kernel partition, or hiding either object in advice or branch choice?",
   "source_branches": [
     "research/parity-lift-000",
     "research/direct-glv-carry-descent-010"
+  ],
+  "source_packages": [
+    "GENERATOR-ORIENTED-HALF-KERNEL-027",
+    "THETA-SPLITTING-DUALITY-028",
+    "DIRECT-GLV-CARRY-DESCENT-010"
   ],
   "claim_boundary": "No unknown production target is accepted and no sub-square-root ECDLP algorithm is claimed."
 }
