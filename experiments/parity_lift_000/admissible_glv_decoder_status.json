@@ -1,5 +1,5 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "date": "2026-08-12",
   "instance": "secp256k1 ordered generator G with order-three GLV endomorphism",
   "master_target": "compute g_G(Q), R3_G(Q), h_G(x(Q)^3), or the equivalent normalized Gaussian-period orientation exactly and reutilizably",
@@ -21,7 +21,8 @@
     "known_sub_sqrt_admissible_decoder": false,
     "universal_nonexistence_proved": false,
     "pure_generic_sub_sqrt_decoder_excluded_conditionally": true,
-    "explicit_finite_field_translation_linear_sub_sqrt_state_excluded": true
+    "explicit_finite_field_translation_linear_sub_sqrt_state_excluded": true,
+    "geometrically_nonpower_rational_character_degree_below_sqrt_excluded": true
   },
   "admissibility": {
     "exact_on_all_nonzero_subgroup_points": true,
@@ -50,14 +51,16 @@
     "purely generic exact reusable sub-sqrt carry decoding under the registered reduction",
     "explicit finite-field linear-output normalized-period recurrences below linear state",
     "explicit finite-field translation-linear state with arbitrary exact readout below linear state",
+    "exact geometrically non-power rational-character carry decoders of degree o(sqrt(n))",
+    "ordinary low-degree line-bundle or explicit divisor sections followed by quadratic character",
     "polylog field-Fourier-L1 x-coordinate predicates",
     "split quotient characters with support at most four on frozen corpus",
     "rational square classes of total degree at most two on frozen corpus",
     "tested order-13441 lookup, spectrum and bounded nonlinear families"
   ],
   "open_classes": [
+    "high-degree low-size square-class arithmetic circuits",
     "direct nonlinear normalized-period coordinate circuit without translation-linear state",
-    "high-degree low-circuit uniform base-field expressions",
     "canonical p-adic or analytic exact orientation descent",
     "nonlocal order-dependent EDS section outside C_quad",
     "new generator-sensitive public field-character identity",
@@ -75,7 +78,12 @@
     "translation_linear_state_arbitrary_exact_readout": "at least (n-1)/6 base-field words",
     "scope": "explicit finite-field state updated linearly under Q -> Q+G"
   },
-  "next_question": "Can sign(U_G(Q)) be computed exactly from affine or projective public coordinates by a uniform nonlinear arithmetic, p-adic, analytic, theta, sigma, or EDS circuit below sqrt(n), without maintaining a translation-linear order-n state or hiding an equivalent orientation table or faithful dual character in constants?",
+  "degree_lower_bounds": {
+    "exact_rational_character_carry_decoder": "degree greater than 2^125.348 on fixed secp256k1 parameters under the Kummer-covering hypotheses",
+    "quotient_R_of_x_cubed": "degree greater than 2^122.763 for f(Q)=y(Q)R(x(Q)^3)",
+    "scope": "geometrically non-power rational functions; this is not an arithmetic-circuit-size lower bound"
+  },
+  "next_question": "Can a uniformly generated polylog-size arithmetic circuit create the required square class despite the square-root rational-map degree barrier, without encoding the carry partition in constants, advice, a faithful dual character, or a large translation state?",
   "source_branches": [
     "research/parity-lift-000",
     "research/direct-glv-carry-descent-010"
@@ -87,7 +95,8 @@
     "GLV-GAUSSIAN-PERIOD-CUT-029",
     "FROBENIUS-ORIENTATION-OBSTRUCTION-030",
     "ANTI-FROBENIUS-ORIENTATION-SEED-031",
-    "NORMALIZED-PERIOD-BLACKBOX-032"
+    "NORMALIZED-PERIOD-BLACKBOX-032",
+    "RATIONAL-CHARACTER-DEGREE-BARRIER-033"
   ],
   "claim_boundary": "No unknown production target is accepted, no universal nonlinear circuit lower bound is claimed, and no sub-square-root ECDLP algorithm is claimed."
 }
