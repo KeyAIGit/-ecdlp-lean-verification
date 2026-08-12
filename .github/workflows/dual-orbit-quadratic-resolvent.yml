@@ -55,8 +55,19 @@ jobs:
 
       - name: Install elan
         run: |
-          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
-            | sh -s -- -y --default-toolchain none
+          curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+            https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            -o /tmp/elan-init.sh
+          for attempt in 1 2 3 4; do
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              break
+            fi
+            if [ "$attempt" = 4 ]; then
+              echo '::error::elan installation failed after retries'
+              exit 1
+            fi
+            sleep $((attempt * 3))
+          done
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
 
       - name: Fetch Mathlib cache
