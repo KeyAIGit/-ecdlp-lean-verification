@@ -24,7 +24,8 @@ def run_cycle(order: int, seed: int) -> dict[str, object]:
     rho[1] = 1
 
     cases: list[dict[str, object]] = []
-    edge_checks = 0
+    ordinary_edge_checks = 0
+    wrap_defect_checks = 0
     prefix_checks = 0
     residue_equivalence_checks = 0
 
@@ -32,11 +33,19 @@ def run_cycle(order: int, seed: int) -> dict[str, object]:
         public = [sign_pow(constant, index) * rho[index] for index in range(order)]
         delta = [rho[(index + 1) % order] * rho[index] for index in range(order)]
 
-        for index in range(order):
-            expected = constant * public[(index + 1) % order] * public[index]
+        # The coboundary identity holds on every ordinary edge. On the single
+        # wrap edge of an odd cycle there is one extra constant factor, which is
+        # precisely the branch-cut defect.
+        for index in range(order - 1):
+            expected = constant * public[index + 1] * public[index]
             if delta[index] != expected:
-                raise AssertionError("public coboundary identity failed")
-            edge_checks += 1
+                raise AssertionError("ordinary public coboundary identity failed")
+            ordinary_edge_checks += 1
+
+        wrap_coboundary = constant * public[0] * public[-1]
+        if delta[-1] != constant * wrap_coboundary:
+            raise AssertionError("odd-cycle wrap defect failed")
+        wrap_defect_checks += 1
 
         prefix = 1
         for length in range(order):
@@ -57,7 +66,8 @@ def run_cycle(order: int, seed: int) -> dict[str, object]:
             {
                 "constant_sign": constant,
                 "hidden_factor": "scalar parity" if constant == -1 else "none",
-                "edge_checks": order,
+                "ordinary_edge_checks": order - 1,
+                "wrap_defect_checks": 1,
                 "prefix_checks": order,
                 "residue_equivalence_checks": order,
             }
@@ -66,7 +76,8 @@ def run_cycle(order: int, seed: int) -> dict[str, object]:
     return {
         "order": order,
         "cases": cases,
-        "edge_checks": edge_checks,
+        "ordinary_edge_checks": ordinary_edge_checks,
+        "wrap_defect_checks": wrap_defect_checks,
         "prefix_checks": prefix_checks,
         "residue_equivalence_checks": residue_equivalence_checks,
         "single_wrap_defect_for_parity": True,
@@ -88,12 +99,16 @@ def main() -> None:
         "cycles": cycles,
         "aggregate": {
             "cycles": len(cycles),
-            "total_edge_checks": sum(case["edge_checks"] for case in cycles),
+            "total_ordinary_edge_checks": sum(
+                case["ordinary_edge_checks"] for case in cycles
+            ),
+            "total_wrap_defect_checks": sum(case["wrap_defect_checks"] for case in cycles),
             "total_prefix_checks": sum(case["prefix_checks"] for case in cycles),
             "total_residue_equivalence_checks": sum(
                 case["residue_equivalence_checks"] for case in cycles
             ),
             "all_telescoping_checks_passed": True,
+            "all_single_wrap_defects_passed": True,
             "secp_like_constant_minus_one_leaves_only_parity": True,
         },
         "secp256k1": {
