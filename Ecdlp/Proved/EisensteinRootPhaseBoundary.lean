@@ -1,12 +1,16 @@
 import Mathlib
 import Ecdlp.Secp256k1Verified
 import Ecdlp.Proved.SevenNonResidue
+import Ecdlp.Proved.RelativeResidueGauge
+import Ecdlp.Proved.GlvNormalizationRigidity
 
 /-!
 # Arithmetic boundary for the Eisenstein root-phase screen
 
 This file records the closed arithmetic facts used by
-`EISENSTEIN-ROOT-PHASE-001`. It does not construct an EDS-residue oracle,
+`EISENSTEIN-ROOT-PHASE-001`. It also imports the theorem-only parity-lift
+support modules so that the isolated research branch kernel-checks them through
+the existing `Ecdlp.lean` root. It does not construct an EDS-residue oracle,
 formalize the extension-field cube-root lift, or make an asymptotic claim.
 -/
 
