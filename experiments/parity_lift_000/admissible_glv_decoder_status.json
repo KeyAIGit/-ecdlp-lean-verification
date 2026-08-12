@@ -1,5 +1,5 @@
 {
-  "schema_version": 7,
+  "schema_version": 8,
   "date": "2026-08-12",
   "instance": "secp256k1 ordered generator G with order-three GLV endomorphism",
   "master_target": "compute g_G(Q), R3_G(Q), h_G(x(Q)^3), or the equivalent normalized Gaussian-period orientation exactly and reutilizably",
@@ -20,12 +20,14 @@
     "exact_bounded_rank_pairing_formula_with_dual_input": true,
     "exact_order_six_recurrence_over_large_coefficient_field": true,
     "exact_scalar_legendre_projector_with_linear_orbit_sum": true,
+    "exact_one_addition_exponential_conductor_family": true,
     "known_sub_sqrt_admissible_carry_decoder": false,
     "known_sub_sqrt_scalar_legendre_projector": false,
     "universal_nonexistence_proved": false,
     "pure_generic_sub_sqrt_decoder_excluded_conditionally": true,
     "explicit_finite_field_translation_linear_sub_sqrt_state_excluded": true,
-    "geometrically_nonpower_rational_character_degree_below_sqrt_excluded": true
+    "geometrically_nonpower_rational_character_degree_below_sqrt_excluded": true,
+    "addition_count_only_conductor_lower_bound_rejected": true
   },
   "admissibility": {
     "exact_on_all_nonzero_subgroup_points": true,
@@ -54,11 +56,13 @@
     "kernel-only generator-blind CM half-factor selection",
     "standard multiplicative bit-only theta or sigma splitting",
     "standard bounded-rank pairing blackbox without a compact dual-C3 orbit selector",
+    "character-balanced elliptic-Jacobi invariants as generator-oriented quadratic decoders",
     "purely generic exact reusable sub-sqrt carry decoding under the registered reduction",
     "explicit finite-field linear-output normalized-period recurrences below linear state",
     "explicit finite-field translation-linear state with arbitrary exact readout below linear state",
     "exact geometrically non-power rational-character carry decoders of degree o(sqrt(n))",
     "ordinary low-degree line-bundle or explicit divisor sections followed by quadratic character",
+    "addition-count-only lower bounds from odd divisor support, Kummer conductor, or cover genus",
     "exact bounded C6-invariant polynomial scalar-Legendre decoders below degree (n-1)/12",
     "exact bounded curve-rational scalar-Legendre decoders below degree (n-1)/2",
     "standard generator-blind quadratic elliptic-Gauss invariant S_3(G)^2 as an oriented sign source",
@@ -68,8 +72,10 @@
     "tested order-13441 lookup, spectrum and bounded nonlinear families"
   ],
   "open_classes": [
+    "uniform one-addition square classes M0*(1+c*M1) with short exponent chains",
     "high-degree low-size square-class arithmetic circuits for carry",
     "direct nonlinear normalized-period coordinate circuit without translation-linear state",
+    "quadratic-Weil or metaplectic orientation with complete public dual-data accounting",
     "Eisenstein-CM oriented square root of the elliptic Gauss projector",
     "compact scalar-Legendre projector followed by a separately proved classical recovery",
     "canonical p-adic or analytic exact orientation descent",
@@ -84,7 +90,8 @@
     "normalized_period": "U_G(Q)=A_G(Q)/A_G(G); exact carry sign with natural (n-1)/6 quotient state",
     "pairing_blackbox": "three normalized pairing factors after supplying one selected dual C3 orbit",
     "order_six_recurrence": "rank 6 over an extension of degree (n-1)/12; total linear-output state (n-1)/2 base-field words",
-    "scalar_legendre_projector": "S_3(P)=sum_{a=1}^{n-1} chi_n(a)x([a]P)^3; S_3([k]G)=chi_n(k)S_3(G); direct cost Theta(n)"
+    "scalar_legendre_projector": "S_3(P)=sum_{a=1}^{n-1} chi_n(a)x([a]P)^3; S_3([k]G)=chi_n(k)S_3(G); direct cost Theta(n)",
+    "one_addition_conductor_family": "F_m=x^(2^m)-x; one subtraction, m squarings, odd support 2*(2^m-b_m) with b_m<=3"
   },
   "dual_orbit_bounds": {
     "nonzero_dual_point_field_degree": "(n-1)/6",
@@ -103,7 +110,13 @@
     "scalar_legendre_curve_rational": "degree at least (n-1)/2",
     "scope": "representation degree; these are not arithmetic-circuit-size lower bounds"
   },
-  "next_question": "Can a uniformly generated polylog-size nonlinear circuit evaluate either the carry orientation sign(U_G(Q)) or an oriented Eisenstein-CM Gauss root, despite the degree and state barriers, without encoding an orientation table, faithful dual character, selected dual orbit, or linear-size projector in constants or advice?",
+  "conductor_frontier": {
+    "innovation_identity": "[A+B]=[A]+[1+B/A]",
+    "degree_weighted_budget": "c2(F_out) <= input c2 + 2*sum_additions deg(B_i/A_i)",
+    "addition_count_only_bound": "false",
+    "secp_counterexample": "m=127 gives b_m=0 and c2(x^(2^m)-x)=2^128 with one subtraction and 127 squarings"
+  },
+  "next_question": "Can any uniformly generated one-addition square class M0(Q)*(1+c*M1(Q)), with monomial inputs and short exponent addition chains, satisfy chi_p(F(Q))=g_G(Q) on every nonzero subgroup point while remaining total, generator-covariant, and reusable on chosen multiples?",
   "source_branches": [
     "research/parity-lift-000",
     "research/direct-glv-carry-descent-010"
@@ -120,7 +133,9 @@
     "DUAL-ORBIT-QUADRATIC-RESOLVENT-034",
     "ELLIPTIC-GAUSS-PROJECTOR-035",
     "NORMALIZED-PERIOD-LINEAR-STATE-BARRIER-035-SUPPLEMENT",
-    "RATIONAL-CHARACTER-DEGREE-BARRIER-036-SUPPLEMENT"
+    "RATIONAL-CHARACTER-DEGREE-BARRIER-036-SUPPLEMENT",
+    "GENERATOR-ORIENTED-ELLIPTIC-JACOBI-037",
+    "ADDITIVE-SQUARE-CLASS-CONDUCTOR-039"
   ],
-  "claim_boundary": "No unknown production target is accepted, scalar-Legendre is not identified with carry, no classical sub-square-root shifted-Legendre recovery is claimed, no universal nonlinear circuit lower bound is claimed, and no sub-square-root ECDLP algorithm is claimed."
+  "claim_boundary": "No unknown production target is accepted, the conductor counterfamily is not a decoder, scalar-Legendre is not identified with carry, no classical sub-square-root shifted-Legendre recovery is claimed, no universal nonlinear circuit lower bound is claimed, and no sub-square-root ECDLP algorithm is claimed."
 }
