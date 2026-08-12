@@ -48,8 +48,8 @@ theorem tripleProduct_eq_inverseSum_sub_sum
     (1 - a) * (1 - b) * (1 - c) =
         1 - a - b - c + a * b + a * c + b * c - a * b * c := by ring
     _ = (a⁻¹ + b⁻¹ + c⁻¹) - (a + b + c) := by
-      rw [hab, hac, hbc, hprod]
-      ring
+      rw [hab, hac, hbc]
+      simp [hc] <;> ring
 
 /-- Cyclically permuting the three GLV phase entries does not change the
 resolvent. -/
@@ -78,6 +78,5 @@ theorem tripleProduct_inversion_neg
         a⁻¹ b⁻¹ c⁻¹ (inv_ne_zero ha) (inv_ne_zero hb) (inv_ne_zero hc) hprodInv,
       tripleProduct_eq_inverseSum_sub_sum a b c ha hb hc hprod]
   simp [ha, hb, hc]
-  ring
 
 end Ecdlp.ParityLift
