@@ -7,9 +7,9 @@ This file formalizes the binary bookkeeping isolated in
 `FROBENIUS-CM-SECTION-RIGIDITY-010`.
 
 The geometric input is a generalized division section `A_α` attached to an
-endomorphism `α` which commutes with the order-three GLV automorphism.  Let
+endomorphism `α` which commutes with the order-three GLV automorphism. Let
 `a` be the scalar by which `α` acts on the chosen prime-order subgroup and let
-`δ` be the parity of `deg α`.  The generalized chain rule and the ordinary
+`δ` be the parity of `deg α`. The generalized chain rule and the ordinary
 multiplication formula reduce the character of the section to
 
     public_ψa(Q)
@@ -17,15 +17,15 @@ multiplication formula reduce the character of the section to
       * phase^(k).
 
 GLV invariance at the even secp256k1 eigenvalue and ordinary GLV covariance
-force the phase bit to be the same bit `a+δ`.  Consequently the entire hidden
+force the phase bit to be the same bit `a+δ`. Consequently the entire hidden
 part is
 
     (rho(Q) * (-1)^k)^(a+δ),
 
 which is either trivial or the already-public perfectly-periodic point
-character.  No independent `R3` or carry equation remains.
+character. No independent `R3` or carry equation remains.
 
-Lean proves only this exact binary implication.  It does not formalize
+Lean proves only this exact binary implication. It does not formalize
 Frobenius, arbitrary-isogeny division polynomials, the generalized chain rule,
 or the geometric admission of an external section into the stated class.
 -/
@@ -64,7 +64,7 @@ theorem frobeniusCmSection_equalParity_isPublic
         + frobeniusCmHiddenWeight actionParity degreeParity * scalarParity
       = publicBit := by
   subst degreeParity
-  simp [frobeniusCmHiddenWeight]
+  fin_cases actionParity <;> simp [frobeniusCmHiddenWeight] <;> ring
 
 /-- If action parity and degree parity differ, the only extra character is the
 already-public perfectly-periodic point character `rhoBit + scalarParity`. -/
@@ -76,7 +76,7 @@ theorem frobeniusCmSection_differentParity_isPointCharacter
         + frobeniusCmHiddenWeight actionParity degreeParity * scalarParity
       = publicBit + rhoBit + scalarParity := by
   fin_cases actionParity <;> fin_cases degreeParity <;>
-    simp_all [frobeniusCmHiddenWeight]
+    simp_all [frobeniusCmHiddenWeight] <;> ring
 
 /-- Taking a C3 orbit norm cannot manufacture an independent equation: the
 extra term is still only the orbit norm of the public point character. -/
