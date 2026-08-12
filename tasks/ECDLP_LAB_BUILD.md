@@ -524,7 +524,7 @@ Completion evidence at baseline `26c828970a4af25e263265b3c2550523d83c11fb`:
 
 ### P04: safe, resumable campaign runner
 
-Status: ready
+Status: complete
 Allowed paths: `experiments/ecdlp_lab/orchestration/`,
 `experiments/ecdlp_lab/core/`, `experiments/ecdlp_lab/fixtures/`,
 `experiments/ecdlp_lab/tests/`, `scripts/lab_*.py`
@@ -567,9 +567,83 @@ Exit criteria:
 - validator shares no decisive method logic;
 - the runner has no Engine writer or submission path.
 
+Completion evidence (2026-08-11):
+
+- the committed smoke expands one authenticated public target into exactly two
+  work units, `bsgs_v1` and `ordinary_rho_xmod3_v1` at algorithm seed 7, and
+  runs them sequentially with `max_parallel=1`;
+- the method child receives exactly the frozen nine-field public projection;
+  full request/work/catalog/fixture/provenance identifiers and the private
+  expected scalar never cross that process boundary;
+- method and validator execute from separate, role-specific SHA/size-pinned
+  code snapshots.  Their import-closed manifests include every executed local
+  package initializer and are reverified while staging immediately before
+  spawn;
+- the Linux worker boundary enforces per-process `RLIMIT_AS`, owns descendants
+  as a subreaper, tracks them through `/proc`, and terminates escaped sessions
+  and double-fork descendants.  Unsupported enforcement fails before spawn;
+- artifact-root creation is bound through directory descriptors and inode
+  identity before the first write.  Repository-local and Engine destinations,
+  traversal, symlinks, parent-swap races, duplicate writers, and partial or
+  noncanonical artifacts fail closed;
+- retained validator output is never trusted by digest alone: initial
+  finalization and resume both rerun the fixed validator worker and require
+  byte-identical output and counters before accepting the create-only receipt;
+- completed replay is byte- and summary-idempotent.  The hash-chained event log
+  and public analysis index contain no private target record, path, or payload;
+- the engineering fixture is honestly non-retainable and dirty relative to the
+  merged P03 base `dc3a69a303bec1048ccf92d55be253daf8b9d6d5`; it binds
+  source snapshot `691fd0345f60b1ab3af42bb58e791b418f281dc8255908f46f2a4c9c7c9f59b7`
+  and deterministic diff digest
+  `1cad82f5d74aeb6ca0c82dc925b76015038ebd230803eaa4ae5eee3a168c236a`;
+- 77 P04 fault/conformance tests and 235 total stdlib-only lab tests pass
+  under a 512 MiB outer address-space cap, including real two-worker CLI,
+  interruption/resume, `setsid`/double-fork, forged validator output, source
+  mutation, deep JSON, root-swap, event tamper, and secret-canary cases.
+
+### P04C: target-axis and analysis-contract correction
+
+Status: ready
+Allowed paths: `experiments/ecdlp_lab/contracts/`,
+`experiments/ecdlp_lab/core/`, `experiments/ecdlp_lab/orchestration/`,
+`experiments/ecdlp_lab/fixtures/`, `experiments/ecdlp_lab/tests/`
+
+This is a separate, reviewable prerequisite PR between P04 and P05.  It must
+not be folded silently into the analysis implementation.
+
+Deliverables:
+
+- Make `matrix.target_vector_sha256s` the leading instance axis.  Each public
+  target already binds one catalog and fixture; `curve_catalog_sha256s` and
+  `curve_fixture_ids` become exact allowlists for those bindings, not
+  independent Cartesian axes.
+- Derive work count as
+  `targets * methods * algorithm_seeds * repetitions`, and take catalog and
+  fixture identity from each authenticated target.  Preserve the existing P01
+  singleton campaign identity and reject incomplete or extra allowlists.
+- Permit an independently validated non-success `method_result_v1` receipt:
+  candidate and relation are null, provenance/status/counters are checked, and
+  validator disagreement remains a failed receipt.  A successful scalar still
+  requires the independently verified relation.
+- Extend `analysis_summary_v1` conditionally for
+  `analysis_protocol_id=equal_success_scaling_v1` with exact target/order,
+  success target, unreachable/censored state, uncertainty, residual,
+  leave-one-size-out, and policy fields.  Legacy P01 fixtures must remain valid.
+- Bind every analysis receipt to the same campaign and preserve the P04 public
+  analysis boundary: the private receipt hash may remain opaque, but no private
+  record, locator, payload, expected scalar, or derivation seed enters analysis.
+
+Exit criteria:
+
+- multi-curve campaigns expand only target-authorized tuples;
+- bounded failure, censoring, and validator disagreement are mechanically
+  distinct;
+- the P01 singleton corpus and all nine contract families remain valid;
+- campaign/receipt injection and private-field leak tests fail closed.
+
 ### P05: equal-success comparison and scaling diagnostics
 
-Status: blocked_by_P04
+Status: blocked_by_P04C
 Allowed paths: `experiments/ecdlp_lab/analysis/`,
 `experiments/ecdlp_lab/fixtures/`, `experiments/ecdlp_lab/tests/`
 
