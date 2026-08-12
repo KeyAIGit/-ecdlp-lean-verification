@@ -30,7 +30,6 @@ theorem normalizedTripleProduct_eq_productRatios
         ((1 - b) / (1 - B)) *
         ((1 - c) / (1 - C)) := by
   field_simp
-  ring
 
 /-- Cyclically permuting both triples leaves the normalized resolvent
 unchanged. -/
@@ -70,6 +69,6 @@ theorem normalizedFullProduct_eq_one
     (hden : denominator ≠ 0) :
     numerator / denominator = 1 := by
   rw [hperm]
-  exact div_self denominator hden
+  exact div_self hden
 
 end Ecdlp.ParityLift
