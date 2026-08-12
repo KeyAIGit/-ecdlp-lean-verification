@@ -1,0 +1,92 @@
+name: Higher-character scalar digit oracle screen
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - experiments/parity_lift_000/higher_character_digit_oracle_screen.py
+      - .github/workflows/higher-character-digit-oracle.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: higher-character-digit-oracle-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run q=3 and q=7 digit-oracle screens
+        run: |
+          python3 experiments/parity_lift_000/higher_character_digit_oracle_screen.py \
+            --out higher_character_digit_oracle_results.json \
+            > /tmp/higher-character-digit.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('higher_character_digit_oracle_results.json').read_text())
+          print(json.dumps(data['aggregate'], indent=2))
+          print(json.dumps(data['family_summary'], indent=2))
+          for case in data['cases']:
+              print({
+                  'family': case['family'],
+                  'q': case['q'],
+                  'order': case['order'],
+                  'exact_formulas': case['exact_calibrated_formulas'],
+                  'best_formula': case['best_majority_formula'],
+                  'best_accuracy': case['best_majority_accuracy'],
+              })
+          PY
+
+      - name: Post decision to PR 365
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY' > /tmp/comment.md
+          import json
+          import os
+          from pathlib import Path
+          data = json.loads(Path('higher_character_digit_oracle_results.json').read_text())
+          universal = data['aggregate']['families_with_universal_exact_formula']
+          print('## HIGHER-CHARACTER-DIGIT-ORACLE-021 decision')
+          print()
+          print(f"Commit: `{os.environ['GITHUB_SHA']}`")
+          print()
+          print('```json')
+          print(json.dumps(data['family_summary'], indent=2))
+          print('```')
+          print()
+          print('| family | q | order | exact calibrated formulas | best majority formula | best accuracy |')
+          print('|---|---:|---:|---|---|---:|')
+          for case in data['cases']:
+              print(
+                  f"| `{case['family']}` | {case['q']} | {case['order']} | "
+                  f"`{case['exact_calibrated_formulas']}` | "
+                  f"`{case['best_majority_formula']}` | {case['best_majority_accuracy']:.6f} |"
+              )
+          print()
+          if universal:
+              print('Decision: **an exact toy radix-digit formula exists across every case in** ' + ', '.join(f'`{name}`' for name in universal))
+              print('Immediate next gate: prove the phase-to-digit identity, export the lookup using known multiples, and run literal radix peeling on an independent family. No secp256k1 claim follows yet.')
+          else:
+              print('Decision: **no tested q=3 or q=7 phase/orientation formula is an exact universally calibrated digit oracle**.')
+          PY
+          gh api --method POST \
+            repos/${GITHUB_REPOSITORY}/issues/365/comments \
+            -f body="$(cat /tmp/comment.md)"
+
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: higher-character-digit-oracle-results
+          path: higher_character_digit_oracle_results.json
