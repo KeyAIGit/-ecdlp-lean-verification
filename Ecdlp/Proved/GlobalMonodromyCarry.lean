@@ -51,10 +51,12 @@ theorem oddOrderBinaryPairingPhase_trivial
     (h₂ : u ^ 2 = 1)
     (hodd : u ^ (2 * m + 1) = 1) :
     u = 1 := by
+  have heven : u ^ (2 * m) = 1 := by
+    rw [pow_mul, h₂, one_pow]
   calc
-    u = (u ^ 2) ^ m * u := by simp [h₂]
-    _ = u ^ (2 * m + 1) := by
-      rw [pow_mul, pow_add, pow_one]
+    u = 1 * u := by simp
+    _ = u ^ (2 * m) * u := by rw [heven]
+    _ = u ^ (2 * m + 1) := by rw [pow_add, pow_one]
     _ = 1 := hodd
 
 /-- An alternating bilinear pairing is trivial when its second input is a
