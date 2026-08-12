@@ -2,7 +2,7 @@ import Mathlib
 import Ecdlp.Secp256k1Verified
 import Ecdlp.Proved.SevenNonResidue
 import Ecdlp.Proved.RelativeResidueGauge
-import Ecdlp.Proved.GlvNormalizationRigidity
+import Ecdlp.Proved.GlvNormalizationRigidityScope
 
 /-!
 # Arithmetic boundary for the Eisenstein root-phase screen
