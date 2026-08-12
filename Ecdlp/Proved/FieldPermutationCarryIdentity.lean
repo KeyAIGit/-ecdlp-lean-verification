@@ -41,7 +41,7 @@ for negative orientation.  The displayed equation packages both cases without
 division by `p`. -/
 theorem directedGap_cyclicOrientation_identity
     (p a b c : ℤ)
-    (hab : a ≠ b) (hbc : b ≠ c) (hca : c ≠ a) :
+    (_hab : a ≠ b) (_hbc : b ≠ c) (hca : c ≠ a) :
     fieldPermutationOrientation a b c * p =
       3 * p - 2 *
         (directedGap p a b + directedGap p b c + directedGap p c a) := by
@@ -95,7 +95,8 @@ theorem fieldCyclicOrientation_sign_dichotomy
     (γ : ℤ) (hγ : γ = 1 ∨ γ = 2) :
     fieldCyclicOrientationSign γ = 1 ∨
       fieldCyclicOrientationSign γ = -1 := by
-  rcases hγ with rfl | rfl <;>
-    simp [fieldCyclicOrientationSign]
+  rcases hγ with rfl | rfl
+  · norm_num [fieldCyclicOrientationSign]
+  · norm_num [fieldCyclicOrientationSign]
 
 end Ecdlp.ParityLift
