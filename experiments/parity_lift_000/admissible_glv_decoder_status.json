@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "date": "2026-08-12",
+  "instance": "secp256k1 ordered generator G with order-three GLV endomorphism",
+  "master_target": "compute g_G(Q), R3_G(Q), or h_G(x(Q)^3) exactly and reutilizably",
+  "equivalences": [
+    "C3_G(Q) = g_G(Q) * R3_G(Q)",
+    "h_G(x(Q)^3) = g_G(Q) * chi(y(Q))"
+  ],
+  "existence": {
+    "exact_public_function": true,
+    "exact_linear_size_lookup_or_interpolation": true,
+    "exact_generator_oriented_half_kernel": true,
+    "known_sub_sqrt_admissible_decoder": false,
+    "universal_nonexistence_proved": false
+  },
+  "admissibility": {
+    "exact_on_all_nonzero_subgroup_points": true,
+    "uniform_from_ordered_public_parameters": true,
+    "generator_covariant": true,
+    "reusable_on_chosen_multiples": true,
+    "all_preprocessing_memory_advice_counted": true,
+    "no_scalar_lift_or_hidden_branch": true,
+    "target_total_cost": "O(n^(1/2-epsilon))",
+    "strong_target": "poly(log p, log n)"
+  },
+  "closed_or_bounded_classes": [
+    "direct x-only parity and Kummer parity",
+    "fixed-rank relative EDS/net gauge relations",
+    "screened bounded isogeny and natural root covers",
+    "first order-n torsion jet and near-period ordinary sections",
+    "finite multiplicative division-polynomial sections",
+    "scoped homogeneous C_quad theta/net category",
+    "pure level-n cyclotomic Frobenius descent",
+    "kernel-only generator-blind CM half-factor selection",
+    "polylog field-Fourier-L1 x-coordinate predicates",
+    "split quotient characters with support at most four on frozen corpus",
+    "rational square classes of total degree at most two on frozen corpus",
+    "tested order-13441 lookup, spectrum and bounded nonlinear families"
+  ],
+  "open_classes": [
+    "generator-sensitive bit-only theta or sigma splitting",
+    "high-degree low-circuit uniform base-field expressions",
+    "canonical p-adic or analytic exact descent",
+    "nonlocal order-dependent EDS section outside C_quad",
+    "new generator-sensitive public field-character identity"
+  ],
+  "next_question": "Can membership in the carry-positive generator-oriented half-kernel be evaluated below sqrt(n) without materializing its (n-1)/6 roots or coefficients, an order-n dual character, equivalent advice, or a hidden ECDLP branch?",
+  "source_branches": [
+    "research/parity-lift-000",
+    "research/direct-glv-carry-descent-010"
+  ],
+  "claim_boundary": "No unknown production target is accepted and no sub-square-root ECDLP algorithm is claimed."
+}
