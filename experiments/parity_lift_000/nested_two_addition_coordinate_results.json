@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "date": "2026-08-12",
+  "target": "chi_p(z^u*H^epsilon*(1+c2*z^b*H^t))*constant_sign = h_G(z), H=1+c1*z^a",
+  "scope": "exact quotient-symmetric and direct character-symmetry nested two-addition toy search; no external target and no secp256k1 decoder claim",
+  "quotient_searches": [
+    {
+      "p":1087,"n":271,"profile":"core-full-t",
+      "a_b_exponents":54,"c1_constants":43,"t_values":53,"c2_values":1087,
+      "outside_square_classes":8,"admissible_H":2155,"admissible_W":6167610,
+      "nominal_formula_evaluations":53633536560,"exact_decoders":0
+    },
+    {
+      "p":1087,"n":271,"profile":"all-c1-small-exponents",
+      "a_b_exponents":17,"c1_constants":1087,"t_values":9,"c2_values":1087,
+      "outside_square_classes":8,"admissible_H":17757,"admissible_W":2716821,
+      "nominal_formula_evaluations":23625475416,"exact_decoders":0
+    },
+    {
+      "p":1663,"n":433,"profile":"core-base-t",
+      "a_b_exponents":54,"c1_constants":43,"t_values":9,"c2_values":1663,
+      "outside_square_classes":8,"admissible_H":2097,"admissible_W":1019142,
+      "nominal_formula_evaluations":13558665168,"exact_decoders":0
+    },
+    {
+      "p":907,"n":967,"profile":"core-base-t",
+      "a_b_exponents":54,"c1_constants":39,"t_values":9,"c2_values":907,
+      "outside_square_classes":8,"admissible_H":1843,"admissible_W":895698,
+      "nominal_formula_evaluations":6499184688,"exact_decoders":0
+    }
+  ],
+  "character_symmetry_searches": [
+    {
+      "p":1087,"n":271,"profile":"full-points-small-monomials",
+      "exponent_values":9,"monomials_per_stage":81,"c1_constants":43,"t_values":9,"c2_values":1087,
+      "outside_square_classes":16,"admissible_H":2954,"admissible_W":2153466,
+      "nominal_formula_evaluations":37453080672,"exact_decoders":0
+    },
+    {
+      "p":1663,"n":433,"profile":"full-points-small-monomials",
+      "exponent_values":7,"monomials_per_stage":49,"c1_constants":43,"t_values":9,"c2_values":1663,
+      "outside_square_classes":16,"admissible_H":1819,"admissible_W":802179,
+      "nominal_formula_evaluations":21344378832,"exact_decoders":0
+    }
+  ],
+  "aggregate": {
+    "nominal_formula_evaluations": 156114321336,
+    "exact_decoders": 0,
+    "medium_cases": 3
+  },
+  "claim_boundary": "The search is exhaustive only inside the declared structured profiles. It does not rule out arbitrary full-range nonquotient exponents/constants, theta or EDS inputs, or a secp256k1-specific identity."
+}
