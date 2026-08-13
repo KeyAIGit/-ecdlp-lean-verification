@@ -9,7 +9,6 @@ on:
       - 'Ecdlp/Proved/UniformOrientedRootCircuitBoundary.lean'
       - 'experiments/parity_lift_000/uniform_high_degree_circuit.py'
       - 'experiments/parity_lift_000/oriented_parity_divisor_circuit.py'
-      - 'archive/untrusted_intake/parity_lift_000/UNIFORM_ORIENTED_ROOT_CIRCUIT_056_TRACK_C.md'
       - '.github/workflows/uniform-oriented-root-circuit-boundary.yml'
   pull_request:
     branches:
@@ -18,7 +17,6 @@ on:
       - 'Ecdlp/Proved/UniformOrientedRootCircuitBoundary.lean'
       - 'experiments/parity_lift_000/uniform_high_degree_circuit.py'
       - 'experiments/parity_lift_000/oriented_parity_divisor_circuit.py'
-      - 'archive/untrusted_intake/parity_lift_000/UNIFORM_ORIENTED_ROOT_CIRCUIT_056_TRACK_C.md'
       - '.github/workflows/uniform-oriented-root-circuit-boundary.yml'
   workflow_dispatch:
 
