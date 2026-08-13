@@ -7,11 +7,13 @@ on:
     paths:
       - 'Ecdlp/Proved/EndpointCocycleNormalForm.lean'
       - 'Ecdlp/Proved/ConjugatedProductNormalForm.lean'
+      - 'Ecdlp/Proved/EndpointNormalFormConsequences.lean'
       - '.github/workflows/lean-normal-forms.yml'
   pull_request:
     paths:
       - 'Ecdlp/Proved/EndpointCocycleNormalForm.lean'
       - 'Ecdlp/Proved/ConjugatedProductNormalForm.lean'
+      - 'Ecdlp/Proved/EndpointNormalFormConsequences.lean'
       - '.github/workflows/lean-normal-forms.yml'
   workflow_dispatch:
 
@@ -28,6 +30,7 @@ jobs:
         run: |
           ! grep -nE '^[[:space:]]*(sorry|admit)([[:space:]]|$)' Ecdlp/Proved/EndpointCocycleNormalForm.lean
           ! grep -nE '^[[:space:]]*(sorry|admit)([[:space:]]|$)' Ecdlp/Proved/ConjugatedProductNormalForm.lean
+          ! grep -nE '^[[:space:]]*(sorry|admit)([[:space:]]|$)' Ecdlp/Proved/EndpointNormalFormConsequences.lean
       - name: Install Lean
         run: |
           curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
@@ -38,5 +41,7 @@ jobs:
           lake exe cache get
           lake build Ecdlp.Proved.EndpointCocycleNormalForm
           lake build Ecdlp.Proved.ConjugatedProductNormalForm
+          lake build Ecdlp.Proved.EndpointNormalFormConsequences
           lake env lean Ecdlp/Proved/EndpointCocycleNormalForm.lean
           lake env lean Ecdlp/Proved/ConjugatedProductNormalForm.lean
+          lake env lean Ecdlp/Proved/EndpointNormalFormConsequences.lean
