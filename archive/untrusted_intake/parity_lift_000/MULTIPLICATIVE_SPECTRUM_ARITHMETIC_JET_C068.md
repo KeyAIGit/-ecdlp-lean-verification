@@ -1,12 +1,12 @@
-# MULTIPLICATIVE-SPECTRUM-ARITHMETIC-JET-C068
+# MULTIPLICATIVE-SPECTRUM-ARITHMETIC-JET-C068-C071
 
 Date: 2026-08-13
 
-Status: **the C060 canonical torsion-lift digit has no admitted heavy multiplicative Fourier signal on six independent frozen groups up to order 1,765,741. The apparent 0.1-scale coefficients on small groups follow the matched random C6-quotient maximum and shrink as quotient-size inverse square root.**
+Status: **the canonical torsion-lift digit has no admitted first-order, higher-order, or higher-residue multiplicative spectral signal on frozen groups up to order 1,765,741. One borderline order-13441 event failed a separately frozen seven-curve replay.**
 
-No external point, private key, wallet, or production-sized discrete-log target is accepted.
+No external point, private key, wallet, or production-sized target is accepted.
 
-## 1. Why multiplicative Fourier is the correct new channel
+## 1. Exact shift model
 
 Let
 
@@ -14,150 +14,115 @@ Let
 u_G(k)=u_x([k]G),
 ```
 
-where `u_x` is the exact canonical torsion-lift digit from C060. For an unknown
+where `u_x` is the exact canonical torsion-lift digit. For a public multiplier `t` and `Q=[k]G`,
 
 ```text
-Q=[k]G
+u_Q(t)=u_G(t*k mod n).
 ```
 
-and a public multiplier `t`,
+After choosing a primitive root modulo `n`, multiplication by `k` becomes a cyclic shift in the multiplicative exponent coordinate. The exact C6 symmetries reduce the period to
 
 ```text
-u_Q(t)=u_x([t]Q)=u_G(t*k mod n).                 (M1)
+m=(n-1)/6.
 ```
 
-Choose a primitive root `r` modulo the prime subgroup order and write
+## 2. C068 first-order spectra
+
+Signals:
 
 ```text
-t=r^j,
-k=r^s.
+exp(2*pi*i*a*u_x/p), a=1,2,3,5,7,11,13,17,
+chi_p(u_x).
 ```
 
-Then `(M1)` becomes a cyclic shift:
+Six independent frozen groups were checked:
 
 ```text
-u_Q(r^j)=u_G(r^(j+s)).                            (M2)
+n=414259,451837,677947,932101,1085431,1765741.
 ```
 
-Therefore the multiplicative Fourier coefficients of any public phase of `u_x` acquire known frequency-dependent phases under the hidden scalar. A heavy coefficient would yield a sample-efficient scalar-recovery channel even though the additive scalar-domain spectrum in C061 is flat.
-
-## 2. C6 quotient
-
-The exact C060 symmetries give
+The matched null permutes the observed C6-quotient values. For the phase family it takes the maximum over all eight powers and all nonzero frequencies.
 
 ```text
-u_x(-Q)=u_x(Q),
-nu_x(phi Q)=u_x(Q).
+phase null-99 exceedances:       0/6
+quadratic null-99 exceedances:   1/6
+largest two above null-95:       no for both families
+any phase reaching 1/log(n):     no
 ```
 
-Hence the multiplicative-exponent sequence has period
+Largest case:
 
 ```text
-m=(n-1)/6.                                       (M3)
+best phase maximum  0.00677179, null-95 0.00778306
+chi maximum         0.00629839, null-95 0.00742716
 ```
 
-All spectra are computed on this quotient. The matched null permutes the observed quotient values, preserving their exact marginal distribution and C6 repetition.
+The exact enumerator and frozen spectrum workflow are stored beside this note.
 
-## 3. Signals
+## 3. C069 higher-order phase test
 
-Two complete public signal families are tested:
+A flat ordinary spectrum can hide a low-degree polynomial phase. Second phase derivatives, diagonal third derivatives, and a sampled U3 cube average were therefore checked on the three largest retained cases.
 
 ```text
-f_a(k)=exp(2*pi*i*a*u_x([k]G)/p),
-a in {1,2,3,5,7,11,13,17},
-
-q(k)=chi_p(u_x([k]G)).                            (M4)
+n=932101:  best second derivative 0.0071641, null max 0.0074237
+n=1085431: best second derivative 0.0065895, null max 0.0061737
+n=1765741: best second derivative 0.0041373, null max 0.0050003
 ```
 
-For the phase family, each null trial takes the maximum over all eight powers and every nonzero multiplicative frequency. This prevents selecting a favorable phase power after seeing the result.
+The isolated middle-case exceedance is absent at the largest order. Third derivatives are smaller and the sampled cube averages remain at Monte-Carlo noise scale.
 
-## 4. Independent frozen cases
+## 4. C070 higher residue characters
 
-The six cases are exactly the independently frozen arithmetic cases from package 026:
+Field-character phases of orders `3`, `6`, and `13441` were tested. The order-13441 family used powers
 
 ```text
-(p,n)=(14,919,511,   414,259),
-      (28,468,039,   451,837),
-      (54,919,927,   677,947),
-      (48,468,247,   932,101),
-      (14,113,051, 1,085,431),
-      (49,435,999, 1,765,741).
+1,2,3,5,7,11,13,17.
 ```
 
-For each case the unique `n`-torsion lift of `G` modulo `p^2` is computed once. The homomorphic torsion lift then enumerates all `[k]G` by repeated addition, and projective coordinates are converted with batched inversion. This gives the complete exact `u_x` sequence in linear group-enumeration time without solving any unknown-target discrete logarithm.
-
-## 5. Matched-null results
-
-Each case uses 32 random permutations of the observed C6-quotient values.
-
-Summary, sorted by `n`:
+Five of six cases remain below the family-wise null. The largest case produced one borderline order-13441, power-7 maximum:
 
 ```text
-n          best phase max   phase null-95%  chi max     chi null-95%
-414259     0.01389047       0.01498058      0.01186444  0.01417656
-451837     0.01346377       0.01448572      0.01219240  0.01299904
-677947     0.01062894       0.01248583      0.01013955  0.01131842
-932101     0.00933409       0.01065702      0.00830032  0.00939533
-1085431    0.00988296       0.00972926      0.00903749  0.00884586
-1765741    0.00677179       0.00778306      0.00629839  0.00742716
+observed 0.00807052
+16-trial null maximum 0.00789890
+sqrt(m)-scaled value 4.3781
 ```
 
-Aggregate gate:
+This one candidate was frozen without changing order, power, sign, or threshold.
+
+## 5. C071 independent fixed-candidate replay
+
+The preselected order-13441, power-7 character was replayed on seven separate frozen cases:
 
 ```text
-phase-family null-99 exceedances:       0 / 6
-quadratic-character null-99 exceedances:1 / 6
-largest two phase above null-95:         no
-largest two chi above null-95:           no
-any phase reaching 1/log(n):             no
-admitted phase signal:                   false
-admitted quadratic signal:               false
+n=34231,52489,77689,82153,206197,549481,683737.
 ```
-
-The isolated exceedance on `n=1,085,431` is not repeated on the largest case and fails the frozen cross-case gate.
-
-On the largest case,
 
 ```text
-sqrt(m)*best phase maximum = 3.6736,
-sqrt(m)*chi maximum        = 3.4168,
+null-95 exceedances: 0/7
+null-99 exceedances: 0/7
+largest two above null-95: no
 ```
 
-which is the scale of the maximum of a random length-`m` spectrum, not a constant-heavy or inverse-polylogarithmic coefficient.
-
-## 6. Result
+Largest holdout:
 
 ```text
-Exact public arithmetic-jet sequence             available
-Multiplicative hidden-scalar shift law            exact
-Complete C6 quotient spectrum                     evaluated
-Heavy phase coefficient                           absent under matched gate
-Heavy quadratic-character coefficient             absent under matched gate
-Sample-efficient multiplicative recovery channel absent
-Public carry, hard-R3, or scalar recovery         absent
+observed 0.00971685
+null-95 0.01156177
+null-99 0.01214901
 ```
 
-## 7. Strategic conclusion
+The C070 borderline event does not replicate.
 
-C060 remains a genuinely new compact public arithmetic coordinate, but both of its natural spectral uses are now bounded negatively:
+## 6. Decision
+
+The following natural spectral uses of the canonical arithmetic digit now show matched-random scaling in frozen scope:
 
 ```text
-additive scalar-domain spectrum       square-root scale,
-multiplicative exponent-domain spectrum matched-random scale.
+additive scalar-domain phases,
+multiplicative exponent-domain phases,
+second and third multiplicative phase derivatives,
+sampled U3 structure,
+higher field-residue characters including order 13441.
 ```
 
-Blindly testing more fixed phase powers is not a new mechanism. A successor must explain an exact nonlinear transformation that changes the spectral scale or uses the arithmetic lift in a structurally different way.
-
-## 8. Successor
-
-The next independent object is
-
-```text
-ARITHMETIC-LIFT-TRACE-COLLISION-C069.
-```
-
-Rather than Fourier-analyzing one digit, it asks whether the full canonical lift modulo `p^2` admits a low-degree public trace/norm relation under two independent scalar pullbacks whose collision equation eliminates the random-looking digit and leaves the GLV carry. The first pass must derive an exact resultant or trace identity before any search.
-
-## Claim boundary
-
-A failed frozen spectral gate is not a lower bound against arbitrary nonlinear arithmetic-jet algorithms. No production target or secp256k1 scalar recovery is claimed.
+This does not prove pseudorandomness and does not exclude every nonlinear arithmetic-lift construction. No production target or secp256k1 scalar computation is part of this package.
