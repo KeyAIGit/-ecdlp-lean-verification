@@ -20,6 +20,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install numeric dependency
+        run: python3 -m pip install --user 'numpy==2.3.2'
+
       - name: Compile frozen torsion-lift enumerator
         run: |
           g++ -O3 -std=c++17 \
