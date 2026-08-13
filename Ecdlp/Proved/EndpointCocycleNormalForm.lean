@@ -11,7 +11,7 @@ def edgeCocycle (defect : A) (potential : ℕ → A) (index : ℕ) : A :=
 
 def segmentSum
     (defect : A) (potential : ℕ → A) (start length : ℕ) : A :=
-  ∑ i in Finset.range length,
+  ∑ i ∈ Finset.range length,
     edgeCocycle defect potential (start + i)
 
 @[simp]
