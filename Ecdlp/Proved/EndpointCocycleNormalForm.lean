@@ -25,7 +25,8 @@ theorem segmentSum_succ
     segmentSum defect potential start (length + 1)
       = segmentSum defect potential start length
         + edgeCocycle defect potential (start + length) := by
-  simp [segmentSum]
+  unfold segmentSum
+  rw [Finset.sum_range_succ]
 
 theorem segmentSum_normalForm
     (defect : A) (potential : ℕ → A) (start length : ℕ) :
