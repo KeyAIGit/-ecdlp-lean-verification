@@ -2,7 +2,7 @@
 
 Date: 2026-08-12
 
-Status: **the natural two-cell Ward/EDS determinant obtained by eliminating the common middle coefficient collapses exactly to one multiplicative EDS monomial for arbitrary indices; genuinely independent three-or-more-cell syzygies and non-Ward minors remain open**.
+Status: **rank-one Ward multi-cell products admit an exact rank-two determinantal model; the shared-middle two-cell determinant factors, the natural three-cell determinant vanishes, and four-index products satisfy the Grassmann-Pluecker relation. Genuinely rank-two elliptic-net minors and non-Ward branch selectors remain open.**
 
 No external point, private key, wallet, or production-sized discrete-log target is accepted.
 
@@ -10,142 +10,136 @@ No external point, private key, wallet, or production-sized discrete-log target 
 
 Package 047 showed that every determinant consisting of exactly one Ward or elliptic-net recurrence cell factors back into a multiplicative net monomial. In particular, the first normalized rank-two `2 x 2` determinant is not an independent equation for the generator-oriented Kummer square root `Y_G`.
 
-The next live class is a bounded additive combination of at least two independent recurrence cells.
+Package 048 asks whether combining several rank-one Ward cells creates a genuinely new additive relation.
 
-## 2. Two Ward cells with a shared middle index
+## 2. Ward recurrence as a rank-two minor
 
-For a rank-one elliptic divisibility sequence `W`, Ward's recurrence is
-
-```text
-W(m+t)W(m-t)
- = W(m+1)W(m-1)W(t)^2
-   - W(t+1)W(t-1)W(m)^2.                         (M1)
-```
-
-Fix `m` and apply `(M1)` twice, at shifts `r` and `s`:
+For a rank-one elliptic divisibility sequence `W`, define
 
 ```text
-A_r = U W(r)^2 - V_r W(m)^2,
-A_s = U W(s)^2 - V_s W(m)^2,                     (M2)
+R(j)=W(j)^2,
+V(j)=W(j+1)W(j-1),
+A(a,b)=W(a+b)W(a-b).
 ```
 
-where
+Ward's recurrence is exactly
 
 ```text
-A_t = W(m+t)W(m-t),
-U   = W(m+1)W(m-1),
-V_t = W(t+1)W(t-1).
+boxed:
+A(a,b)=V(a)R(b)-V(b)R(a).                        (M1)
 ```
 
-The common coefficient `U` is the obvious object to eliminate.
+Thus every Ward product is a `2 x 2` minor:
+
+```text
+A(a,b)=det [
+  V(a) R(a)
+  V(b) R(b)
+].                                                (M2)
+```
+
+This exposes the hidden algebraic reason many additive Ward constructions collapse: all columns live in a two-dimensional determinantal geometry.
 
 ## 3. Exact two-cell determinant
 
-Form
-
-```text
-D(m;r,s)
- = A_r W(s)^2 - A_s W(r)^2.                      (M3)
-```
-
-Substituting `(M2)` cancels the entire `U` contribution:
-
-```text
-D(m;r,s)
- = W(m)^2 [V_s W(r)^2 - V_r W(s)^2].             (M4)
-```
-
-But the bracket is itself Ward's recurrence, now with middle index `s` and shift `r`:
-
-```text
-V_s W(r)^2 - V_r W(s)^2
- = W(r+s)W(s-r).                                  (M5)
-```
-
-Therefore
+Fix `m` and two independent shifts `r,s`. Eliminating the common Ward coefficient gives
 
 ```text
 boxed:
+A(m,r)R(s)-A(m,s)R(r)=R(m)A(s,r).                (M3)
+```
+
+Equivalently,
+
+```text
 W(m+r)W(m-r)W(s)^2
  - W(m+s)W(m-s)W(r)^2
- = W(m)^2 W(r+s)W(s-r).                          (M6)
+ = W(m)^2W(r+s)W(s-r).                           (M4)
 ```
 
-This identity is symbolic and holds for arbitrary indices whenever Ward's recurrence holds.
+The first natural two-cell Pluecker/Wronskian therefore collapses to one multiplicative EDS monomial.
 
-## 4. Determinant interpretation
-
-Equation `(M6)` is the exact determinant identity
+For `s=r+1` and normalized `W(1)=1`,
 
 ```text
-det [
-  W(m+r)W(m-r)    W(r)^2
-  W(m+s)W(m-s)    W(s)^2
-]
- = W(m)^2 W(r+s)W(s-r).                          (M7)
+W(m+r)W(m-r)W(r+1)^2
+ - W(m+r+1)W(m-r-1)W(r)^2
+ = W(m)^2W(2r+1).                                (M5)
 ```
 
-Thus the first natural multi-cell Pluecker/Wronskian construction does not retain an irreducible additive numerator. It factors to one multiplicative EDS monomial.
+So coupling adjacent Ward cells does not create an absolute branch selector.
 
-The result is stronger than package 047's one-cell closure because `r` and `s` are independent and may depend publicly on the subgroup order `n`.
+## 4. Three-cell determinant
 
-## 5. Adjacent specialization
-
-Set
+For fixed `m`, the column relation
 
 ```text
-s=r+1.
+A(m,t)=V(m)R(t)-R(m)V(t)                         (M6)
 ```
 
-Since a normalized EDS has `W(1)=1`, `(M6)` becomes
+shows that the three columns
+
+```text
+A(m,t), R(t), V(t)
+```
+
+have rank at most two as `t` varies. Hence for arbitrary `r,s,t`,
 
 ```text
 boxed:
-W(m+r)W(m-r)W(r+1)^2
- - W(m+r+1)W(m-r-1)W(r)^2
- = W(m)^2 W(2r+1).                               (M8)
+det [
+  A(m,r) R(r) V(r)
+  A(m,s) R(s) V(s)
+  A(m,t) R(t) V(t)
+]=0.                                              (M7)
 ```
 
-So the most obvious adjacent discrete Wronskian is exactly one odd-index EDS term times `W(m)^2`.
+The smallest natural `3 x 3` Casoratian/Wronskian built from these Ward products therefore vanishes identically rather than selecting a new orientation.
 
-This excludes the hypothesis that merely coupling two adjacent Ward cells creates a new absolute branch selector.
+## 5. Four-index Pluecker syzygy
 
-## 6. Consequence for the oriented square root target
+Because all `A(a,b)` are `2 x 2` minors of one rank-two array, for arbitrary indices `a,b,c,d` they satisfy
 
-Package 046 identified the target as the marked-generator root `Y_G` satisfying
+```text
+boxed:
+A(a,b)A(c,d)
+ - A(a,c)A(b,d)
+ + A(a,d)A(b,c)=0.                               (M8)
+```
+
+This is the Grassmann-Pluecker relation. It is not a numerical coincidence and does not depend on small indices.
+
+Consequently the first multi-cell rank-one Ward grammar is governed by rank-two minor algebra rather than by an independent generator-oriented square-root equation.
+
+## 6. Relation to the target Y_G
+
+Package 046 identified the exact target
 
 ```text
 Y_G(X)^2 = X^3+7 mod K_H(X),
 Y_G(x([k]G))/y([k]G)=(-1)^k.                     (M9)
 ```
 
-A successful additive net construction would need an equation whose surviving term is not already in the multiplicative EDS/net algebra and whose normalization genuinely selects the marked-generator branch.
+A useful net construction must do more than generate another exact identity: after symbolic reduction it must retain generator-sensitive branch information capable of selecting this particular `Y_G`.
 
-The family `(M7)` fails this test exactly: its output is the ordinary product
-
-```text
-W(m)^2 W(r+s)W(s-r).
-```
-
-Hence it supplies no independent square-root equation for `Y_G`.
-
-This is a mechanism-class closure, not a proof that the quadratic character of every such product is useless on every curve. Earlier packages separately audit the fixed-index multiplicative residue mechanism.
-
-## 7. Why high public indices do not evade the theorem
-
-No bounded-index hypothesis appears in `(M6)`. Therefore one may take, for example,
+The rank-one Ward minor grammar fails that test:
 
 ```text
-m=n+a,
-r=n+b,
-s=2n+c,
+one cell                    -> multiplicative monomial,
+shared-middle two cells     -> multiplicative monomial,
+natural three-cell minor    -> zero,
+four-index syzygy           -> Pluecker identity.
 ```
 
-or any other publicly specified integer expressions in the subgroup order.
+This does not prove that every arbitrary polynomial in EDS terms is useless. It closes the declared determinant/minor mechanism class.
 
-Periodicity may simplify some factors, but it cannot restore an additive determinant: the symbolic factorization happened before reduction modulo the period.
+## 7. Public high indices
 
-A basis or index depending on the hidden scalar `k` is not admissible, since it would inject the information the construction is meant to recover.
+No bounded-index assumption occurs in `(M1)`-`(M8)`. The indices may be public functions of the subgroup order, such as `n+a`, `2n+b`, or larger addition-chain values.
+
+Periodicity can simplify factors after evaluation, but cannot restore an independent additive equation because the rank-two factorization is symbolic before period reduction.
+
+A basis or index depending on the unknown scalar `k` is not admissible: supplying it would inject the hidden information the construction is intended to recover.
 
 ## 8. Frozen exact replay
 
@@ -155,77 +149,77 @@ A basis or index depending on the hidden scalar `k` is not admissible, since it 
 n=19,31,67,271,397,433.
 ```
 
-For each retained case it checks:
+It checks exactly:
 
-1. exhaustive bounded triples `(m,r,s)` with indices up to `18`;
-2. the exact determinant identity `(M6)`;
-3. the adjacent specialization `(M8)`;
-4. public near-period and beyond-period index patterns.
+1. the rank-two minor representation `(M1)`;
+2. exhaustive bounded shared-middle two-cell identities `(M3)`;
+3. the adjacent specialization `(M5)`;
+4. public near-period and beyond-period index patterns;
+5. natural `3 x 3` determinant vanishing `(M7)`;
+6. four-index Grassmann-Pluecker relations `(M8)`.
 
 All arithmetic is exact in the finite field. There is no floating-point fitting and no unknown target scalar.
 
 ## 9. Formalization
 
-`Ecdlp/Proved/MultiCellNetCancellation.lean` kernel-checks the algebraic elimination step:
+`Ecdlp/Proved/MultiCellNetCancellation.lean` kernel-checks:
 
 ```text
-A_r = U R^2 - V_r M^2,
-A_s = U S^2 - V_s M^2
-
-=>
-
-A_r S^2 - A_s R^2
- = M^2 (V_s R^2 - V_r S^2).
+shared-coefficient two-cell elimination,
+two-cell determinant collapse,
+three-row rank-two determinant = 0,
+four-minor Grassmann-Pluecker relation.
 ```
 
-When the bracket is identified with the second Ward product, Lean obtains the full determinant collapse abstractly.
-
-The file does not formalize elliptic curves, division polynomials, the Ward recurrence theorem itself, secp256k1, parity, or ECDLP.
+The file formalizes the commutative-ring algebra after the Ward-shaped hypotheses are supplied. It does not formalize elliptic curves, division polynomials, the Ward recurrence theorem itself, secp256k1, parity, or ECDLP.
 
 ## 10. Answer
 
 ```text
-Does the natural two-cell Ward determinant remain additive?   no
-Exact factor                                                  W(m)^2 W(r+s)W(s-r)
-Does choosing public n-dependent indices avoid collapse?      no
-Does the adjacent two-cell Wronskian remain additive?         no
-Adjacent factor                                               W(m)^2 W(2r+1)
-Does this construct Y_G?                                      no
-Public parity / absolute EDS-residue decoder                  absent
-Unconditional classical sub-sqrt ECDLP                       absent
+Rank-one Ward product geometry                              rank two
+Natural two-cell determinant                              factors
+Exact two-cell factor                                     W(m)^2 W(r+s)W(s-r)
+Natural three-cell 3x3 determinant                        zero
+Four-index multi-cell relation                            Grassmann-Pluecker
+Do public n-dependent indices evade this?                 no
+Does this rank-one Ward minor grammar construct Y_G?      no
+Public parity / absolute EDS-residue decoder              absent
+Unconditional classical sub-sqrt ECDLP                   absent
 ```
 
 ## 11. Decomposition of the remaining central task
 
-The remaining `Y_G` problem can now be decomposed into increasingly narrow mechanism classes:
+The `Y_G` problem is now narrowed to mechanism classes not captured by the rank-one Ward minor geometry:
 
 ```text
 A. one recurrence cell                         closed by 047
-B. shared-coefficient two-cell Ward minors     closed by 048
-C. two unrelated cells / non-Ward minors       open
-D. three-or-more recurrence-cell syzygies      open
-E. independently normalized theta/sigma rows   open
-F. p-adic analytic branch selection            open
-G. unrestricted short nonlinear circuit        open
+B. rank-one Ward two-cell minors               closed by 048
+C. rank-one Ward natural 3x3 minors            closed by 048
+D. rank-one Ward Pluecker syzygies              structurally classified by 048
+E. genuinely rank-two elliptic-net multi-cells  open
+F. independent theta/sigma determinant rows     open
+G. p-adic analytic branch selection             open
+H. unrestricted short nonlinear circuit         open
 ```
 
-Each stage asks the same exact question: after symbolic normalization, is there any surviving generator-sensitive branch information not already expressible as a public or multiplicative net section?
+Each remaining stage asks the same question: after exact normalization and reduction, is there generator-sensitive information that selects the marked root `Y_G`, rather than a public coordinate function, a multiplicative net section, zero, or a universal syzygy?
 
 ## 12. Strategic successor
 
-The next subpackage is
+The next theorem-first object is
 
 ```text
-MULTI-CELL-NET-CANCELLATION-048B.
+RANK-TWO-NET-MULTI-CELL-049.
 ```
 
-It will construct the first finite recurrence-ideal grammar with at least three cells and perform exact symbolic `S`-polynomial / elimination reductions. The target is not numerical correlation. A candidate survives only if its normal form contains a genuinely new generator-sensitive additive relation rather than a Ward/Pluecker product or a public coordinate function.
+The first task is to leave rank-one Ward geometry entirely and build a finite symbolic grammar from genuinely rank-two net cells involving both marked points. The candidate must use at least two independent rank-two recurrence cells whose normal form is not inherited from one rank-one subnet.
 
-The first objects are:
+The package will test:
 
-1. three Ward cells with common `m` but independent shifts `r,s,t`;
-2. two cells with different middle indices and one shared shift;
-3. the smallest `3 x 3` Casoratian/Wronskian built from Ward products;
-4. corresponding rank-two net cells after preferred-basis normalization.
+1. the smallest coupled rank-two `3 x 3` minors after preferred-basis normalization;
+2. cells mixing `(a,b)` indices with both coordinates nonzero;
+3. exact reduction under the rank-two recurrence ideal and known basis changes;
+4. whether any surviving term is generator-sensitive under `G -> [u]G` in the way required by `Y_G`;
+5. total index, recurrence, normalization, coefficient, memory, and branch-extraction cost.
 
-Any surviving relation must then be tested against `(M9)` and receive a complete index, coefficient, memory, normalization, and branch-extraction cost accounting.
+A numerical correlation is insufficient. A survivor must be an exact symbolic relation not reducible to rank-one Ward minors, a public coordinate identity, or a multiplicative net monomial.
