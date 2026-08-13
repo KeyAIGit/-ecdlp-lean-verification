@@ -1,0 +1,58 @@
+name: Lean normal forms
+
+# Focused kernel check for the Track A mechanism-boundary modules.
+on:
+  push:
+    branches:
+      - research/uorc056-endpoint-segment
+    paths:
+      - 'Ecdlp/Proved/EndpointCocycleNormalForm.lean'
+      - 'Ecdlp/Proved/ConjugatedProductNormalForm.lean'
+      - 'Ecdlp/Proved/EndpointNormalFormConsequences.lean'
+      - 'Ecdlp/Proved/WardSubtractionSquareClass.lean'
+      - 'Ecdlp/Proved/WardPublicHalfCollapse.lean'
+      - '.github/workflows/lean-normal-forms.yml'
+  pull_request:
+    paths:
+      - 'Ecdlp/Proved/EndpointCocycleNormalForm.lean'
+      - 'Ecdlp/Proved/ConjugatedProductNormalForm.lean'
+      - 'Ecdlp/Proved/EndpointNormalFormConsequences.lean'
+      - 'Ecdlp/Proved/WardSubtractionSquareClass.lean'
+      - 'Ecdlp/Proved/WardPublicHalfCollapse.lean'
+      - '.github/workflows/lean-normal-forms.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check completeness
+        run: |
+          ! grep -nE '^[[:space:]]*(sorry|admit)([[:space:]]|$)' Ecdlp/Proved/EndpointCocycleNormalForm.lean
+          ! grep -nE '^[[:space:]]*(sorry|admit)([[:space:]]|$)' Ecdlp/Proved/ConjugatedProductNormalForm.lean
+          ! grep -nE '^[[:space:]]*(sorry|admit)([[:space:]]|$)' Ecdlp/Proved/EndpointNormalFormConsequences.lean
+          ! grep -nE '^[[:space:]]*(sorry|admit)([[:space:]]|$)' Ecdlp/Proved/WardSubtractionSquareClass.lean
+          ! grep -nE '^[[:space:]]*(sorry|admit)([[:space:]]|$)' Ecdlp/Proved/WardPublicHalfCollapse.lean
+      - name: Install Lean
+        run: |
+          curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Build modules
+        run: |
+          lake exe cache get
+          lake build Ecdlp.Proved.EndpointCocycleNormalForm
+          lake build Ecdlp.Proved.ConjugatedProductNormalForm
+          lake build Ecdlp.Proved.EndpointNormalFormConsequences
+          lake build Ecdlp.Proved.WardSubtractionSquareClass
+          lake build Ecdlp.Proved.WardPublicHalfCollapse
+          lake env lean Ecdlp/Proved/EndpointCocycleNormalForm.lean
+          lake env lean Ecdlp/Proved/ConjugatedProductNormalForm.lean
+          lake env lean Ecdlp/Proved/EndpointNormalFormConsequences.lean
+          lake env lean Ecdlp/Proved/WardSubtractionSquareClass.lean
+          lake env lean Ecdlp/Proved/WardPublicHalfCollapse.lean
