@@ -56,6 +56,5 @@ theorem rowTrivialization_residual
     transformed / (common * basisConstant) = rowProduct := by
   rw [hfactor]
   field_simp
-  ring
 
 end Ecdlp.ParityLift
