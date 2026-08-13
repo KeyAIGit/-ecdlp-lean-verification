@@ -1,0 +1,95 @@
+name: Nested two-addition coordinate
+
+on:
+  push:
+    branches:
+      - research/direct-glv-carry-descent-010
+    paths:
+      - 'experiments/parity_lift_000/nested_two_addition_coordinate.py'
+      - 'experiments/parity_lift_000/nested_two_addition_exceptional.py'
+      - 'experiments/parity_lift_000/nested_two_addition_coordinate_results.json'
+      - 'Ecdlp/Proved/NestedTwoAdditionCoordinate.lean'
+      - '.github/workflows/nested-two-addition-coordinate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact quotient smoke slice
+        run: |
+          python3 experiments/parity_lift_000/nested_two_addition_coordinate.py \
+            --order 271 --profile base --t-start 0 --t-stop 1 \
+            --out /tmp/nested-quotient-smoke.json > /tmp/nested-quotient.log
+          python3 - <<'PY'
+          import json
+          data=json.load(open('/tmp/nested-quotient-smoke.json'))
+          assert data['n']==271
+          assert data['t_values']==1
+          assert data['admissible_W']==116370
+          assert data['nominal_formula_evaluations']==1011953520
+          assert data['exact_decoders']==[]
+          PY
+
+      - name: Run exact character-symmetry smoke slice
+        run: |
+          python3 experiments/parity_lift_000/nested_two_addition_exceptional.py \
+            --order 433 --t-start 0 --t-stop 1 \
+            --out /tmp/nested-exceptional-smoke.json > /tmp/nested-exceptional.log
+          python3 - <<'PY'
+          import json
+          data=json.load(open('/tmp/nested-exceptional-smoke.json'))
+          assert data['n']==433
+          assert data['t_values']==1
+          assert data['admissible_W']==89131
+          assert data['nominal_formula_evaluations']==2371597648
+          assert data['exact_decoders']==[]
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/NestedTwoAdditionCoordinate.lean; then
+            echo '::error::Nested two-addition theorem contains sorry'
+            exit 1
+          fi
+
+      - name: Install elan with retries
+        run: |
+          curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+            https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            -o /tmp/elan-init.sh
+          for attempt in 1 2 3 4 5 6 7 8; do
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              break
+            fi
+            if [ "$attempt" = 8 ]; then
+              echo '::error::elan installation failed after retries'
+              exit 1
+            fi
+            rm -rf "$HOME/.elan"
+            sleep $((attempt * 5))
+          done
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check nested identities
+        run: lake build Ecdlp.Proved.NestedTwoAdditionCoordinate
+
+      - name: Upload smoke artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: nested-two-addition-smoke
+          path: |
+            /tmp/nested-quotient-smoke.json
+            /tmp/nested-exceptional-smoke.json
+            /tmp/nested-quotient.log
+            /tmp/nested-exceptional.log
+          retention-days: 90
