@@ -24,8 +24,7 @@ theorem mod_two_cases (scalar : ℕ) :
   omega
 
 theorem zmodTwo_add_self (value : ZMod 2) : value + value = 0 := by
-  change (2 : ZMod 2) * value = 0
-  norm_num
+  fin_cases value <;> native_decide
 
 theorem oddHalfRep_succ_add_pred
     {order scalar : ℕ}
@@ -81,7 +80,12 @@ theorem publicPhase_pair_normalForm
     simp [publicPhase, hleft, hright, hdiff]
     ring
   · have hdiff : (right - left) % 2 = 0 := by omega
-    simp [publicPhase, hleft, hright, hdiff, zmodTwo_add_self]
+    simp only [publicPhase, hleft, hright, if_false, hdiff, if_true, add_zero]
+    calc
+      defect + residue left + (defect + residue right)
+          = (defect + defect) + (residue left + residue right) := by abel
+      _ = residue left + residue right := by
+        rw [zmodTwo_add_self, zero_add]
 
 theorem residue_liftedIndex_eq_defect_add_publicPhase
     (order : ℕ)
@@ -93,7 +97,7 @@ theorem residue_liftedIndex_eq_defect_add_publicPhase
       = defect + publicPhase defect residue scalar := by
   by_cases heven : scalar % 2 = 0
   · simp only [liftedIndex, publicPhase, heven, if_true]
-    rw [Nat.add_comm, hshift]
+    rw [Nat.add_comm order scalar, hshift scalar]
     abel
   · simp only [liftedIndex, publicPhase, heven, if_false]
     rw [← add_assoc, zmodTwo_add_self, zero_add]
