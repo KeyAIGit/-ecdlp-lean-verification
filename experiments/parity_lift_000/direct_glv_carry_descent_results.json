@@ -1,0 +1,368 @@
+{
+  "aggregate": {
+    "all_linear_factor_ranks_full": true,
+    "cases": 15,
+    "largest_order": 4021,
+    "largest_quotient_orbits": 670,
+    "largest_randomized_support_upper_bound": 313,
+    "nontrivial_cases": 12,
+    "quadratic_square_class_exact_decoders": 3,
+    "quadratic_square_class_exact_decoders_order_at_least_271": 0,
+    "split_degree_at_most_four_exact_decoders": 3,
+    "split_degree_at_most_four_exact_decoders_order_at_least_271": 0
+  },
+  "cases": [
+    {
+      "available_linear_factors": 38,
+      "beta": 36,
+      "deterministic_support_upper_bound": 1,
+      "generator": [
+        2,
+        12
+      ],
+      "lam": 25,
+      "linear_factor_rank": 5,
+      "order": 31,
+      "p": 43,
+      "quadratic_square_class_solution": {
+        "a": 0,
+        "b": 3,
+        "leading_character": 1
+      },
+      "quotient_orbits": 5,
+      "randomized_support_upper_bound": 1,
+      "rank_is_full": true,
+      "split_degree_at_most_four_solution": {
+        "coefficients": [
+          0,
+          5
+        ],
+        "constant_nonsquare": false,
+        "degree": 2
+      },
+      "target_negative": 2,
+      "target_positive": 3
+    },
+    {
+      "available_linear_factors": 68,
+      "beta": 23,
+      "deterministic_support_upper_bound": 3,
+      "generator": [
+        1,
+        18
+      ],
+      "lam": 29,
+      "linear_factor_rank": 11,
+      "order": 67,
+      "p": 79,
+      "quadratic_square_class_solution": {
+        "a": 1,
+        "b": 50,
+        "leading_character": -1
+      },
+      "quotient_orbits": 11,
+      "randomized_support_upper_bound": 2,
+      "rank_is_full": true,
+      "split_degree_at_most_four_solution": {
+        "coefficients": [
+          48,
+          50
+        ],
+        "constant_nonsquare": false,
+        "degree": 2
+      },
+      "target_negative": 5,
+      "target_positive": 6
+    },
+    {
+      "available_linear_factors": 148,
+      "beta": 32,
+      "deterministic_support_upper_bound": 0,
+      "generator": [
+        70,
+        122
+      ],
+      "lam": 7,
+      "linear_factor_rank": 3,
+      "order": 19,
+      "p": 151,
+      "quadratic_square_class_solution": {
+        "a": 0,
+        "b": 0,
+        "leading_character": 1
+      },
+      "quotient_orbits": 3,
+      "randomized_support_upper_bound": 0,
+      "rank_is_full": true,
+      "split_degree_at_most_four_solution": {
+        "coefficients": [],
+        "constant_nonsquare": false,
+        "degree": 0
+      },
+      "target_negative": 0,
+      "target_positive": 3
+    },
+    {
+      "available_linear_factors": 456,
+      "beta": 40,
+      "deterministic_support_upper_bound": 38,
+      "generator": [
+        2,
+        62
+      ],
+      "lam": 506,
+      "linear_factor_rank": 91,
+      "order": 547,
+      "p": 547,
+      "quadratic_square_class_solution": null,
+      "quotient_orbits": 91,
+      "randomized_support_upper_bound": 33,
+      "rank_is_full": true,
+      "split_degree_at_most_four_solution": null,
+      "target_negative": 48,
+      "target_positive": 43
+    },
+    {
+      "available_linear_factors": 746,
+      "beta": 384,
+      "deterministic_support_upper_bound": 84,
+      "generator": [
+        2,
+        165
+      ],
+      "lam": 824,
+      "linear_factor_rank": 161,
+      "order": 967,
+      "p": 907,
+      "quadratic_square_class_solution": null,
+      "quotient_orbits": 161,
+      "randomized_support_upper_bound": 63,
+      "rank_is_full": true,
+      "split_degree_at_most_four_solution": null,
+      "target_negative": 81,
+      "target_positive": 80
+    },
+    {
+      "available_linear_factors": 869,
+      "beta": 870,
+      "deterministic_support_upper_bound": 90,
+      "generator": [
+        3,
+        385
+      ],
+      "lam": 151,
+      "linear_factor_rank": 182,
+      "order": 1093,
+      "p": 1051,
+      "quadratic_square_class_solution": null,
+      "quotient_orbits": 182,
+      "randomized_support_upper_bound": 76,
+      "rank_is_full": true,
+      "split_degree_at_most_four_solution": null,
+      "target_negative": 86,
+      "target_positive": 96
+    },
+    {
+      "available_linear_factors": 1042,
+      "beta": 257,
+      "deterministic_support_upper_bound": 21,
+      "generator": [
+        1017,
+        688
+      ],
+      "lam": 242,
+      "linear_factor_rank": 45,
+      "order": 271,
+      "p": 1087,
+      "quadratic_square_class_solution": null,
+      "quotient_orbits": 45,
+      "randomized_support_upper_bound": 15,
+      "rank_is_full": true,
+      "split_degree_at_most_four_solution": null,
+      "target_negative": 21,
+      "target_positive": 24
+    },
+    {
+      "available_linear_factors": 1095,
+      "beta": 1207,
+      "deterministic_support_upper_bound": 102,
+      "generator": [
+        1,
+        201
+      ],
+      "lam": 93,
+      "linear_factor_rank": 208,
+      "order": 1249,
+      "p": 1303,
+      "quadratic_square_class_solution": null,
+      "quotient_orbits": 208,
+      "randomized_support_upper_bound": 89,
+      "rank_is_full": true,
+      "split_degree_at_most_four_solution": null,
+      "target_negative": 106,
+      "target_positive": 102
+    },
+    {
+      "available_linear_factors": 1591,
+      "beta": 318,
+      "deterministic_support_upper_bound": 35,
+      "generator": [
+        126,
+        1375
+      ],
+      "lam": 198,
+      "linear_factor_rank": 72,
+      "order": 433,
+      "p": 1663,
+      "quadratic_square_class_solution": null,
+      "quotient_orbits": 72,
+      "randomized_support_upper_bound": 29,
+      "rank_is_full": true,
+      "split_degree_at_most_four_solution": null,
+      "target_negative": 35,
+      "target_positive": 37
+    },
+    {
+      "available_linear_factors": 2252,
+      "beta": 1284,
+      "deterministic_support_upper_bound": 41,
+      "generator": [
+        2107,
+        1535
+      ],
+      "lam": 461,
+      "linear_factor_rank": 95,
+      "order": 571,
+      "p": 2347,
+      "quadratic_square_class_solution": null,
+      "quotient_orbits": 95,
+      "randomized_support_upper_bound": 40,
+      "rank_is_full": true,
+      "split_degree_at_most_four_solution": null,
+      "target_negative": 41,
+      "target_positive": 54
+    },
+    {
+      "available_linear_factors": 2610,
+      "beta": 2126,
+      "deterministic_support_upper_bound": 30,
+      "generator": [
+        83,
+        2009
+      ],
+      "lam": 283,
+      "linear_factor_rank": 61,
+      "order": 367,
+      "p": 2671,
+      "quadratic_square_class_solution": null,
+      "quotient_orbits": 61,
+      "randomized_support_upper_bound": 18,
+      "rank_is_full": true,
+      "split_degree_at_most_four_solution": null,
+      "target_negative": 35,
+      "target_positive": 26
+    },
+    {
+      "available_linear_factors": 2785,
+      "beta": 1014,
+      "deterministic_support_upper_bound": 30,
+      "generator": [
+        2276,
+        1015
+      ],
+      "lam": 362,
+      "linear_factor_rank": 66,
+      "order": 397,
+      "p": 2851,
+      "quadratic_square_class_solution": null,
+      "quotient_orbits": 66,
+      "randomized_support_upper_bound": 21,
+      "rank_is_full": true,
+      "split_degree_at_most_four_solution": null,
+      "target_negative": 34,
+      "target_positive": 32
+    },
+    {
+      "available_linear_factors": 3184,
+      "beta": 1527,
+      "deterministic_support_upper_bound": 70,
+      "generator": [
+        177,
+        298
+      ],
+      "lam": 130,
+      "linear_factor_rank": 135,
+      "order": 811,
+      "p": 3319,
+      "quadratic_square_class_solution": null,
+      "quotient_orbits": 135,
+      "randomized_support_upper_bound": 55,
+      "rank_is_full": true,
+      "split_degree_at_most_four_solution": null,
+      "target_negative": 70,
+      "target_positive": 65
+    },
+    {
+      "available_linear_factors": 2993,
+      "beta": 3467,
+      "deterministic_support_upper_bound": 279,
+      "generator": [
+        4,
+        1706
+      ],
+      "lam": 1683,
+      "linear_factor_rank": 578,
+      "order": 3469,
+      "p": 3571,
+      "quadratic_square_class_solution": null,
+      "quotient_orbits": 578,
+      "randomized_support_upper_bound": 267,
+      "rank_is_full": true,
+      "split_degree_at_most_four_solution": null,
+      "target_negative": 279,
+      "target_positive": 299
+    },
+    {
+      "available_linear_factors": 3261,
+      "beta": 3313,
+      "deterministic_support_upper_bound": 325,
+      "generator": [
+        4,
+        1427
+      ],
+      "lam": 1812,
+      "linear_factor_rank": 670,
+      "order": 4021,
+      "p": 3931,
+      "quadratic_square_class_solution": null,
+      "quotient_orbits": 670,
+      "randomized_support_upper_bound": 313,
+      "rank_is_full": true,
+      "split_degree_at_most_four_solution": null,
+      "target_negative": 333,
+      "target_positive": 337
+    }
+  ],
+  "claim_boundary": [
+    "This is exact finite exhaustion only for the two declared low-complexity classes.",
+    "It does not exclude irreducible factors of degree at least three, high-degree sparse polynomials, or general small arithmetic circuits.",
+    "Support values from Gaussian bases are upper bounds, not minimum-degree certificates.",
+    "The experiment is bounded toy evidence, not an asymptotic lower bound.",
+    "No secp256k1 unknown point, private key, wallet, or external target is accepted or evaluated."
+  ],
+  "conclusion": "Small exact direct descents occur only on the three tiny quotients.  Across every frozen subgroup of order at least 271, there is no exact split decoder with at most four linear factors and no exact rational square class of total degree at most two.  The complete linear-factor family has full F_2 rank, so high-support finite interpolation remains possible; the recorded constructions use tens to hundreds of factors rather than a small formula.",
+  "exact_classes": [
+    "all split squarefree R with at most four distinct F_p-linear factors and either constant square class",
+    "all rational square classes with total numerator-plus-denominator degree at most two, represented by u*(z^2+a*z+b)"
+  ],
+  "package": "DIRECT-GLV-CARRY-DESCENT-010",
+  "protocol": {
+    "nontrivial_order_floor": 271,
+    "quotient_coordinate": "z=x^3=y^2-7",
+    "random_basis_trials": 20,
+    "residual_target": "h=g*chi(y)",
+    "sparse_factor_limit": 4
+  },
+  "scope": "fifteen frozen j=0 prime-order toy subgroups; no external or production target",
+  "target": "chi(y(Q)*R(x(Q)^3)) = canonical GLV carry g(Q)"
+}

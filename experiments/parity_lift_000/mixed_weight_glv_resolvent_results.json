@@ -1,0 +1,110 @@
+{
+  "aggregate_exact_decoders": 0,
+  "aggregate_nominal_formula_instances": 1637634348,
+  "claim_boundary": "toy-only exact search; no secp256k1 target and no decoder claim",
+  "results": [
+    {
+      "aggregate_exact_decoders": 0,
+      "aggregate_nominal_formula_instances": 396211500,
+      "base_zero_counts": {
+        "det_anti": 0,
+        "x0_anti": 0,
+        "x0x2_anti": 0,
+        "x2_anti": 0
+      },
+      "dft_identity_checks": 264,
+      "n": 271,
+      "p": 1087,
+      "searches": [
+        {
+          "coefficients_per_pair": 1087,
+          "exact_decoders": [],
+          "left": "det_anti",
+          "multiplier_pairs": 72900,
+          "nominal_formula_instances": 79242300,
+          "right": "det_anti"
+        },
+        {
+          "coefficients_per_pair": 1087,
+          "exact_decoders": [],
+          "left": "x0_anti",
+          "multiplier_pairs": 72900,
+          "nominal_formula_instances": 79242300,
+          "right": "x2_anti"
+        },
+        {
+          "coefficients_per_pair": 1087,
+          "exact_decoders": [],
+          "left": "det_anti",
+          "multiplier_pairs": 72900,
+          "nominal_formula_instances": 79242300,
+          "right": "x0_anti"
+        },
+        {
+          "coefficients_per_pair": 1087,
+          "exact_decoders": [],
+          "left": "det_anti",
+          "multiplier_pairs": 72900,
+          "nominal_formula_instances": 79242300,
+          "right": "x2_anti"
+        },
+        {
+          "coefficients_per_pair": 1087,
+          "exact_decoders": [],
+          "left": "x0x2_anti",
+          "multiplier_pairs": 72900,
+          "nominal_formula_instances": 79242300,
+          "right": "det_anti"
+        }
+      ]
+    },
+    {
+      "aggregate_exact_decoders": 0,
+      "aggregate_nominal_formula_instances": 1241422848,
+      "base_zero_counts": {
+        "det_anti": 0,
+        "x0_anti": 0,
+        "x0x2_anti": 0,
+        "x2_anti": 0
+      },
+      "dft_identity_checks": 426,
+      "n": 433,
+      "p": 1663,
+      "searches": [
+        {
+          "coefficients_per_pair": 1663,
+          "exact_decoders": [],
+          "left": "det_anti",
+          "multiplier_pairs": 186624,
+          "nominal_formula_instances": 310355712,
+          "right": "det_anti"
+        },
+        {
+          "coefficients_per_pair": 1663,
+          "exact_decoders": [],
+          "left": "x0_anti",
+          "multiplier_pairs": 186624,
+          "nominal_formula_instances": 310355712,
+          "right": "x2_anti"
+        },
+        {
+          "coefficients_per_pair": 1663,
+          "exact_decoders": [],
+          "left": "det_anti",
+          "multiplier_pairs": 186624,
+          "nominal_formula_instances": 310355712,
+          "right": "x0_anti"
+        },
+        {
+          "coefficients_per_pair": 1663,
+          "exact_decoders": [],
+          "left": "det_anti",
+          "multiplier_pairs": 186624,
+          "nominal_formula_instances": 310355712,
+          "right": "x2_anti"
+        }
+      ]
+    }
+  ],
+  "schema_version": 1
+}

@@ -1,0 +1,21 @@
+{
+  "date": "2026-08-12",
+  "target": "chi_p(kappa*x^u*y^v*(1+c*x^a*y^b)) = GLV carry on every nonzero subgroup point",
+  "normal_form": {
+    "u_v": "{0,1}",
+    "a_b": "mod p-1",
+    "c": "all of F_p",
+    "constant_character": "+/-1"
+  },
+  "cases": [
+    {"p":43,"n":31,"G":[2,12],"exponent_pairs":1764,"abc_tests":75852,"formula_tests":606816,"exact_decoders":1322,"classification":"small accidental fits"},
+    {"p":79,"n":67,"G":[1,18],"exponent_pairs":6084,"abc_tests":480636,"formula_tests":3845088,"exact_decoders":172,"classification":"small accidental fits"},
+    {"p":907,"n":967,"G":[2,165],"exponent_pairs":820836,"abc_tests":744498252,"formula_tests":5955986016,"exact_decoders":0,"classification":"complete medium exhaustion"},
+    {"p":1087,"n":271,"G":[1017,688],"exponent_pairs":1179396,"abc_tests":1282003452,"formula_tests":10256027616,"exact_decoders":0,"classification":"complete medium exhaustion"}
+  ],
+  "quotient_symmetric_checks": [
+    {"p":1087,"n":271,"formula_tests":854668968,"exact_decoders":0},
+    {"p":1663,"n":433,"formula_tests":3062407848,"exact_decoders":0}
+  ],
+  "conclusion": "No scalable one-addition executor identity found; secp256k1-specific exceptions are not universally excluded."
+}
