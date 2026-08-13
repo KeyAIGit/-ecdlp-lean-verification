@@ -1,5 +1,5 @@
 {
-  "schema_version": 8,
+  "schema_version": 9,
   "date": "2026-08-12",
   "instance": "secp256k1 ordered generator G with order-three GLV endomorphism",
   "master_target": "compute g_G(Q), R3_G(Q), h_G(x(Q)^3), or the equivalent normalized Gaussian-period orientation exactly and reutilizably",
@@ -21,6 +21,8 @@
     "exact_order_six_recurrence_over_large_coefficient_field": true,
     "exact_scalar_legendre_projector_with_linear_orbit_sum": true,
     "exact_one_addition_exponential_conductor_family": true,
+    "complete_medium_one_addition_monomial_exhaustion": true,
+    "structured_nested_two_addition_exact_search": true,
     "known_sub_sqrt_admissible_carry_decoder": false,
     "known_sub_sqrt_scalar_legendre_projector": false,
     "universal_nonexistence_proved": false,
@@ -63,6 +65,10 @@
     "exact geometrically non-power rational-character carry decoders of degree o(sqrt(n))",
     "ordinary low-degree line-bundle or explicit divisor sections followed by quadratic character",
     "addition-count-only lower bounds from odd divisor support, Kummer conductor, or cover genus",
+    "complete one-addition monomial square-class search on two medium toy groups",
+    "structured quotient-symmetric nested two-addition profiles totaling 97,316,861,832 exact formula evaluations",
+    "structured character-only nested two-addition profiles totaling 58,797,459,504 exact formula evaluations",
+    "same-feature cubic GLV orbit products, which collapse to one-addition square classes",
     "exact bounded C6-invariant polynomial scalar-Legendre decoders below degree (n-1)/12",
     "exact bounded curve-rational scalar-Legendre decoders below degree (n-1)/2",
     "standard generator-blind quadratic elliptic-Gauss invariant S_3(G)^2 as an oriented sign source",
@@ -72,8 +78,8 @@
     "tested order-13441 lookup, spectrum and bounded nonlinear families"
   ],
   "open_classes": [
-    "uniform one-addition square classes M0*(1+c*M1) with short exponent chains",
-    "high-degree low-size square-class arithmetic circuits for carry",
+    "mixed-weight GLV resolvents coupling at least two nonproportional CM weight components",
+    "high-degree low-size square-class arithmetic circuits for carry outside the searched nested profiles",
     "direct nonlinear normalized-period coordinate circuit without translation-linear state",
     "quadratic-Weil or metaplectic orientation with complete public dual-data accounting",
     "Eisenstein-CM oriented square root of the elliptic Gauss projector",
@@ -110,13 +116,21 @@
     "scalar_legendre_curve_rational": "degree at least (n-1)/2",
     "scope": "representation degree; these are not arithmetic-circuit-size lower bounds"
   },
+  "coordinate_circuit_frontier": {
+    "one_addition_complete_medium_formula_evaluations": 16211988632,
+    "one_addition_complete_medium_exact_decoders": 0,
+    "nested_two_addition_structured_formula_evaluations": 156114321336,
+    "nested_two_addition_exact_decoders": 0,
+    "same_feature_glv_orbit_product": "collapses to (1+cM)^3 or 1+c^3M^3 and hence to the one-addition square-class gate",
+    "scope": "toy-only exact finite searches plus an algebraic orbit-product identity; no secp256k1 impossibility theorem"
+  },
   "conductor_frontier": {
     "innovation_identity": "[A+B]=[A]+[1+B/A]",
     "degree_weighted_budget": "c2(F_out) <= input c2 + 2*sum_additions deg(B_i/A_i)",
     "addition_count_only_bound": "false",
     "secp_counterexample": "m=127 gives b_m=0 and c2(x^(2^m)-x)=2^128 with one subtraction and 127 squarings"
   },
-  "next_question": "Can any uniformly generated one-addition square class M0(Q)*(1+c*M1(Q)), with monomial inputs and short exponent addition chains, satisfy chi_p(F(Q))=g_G(Q) on every nonzero subgroup point while remaining total, generator-covariant, and reusable on chosen multiples?",
+  "next_question": "Can a generator-sensitive mixed-weight GLV determinant, resultant, or theta/net resolvent coupling at least two nonproportional CM weight components produce the exact carry square class without collapsing to public orbit norms or importing hidden orientation data?",
   "source_branches": [
     "research/parity-lift-000",
     "research/direct-glv-carry-descent-010"
@@ -135,7 +149,9 @@
     "NORMALIZED-PERIOD-LINEAR-STATE-BARRIER-035-SUPPLEMENT",
     "RATIONAL-CHARACTER-DEGREE-BARRIER-036-SUPPLEMENT",
     "GENERATOR-ORIENTED-ELLIPTIC-JACOBI-037",
-    "ADDITIVE-SQUARE-CLASS-CONDUCTOR-039"
+    "ADDITIVE-SQUARE-CLASS-CONDUCTOR-039",
+    "ONE-ADDITION-SQUARE-CLASS-NORMAL-FORM-040",
+    "NESTED-TWO-ADDITION-COORDINATE-041"
   ],
-  "claim_boundary": "No unknown production target is accepted, the conductor counterfamily is not a decoder, scalar-Legendre is not identified with carry, no classical sub-square-root shifted-Legendre recovery is claimed, no universal nonlinear circuit lower bound is claimed, and no sub-square-root ECDLP algorithm is claimed."
+  "claim_boundary": "No unknown production target is accepted, finite coordinate exhaustions are not secp256k1 impossibility theorems, scalar-Legendre is not identified with carry, no classical sub-square-root shifted-Legendre recovery is claimed, no universal nonlinear circuit lower bound is claimed, and no sub-square-root ECDLP algorithm is claimed."
 }
