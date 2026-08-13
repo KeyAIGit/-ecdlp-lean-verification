@@ -41,7 +41,7 @@ for a fixed `epsilon>0`. Charge tables, coefficients, branch bits, full dual sta
 
 Treat the existing line as input and verify exact file names before using it:
 
-1. `Y_G^2=x^3+7 mod K_H` and `Y_G(x([k]G))/y([k]G]=(-1)^k`.
+1. `Y_G^2=x^3+7 mod K_H` and `Y_G(x([k]G))/y([k]G)=(-1)^k`.
 2. `Y_(-G)=-Y_G`, while `K_H` is fixed.
 3. Miller, division-polynomial, endpoint, Ward/net, common-basis determinant, row-rescaling, ordinary theta-characteristic, standard metaplectic, and local p-adic routes are closed in their declared gauge-even or generator-blind models.
 4. Dyadic branch expansion, full Fourier support, explicit root or coefficient materialization, and standard level-`n` states require large state.
@@ -108,6 +108,30 @@ det(I+T_G+t*d_G*ev_Q)=2+t*(-1)^k.
 
 This determinant is exact, generator-sensitive, and nonmultiplicative. It is not an algorithm because its natural dimension is `n`.
 
+### Exact C3 boundary already proved
+
+Read:
+
+```text
+archive/untrusted_intake/parity_lift_000/UORC056_LOCAL_SUPPORT_QUERY_BOUND_C3.md
+```
+
+A deterministic exact algorithm whose Q-dependent primitives are membership
+queries in public subgroup subsets of support at most `b` must satisfy
+
+```text
+q*b >= (n-1)/2.
+```
+
+In particular, translated singleton-defect probes require at least `(n-1)/2`
+queries, even with adaptive choice and arbitrary nonlinear post-processing.
+Therefore direct evaluation of the alternating resolvent through translated
+`delta_(-G)` probes is closed. Do not repeat that route or merely group the
+same local probes into bounded-support blocks.
+
+A surviving construction must use a genuinely nonlocal full-support observable
+whose algebraic evaluation itself has sub-square-root total cost.
+
 ### Primary question
 
 Determine whether
@@ -155,7 +179,12 @@ For every candidate identify the actual dimension, representation of `ev_Q`, num
 
 A generic structured algorithm quasi-linear in dimension `n` is rejected.
 
-#### 3. Nonlinear partial-resolvent composition
+#### 3. Nonlinear partial-resolvent composition beyond local-support probes
+
+The C3 theorem already rejects any implementation whose Q-dependent interface
+reduces to `q` membership probes of support `b` with `q*b<(n-1)/2`.
+A new summary must violate that model by evaluating a nonlocal algebraic object
+directly.
 
 Let
 
@@ -244,7 +273,7 @@ unless a complete positive construction genuinely satisfies every gate.
 
 ### First action
 
-Reproduce the package, then answer this exact question:
+Reproduce both C2 and C3. Treat translated singleton defects and bounded-support membership blocks as closed. Then answer this exact question:
 
 ```text
 Can det(I+T_G+delta_(-G)ev_Q) be reduced to a constant-size
