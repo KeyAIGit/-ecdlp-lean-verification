@@ -1,0 +1,99 @@
+name: Rank-two net multi-cell
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/RANK_TWO_NET_MULTI_CELL_049.md'
+      - 'experiments/parity_lift_000/rank_two_net_multi_cell.py'
+      - 'Ecdlp/Proved/RankTwoNetMultiCell.lean'
+      - '.github/workflows/rank-two-net-multi-cell.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact rank-two determinant replay
+        run: |
+          python3 experiments/parity_lift_000/rank_two_net_multi_cell.py \
+            --out /tmp/rank_two_net_multi_cell_results.json \
+            > /tmp/rank-two-net-multi-cell.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('/tmp/rank_two_net_multi_cell_results.json').read_text())
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert aggregate['cases'] == 6
+          assert aggregate['total_normalization_checks'] == 432
+          assert aggregate['total_three_point_determinant_checks'] == 3592
+          assert aggregate['total_zero_sum_collinearity_checks'] == 48
+          assert aggregate['total_high_index_determinant_checks'] == 88
+          assert aggregate['total_fixed_character_candidates'] == 24
+          assert aggregate['all_rank_two_determinants_factor']
+          assert aggregate['all_fixed_characters_reject_parity']
+          assert secp['bit_length'] == 256
+          assert secp['identity_is_index_symbolic']
+          assert secp['valid_for_public_n_dependent_vectors']
+          assert secp['three_point_determinant_factor'] == '-W(u+v+w)W(u-v)W(u-w)W(v-w)/(W(u)^3W(v)^3W(w)^3)'
+          assert not secp['does_smallest_rank_two_minor_select_oriented_sqrt']
+          assert secp['selected_successor'] == 'FROBENIUS-STICKELBERGER-DETERMINANT-050'
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/RankTwoNetMultiCell.lean; then
+            echo '::error::Rank-two determinant theorem contains sorry'
+            exit 1
+          fi
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            for attempt in 1 2 3 4; do
+              if sh /tmp/elan-init.sh -y --default-toolchain none; then
+                installed=1
+                echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+                break
+              fi
+              sleep $((attempt * 3))
+            done
+          fi
+          if [ "$installed" = 0 ]; then
+            echo 'elan unavailable; downloading the pinned Lean distribution directly'
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check rank-two determinant identities
+        run: lake build Ecdlp.Proved.RankTwoNetMultiCell
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rank-two-net-multi-cell-results
+          path: |
+            /tmp/rank_two_net_multi_cell_results.json
+            /tmp/rank-two-net-multi-cell.log
+          retention-days: 90
