@@ -45,7 +45,6 @@ theorem sexticCube_overQuadraticProjector_isInvariant
       sexticBase ^ 3 / quadraticBase := by
   rw [hsextic, hquadratic, mul_pow, hcube]
   field_simp [hquadratic_ne, hquadraticBase_ne]
-  ring
 
 /-- A product whose total character is trivial is a generator-blind Jacobi
 ratio. -/
@@ -64,7 +63,6 @@ theorem balancedMixedJacobiRatio_isInvariant
       cubicBase * quadraticBase / sexticBase := by
   rw [hcubic, hquadratic, hsextic, hfactor]
   field_simp [hcubicInv_ne, hquadraticInv_ne, hsexticBase_ne]
-  ring
 
 /-- Opposite quadratic orientations have the same invariant square. -/
 theorem orientedCube_opposite_sameSquare

@@ -1,0 +1,97 @@
+name: Quadratic Weil orientation
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/QUADRATIC_WEIL_ORIENTATION_038.md'
+      - 'experiments/parity_lift_000/quadratic_weil_orientation.py'
+      - 'Ecdlp/Proved/QuadraticWeilOrientation.lean'
+      - '.github/workflows/quadratic-weil-orientation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact Weil-orientation replay
+        run: |
+          python3 experiments/parity_lift_000/quadratic_weil_orientation.py \
+            --out /tmp/quadratic_weil_orientation_results.json \
+            > /tmp/quadratic-weil-orientation.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('/tmp/quadratic_weil_orientation_results.json').read_text())
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert aggregate['cases'] == 6
+          assert aggregate['all_gauss_scaling_passed']
+          assert aggregate['all_gauss_squares_passed']
+          assert aggregate['total_dual_ratio_checks'] == 31280832
+          assert aggregate['total_selector_free_contraction_checks'] == 10656
+          assert aggregate['total_full_dual_sum_cancellation_checks'] == 10656
+          assert aggregate['total_incidence_checks'] == 10656
+          assert secp['n_mod_12'] == 1
+          assert secp['half_frobenius_residue'] == secp['n'] - 1
+          assert secp['single_gauss_terms'] > secp['ceil_sqrt_n']
+          assert secp['embedding_degree'] > secp['ceil_sqrt_n']
+          assert secp['schrodinger_dimension'] > secp['ceil_sqrt_n']
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/QuadraticWeilOrientation.lean; then
+            echo '::error::Quadratic-Weil theorem contains sorry'
+            exit 1
+          fi
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            for attempt in 1 2 3 4; do
+              if sh /tmp/elan-init.sh -y --default-toolchain none; then
+                installed=1
+                echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+                break
+              fi
+              sleep $((attempt * 3))
+            done
+          fi
+          if [ "$installed" = 0 ]; then
+            echo 'elan unavailable; downloading the pinned Lean distribution directly'
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check Weil identities
+        run: lake build Ecdlp.Proved.QuadraticWeilOrientation
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: quadratic-weil-orientation-results
+          path: |
+            /tmp/quadratic_weil_orientation_results.json
+            /tmp/quadratic-weil-orientation.log
+          retention-days: 90

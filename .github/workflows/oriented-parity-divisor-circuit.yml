@@ -1,0 +1,103 @@
+name: Oriented parity divisor circuit
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/ORIENTED_PARITY_DIVISOR_CIRCUIT_046.md'
+      - 'experiments/parity_lift_000/oriented_parity_divisor_circuit.py'
+      - 'Ecdlp/Proved/OrientedParityDivisorCircuit.lean'
+      - '.github/workflows/oriented-parity-divisor-circuit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact oriented-divisor replay
+        run: |
+          python3 experiments/parity_lift_000/oriented_parity_divisor_circuit.py \
+            --out /tmp/oriented_parity_divisor_circuit_results.json \
+            > /tmp/oriented-parity-divisor-circuit.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('/tmp/oriented_parity_divisor_circuit_results.json').read_text())
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert aggregate['cases'] == 6
+          assert aggregate['total_kummer_pairs'] == 606
+          assert aggregate['total_parity_checks'] == 1212
+          assert aggregate['total_generator_orientations'] == 1212
+          assert aggregate['total_scalar_decoder_checks'] == 1212
+          assert aggregate['all_square_root_congruences_passed']
+          assert aggregate['all_parity_decoders_exact']
+          assert aggregate['all_generator_orbits_distinct']
+          assert aggregate['all_negations_global']
+          assert aggregate['all_scalar_factorizations_exact']
+          assert aggregate['all_toy_oriented_sqrts_maximal_degree']
+          assert secp['bit_length'] == 256
+          assert secp['kernel_degree'] == secp['kummer_pairs']
+          assert secp['orientation_square_root_choices_log2'] == secp['kummer_pairs']
+          assert secp['distinct_generator_orientations'] == secp['n'] - 1
+          assert secp['explicit_product_tree_multiplications'] == secp['kummer_pairs'] - 1
+          assert secp['pollard_scale'] == 2**128
+          assert secp['selected_successor'] == 'ELLIPTIC-NET-ORIENTED-SQUARE-ROOT-047'
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/OrientedParityDivisorCircuit.lean; then
+            echo '::error::Oriented parity divisor theorem contains sorry'
+            exit 1
+          fi
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            for attempt in 1 2 3 4; do
+              if sh /tmp/elan-init.sh -y --default-toolchain none; then
+                installed=1
+                echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+                break
+              fi
+              sleep $((attempt * 3))
+            done
+          fi
+          if [ "$installed" = 0 ]; then
+            echo 'elan unavailable; downloading the pinned Lean distribution directly'
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check oriented square-root identities
+        run: lake build Ecdlp.Proved.OrientedParityDivisorCircuit
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: oriented-parity-divisor-circuit-results
+          path: |
+            /tmp/oriented_parity_divisor_circuit_results.json
+            /tmp/oriented-parity-divisor-circuit.log
+          retention-days: 90
