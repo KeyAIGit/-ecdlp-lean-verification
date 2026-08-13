@@ -163,7 +163,7 @@ def harness_digest_resolves(relative_path: str, digest: str) -> bool:
 
 
 def github_push_before_sha() -> str | None:
-    """Return the immutable pre-push commit from a GitHub push event."""
+    """Return the pre-push commit, or ``None`` for a validated new-ref push."""
     if os.environ.get("GITHUB_EVENT_NAME") != "push":
         return None
     event_path = os.environ.get("GITHUB_EVENT_PATH")
@@ -174,7 +174,11 @@ def github_push_before_sha() -> str | None:
     except (OSError, json.JSONDecodeError) as exc:
         raise ValueError(f"cannot read GitHub push event: {exc}") from exc
     before = event.get("before")
-    if not isinstance(before, str) or not HEX40_RE.fullmatch(before) or before == "0" * 40:
+    if not isinstance(before, str) or not HEX40_RE.fullmatch(before):
+        raise ValueError("GitHub push event has no valid before commit")
+    if before == "0" * 40:
+        if event.get("created") is True:
+            return None
         raise ValueError("GitHub push event has no valid before commit")
     return before
 
@@ -213,6 +217,11 @@ def protected_base_anchors(policy: dict[str, Any]) -> list[dict[str, str]]:
             if ancestor.returncode:
                 raise ValueError("GitHub push before commit is not an ancestor of HEAD")
             commit = push_before
+        elif os.environ.get("GITHUB_EVENT_NAME") == "push":
+            # A validated new-ref event has no predecessor. The protected merge
+            # base itself is the immutable comparison point; do not fall back to
+            # HEAD^1 and accidentally attribute branch creation to a main rewrite.
+            pass
         else:
             parent = subprocess.run(
                 ["git", "rev-parse", "HEAD^1"],
