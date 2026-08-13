@@ -1,0 +1,85 @@
+name: One-addition executor gate
+
+on:
+  push:
+    branches:
+      - research/one-addition-executor-gate-oa1
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/ONE_ADDITION_EXECUTOR_GATE_OA1.md'
+      - 'experiments/parity_lift_000/one_addition_executor_gate.py'
+      - 'Ecdlp/Proved/OneAdditionExecutorGate.lean'
+      - '.github/workflows/one-addition-executor-gate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact identity and decoder screen
+        run: |
+          python3 experiments/parity_lift_000/one_addition_executor_gate.py \
+            --out /tmp/one_addition_executor_gate_results.json \
+            > /tmp/one-addition-executor-gate.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/one_addition_executor_gate_results.json').read_text()
+          )
+          aggregate = data['aggregate']
+          print(json.dumps(aggregate, indent=2, sort_keys=True))
+          assert aggregate['identity_cases'] == 15
+          assert aggregate['all_identity_cases_passed']
+          assert aggregate['all_identity_zero_counts_equal_six']
+          assert aggregate['screen_cases'] == 5
+          assert aggregate['unrestricted_x_exponent_cases'] == 2
+          assert aggregate['exact_carry_decoders'] == 0
+          assert aggregate['exact_R3_decoders'] == 0
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/OneAdditionExecutorGate.lean; then
+            echo '::error::One-addition theorem contains sorry'
+            exit 1
+          fi
+
+      - name: Install elan with retries
+        run: |
+          curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+            https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            -o /tmp/elan-init.sh
+          for attempt in 1 2 3 4 5 6 7 8; do
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              break
+            fi
+            if [ "$attempt" = 8 ]; then
+              echo '::error::elan installation failed after retries'
+              exit 1
+            fi
+            rm -rf "$HOME/.elan"
+            sleep $((attempt * 5))
+          done
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check cubic factor core
+        run: lake build Ecdlp.Proved.OneAdditionExecutorGate
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: one-addition-executor-gate-results
+          path: |
+            /tmp/one_addition_executor_gate_results.json
+            /tmp/one-addition-executor-gate.log
+          retention-days: 90
