@@ -1,0 +1,88 @@
+name: Mixed-weight GLV resolvent
+
+on:
+  push:
+    branches:
+      - research/direct-glv-carry-descent-010
+    paths:
+      - 'experiments/parity_lift_000/mixed_weight_glv_resolvent.py'
+      - 'experiments/parity_lift_000/mixed_weight_glv_resolvent_results.json'
+      - 'Ecdlp/Proved/MixedWeightGlvResolvent.lean'
+      - '.github/workflows/mixed-weight-glv-resolvent.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact translated-resolvent replay
+        run: |
+          python3 experiments/parity_lift_000/mixed_weight_glv_resolvent.py \
+            --out /tmp/mixed_weight_glv_resolvent_results.json \
+            > /tmp/mixed-weight-glv-resolvent.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('/tmp/mixed_weight_glv_resolvent_results.json').read_text())
+          assert data['aggregate_nominal_formula_instances'] == 1_637_634_348
+          assert data['aggregate_exact_decoders'] == 0
+          by_order = {row['n']: row for row in data['results']}
+          assert by_order[271]['dft_identity_checks'] == 264
+          assert by_order[271]['aggregate_nominal_formula_instances'] == 396_211_500
+          assert by_order[271]['aggregate_exact_decoders'] == 0
+          assert by_order[433]['dft_identity_checks'] == 426
+          assert by_order[433]['aggregate_nominal_formula_instances'] == 1_241_422_848
+          assert by_order[433]['aggregate_exact_decoders'] == 0
+          assert all(
+              count == 0
+              for row in data['results']
+              for count in row['base_zero_counts'].values()
+          )
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/MixedWeightGlvResolvent.lean; then
+            echo '::error::Mixed-weight GLV theorem contains sorry'
+            exit 1
+          fi
+
+      - name: Install elan with retries
+        run: |
+          curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+            https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            -o /tmp/elan-init.sh
+          for attempt in 1 2 3 4 5 6 7 8; do
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              break
+            fi
+            if [ "$attempt" = 8 ]; then
+              echo '::error::elan installation failed after retries'
+              exit 1
+            fi
+            rm -rf "$HOME/.elan"
+            sleep $((attempt * 5))
+          done
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check C3 factorization core
+        run: lake build Ecdlp.Proved.MixedWeightGlvResolvent
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mixed-weight-glv-resolvent-results
+          path: |
+            /tmp/mixed_weight_glv_resolvent_results.json
+            /tmp/mixed-weight-glv-resolvent.log
+          retention-days: 90
