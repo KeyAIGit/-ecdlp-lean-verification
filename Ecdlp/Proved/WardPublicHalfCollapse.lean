@@ -80,6 +80,30 @@ def publicPhase
     (defect : ZMod 2) (residue : ℕ → ZMod 2) (scalar : ℕ) : ZMod 2 :=
   if scalar % 2 = 0 then residue scalar else defect + residue scalar
 
+/-- The product of two public phases has the exact endpoint normal form: the
+sum of the two residue bits plus the parity character of the segment length. -/
+theorem publicPhase_pair_normalForm
+    (defect : ZMod 2)
+    (residue : ℕ → ZMod 2)
+    {left right : ℕ}
+    (hle : left ≤ right) :
+    publicPhase defect residue left + publicPhase defect residue right
+      = residue left + residue right
+        + (if (right - left) % 2 = 0 then 0 else defect) := by
+  rcases mod_two_cases left with hleft | hleft <;>
+    rcases mod_two_cases right with hright | hright
+  · have hdiff : (right - left) % 2 = 0 := by omega
+    simp [publicPhase, hleft, hright, hdiff]
+  · have hdiff : (right - left) % 2 = 1 := by omega
+    simp [publicPhase, hleft, hright, hdiff]
+    ring
+  · have hdiff : (right - left) % 2 = 1 := by omega
+    simp [publicPhase, hleft, hright, hdiff]
+    ring
+  · have hdiff : (right - left) % 2 = 0 := by omega
+    simp [publicPhase, hleft, hright, hdiff]
+    ring
+
 /-- If shifting the residue index by one odd period adds the constant defect,
 then the residue selected by the public-half Ward construction is exactly the
 defect plus the public phase. The putative nonconstant midpoint observable has
