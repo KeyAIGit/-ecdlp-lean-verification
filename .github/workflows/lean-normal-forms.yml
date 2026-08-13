@@ -1,5 +1,6 @@
 name: Lean normal forms
 
+# Focused kernel check for the three Track A normal-form modules.
 on:
   push:
     branches:
