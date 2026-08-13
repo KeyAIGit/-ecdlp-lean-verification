@@ -13,7 +13,8 @@ public y-coordinate returns either `1` or `-1`.  The file also records the
 binary product-tree gate arithmetic.
 
 The file does not formalize elliptic curves, Kummer kernel polynomials,
-interpolation, divisor degrees, determinant complexity, secp256k1, or ECDLP.
+interpolation, branch cardinalities, divisor degrees, determinant complexity,
+secp256k1, or ECDLP.
 -/
 
 namespace Ecdlp.ParityLift
@@ -72,12 +73,6 @@ theorem orientedRatio_eq_negOne
     (horiented : oriented = -y) :
     oriented / y = -1 := by
   simp [horiented, hy]
-
-/-- There are two independent Boolean branch choices per split component. -/
-theorem booleanOrientation_card
-    (ι : Type*) [Fintype ι] :
-    Fintype.card (ι → Bool) = 2 ^ Fintype.card ι := by
-  simp
 
 /-- A binary product tree with `leaves` inputs and at most one new component per
 multiplication needs at least `leaves - 1` gates.  The structural premise is
