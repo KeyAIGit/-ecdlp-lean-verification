@@ -1,0 +1,109 @@
+name: UORC056 translated quarter-kernel evaluator
+
+on:
+  push:
+    branches:
+      - research/uorc056-uniform-circuit
+    paths:
+      - 'Ecdlp/Proved/OrientedHalfDivisorTraceEvaluator.lean'
+      - 'experiments/parity_lift_000/uorc056_translated_quarter_kernel.py'
+      - '.github/workflows/oriented-half-divisor-trace-evaluator.yml'
+  pull_request:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - 'Ecdlp/Proved/OrientedHalfDivisorTraceEvaluator.lean'
+      - 'experiments/parity_lift_000/uorc056_translated_quarter_kernel.py'
+      - '.github/workflows/oriented-half-divisor-trace-evaluator.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact translated quarter-kernel replay
+        run: |
+          python3 experiments/parity_lift_000/uorc056_translated_quarter_kernel.py \
+            --out /tmp/uorc056_translated_quarter_kernel_results.json \
+            > /tmp/uorc056-translated-quarter-kernel.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/uorc056_translated_quarter_kernel_results.json').read_text()
+          )
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert aggregate['cases'] == 4
+          assert aggregate['total_zero_test_checks'] == 1200
+          assert aggregate['total_trace_ratio_checks'] == 1200
+          assert aggregate['all_translated_set_identities_passed']
+          assert aggregate['all_pell_identities_passed']
+          assert aggregate['all_oriented_root_bridges_passed']
+          assert aggregate['all_generator_negation_checks_passed']
+          assert aggregate['exact_evaluator_normal_form_found']
+          assert not aggregate['full_cost_gate_passed']
+          assert not aggregate['public_parity_oracle_found']
+          assert not aggregate['sub_sqrt_ecdlp_found']
+          assert secp['bit_length'] == 256
+          assert secp['n_mod_4'] == 1
+          assert secp['quarter_kernel_degree'] == (secp['n'] - 1) // 4
+          assert secp['trace_a_degree_upper_bound'] == (secp['n'] - 1) // 2
+          assert secp['explicit_representation_is_theta_n']
+          assert not secp['full_cost_gate_passed']
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/OrientedHalfDivisorTraceEvaluator.lean; then
+            echo '::error::Trace evaluator theorem contains sorry'
+            exit 1
+          fi
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            for attempt in 1 2 3 4; do
+              if sh /tmp/elan-init.sh -y --default-toolchain none; then
+                installed=1
+                echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+                break
+              fi
+              sleep $((attempt * 3))
+            done
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check trace evaluator core
+        run: lake build Ecdlp.Proved.OrientedHalfDivisorTraceEvaluator
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-translated-quarter-kernel-results
+          path: |
+            /tmp/uorc056_translated_quarter_kernel_results.json
+            /tmp/uorc056-translated-quarter-kernel.log
+          retention-days: 90
