@@ -1,0 +1,67 @@
+name: Multiplicative spectrum arithmetic jet
+
+on:
+  push:
+    branches:
+      - research/direct-glv-carry-descent-010
+    paths:
+      - 'experiments/parity_lift_000/canonical_torsion_lift_enumerator.cpp'
+      - 'experiments/parity_lift_000/c068_frozen_spectrum.py'
+      - 'archive/untrusted_intake/parity_lift_000/MULTIPLICATIVE_SPECTRUM_ARITHMETIC_JET_C068.md'
+      - '.github/workflows/multiplicative-spectrum-arithmetic-jet.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile frozen torsion-lift enumerator
+        run: |
+          g++ -O3 -std=c++17 \
+            experiments/parity_lift_000/canonical_torsion_lift_enumerator.cpp \
+            -o /tmp/c068-enumerator
+          mkdir -p /tmp/c068
+
+      - name: Enumerate six frozen arithmetic-jet sequences
+        run: |
+          /tmp/c068-enumerator 14113051 1085431 275359 6864305 /tmp/c068/ux_a.bin /tmp/c068/a.json
+          /tmp/c068-enumerator 14919511 414259 2608752 2664509 /tmp/c068/ux_b.bin /tmp/c068/b.json
+          /tmp/c068-enumerator 28468039 451837 17305150 18762615 /tmp/c068/ux_c.bin /tmp/c068/c.json
+          /tmp/c068-enumerator 48468247 932101 32417074 5168005 /tmp/c068/ux_d.bin /tmp/c068/d.json
+          /tmp/c068-enumerator 49435999 1765741 7239915 2924703 /tmp/c068/ux_e.bin /tmp/c068/e.json
+          /tmp/c068-enumerator 54919927 677947 28863717 33322957 /tmp/c068/ux_f.bin /tmp/c068/f.json
+
+      - name: Run matched C6 quotient spectrum gate
+        run: |
+          python3 experiments/parity_lift_000/c068_frozen_spectrum.py > /tmp/c068.log
+          python3 - <<'PY'
+          import json
+          result=json.load(open('/tmp/c068_results.json'))
+          aggregate=result['aggregate']
+          assert len(result['cases']) == 6
+          assert aggregate['phase_q99_exceedances'] == 0
+          assert aggregate['quadratic_q99_exceedances'] == 1
+          assert aggregate['phase_largest_two_above_q95'] is False
+          assert aggregate['quadratic_largest_two_above_q95'] is False
+          assert aggregate['any_phase_reaches_inverse_log'] is False
+          assert aggregate['admitted_phase_signal'] is False
+          assert aggregate['admitted_quadratic_signal'] is False
+          largest=result['cases'][-1]
+          assert largest['n'] == 1765741
+          assert abs(largest['phase_maximum']-0.00677178829597709) < 1e-12
+          assert abs(largest['quadratic_maximum']-0.006298389757200251) < 1e-12
+          PY
+
+      - name: Upload frozen result
+        uses: actions/upload-artifact@v4
+        with:
+          name: multiplicative-spectrum-arithmetic-jet-c068
+          path: |
+            /tmp/c068_results.json
+            /tmp/c068.log
+          retention-days: 90
