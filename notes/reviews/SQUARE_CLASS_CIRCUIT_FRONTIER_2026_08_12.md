@@ -2,9 +2,9 @@
 
 Date: 2026-08-12
 
-Status: **structural reduction after linear-state, rational-degree, one-addition, and structured nested two-addition barriers; no general arithmetic-circuit lower bound and no decoder**.
+Status: **structural reduction after linear-state, rational-degree, one-addition, nested two-addition, and translated mixed-weight coordinate gates; no general circuit lower bound and no decoder**.
 
-## 1. Exact target
+## Exact target
 
 The target remains
 
@@ -14,99 +14,76 @@ g_G(Q)=g_G(G)*sign(U_G(Q)),
 
 or any publicly equivalent exact output `R3_G(Q)` or `h_G(x(Q)^3)`.
 
-A direct quadratic-character coordinate decoder has the form
+## Completed coordinate gates
 
 ```text
-chi_p(F_G(Q))=g_G(Q).
+one-addition monomial class:
+  complete medium exhaustion, zero exact decoders;
+
+nested two-addition quotient and direct-character profiles:
+  156,114,321,336 nominal exact formula evaluations,
+  zero exact decoders;
+
+same-feature cubic GLV orbit product:
+  exact collapse to one-addition square class.
 ```
 
-The rational-character degree theorem forces square-root-scale degree, but repeated squaring prevents degree alone from becoming a circuit-size lower bound.
+## Translated mixed-weight determinant
 
-## 2. Square-class innovations
-
-In `K=F_p(E)` modulo squares,
+For the first public translated characteristic
 
 ```text
-[F*G]=[F]+[G],
-[1/F]=[F],
-[F^2]=0,
-[F^(odd)]=[F],
-[F^p]=[F].
+M_ij(Q,R)=x(phi^i Q + phi^j R),
 ```
 
-An addition contributes one new class:
+the matrix is C3-circulant after public row scaling. Its DFT decomposition has one exact-square component. The anti-Kummer plus/minus determinant reduces, modulo a square denominator and public constants, to
 
 ```text
-[F+G]=[F]+[1+G/F].
+y(Q)*x(Q)^3*R4(X^3,x(Q)^3;7),
 ```
 
-Package 039 proves that one such innovation can already have conductor above `sqrt(n)` after a short squaring chain. Thus degree, conductor, genus, odd support, and addition count do not separately lower-bound circuit size strongly enough.
+where `R4` has degree four in the quotient coordinate. Thus the natural translated determinant returns to a low-degree direct coordinate square class.
 
-## 3. Exact coordinate gates completed
+A scalar pullback only permutes Fourier frequencies, so a single pulled-back copy cannot amplify the base spectrum into carry.
 
-### One addition
-
-Every one-addition monomial square class has form
+The stronger exact pencils
 
 ```text
-kappa*x^u*y^v*(1+c*x^a*y^b).
+F([m]Q)+c*G([ell]Q)
 ```
 
-Complete medium exhaustions over all exponent pairs and all constants produced zero exact carry decoders.
-
-### Nested two additions
-
-The quotient class
+were exhausted over all nonzero `m,ell`, all `c`, and nine declared component pairs on the medium groups of orders 271 and 433:
 
 ```text
-H=1+c1*z^a,
-F=kappa*z^u*H^epsilon*(1+c2*z^b*H^t),
-z=x^3,
+nominal exact formula instances: 1,637,634,348
+exact carry decoders:            0
 ```
 
-and a direct full-point character-symmetry branch were searched exactly in predeclared structured profiles.
+This is bounded toy evidence, not a secp256k1 impossibility theorem.
 
-```text
-nominal formula evaluations: 156,114,321,336
-exact decoders:              0
-```
+## Current frontier
 
-This is bounded structured evidence, not a universal theorem.
-
-## 4. Same-feature GLV symmetrization collapses
-
-For `M(phi Q)=beta^a M(Q)` and `beta^2+beta+1=0`, the orbit product
-
-```text
-product_(j=0..2)(1+c*beta^(a*j)M)
-```
-
-is either `(1+cM)^3` or `1+c^3M^3`. Modulo squares it returns to the one-addition gate. Therefore a naive third addition obtained by multiplying the three GLV translates is not a new class.
-
-## 5. Current nonlinear frontier
-
-The next admitted coordinate object must couple at least two nonproportional CM weight components. The first class is a generator-sensitive mixed-weight determinant, resultant, or theta/net resolvent whose anti-invariant output survives public-factor reduction.
+The bounded-pole translated-coordinate realization of mixed weights is no longer the priority. A new survivor must leave the common bounded-pole coordinate category, most naturally through genuinely different theta characteristics or a Heisenberg/metaplectic intertwiner.
 
 Immediate rejection tests:
 
-1. pure monomial orbit columns factor into public monomials;
-2. same-feature orbit products collapse to one addition;
-3. character-balanced expressions cancel the generator character;
-4. fitted coefficients or selected dual-orbit data are hidden advice;
-5. an empirical correlation without an exact identity is not admissible.
+1. one common theta basis factors into a multiplicative net ratio;
+2. scalar row rescaling contributes only the supplied row-factor product;
+3. translated `x/y` characteristics collapse after C3 diagonalization;
+4. one scalar pullback only permutes Fourier magnitudes;
+5. fitted coefficients, dual-orbit orientation, or label tables are hidden advice.
 
-## 6. Current answer
+## Current answer
 
 ```text
 Low-degree rational-character decoder                     excluded
 Explicit translation-linear state                         excluded
 Complete medium one-addition monomial class               zero decoders
-Structured nested two-addition coordinate profiles        zero decoders
-Same-feature GLV orbit product                             collapses
-Mixed-weight GLV resolvent                                 open
+Structured nested two-addition profiles                   zero decoders
+Translated mixed-weight determinant                       low-degree collapse
+Complete declared two-pullback mixed pencils              zero decoders
+Genuinely twisted theta/Heisenberg characteristic          open
 Canonical p-adic/analytic orientation circuit             open
 Public carry or hard-R3 decoder                            absent
 Classical sub-square-root ECDLP algorithm                  absent
 ```
-
-The surviving coordinate problem is no longer “add another nonlinear gate.” It is whether mixing distinct CM weights can create a genuinely generator-oriented square class rather than another public norm or balanced invariant.
