@@ -284,6 +284,6 @@ Any positive formula must include a public evaluator and complete preprocessing,
 
 - `mixed_weight_glv_resolvent.py` verifies the C3 DFT identities and performs the complete two-pullback searches.
 - `mixed_weight_glv_resolvent_results.json` freezes the exact counts.
-- `Ecdlp/Proved/MixedWeightGlvResolvent.lean` formalizes the C3 Fourier product identity and the anti/symmetric polynomial collapses.
+- `Ecdlp/Proved/MixedWeightGlvResolvent.lean` formalizes the C3 Fourier product identity and the generic odd-factor decomposition. The explicit R4/S5 reductions are checked by exact polynomial replay in the Python package.
 
 The Lean file does not formalize elliptic curves, Fourier analysis, character-sum bounds, carry correctness, or ECDLP.
