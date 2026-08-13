@@ -10,6 +10,7 @@ on:
       - 'Ecdlp/Proved/ConjugatedProductNormalForm.lean'
       - 'Ecdlp/Proved/EndpointNormalFormConsequences.lean'
       - 'Ecdlp/Proved/WardSubtractionSquareClass.lean'
+      - 'Ecdlp/Proved/WardPublicHalfCollapse.lean'
       - '.github/workflows/lean-normal-forms.yml'
   pull_request:
     paths:
@@ -17,6 +18,7 @@ on:
       - 'Ecdlp/Proved/ConjugatedProductNormalForm.lean'
       - 'Ecdlp/Proved/EndpointNormalFormConsequences.lean'
       - 'Ecdlp/Proved/WardSubtractionSquareClass.lean'
+      - 'Ecdlp/Proved/WardPublicHalfCollapse.lean'
       - '.github/workflows/lean-normal-forms.yml'
   workflow_dispatch:
 
@@ -35,6 +37,7 @@ jobs:
           ! grep -nE '^[[:space:]]*(sorry|admit)([[:space:]]|$)' Ecdlp/Proved/ConjugatedProductNormalForm.lean
           ! grep -nE '^[[:space:]]*(sorry|admit)([[:space:]]|$)' Ecdlp/Proved/EndpointNormalFormConsequences.lean
           ! grep -nE '^[[:space:]]*(sorry|admit)([[:space:]]|$)' Ecdlp/Proved/WardSubtractionSquareClass.lean
+          ! grep -nE '^[[:space:]]*(sorry|admit)([[:space:]]|$)' Ecdlp/Proved/WardPublicHalfCollapse.lean
       - name: Install Lean
         run: |
           curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
@@ -47,7 +50,9 @@ jobs:
           lake build Ecdlp.Proved.ConjugatedProductNormalForm
           lake build Ecdlp.Proved.EndpointNormalFormConsequences
           lake build Ecdlp.Proved.WardSubtractionSquareClass
+          lake build Ecdlp.Proved.WardPublicHalfCollapse
           lake env lean Ecdlp/Proved/EndpointCocycleNormalForm.lean
           lake env lean Ecdlp/Proved/ConjugatedProductNormalForm.lean
           lake env lean Ecdlp/Proved/EndpointNormalFormConsequences.lean
           lake env lean Ecdlp/Proved/WardSubtractionSquareClass.lean
+          lake env lean Ecdlp/Proved/WardPublicHalfCollapse.lean
