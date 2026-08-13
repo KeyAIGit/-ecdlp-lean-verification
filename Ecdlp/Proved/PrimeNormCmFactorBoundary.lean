@@ -8,7 +8,7 @@ This file formalizes the elementary degree arithmetic used by the
 
 For a CM endomorphism of prime norm `n`, multiplicativity of degree would force
 any two-stage endomorphism factorization to have positive integer degrees whose
-product is `n`.  Primality therefore makes one stage a degree-one unit.
+product is `n`. Primality therefore makes one stage a degree-one unit.
 
 The file does not formalize elliptic curves, endomorphism rings, isogenies,
 secp256k1, or an oriented-root evaluator.
@@ -24,7 +24,7 @@ theorem primeNorm_noNontrivialTwoFactor
     (hright : 0 < right)
     (hfactor : left * right = n) :
     left = 1 ∨ right = 1 := by
-  have hdiv : left ∣ n := ⟨right, hfactor⟩
+  have hdiv : left ∣ n := ⟨right, hfactor.symm⟩
   rcases (hn.eq_one_or_self_of_dvd left hdiv) with hleftOne | hleftN
   · exact Or.inl hleftOne
   · right
