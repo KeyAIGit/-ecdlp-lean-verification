@@ -20,7 +20,12 @@ theorem segmentRatio_compose
     {K : Type*} [CommGroup K]
     (start middle finish : K) :
     (middle / start) * (finish / middle) = finish / start := by
-  group
+  calc
+    (middle / start) * (finish / middle)
+        = finish * start⁻¹ * (middle * middle⁻¹) := by
+            simp only [div_eq_mul_inv]
+            ac_rfl
+    _ = finish / start := by simp [div_eq_mul_inv]
 
 /-- The quotient of a segment and its reflected partner is the quotient of the
 corresponding endpoint norms. -/
@@ -29,7 +34,8 @@ theorem segment_reflected_normQuotient
     (start reflectedStart finish reflectedFinish : K) :
     (finish / start) / (reflectedStart / reflectedFinish)
       = (finish * reflectedFinish) / (start * reflectedStart) := by
-  group
+  simp only [div_eq_mul_inv, mul_inv_rev, inv_inv]
+  ac_rfl
 
 /-- A full closed segment has unit multiplicative ratio. -/
 theorem closedSegment_ratio (value : α) [Group α] :
