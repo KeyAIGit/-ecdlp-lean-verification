@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Exact arithmetic replay for the direct generic parity collision boundary.
+"""Exact replay for the direct generic parity collision boundary.
 
-The executable accepts no curve, point, key, wallet, scalar target, or runtime
-instance. It verifies only finite-field affine-label collision facts on frozen
-small prime orders and records a public secp256k1 integer certificate.
+No curve, point, key, wallet, unknown scalar, or runtime target is accepted.
+The replay exhausts affine labels over frozen small prime fields and records
+public integer certificates for secp256k1.
 """
 from __future__ import annotations
 
@@ -17,10 +17,8 @@ FROZEN_PRIMES = (7, 11, 13, 17, 19, 23, 31)
 SECP_N = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141
 
 
-def minimum_labels_for_exact_parity(order: int) -> int:
-    """Least L with L(L-1) >= order-1."""
-    if order < 3 or order % 2 == 0:
-        raise ValueError("order must be odd and at least three")
+def minimum_labels(order: int) -> int:
+    """Least L such that L(L-1) >= order-1."""
     candidate = (1 + math.isqrt(4 * order - 3)) // 2
     while candidate * (candidate - 1) < order - 1:
         candidate += 1
@@ -29,46 +27,64 @@ def minimum_labels_for_exact_parity(order: int) -> int:
     return candidate
 
 
-def run_affine_case(order: int) -> dict[str, object]:
-    if not all(order % divisor for divisor in range(2, math.isqrt(order) + 1)):
-        raise ValueError("frozen order must be prime")
+def minimum_online_labels(order: int, stored: int) -> int:
+    """Least T such that T(2S+T-1) >= order-1."""
+    linear = 2 * stored - 1
+    discriminant = linear * linear + 4 * (order - 1)
+    candidate = max(0, (-linear + math.isqrt(discriminant)) // 2)
+    while candidate * (2 * stored + candidate - 1) < order - 1:
+        candidate += 1
+    while candidate > 0:
+        previous = (candidate - 1) * (2 * stored + candidate - 2)
+        if previous < order - 1:
+            break
+        candidate -= 1
+    return candidate
 
-    forms = [(slope, intercept) for slope in range(order) for intercept in range(order)]
+
+def run_case(order: int) -> dict[str, object]:
+    forms = [(a, b) for a in range(order) for b in range(order)]
     distinct_slope_pairs = 0
     parallel_pairs = 0
-    verified_collision_solutions = 0
 
     for (a, b), (c, d) in itertools.combinations(forms, 2):
         if a == c:
             if b == d:
-                raise AssertionError("distinct forms unexpectedly identical")
-            for scalar in range(order):
-                if (a * scalar + b - c * scalar - d) % order == 0:
-                    raise AssertionError("parallel distinct forms collided")
+                raise AssertionError("distinct forms were identical")
+            if any((a * k + b - c * k - d) % order == 0 for k in range(order)):
+                raise AssertionError("parallel distinct forms collided")
             parallel_pairs += 1
             continue
 
-        scalar = (d - b) * pow((a - c) % order, -1, order) % order
-        if (a * scalar + b - c * scalar - d) % order != 0:
-            raise AssertionError("computed affine collision is not a solution")
-        for other in range(order):
-            equality = (a * other + b - c * other - d) % order == 0
-            if equality != (other == scalar):
-                raise AssertionError("affine equality did not have a unique solution")
+        root = (d - b) * pow((a - c) % order, -1, order) % order
+        solutions = [
+            k for k in range(order)
+            if (a * k + b - c * k - d) % order == 0
+        ]
+        if solutions != [root]:
+            raise AssertionError("affine collision was not unique")
         distinct_slope_pairs += 1
-        verified_collision_solutions += 1
 
     half = (order - 1) // 2
-    even_nonzero = [scalar for scalar in range(1, order) if scalar % 2 == 0]
-    odd_nonzero = [scalar for scalar in range(1, order) if scalar % 2 == 1]
-    if len(even_nonzero) != half or len(odd_nonzero) != half:
-        raise AssertionError("canonical nonzero parity classes are not balanced")
+    even = sum(k % 2 == 0 for k in range(1, order))
+    odd = sum(k % 2 == 1 for k in range(1, order))
+    if even != half or odd != half:
+        raise AssertionError("nonzero parity classes were not balanced")
 
-    labels = minimum_labels_for_exact_parity(order)
-    if labels * (labels - 1) < order - 1:
-        raise AssertionError("declared threshold has insufficient collision capacity")
-    if (labels - 1) * (labels - 2) >= order - 1:
-        raise AssertionError("declared threshold is not minimal")
+    labels = minimum_labels(order)
+    if not ((labels - 1) * (labels - 2) < order - 1 <= labels * (labels - 1)):
+        raise AssertionError("exact label threshold failed")
+
+    tradeoff_checks = 0
+    for stored in range(labels + 1):
+        online = minimum_online_labels(order, stored)
+        capacity = online * (2 * stored + online - 1)
+        previous = 0 if online == 0 else (online - 1) * (2 * stored + online - 2)
+        if not (previous < order - 1 <= capacity):
+            raise AssertionError("preprocessing-online threshold failed")
+        if (stored + online) ** 2 < order - 1:
+            raise AssertionError("total square-root implication failed")
+        tradeoff_checks += 1
 
     return {
         "order": order,
@@ -76,45 +92,55 @@ def run_affine_case(order: int) -> dict[str, object]:
         "unordered_distinct_form_pairs": len(forms) * (len(forms) - 1) // 2,
         "distinct_slope_pairs": distinct_slope_pairs,
         "parallel_distinct_pairs": parallel_pairs,
-        "unique_collision_solutions_verified": verified_collision_solutions,
-        "nonzero_even_scalars": len(even_nonzero),
-        "nonzero_odd_scalars": len(odd_nonzero),
-        "balanced_half": half,
+        "unique_collision_solutions_verified": distinct_slope_pairs,
+        "nonzero_even_scalars": even,
+        "nonzero_odd_scalars": odd,
         "minimum_exact_labels": labels,
-        "previous_label_count_fails": (labels - 1) * (labels - 2) < order - 1,
-        "threshold_label_count_succeeds_capacity": labels * (labels - 1) >= order - 1,
+        "preprocessing_online_tradeoff_checks": tradeoff_checks,
+        "exact_threshold_minimal": True,
     }
 
 
-def secp256k1_certificate() -> dict[str, object]:
+def secp_certificate() -> dict[str, object]:
     order = SECP_N
-    labels = minimum_labels_for_exact_parity(order)
+    labels = minimum_labels(order)
     previous = labels - 1
-    exact_capacity = labels * (labels - 1)
-    previous_capacity = previous * (previous - 1)
-    if labels != 1 << 128:
-        raise AssertionError("unexpected secp256k1 exact label threshold")
+    if labels != 2 ** 128:
+        raise AssertionError("unexpected secp256k1 threshold")
+
+    examples: dict[str, object] = {}
+    for exponent in (0, 64, 96, 112, 120, 127, 128, 129, 160, 192, 224, 255):
+        stored = 0 if exponent == 0 else 2 ** exponent
+        online = minimum_online_labels(order, stored)
+        capacity = online * (2 * stored + online - 1)
+        prior = 0 if online == 0 else (online - 1) * (2 * stored + online - 2)
+        examples["0" if exponent == 0 else f"2^{exponent}"] = {
+            "stored_labels": stored,
+            "minimum_online_labels": online,
+            "total_labels": stored + online,
+            "tradeoff_verified": prior < order - 1 <= capacity,
+        }
+
     return {
         "n": order,
         "n_bit_length": order.bit_length(),
         "nonzero_parity_class_size": (order - 1) // 2,
         "exact_generic_label_lower_bound": labels,
         "exact_generic_label_lower_bound_power": "2^128",
-        "lower_bound_bit_length": labels.bit_length(),
-        "threshold_capacity": exact_capacity,
-        "threshold_capacity_excess": exact_capacity - (order - 1),
+        "threshold_capacity": labels * (labels - 1),
+        "threshold_capacity_excess": labels * (labels - 1) - (order - 1),
         "previous_label_count": previous,
-        "previous_capacity": previous_capacity,
-        "previous_capacity_deficit": (order - 1) - previous_capacity,
-        "exact_threshold_verified": previous_capacity < order - 1 <= exact_capacity,
+        "previous_capacity": previous * (previous - 1),
+        "previous_capacity_deficit": (order - 1) - previous * (previous - 1),
+        "exact_threshold_verified": (
+            previous * (previous - 1) < order - 1 <= labels * (labels - 1)
+        ),
         "uniform_success_bound": (
-            "success <= 1/2 + L(L-1)/(2(n-1)) on uniform nonzero scalar"
+            "success <= 1/2 + L(L-1)/(2(n-1))"
         ),
         "exactness_condition": "L(L-1) >= n-1",
-        "full_cost_interpretation": (
-            "all distinct generic labels materialized in preprocessing, advice, "
-            "memory, or online group operations are charged"
-        ),
+        "preprocessing_online_condition": "T(2S+T-1) >= n-1",
+        "preprocessing_online_examples": examples,
         "central_target": "UNIFORM-ORIENTED-ROOT-CIRCUIT-056",
         "coordinate_specific_evaluator_ruled_out": False,
         "public_parity_oracle_found": False,
@@ -127,7 +153,7 @@ def main() -> None:
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
 
-    cases = [run_affine_case(order) for order in FROZEN_PRIMES]
+    cases = [run_case(order) for order in FROZEN_PRIMES]
     aggregate = {
         "cases": len(cases),
         "total_affine_forms": sum(case["affine_forms"] for case in cases),
@@ -137,35 +163,27 @@ def main() -> None:
         "total_unique_collision_solutions": sum(
             case["unique_collision_solutions_verified"] for case in cases
         ),
+        "total_preprocessing_online_tradeoff_checks": sum(
+            case["preprocessing_online_tradeoff_checks"] for case in cases
+        ),
         "all_parity_classes_balanced": all(
             case["nonzero_even_scalars"] == case["nonzero_odd_scalars"]
             for case in cases
         ),
-        "all_affine_pairs_have_at_most_one_collision": all(
-            case["distinct_slope_pairs"]
-            == case["unique_collision_solutions_verified"]
-            for case in cases
-        ),
+        "all_affine_pairs_have_at_most_one_collision": True,
         "all_exact_thresholds_minimal": all(
-            case["previous_label_count_fails"]
-            and case["threshold_label_count_succeeds_capacity"]
-            for case in cases
+            case["exact_threshold_minimal"] for case in cases
         ),
     }
     payload = {
         "package": "UORC056-DIRECT-GENERIC-PARITY-COLLISION-E1",
-        "model": (
-            "prime-order generic cyclic group; deterministic no-collision path; "
-            "computed encodings represented by distinct affine forms a*k+b"
-        ),
         "cases": cases,
         "aggregate": aggregate,
-        "secp256k1": secp256k1_certificate(),
+        "secp256k1": secp_certificate(),
         "decision": (
-            "Every exact generic parity evaluator must materialize at least L "
-            "distinct affine labels with L(L-1)>=n-1. For secp256k1 the exact "
-            "integer threshold is L=2^128. This is a direct parity bound and "
-            "does not apply to non-generic coordinate/CM circuits."
+            "Exact generic parity needs L(L-1)>=n-1; with S stored and T "
+            "online labels it needs T(2S+T-1)>=n-1. The exact secp256k1 "
+            "label threshold without preprocessing is 2^128."
         ),
     }
     args.out.write_text(json.dumps(payload, indent=2), encoding="utf-8")

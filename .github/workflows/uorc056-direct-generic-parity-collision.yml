@@ -42,11 +42,17 @@ jobs:
           assert aggregate['total_affine_forms'] == 2479
           assert aggregate['total_unordered_form_pairs'] == 730164
           assert aggregate['total_unique_collision_solutions'] == 702603
+          assert aggregate['total_preprocessing_online_tradeoff_checks'] == 40
           assert aggregate['all_parity_classes_balanced']
           assert aggregate['all_affine_pairs_have_at_most_one_collision']
           assert aggregate['all_exact_thresholds_minimal']
           assert secp['exact_generic_label_lower_bound'] == 2**128
           assert secp['exact_threshold_verified']
+          assert secp['preprocessing_online_condition'] == 'T(2S+T-1) >= n-1'
+          assert all(
+              item['tradeoff_verified']
+              for item in secp['preprocessing_online_examples'].values()
+          )
           assert secp['central_target'] == 'UNIFORM-ORIENTED-ROOT-CIRCUIT-056'
           assert not secp['coordinate_specific_evaluator_ruled_out']
           assert not secp['public_parity_oracle_found']
