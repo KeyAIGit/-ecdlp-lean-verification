@@ -10,6 +10,7 @@ on:
       - 'experiments/parity_lift_000/uorc056_implicit_hilbert90_boundary.py'
       - 'Ecdlp/Proved/Uorc056NegationPaired.lean'
       - 'Ecdlp/Proved/Uorc056Hilbert90Divisor.lean'
+      - 'Ecdlp/Proved/ScalarParity.lean'
       - '.github/workflows/uorc056-implicit-hilbert90-c22.yml'
   workflow_dispatch:
 
@@ -97,7 +98,7 @@ jobs:
         run: |
           lake env lean Ecdlp/Proved/Uorc056NegationPaired.lean
           lake env lean Ecdlp/Proved/Uorc056Hilbert90Divisor.lean
-          lake env lean Ecdlp/Proved/ScalarParity.lean
+          lake build Ecdlp.Proved.ScalarParity
 
       - name: Upload C22 replay output
         uses: actions/upload-artifact@v4
