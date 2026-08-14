@@ -8,6 +8,7 @@ on:
       - 'experiments/uorc056/**'
       - 'notes/reviews/UORC056_FOURIER_DIVISOR_BARRIER_V7.md'
       - 'notes/reviews/UORC056_REGULARIZED_FOURIER_DIVISOR_BARRIER_V8.md'
+      - 'notes/reviews/UORC056_FDB1_KUMMER_LANG_PROOF_V8.md'
       - '.github/workflows/uorc056-execution-001.yml'
   workflow_dispatch:
 
@@ -61,7 +62,12 @@ jobs:
           python scripts/uorc056_divisor_aware_rational.py --check
           python scripts/uorc056_divisor_aware_pullback.py --check
           python scripts/uorc056_divisor_aware_mixed_pullback.py --check
-          python scripts/uorc056_divisor_aware_balanced_product.py --check
+          python scripts/uorc056_divisor_aware_balanced_product.py \
+            --out /tmp/uorc056-divisor-aware-balanced-product-results.json \
+            > /tmp/uorc056-divisor-aware-balanced-product.log
+          diff -u \
+            experiments/uorc056/divisor_aware_balanced_product_results.json \
+            /tmp/uorc056-divisor-aware-balanced-product-results.json
           python scripts/uorc056_global_divisor_balance.py --check
           python scripts/uorc056_small_miller_balance.py --check
           python scripts/uorc056_fourier_divisor_barrier.py --check
