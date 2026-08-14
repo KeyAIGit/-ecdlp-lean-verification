@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "registry_id": "UORC-056-CLOSED-CLASSES-001",
   "status": "scoped_registry_not_universal_lower_bound",
   "entries": [
@@ -66,7 +66,31 @@
       "disposition": "normal_form_scoped",
       "reason": "The declared product grammar reduces to endpoint conjugation and does not independently select the absolute orientation.",
       "reopen_condition": "Compose both orientation branches simultaneously or add a genuinely nonmultiplicative primitive with charged state growth."
+    },
+    {
+      "id": "ALL-INDEX-TERMINAL-MILLER-CHARACTER",
+      "source": "PR-386-V9",
+      "scope": "A quadratic character of one classical terminal Miller function f_(m,P), for arbitrary positive index m, or an explicit product of too few independent terminal functions.",
+      "disposition": "closed_by_V8_odd_support_barrier",
+      "reason": "The terminal divisor m[P]-[mP]-(m-1)[O] has at most two odd-support slots after reduction modulo two, independently of the Miller-loop length.",
+      "reopen_condition": "Use a recursively shared object that is not an explicit product of terminal Miller functions, or leave the one-rational-character model."
+    },
+    {
+      "id": "ODD-DIVISOR-SUPPORT-ONLY-CIRCUIT-LOWER-BOUND",
+      "source": "PR-386-V9",
+      "scope": "Any unrestricted claim that square-root-scale odd divisor support alone implies square-root field-operation or straight-line-program cost.",
+      "disposition": "closed_as_argument",
+      "reason": "Division polynomials have odd support quadratic in the index while their standard doubling recurrences have logarithmic dependency depth and a constant-width window per level.",
+      "reopen_condition": "Add a restricted gate model or another invariant that rules out division-polynomial-style recurrence compression."
+    },
+    {
+      "id": "PURE-DIVISION-POLYNOMIAL-MIXED-MOD4-TRANSFER",
+      "source": "PR-386-V9",
+      "scope": "An unchanged formula chi(psi_m(Q)) claimed to equal canonical parity across a transfer corpus containing fields with q congruent to both 1 and 3 modulo 4.",
+      "disposition": "closed_by_negation_covariance",
+      "reason": "Odd m is invariant under Q -> -Q. Even m remains character-invariant when chi(-1)=+1, while canonical parity is always anti-invariant on an odd cycle.",
+      "reopen_condition": "Specialize to q congruent to 3 modulo 4 with even m, add a charged covariance-correcting factor, or leave the pure division-polynomial character model."
     }
   ],
-  "global_warning": "Every entry is scoped. This registry is not a proof that UORC-056 has no sub-root evaluator."
+  "global_warning": "Every entry is scoped. This registry is not a proof that UORC-056 has no sub-root evaluator. The even-index q=3 mod 4 EDS-decimation case remains open."
 }
