@@ -1,0 +1,17 @@
+{
+  "entries": [
+    {
+      "disposition": "exact_minimum_degree_in_direct_rational_model",
+      "id": "DIRECT-FIELD-VALUED-RATIONAL-KUMMER-SECTOR-SECP256K1",
+      "reason": "The floor-sum certificate gives exact sign-fiber sizes (n-1+208)/4 and (n-1-208)/4, forcing the same lower bound through A-B and A+B. The witness (K_- - K_+)/(K_- + K_+) attains max(deg K_+,deg K_-), so the 254-bit minimum degree is exact.",
+      "reopen_condition": "Use a high-degree low-size circuit, modular composition, transposed evaluation, a character output chi(f), or another representation outside direct field-valued rational output.",
+      "scope": "An ordinary rational function A(X)/B(X), regular on every secp256k1 half-kernel root, that directly returns the field value J_G(X) in {+1,-1}.",
+      "source": "V16"
+    }
+  ],
+  "global_warning": "This delta is scoped. It is not an unrestricted arithmetic-circuit lower bound and does not close compact evaluation of high-degree representations.",
+  "parent_registry": "UORC-056-CLOSED-CLASSES-001 schema 1.3",
+  "registry_delta_id": "UORC-056-CLOSED-CLASSES-V16-DELTA",
+  "schema_version": "1.0",
+  "status": "scoped_delta_for_stacked_V16_review"
+}

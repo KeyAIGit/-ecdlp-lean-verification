@@ -1,0 +1,185 @@
+{
+  "decision": "legacy carry reconciled exactly; the optimal direct field-valued sector rational degree is exact on secp256k1; compact high-degree circuits remain open",
+  "exact_reconciliation": {
+    "carry_identity": "c=sigma(Q)sigma(alpha Q)sigma(alpha^2 Q)=g_G(Q)",
+    "interpretation": "V15 carry is exactly the legacy GLV carry; the sector is a complementary two-rotation product, not a public correction of R3",
+    "public_residue_bridge": "c=C3_G(Q)R3_G(Q)=g_G(Q)",
+    "sector_R3_form": "J_G=sigma(Q)C3_G(Q)R3_G(Q)",
+    "sector_identity": "J_G(x(Q))=sigma(Q)g_G(Q)",
+    "sector_residue_form": "J_G=C_G(alpha Q)C_G(alpha^2 Q)rho_G(alpha Q)rho_G(alpha^2 Q)"
+  },
+  "exact_toy_replay": {
+    "aggregate_sector_minus_evaluations": 11388,
+    "aggregate_sector_plus_evaluations": 11742,
+    "all_canonical_sector_polynomial_degrees_maximal": true,
+    "curve_rows": [
+      {
+        "branch_factor_degrees": {
+          "minority_0": 3,
+          "minority_1": 3,
+          "minority_2": 3,
+          "uniform": 6
+        },
+        "canonical_sector_polynomial_degree": 14,
+        "direct_rational_degree_lower_bound": 9,
+        "floor_sum_A1": 12,
+        "floor_sum_A2": 30,
+        "id": "E7-P43-N31",
+        "kernel_degree": 15,
+        "kummer_evaluations": 450,
+        "lambda": 5,
+        "marked_roots": 30,
+        "n": 31,
+        "optimal_direct_rational_degree": 9,
+        "p": 43,
+        "parity_correlation": 6,
+        "scalar_reconciliation_checks": 900,
+        "sector_minus_factor_degree": 6,
+        "sector_plus_factor_degree": 9
+      },
+      {
+        "branch_factor_degrees": {
+          "minority_0": 9,
+          "minority_1": 9,
+          "minority_2": 9,
+          "uniform": 12
+        },
+        "canonical_sector_polynomial_degree": 38,
+        "direct_rational_degree_lower_bound": 21,
+        "floor_sum_A1": 208,
+        "floor_sum_A2": 434,
+        "id": "E7-P67-N79",
+        "kernel_degree": 39,
+        "kummer_evaluations": 3042,
+        "lambda": 23,
+        "marked_roots": 78,
+        "n": 79,
+        "optimal_direct_rational_degree": 21,
+        "p": 67,
+        "parity_correlation": 6,
+        "scalar_reconciliation_checks": 6084,
+        "sector_minus_factor_degree": 18,
+        "sector_plus_factor_degree": 21
+      },
+      {
+        "branch_factor_degrees": {
+          "minority_0": 8,
+          "minority_1": 8,
+          "minority_2": 8,
+          "uniform": 9
+        },
+        "canonical_sector_polynomial_degree": 32,
+        "direct_rational_degree_lower_bound": 17,
+        "floor_sum_A1": 226,
+        "floor_sum_A2": 468,
+        "id": "E7-P79-N67",
+        "kernel_degree": 33,
+        "kummer_evaluations": 2178,
+        "lambda": 29,
+        "marked_roots": 66,
+        "n": 67,
+        "optimal_direct_rational_degree": 17,
+        "p": 79,
+        "parity_correlation": 2,
+        "scalar_reconciliation_checks": 4356,
+        "sector_minus_factor_degree": 16,
+        "sector_plus_factor_degree": 17
+      },
+      {
+        "branch_factor_degrees": {
+          "minority_0": 15,
+          "minority_1": 15,
+          "minority_2": 15,
+          "uniform": 18
+        },
+        "canonical_sector_polynomial_degree": 62,
+        "direct_rational_degree_lower_bound": 33,
+        "floor_sum_A1": 1668,
+        "floor_sum_A2": 3366,
+        "id": "E7-P127-N127",
+        "kernel_degree": 63,
+        "kummer_evaluations": 7938,
+        "lambda": 107,
+        "marked_roots": 126,
+        "n": 127,
+        "optimal_direct_rational_degree": 33,
+        "p": 127,
+        "parity_correlation": 6,
+        "scalar_reconciliation_checks": 15876,
+        "sector_minus_factor_degree": 30,
+        "sector_plus_factor_degree": 33
+      },
+      {
+        "branch_factor_degrees": {
+          "minority_0": 18,
+          "minority_1": 18,
+          "minority_2": 18,
+          "uniform": 15
+        },
+        "canonical_sector_polynomial_degree": 68,
+        "direct_rational_degree_lower_bound": 36,
+        "floor_sum_A1": 1633,
+        "floor_sum_A2": 3302,
+        "id": "E7-P163-N139",
+        "kernel_degree": 69,
+        "kummer_evaluations": 9522,
+        "lambda": 96,
+        "marked_roots": 138,
+        "n": 139,
+        "optimal_direct_rational_degree": 36,
+        "p": 163,
+        "parity_correlation": -6,
+        "scalar_reconciliation_checks": 19044,
+        "sector_minus_factor_degree": 36,
+        "sector_plus_factor_degree": 33
+      }
+    ],
+    "curves": 5,
+    "kummer_evaluations": 23130,
+    "marked_roots": 438,
+    "scalar_reconciliation_checks": 46260
+  },
+  "factor_normal_form": {
+    "binary_factorization": "K_H=K_{G,+}K_{G,-}, roots selected by J_G=+1 and -1",
+    "crt_idempotent": "e_+=K_{G,-}*(K_{G,-}^{-1} mod K_{G,+}) mod K_H",
+    "crt_involution": "J_G=2e_+-1 mod K_H",
+    "four_branch_factorization": "K_H=K_uniform*K_minority0*K_minority1*K_minority2",
+    "generator_glv_covariance": "J_{alpha G}(X)=J_G(beta^2 X) mod K_H",
+    "generator_negation": "J_{-G}=J_G"
+  },
+  "floor_sum_certificate": {
+    "all_diagnostics_passed": true,
+    "diagnostic_odd_moduli_through": 255,
+    "diagnostic_scalar_terms": 2240852,
+    "diagnostic_unit_multipliers": 13230,
+    "formula": "S(a;n)=(n-1)-4*A2+8*A1, A1=sum_{j=1}^m floor(a*j/n), A2=sum_{j=1}^m floor(2*a*j/n), m=(n-1)/2"
+  },
+  "next_frontier": [
+    "high-degree low-size or modular-composition evaluation of the sector involution",
+    "shared evaluation of legacy carry g_G and sector J_G without dense factors",
+    "additive mixed-CM-weight or field-valued circuits carrying a nontrivial C3 representation",
+    "formalize the floor-sum count and polynomial root-count transfer beyond the frozen arithmetic core"
+  ],
+  "profile_id": "UORC-056-SECTOR-FACTOR-RECONCILIATION-V16",
+  "schema_version": "1.0",
+  "scientific_boundary": "No public sub-square-root parity evaluator or ECDLP algorithm is constructed.",
+  "secp256k1": {
+    "claim_boundary": "degree/representation lower bound for an ordinary rational function returning field values +/-1; not an arithmetic-circuit lower bound and not a bound for chi(f)",
+    "direct_field_valued_rational_degree_lower_bound": 28948022309329048855892746252171976963209391069768726095651290785379540373636,
+    "direct_field_valued_rational_minimum_degree": 28948022309329048855892746252171976963209391069768726095651290785379540373636,
+    "each_minority_branch_factor_degree": 14474011154664524427946373126085988481604695534884363047825645392689770186766,
+    "floor_sum_A1": 545931915908852855591505153367665171115826627131531269849624024978182150897647537294607246404098269776027227977234989815764719225974734377650416002896222,
+    "floor_sum_A1_euclidean_rounds": 141,
+    "floor_sum_A2": 1091863831817705711183010306735330342231653254263062539699248049956364301795324022611523821857052432298306627931433189022599207178045120046086211546165976,
+    "floor_sum_A2_euclidean_rounds": 143,
+    "half_kernel_degree": 57896044618658097711785492504343953926418782139537452191302581570759080747168,
+    "lambda": 37718080363155996902926221483475020450927657555482586988616620542887997980018,
+    "lambda_order_three": true,
+    "lower_bound_bit_length": 254,
+    "n": 115792089237316195423570985008687907852837564279074904382605163141518161494337,
+    "sector_minus_factor_degree": 28948022309329048855892746252171976963209391069768726095651290785379540373532,
+    "sector_parity_correlation_all_nonzero_scalars": 208,
+    "sector_plus_factor_degree": 28948022309329048855892746252171976963209391069768726095651290785379540373636,
+    "uniform_branch_factor_degree": 14474011154664524427946373126085988481604695534884363047825645392689770186870
+  }
+}

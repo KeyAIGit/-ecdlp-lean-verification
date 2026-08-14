@@ -6,12 +6,12 @@ on:
       - research/uorc056-carry-sector-factorization-v15
     paths:
       - 'scripts/uorc056_carry_sector_factorization.py'
-      - 'scripts/test_uorc056_cary_sector_factorization.py'
+      - 'scripts/test_uorc056_carry_sector_factorization.py'
       - 'Ecdlp/Proved/CarrySectorFactorization.lean'
       - 'notes/reviews/UORC056_CARRY_SECTOR_FACTORIZATION_V15.md'
       - 'experiments/uorc056/carry_sector_factorization_results.json'
       - 'experiments/uorc056/closed_classes.json'
-      - 'experiments/uorc056/execution_status.json'
+      - 'experiments/uorc056/execution_status_v15.json'
       - '.github/workflows/uorc056-carry-sector-v15.yml'
   pull_request:
     branches:
@@ -23,7 +23,7 @@ on:
       - 'notes/reviews/UORC056_CARRY_SECTOR_FACTORIZATION_V15.md'
       - 'experiments/uorc056/carry_sector_factorization_results.json'
       - 'experiments/uorc056/closed_classes.json'
-      - 'experiments/uorc056/execution_status.json'
+      - 'experiments/uorc056/execution_status_v15.json'
       - '.github/workflows/uorc056-carry-sector-v15.yml'
   workflow_dispatch:
 
