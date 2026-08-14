@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "package": "UORC-056-CARRY-SECTOR-FACTORIZATION-V15",
+  "parent_head": "873829128bc09a78a46867e995f7a0fc39e90800",
+  "central_target_unchanged": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "status": "implemented_locally_pending_clean_GitHub_Lean_and_exact_replay_gate",
+  "results": [
+    "V13 already closes arbitrary finite multiplicative products and quotients of division-polynomial quadratic characters on secp256k1, so bounded multi-decimation search is no longer the primary secp256k1 frontier",
+    "for s_i=sigma(alpha^i(Q)), carry c=s_0*s_1*s_2 and sector bits kappa_0=s_1*s_2, kappa_1=s_2*s_0, kappa_2=s_0*s_1, canonical parity factors as sigma(Q)=c*kappa_0",
+    "kappa_0*kappa_1*kappa_2=1, so the sector state is a Klein-four state",
+    "the V14 selector is the C3 Fourier transform u=-(kappa_0+beta^2*kappa_1+beta*kappa_2)",
+    "h(u)=(u^3+u^2-2u+6)/6 recovers kappa_0 and its two GLV rotations recover kappa_1 and kappa_2",
+    "the V14 invariant mode collapses to A/y=c*(1+u^3/6), so A/y is not a third independent orientation observable",
+    "the x-only Kummer involution J_G(x)=Y_G(beta*x)Y_G(beta^2*x)/(x^3+7) equals kappa_0 on the marked subgroup",
+    "J_G(x)^2=1 and J_G(x)J_G(beta*x)J_G(beta^2*x)=1 on the half-kernel"
+  ],
+  "exact_replay": {
+    "curves": 5,
+    "marked_roots": 438,
+    "scalar_evaluations": 46260,
+    "errors": 0
+  },
+  "next_frontier": [
+    "public decoder or scoped lower bound for the GLV carry bit",
+    "compact evaluator or scoped lower bound for the Kummer sector involution",
+    "shared field-valued circuits and additive CM-weight mixing",
+    "formalize the V13 all-index CM-weight induction and connect V15 to elliptic-curve definitions"
+  ],
+  "claim_boundary": "V15 is an exact structural reduction and constant-call equivalence, not a public decoder, not a sub-square-root algorithm and not a proof that UORC-056 is impossible."
+}

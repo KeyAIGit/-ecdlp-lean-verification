@@ -1,0 +1,506 @@
+{
+  "decision": "V14_A_mode_is_not_an_independent_observable; canonical parity factors_exactly_into_one_GLV_carry_bit_and_one_Kummer_sector_bit",
+  "exact_factorization": {
+    "A_mode_collapse": "A/y=c*(1+u^3/6)",
+    "carry": "c=s0*s1*s2=(-1)^gamma",
+    "klein_state": "kappa0*kappa1*kappa2=1",
+    "kummer_involution": "J_G(x)=Y_G(beta*x)Y_G(beta^2*x)/(x^3+7)=kappa0; J_G^2=1 and prod_i J_G(beta^i*x)=1 on K_H",
+    "orbit_signs": "s_i=sigma(alpha^i(Q)), i=0,1,2",
+    "parity": "sigma(Q)=c*kappa0",
+    "sector_bits": [
+      "kappa0=s1*s2",
+      "kappa1=s2*s0",
+      "kappa2=s0*s1"
+    ],
+    "sector_phase_polynomial": "h(u)=(u^3+u^2-2u+6)/6; kappa_i=h(beta^i*u)",
+    "sector_selector_dft": "u=-(kappa0+beta^2*kappa1+beta*kappa2)"
+  },
+  "exact_replay": {
+    "branch_counts": {
+      "minority_0": 11388,
+      "minority_1": 11388,
+      "minority_2": 11388,
+      "uniform": 12096
+    },
+    "carry_counts": {
+      "+1": 23130,
+      "-1": 23130
+    },
+    "curve_rows": [
+      {
+        "branch_counts": {
+          "minority_0": 180,
+          "minority_1": 180,
+          "minority_2": 180,
+          "uniform": 360
+        },
+        "carry_counts": {
+          "+1": 450,
+          "-1": 450
+        },
+        "id": "E7-P43-N31",
+        "kappa_state_counts": {
+          "(+,+,+)": 360,
+          "(+,-,-)": 180,
+          "(-,+,-)": 180,
+          "(-,-,+)": 180
+        },
+        "marked_roots": 30,
+        "n": 31,
+        "p": 43,
+        "scalar_evaluations": 900,
+        "sector_bit_counts": {
+          "+1": 540,
+          "-1": 360
+        },
+        "truth_table": [
+          {
+            "branch": "uniform",
+            "carry": 1,
+            "kappas": [
+              1,
+              1,
+              1
+            ],
+            "selector_u": 0,
+            "signs": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "branch": "minority_0",
+            "carry": -1,
+            "kappas": [
+              1,
+              -1,
+              -1
+            ],
+            "selector_u": 41,
+            "signs": [
+              -1,
+              1,
+              1
+            ]
+          },
+          {
+            "branch": "minority_1",
+            "carry": -1,
+            "kappas": [
+              -1,
+              1,
+              -1
+            ],
+            "selector_u": 14,
+            "signs": [
+              1,
+              -1,
+              1
+            ]
+          },
+          {
+            "branch": "minority_2",
+            "carry": -1,
+            "kappas": [
+              -1,
+              -1,
+              1
+            ],
+            "selector_u": 31,
+            "signs": [
+              1,
+              1,
+              -1
+            ]
+          }
+        ]
+      },
+      {
+        "branch_counts": {
+          "minority_0": 1404,
+          "minority_1": 1404,
+          "minority_2": 1404,
+          "uniform": 1872
+        },
+        "carry_counts": {
+          "+1": 3042,
+          "-1": 3042
+        },
+        "id": "E7-P67-N79",
+        "kappa_state_counts": {
+          "(+,+,+)": 1872,
+          "(+,-,-)": 1404,
+          "(-,+,-)": 1404,
+          "(-,-,+)": 1404
+        },
+        "marked_roots": 78,
+        "n": 79,
+        "p": 67,
+        "scalar_evaluations": 6084,
+        "sector_bit_counts": {
+          "+1": 3276,
+          "-1": 2808
+        },
+        "truth_table": [
+          {
+            "branch": "uniform",
+            "carry": 1,
+            "kappas": [
+              1,
+              1,
+              1
+            ],
+            "selector_u": 0,
+            "signs": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "branch": "minority_0",
+            "carry": -1,
+            "kappas": [
+              1,
+              -1,
+              -1
+            ],
+            "selector_u": 65,
+            "signs": [
+              -1,
+              1,
+              1
+            ]
+          },
+          {
+            "branch": "minority_1",
+            "carry": -1,
+            "kappas": [
+              -1,
+              1,
+              -1
+            ],
+            "selector_u": 60,
+            "signs": [
+              1,
+              -1,
+              1
+            ]
+          },
+          {
+            "branch": "minority_2",
+            "carry": -1,
+            "kappas": [
+              -1,
+              -1,
+              1
+            ],
+            "selector_u": 9,
+            "signs": [
+              1,
+              1,
+              -1
+            ]
+          }
+        ]
+      },
+      {
+        "branch_counts": {
+          "minority_0": 1056,
+          "minority_1": 1056,
+          "minority_2": 1056,
+          "uniform": 1188
+        },
+        "carry_counts": {
+          "+1": 2178,
+          "-1": 2178
+        },
+        "id": "E7-P79-N67",
+        "kappa_state_counts": {
+          "(+,+,+)": 1188,
+          "(+,-,-)": 1056,
+          "(-,+,-)": 1056,
+          "(-,-,+)": 1056
+        },
+        "marked_roots": 66,
+        "n": 67,
+        "p": 79,
+        "scalar_evaluations": 4356,
+        "sector_bit_counts": {
+          "+1": 2244,
+          "-1": 2112
+        },
+        "truth_table": [
+          {
+            "branch": "uniform",
+            "carry": 1,
+            "kappas": [
+              1,
+              1,
+              1
+            ],
+            "selector_u": 0,
+            "signs": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "branch": "minority_0",
+            "carry": -1,
+            "kappas": [
+              1,
+              -1,
+              -1
+            ],
+            "selector_u": 77,
+            "signs": [
+              -1,
+              1,
+              1
+            ]
+          },
+          {
+            "branch": "minority_1",
+            "carry": -1,
+            "kappas": [
+              -1,
+              1,
+              -1
+            ],
+            "selector_u": 48,
+            "signs": [
+              1,
+              -1,
+              1
+            ]
+          },
+          {
+            "branch": "minority_2",
+            "carry": -1,
+            "kappas": [
+              -1,
+              -1,
+              1
+            ],
+            "selector_u": 33,
+            "signs": [
+              1,
+              1,
+              -1
+            ]
+          }
+        ]
+      },
+      {
+        "branch_counts": {
+          "minority_0": 3780,
+          "minority_1": 3780,
+          "minority_2": 3780,
+          "uniform": 4536
+        },
+        "carry_counts": {
+          "+1": 7938,
+          "-1": 7938
+        },
+        "id": "E7-P127-N127",
+        "kappa_state_counts": {
+          "(+,+,+)": 4536,
+          "(+,-,-)": 3780,
+          "(-,+,-)": 3780,
+          "(-,-,+)": 3780
+        },
+        "marked_roots": 126,
+        "n": 127,
+        "p": 127,
+        "scalar_evaluations": 15876,
+        "sector_bit_counts": {
+          "+1": 8316,
+          "-1": 7560
+        },
+        "truth_table": [
+          {
+            "branch": "uniform",
+            "carry": 1,
+            "kappas": [
+              1,
+              1,
+              1
+            ],
+            "selector_u": 0,
+            "signs": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "branch": "minority_0",
+            "carry": -1,
+            "kappas": [
+              1,
+              -1,
+              -1
+            ],
+            "selector_u": 125,
+            "signs": [
+              -1,
+              1,
+              1
+            ]
+          },
+          {
+            "branch": "minority_1",
+            "carry": -1,
+            "kappas": [
+              -1,
+              1,
+              -1
+            ],
+            "selector_u": 40,
+            "signs": [
+              1,
+              -1,
+              1
+            ]
+          },
+          {
+            "branch": "minority_2",
+            "carry": -1,
+            "kappas": [
+              -1,
+              -1,
+              1
+            ],
+            "selector_u": 89,
+            "signs": [
+              1,
+              1,
+              -1
+            ]
+          }
+        ]
+      },
+      {
+        "branch_counts": {
+          "minority_0": 4968,
+          "minority_1": 4968,
+          "minority_2": 4968,
+          "uniform": 4140
+        },
+        "carry_counts": {
+          "+1": 9522,
+          "-1": 9522
+        },
+        "id": "E7-P163-N139",
+        "kappa_state_counts": {
+          "(+,+,+)": 4140,
+          "(+,-,-)": 4968,
+          "(-,+,-)": 4968,
+          "(-,-,+)": 4968
+        },
+        "marked_roots": 138,
+        "n": 139,
+        "p": 163,
+        "scalar_evaluations": 19044,
+        "sector_bit_counts": {
+          "+1": 9108,
+          "-1": 9936
+        },
+        "truth_table": [
+          {
+            "branch": "uniform",
+            "carry": 1,
+            "kappas": [
+              1,
+              1,
+              1
+            ],
+            "selector_u": 0,
+            "signs": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "branch": "minority_0",
+            "carry": -1,
+            "kappas": [
+              1,
+              -1,
+              -1
+            ],
+            "selector_u": 161,
+            "signs": [
+              -1,
+              1,
+              1
+            ]
+          },
+          {
+            "branch": "minority_1",
+            "carry": -1,
+            "kappas": [
+              -1,
+              1,
+              -1
+            ],
+            "selector_u": 118,
+            "signs": [
+              1,
+              -1,
+              1
+            ]
+          },
+          {
+            "branch": "minority_2",
+            "carry": -1,
+            "kappas": [
+              -1,
+              -1,
+              1
+            ],
+            "selector_u": 47,
+            "signs": [
+              1,
+              1,
+              -1
+            ]
+          }
+        ]
+      }
+    ],
+    "curves": 5,
+    "kappa_state_counts": {
+      "(+,+,+)": 12096,
+      "(+,-,-)": 11388,
+      "(-,+,-)": 11388,
+      "(-,-,+)": 11388
+    },
+    "marked_roots": 438,
+    "scalar_evaluations": 46260,
+    "sector_bit_counts": {
+      "+1": 23484,
+      "-1": 22776
+    }
+  },
+  "next_frontier": [
+    "seek or lower-bound a public decoder for the GLV carry c(Q)",
+    "seek or lower-bound the Kummer involution J_G(x(Q))",
+    "test additive mixtures of distinct CM weights; multiplicative division-polynomial monomials are already closed by V13",
+    "search for shared evaluation of carry and sector rather than constructing dense A and B separately",
+    "charge representation construction, branch selection, memory and all public GLV calls"
+  ],
+  "profile_id": "UORC-056-CARRY-SECTOR-FACTORIZATION-V15",
+  "schema_version": "1.0",
+  "scientific_boundary": "V15 is an exact two-bit normal form and constant-call equivalence, not a public decoder and not a sub-square-root algorithm.",
+  "symmetry_split": {
+    "carry": "C3/GLV-invariant and anti-invariant under Q -> -Q",
+    "constant_call_equivalence": "one sector-bit evaluator on Q,alpha(Q),alpha^2(Q) reconstructs the full four-state selector u by the displayed DFT",
+    "division_polynomial_consequence": "V13 finite multiplicative division-polynomial characters are C3-invariant, so they cannot equal the non-invariant sector bit",
+    "sector_bit": "Kummer-invariant under Q -> -Q and non-invariant along the C3/GLV orbit"
+  }
+}
