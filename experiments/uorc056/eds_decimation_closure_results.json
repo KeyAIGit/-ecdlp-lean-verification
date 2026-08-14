@@ -1,0 +1,167 @@
+{
+  "bounded_base_discovery_screen": {
+    "curves": [
+      {
+        "best_m": 16,
+        "best_matches": 24,
+        "exact_candidates": [],
+        "n": 31,
+        "p": 43,
+        "tested_even_classes_mod_2n": 30,
+        "total_nonzero_points": 30
+      },
+      {
+        "best_m": 94,
+        "best_matches": 50,
+        "exact_candidates": [],
+        "n": 79,
+        "p": 67,
+        "tested_even_classes_mod_2n": 78,
+        "total_nonzero_points": 78
+      },
+      {
+        "best_m": 64,
+        "best_matches": 46,
+        "exact_candidates": [],
+        "n": 67,
+        "p": 79,
+        "tested_even_classes_mod_2n": 66,
+        "total_nonzero_points": 66
+      },
+      {
+        "best_m": 24,
+        "best_matches": 76,
+        "exact_candidates": [],
+        "n": 127,
+        "p": 127,
+        "tested_even_classes_mod_2n": 126,
+        "total_nonzero_points": 126
+      },
+      {
+        "best_m": 18,
+        "best_matches": 84,
+        "exact_candidates": [],
+        "n": 139,
+        "p": 163,
+        "tested_even_classes_mod_2n": 138,
+        "total_nonzero_points": 138
+      }
+    ],
+    "exact_candidates": 0
+  },
+  "decision": "even_eds_decimation_is_a_real_mechanism_on_small_curves_secp_case_open",
+  "exact_equivalence": "for even m with n not dividing m: chi(psi_m([k]G))=(-1)^k for all k iff rho_m(G)=-1 and the re-marked generator P=[m]G has chi(psi_k(P))=+1 for every 1<=k<n",
+  "exact_small_curve_witnesses": [
+    {
+      "G": [
+        22,
+        25
+      ],
+      "P_equals_mG": [
+        31,
+        11
+      ],
+      "chi_minus_one": -1,
+      "decimation_outputs": [
+        -1,
+        1,
+        -1,
+        1
+      ],
+      "exact_parity_decimation": true,
+      "m": 2,
+      "n": 5,
+      "p": 59,
+      "p_mod_4": 3,
+      "remarked_residue_row": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "remarked_row_all_residue": true,
+      "rho_m_at_G": -1,
+      "specialized_recurrence_exact": true,
+      "target_parity": [
+        -1,
+        1,
+        -1,
+        1
+      ],
+      "ward_at_remarked_generator": {
+        "a": 28,
+        "b": 56,
+        "chi_a": 1,
+        "chi_b": -1,
+        "exact_checks": 8
+      }
+    },
+    {
+      "G": [
+        70,
+        36
+      ],
+      "P_equals_mG": [
+        74,
+        5
+      ],
+      "chi_minus_one": -1,
+      "decimation_outputs": [
+        -1,
+        1,
+        -1,
+        1,
+        -1,
+        1
+      ],
+      "exact_parity_decimation": true,
+      "m": 2,
+      "n": 7,
+      "p": 83,
+      "p_mod_4": 3,
+      "remarked_residue_row": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "remarked_row_all_residue": true,
+      "rho_m_at_G": -1,
+      "specialized_recurrence_exact": true,
+      "target_parity": [
+        -1,
+        1,
+        -1,
+        1,
+        -1,
+        1
+      ],
+      "ward_at_remarked_generator": {
+        "a": 28,
+        "b": 35,
+        "chi_a": 1,
+        "chi_b": -1,
+        "exact_checks": 12
+      }
+    }
+  ],
+  "next_frontier": [
+    "derive generator-change laws for Ward sign invariants and the all-residue property",
+    "use character-sum bounds to rule out an all-residue row in the large-order secp256k1 regime if constants can be made explicit",
+    "otherwise seek secp-specific constraints from CM/GLV on all-residue generators",
+    "direct field-valued Y_G and compact global Miller-cocycle integration remain open"
+  ],
+  "normalization_correction": "Silverman Theorem 8 uses the n+1 and n+2 terms for the Ward constants; the earlier n-1/n-2 inference was invalid",
+  "profile_id": "UORC-056-EDS-DECIMATION-AUDIT-V10",
+  "schema_version": "1.2",
+  "scientific_boundary": "V10 proves small exact witnesses and an exact re-marking equivalence. It does not decide whether any even decimation exists for secp256k1.",
+  "sources": [
+    "Silverman, p-adic properties of division polynomials and elliptic divisibility sequences, Theorem 8",
+    "Shparlinski-Stange, Character Sums with Division Polynomials",
+    "Stange, Division polynomials for arbitrary isogenies (2026), recurrence and chain rule",
+    "Bhakta, Character sums of division polynomials twisted by multiplicative functions (2026), Lemma 2.3"
+  ],
+  "status": "universal_closure_refuted_by_exact_small_curve_witnesses"
+}
