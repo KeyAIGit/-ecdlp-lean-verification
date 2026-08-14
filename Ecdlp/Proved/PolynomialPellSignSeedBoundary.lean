@@ -33,9 +33,8 @@ theorem markedSeed_negation
 
 /-- The oriented rational selector changes sign under quadratic conjugation. -/
 theorem pellSelector_negA
-    {K : Type*} [Field K] (A B y : K) (hA : A ≠ 0) :
+    {K : Type*} [Field K] (A B y : K) (_hA : A ≠ 0) :
     (-y * B) / (-A) = -((-y * B) / A) := by
-  field_simp
-  ring
+  simp [neg_mul]
 
 end Ecdlp.ParityLift
