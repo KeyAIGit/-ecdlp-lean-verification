@@ -1,0 +1,77 @@
+name: UORC-056 nested SLP v3
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/uorc056_nested_slp_v3.py'
+      - 'scripts/uorc056_nested_slp_v3_runner.py'
+      - 'scripts/test_uorc056_nested_slp_v3.py'
+      - 'experiments/uorc056/nested_slp_grammar_v3.json'
+      - '.github/workflows/uorc056-nested-slp-v3.yml'
+  push:
+    branches:
+      - research/uorc056-execution-001
+    paths:
+      - 'scripts/uorc056_nested_slp_v3.py'
+      - 'scripts/uorc056_nested_slp_v3_runner.py'
+      - 'scripts/test_uorc056_nested_slp_v3.py'
+      - 'experiments/uorc056/nested_slp_grammar_v3.json'
+      - '.github/workflows/uorc056-nested-slp-v3.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  nested-slp-search:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Unit and deterministic smoke tests
+        run: |
+          PYTHONPATH=scripts python -m unittest -v \
+            scripts/test_uorc056_nested_slp_v3.py
+
+      - name: Search nested straight-line programs
+        run: |
+          PYTHONPATH=scripts python scripts/uorc056_nested_slp_v3_runner.py \
+            --max-size 4 \
+            --beam-size 96 \
+            --out /tmp/uorc056-nested-slp-v3.json \
+            | tee /tmp/uorc056-nested-slp-v3-summary.txt
+
+      - name: Enforce declared boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('/tmp/uorc056-nested-slp-v3.json').read_text())
+          assert data['experiment'] == 'UORC-056-NESTED-SLP-V3'
+          assert data['search']['field_specific_fitting'] is False
+          assert data['search']['free_per_curve_phase'] is False
+          assert data['seed_count'] == 27
+          assert data['claim_boundary']
+          best = data['best_all_five_near_miss']
+          print(json.dumps({
+              'decision': data['decision'],
+              'minimum_exact_size': data['minimum_exact_all_five_size'],
+              'best_penalty': None if best is None else best['total_penalty_all_five'],
+              'layers': data['layer_statistics'],
+          }, indent=2))
+          PY
+
+      - name: Upload nested-SLP evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-nested-slp-v3
+          path: |
+            /tmp/uorc056-nested-slp-v3.json
+            /tmp/uorc056-nested-slp-v3-summary.txt
+          if-no-files-found: error
