@@ -1,0 +1,170 @@
+name: UORC056 negation-paired quadratic C20
+
+on:
+  push:
+    branches:
+      - research/uorc056-endpoint-gauge
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_NEGATION_PAIRED_QUADRATIC_C20.md'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_HILBERT90_NORM_ONE_TWIST_C21_PROMPT.md'
+      - 'experiments/parity_lift_000/uorc056_odd_symmetric_glv_invariants.py'
+      - 'experiments/parity_lift_000/uorc056_odd_rational_functional_boundary.py'
+      - 'experiments/parity_lift_000/uorc056_negation_paired_core.py'
+      - 'experiments/parity_lift_000/uorc056_negation_paired_dickson.py'
+      - 'experiments/parity_lift_000/uorc056_negation_paired_structures.py'
+      - 'experiments/parity_lift_000/uorc056_negation_paired_case.py'
+      - 'experiments/parity_lift_000/uorc056_negation_paired_quadratic.py'
+      - 'experiments/parity_lift_000/uorc056_negation_paired_case_runner.py'
+      - 'experiments/parity_lift_000/uorc056_negation_paired_replacement_runner.py'
+      - 'experiments/parity_lift_000/uorc056_negation_paired_assemble.py'
+      - '.github/workflows/uorc056-negation-paired-quadratic-c20.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile C20 replay
+        run: |
+          python3 -m py_compile \
+            experiments/parity_lift_000/uorc056_odd_symmetric_glv_invariants.py \
+            experiments/parity_lift_000/uorc056_odd_rational_functional_boundary.py \
+            experiments/parity_lift_000/uorc056_negation_paired_core.py \
+            experiments/parity_lift_000/uorc056_negation_paired_dickson.py \
+            experiments/parity_lift_000/uorc056_negation_paired_structures.py \
+            experiments/parity_lift_000/uorc056_negation_paired_case.py \
+            experiments/parity_lift_000/uorc056_negation_paired_quadratic.py \
+            experiments/parity_lift_000/uorc056_negation_paired_case_runner.py \
+            experiments/parity_lift_000/uorc056_negation_paired_replacement_runner.py \
+            experiments/parity_lift_000/uorc056_negation_paired_assemble.py
+
+      - name: Replay seven public curves in isolated processes
+        run: |
+          mkdir -p /tmp/uorc056-c20
+          for i in 0 1 2 3 4 5 6; do
+            python3 experiments/parity_lift_000/uorc056_negation_paired_case_runner.py "$i" \
+              --out-dir /tmp/uorc056-c20
+          done
+
+      - name: Replay public generator replacements
+        run: |
+          for base in 0 1; do
+            for multiplier in 2 3 5; do
+              python3 experiments/parity_lift_000/uorc056_negation_paired_replacement_runner.py \
+                "$base" "$multiplier" --out-dir /tmp/uorc056-c20
+            done
+          done
+
+      - name: Assemble deterministic C20 result
+        run: |
+          python3 experiments/parity_lift_000/uorc056_negation_paired_assemble.py \
+            --workdir /tmp/uorc056-c20 \
+            --out /tmp/uorc056-c20/uorc056_negation_paired_quadratic_result.json \
+            --summary /tmp/uorc056-c20/uorc056_negation_paired_quadratic_summary.json
+
+      - name: Check theorem flags and deterministic digest
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path('/tmp/uorc056-c20')
+          result = json.loads((root / 'uorc056_negation_paired_quadratic_result.json').read_text())
+          summary = json.loads((root / 'uorc056_negation_paired_quadratic_summary.json').read_text())
+          digest = '74db667ddeb9df578bc8563192f48d5e422696628876d739a0c8fd473114c4c3'
+          assert result['result_sha256_without_digest_field'] == digest
+          assert summary['result_sha256_without_digest_field'] == digest
+
+          aggregate = result['aggregate']
+          assert aggregate['curves'] == 7
+          assert aggregate['split_counts'] == {'discovery': 3, 'validation': 2, 'held_out': 2}
+          assert aggregate['all_pair_algebra_identities_pass']
+          assert aggregate['all_fixed_field_checks_pass']
+          assert aggregate['all_K_signatures_degree_1_over_3']
+          assert aggregate['all_pair_exception_sets_have_nine_points']
+          assert aggregate['all_S_D_dense_pole_theorems_pass']
+          assert aggregate['all_screened_Dickson_traces_full_quotient_support']
+          assert aggregate['pair_product_global_sign_lower_bound_proved']
+          assert aggregate['branch_even_grammar_cannot_output_branch_odd_value']
+          assert aggregate['quadratic_root_sign_is_original_mu2_ambiguity']
+          assert aggregate['compact_nested_even_norm_found']
+          assert aggregate['compact_public_Hilbert90_factor_found']
+          assert aggregate['norm_one_twist_remains_dense_on_corpus']
+          assert not aggregate['paired_sum_compact_evaluator_found']
+          assert not aggregate['paired_difference_compact_evaluator_found']
+          assert not aggregate['quadratic_sign_selected_without_advice']
+          assert not aggregate['Dickson_divisor_collapse_found']
+          assert not aggregate['sub_sqrt_evaluator_found']
+          assert not aggregate['parity_oracle_found']
+          assert not aggregate['sub_sqrt_ecdlp_found']
+
+          replacements = aggregate['generator_replacements']
+          assert replacements['replacements'] == 6
+          assert replacements['all_lambda_covariance_checks_pass']
+          assert replacements['all_pair_algebra_identities_pass']
+          assert replacements['all_fixed_field_checks_pass']
+          assert replacements['all_K_signatures_degree_1_over_3']
+          assert replacements['all_pair_exception_sets_have_nine_points']
+          assert not replacements['all_screened_Dickson_traces_full_quotient_support']
+          assert replacements['all_screened_Dickson_traces_support_at_least_q_minus_4']
+          assert not replacements['quadratic_sign_selected_without_advice']
+          assert not replacements['parity_oracle_found']
+
+          special = next(
+              row for row in result['generator_replacements']
+              if row['p'] == 61 and row['replacement_metadata']['multiplier'] == 3
+          )
+          j1 = special['dickson']['trace_screen']['metrics']['1']
+          assert special['dickson']['trace_screen']['quotient_orbits'] == 20
+          assert j1['quotient_support'] == 18
+          assert j1['uncertain_orbits'] == 0
+
+          expected_profiles = [
+              (43, [6, 3, 9], 12, 9, [24, 21, 24], 30, 24),
+              (61, [6, 3, 9], 12, 9, [45, 42, 45], 60, 45),
+              (67, [6, 3, 9], 12, 9, [60, 57, 60], 78, 60),
+              (79, [6, 3, 9], 12, 9, [48, 45, 48], 66, 48),
+              (97, [6, 3, 9], 12, 9, [60, 57, 60], 78, 60),
+              (127, [6, 3, 9], 12, 9, [96, 93, 96], 126, 96),
+              (163, [6, 3, 9], 12, 9, [102, 99, 102], 138, 102),
+          ]
+          for row, expected in zip(result['cases'], expected_profiles):
+              p, c_sig, c_support, c_poles, r_sig, r_support, r_poles = expected
+              assert row['p'] == p
+              factor = row['nested_norm_pair']['public_compact_factor']
+              twist = row['nested_norm_pair']['norm_one_twist']
+              assert factor['signature']['degrees'] == c_sig
+              assert factor['profile']['affine_nonzero_support'] == c_support
+              assert factor['profile']['affine_nonzero_pole_degree'] == c_poles
+              assert twist['signature']['degrees'] == r_sig
+              assert twist['profile']['affine_nonzero_support'] == r_support
+              assert twist['profile']['affine_nonzero_pole_degree'] == r_poles
+
+          secp = result['secp256k1']
+          assert secp['paired_sum_difference_support_lower_bound'] == \
+              '115792089237316195423570985008687907852837564279074904382605163141518161494328'
+          assert secp['paired_squares_pole_degree_lower_bound'] == \
+              '231584178474632390847141970017375815705675128558149808765210326283036322988656'
+          assert secp['pair_product_laurent_edge_support_lower_bound'] == \
+              '57896044618658097711785492504343953926418782139537452191302581570759080747168'
+          assert secp['generic_prism_reconstruction_edge_lower_bound'] == \
+              '231584178474632390847141970017375815705675128558149808765210326283036322988674'
+          assert secp['U_31_pole_degree_lower_bound'] == \
+              '3589554766356802058130700535269325143437964492651322035860760057387063006324168'
+          PY
+
+      - name: Upload C20 replay outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-negation-paired-quadratic-c20
+          path: |
+            /tmp/uorc056-c20/uorc056_negation_paired_quadratic_result.json
+            /tmp/uorc056-c20/uorc056_negation_paired_quadratic_summary.json
+            /tmp/uorc056-c20/case_*.json
+            /tmp/uorc056-c20/replacement_*.json
+          retention-days: 90
