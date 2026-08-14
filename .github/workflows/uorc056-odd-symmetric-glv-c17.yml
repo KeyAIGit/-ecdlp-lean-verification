@@ -1,0 +1,62 @@
+name: UORC056 odd symmetric GLV C17
+
+on:
+  push:
+    branches:
+      - research/uorc056-endpoint-gauge
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_ODD_SYMMETRIC_GLV_INVARIANTS_C17.md'
+      - 'experiments/parity_lift_000/uorc056_odd_symmetric_glv_invariants_replay.py'
+      - 'experiments/parity_lift_000/uorc056_odd_symmetric_glv_invariants_summary.json'
+      - '.github/workflows/uorc056-odd-symmetric-glv-c17.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile and replay C17
+        run: |
+          python3 -m py_compile experiments/parity_lift_000/uorc056_odd_symmetric_glv_invariants_replay.py
+          python3 experiments/parity_lift_000/uorc056_odd_symmetric_glv_invariants_replay.py \
+            --summary experiments/parity_lift_000/uorc056_odd_symmetric_glv_invariants_summary.json \
+            --out /tmp/uorc056_odd_symmetric_glv_invariants_replay_result.json \
+            > /tmp/uorc056-odd-symmetric-glv-c17.log
+
+      - name: Check exact result flags
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('/tmp/uorc056_odd_symmetric_glv_invariants_replay_result.json').read_text())
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          assert aggregate['curves'] == 7
+          assert aggregate['cubic_identity_checks'] == 896
+          assert aggregate['all_public_corpus_checks']
+          assert aggregate['all_negation_pair_counts_pass']
+          assert aggregate['all_trace_e2_norm_identities_pass']
+          assert aggregate['full_result_sha256'] == '29cc8520289b651d83579cfc4486c7a6c7bd888d9587a99bc4fa9cc8fd3ee694'
+          assert not aggregate['sub_sqrt_evaluator_found']
+          assert not aggregate['parity_oracle_found']
+          assert secp['support_bit_length'] == 254
+          assert secp['pole_degree_bit_length'] == 253
+          assert secp['support_lower_bound'] == '19298681539552699237261830834781317975472927379845817397100860523586360249052'
+          assert secp['pole_degree_lower_bound'] == '9649340769776349618630915417390658987736463689922908698550430261793180124526'
+          print(json.dumps(aggregate, indent=2, sort_keys=True))
+          print(json.dumps(secp, indent=2, sort_keys=True))
+          PY
+
+      - name: Upload replay output
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-odd-symmetric-glv-c17
+          path: |
+            /tmp/uorc056_odd_symmetric_glv_invariants_replay_result.json
+            /tmp/uorc056-odd-symmetric-glv-c17.log
+          retention-days: 90
