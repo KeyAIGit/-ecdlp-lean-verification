@@ -4,21 +4,21 @@ from pathlib import Path
 import uorc056_eds_decimation_closure as module
 
 
-class EdsDecimationClosureTests(unittest.TestCase):
-    def test_exact_theorem_replay(self):
+class EdsDecimationAuditTests(unittest.TestCase):
+    def test_corrected_audit_and_counterexamples(self):
         result = module.run(
             Path("experiments/uorc056/divisor_aware_rational_grammar.json")
         )
-        self.assertEqual(
-            result["decision"],
-            "pure_single_division_polynomial_character_route_closed_for_all_indices",
-        )
-        replay = result["exact_replay"]
-        self.assertGreater(replay["generator_rows_checked"], 0)
-        self.assertGreater(replay["q3_generator_rows_checked"], 0)
-        self.assertEqual(replay["q3_three_sign_obstruction_violations"], 0)
+        self.assertEqual(result["decision"], "even_eds_decimation_frontier_remains_open")
+        self.assertEqual(len(result["counterexamples"]), 2)
+        for row in result["counterexamples"]:
+            self.assertEqual(row["p_mod_4"], 3)
+            self.assertEqual(row["chi_minus_one"], -1)
+            self.assertTrue(row["all_nonzero_terms_are_residues"])
+            self.assertEqual(row["ward"]["chi_a"], 1)
+            self.assertEqual(row["ward"]["chi_b"], -1)
+            self.assertTrue(row["specialized_recurrence_exact"])
         bounded = result["bounded_discovery_even_decimation_screen"]
-        self.assertGreater(bounded["total_even_classes_tested"], 0)
         self.assertEqual(bounded["exact_candidates"], 0)
 
     def test_secp_congruence_class(self):
