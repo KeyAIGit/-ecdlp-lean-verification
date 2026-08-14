@@ -7,6 +7,7 @@ on:
       - 'scripts/test_uorc056_*.py'
       - 'experiments/uorc056/**'
       - 'notes/reviews/UORC056_FOURIER_DIVISOR_BARRIER_V7.md'
+      - 'notes/reviews/UORC056_REGULARIZED_FOURIER_DIVISOR_BARRIER_V8.md'
       - '.github/workflows/uorc056-execution-001.yml'
   workflow_dispatch:
 
@@ -34,7 +35,7 @@ jobs:
           python scripts/uorc056_toy_factory.py --output-dir /tmp/uorc056-fixtures --check
           cmp /tmp/uorc056-fixtures/manifest.json experiments/uorc056/expected_fixture_manifest.json
 
-      - name: Run exact producer, synthesis and regularization tests
+      - name: Run exact producer, synthesis, divisor and spectral tests
         run: |
           PYTHONPATH=scripts python -m unittest -v \
             scripts/test_uorc056_toy_factory.py \
@@ -46,12 +47,14 @@ jobs:
             scripts/test_uorc056_divisor_aware_balanced_product.py \
             scripts/test_uorc056_global_divisor_balance.py \
             scripts/test_uorc056_small_miller_balance.py \
-            scripts/test_uorc056_fourier_divisor_barrier.py
+            scripts/test_uorc056_fourier_divisor_barrier.py \
+            scripts/test_uorc056_parity_spectrum_barrier.py \
+            scripts/test_uorc056_regularized_fourier_divisor_barrier.py
 
       - name: Replay every root and parity ratio independently
         run: python scripts/uorc056_sympy_replay.py /tmp/uorc056-fixtures
 
-      - name: Replay bounded circuit synthesis and transfer decisions
+      - name: Replay bounded synthesis, divisor and spectral decisions
         run: |
           python scripts/uorc056_circuit_synth.py --check
           python scripts/uorc056_structural_transfer.py --check
@@ -62,6 +65,8 @@ jobs:
           python scripts/uorc056_global_divisor_balance.py --check
           python scripts/uorc056_small_miller_balance.py --check
           python scripts/uorc056_fourier_divisor_barrier.py --check
+          python scripts/uorc056_parity_spectrum_barrier.py --check
+          python scripts/uorc056_regularized_fourier_divisor_barrier.py --check
 
       - name: Upload exact ground-truth fixtures
         uses: actions/upload-artifact@v4
