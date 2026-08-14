@@ -1,5 +1,6 @@
 name: UORC-056 even divpoly Fourier V10
 
+# Canonical JSON is generated before replay; a push run persists only real drift.
 on:
   push:
     branches:
