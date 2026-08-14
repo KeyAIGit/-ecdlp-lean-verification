@@ -42,7 +42,7 @@ jobs:
             --out /tmp/uorc056_branch_sensitive_leaf_audit_result.json \
             | tee /tmp/uorc056-branch-sensitive-leaf-c24.log
 
-      - name: Check C24 classification schema and theorem flags
+      - name: Check exact C24 audit identity and theorem flags
         run: |
           python3 - <<'PY'
           import json
@@ -51,7 +51,8 @@ jobs:
           result = json.loads(
               Path('/tmp/uorc056_branch_sensitive_leaf_audit_result.json').read_text()
           )
-          assert len(result['digest']) == 64
+          assert result['digest'] == \
+              '95e2955856de3058ea5067cb31b3c32d19109b4f6a5ba8b13fc39457ed11c220'
           assert result['classification_counts'] == {
               'branch_sensitive_large_or_seeded': 4,
               'canonical_sign_blind': 2,
@@ -94,6 +95,7 @@ jobs:
           collision = result['collision_certificate']
           assert collision['candidate_decoders_checked'] == 28
           assert collision['all_invariant_global_selectors_rejected']
+          assert [row['orbit_size'] for row in collision['orbit_fixtures']] == [2, 3, 5, 7, 11]
           assert all(
               row['successful_global_selectors'] == 0
               for row in collision['orbit_fixtures']
@@ -103,6 +105,8 @@ jobs:
           assert finite['public_data_collisions'] == 630
           assert finite['required_state_separations'] == 630
           assert finite['all_two_world_collision_checks_passed']
+          assert [row['nonzero_sign_collisions'] for row in finite['fields']] == \
+              [42, 60, 66, 78, 96, 126, 162]
           assert len(result['best_survivors']) == 4
           PY
 
