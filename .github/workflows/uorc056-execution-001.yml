@@ -9,6 +9,7 @@ on:
       - 'notes/reviews/UORC056_FOURIER_DIVISOR_BARRIER_V7.md'
       - 'notes/reviews/UORC056_REGULARIZED_FOURIER_DIVISOR_BARRIER_V8.md'
       - 'notes/reviews/UORC056_FDB1_KUMMER_LANG_PROOF_V8.md'
+      - 'notes/reviews/UORC056_DIVISION_POLYNOMIAL_FRONTIER_V9.md'
       - '.github/workflows/uorc056-execution-001.yml'
   workflow_dispatch:
 
@@ -50,7 +51,8 @@ jobs:
             scripts/test_uorc056_small_miller_balance.py \
             scripts/test_uorc056_fourier_divisor_barrier.py \
             scripts/test_uorc056_parity_spectrum_barrier.py \
-            scripts/test_uorc056_regularized_fourier_divisor_barrier.py
+            scripts/test_uorc056_regularized_fourier_divisor_barrier.py \
+            scripts/test_uorc056_division_polynomial_frontier.py
 
       - name: Replay every root and parity ratio independently
         run: python scripts/uorc056_sympy_replay.py /tmp/uorc056-fixtures
@@ -73,6 +75,7 @@ jobs:
           python scripts/uorc056_fourier_divisor_barrier.py --check
           python scripts/uorc056_parity_spectrum_barrier.py --check
           python scripts/uorc056_regularized_fourier_divisor_barrier.py --check
+          python scripts/uorc056_division_polynomial_frontier.py --check
 
       - name: Upload exact ground-truth fixtures
         uses: actions/upload-artifact@v4
