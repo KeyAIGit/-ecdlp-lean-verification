@@ -99,8 +99,8 @@
     "candidate": null,
     "candidate_found": false
   },
-  "experiment": "UORC-056-GLOBAL-DIVISOR-BALANCE-V4",
-  "grammar_sha256": "628c86a8585e4f861d9b795f4295b182b3b1380f7a06ea5ae8080ca99d38bbab",
+  "experiment": "UORC-056-GLOBAL-DIVISOR-BALANCE-V5",
+  "grammar_sha256": "01193c50463eb2fc75ad356769a56fcaece93d2800b05b9cc6162592491b57db",
   "schema_version": "1.0",
   "template_quotient": {
     "duplicates_removed": 160,
