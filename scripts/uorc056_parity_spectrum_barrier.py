@@ -206,6 +206,10 @@ def run(grammar_path: Path) -> dict[str, Any]:
     return {
         "schema_version": "1.0",
         "experiment": PROFILE_ID,
+        "review_status": (
+            "provisional theorem-level derivation with executable arithmetic checks; "
+            "independent specialist review and formalization remain pending"
+        ),
         "input_grammar_sha256": hashlib.sha256(grammar_bytes).hexdigest(),
         "theorem": theorem,
         "certified_elementary_bound": {
@@ -219,6 +223,12 @@ def run(grammar_path: Path) -> dict[str, Any]:
             ],
         },
         "records": records,
+        "references": [
+            "P. Deligne, La conjecture de Weil II, Publ. Math. IHES 52 (1980), 137-252.",
+            "C. Cunningham and D. Roe, From the function-sheaf dictionary to quasicharacters of p-adic tori, J. Inst. Math. Jussieu 17 (2018), 1-37.",
+            "M. Perret, Multiplicative character sums and Kummer coverings, Acta Arith. 59 (1991), 279-290.",
+            "SEC 2, Recommended Elliptic Curve Domain Parameters, Version 2.0 (2010).",
+        ],
         "interpretation": [
             "For n asymptotic to q, odd divisor support is Omega(sqrt(n)).",
             "This closes bounded low-divisor-degree rational-character mechanisms, not succinct high-degree straight-line programs.",
