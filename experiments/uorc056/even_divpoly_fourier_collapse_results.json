@@ -364,7 +364,7 @@
   "decision": "the pure single-division-polynomial character route is closed for secp256k1 by the published 6*sqrt(q) theorem and for every curve in the frozen eighteen-curve corpus by that theorem plus complete multiplier scans",
   "experiment": "UORC-056-EVEN-DIVPOLY-FOURIER-COLLAPSE-V10",
   "independent_cross_check": "the q=3 mod 4 secp256k1 case is also closed by the elementary Paley tournament obstruction in UORC056_EDS_PALEY_OBSTRUCTION_V10",
-  "input_grammar_sha256": "86d1804b2b299281c96ab956ff3a8631ca2d1c8288aed01898d0ef7aa4047184",
+  "input_grammar_sha256": "ef2bac2eda3934c74faccde104a038dd6a8dd2649ddabd8881c3112064011c94",
   "remaining_scope": [
     "products of multiple independently pulled division-polynomial characters",
     "direct field-valued Y_G evaluation without one outer quadratic character",
