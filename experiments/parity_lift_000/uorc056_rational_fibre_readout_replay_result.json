@@ -1,0 +1,129 @@
+{
+  "aggregate": {
+    "base_gauge_transformation_checks": 240,
+    "base_inverse_normalization_checks": 240,
+    "base_nonconstant_gauge_families": 30,
+    "canonical_weight_one_readout_without_gauge_found": false,
+    "curves": 6,
+    "gauge_transformation_law_verified": true,
+    "generator_replacements_checked": 129,
+    "replacement_gauge_transformation_checks": 1935,
+    "replacement_inverse_normalization_checks": 1935,
+    "replacement_nonconstant_gauge_families": 645,
+    "sub_sqrt_evaluator_found": false
+  },
+  "cases": [
+    {
+      "checks": {
+        "accepted_points": 8,
+        "gauge_transformation_checks": 40,
+        "inverse_normalization_checks": 40,
+        "nonconstant_gauge_families": 5,
+        "passed": true
+      },
+      "n": 19
+    },
+    {
+      "checks": {
+        "accepted_points": 8,
+        "gauge_transformation_checks": 40,
+        "inverse_normalization_checks": 40,
+        "nonconstant_gauge_families": 5,
+        "passed": true
+      },
+      "n": 31
+    },
+    {
+      "checks": {
+        "accepted_points": 8,
+        "gauge_transformation_checks": 40,
+        "inverse_normalization_checks": 40,
+        "nonconstant_gauge_families": 5,
+        "passed": true
+      },
+      "n": 67
+    },
+    {
+      "checks": {
+        "accepted_points": 8,
+        "gauge_transformation_checks": 40,
+        "inverse_normalization_checks": 40,
+        "nonconstant_gauge_families": 5,
+        "passed": true
+      },
+      "n": 271
+    },
+    {
+      "checks": {
+        "accepted_points": 8,
+        "gauge_transformation_checks": 40,
+        "inverse_normalization_checks": 40,
+        "nonconstant_gauge_families": 5,
+        "passed": true
+      },
+      "n": 397
+    },
+    {
+      "checks": {
+        "accepted_points": 8,
+        "gauge_transformation_checks": 40,
+        "inverse_normalization_checks": 40,
+        "nonconstant_gauge_families": 5,
+        "passed": true
+      },
+      "n": 433
+    }
+  ],
+  "experiment": "UORC056_C14_RATIONAL_FIBRE_READOUT_LIGHT_REPLAY",
+  "generator_replacements": [
+    {
+      "gauge_transformation_checks": 270,
+      "inverse_normalization_checks": 270,
+      "n": 19,
+      "nonconstant_gauge_families": 90,
+      "passed": true,
+      "replacements_checked": 18
+    },
+    {
+      "gauge_transformation_checks": 450,
+      "inverse_normalization_checks": 450,
+      "n": 31,
+      "nonconstant_gauge_families": 150,
+      "passed": true,
+      "replacements_checked": 30
+    },
+    {
+      "gauge_transformation_checks": 990,
+      "inverse_normalization_checks": 990,
+      "n": 67,
+      "nonconstant_gauge_families": 330,
+      "passed": true,
+      "replacements_checked": 66
+    },
+    {
+      "gauge_transformation_checks": 75,
+      "inverse_normalization_checks": 75,
+      "n": 271,
+      "nonconstant_gauge_families": 25,
+      "passed": true,
+      "replacements_checked": 5
+    },
+    {
+      "gauge_transformation_checks": 75,
+      "inverse_normalization_checks": 75,
+      "n": 397,
+      "nonconstant_gauge_families": 25,
+      "passed": true,
+      "replacements_checked": 5
+    },
+    {
+      "gauge_transformation_checks": 75,
+      "inverse_normalization_checks": 75,
+      "n": 433,
+      "nonconstant_gauge_families": 25,
+      "passed": true,
+      "replacements_checked": 5
+    }
+  ],
+  "identity": "endpoint(u*R)=endpoint(R)*u(P)/u(P+G)"
+}
