@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 """Corrected UORC-056 EDS-decimation audit V10.
 
-The first V10 no-go attempt was false.  Exact even EDS decimations actually
-exist on small q=3 mod 4 prime-order examples.  This replay verifies both the
-correct Silverman/Ward normalization and explicit exact parity witnesses, while
-keeping the secp256k1 arbitrary-index question open.
+The first Ward-only universal no-go attempt was false. Exact even EDS
+decimations exist on small q=3 mod 4 prime-order examples. This replay verifies
+the correct Silverman/Ward normalization, the exact re-marking equivalence and
+explicit parity witnesses.
 
-The script checks only frozen/public toy curves.  It accepts no external point
+The companion Fourier-collapse and Paley-obstruction packages nevertheless
+exclude the same pure single-division-polynomial mechanism for secp256k1. That
+large-order conclusion is not attributed to the Ward recurrence itself.
+
+The script checks only frozen/public toy curves. It accepts no external point
 or scalar and does not attempt a production-sized discrete log.
 """
 from __future__ import annotations
@@ -27,7 +31,7 @@ PROFILE_ID = "UORC-056-EDS-DECIMATION-AUDIT-V10"
 DEFAULT_GRAMMAR = Path("experiments/uorc056/divisor_aware_rational_grammar.json")
 DEFAULT_OUTPUT = Path("experiments/uorc056/eds_decimation_closure_results.json")
 
-# Each tuple is (p,n,G,m,P=[m]G).  In both cases m=2 is an exact parity
+# Each tuple is (p,n,G,m,P=[m]G). In both cases m=2 is an exact parity
 # decimation and P has an all-residue nonzero EDS row.
 EXACT_DECIMATION_EXAMPLES = (
     (59, 5, (22, 25), 2, (31, 11)),
@@ -196,9 +200,12 @@ def run(grammar_path: Path) -> dict[str, Any]:
         raise AssertionError("base discovery corpus unexpectedly acquired an exact candidate")
 
     return {
-        "schema_version": "1.2",
+        "schema_version": "1.3",
         "profile_id": PROFILE_ID,
-        "status": "universal_closure_refuted_by_exact_small_curve_witnesses",
+        "status": (
+            "universal_ward_closure_refuted_small_witnesses_preserved_"
+            "secp_pure_route_closed_by_companion_bounds"
+        ),
         "exact_equivalence": (
             "for even m with n not dividing m: chi(psi_m([k]G))=(-1)^k for all k "
             "iff rho_m(G)=-1 and the re-marked generator P=[m]G has "
@@ -213,22 +220,43 @@ def run(grammar_path: Path) -> dict[str, Any]:
             "curves": screens,
             "exact_candidates": exact_total,
         },
-        "decision": "even_eds_decimation_is_a_real_mechanism_on_small_curves_secp_case_open",
+        "decision": (
+            "even_eds_decimation_exists_on_small_curves_but_is_excluded_for_"
+            "secp256k1_by_fourier_and_paley_bounds"
+        ),
+        "secp256k1_status": {
+            "pure_single_factor_closed": True,
+            "fourier_companion": (
+                "UORC-056-EVEN-DIVPOLY-FOURIER-COLLAPSE-V10"
+            ),
+            "published_fourier_necessary_condition": (
+                "cot(pi/(2n)) <= 6*sqrt(p)"
+            ),
+            "published_integer_certificate": (
+                "(98*n^2-121)^2 > 36*(154*n)^2*p"
+            ),
+            "paley_companion": "UORC-056-EDS-PALEY-OBSTRUCTION-V10",
+            "paley_necessary_condition": "((n-1)/2)^2 <= 3p+1",
+        },
         "next_frontier": [
-            "derive generator-change laws for Ward sign invariants and the all-residue property",
-            "use character-sum bounds to rule out an all-residue row in the large-order secp256k1 regime if constants can be made explicit",
-            "otherwise seek secp-specific constraints from CM/GLV on all-residue generators",
-            "direct field-valued Y_G and compact global Miller-cocycle integration remain open",
+            "products or ratios of multiple independently pulled division-polynomial factors",
+            "a low-rank or multi-tournament obstruction for bounded multi-factor circuits",
+            "direct field-valued Y_G and compact global Miller-cocycle integration",
+            "theta, elliptic-unit and non-character output mechanisms",
         ],
         "sources": [
             "Silverman, p-adic properties of division polynomials and elliptic divisibility sequences, Theorem 8",
-            "Shparlinski-Stange, Character Sums with Division Polynomials",
+            "Shparlinski-Stange, Character Sums with Division Polynomials, Lemma 5",
             "Stange, Division polynomials for arbitrary isogenies (2026), recurrence and chain rule",
-            "Bhakta, Character sums of division polynomials twisted by multiplicative functions (2026), Lemma 2.3",
+            "UORC056_EVEN_DIVPOLY_FOURIER_COLLAPSE_V10",
+            "UORC056_EDS_PALEY_OBSTRUCTION_V10",
         ],
         "scientific_boundary": (
-            "V10 proves small exact witnesses and an exact re-marking equivalence. "
-            "It does not decide whether any even decimation exists for secp256k1."
+            "This audit proves the exact re-marking equivalence, corrected Ward "
+            "normalization and small exact witnesses. The secp256k1 no-go is "
+            "provided by the companion Fourier and Paley packages, not by the "
+            "Ward recurrence alone. Multi-factor division-polynomial circuits "
+            "remain open."
         ),
     }
 
