@@ -1,0 +1,62 @@
+{
+  "best_balanced_one_by_one_correlation": {
+    "accuracy": "0.584474886",
+    "denominator": {
+      "line": {
+        "a": "zero",
+        "b": "neg_one",
+        "c": "zero"
+      },
+      "multiplier": 4
+    },
+    "matches": 256,
+    "numerator": {
+      "line": {
+        "a": "neg_one",
+        "b": "zero",
+        "c": "neg_x_G"
+      },
+      "multiplier": 4
+    },
+    "output_phase": -1,
+    "total": 438
+  },
+  "catalog": {
+    "aggregate_divisor_signatures": 482621,
+    "balanced_one_by_one_states_checked": 3591,
+    "base_valuation_signatures": 982,
+    "maximum_semantic_states_in_one_divisor_bucket": 1618,
+    "repeated_pair_semantic_states": 50277,
+    "sampled_internal_state_checks": 4096,
+    "semantic_pulled_line_templates": 1280,
+    "unique_pair_semantic_states": 769563,
+    "unordered_template_pairs_checked": 819840
+  },
+  "claim_boundary": [
+    "Complete only for two numerator and two denominator pulled affine lines from the declared 1,440-template dictionary.",
+    "Cross-factor zero and pole cancellation is exact; no exceptional subgroup point is patched or omitted.",
+    "Higher total factor count, higher-degree primitives, index-growing maps, EDS factors and unrestricted straight-line programs remain open.",
+    "No external point, wallet, real key or production-sized discrete-log target is accepted."
+  ],
+  "corpus": {
+    "curve_count": 5,
+    "curves": [
+      {"G": [2, 12], "beta_hi": 36, "beta_lo": 6, "n": 31, "p": 43},
+      {"G": [2, 22], "beta_hi": 37, "beta_lo": 29, "n": 79, "p": 67},
+      {"G": [1, 18], "beta_hi": 55, "beta_lo": 23, "n": 67, "p": 79},
+      {"G": [1, 32], "beta_hi": 107, "beta_lo": 19, "n": 127, "p": 127},
+      {"G": [2, 34], "beta_hi": 104, "beta_lo": 58, "n": 139, "p": 163}
+    ],
+    "nonzero_points": 438
+  },
+  "decision": "no_exact_globally_balanced_two_by_two_pulled_line_circuit",
+  "exact_search": {"candidate": null, "candidate_found": false},
+  "experiment": "UORC-056-GLOBAL-DIVISOR-BALANCE-V4",
+  "grammar_sha256": "628c86a8585e4f861d9b795f4295b182b3b1380f7a06ea5ae8080ca99d38bbab",
+  "schema_version": "1.0",
+  "template_quotient": {
+    "duplicates_removed": 160,
+    "raw_pulled_line_templates": 1440,
+    "unique_exact_local_semantics": 1280
+  }
+}
