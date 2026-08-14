@@ -1,0 +1,56 @@
+{
+  "combined_with_v10": "no even m can make chi(psi_m([k]G)) equal canonical parity on secp256k1",
+  "combined_with_v9": "the pure single classical division-polynomial quadratic-character family is closed for secp256k1 at every index m",
+  "decision": "secp256k1_has_no_all_residue_generator_of_order_n",
+  "profile_id": "UORC-056-ALL-RESIDUE-LARGE-ORDER-BARRIER-V11",
+  "schema_version": "1.0",
+  "scientific_boundary": "This is not an unrestricted circuit lower bound and does not close the direct field-valued Y_G evaluator.",
+  "secp256k1": {
+    "block_N_floor_n_minus_1_over_3": "38597363079105398474523661669562635950945854759691634794201721047172720498112",
+    "block_bits": 255,
+    "certificate_holds": true,
+    "coarse_completion_constant": 2064,
+    "coarse_log_fact": "n < 2^256 and ln(2)<1 imply 2+ln((n-1)/2) < 258",
+    "coarse_necessary_bound": "N <= 2064*sqrt(p)",
+    "completion_bound": "N <= 8*sqrt(p)*(2+ln((n-1)/2))",
+    "constant_square": 4260096,
+    "integer_certificate": "N^2 > 2064^2*p",
+    "left_square": "1489756436660288566619336110911760680819913788957100235681880788562031666959517749581433638287471444966403456034886400459150999946320860696996057395564544",
+    "log2_ratio_margin_descriptive": "115.403810243856",
+    "n": "115792089237316195423570985008687907852837564279074904382605163141518161494337",
+    "n_bits": 256,
+    "p": "115792089237316195423570985008687907853269984665640564039457584007908834671663",
+    "p_bits": 256,
+    "psi3_function_degree": 4,
+    "published_fourier_bound": "abs(a_hat(r)) <= 8*sqrt(p)",
+    "right_square": "493285416191533774859173058951571321494084048594156704302237095801756394949412859648",
+    "squared_ratio_floor": "3020069898198334691246680956607756879250429617144497440791963954571485"
+  },
+  "small_exact_witness_consistency": [
+    {
+      "block_N": 1,
+      "completion_rhs_descriptive": "165.491648114739",
+      "exact_parity_decimation": true,
+      "m": 2,
+      "n": 5,
+      "necessary_bound_holds": true,
+      "p": 59
+    },
+    {
+      "block_N": 2,
+      "completion_rhs_descriptive": "225.837611547449",
+      "exact_parity_decimation": true,
+      "m": 2,
+      "n": 7,
+      "necessary_bound_holds": true,
+      "p": 83
+    }
+  ],
+  "theorem_input": {
+    "all_residue_implication": "for N=floor((n-1)/3), chain rule forces chi(psi_3([k]P))=1 for 1<=k<=N",
+    "completion_l1_bound": "(1/n)*sum_r |D_N(r)| <= 1+H_((n-1)/2) <= 2+ln((n-1)/2)",
+    "degree": 4,
+    "fixed_probe": "psi_3",
+    "subgroup_character_sum_bound": "2*d*sqrt(p)=8*sqrt(p)"
+  }
+}
