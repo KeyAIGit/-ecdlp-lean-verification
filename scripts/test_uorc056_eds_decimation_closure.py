@@ -5,14 +5,16 @@ import uorc056_eds_decimation_closure as module
 
 
 class EdsDecimationAuditTests(unittest.TestCase):
-    def test_exact_small_curve_witnesses(self):
+    def test_exact_small_curve_witnesses_and_secp_status(self):
         result = module.run(
             Path("experiments/uorc056/divisor_aware_rational_grammar.json")
         )
         self.assertEqual(
             result["decision"],
-            "even_eds_decimation_is_a_real_mechanism_on_small_curves_secp_case_open",
+            "even_eds_decimation_exists_on_small_curves_but_is_excluded_for_"
+            "secp256k1_by_fourier_and_paley_bounds",
         )
+        self.assertEqual(result["schema_version"], "1.3")
         witnesses = result["exact_small_curve_witnesses"]
         self.assertEqual(len(witnesses), 2)
         for row in witnesses:
@@ -25,7 +27,20 @@ class EdsDecimationAuditTests(unittest.TestCase):
             self.assertEqual(row["ward_at_remarked_generator"]["chi_a"], 1)
             self.assertEqual(row["ward_at_remarked_generator"]["chi_b"], -1)
             self.assertTrue(row["specialized_recurrence_exact"])
-        self.assertEqual(result["bounded_base_discovery_screen"]["exact_candidates"], 0)
+        self.assertEqual(
+            result["bounded_base_discovery_screen"]["exact_candidates"],
+            0,
+        )
+        secp = result["secp256k1_status"]
+        self.assertTrue(secp["pure_single_factor_closed"])
+        self.assertEqual(
+            secp["published_fourier_necessary_condition"],
+            "cot(pi/(2n)) <= 6*sqrt(p)",
+        )
+        self.assertEqual(
+            secp["paley_necessary_condition"],
+            "((n-1)/2)^2 <= 3p+1",
+        )
 
     def test_secp_congruence_class(self):
         secp_p = int(
