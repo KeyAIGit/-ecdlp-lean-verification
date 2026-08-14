@@ -1,0 +1,109 @@
+name: UORC056 Hilbert-90 integration B13
+
+on:
+  push:
+    branches:
+      - research/uorc056-kummer-factor
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_HILBERT90_INTEGRATION_B13.md'
+      - 'experiments/parity_lift_000/uorc056_hilbert90_integration.py'
+      - 'experiments/parity_lift_000/uorc056_hilbert90_integration_core.py'
+      - 'experiments/parity_lift_000/uorc056_hilbert90_integration_miller.py'
+      - 'experiments/parity_lift_000/uorc056_oriented_principal_pell_core.py'
+      - 'Ecdlp/Proved/Hilbert90IntegrationBoundary.lean'
+      - '.github/workflows/uorc056-hilbert90-integration-b13.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact frozen cocycle and Hilbert-90 replay
+        run: |
+          python3 experiments/parity_lift_000/uorc056_hilbert90_integration.py \
+            --out /tmp/uorc056_hilbert90_integration_results.json \
+            > /tmp/uorc056-hilbert90-integration-b13.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/uorc056_hilbert90_integration_results.json').read_text()
+          )
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert data['package'] == 'UORC056-HILBERT90-INTEGRATION-B13'
+          assert aggregate['cases'] == 5
+          assert aggregate['total_coset_points'] == 117
+          assert aggregate['all_exact_coboundary_norms_one']
+          assert aggregate['all_projective_cocycles_valid']
+          assert aggregate['all_norm_normalizations_exact']
+          assert aggregate['all_hilbert90_reconstructions_exact']
+          assert aggregate['all_generator_negation_covariances_exact']
+          assert secp['gcd_n_p_minus_one'] == 1
+          assert secp['miller_multiplier_bit_length'] == 255
+          assert secp['miller_doubling_steps'] == 254
+          assert secp['miller_addition_steps'] == 191
+          assert secp['miller_line_steps'] == 445
+          assert secp['extra_line_factors'] == 2
+          assert secp['projective_cocycle_slp_class'] == 'O(log n)'
+          assert not secp['compact_hilbert90_lift_found']
+          assert not secp['parity_oracle_found']
+          assert not secp['sub_sqrt_ecdlp_found']
+          assert secp['central_target'] == 'UNIFORM-ORIENTED-ROOT-CIRCUIT-056'
+          PY
+
+      - name: Ensure scoped Lean boundary has no sorry
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/Hilbert90IntegrationBoundary.lean; then
+            echo '::error::Lean boundary contains sorry'
+            exit 1
+          fi
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            for attempt in 1 2 3 4; do
+              if sh /tmp/elan-init.sh -y --default-toolchain none; then
+                installed=1
+                echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+                break
+              fi
+              sleep $((attempt * 3))
+            done
+          fi
+          if [ "$installed" = 0 ]; then
+            echo 'elan unavailable; downloading the pinned Lean distribution directly'
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check scoped Lean boundary
+        run: lake build Ecdlp.Proved.Hilbert90IntegrationBoundary
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-hilbert90-integration-b13-results
+          path: |
+            /tmp/uorc056_hilbert90_integration_results.json
+            /tmp/uorc056-hilbert90-integration-b13.log
+          retention-days: 90
