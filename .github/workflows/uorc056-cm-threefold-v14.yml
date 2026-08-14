@@ -1,0 +1,85 @@
+name: UORC-056 CM threefold root decomposition V14
+
+on:
+  push:
+    branches:
+      - research/uorc056-execution-001
+    paths:
+      - 'scripts/uorc056_cm_threefold_root_decomposition.py'
+      - 'scripts/test_uorc056_cm_threefold_root_decomposition.py'
+      - 'Ecdlp/Proved/CmThreefoldRootDecomposition.lean'
+      - 'notes/reviews/UORC056_CM_THREEFOLD_ROOT_DECOMPOSITION_V14.md'
+      - '.github/workflows/uorc056-cm-threefold-v14.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  verify-and-persist:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/uorc056-execution-001
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run exact V14 decomposition replay and tests
+        run: |
+          PYTHONPATH=scripts python -m unittest -v scripts/test_uorc056_cm_threefold_root_decomposition.py
+          PYTHONPATH=scripts python scripts/uorc056_cm_threefold_root_decomposition.py \
+            --out experiments/uorc056/cm_threefold_root_decomposition_results.json
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Kernel-check V14 selector algebra
+        run: |
+          lake exe cache get
+          lake build Ecdlp.Proved.CmThreefoldRootDecomposition
+          lake env lean Ecdlp/Proved/CmThreefoldRootDecomposition.lean
+
+      - name: Persist deterministic V14 result
+        run: |
+          path=experiments/uorc056/cm_threefold_root_decomposition_results.json
+          if git diff --quiet -- "$path" \
+             && git ls-files --error-unmatch "$path" >/dev/null 2>&1; then
+            echo 'V14 result already current.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$path"
+          git commit -m 'UORC-056: persist CM threefold V14 result'
+          for attempt in 1 2 3; do
+            if git pull --rebase origin research/uorc056-execution-001 \
+               && git push origin HEAD:research/uorc056-execution-001; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          echo '::error::Could not persist V14 result after branch advanced.'
+          exit 1
