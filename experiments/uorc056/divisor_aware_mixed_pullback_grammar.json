@@ -1,0 +1,46 @@
+{
+  "base_ratio_grammar": "experiments/uorc056/divisor_aware_rational_grammar.json",
+  "cost_model": [
+    "all group operations for [u]Q and [v]Q are charged",
+    "all public coefficient construction, local regularization and field inversions are charged",
+    "every quadratic character and sign multiplication is charged",
+    "enumerative search is discovery work rather than evaluator advice"
+  ],
+  "mixed_rational_atoms": {
+    "admission": "the two pulled lines have equal local order at every tested subgroup point",
+    "canonicalization": "unordered pair of pulled-line templates because chi(R)=chi(R^-1)",
+    "forbidden": [
+      "per-point patch values",
+      "dropping exceptional points",
+      "numerical regularization",
+      "per-curve AST fitting"
+    ],
+    "formula": "L_num([u]Q)/L_den([v]Q)",
+    "local_derivative": "alpha_{u,P}=u*y([u]P)/y(P), obtained from [u]^*(dx/(2y))=u*dx/(2y)",
+    "regular_value": "if the common order is m, divide c_num*alpha_{u,P}^m by c_den*alpha_{v,P}^m"
+  },
+  "profile_id": "UORC-056-DIVISOR-AWARE-MIXED-PULLBACK-RATIO-V3",
+  "pulled_line_templates": {
+    "etale_condition": "p does not divide u and gcd(u,n)=1 on every frozen curve",
+    "formula": "L([u]Q)",
+    "multipliers": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "raw_count": 1440
+  },
+  "schema_version": "1.0",
+  "sign_circuit": {
+    "composition": "product of mixed-pullback rational-character atoms",
+    "maximum_weight": 4,
+    "uniform_output_negation": true
+  },
+  "status": "bounded_exact_screen",
+  "transfer_gate": {
+    "claim_boundary": "Failure closes only the declared mixed-pullback line-ratio grammar through product weight four.",
+    "discovery": "one symbolic mixed-pullback AST must be exact on all five base discovery curves",
+    "holdout": "the same AST must be exact on all thirteen base holdout curves"
+  }
+}
