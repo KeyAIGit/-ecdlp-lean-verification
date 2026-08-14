@@ -1,0 +1,88 @@
+name: UORC056 Hilbert90 norm-one C21
+
+on:
+  push:
+    branches:
+      - research/uorc056-endpoint-gauge
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_QUADRATIC_HILBERT90_NORM_ONE_TWIST_C21.md'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_IMPLICIT_HILBERT90_C22_PROMPT.md'
+      - 'experiments/parity_lift_000/uorc056_hilbert90_norm_one_replay.py'
+      - 'Ecdlp/Proved/Uorc056NegationPaired.lean'
+      - '.github/workflows/uorc056-hilbert90-norm-one-c21.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile and replay C21
+        run: |
+          python3 -m py_compile \
+            experiments/parity_lift_000/uorc056_odd_symmetric_glv_invariants.py \
+            experiments/parity_lift_000/uorc056_odd_rational_functional_boundary.py \
+            experiments/parity_lift_000/uorc056_hilbert90_norm_one_replay.py
+          python3 experiments/parity_lift_000/uorc056_hilbert90_norm_one_replay.py \
+            --out /tmp/uorc056_hilbert90_norm_one_replay_result.json \
+            > /tmp/uorc056-hilbert90-c21.log
+
+      - name: Check exact structural metrics
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          result=json.loads(Path('/tmp/uorc056_hilbert90_norm_one_replay_result.json').read_text())
+          assert result['digest']=='8f9d10f6c75d616faad137ed27b0c70b38a9707990b4547dfaad12e3e655483b'
+          assert result['aggregate']=={
+              'curves':7,'replacements':6,'all_norm_one':True,
+              'all_half_bounds_exact':True,'all_infinity_normalizations_one':True,
+              'compact_public_H_found':False,'sub_sqrt_evaluator_found':False,
+              'parity_oracle_found':False,
+          }
+          expected=[
+              (43,31,[8,8],10,8,4,5,8),(61,61,[15,15],20,15,8,11,16),
+              (67,79,[20,20],26,20,10,13,20),(79,67,[16,16],22,16,8,11,16),
+              (97,79,[20,20],26,20,10,13,20),(127,127,[32,32],42,32,16,21,32),
+              (163,139,[34,34],46,34,17,23,34),
+          ]
+          for row,exp in zip(result['cases'],expected):
+              got=(row['p'],row['n'],row['R_degrees'],row['R_support'],row['R_poles'],
+                   row['minimum_H_poles'],row['minimum_H_support'],row['canonical_H_degree'])
+              assert got==exp
+              assert row['R_infinity']==1
+              assert row['denominator_is_monic_tau_numerator']
+          assert len(result['generator_replacements'])==6
+          assert all(r['R_infinity']==1 for r in result['generator_replacements'])
+          secp=result['secp256k1']
+          assert secp['R_pole_lower_bound']=='28948022309329048855892746252171976963209391069768726095651290785379540373624'
+          assert secp['R_support_lower_bound']=='38597363079105398474523661669562635950945854759691634794201721047172720498104'
+          assert secp['H_pole_lower_bound']=='14474011154664524427946373126085988481604695534884363047825645392689770186812'
+          assert secp['H_support_lower_bound']=='19298681539552699237261830834781317975472927379845817397100860523586360249052'
+          PY
+
+      - name: Install elan
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Check C20 algebraic core in Lean
+        run: lake env lean Ecdlp/Proved/Uorc056NegationPaired.lean
+
+      - name: Upload C21 outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-hilbert90-norm-one-c21
+          path: |
+            /tmp/uorc056_hilbert90_norm_one_replay_result.json
+            /tmp/uorc056-hilbert90-c21.log
+          retention-days: 90
