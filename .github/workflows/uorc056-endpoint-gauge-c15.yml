@@ -1,0 +1,62 @@
+name: UORC056 endpoint-gauge C15
+
+on:
+  push:
+    branches:
+      - research/uorc056-endpoint-gauge
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_ENDPOINT_GAUGE_TRANSPOSED_FUNCTIONAL_C15.md'
+      - 'experiments/parity_lift_000/uorc056_endpoint_gauge_transposed_replay.py'
+      - 'experiments/parity_lift_000/uorc056_endpoint_gauge_transposed_replay_result.json'
+      - '.github/workflows/uorc056-endpoint-gauge-c15.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile and replay C15
+        run: |
+          python3 -m py_compile experiments/parity_lift_000/uorc056_endpoint_gauge_transposed_replay.py
+          python3 experiments/parity_lift_000/uorc056_endpoint_gauge_transposed_replay.py \
+            --out /tmp/uorc056_endpoint_gauge_transposed_replay_result.json \
+            > /tmp/uorc056-endpoint-gauge-c15.log
+          cmp \
+            /tmp/uorc056_endpoint_gauge_transposed_replay_result.json \
+            experiments/parity_lift_000/uorc056_endpoint_gauge_transposed_replay_result.json
+
+      - name: Check exact result flags
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('/tmp/uorc056_endpoint_gauge_transposed_replay_result.json').read_text())
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          assert aggregate['orders'] == 6
+          assert aggregate['all_endpoint_target_relations']
+          assert aggregate['all_seven_source_equations']
+          assert aggregate['all_anti_resolvent_reconstructions']
+          assert aggregate['all_rational_translate_ranks_n_minus_1']
+          assert not aggregate['sub_sqrt_evaluator_found']
+          assert not aggregate['parity_oracle_found']
+          assert secp['intersection_formula'] == 's/2+20'
+          assert secp['partial_formula'] == '3s/2-20'
+          assert secp['partial_bit_length'] == 254
+          print(json.dumps(aggregate, indent=2, sort_keys=True))
+          print(json.dumps(secp, indent=2, sort_keys=True))
+          PY
+
+      - name: Upload replay output
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-endpoint-gauge-c15
+          path: |
+            /tmp/uorc056_endpoint_gauge_transposed_replay_result.json
+            /tmp/uorc056-endpoint-gauge-c15.log
+          retention-days: 90
