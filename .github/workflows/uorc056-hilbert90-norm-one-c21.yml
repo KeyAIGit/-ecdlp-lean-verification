@@ -4,11 +4,13 @@ on:
   push:
     branches:
       - research/uorc056-endpoint-gauge
+      - research/uorc056-hilbert90-completion
     paths:
-      - 'archive/untrusted_intake/parity_lift_000/UORC056_QUADRATIC_HILBERT90_NORM_ONE_TWIST_C21.md'
-      - 'archive/untrusted_intake/parity_lift_000/UORC056_IMPLICIT_HILBERT90_C22_PROMPT.md'
+      - 'experiments/parity_lift_000/uorc056_odd_symmetric_glv_invariants.py'
+      - 'experiments/parity_lift_000/uorc056_odd_rational_functional_boundary.py'
       - 'experiments/parity_lift_000/uorc056_hilbert90_norm_one_replay.py'
       - 'Ecdlp/Proved/Uorc056NegationPaired.lean'
+      - 'Ecdlp/Proved/Uorc056Hilbert90Divisor.lean'
       - '.github/workflows/uorc056-hilbert90-norm-one-c21.yml'
   workflow_dispatch:
 
@@ -75,8 +77,10 @@ jobs:
       - name: Fetch Mathlib cache
         run: lake exe cache get
 
-      - name: Check C20 algebraic core in Lean
-        run: lake env lean Ecdlp/Proved/Uorc056NegationPaired.lean
+      - name: Check C20 and C21 Lean certificates
+        run: |
+          lake env lean Ecdlp/Proved/Uorc056NegationPaired.lean
+          lake env lean Ecdlp/Proved/Uorc056Hilbert90Divisor.lean
 
       - name: Upload C21 outputs
         uses: actions/upload-artifact@v4
