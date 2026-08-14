@@ -6,6 +6,7 @@ on:
       - 'scripts/uorc056_*.py'
       - 'scripts/test_uorc056_*.py'
       - 'experiments/uorc056/**'
+      - 'notes/reviews/UORC056_FOURIER_DIVISOR_BARRIER_V7.md'
       - '.github/workflows/uorc056-execution-001.yml'
   workflow_dispatch:
 
@@ -44,7 +45,8 @@ jobs:
             scripts/test_uorc056_divisor_aware_mixed_pullback.py \
             scripts/test_uorc056_divisor_aware_balanced_product.py \
             scripts/test_uorc056_global_divisor_balance.py \
-            scripts/test_uorc056_small_miller_balance.py
+            scripts/test_uorc056_small_miller_balance.py \
+            scripts/test_uorc056_fourier_divisor_barrier.py
 
       - name: Replay every root and parity ratio independently
         run: python scripts/uorc056_sympy_replay.py /tmp/uorc056-fixtures
@@ -59,6 +61,7 @@ jobs:
           python scripts/uorc056_divisor_aware_balanced_product.py --check
           python scripts/uorc056_global_divisor_balance.py --check
           python scripts/uorc056_small_miller_balance.py --check
+          python scripts/uorc056_fourier_divisor_barrier.py --check
 
       - name: Upload exact ground-truth fixtures
         uses: actions/upload-artifact@v4
