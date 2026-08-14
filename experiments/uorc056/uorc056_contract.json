@@ -1,0 +1,81 @@
+{
+  "central_question": "Construct, or rule out in an explicitly broad declared circuit class, a uniform exact evaluator for the marked-generator oriented Kummer root with all-in complexity strictly below the square-root frontier.",
+  "contract_id": "UORC-056",
+  "cost_gate": {
+    "components": [
+      "preprocessing_time",
+      "online_time",
+      "memory",
+      "advice_bits",
+      "representation_construction",
+      "precision_and_exact_recovery",
+      "branch_selection"
+    ],
+    "forbidden_free_inputs": [
+      "orientation values indexed by subgroup components",
+      "unknown scalar bits",
+      "a supplied analytic or p-adic branch",
+      "an uncharged degree-n kernel expansion",
+      "an uncharged Omega(sqrt(n)) table or memory-time product"
+    ],
+    "goal": "C_total = O(n^(1/2-epsilon)) for some fixed epsilon>0 on the declared scaling family"
+  },
+  "evidence_boundaries": {
+    "degree": "high polynomial degree alone is not an arithmetic-circuit lower bound",
+    "finite_pattern": "not promotable without a symbolic law and held-out transfer",
+    "negative_screens": "do not constitute a universal lower bound",
+    "secp256k1_unknown_target_runs": "out of scope",
+    "toy_interpolation": "ground truth only, not a candidate evaluator"
+  },
+  "first_execution_package": {
+    "does_not_authorize": [
+      "circuit-search claims",
+      "route promotion",
+      "unknown-target scalar recovery",
+      "production-scale secp256k1 experiments"
+    ],
+    "purpose": "freeze the contract and build independently replayable exact toy ground truth",
+    "tasks": [1, 2, 3, 4, 5, 6, 7, 8]
+  },
+  "schema_version": "1.0",
+  "status": "frozen_research_target",
+  "target": {
+    "bit_peeling": "an exact evaluator yields canonical scalar recovery in at most ceil(log2(n)) adaptive calls",
+    "canonical_scalar": "the unique integer k with 0 <= k < n and Q=[k]G",
+    "curve_family": "short Weierstrass y^2 = x^3 + a*x + b over F_p; primary fixed curve secp256k1 has a=0,b=7",
+    "generator_negation": "Y_{-G}=-Y_G",
+    "input": ["public curve E", "public marked generator G", "public Q in <G>"],
+    "kernel": "K_H(X)=product_{j=1}^{(n-1)/2}(X-x([j]G))",
+    "oriented_root": "the unique polynomial of degree < (n-1)/2 satisfying Y_G(x([j]G))=(-1)^j*y([j]G) for 1 <= j <= (n-1)/2",
+    "output": "A(E,G,Q)=Y_G(x(Q))/y(Q)=(-1)^k for Q != O",
+    "square_congruence": "Y_G(X)^2 = X^3+aX+b mod K_H(X)",
+    "subgroup": "H=<G> of odd prime order n"
+  },
+  "toy_corpus": {
+    "instances": [
+      {"G": [2, 12], "n": 31, "p": 43},
+      {"G": [2, 22], "n": 79, "p": 67},
+      {"G": [1, 18], "n": 67, "p": 79},
+      {"G": [1, 32], "n": 127, "p": 127},
+      {"G": [2, 34], "n": 139, "p": 163}
+    ],
+    "role": "finite exact ground truth only; no unknown-target or asymptotic claim",
+    "source": "exactly the five frozen prime-order y^2=x^3+7 curves from experiments/parity_lift_000/char_parity_toy_screen.py"
+  },
+  "uniformity": {
+    "allowed_structure": [
+      "j=0 Eisenstein CM",
+      "GLV endomorphism",
+      "Frobenius",
+      "public field and subgroup constants",
+      "charged preprocessing"
+    ],
+    "required": [
+      "one declared algorithmic rule across a scaling family",
+      "explicit dependence on E,G,Q and public secp256k1 constants",
+      "exact finite-field output",
+      "explicit G -> -G covariance",
+      "no fitted level-n orientation table"
+    ]
+  }
+}
