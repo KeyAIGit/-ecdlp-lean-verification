@@ -1,0 +1,143 @@
+{
+  "aggregate": {
+    "all_exhaustive_odd_linear_spans_remain_linear_support": true,
+    "all_negation_pair_counts_pass": true,
+    "all_trace_and_norm_descend": true,
+    "curves": 7,
+    "parity_oracle_found": false,
+    "sub_sqrt_evaluator_found": false
+  },
+  "cases": [
+    {
+      "G": [2, 12],
+      "beta": 6,
+      "lambda": 5,
+      "n": 31,
+      "norm_support_H": 30,
+      "odd_linear_span_minimum_support_H": 24,
+      "odd_linear_span_witnesses": [
+        {"label": "trace+9*norm", "negative_H": 39, "positive_H": 3, "support_H": 24},
+        {"label": "trace+14*norm", "negative_H": 39, "positive_H": 3, "support_H": 24}
+      ],
+      "p": 43,
+      "paired_orbit_support_exact": 5,
+      "parity_orbit_counts": [2, 3, 3, 2],
+      "trace_support_H": 27
+    },
+    {
+      "G": [2, 25],
+      "beta": 13,
+      "lambda": 47,
+      "n": 61,
+      "norm_support_H": 51,
+      "odd_linear_span_minimum_support_H": 51,
+      "odd_linear_span_witnesses": [
+        {"label": "norm", "negative_H": 45, "positive_H": 39, "support_H": 51}
+      ],
+      "p": 61,
+      "paired_orbit_support_exact": 10,
+      "parity_orbit_counts": [3, 7, 7, 3],
+      "trace_support_H": 54
+    },
+    {
+      "G": [2, 22],
+      "beta": 29,
+      "lambda": 23,
+      "n": 79,
+      "norm_support_H": 72,
+      "odd_linear_span_minimum_support_H": 72,
+      "odd_linear_span_witnesses": [
+        {"label": "trace+5*norm", "negative_H": 93, "positive_H": 9, "support_H": 72},
+        {"label": "trace+7*norm", "negative_H": 93, "positive_H": 9, "support_H": 72},
+        {"label": "trace+9*norm", "negative_H": 93, "positive_H": 9, "support_H": 72},
+        {"label": "trace+24*norm", "negative_H": 93, "positive_H": 9, "support_H": 72},
+        {"label": "trace+26*norm", "negative_H": 93, "positive_H": 9, "support_H": 72},
+        {"label": "trace+31*norm", "negative_H": 93, "positive_H": 9, "support_H": 72},
+        {"label": "trace+41*norm", "negative_H": 93, "positive_H": 9, "support_H": 72},
+        {"label": "trace+56*norm", "negative_H": 93, "positive_H": 9, "support_H": 72}
+      ],
+      "p": 67,
+      "paired_orbit_support_exact": 13,
+      "parity_orbit_counts": [4, 9, 9, 4],
+      "trace_support_H": 75
+    },
+    {
+      "G": [1, 18],
+      "beta": 23,
+      "lambda": 29,
+      "n": 67,
+      "norm_support_H": 66,
+      "odd_linear_span_minimum_support_H": 57,
+      "odd_linear_span_witnesses": [
+        {"label": "trace+50*norm", "negative_H": 75, "positive_H": 6, "support_H": 57}
+      ],
+      "p": 79,
+      "paired_orbit_support_exact": 11,
+      "parity_orbit_counts": [3, 8, 8, 3],
+      "trace_support_H": 63
+    },
+    {
+      "G": [1, 28],
+      "beta": 35,
+      "lambda": 55,
+      "n": 79,
+      "norm_support_H": 72,
+      "odd_linear_span_minimum_support_H": 69,
+      "odd_linear_span_witnesses": [
+        {"label": "trace+46*norm", "negative_H": 90, "positive_H": 9, "support_H": 69}
+      ],
+      "p": 97,
+      "paired_orbit_support_exact": 13,
+      "parity_orbit_counts": [4, 9, 9, 4],
+      "trace_support_H": 75
+    },
+    {
+      "G": [1, 32],
+      "beta": 19,
+      "lambda": 107,
+      "n": 127,
+      "norm_support_H": 123,
+      "odd_linear_span_minimum_support_H": 117,
+      "odd_linear_span_witnesses": [
+        {"label": "trace+54*norm", "negative_H": 144, "positive_H": 15, "support_H": 117},
+        {"label": "trace+57*norm", "negative_H": 144, "positive_H": 15, "support_H": 117}
+      ],
+      "p": 127,
+      "paired_orbit_support_exact": 21,
+      "parity_orbit_counts": [6, 15, 15, 6],
+      "trace_support_H": 123
+    },
+    {
+      "G": [2, 34],
+      "beta": 58,
+      "lambda": 96,
+      "n": 139,
+      "norm_support_H": 138,
+      "odd_linear_span_minimum_support_H": 135,
+      "odd_linear_span_witnesses": [
+        {"label": "trace+17*norm", "negative_H": 156, "positive_H": 15, "support_H": 135},
+        {"label": "trace+33*norm", "negative_H": 156, "positive_H": 15, "support_H": 135},
+        {"label": "trace+42*norm", "negative_H": 156, "positive_H": 15, "support_H": 135},
+        {"label": "trace+45*norm", "negative_H": 156, "positive_H": 15, "support_H": 135},
+        {"label": "trace+73*norm", "negative_H": 156, "positive_H": 15, "support_H": 135},
+        {"label": "trace+86*norm", "negative_H": 156, "positive_H": 15, "support_H": 135},
+        {"label": "trace+95*norm", "negative_H": 156, "positive_H": 15, "support_H": 135},
+        {"label": "trace+105*norm", "negative_H": 156, "positive_H": 15, "support_H": 135}
+      ],
+      "p": 163,
+      "paired_orbit_support_exact": 23,
+      "parity_orbit_counts": [5, 18, 18, 5],
+      "trace_support_H": 138
+    }
+  ],
+  "corpus_rule": "first seven ascending primes p congruent 1 mod 3 for which E:y^2=x^3+7 has prime order n congruent 1 mod 3",
+  "experiment": "ODD-SYMMETRIC-GLV-INVARIANTS-067-C17",
+  "full_result_sha256": "29cc8520289b651d83579cfc4486c7a6c7bd888d9587a99bc4fa9cc8fd3ee694",
+  "secp256k1": {
+    "n": "115792089237316195423570985008687907852837564279074904382605163141518161494337",
+    "odd_linear_span_pole_degree_at_least": "9649340769776349618630915417390658987736463689922908698550430261793180124526",
+    "odd_linear_span_quotient_support_at_least": "19298681539552699237261830834781317975472927379845817397100860523586360249052",
+    "pole_degree_bit_length": 253,
+    "support_bit_length": 254
+  }
+}
