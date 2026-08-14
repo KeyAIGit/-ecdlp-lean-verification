@@ -1,0 +1,149 @@
+name: UORC056 sparse-circulant parity C25
+
+on:
+  push:
+    branches:
+      - research/uorc056-sparse-circulant-c25
+    paths:
+      - 'experiments/parity_lift_000/uorc056_sparse_circulant_symmetry.py'
+      - 'Ecdlp/Proved/Uorc056SparseCirculant.lean'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_SPARSE_CIRCULANT_PARITY_C25.md'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_ASYMMETRIC_RESULTANT_C26_PROMPT.md'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_SPARSE_TWO_TRANSLATION_RESULTANT_C5.md'
+      - '.github/workflows/uorc056-sparse-circulant-c25.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile and replay C25
+        run: |
+          set -o pipefail
+          python3 -m py_compile \
+            experiments/parity_lift_000/uorc056_sparse_circulant_symmetry.py
+          python3 experiments/parity_lift_000/uorc056_sparse_circulant_symmetry.py \
+            --out /tmp/uorc056_sparse_circulant_symmetry_result.json \
+            | tee /tmp/uorc056-sparse-circulant-c25.log
+
+      - name: Check exact C25 identity and classification
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = json.loads(
+              Path('/tmp/uorc056_sparse_circulant_symmetry_result.json').read_text()
+          )
+          assert result['digest'] == \
+              'd2d7e45be77b5502a286058a0a935ea751d472de84d5b876169a52df9e453586'
+          source = result['source_certificate']
+          assert source == {
+              'bytes': 2284,
+              'markers_verified': True,
+              'path': 'archive/untrusted_intake/parity_lift_000/UORC056_SPARSE_TWO_TRANSLATION_RESULTANT_C5.md',
+              'sha256': 'fc846581a511e4256d9e36507d6c13156d314890234c807b01a5346319af11a4',
+          }
+          assert len(result['transform_table']) == 6
+          assert len(result['screens']) == 32
+          assert [row['n'] for row in result['screens']] == [
+              5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61,
+              67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131,
+              137, 139,
+          ]
+
+          residue = result['residue_certificate']
+          assert residue['modulus'] == 55440
+          assert residue['unit_residues'] == 11520
+          assert residue['witness_scalars'] == [2, 3, 4, 5, 7, 8, 9, 10, 11, 12]
+          assert residue['stable_inverse_parity_checks'] == 115200
+          assert residue['all_unit_residues_covered']
+          assert residue['inversion_witness_frequency'] == {
+              '2': 5760, '3': 2880, '4': 1440, '5': 720, '7': 360,
+              '8': 180, '9': 60, '10': 60, '11': 30, '12': 30,
+          }
+          assert residue['small_prime_exceptions'] == {
+              '3': None, '5': [2, 3], '7': None, '11': [3, 4],
+          }
+          assert residue['only_prime_without_a_screened_inversion_witness'] == 7
+
+          aggregate = result['aggregate']
+          assert aggregate['screen_orders'] == 32
+          assert aggregate['public_subgroup_orders_included']
+          assert aggregate['full_S3_Mobius_action_verified']
+          assert aggregate['S3_covariance_checks'] == 209916
+          assert aggregate['one_minus_parity_checks'] == 34986
+          assert aggregate['zero_coefficient_independence_checks'] == 12348
+          assert aggregate['repeated_opposite_parity_collisions'] == 186
+          assert aggregate['coefficient_symmetric_extraction_collisions'] == 93
+          assert aggregate['all_zero_coefficient_strata_blocked']
+          assert aggregate['all_repeated_coefficient_strata_classified']
+          assert aggregate['b_eq_c_blocked_for_all_primes_gt_11']
+          assert aggregate['a_eq_c_blocked_for_all_primes_gt_11']
+          assert aggregate['all_equal_blocked_for_all_primes_gt_11']
+          assert aggregate['a_eq_b_stabilizer_parity_preserving']
+          assert not aggregate['a_eq_b_repeated_stratum_fully_blocked']
+          assert aggregate['coefficient_symmetric_extraction_blocked_for_all_primes_gt_11']
+          assert not aggregate['fully_asymmetric_parity_collision_proved']
+          assert aggregate['finite_exception_n7_retained']
+          assert not aggregate['sublinear_sparse_resultant_representation_found']
+          assert aggregate['linear_regular_representation_public_Q_realization_known']
+          assert not aggregate['sublinear_public_Q_operator_realization_found']
+          assert not aggregate['exact_parity_extraction_found']
+          assert not aggregate['exact_Hilbert90_branch_bridge_found']
+          assert not aggregate['complete_cost_gate_passed']
+          assert not aggregate['compact_branch_odd_evaluator_found']
+          assert not aggregate['sub_sqrt_evaluator_found']
+          assert not aggregate['parity_oracle_found']
+          assert not aggregate['sub_sqrt_ecdlp_found']
+
+          secp = result['secp256k1']
+          assert secp['n_mod_4'] == 1
+          assert secp['n_coprime_to_residue_modulus']
+          assert secp['b_eq_c_inversion_witness'] == [
+              2,
+              '57896044618658097711785492504343953926418782139537452191302581570759080747169',
+          ]
+          assert secp['a_eq_c_k_over_k_minus_one_witness'] == [
+              3,
+              '57896044618658097711785492504343953926418782139537452191302581570759080747170',
+          ]
+          assert secp['zero_coefficient_strata_blocked']
+          assert secp['b_eq_c_stratum_blocked']
+          assert secp['a_eq_c_stratum_blocked']
+          assert secp['all_equal_stratum_blocked']
+          assert not secp['a_eq_b_stratum_blocked_by_stabilizer']
+          assert secp['coefficient_symmetric_full_S3_extraction_blocked']
+          assert not secp['fully_asymmetric_fixed_label_extraction_blocked']
+          assert not secp['sublinear_public_Q_operator_realization_found']
+          PY
+
+      - name: Install elan
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Check C24-C25 Lean certificates
+        run: |
+          lake build Ecdlp.Proved.Uorc056BranchSensitiveLeaf
+          lake build Ecdlp.Proved.Uorc056SparseCirculant
+          lake env lean Ecdlp/Proved/Uorc056SparseCirculant.lean
+
+      - name: Upload C25 replay output
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-sparse-circulant-c25
+          path: |
+            /tmp/uorc056_sparse_circulant_symmetry_result.json
+            /tmp/uorc056-sparse-circulant-c25.log
+          retention-days: 90
