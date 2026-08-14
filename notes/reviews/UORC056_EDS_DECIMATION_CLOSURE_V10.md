@@ -1,8 +1,8 @@
-# UORC-056 EDS decimation closure V10
+# UORC-056 EDS decimation audit V10
 
 Date: 2026-08-14
 
-Status: **the pure division-polynomial / EDS-decimation character route left open by V9 is closed.**
+Status: **the attempted all-index EDS-decimation closure is retracted. The valid chain-rule reduction survives, but its proposed Ward obstruction is false. Explicit q=3 mod 4 counterexamples show that a generator can have an all-residue nonzero EDS row. The secp256k1 even-decimation frontier therefore remains open.**
 
 Central target remains unchanged:
 
@@ -11,33 +11,7 @@ A(E,G,Q)=Y_G(x(Q))/y(Q)=(-1)^k,
 Q=[k]G.
 ```
 
-This checkpoint does not construct the target evaluator. It proves that no single quadratic character of a classical division polynomial can be that evaluator, for any index `m`, on an odd prime-order marked subgroup.
-
-## 1. Statement
-
-Let `E/F_q` be an elliptic curve over a finite field of odd characteristic, let
-
-```text
-H=<G>,  |H|=n,
-```
-
-with `n>=3` an odd prime, and let `chi` be the quadratic character. For every positive integer `m`, define
-
-```text
-D_m([k]G)=chi(psi_m([k]G)),  1<=k<n.
-```
-
-Then
-
-```text
-D_m([k]G) != (-1)^k
-```
-
-for at least one `k` in `1,...,n-1`.
-
-Thus there is no exceptional even EDS decimation left to search.
-
-## 2. Odd indices and q=1 mod 4
+## 1. What remains proved from V9
 
 Classical division polynomials satisfy
 
@@ -45,212 +19,135 @@ Classical division polynomials satisfy
 psi_m(-Q)=(-1)^(m+1) psi_m(Q).
 ```
 
-Canonical parity on an odd cycle is anti-invariant:
-
-```text
-sigma_G(-Q)=-sigma_G(Q).
-```
-
 Hence:
 
-1. if `m` is odd, `psi_m` is invariant under `Q -> -Q`, so its quadratic character cannot equal parity;
-2. if `m` is even and `chi(-1)=+1`, its quadratic character is again invariant, so it cannot equal parity.
+1. odd `m` cannot give parity because the quadratic-character output is invariant under `Q -> -Q`;
+2. even `m` over `q=1 mod 4` cannot give parity because `chi(-1)=+1` again makes the output invariant;
+3. only even `m` over `q=3 mod 4` survives this covariance gate. secp256k1 is in this class.
 
-Only the case
+## 2. Valid chain-rule reduction
 
-```text
-m even,
-chi(-1)=-1,
-```
-
-can pass the negation gate. This is exactly the secp256k1 congruence class.
-
-## 3. Chain-rule reduction of the surviving case
-
-Assume for contradiction that `m` is even, `chi(-1)=-1`, and
+Assume `m` is even, `chi(-1)=-1`, and
 
 ```text
 chi(psi_m([k]G))=(-1)^k
 ```
 
-for every `1<=k<n`.
-
-Since `m^2` is even, the division-polynomial chain rule
+for every `1<=k<n`. The chain rule gives
 
 ```text
-psi_(mk)(G)=psi_m([k]G) * psi_k(G)^(m^2)
+psi_(mk)(G)=psi_m([k]G) * psi_k(G)^(m^2),
 ```
 
-implies
+so, with `rho_j=chi(psi_j(G))`, `rho_(mk)=(-1)^k` and in particular `rho_m=-1`.
+
+Put `P=[m]G`. If `n | m`, then `psi_m(G)=0`, impossible. Otherwise `P` is a generator because `n` is prime. Using the chain rule in the opposite order,
 
 ```text
-rho_(mk)=(-1)^k,
-rho_j=chi(psi_j(G)).
+psi_(mk)(G)=psi_k(P) * psi_m(G)^(k^2),
 ```
 
-At `k=1`, therefore,
+and `k^2 == k mod 2` gives
 
 ```text
-rho_m=-1.
+chi(psi_k(P))=+1,  1<=k<n.             (V10.1)
 ```
 
-Put
+Thus any exact even decimation would imply the existence of a generator whose complete nonzero EDS-residue row is all quadratic residues. This reduction is correct and remains useful.
+
+## 3. Correction of the Ward normalization
+
+The first V10 attempt used a misread normalization for the torsion quasi-period constants. The primary source is Silverman, Theorem 8. For a point `P` of order `n>=3`, there exist units `a,b` such that
 
 ```text
-P=[m]G.
+F_(s*n+k)(P)=a^(s*k) b^(s^2) F_k(P).
 ```
 
-If `n | m`, then `psi_m(G)=0`, already contradicting `rho_m=-1`. Since `n` is prime, otherwise `P` is again a generator of `H`.
-
-Apply the chain rule in the opposite order:
+With Silverman's normalized division functions,
 
 ```text
-psi_(mk)(G)=psi_k(P) * psi_m(G)^(k^2).
+a = F_(n+2)(P)/(F_2(P) F_(n+1)(P)),
+b = F_2(P) F_(n+1)(P)^2/F_(n+2)(P).
 ```
 
-Taking quadratic characters and using
+The same `n+1,n+2` normalization is what the classical short-Weierstrass division-polynomial recurrence satisfies up to the fixed normalization gauge. The earlier `n-1,n-2` reading cannot be used to infer `chi(a)=chi(b)=+1` from `(V10.1)`.
+
+Under an all-residue row, the recurrence is instead compatible with
 
 ```text
-k^2 == k mod 2,
-rho_m=-1,
-rho_(mk)=(-1)^k,
+chi(a)=+1,
+chi(b)=-1
 ```
 
-gives
+when `chi(-1)=-1`. There is no contradiction.
+
+## 4. Exact counterexamples to the proposed obstruction
+
+The corrected replay exhibits genuine generators on the same curve shape
 
 ```text
-chi(psi_k(P))=+1
+y^2=x^3+7
 ```
 
-for every `1<=k<n`.
+over fields with `q=3 mod 4` whose entire nonzero division-polynomial row consists of quadratic residues.
 
-So an exact even decimation would force the complete nonzero EDS-residue row of a generator `P` to be identically quadratic-residue.
-
-## 4. Ward quasi-periodicity forbids an all-residue row
-
-For a point `P` of order `n>=3`, Shparlinski--Stange quote the classical Ward/Silverman torsion formula
+Two frozen counterexamples are:
 
 ```text
-psi_(s*n+k)(P)=a^(k*s) b^(s^2) psi_k(P),
+F_59: P=(31,11), ord(P)=5,
+chi(psi_k(P))=+1 for k=1,2,3,4;
+
+F_83: P=(74,5), ord(P)=7,
+chi(psi_k(P))=+1 for k=1,...,6.
 ```
 
-for positive integers `s,k`, with
+For both examples the corrected Ward constants satisfy
 
 ```text
-a = psi_(n-2)(P)/(psi_(n-1)(P) psi_2(P)),
-
-b = psi_(n-1)(P)^2 psi_2(P)/psi_(n-2)(P).
+chi(a)=+1,
+chi(b)=-1,
 ```
 
-Under the forced all-residue condition
-
-```text
-chi(psi_k(P))=1,  1<=k<n,
-```
-
-all factors defining `a` and `b` are nonzero and
-
-```text
-chi(a)=chi(b)=1.
-```
-
-Therefore Ward quasi-periodicity at `(s,k)=(1,1)` and `(2,1)` gives
-
-```text
-chi(psi_(n+1)(P))  = 1,
-chi(psi_(2n+1)(P)) = 1.                 (V10.1)
-```
-
-Now use the standard EDS/division-polynomial recurrence
-
-```text
-psi_(h+i) psi_(h-i) psi_j^2
-+ psi_(i+j) psi_(i-j) psi_h^2
-+ psi_(j+h) psi_(j-h) psi_i^2 = 0.
-```
-
-Substitute
-
-```text
-h=n+1,
-i=n,
-j=1.
-```
-
-Because
-
-```text
-psi_n(P)=0,
-psi_1(P)=1,
-```
-
-we get the exact identity
-
-```text
-psi_(2n+1)(P)
-  = - psi_(n+1)(P)^3 psi_(n-1)(P).     (V10.2)
-```
-
-All three nonzero division-polynomial factors on the right of `(V10.2)` have quadratic character `+1` by the all-residue condition and `(V10.1)`. Hence
-
-```text
-chi(psi_(2n+1)(P))=chi(-1)=-1,
-```
-
-contradicting `(V10.1)`.
-
-Therefore an all-residue EDS row cannot occur when `chi(-1)=-1`, and the surviving even decimation is impossible.
+and the Ward quasi-period formula and EDS recurrence hold exactly. Therefore the all-residue condition by itself is not an obstruction to an even decimation.
 
 ## 5. Consequence for secp256k1
 
-The secp256k1 subgroup order is odd prime and its base field satisfies
-
-```text
-p == 3 mod 4,
-chi(-1)=-1.
-```
-
-V9 reduced every surviving pure division-polynomial candidate to
+The secp256k1-specific open case remains
 
 ```text
 m even,
-k -> rho_(m*k).
+chi(psi_m([k]G))=rho_(m*k),
+q=3 mod 4.
 ```
 
-V10 proves that no such `m` exists. This is independent of the size of `m`; the former lower threshold
+V10 does not find an exceptional `m`, but it proves that the proposed shortcut
 
 ```text
-m >= 14715411119103453974
+exact decimation -> all-residue re-marked row -> impossible
 ```
 
-no longer defines an open search range.
+stops at the second implication: all-residue rows are possible.
 
-## 6. Exact scope
+The bounded V9 screens remain valid evidence only. They do not settle arbitrary `m`.
 
-V10 closes:
+## 6. Revised next questions
 
-- every odd-index `chi(psi_m(Q))` by negation covariance;
-- every even-index `chi(psi_m(Q))` over `q=1 mod 4` by negation covariance;
-- every even-index `chi(psi_m(Q))` over `q=3 mod 4` by chain-rule reduction plus Ward quasi-periodicity and the EDS recurrence;
-- equivalently, the pure even EDS decimation frontier isolated in V9.
+The useful next statements are now more precise:
 
-It does not close:
-
-1. direct field-valued evaluation of `Y_G(x(Q))/y(Q)`;
-2. rational functions not restricted to one division polynomial whose succinct programs use cancellations not represented by this route;
-3. theta, elliptic-unit or higher-level CM constructions;
-4. transposed/modular-composition representations;
-5. adaptive branching or non-character outputs;
-6. compact distinguished global integration of the oriented Miller cocycle.
+1. classify the pair of Ward sign invariants `(chi(a_P),chi(b_P))` as the generator `P` varies through `<G>`;
+2. determine the exact action of re-marking `P=[m]G` on these invariants;
+3. combine `(V10.1)` with the *generator-change law*, not merely with the existence of an all-residue row;
+4. test whether an all-residue generator `P` can specifically arise from an even `m` satisfying `rho_m=-1` relative to the original marked generator `G`;
+5. if this route remains inconclusive, return to the non-character central routes: direct field-valued `Y_G`, compact global integration of the oriented Miller cocycle, theta/elliptic-unit and transposed representations.
 
 ## 7. Source lock
 
-Primary sources used for the algebraic identities:
+The correction is anchored to the primary normalization in:
 
-1. I. E. Shparlinski and K. E. Stange, *Character Sums with Division Polynomials*, Canadian Mathematical Bulletin 55 (2012), 850--857, especially Lemmas 1--3. Lemma 1 records the Ward/Silverman torsion quasi-periodicity and Lemma 2 the multiplication chain rule.
-2. K. E. Stange, *Division polynomials for arbitrary isogenies*, Research in Number Theory 12:53 (2026), equations (1.1)--(1.3) and the chain rule.
-3. S. Bhakta, *Character sums of division polynomials twisted by multiplicative functions*, Canadian Mathematical Bulletin, FirstView (2026), Lemma 2.3, for an independent modern statement of the chain rule after applying a multiplicative character.
+- J. H. Silverman, *p-adic properties of division polynomials and elliptic divisibility sequences*, Math. Ann. 332 (2005), Theorem 8, especially the explicit formulas obtained from `F_(n+1)` and `F_(n+2)`;
+- K. E. Stange, *Division polynomials for arbitrary isogenies*, Research in Number Theory 12:53 (2026), for the classical recurrence and chain rule;
+- S. Bhakta, *Character sums of division polynomials twisted by multiplicative functions*, Canadian Mathematical Bulletin (2026), Lemma 2.3, for the multiplicative-character chain rule.
 
 ## 8. Claim boundary
 
-The theorem is an exact algebraic no-go for the **pure single-division-polynomial quadratic-character family** on odd prime-order subgroups. It is not a general arithmetic-circuit lower bound, does not solve ECDLP, and does not produce or evaluate an unknown production scalar.
+V10 is now an **error-correcting checkpoint**, not a no-go theorem. It preserves the valid chain-rule reduction and supplies exact counterexamples to an invalid obstruction. No public parity evaluator, sub-square-root ECDLP algorithm, or arbitrary-index EDS-decimation classification is claimed.
