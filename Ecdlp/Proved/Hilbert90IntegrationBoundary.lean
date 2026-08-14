@@ -27,7 +27,7 @@ theorem telescopingDivProduct
   | zero => simp
   | succ m ih =>
       rw [Finset.prod_range_succ, ih]
-      group
+      simpa [Nat.add_comm, div_eq_mul_inv, mul_comm, mul_left_comm, mul_assoc]
 
 /-- A cyclic multiplicative coboundary has norm one. -/
 theorem cyclicCoboundaryNorm
