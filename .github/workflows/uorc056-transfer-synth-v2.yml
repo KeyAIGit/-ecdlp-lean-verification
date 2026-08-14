@@ -1,0 +1,72 @@
+name: UORC-056 transfer synthesis v2
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/uorc056_transfer_synth_v2.py'
+      - 'scripts/test_uorc056_transfer_synth_v2.py'
+      - 'experiments/uorc056/transfer_grammar_v2.json'
+      - 'experiments/uorc056/TRANSFER_SYNTH_V2.md'
+      - 'experiments/uorc056/execution_status_002.json'
+      - '.github/workflows/uorc056-transfer-synth-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-transfer-search:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run focused unit tests
+        run: |
+          PYTHONPATH=scripts python -m unittest -v \
+            scripts/test_uorc056_transfer_synth_v2.py
+
+      - name: Run deterministic exact and transfer search
+        run: |
+          python scripts/uorc056_transfer_synth_v2.py \
+            --max-weight 4 \
+            --beam-size 192 \
+            --out /tmp/uorc056-transfer-v2.json \
+            | tee /tmp/uorc056-transfer-v2-summary.txt
+
+      - name: Enforce result schema and scientific boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path('/tmp/uorc056-transfer-v2.json')
+          data = json.loads(path.read_text())
+          assert data['experiment'] == 'UORC-056-TRANSFER-SYNTH-V2'
+          assert data['grammar']['field_specific_fitting'] is False
+          assert data['grammar']['free_per_curve_phase'] is False
+          assert len(data['corpus']) == 5
+          assert data['catalogue']['raw_symbolic_atoms'] == 1639
+          assert data['exact_all_five']['target_bits'] == 438
+          assert data['claim_boundary']
+          print(json.dumps({
+              'decision': data['decision'],
+              'catalogue': data['catalogue'],
+              'all_five_found': data['exact_all_five']['found'],
+              'first_three_found': data['exact_train_first_three_then_unmodified_holdout']['found'],
+              'near_miss_accuracy': data['near_miss_all_five']['subset_accuracy'],
+          }, indent=2))
+          PY
+
+      - name: Upload transfer-search evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-transfer-synth-v2
+          path: |
+            /tmp/uorc056-transfer-v2.json
+            /tmp/uorc056-transfer-v2-summary.txt
+          if-no-files-found: error

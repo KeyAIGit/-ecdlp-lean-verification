@@ -1,0 +1,146 @@
+{
+  "bounded_discovery_screen": {
+    "best": {
+      "accuracy": "0.621004566",
+      "index": 884,
+      "matches": 272,
+      "output_phase": 1,
+      "total": 438
+    },
+    "even_indices_tested": 2048,
+    "everywhere_defined_indices": 1897,
+    "exact_candidates": [],
+    "maximum_index": 4096,
+    "per_curve": [
+      {
+        "best": {
+          "accuracy": "0.800000000",
+          "index": 16,
+          "matches": 24,
+          "output_phase": 1,
+          "total": 30
+        },
+        "exact_candidates": [],
+        "n": 31,
+        "p": 43,
+        "search_limit": 248
+      },
+      {
+        "best": {
+          "accuracy": "0.641025641",
+          "index": 44,
+          "matches": 50,
+          "output_phase": -1,
+          "total": 78
+        },
+        "exact_candidates": [],
+        "n": 79,
+        "p": 67,
+        "search_limit": 632
+      },
+      {
+        "best": {
+          "accuracy": "0.696969697",
+          "index": 20,
+          "matches": 46,
+          "output_phase": -1,
+          "total": 66
+        },
+        "exact_candidates": [],
+        "n": 67,
+        "p": 79,
+        "search_limit": 536
+      },
+      {
+        "best": {
+          "accuracy": "0.603174603",
+          "index": 2,
+          "matches": 76,
+          "output_phase": -1,
+          "total": 126
+        },
+        "exact_candidates": [],
+        "n": 127,
+        "p": 127,
+        "search_limit": 1016
+      },
+      {
+        "best": {
+          "accuracy": "0.608695652",
+          "index": 18,
+          "matches": 84,
+          "output_phase": 1,
+          "total": 138
+        },
+        "exact_candidates": [],
+        "n": 139,
+        "p": 163,
+        "search_limit": 1112
+      }
+    ],
+    "total_nonzero_points": 438
+  },
+  "claim_boundary": [
+    "The Miller closure concerns quadratic characters of classical terminal Miller functions and finite products of them.",
+    "The support-to-cost separation is a counterexample to unrestricted degree or support based circuit lower bounds, not a parity evaluator.",
+    "Even-index division-polynomial characters over q=3 mod 4 remain open after the stated lower threshold.",
+    "No external point, wallet, real key or unknown production scalar is used."
+  ],
+  "covariance_classification": {
+    "even_index_q_1_mod_4": "psi_m changes sign but chi(-1)=+1, so the character remains invariant and is impossible",
+    "even_index_q_3_mod_4": "anti-invariant and symmetry-compatible; not solved by covariance alone",
+    "odd_index": "x-only and invariant under Q -> -Q, so impossible for canonical parity on every odd cycle",
+    "uniform_mixed_mod4_transfer": "a pure division-polynomial character cannot transfer unchanged across corpora containing both q=1 mod 4 and q=3 mod 4"
+  },
+  "division_polynomial": {
+    "composition_formula": "psi_(m*k)(G)=psi_m([k]G)*psi_k(G)^(m^2)",
+    "divisor_formula": "div(psi_m)=sum_{T in E[m] minus {O}}[T]-(m^2-1)[O], for char(F_q) not dividing m",
+    "negation_formula": "psi_m(-Q)=(-1)^(m+1)*psi_m(Q)",
+    "odd_support_formula": {
+      "m_even": "m^2",
+      "m_odd": "m^2-1"
+    },
+    "quadratic_character_reduction": {
+      "m_even": "chi(psi_m([k]G))=rho_(mk)",
+      "m_odd": "chi(psi_m([k]G))=rho_(mk)*rho_k",
+      "rho_j": "chi(psi_j(G))"
+    }
+  },
+  "experiment": "UORC-056-DIVISION-POLYNOMIAL-FRONTIER-V9",
+  "holdout_observation": {
+    "contains_q_1_mod_4": true,
+    "contains_q_3_mod_4": true,
+    "holdout_curve_count": 13
+  },
+  "input_corpus_sha256": "88e8f6178d31a2caf483e21ae321367f38f72eba7615816c5fc7f9864b59fb93",
+  "miller": {
+    "divisor_formula": "div(f_(m,P))=m[P]-[mP]-(m-1)[O]",
+    "interpretation": "Miller-loop length does not create odd support because the line divisors telescope to at most two odd slots",
+    "minimum_independent_terminal_functions_for_secp256k1": "108271662202116783829255556910108067281",
+    "odd_support_upper_bound_for_every_index": 2,
+    "single_terminal_function_status": "excluded by V8 whenever the required support lower bound exceeds two"
+  },
+  "review_status": "the algebraic identities and executable checks are complete; literature source locking and formalization remain pending",
+  "schema_version": "1.0",
+  "support_to_cost_separation": {
+    "decision": "odd divisor support alone cannot imply square-root field-operation cost",
+    "division_polynomial_odd_support": "216543324404233567679619376536736392676",
+    "minimum_even_division_index_meeting_support": "14715411119103453974",
+    "minimum_even_index_bit_length": 64,
+    "recurrence_DAG": {
+      "addition_subtraction_upper_bound": 495,
+      "dependency_nodes": 483,
+      "field_inversions": 1,
+      "multiplication_upper_bound": 2906,
+      "nonbase_recurrence_nodes": 479
+    },
+    "secp256k1_V8_required_support": "216543324404233567658511113820216134562"
+  },
+  "surviving_secp256k1_frontier": {
+    "field_congruence": "p=3 mod 4",
+    "index_parity": "even",
+    "minimum_index_from_V8": "14715411119103453974",
+    "sequence_normal_form": "k -> rho_(m*k)",
+    "status": "open EDS-decimation problem; not an independent Miller route"
+  }
+}

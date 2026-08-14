@@ -1,0 +1,58 @@
+name: UORC-056 Ward point-scale collapse V12
+
+on:
+  push:
+    branches:
+      - research/uorc056-execution-001
+    paths:
+      - 'scripts/uorc056_ward_point_scale_collapse.py'
+      - 'scripts/test_uorc056_ward_point_scale_collapse.py'
+      - 'notes/reviews/UORC056_WARD_POINT_SCALE_COLLAPSE_V12.md'
+      - '.github/workflows/uorc056-ward-point-scale-v12.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  verify-and-persist:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/uorc056-execution-001
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run exact V12 collapse replay and tests
+        run: |
+          PYTHONPATH=scripts python -m unittest -v scripts/test_uorc056_ward_point_scale_collapse.py
+          PYTHONPATH=scripts python scripts/uorc056_ward_point_scale_collapse.py \
+            --out experiments/uorc056/ward_point_scale_collapse_results.json
+
+      - name: Persist deterministic V12 result
+        run: |
+          path=experiments/uorc056/ward_point_scale_collapse_results.json
+          if git diff --quiet -- "$path" \
+             && git ls-files --error-unmatch "$path" >/dev/null 2>&1; then
+            echo 'V12 result already current.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$path"
+          git commit -m 'UORC-056: persist Ward point-scale V12 result'
+          for attempt in 1 2 3; do
+            if git pull --rebase origin research/uorc056-execution-001 \
+               && git push origin HEAD:research/uorc056-execution-001; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          echo '::error::Could not persist V12 result after branch advanced.'
+          exit 1

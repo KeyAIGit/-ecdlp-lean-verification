@@ -1,0 +1,42 @@
+{
+  "balanced_rational_atoms": {
+    "admission": "the aggregate local orders of P_num and P_den agree at every tested subgroup point",
+    "canonicalization": "unordered pair of semantic line products because chi(R)=chi(R^-1)",
+    "forbidden": [
+      "per-point patch values",
+      "factorwise dropping of zeros or poles",
+      "numerical epsilon regularization",
+      "per-curve AST fitting",
+      "target-indexed orientation tables"
+    ],
+    "formula": "R(Q)=P_num(Q)/P_den(Q) with each P a product of two declared lines",
+    "new_capability": "zeros may cancel across different line factors rather than only inside pre-admissible line ratios",
+    "regular_value": "ratio of products of exact first nonzero local-series coefficients after aggregate cancellation"
+  },
+  "base_ratio_grammar": "experiments/uorc056/divisor_aware_rational_grammar.json",
+  "cost_model": [
+    "construction and evaluation of all four public affine line factors are charged",
+    "aggregate local regularization, field inversion or equivalent ratio construction are charged",
+    "every quadratic character and sign multiplication is charged",
+    "enumerative discovery is not evaluator advice"
+  ],
+  "line_products": {
+    "canonicalization": "unordered pair with repetition of V1 line templates",
+    "formula": "P(Q)=L_1(Q)*L_2(Q)",
+    "geometric_scope": "reducible plane conics restricted to the elliptic curve",
+    "raw_count": 64980
+  },
+  "profile_id": "UORC-056-DIVISOR-AWARE-BALANCED-LINE-PRODUCT-RATIO-V4",
+  "schema_version": "1.0",
+  "sign_circuit": {
+    "composition": "product of balanced line-product rational-character atoms",
+    "maximum_weight": 4,
+    "uniform_output_negation": true
+  },
+  "status": "bounded_exact_screen",
+  "transfer_gate": {
+    "claim_boundary": "Failure closes only the declared reducible-conic product-ratio grammar through character-product weight four.",
+    "discovery": "one symbolic balanced-product AST must be exact on all five base discovery curves",
+    "holdout": "the same AST must be exact on all thirteen base holdout curves"
+  }
+}

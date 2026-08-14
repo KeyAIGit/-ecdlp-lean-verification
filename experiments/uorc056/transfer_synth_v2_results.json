@@ -1,0 +1,611 @@
+{
+  "catalogue": {
+    "all_curve_semantic_classes": 218,
+    "raw_symbolic_atoms": 1639,
+    "valid_nonzero_atoms_per_curve": {
+      "E7-P127-N127": 914,
+      "E7-P163-N139": 919,
+      "E7-P43-N31": 1000,
+      "E7-P67-N79": 769,
+      "E7-P79-N67": 929
+    },
+    "valid_nonzero_on_all_curves": 272
+  },
+  "central_target": "Q=[k]G -> Y_G(x(Q))/y(Q)=(-1)^k",
+  "claim_boundary": [
+    "An exact result on one toy curve is finite evidence, not a uniform evaluator.",
+    "An exact result on all five toy curves is still only a transfer seed requiring a symbolic identity and all-in asymptotic cost proof.",
+    "A negative result closes only this explicit bounded grammar.",
+    "No unknown production scalar is accepted or recovered."
+  ],
+  "corpus": [
+    {
+      "beta": 6,
+      "beta2": 36,
+      "curve_id": "E7-P43-N31",
+      "generator": [
+        2,
+        12
+      ],
+      "order": 31,
+      "p": 43,
+      "target_points": 30
+    },
+    {
+      "beta": 29,
+      "beta2": 37,
+      "curve_id": "E7-P67-N79",
+      "generator": [
+        2,
+        22
+      ],
+      "order": 79,
+      "p": 67,
+      "target_points": 78
+    },
+    {
+      "beta": 23,
+      "beta2": 55,
+      "curve_id": "E7-P79-N67",
+      "generator": [
+        1,
+        18
+      ],
+      "order": 67,
+      "p": 79,
+      "target_points": 66
+    },
+    {
+      "beta": 19,
+      "beta2": 107,
+      "curve_id": "E7-P127-N127",
+      "generator": [
+        1,
+        32
+      ],
+      "order": 127,
+      "p": 127,
+      "target_points": 126
+    },
+    {
+      "beta": 58,
+      "beta2": 104,
+      "curve_id": "E7-P163-N139",
+      "generator": [
+        2,
+        34
+      ],
+      "order": 139,
+      "p": 163,
+      "target_points": 138
+    }
+  ],
+  "decision": "NO_EXACT_CANDIDATE_IN_UORC-056-C-SYNTH-V2",
+  "exact_all_five": {
+    "candidates": [],
+    "found": false,
+    "minimum_weight": null,
+    "pool_size_after_zero_rejection_and_semantic_quotient": 218,
+    "semantic_classes": 218,
+    "subset": [
+      "E7-P43-N31",
+      "E7-P67-N79",
+      "E7-P79-N67",
+      "E7-P127-N127",
+      "E7-P163-N139"
+    ],
+    "target_bits": 438
+  },
+  "exact_train_first_three_then_unmodified_holdout": {
+    "candidates": [],
+    "found": false,
+    "minimum_weight": null,
+    "pool_size_after_zero_rejection_and_semantic_quotient": 342,
+    "semantic_classes": 342,
+    "subset": [
+      "E7-P43-N31",
+      "E7-P67-N79",
+      "E7-P79-N67"
+    ],
+    "target_bits": 174
+  },
+  "experiment": "UORC-056-TRANSFER-SYNTH-V2",
+  "grammar": {
+    "field_specific_fitting": false,
+    "free_per_curve_phase": false,
+    "id": "UORC-056-C-SYNTH-V2",
+    "maximum_weight": 4,
+    "symbolic_source": "experiments/uorc056/transfer_grammar_v2.json",
+    "zero_or_pole_policy": "reject the atom on that curve"
+  },
+  "near_miss_all_five": {
+    "atom_ids": [
+      "phase:gy1",
+      "sum:x1:plus:beta2_x1:neg_two",
+      "mul:x1:doubling_slope:zero"
+    ],
+    "cost": {
+      "notes": [
+        "The count is a conservative online upper bound after sharing identical named observables.",
+        "It does not make finite-field inversion or quadratic character free.",
+        "Construction and validation of public constants remain part of preprocessing/representation cost."
+      ],
+      "operation_upper_bound": {
+        "field_add": 2,
+        "field_inv": 1,
+        "field_mul": 5,
+        "group_add": 0,
+        "group_double": 0,
+        "quadratic_character": 3,
+        "sign_mul": 2
+      },
+      "public_constant_expressions": [
+        "gy1",
+        "neg_two",
+        "zero"
+      ],
+      "shared_observables": [
+        "beta2_x1",
+        "doubling_slope",
+        "x1"
+      ]
+    },
+    "curve_validation": [
+      {
+        "accuracy": 0.5333333333333333,
+        "curve_id": "E7-P43-N31",
+        "defined_on_full_nonzero_orbit": true,
+        "errors": 14,
+        "exact": false,
+        "matches": 16,
+        "total": 30
+      },
+      {
+        "accuracy": 0.5897435897435898,
+        "curve_id": "E7-P67-N79",
+        "defined_on_full_nonzero_orbit": true,
+        "errors": 32,
+        "exact": false,
+        "matches": 46,
+        "total": 78
+      },
+      {
+        "accuracy": 0.7272727272727273,
+        "curve_id": "E7-P79-N67",
+        "defined_on_full_nonzero_orbit": true,
+        "errors": 18,
+        "exact": false,
+        "matches": 48,
+        "total": 66
+      },
+      {
+        "accuracy": 0.5873015873015873,
+        "curve_id": "E7-P127-N127",
+        "defined_on_full_nonzero_orbit": true,
+        "errors": 52,
+        "exact": false,
+        "matches": 74,
+        "total": 126
+      },
+      {
+        "accuracy": 0.6811594202898551,
+        "curve_id": "E7-P163-N139",
+        "defined_on_full_nonzero_orbit": true,
+        "errors": 44,
+        "exact": false,
+        "matches": 94,
+        "total": 138
+      }
+    ],
+    "diagnostic_only": true,
+    "formula": "chi(gy1) * chi((x1+beta2_x1+neg_two)) * chi((x1*doubling_slope))",
+    "search_completeness": "complete for weights 1 and 2; deterministic beam diagnostic for weights 3 and 4",
+    "subset_accuracy": 0.634703196347032,
+    "subset_errors": 160,
+    "subset_total": 438,
+    "weight": 3
+  },
+  "schema_version": "1.0",
+  "scope": "five frozen prime-order toy curves y^2=x^3+7 only; no external input",
+  "single_curve_minimum_seeds": [
+    {
+      "candidates": [
+        {
+          "atom_ids": [
+            "phase:curve_b",
+            "sum:x3:minus:x4:neg_two",
+            "mul:x4:chord_1_2:zero"
+          ],
+          "cost": {
+            "notes": [
+              "The count is a conservative online upper bound after sharing identical named observables.",
+              "It does not make finite-field inversion or quadratic character free.",
+              "Construction and validation of public constants remain part of preprocessing/representation cost."
+            ],
+            "operation_upper_bound": {
+              "field_add": 4,
+              "field_inv": 1,
+              "field_mul": 2,
+              "group_add": 1,
+              "group_double": 4,
+              "quadratic_character": 3,
+              "sign_mul": 2
+            },
+            "public_constant_expressions": [
+              "curve_b",
+              "neg_two",
+              "zero"
+            ],
+            "shared_observables": [
+              "chord_1_2",
+              "x3",
+              "x4"
+            ]
+          },
+          "curve_validation": [
+            {
+              "accuracy": 1.0,
+              "curve_id": "E7-P43-N31",
+              "defined_on_full_nonzero_orbit": true,
+              "errors": 0,
+              "exact": true,
+              "matches": 30,
+              "total": 30
+            },
+            {
+              "accuracy": null,
+              "curve_id": "E7-P67-N79",
+              "defined_on_full_nonzero_orbit": false,
+              "errors": null,
+              "exact": false,
+              "matches": null,
+              "total": 78
+            },
+            {
+              "accuracy": 0.48484848484848486,
+              "curve_id": "E7-P79-N67",
+              "defined_on_full_nonzero_orbit": true,
+              "errors": 34,
+              "exact": false,
+              "matches": 32,
+              "total": 66
+            },
+            {
+              "accuracy": 0.5238095238095238,
+              "curve_id": "E7-P127-N127",
+              "defined_on_full_nonzero_orbit": true,
+              "errors": 60,
+              "exact": false,
+              "matches": 66,
+              "total": 126
+            },
+            {
+              "accuracy": null,
+              "curve_id": "E7-P163-N139",
+              "defined_on_full_nonzero_orbit": false,
+              "errors": null,
+              "exact": false,
+              "matches": null,
+              "total": 138
+            }
+          ],
+          "formula": "chi(curve_b) * chi((x3-x4+neg_two)) * chi((x4*chord_1_2))",
+          "weight": 3
+        },
+        {
+          "atom_ids": [
+            "unary:x1:zero",
+            "sum:y1:minus:y2:zero",
+            "sum:x3:minus:x4:neg_two"
+          ],
+          "cost": {
+            "notes": [
+              "The count is a conservative online upper bound after sharing identical named observables.",
+              "It does not make finite-field inversion or quadratic character free.",
+              "Construction and validation of public constants remain part of preprocessing/representation cost."
+            ],
+            "operation_upper_bound": {
+              "field_add": 3,
+              "field_inv": 0,
+              "field_mul": 0,
+              "group_add": 1,
+              "group_double": 4,
+              "quadratic_character": 3,
+              "sign_mul": 2
+            },
+            "public_constant_expressions": [
+              "neg_two",
+              "zero"
+            ],
+            "shared_observables": [
+              "x1",
+              "x3",
+              "x4",
+              "y1",
+              "y2"
+            ]
+          },
+          "curve_validation": [
+            {
+              "accuracy": 1.0,
+              "curve_id": "E7-P43-N31",
+              "defined_on_full_nonzero_orbit": true,
+              "errors": 0,
+              "exact": true,
+              "matches": 30,
+              "total": 30
+            },
+            {
+              "accuracy": null,
+              "curve_id": "E7-P67-N79",
+              "defined_on_full_nonzero_orbit": false,
+              "errors": null,
+              "exact": false,
+              "matches": null,
+              "total": 78
+            },
+            {
+              "accuracy": 0.6060606060606061,
+              "curve_id": "E7-P79-N67",
+              "defined_on_full_nonzero_orbit": true,
+              "errors": 26,
+              "exact": false,
+              "matches": 40,
+              "total": 66
+            },
+            {
+              "accuracy": 0.4603174603174603,
+              "curve_id": "E7-P127-N127",
+              "defined_on_full_nonzero_orbit": true,
+              "errors": 68,
+              "exact": false,
+              "matches": 58,
+              "total": 126
+            },
+            {
+              "accuracy": null,
+              "curve_id": "E7-P163-N139",
+              "defined_on_full_nonzero_orbit": false,
+              "errors": null,
+              "exact": false,
+              "matches": null,
+              "total": 138
+            }
+          ],
+          "formula": "chi(x1) * chi((y1-y2)) * chi((x3-x4+neg_two))",
+          "weight": 3
+        },
+        {
+          "atom_ids": [
+            "unary:x1:neg_one",
+            "sum:y1:minus:y4:neg_one",
+            "mul:x2:beta2_x1:one"
+          ],
+          "cost": {
+            "notes": [
+              "The count is a conservative online upper bound after sharing identical named observables.",
+              "It does not make finite-field inversion or quadratic character free.",
+              "Construction and validation of public constants remain part of preprocessing/representation cost."
+            ],
+            "operation_upper_bound": {
+              "field_add": 4,
+              "field_inv": 0,
+              "field_mul": 2,
+              "group_add": 0,
+              "group_double": 3,
+              "quadratic_character": 3,
+              "sign_mul": 2
+            },
+            "public_constant_expressions": [
+              "neg_one",
+              "one"
+            ],
+            "shared_observables": [
+              "beta2_x1",
+              "x1",
+              "x2",
+              "y1",
+              "y4"
+            ]
+          },
+          "curve_validation": [
+            {
+              "accuracy": 1.0,
+              "curve_id": "E7-P43-N31",
+              "defined_on_full_nonzero_orbit": true,
+              "errors": 0,
+              "exact": true,
+              "matches": 30,
+              "total": 30
+            },
+            {
+              "accuracy": null,
+              "curve_id": "E7-P67-N79",
+              "defined_on_full_nonzero_orbit": false,
+              "errors": null,
+              "exact": false,
+              "matches": null,
+              "total": 78
+            },
+            {
+              "accuracy": null,
+              "curve_id": "E7-P79-N67",
+              "defined_on_full_nonzero_orbit": false,
+              "errors": null,
+              "exact": false,
+              "matches": null,
+              "total": 66
+            },
+            {
+              "accuracy": null,
+              "curve_id": "E7-P127-N127",
+              "defined_on_full_nonzero_orbit": false,
+              "errors": null,
+              "exact": false,
+              "matches": null,
+              "total": 126
+            },
+            {
+              "accuracy": null,
+              "curve_id": "E7-P163-N139",
+              "defined_on_full_nonzero_orbit": false,
+              "errors": null,
+              "exact": false,
+              "matches": null,
+              "total": 138
+            }
+          ],
+          "formula": "chi((x1+neg_one)) * chi((y1-y4+neg_one)) * chi((x2*beta2_x1+one))",
+          "weight": 3
+        },
+        {
+          "atom_ids": [
+            "unary:y1:zero",
+            "sum:x1:plus:beta_x1:neg_curve_b",
+            "mul:x2:beta2_x1:one"
+          ],
+          "cost": {
+            "notes": [
+              "The count is a conservative online upper bound after sharing identical named observables.",
+              "It does not make finite-field inversion or quadratic character free.",
+              "Construction and validation of public constants remain part of preprocessing/representation cost."
+            ],
+            "operation_upper_bound": {
+              "field_add": 3,
+              "field_inv": 0,
+              "field_mul": 3,
+              "group_add": 0,
+              "group_double": 1,
+              "quadratic_character": 3,
+              "sign_mul": 2
+            },
+            "public_constant_expressions": [
+              "neg_curve_b",
+              "one",
+              "zero"
+            ],
+            "shared_observables": [
+              "beta2_x1",
+              "beta_x1",
+              "x1",
+              "x2",
+              "y1"
+            ]
+          },
+          "curve_validation": [
+            {
+              "accuracy": 1.0,
+              "curve_id": "E7-P43-N31",
+              "defined_on_full_nonzero_orbit": true,
+              "errors": 0,
+              "exact": true,
+              "matches": 30,
+              "total": 30
+            },
+            {
+              "accuracy": null,
+              "curve_id": "E7-P67-N79",
+              "defined_on_full_nonzero_orbit": false,
+              "errors": null,
+              "exact": false,
+              "matches": null,
+              "total": 78
+            },
+            {
+              "accuracy": 0.6363636363636364,
+              "curve_id": "E7-P79-N67",
+              "defined_on_full_nonzero_orbit": true,
+              "errors": 24,
+              "exact": false,
+              "matches": 42,
+              "total": 66
+            },
+            {
+              "accuracy": 0.5238095238095238,
+              "curve_id": "E7-P127-N127",
+              "defined_on_full_nonzero_orbit": true,
+              "errors": 60,
+              "exact": false,
+              "matches": 66,
+              "total": 126
+            },
+            {
+              "accuracy": 0.5797101449275363,
+              "curve_id": "E7-P163-N139",
+              "defined_on_full_nonzero_orbit": true,
+              "errors": 58,
+              "exact": false,
+              "matches": 80,
+              "total": 138
+            }
+          ],
+          "formula": "chi(y1) * chi((x1+beta_x1+neg_curve_b)) * chi((x2*beta2_x1+one))",
+          "weight": 3
+        }
+      ],
+      "found": true,
+      "minimum_weight": 3,
+      "pool_size_after_zero_rejection_and_semantic_quotient": 766,
+      "semantic_classes": 766,
+      "subset": [
+        "E7-P43-N31"
+      ],
+      "target_bits": 30
+    },
+    {
+      "candidates": [],
+      "found": false,
+      "minimum_weight": null,
+      "pool_size_after_zero_rejection_and_semantic_quotient": 651,
+      "semantic_classes": 651,
+      "subset": [
+        "E7-P67-N79"
+      ],
+      "target_bits": 78
+    },
+    {
+      "candidates": [],
+      "found": false,
+      "minimum_weight": null,
+      "pool_size_after_zero_rejection_and_semantic_quotient": 838,
+      "semantic_classes": 838,
+      "subset": [
+        "E7-P79-N67"
+      ],
+      "target_bits": 66
+    }
+  ],
+  "symbolic_lifting_status": "not_triggered_because_no_three_curve_exact_seed_exists",
+  "task_status": [
+    {
+      "name": "freeze_transferable_grammar_v2",
+      "status": "complete",
+      "task": 14
+    },
+    {
+      "name": "compile_identical_symbolic_atoms_across_fields",
+      "status": "complete",
+      "task": 15
+    },
+    {
+      "name": "exact_meet_in_the_middle_weight_at_most_four",
+      "status": "complete",
+      "task": 16
+    },
+    {
+      "name": "train_holdout_transfer_without_refitting",
+      "status": "complete",
+      "task": 17
+    },
+    {
+      "name": "extract_near_miss_residual_diagnostic",
+      "status": "complete",
+      "task": 18
+    },
+    {
+      "name": "symbolic_lift_of_transfer_seed",
+      "status": "not_triggered_because_no_three_curve_exact_seed_exists",
+      "task": 19
+    }
+  ]
+}

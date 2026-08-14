@@ -1,0 +1,168 @@
+{
+  "best_discovery_correlations": {
+    "weight_one": {
+      "accuracy": "0.561643836",
+      "atoms": [
+        {
+          "canceled_orbit_zero": false,
+          "canceled_point_count": 0,
+          "denominator": {
+            "a": "beta_lo",
+            "b": "zero",
+            "c": "x_G"
+          },
+          "numerator": {
+            "a": "zero",
+            "b": "one",
+            "c": "zero"
+          }
+        }
+      ],
+      "matches": 246,
+      "output_phase": 1,
+      "total": 438
+    },
+    "weight_two": {
+      "accuracy": "0.579908676",
+      "atoms": [
+        {
+          "canceled_orbit_zero": false,
+          "canceled_point_count": 0,
+          "denominator": {
+            "a": "one",
+            "b": "zero",
+            "c": "zero"
+          },
+          "numerator": {
+            "a": "zero",
+            "b": "one",
+            "c": "zero"
+          }
+        },
+        {
+          "canceled_orbit_zero": false,
+          "canceled_point_count": 0,
+          "denominator": {
+            "a": "beta_hi",
+            "b": "zero",
+            "c": "two"
+          },
+          "numerator": {
+            "a": "one",
+            "b": "zero",
+            "c": "two"
+          }
+        }
+      ],
+      "matches": 254,
+      "output_phase": 1,
+      "total": 438
+    }
+  },
+  "best_full_corpus_correlations": {
+    "weight_one": {
+      "accuracy": "0.504977132",
+      "atoms": [
+        {
+          "canceled_orbit_zero": false,
+          "canceled_point_count": 0,
+          "denominator": {
+            "a": "one",
+            "b": "zero",
+            "c": "curve_b"
+          },
+          "numerator": {
+            "a": "zero",
+            "b": "one",
+            "c": "zero"
+          }
+        }
+      ],
+      "matches": 3754,
+      "output_phase": 1,
+      "total": 7434
+    },
+    "weight_two": {
+      "accuracy": "0.509819747",
+      "atoms": [
+        {
+          "canceled_orbit_zero": false,
+          "canceled_point_count": 0,
+          "denominator": {
+            "a": "one",
+            "b": "zero",
+            "c": "zero"
+          },
+          "numerator": {
+            "a": "zero",
+            "b": "one",
+            "c": "zero"
+          }
+        },
+        {
+          "canceled_orbit_zero": false,
+          "canceled_point_count": 0,
+          "denominator": {
+            "a": "beta_lo",
+            "b": "zero",
+            "c": "curve_b"
+          },
+          "numerator": {
+            "a": "one",
+            "b": "zero",
+            "c": "curve_b"
+          }
+        }
+      ],
+      "matches": 3790,
+      "output_phase": 1,
+      "total": 7434
+    }
+  },
+  "claim_boundary": [
+    "This is complete only for ratios of the declared affine line templates and products of at most four character atoms.",
+    "It does not cover ratios of higher-degree functions, pullbacks through index-growing maps, EDS factors or unrestricted straight-line programs.",
+    "Local values are derived from exact series coefficients; no exceptional point is patched or omitted.",
+    "No external point, wallet, real key or production-sized discrete-log target is accepted."
+  ],
+  "corpus": {
+    "discovery_curves": 5,
+    "discovery_nonzero_points": 438,
+    "full_corpus_nonzero_points": 7434,
+    "holdout_curves": 13
+  },
+  "decision": "no_exact_divisor_aware_line_ratio_circuit_weight_le_4",
+  "discovery_catalog": {
+    "admissible_unordered_ratios": 673,
+    "line_templates": 360,
+    "nonexceptional_sign_vectors": 97,
+    "novel_exceptional_sign_vectors": 6,
+    "ratios_with_canceled_orbit_zero": 463,
+    "unique_exceptional_sign_vectors": 8,
+    "unique_sign_vectors": 103,
+    "valuation_signatures": 250
+  },
+  "discovery_exact_search": {
+    "candidate": null,
+    "candidate_found": false
+  },
+  "exceptional_fiber_decision": "six discovery-only semantic vectors are introduced by removable line-ratio singularities, but zero remain novel on the full corpus",
+  "experiment": "UORC-056-DIVISOR-AWARE-LINE-RATIO-V1",
+  "full_corpus_catalog": {
+    "admissible_unordered_ratios": 541,
+    "line_templates": 360,
+    "nonexceptional_sign_vectors": 21,
+    "novel_exceptional_sign_vectors": 0,
+    "ratios_with_canceled_orbit_zero": 463,
+    "unique_exceptional_sign_vectors": 2,
+    "unique_sign_vectors": 21,
+    "valuation_signatures": 260
+  },
+  "full_corpus_exact_search": {
+    "candidate": null,
+    "candidate_found": false
+  },
+  "grammar_sha256": "ef2bac2eda3934c74faccde104a038dd6a8dd2649ddabd8881c3112064011c94",
+  "schema_version": "1.0",
+  "transfer_status": "not_reached_no_discovery_candidate"
+}

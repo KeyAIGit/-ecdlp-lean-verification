@@ -1,0 +1,85 @@
+name: UORC-056 exact toy ground truth
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/uorc056_*.py'
+      - 'scripts/test_uorc056_*.py'
+      - 'experiments/uorc056/**'
+      - 'notes/reviews/UORC056_FOURIER_DIVISOR_BARRIER_V7.md'
+      - 'notes/reviews/UORC056_REGULARIZED_FOURIER_DIVISOR_BARRIER_V8.md'
+      - 'notes/reviews/UORC056_FDB1_KUMMER_LANG_PROOF_V8.md'
+      - 'notes/reviews/UORC056_DIVISION_POLYNOMIAL_FRONTIER_V9.md'
+      - '.github/workflows/uorc056-execution-001.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-ground-truth:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install independent polynomial backend
+        run: python -m pip install --disable-pip-version-check 'sympy>=1.13,<2'
+
+      - name: Generate and lock exact fixtures
+        run: |
+          rm -rf /tmp/uorc056-fixtures
+          python scripts/uorc056_toy_factory.py --output-dir /tmp/uorc056-fixtures
+          python scripts/uorc056_toy_factory.py --output-dir /tmp/uorc056-fixtures --check
+          cmp /tmp/uorc056-fixtures/manifest.json experiments/uorc056/expected_fixture_manifest.json
+
+      - name: Run exact producer, synthesis, divisor and spectral tests
+        run: |
+          PYTHONPATH=scripts python -m unittest -v \
+            scripts/test_uorc056_toy_factory.py \
+            scripts/test_uorc056_circuit_synth.py \
+            scripts/test_uorc056_structural_transfer.py \
+            scripts/test_uorc056_divisor_aware_rational.py \
+            scripts/test_uorc056_divisor_aware_pullback.py \
+            scripts/test_uorc056_divisor_aware_mixed_pullback.py \
+            scripts/test_uorc056_divisor_aware_balanced_product.py \
+            scripts/test_uorc056_global_divisor_balance.py \
+            scripts/test_uorc056_small_miller_balance.py \
+            scripts/test_uorc056_fourier_divisor_barrier.py \
+            scripts/test_uorc056_parity_spectrum_barrier.py \
+            scripts/test_uorc056_regularized_fourier_divisor_barrier.py \
+            scripts/test_uorc056_division_polynomial_frontier.py
+
+      - name: Replay every root and parity ratio independently
+        run: python scripts/uorc056_sympy_replay.py /tmp/uorc056-fixtures
+
+      - name: Replay bounded synthesis, divisor and spectral decisions
+        run: |
+          python scripts/uorc056_circuit_synth.py --check
+          python scripts/uorc056_structural_transfer.py --check
+          python scripts/uorc056_divisor_aware_rational.py --check
+          python scripts/uorc056_divisor_aware_pullback.py --check
+          python scripts/uorc056_divisor_aware_mixed_pullback.py --check
+          python scripts/uorc056_divisor_aware_balanced_product.py \
+            --out /tmp/uorc056-divisor-aware-balanced-product-results.json \
+            > /tmp/uorc056-divisor-aware-balanced-product.log
+          diff -u \
+            experiments/uorc056/divisor_aware_balanced_product_results.json \
+            /tmp/uorc056-divisor-aware-balanced-product-results.json
+          python scripts/uorc056_global_divisor_balance.py --check
+          python scripts/uorc056_small_miller_balance.py --check
+          python scripts/uorc056_fourier_divisor_barrier.py --check
+          python scripts/uorc056_parity_spectrum_barrier.py --check
+          python scripts/uorc056_regularized_fourier_divisor_barrier.py --check
+          python scripts/uorc056_division_polynomial_frontier.py --check
+
+      - name: Upload exact ground-truth fixtures
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-exact-toy-fixtures
+          path: /tmp/uorc056-fixtures
+          if-no-files-found: error

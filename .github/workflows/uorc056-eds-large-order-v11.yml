@@ -1,0 +1,88 @@
+name: UORC-056 EDS large-order barrier V11
+
+on:
+  push:
+    branches:
+      - research/uorc056-execution-001
+    paths:
+      - 'scripts/uorc056_all_residue_large_order_barrier.py'
+      - 'scripts/test_uorc056_all_residue_large_order_barrier.py'
+      - 'scripts/uorc056_eds_decimation_closure.py'
+      - 'Ecdlp/Proved/EdsAllResidueCompletionBoundary.lean'
+      - 'notes/reviews/UORC056_ALL_RESIDUE_LARGE_ORDER_BARRIER_V11.md'
+      - '.github/workflows/uorc056-eds-large-order-v11.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  verify-and-persist:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/uorc056-execution-001
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run exact V11 arithmetic replay and tests
+        run: |
+          PYTHONPATH=scripts python -m unittest -v \
+            scripts/test_uorc056_eds_decimation_closure.py \
+            scripts/test_uorc056_all_residue_large_order_barrier.py
+          PYTHONPATH=scripts python scripts/uorc056_all_residue_large_order_barrier.py \
+            --out experiments/uorc056/all_residue_large_order_barrier_results.json
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Kernel-check V11 exact integer boundary
+        run: |
+          lake exe cache get
+          lake build Ecdlp.Proved.EdsAllResidueCompletionBoundary
+          lake env lean Ecdlp/Proved/EdsAllResidueCompletionBoundary.lean
+
+      - name: Persist deterministic V11 result
+        run: |
+          path=experiments/uorc056/all_residue_large_order_barrier_results.json
+          if git diff --quiet -- "$path" \
+             && git ls-files --error-unmatch "$path" >/dev/null 2>&1; then
+            echo 'V11 result already current.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$path"
+          git commit -m 'UORC-056: persist EDS large-order V11 result'
+          for attempt in 1 2 3; do
+            if git pull --rebase origin research/uorc056-execution-001 \
+               && git push origin HEAD:research/uorc056-execution-001; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((attempt * 2))
+          done
+          echo '::error::Could not persist V11 result after branch advanced.'
+          exit 1

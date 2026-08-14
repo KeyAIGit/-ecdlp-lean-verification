@@ -1,0 +1,210 @@
+{
+  "best_all_five_near_miss": {
+    "cost": {
+      "arithmetic_gates_in_slp": 4,
+      "cost_boundary": "This is an operation ledger, not an asymptotic speedup claim.",
+      "operation_upper_bound": {
+        "endpoint_quadratic_character": 1,
+        "field_add": 3,
+        "field_inv": 0,
+        "field_mul": 1,
+        "group_add_upper_bound": 1,
+        "group_double_upper_bound": 4,
+        "negation": 0
+      },
+      "public_constants": [
+        "gy1"
+      ],
+      "public_features": [
+        "y1",
+        "y2",
+        "y3",
+        "y4"
+      ]
+    },
+    "curve_validation": [
+      {
+        "accuracy_with_zeros_as_failures": 0.6666666666666666,
+        "curve_id": "E7-P43-N31",
+        "endpoint_zeros": 0,
+        "errors_among_nonzero_values": 10,
+        "exact": false,
+        "total": 30
+      },
+      {
+        "accuracy_with_zeros_as_failures": 0.6666666666666666,
+        "curve_id": "E7-P67-N79",
+        "endpoint_zeros": 0,
+        "errors_among_nonzero_values": 26,
+        "exact": false,
+        "total": 78
+      },
+      {
+        "accuracy_with_zeros_as_failures": 0.6363636363636364,
+        "curve_id": "E7-P79-N67",
+        "endpoint_zeros": 0,
+        "errors_among_nonzero_values": 24,
+        "exact": false,
+        "total": 66
+      },
+      {
+        "accuracy_with_zeros_as_failures": 0.6031746031746031,
+        "curve_id": "E7-P127-N127",
+        "endpoint_zeros": 0,
+        "errors_among_nonzero_values": 50,
+        "exact": false,
+        "total": 126
+      },
+      {
+        "accuracy_with_zeros_as_failures": 0.6231884057971014,
+        "curve_id": "E7-P163-N139",
+        "endpoint_zeros": 0,
+        "errors_among_nonzero_values": 52,
+        "exact": false,
+        "total": 138
+      }
+    ],
+    "exact_all_five": false,
+    "exact_first_three": false,
+    "expression": "(((y3-y1)-(y4-y2))*gy1)",
+    "size": 4,
+    "total_penalty_all_five": 162,
+    "total_penalty_first_three": 60
+  },
+  "best_first_three_near_miss": {
+    "cost": {
+      "arithmetic_gates_in_slp": 4,
+      "cost_boundary": "This is an operation ledger, not an asymptotic speedup claim.",
+      "operation_upper_bound": {
+        "endpoint_quadratic_character": 1,
+        "field_add": 2,
+        "field_inv": 1,
+        "field_mul": 5,
+        "group_add_upper_bound": 1,
+        "group_double_upper_bound": 3,
+        "negation": 0
+      },
+      "public_constants": [
+        "gx3"
+      ],
+      "public_features": [
+        "doubling_slope",
+        "x3",
+        "y4"
+      ]
+    },
+    "curve_validation": [
+      {
+        "accuracy_with_zeros_as_failures": 0.6666666666666666,
+        "curve_id": "E7-P43-N31",
+        "endpoint_zeros": 6,
+        "errors_among_nonzero_values": 4,
+        "exact": false,
+        "total": 30
+      },
+      {
+        "accuracy_with_zeros_as_failures": 0.6923076923076923,
+        "curve_id": "E7-P67-N79",
+        "endpoint_zeros": 6,
+        "errors_among_nonzero_values": 18,
+        "exact": false,
+        "total": 78
+      },
+      {
+        "accuracy_with_zeros_as_failures": 0.696969696969697,
+        "curve_id": "E7-P79-N67",
+        "endpoint_zeros": 0,
+        "errors_among_nonzero_values": 20,
+        "exact": false,
+        "total": 66
+      },
+      {
+        "accuracy_with_zeros_as_failures": 0.5714285714285714,
+        "curve_id": "E7-P127-N127",
+        "endpoint_zeros": 0,
+        "errors_among_nonzero_values": 54,
+        "exact": false,
+        "total": 126
+      },
+      {
+        "accuracy_with_zeros_as_failures": 0.4492753623188406,
+        "curve_id": "E7-P163-N139",
+        "endpoint_zeros": 0,
+        "errors_among_nonzero_values": 76,
+        "exact": false,
+        "total": 138
+      }
+    ],
+    "exact_all_five": false,
+    "exact_first_three": false,
+    "expression": "(((doubling_slope*gx3)*x3)-(y4+y4))",
+    "size": 4,
+    "total_penalty_all_five": 184,
+    "total_penalty_first_three": 54
+  },
+  "central_target": "Q=[k]G -> Y_G(x(Q))/y(Q)=(-1)^k",
+  "claim_boundary": [
+    "A beam miss is not an arithmetic-circuit lower bound.",
+    "A toy exact expression is only a transfer seed until symbolically lifted and asymptotically costed.",
+    "No materialized Y_G coefficients or scalar-indexed advice are available to the grammar.",
+    "No unknown production scalar is accepted or recovered."
+  ],
+  "decision": "NO_EXACT_SEED_FOUND_IN_DECLARED_NESTED_SLP_BEAM",
+  "exact_all_five_candidates": [],
+  "exact_first_three_candidates": [],
+  "experiment": "UORC-056-NESTED-SLP-V3",
+  "layer_statistics": [
+    {
+      "best_all_five_penalty": 210,
+      "best_first_three_penalty": 78,
+      "generated": 27,
+      "retained": 27,
+      "size": 0
+    },
+    {
+      "best_all_five_penalty": 188,
+      "best_first_three_penalty": 70,
+      "distinct_error_signatures": 75,
+      "generated": 1538,
+      "retained": 96,
+      "size": 1
+    },
+    {
+      "best_all_five_penalty": 172,
+      "best_first_three_penalty": 56,
+      "distinct_error_signatures": 73,
+      "generated": 10511,
+      "retained": 96,
+      "size": 2
+    },
+    {
+      "best_all_five_penalty": 172,
+      "best_first_three_penalty": 56,
+      "distinct_error_signatures": 72,
+      "generated": 29038,
+      "retained": 96,
+      "size": 3
+    },
+    {
+      "best_all_five_penalty": 162,
+      "best_first_three_penalty": 56,
+      "distinct_error_signatures": 52,
+      "generated": 47363,
+      "retained": 96,
+      "size": 4
+    }
+  ],
+  "minimum_exact_all_five_size": null,
+  "schema_version": "1.0",
+  "scope": "five frozen toy curves only; no external inputs",
+  "search": {
+    "beam_size_per_gate_count": 96,
+    "completeness": "all declared seeds are exhaustive; subsequent layers are deterministic beam search and do not support a general lower-bound claim",
+    "endpoint": "one quadratic character",
+    "field_specific_fitting": false,
+    "free_per_curve_phase": false,
+    "max_arithmetic_gates": 4
+  },
+  "seed_count": 27,
+  "symbolic_lifting_status": "not_triggered"
+}

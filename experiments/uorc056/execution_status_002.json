@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "package": "UORC-056-EXECUTION-002",
+  "central_target_unchanged": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "tasks": [
+    {
+      "task": 14,
+      "name": "freeze_transferable_circuit_grammar_v2",
+      "status": "complete",
+      "evidence": "experiments/uorc056/transfer_grammar_v2.json"
+    },
+    {
+      "task": 15,
+      "name": "compile_identical_symbolic_atoms_across_fields",
+      "status": "complete",
+      "evidence": "scripts/uorc056_transfer_synth_v2.py"
+    },
+    {
+      "task": 16,
+      "name": "exact_meet_in_the_middle_search_through_weight_four",
+      "status": "implemented_pending_ci_result",
+      "evidence": "scripts/uorc056_transfer_synth_v2.py"
+    },
+    {
+      "task": 17,
+      "name": "unchanged_train_holdout_transfer_test",
+      "status": "implemented_pending_ci_result",
+      "evidence": "scripts/uorc056_transfer_synth_v2.py"
+    },
+    {
+      "task": 18,
+      "name": "bounded_near_miss_residual_diagnostic",
+      "status": "implemented_pending_ci_result",
+      "evidence": "scripts/uorc056_transfer_synth_v2.py"
+    },
+    {
+      "task": 19,
+      "name": "symbolic_lifting_of_multi_curve_exact_seed",
+      "status": "conditional_not_started",
+      "activation_gate": "an identical exact formula must pass all admitted toy curves without refitting"
+    }
+  ],
+  "ci": ".github/workflows/uorc056-transfer-synth-v2.yml",
+  "claim_boundary": "This package either produces a bounded toy transfer seed or a scoped negative for UORC-056-C-SYNTH-V2. It cannot by itself establish a sub-square-root evaluator."
+}

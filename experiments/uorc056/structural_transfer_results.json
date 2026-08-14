@@ -1,0 +1,100 @@
+{
+  "best_discovery_correlations": {
+    "weight_one": {
+      "accuracy": "0.570776256",
+      "matches": 250,
+      "output_phase": -1,
+      "templates": [
+        {
+          "kind": "cross_source_affine",
+          "left": {
+            "coefficient": "one",
+            "coordinate": "y",
+            "multiplier": 1
+          },
+          "offset": "zero",
+          "right": {
+            "coefficient": "neg_one",
+            "coordinate": "y",
+            "multiplier": 3
+          }
+        }
+      ],
+      "total": 438
+    },
+    "weight_two": {
+      "accuracy": "0.621004566",
+      "matches": 272,
+      "output_phase": -1,
+      "templates": [
+        {
+          "kind": "cross_source_affine",
+          "left": {
+            "coefficient": "one",
+            "coordinate": "x",
+            "multiplier": 1
+          },
+          "offset": "beta_hi",
+          "right": {
+            "coefficient": "beta_hi",
+            "coordinate": "x",
+            "multiplier": 4
+          }
+        },
+        {
+          "kind": "cross_source_affine",
+          "left": {
+            "coefficient": "neg_one",
+            "coordinate": "y",
+            "multiplier": 3
+          },
+          "offset": "zero",
+          "right": {
+            "coefficient": "beta_hi",
+            "coordinate": "y",
+            "multiplier": 4
+          }
+        }
+      ],
+      "total": 438
+    }
+  },
+  "claim_boundary": [
+    "The negative result is exact only for the declared finite AST grammar and product weight at most four.",
+    "It does not cover rational cancellation across exceptional zeros, index-growing EDS mechanisms, or unrestricted high-degree straight-line programs.",
+    "No external point, wallet, real key, or production-sized discrete-log target is accepted."
+  ],
+  "corpus": {
+    "discovery_curves": 5,
+    "discovery_nonzero_points": 438,
+    "full_corpus_nonzero_points": 7434,
+    "holdout_curves": 13
+  },
+  "cost_boundary": [
+    "Every [u]Q coordinate source charges its group additions and doublings.",
+    "Both beta branches are public representation-dependent constants whose construction is charged.",
+    "Every quadratic character and sign multiplication is charged.",
+    "The enumerative screen is discovery work, not free evaluator advice."
+  ],
+  "decision": "no_exact_structural_transfer_circuit_weight_le_4",
+  "discovery_exact_search": {
+    "candidate": null,
+    "candidate_found": false
+  },
+  "enumeration": {
+    "maximum_product_weight": 4,
+    "raw_symbolic_templates": 8174,
+    "unique_discovery_sign_vectors": 605,
+    "unique_full_corpus_sign_vectors": 129,
+    "valid_on_discovery": 723,
+    "valid_on_full_corpus": 163
+  },
+  "experiment": "UORC-056-STRUCTURAL-TRANSFER-V2",
+  "full_corpus_exact_search": {
+    "candidate": null,
+    "candidate_found": false
+  },
+  "grammar_sha256": "cc98ac3a2143297e7a05a0b7b1eedd8bfbc1f33264a2435745d943ecc60e8271",
+  "schema_version": "1.0",
+  "transfer_status": "not_reached_no_discovery_candidate"
+}

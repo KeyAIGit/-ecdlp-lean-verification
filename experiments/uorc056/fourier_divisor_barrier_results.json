@@ -1,0 +1,84 @@
+{
+  "conditional_bridge": {
+    "consequence": "s >= (cot(pi/(2n))-1)/(C*sqrt(p)+1), hence s=Omega(sqrt(n)) when n is comparable to p.",
+    "hypothesis": "For every nontrivial group character eta and quadratic Kummer trace chi(R), the complete hybrid sum is at most C*s*sqrt(p), where s is the geometric odd-valuation support of R.",
+    "regularization_allowance": "Changing values on at most s divisor-support points and omitting the identity changes the Fourier coefficient by at most s+1."
+  },
+  "contract_sha256": "11ad3ca5405a0d1e7bb42363363a167a44aded1a8a416dff8dfb4dde84f46f0e",
+  "elementary_identity": {
+    "asymptotic_ratio": "cot(pi/(2n))/n -> 2/pi",
+    "peak_frequency": "r=(n-1)/2",
+    "peak_magnitude": "cot(pi/(2n))",
+    "sequence": "s(k)=(-1)^k for 1<=k<n, n odd",
+    "transform": "sum_{k=1}^{n-1} s(k) z^k = (1-z)/(1+z) when z^n=1 and z!=1"
+  },
+  "experiment": "UORC-056-FOURIER-DIVISOR-BARRIER-V7",
+  "frozen_replays": [
+    {
+      "closed_magnitude_vs_cot_error": "2.51920354034e-139",
+      "direct_vs_closed_absolute_error": "3.89822506194e-139",
+      "frequency": 15,
+      "n": 31,
+      "peak_magnitude": "19.718319768511248842597206246671414440526130428583",
+      "peak_over_n": "0.6360748312422983497612002015055294980814880783414"
+    },
+    {
+      "closed_magnitude_vs_cot_error": "7.55761062101e-139",
+      "direct_vs_closed_absolute_error": "1.31257891057e-138",
+      "frequency": 39,
+      "n": 79,
+      "peak_magnitude": "50.286334009740723690836223200785260346851315500769",
+      "peak_over_n": "0.63653587354102181887134459747829443477026981646543"
+    },
+    {
+      "closed_magnitude_vs_cot_error": "2.85509734572e-138",
+      "direct_vs_closed_absolute_error": "4.55615333911e-138",
+      "frequency": 33,
+      "n": 67,
+      "peak_magnitude": "42.64570955514764818486664802672574375426073884702",
+      "peak_over_n": "0.63650312768877086843084549293620513066060804249284"
+    },
+    {
+      "closed_magnitude_vs_cot_error": "5.71019469143e-138",
+      "direct_vs_closed_absolute_error": "9.25525541356e-138",
+      "frequency": 63,
+      "n": 127,
+      "peak_magnitude": "80.84658822363041597770708586052229201547880140182",
+      "peak_over_n": "0.63658730884748359037564634535844324421636851497496"
+    },
+    {
+      "closed_magnitude_vs_cot_error": "4.19867256723e-138",
+      "direct_vs_closed_absolute_error": "7.88564006271e-138",
+      "frequency": 69,
+      "n": 139,
+      "peak_magnitude": "88.486381429356964412517598784676222549443951936939",
+      "peak_over_n": "0.63659267215364722598933524305522462265787015781971"
+    }
+  ],
+  "schema_version": "1.0",
+  "scientific_boundary": [
+    "The result targets exact single-character rational evaluators and divisor support, not arbitrary arithmetic circuits.",
+    "The numerical secp256k1 values use only fixed public curve parameters.",
+    "No external point, unknown scalar, wallet or production discrete-log target is accepted."
+  ],
+  "secp256k1": {
+    "cofactor": 1,
+    "conditional_odd_divisor_support_lower_bounds": {
+      "C=1": "216630482969909636093804454941121895872",
+      "C=2": "108315241484954818046902227470560947936",
+      "C=4": "54157620742477409023451113735280473968",
+      "C=8": "27078810371238704511725556867640236984"
+    },
+    "n": "115792089237316195423570985008687907852837564279074904382605163141518161494337",
+    "p": "115792089237316195423570985008687907853269984665640564039457584007908834671663",
+    "peak_frequency": "57896044618658097711785492504343953926418782139537452191302581570759080747168",
+    "peak_magnitude": "73715533492226901901836098385759174607022677959685154924986230304785865508433.076964283863317011211630508870602",
+    "peak_over_n": "0.63661977236758134307553505349005744813783858296182579499066937623558719053690614036045521106501234382429137091",
+    "peak_over_sqrt_p": "216630482969909636093804454941121895872.04797616307248993257357938505940616164063786388469037488566208168773458"
+  },
+  "status": {
+    "circuit_lower_bound": "not_claimed; high divisor support can still arise from a short nonlinear circuit",
+    "elementary_fourier_reduction": "proved algebraically and replayed numerically",
+    "elliptic_kummer_lang_sheaf_bound": "proof_obligation_not_yet_kernel_checked"
+  }
+}

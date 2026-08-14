@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "package": "UORC-056-EXECUTION-004",
+  "central_target_unchanged": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "tasks": [
+    {
+      "task": 26,
+      "name": "select_deterministic_all_curve_v2_residual",
+      "status": "complete",
+      "evidence": "scripts/uorc056_residual_correction_v4.py"
+    },
+    {
+      "task": 27,
+      "name": "exhaust_one_and_two_atom_uniform_corrections",
+      "status": "complete_locally_pending_persisted_ci_result",
+      "evidence": ".github/workflows/uorc056-residual-correction-v4.yml"
+    },
+    {
+      "task": 28,
+      "name": "measure_negation_doubling_and_glv_transport",
+      "status": "complete_locally_pending_persisted_ci_result",
+      "evidence": "scripts/uorc056_residual_correction_v4.py"
+    },
+    {
+      "task": 29,
+      "name": "measure_modular_and_fourier_residual_structure",
+      "status": "complete_locally_pending_persisted_ci_result",
+      "evidence": "scripts/uorc056_residual_correction_v4.py"
+    },
+    {
+      "task": 30,
+      "name": "activate_symbolic_lift_or_next_grammar",
+      "status": "conditional_on_recorded_exact_correction_gate",
+      "activation_gate": "the corrected circuit must have zero residual on all 438 toy points"
+    }
+  ],
+  "claim_boundary": "The correction search is exhaustive only for one or two admitted atoms added to the selected V2 near miss. It is not a complete weight-six lower bound."
+}

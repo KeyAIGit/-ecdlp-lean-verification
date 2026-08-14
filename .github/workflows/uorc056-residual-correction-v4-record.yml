@@ -1,0 +1,107 @@
+name: UORC-056 persist residual correction v4
+
+on:
+  push:
+    branches:
+      - research/uorc056-execution-001
+    paths:
+      - 'scripts/uorc056_residual_correction_v4.py'
+      - 'scripts/test_uorc056_residual_correction_v4.py'
+      - 'experiments/uorc056/residual_correction_v4.json'
+      - '.github/workflows/uorc056-residual-correction-v4-record.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: uorc056-residual-correction-v4-record
+  cancel-in-progress: true
+
+jobs:
+  record:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/uorc056-execution-001
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verify and execute residual correction
+        run: |
+          PYTHONPATH=scripts python -m unittest -v \
+            scripts/test_uorc056_residual_correction_v4.py
+          PYTHONPATH=scripts python scripts/uorc056_residual_correction_v4.py \
+            --beam-size 192 \
+            --out experiments/uorc056/residual_correction_v4_results.json
+
+      - name: Render result summary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path('experiments/uorc056/residual_correction_v4_results.json').read_text()
+          )
+          selected = data['selected_v2_near_miss']
+          search = data['correction_search']
+          lines = [
+              '# UORC-056 residual correction v4 result',
+              '',
+              f"Decision: **{data['decision']}**",
+              '',
+              '## Exact correction gate',
+              '',
+              f"- Selected V2 residual errors: `{selected['errors']}` of `{selected['total']}`.",
+              f"- Searched one-atom corrections: `{search['searched_singles']}`.",
+              f"- Searched two-atom corrections: `{search['searched_pairs']}`.",
+              f"- Exact corrections found: `{len(search['exact_corrections'])}`.",
+              f"- Best corrected total errors: `{search['best_combined_total_errors']}`.",
+              f"- Best corrected actual weight: `{search['best_combined_actual_weight']}`.",
+              f"- Symbolic lifting: `{data['symbolic_lifting_status']}`.",
+              '',
+              '## Per-curve residual structure',
+              '',
+              '| curve | errors | negation disagreement | doubling disagreement | GLV disagreement | best modulus | lift |',
+              '|---|---:|---:|---:|---:|---:|---:|',
+          ]
+          for row in data['residual_diagnostics']:
+              transport = row['transport_disagreement']
+              modular = row['best_modular_predictor']
+              lines.append(
+                  f"| `{row['curve_id']}` | {row['errors']} | "
+                  f"{transport['negation_k_to_minus_k']} | "
+                  f"{transport['doubling_k_to_2k']} | "
+                  f"{transport['canonical_glv_k_to_lambda_k']} | "
+                  f"{modular['modulus']} | {modular['lift']:.12f} |"
+              )
+          lines.extend([
+              '',
+              'The modular and Fourier rows are diagnostics on known toy indices, not evaluators from Q.',
+              '',
+              'The exact correction search is exhaustive only around the selected V2 near miss and at most two additional admitted atoms.',
+              '',
+          ])
+          Path('experiments/uorc056/RESIDUAL_CORRECTION_V4_RESULT.md').write_text(
+              '\n'.join(lines), encoding='utf-8'
+          )
+          PY
+
+      - name: Commit deterministic evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            experiments/uorc056/residual_correction_v4_results.json \
+            experiments/uorc056/RESIDUAL_CORRECTION_V4_RESULT.md
+          if git diff --cached --quiet; then
+            echo 'deterministic evidence already current'
+          else
+            git commit -m 'research: record UORC-056 residual correction v4 result'
+            git push origin HEAD:research/uorc056-execution-001
+          fi

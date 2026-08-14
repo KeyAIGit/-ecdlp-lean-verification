@@ -1,0 +1,211 @@
+{
+  "base_grammar_sha256": "ef2bac2eda3934c74faccde104a038dd6a8dd2649ddabd8881c3112064011c94",
+  "best_discovery_correlations": {
+    "weight_one": {
+      "accuracy": "0.584474886",
+      "atoms": [
+        {
+          "canceled_orbit_zero": false,
+          "canceled_point_count": 0,
+          "denominator": {
+            "line": {
+              "a": "one",
+              "b": "zero",
+              "c": "two"
+            },
+            "multiplier": 3
+          },
+          "numerator": {
+            "line": {
+              "a": "zero",
+              "b": "one",
+              "c": "zero"
+            },
+            "multiplier": 2
+          }
+        }
+      ],
+      "matches": 256,
+      "output_phase": 1,
+      "total": 438
+    },
+    "weight_two": {
+      "accuracy": "0.639269406",
+      "atoms": [
+        {
+          "canceled_orbit_zero": false,
+          "canceled_point_count": 0,
+          "denominator": {
+            "line": {
+              "a": "zero",
+              "b": "one",
+              "c": "zero"
+            },
+            "multiplier": 2
+          },
+          "numerator": {
+            "line": {
+              "a": "beta_hi",
+              "b": "zero",
+              "c": "curve_b"
+            },
+            "multiplier": 1
+          }
+        },
+        {
+          "canceled_orbit_zero": false,
+          "canceled_point_count": 0,
+          "denominator": {
+            "line": {
+              "a": "beta_lo",
+              "b": "zero",
+              "c": "two"
+            },
+            "multiplier": 3
+          },
+          "numerator": {
+            "line": {
+              "a": "one",
+              "b": "zero",
+              "c": "two"
+            },
+            "multiplier": 3
+          }
+        }
+      ],
+      "matches": 280,
+      "output_phase": 1,
+      "total": 438
+    }
+  },
+  "best_full_corpus_correlations": {
+    "weight_one": {
+      "accuracy": "0.515738499",
+      "atoms": [
+        {
+          "canceled_orbit_zero": false,
+          "canceled_point_count": 0,
+          "denominator": {
+            "line": {
+              "a": "beta_lo",
+              "b": "zero",
+              "c": "curve_b"
+            },
+            "multiplier": 3
+          },
+          "numerator": {
+            "line": {
+              "a": "zero",
+              "b": "one",
+              "c": "zero"
+            },
+            "multiplier": 1
+          }
+        }
+      ],
+      "matches": 3834,
+      "output_phase": 1,
+      "total": 7434
+    },
+    "weight_two": {
+      "accuracy": "0.523002421",
+      "atoms": [
+        {
+          "canceled_orbit_zero": false,
+          "canceled_point_count": 0,
+          "denominator": {
+            "line": {
+              "a": "beta_hi",
+              "b": "zero",
+              "c": "curve_b"
+            },
+            "multiplier": 2
+          },
+          "numerator": {
+            "line": {
+              "a": "zero",
+              "b": "one",
+              "c": "zero"
+            },
+            "multiplier": 1
+          }
+        },
+        {
+          "canceled_orbit_zero": false,
+          "canceled_point_count": 0,
+          "denominator": {
+            "line": {
+              "a": "beta_hi",
+              "b": "zero",
+              "c": "curve_b"
+            },
+            "multiplier": 4
+          },
+          "numerator": {
+            "line": {
+              "a": "beta_hi",
+              "b": "zero",
+              "c": "curve_b"
+            },
+            "multiplier": 3
+          }
+        }
+      ],
+      "matches": 3888,
+      "output_phase": -1,
+      "total": 7434
+    }
+  },
+  "claim_boundary": [
+    "This is complete only for ratios of the 1,440 declared pulled-line templates and products of at most four character atoms.",
+    "Higher-degree numerator or denominator functions, larger multiplier sets, EDS factors and unrestricted straight-line programs remain open.",
+    "The local derivative is exact from the invariant differential; no exceptional point is patched or omitted.",
+    "No external point, wallet, real key or production-sized discrete-log target is accepted."
+  ],
+  "corpus": {
+    "discovery_curves": 5,
+    "discovery_nonzero_points": 438,
+    "full_corpus_nonzero_points": 7434,
+    "holdout_curves": 13
+  },
+  "decision": "no_exact_mixed_pullback_divisor_circuit_weight_le_4",
+  "discovery_catalog": {
+    "admissible_unordered_mixed_ratios": 5149,
+    "exceptional_sign_vectors": 77,
+    "nonexceptional_sign_vectors": 1618,
+    "novel_exceptional_sign_vectors": 75,
+    "pulled_line_templates": 1440,
+    "ratios_with_canceled_orbit_zero": 1909,
+    "unique_sign_vectors": 1693,
+    "valuation_signatures": 982
+  },
+  "discovery_exact_search": {
+    "candidate": null,
+    "candidate_found": false,
+    "maximum_pair_xor_multiplicity": 701,
+    "pair_count": 1432278,
+    "pair_xor_classes": 345626
+  },
+  "exceptional_fiber_decision": "seventy-five mixed-pullback exceptional vectors are discovery-only; zero remain novel on the full eighteen-curve corpus",
+  "experiment": "UORC-056-DIVISOR-AWARE-MIXED-PULLBACK-RATIO-V3",
+  "full_corpus_catalog": {
+    "admissible_unordered_mixed_ratios": 3028,
+    "exceptional_sign_vectors": 2,
+    "nonexceptional_sign_vectors": 354,
+    "novel_exceptional_sign_vectors": 0,
+    "pulled_line_templates": 1440,
+    "ratios_with_canceled_orbit_zero": 1852,
+    "unique_sign_vectors": 354,
+    "valuation_signatures": 1037
+  },
+  "full_corpus_exact_search": {
+    "candidate": null,
+    "candidate_found": false,
+    "maximum_pair_xor_multiplicity": 163,
+    "pair_count": 62481,
+    "pair_xor_classes": 10001
+  },
+  "grammar_sha256": "ba4dc4bd3d518c419fc152a9cfba7f1efd2afefb34f38918126caca878914c24",
+  "schema_version": "1.0",
+  "transfer_status": "not_reached_no_discovery_candidate"
+}

@@ -1,0 +1,31 @@
+name: UORC-056 EDS Paley obstruction V10
+
+on:
+  pull_request:
+    paths:
+      - "experiments/uorc056/eds_paley_obstruction_grammar.json"
+      - "experiments/uorc056/eds_paley_obstruction_results.json"
+      - "notes/reviews/UORC056_EDS_PALEY_OBSTRUCTION_V10.md"
+      - "scripts/uorc056_eds_paley_obstruction.py"
+      - "scripts/test_uorc056_eds_paley_obstruction.py"
+      - ".github/workflows/uorc056-eds-paley-v10.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-v10-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Unit tests
+        env:
+          PYTHONPATH: scripts
+        run: python3 -m unittest -v scripts/test_uorc056_eds_paley_obstruction.py
+      - name: Frozen artifact replay
+        run: python3 scripts/uorc056_eds_paley_obstruction.py --check

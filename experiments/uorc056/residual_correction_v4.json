@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "protocol_id": "UORC-056-RESIDUAL-CORRECTION-V4",
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "input": "the deterministic best all-five near miss from UORC-056-C-SYNTH-V2",
+  "residual": "target sign vector XOR candidate sign vector",
+  "exact_correction_search": {
+    "atoms": "all V2 atoms defined and nonzero on all five complete nonidentity orbits",
+    "maximum_additional_weight": 2,
+    "completeness": "exhaustive for one- and two-atom corrections to the selected near miss",
+    "actual_weight": "computed after cancelling duplicate sign atoms modulo two"
+  },
+  "diagnostics": [
+    "error positions on every frozen curve",
+    "negation, doubling and canonical cubic-CM/GLV transport disagreement",
+    "best scalar residue-class predictor for moduli 2 through 16",
+    "largest nonconstant cyclic Fourier coefficients",
+    "best one- and two-atom residual approximations"
+  ],
+  "promotion_gate": "Only a zero-residual corrected circuit may trigger symbolic lifting.",
+  "claim_boundary": "Failure closes only corrections of the selected V2 near miss by at most two admitted atoms. It is not a weight-six lower bound for the whole grammar."
+}

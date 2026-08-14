@@ -1,0 +1,48 @@
+{
+  "circuit": {
+    "admission": "aggregate valuation equals zero at every tested subgroup point",
+    "exponents": [
+      -1,
+      1
+    ],
+    "local_value": "product of exact local unit coefficients after aggregate divisor cancellation",
+    "maximum_primitive_factors": 4,
+    "public_phase": "one fixed symbolic public character or uniform output negation"
+  },
+  "claim_boundary": "A negative result closes only products/inverses of at most four declared small Miller primitives with one declared public phase.",
+  "cost_model": [
+    "all public small multiples, pullbacks, line constructions and inversions are charged",
+    "all local regularization and character operations are charged",
+    "discovery enumeration is not evaluator advice"
+  ],
+  "forbidden": [
+    "per-point patch values or omitted exceptional points",
+    "per-curve selected formulas or phase fitting",
+    "target-indexed orientation tables",
+    "unknown-scalar-dependent coefficients"
+  ],
+  "primitive": {
+    "canonical_line_normalization": "ell=y-y_A-m(x-x_A); vertical denominator=x-x_(A+B)",
+    "excluded": "a+b=0, where the addition line is vertical",
+    "formula": "g_(a,b)([u]Q)=ell_([a]G,[b]G)([u]Q)/v_([a+b]G)([u]Q)",
+    "pullbacks": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "raw_count": 128,
+    "signed_marks": [
+      -4,
+      -3,
+      -2,
+      -1,
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "profile_id": "UORC-056-SMALL-MILLER-DIVISOR-BALANCE-V6",
+  "schema_version": "1.0"
+}

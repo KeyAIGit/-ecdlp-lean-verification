@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "grammar_id": "UORC-056-C-SYNTH-V1",
+  "status": "declared_gate_universe_with_bounded_first_profile",
+  "sorts": ["field", "sign"],
+  "field_atoms": [
+    {"name": "public_constant", "parameters": "c in F_p", "advice_charge": "bit_length(c) and construction source"},
+    {"name": "x_Q", "cost": {"coordinate_read": 1}},
+    {"name": "y_Q", "cost": {"coordinate_read": 1}},
+    {"name": "small_scalar_coordinates", "parameters": "x([s]Q),y([s]Q), s in a declared fixed set", "cost": "charged group operations"},
+    {"name": "glv_coordinates", "parameters": "x(phi(Q)),y(phi(Q))", "cost": "charged public endomorphism"}
+  ],
+  "field_gates": [
+    {"name": "add", "arity": 2, "cost": {"field_add": 1}},
+    {"name": "sub", "arity": 2, "cost": {"field_add": 1}},
+    {"name": "mul", "arity": 2, "cost": {"field_mul": 1}},
+    {"name": "inv", "arity": 1, "domain": "nonzero", "cost": {"field_inv": 1}},
+    {"name": "frobenius", "arity": 1, "cost": "charged in the represented extension field"}
+  ],
+  "sort_changing_gates": [
+    {"name": "quadratic_character", "input": "field", "output": "sign", "domain": "nonzero", "cost": "exact exponentiation or declared character primitive"}
+  ],
+  "sign_gates": [
+    {"name": "sign_mul", "arity": 2, "cost": {"sign_mul": 1}},
+    {"name": "sign_neg", "arity": 1, "cost": {"sign_neg": 1}}
+  ],
+  "symmetry_quotient": [
+    "commutative operand ordering",
+    "projective normalization of affine forms",
+    "exact semantic equality on the frozen full subgroup orbit",
+    "global sign stored as a phase bit rather than duplicated expression"
+  ],
+  "forbidden_free_state": [
+    "target sign vector",
+    "orientation table indexed by subgroup element",
+    "unbounded constants fitted separately for each n",
+    "uncharged kernel or root coefficients"
+  ],
+  "first_bounded_profile": {
+    "profile_id": "AFFINE-CHAR-PRODUCT-V1",
+    "active_field_forms": "a*x(Q)+b*y(Q)+c, projectively normalized",
+    "active_sort_change": "quadratic_character",
+    "active_sign_composition": "product of at most four character factors",
+    "deep_search_curve": {"p": 43, "n": 31, "G": [2, 12]},
+    "purpose": "validate exact synthesis and quotienting against the known finite weight-four seed, then test unchanged transfer",
+    "claim_boundary": "This profile is a strict subgrammar of C_SYNTH_V1 and cannot close the full gate universe."
+  }
+}

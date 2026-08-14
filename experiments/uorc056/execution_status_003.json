@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "package": "UORC-056-EXECUTION-003",
+  "central_target_unchanged": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "tasks": [
+    {
+      "task": 20,
+      "name": "freeze_nested_field_slp_grammar",
+      "status": "complete",
+      "evidence": "experiments/uorc056/nested_slp_grammar_v3.json"
+    },
+    {
+      "task": 21,
+      "name": "implement_uniform_multi_curve_field_semantics",
+      "status": "complete",
+      "evidence": "scripts/uorc056_nested_slp_v3.py"
+    },
+    {
+      "task": 22,
+      "name": "validate_zero_and_pole_accounting",
+      "status": "complete",
+      "evidence": "scripts/uorc056_nested_slp_v3_runner.py and scripts/test_uorc056_nested_slp_v3.py"
+    },
+    {
+      "task": 23,
+      "name": "search_nested_add_sub_mul_inv_programs",
+      "status": "implemented_and_executed_locally_pending_persisted_ci_result",
+      "evidence": ".github/workflows/uorc056-nested-slp-v3.yml"
+    },
+    {
+      "task": 24,
+      "name": "unchanged_five_curve_endpoint_character_gate",
+      "status": "implemented_and_executed_locally_pending_persisted_ci_result",
+      "evidence": "scripts/uorc056_nested_slp_v3.py"
+    },
+    {
+      "task": 25,
+      "name": "symbolic_lifting_or_next_grammar_decision",
+      "status": "conditional_on_persisted_result",
+      "activation_gate": "an identical exact nested expression must pass all five curves"
+    }
+  ],
+  "claim_boundary": "The nested search is deterministic but beam-pruned beyond the seed layer. A miss is not a circuit lower bound; a hit is only a toy transfer seed."
+}

@@ -1,0 +1,72 @@
+{
+  "claim_boundary": "FDB-1 lower-bounds odd divisor support and rational-map degree for exact quadratic-character rational evaluators. It is not an unrestricted arithmetic-circuit lower bound.",
+  "paper_proof_ledger": [
+    {
+      "component": "subgroup_character_extension_and_annihilator_average",
+      "status": "closed_elementary",
+      "consequence": "the theorem applies to any odd cyclic marked subgroup, not only a cofactor-one group"
+    },
+    {
+      "component": "character_sheaf_existence_and_trace",
+      "status": "source_locked",
+      "source": "Cunningham-Roe, Theorem 3.6, connected commutative group specialization"
+    },
+    {
+      "component": "quadratic_kummer_ramification_and_middle_extension_trace",
+      "status": "source_locked",
+      "source": "Fouvry-Kowalski-Michel, Theorem 2.3.1, pulled back from G_m to E"
+    },
+    {
+      "component": "peak_character_exact_odd_order",
+      "status": "closed_elementary",
+      "reason": "gcd((n-1)/2,n)=1 for odd n"
+    },
+    {
+      "component": "tensor_geometric_nontriviality",
+      "status": "proof_audited",
+      "reason": "the Lang factor restricts to a faithful odd-order character while the Kummer factor has order dividing two"
+    },
+    {
+      "component": "H_c0_and_H_c2_vanishing",
+      "status": "proof_audited",
+      "reason": "compact support or geometric nontriviality for H_c0; Poincare duality for H_c2"
+    },
+    {
+      "component": "grothendieck_ogg_shafarevich_dimension",
+      "status": "source_locked",
+      "source": "SGA 5, Expose X, formula 7.2",
+      "consequence": "dim H_c^1=s(f) for genus one, rank one and tame ramification"
+    },
+    {
+      "component": "deligne_weight_bound",
+      "status": "source_locked",
+      "source": "Deligne, Weil II",
+      "consequence": "each H_c^1 eigenvalue has absolute value at most sqrt(q)"
+    },
+    {
+      "component": "divisor_aware_regularization_transfer",
+      "status": "closed_elementary",
+      "consequence": "at most s(f) rational odd-support values change by one, plus one identity term"
+    }
+  ],
+  "profile_id": "UORC-056-FDB1-KUMMER-LANG-V8",
+  "result": {
+    "FDB1": "|sum eta(P)t_f(P)| <= s(f)*sqrt(q)",
+    "FDB2": "s(f) >= (cot(pi/(2n))-1)/(sqrt(q)+1)",
+    "constant": 1,
+    "secp256k1_certified_minimum_odd_geometric_support": "216543324404233567658511113820216134562",
+    "secp256k1_certified_minimum_rational_map_degree": "108271662202116783829255556910108067281",
+    "secp256k1_support_bound_bits": 127,
+    "high_precision_sharper_estimate": "216630482969909649486417808747042701312",
+    "high_precision_estimate_status": "not_used_as_the_integer_certificate"
+  },
+  "schema_version": "1.1",
+  "status": "source_lock_and_normalization_audit_complete_theorem_provisional_pending_specialist_review_not_lean_kernel_checked",
+  "verification_layers": {
+    "elementary_fourier_identity": "replayed_by_V7_and_V8_scripts",
+    "public_parameter_integer_certificate": "replayed_by_scripts/uorc056_regularized_fourier_divisor_barrier.py",
+    "l_adic_theorem": "source_locked_paper_proof_audit",
+    "independent_specialist_review": "pending",
+    "lean": "pending_unavailable_library_infrastructure"
+  }
+}

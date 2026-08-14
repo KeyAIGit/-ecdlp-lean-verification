@@ -1,0 +1,111 @@
+{
+  "best_regular_weight_le_2_correlation": {
+    "accuracy": "0.541095890",
+    "factors": [
+      {
+        "exponent": 1,
+        "miller_addition": {
+          "a": -1,
+          "b": 2
+        },
+        "pullback": 1
+      },
+      {
+        "exponent": -1,
+        "miller_addition": {
+          "a": -2,
+          "b": 4
+        },
+        "pullback": 2
+      }
+    ],
+    "matches": 237,
+    "public_phase": "x_G_minus_y_G",
+    "total": 438
+  },
+  "catalog": {
+    "maximum_states_in_one_valuation_bucket": 25,
+    "pair_states_enumerated": 33152,
+    "public_phase_vectors": 8,
+    "repeated_pair_semantic_states": 1403,
+    "semantic_miller_primitives": 128,
+    "signed_semantic_atoms": 256,
+    "unique_pair_semantic_states": 31749,
+    "valuation_buckets": 22803
+  },
+  "claim_boundary": [
+    "Complete only for the declared signed marks, pullbacks, public phases and at most four Miller primitives.",
+    "Aggregate zero/pole cancellation is exact and all subgroup points are retained.",
+    "Long addition chains, index-growing Miller functions, EDS factors, higher-degree special functions and unrestricted circuits remain open.",
+    "No external point, wallet, real key or production-sized discrete-log target is accepted."
+  ],
+  "corpus": {
+    "curve_count": 5,
+    "curves": [
+      {
+        "G": [
+          2,
+          12
+        ],
+        "beta_hi": 36,
+        "beta_lo": 6,
+        "n": 31,
+        "p": 43
+      },
+      {
+        "G": [
+          2,
+          22
+        ],
+        "beta_hi": 37,
+        "beta_lo": 29,
+        "n": 79,
+        "p": 67
+      },
+      {
+        "G": [
+          1,
+          18
+        ],
+        "beta_hi": 55,
+        "beta_lo": 23,
+        "n": 67,
+        "p": 79
+      },
+      {
+        "G": [
+          1,
+          32
+        ],
+        "beta_hi": 107,
+        "beta_lo": 19,
+        "n": 127,
+        "p": 127
+      },
+      {
+        "G": [
+          2,
+          34
+        ],
+        "beta_hi": 104,
+        "beta_lo": 58,
+        "n": 139,
+        "p": 163
+      }
+    ],
+    "nonzero_points": 438
+  },
+  "decision": "no_exact_small_miller_divisor_balanced_circuit_weight_le_4",
+  "exact_search": {
+    "candidate": null,
+    "candidate_found": false
+  },
+  "experiment": "UORC-056-SMALL-MILLER-DIVISOR-BALANCE-V6",
+  "grammar_sha256": "ea7387d9f6da804b633e38600098e7e469f55d81d9542ae43252e7a222e09eb0",
+  "primitive_quotient": {
+    "duplicates_removed": 0,
+    "raw_primitives": 128,
+    "unique_exact_local_semantics": 128
+  },
+  "schema_version": "1.0"
+}

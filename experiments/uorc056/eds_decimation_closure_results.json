@@ -1,0 +1,176 @@
+{
+  "bounded_base_discovery_screen": {
+    "curves": [
+      {
+        "best_m": 16,
+        "best_matches": 24,
+        "exact_candidates": [],
+        "n": 31,
+        "p": 43,
+        "tested_even_classes_mod_2n": 30,
+        "total_nonzero_points": 30
+      },
+      {
+        "best_m": 94,
+        "best_matches": 50,
+        "exact_candidates": [],
+        "n": 79,
+        "p": 67,
+        "tested_even_classes_mod_2n": 78,
+        "total_nonzero_points": 78
+      },
+      {
+        "best_m": 64,
+        "best_matches": 46,
+        "exact_candidates": [],
+        "n": 67,
+        "p": 79,
+        "tested_even_classes_mod_2n": 66,
+        "total_nonzero_points": 66
+      },
+      {
+        "best_m": 24,
+        "best_matches": 76,
+        "exact_candidates": [],
+        "n": 127,
+        "p": 127,
+        "tested_even_classes_mod_2n": 126,
+        "total_nonzero_points": 126
+      },
+      {
+        "best_m": 18,
+        "best_matches": 84,
+        "exact_candidates": [],
+        "n": 139,
+        "p": 163,
+        "tested_even_classes_mod_2n": 138,
+        "total_nonzero_points": 138
+      }
+    ],
+    "exact_candidates": 0
+  },
+  "decision": "even_eds_decimation_exists_on_small_curves_but_is_excluded_for_secp256k1_by_fourier_and_paley_bounds",
+  "exact_equivalence": "for even m with n not dividing m: chi(psi_m([k]G))=(-1)^k for all k iff rho_m(G)=-1 and the re-marked generator P=[m]G has chi(psi_k(P))=+1 for every 1<=k<n",
+  "exact_small_curve_witnesses": [
+    {
+      "G": [
+        22,
+        25
+      ],
+      "P_equals_mG": [
+        31,
+        11
+      ],
+      "chi_minus_one": -1,
+      "decimation_outputs": [
+        -1,
+        1,
+        -1,
+        1
+      ],
+      "exact_parity_decimation": true,
+      "m": 2,
+      "n": 5,
+      "p": 59,
+      "p_mod_4": 3,
+      "remarked_residue_row": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "remarked_row_all_residue": true,
+      "rho_m_at_G": -1,
+      "specialized_recurrence_exact": true,
+      "target_parity": [
+        -1,
+        1,
+        -1,
+        1
+      ],
+      "ward_at_remarked_generator": {
+        "a": 28,
+        "b": 56,
+        "chi_a": 1,
+        "chi_b": -1,
+        "exact_checks": 8
+      }
+    },
+    {
+      "G": [
+        70,
+        36
+      ],
+      "P_equals_mG": [
+        74,
+        5
+      ],
+      "chi_minus_one": -1,
+      "decimation_outputs": [
+        -1,
+        1,
+        -1,
+        1,
+        -1,
+        1
+      ],
+      "exact_parity_decimation": true,
+      "m": 2,
+      "n": 7,
+      "p": 83,
+      "p_mod_4": 3,
+      "remarked_residue_row": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "remarked_row_all_residue": true,
+      "rho_m_at_G": -1,
+      "specialized_recurrence_exact": true,
+      "target_parity": [
+        -1,
+        1,
+        -1,
+        1,
+        -1,
+        1
+      ],
+      "ward_at_remarked_generator": {
+        "a": 28,
+        "b": 35,
+        "chi_a": 1,
+        "chi_b": -1,
+        "exact_checks": 12
+      }
+    }
+  ],
+  "next_frontier": [
+    "products or ratios of multiple independently pulled division-polynomial factors",
+    "a low-rank or multi-tournament obstruction for bounded multi-factor circuits",
+    "direct field-valued Y_G and compact global Miller-cocycle integration",
+    "theta, elliptic-unit and non-character output mechanisms"
+  ],
+  "normalization_correction": "Silverman Theorem 8 uses the n+1 and n+2 terms for the Ward constants; the earlier n-1/n-2 inference was invalid",
+  "profile_id": "UORC-056-EDS-DECIMATION-AUDIT-V10",
+  "schema_version": "1.3",
+  "scientific_boundary": "This audit proves the exact re-marking equivalence, corrected Ward normalization and small exact witnesses. The secp256k1 no-go is provided by the companion Fourier and Paley packages, not by the Ward recurrence alone. Multi-factor division-polynomial circuits remain open.",
+  "secp256k1_status": {
+    "fourier_companion": "UORC-056-EVEN-DIVPOLY-FOURIER-COLLAPSE-V10",
+    "paley_companion": "UORC-056-EDS-PALEY-OBSTRUCTION-V10",
+    "paley_necessary_condition": "((n-1)/2)^2 <= 3p+1",
+    "published_fourier_necessary_condition": "cot(pi/(2n)) <= 6*sqrt(p)",
+    "published_integer_certificate": "(98*n^2-121)^2 > 36*(154*n)^2*p",
+    "pure_single_factor_closed": true
+  },
+  "sources": [
+    "Silverman, p-adic properties of division polynomials and elliptic divisibility sequences, Theorem 8",
+    "Shparlinski-Stange, Character Sums with Division Polynomials, Lemma 5",
+    "Stange, Division polynomials for arbitrary isogenies (2026), recurrence and chain rule",
+    "UORC056_EVEN_DIVPOLY_FOURIER_COLLAPSE_V10",
+    "UORC056_EDS_PALEY_OBSTRUCTION_V10"
+  ],
+  "status": "universal_ward_closure_refuted_small_witnesses_preserved_secp_pure_route_closed_by_companion_bounds"
+}

@@ -1,0 +1,209 @@
+{
+  "base_grammar_sha256": "ef2bac2eda3934c74faccde104a038dd6a8dd2649ddabd8881c3112064011c94",
+  "best_discovery_correlations": {
+    "weight_one": {
+      "accuracy": "0.584474886",
+      "atoms": [
+        {
+          "multiplier": 4,
+          "ratio": {
+            "canceled_orbit_zero": false,
+            "canceled_point_count": 0,
+            "denominator": {
+              "a": "one",
+              "b": "zero",
+              "c": "x_G"
+            },
+            "numerator": {
+              "a": "zero",
+              "b": "one",
+              "c": "zero"
+            }
+          }
+        }
+      ],
+      "matches": 256,
+      "output_phase": -1,
+      "total": 438
+    },
+    "weight_two": {
+      "accuracy": "0.634703196",
+      "atoms": [
+        {
+          "multiplier": 3,
+          "ratio": {
+            "canceled_orbit_zero": false,
+            "canceled_point_count": 0,
+            "denominator": {
+              "a": "beta_hi",
+              "b": "zero",
+              "c": "x_G"
+            },
+            "numerator": {
+              "a": "zero",
+              "b": "one",
+              "c": "zero"
+            }
+          }
+        },
+        {
+          "multiplier": 4,
+          "ratio": {
+            "canceled_orbit_zero": false,
+            "canceled_point_count": 0,
+            "denominator": {
+              "a": "beta_hi",
+              "b": "zero",
+              "c": "two"
+            },
+            "numerator": {
+              "a": "beta_lo",
+              "b": "zero",
+              "c": "two"
+            }
+          }
+        }
+      ],
+      "matches": 278,
+      "output_phase": -1,
+      "total": 438
+    }
+  },
+  "best_full_corpus_correlations": {
+    "weight_one": {
+      "accuracy": "0.509550713",
+      "atoms": [
+        {
+          "multiplier": 4,
+          "ratio": {
+            "canceled_orbit_zero": false,
+            "canceled_point_count": 0,
+            "denominator": {
+              "a": "beta_lo",
+              "b": "zero",
+              "c": "curve_b"
+            },
+            "numerator": {
+              "a": "zero",
+              "b": "one",
+              "c": "zero"
+            }
+          }
+        }
+      ],
+      "matches": 3788,
+      "output_phase": -1,
+      "total": 7434
+    },
+    "weight_two": {
+      "accuracy": "0.521119182",
+      "atoms": [
+        {
+          "multiplier": 1,
+          "ratio": {
+            "canceled_orbit_zero": false,
+            "canceled_point_count": 0,
+            "denominator": {
+              "a": "one",
+              "b": "zero",
+              "c": "zero"
+            },
+            "numerator": {
+              "a": "zero",
+              "b": "one",
+              "c": "zero"
+            }
+          }
+        },
+        {
+          "multiplier": 2,
+          "ratio": {
+            "canceled_orbit_zero": false,
+            "canceled_point_count": 0,
+            "denominator": {
+              "a": "one",
+              "b": "zero",
+              "c": "curve_b"
+            },
+            "numerator": {
+              "a": "one",
+              "b": "zero",
+              "c": "zero"
+            }
+          }
+        }
+      ],
+      "matches": 3874,
+      "output_phase": 1,
+      "total": 7434
+    }
+  },
+  "claim_boundary": [
+    "This is complete only for common-multiplier pullbacks u in {1,2,3,4} of V1 line ratios and products of at most four atoms.",
+    "Mixed-multiplier numerator/denominator ratios and higher-degree divisor circuits remain open.",
+    "The etale pullback rule is exact and no exceptional point is patched or omitted.",
+    "No external point, wallet, real key or production-sized discrete-log target is accepted."
+  ],
+  "corpus": {
+    "discovery_curves": 5,
+    "discovery_nonzero_points": 438,
+    "full_corpus_nonzero_points": 7434,
+    "holdout_curves": 13
+  },
+  "decision": "no_exact_divisor_aware_pullback_circuit_weight_le_4",
+  "discovery_catalog": {
+    "admissible_unordered_ratios": 673,
+    "base_exceptional_vectors": 8,
+    "base_nonexceptional_vectors": 97,
+    "multipliers": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "novel_pullback_exceptional_vectors": 24,
+    "pullback_exceptional_vectors": 26,
+    "pullback_nonexceptional_vectors": 382,
+    "ratios_with_canceled_orbit_zero": 463,
+    "raw_exceptional_pullback_asts": 1852,
+    "raw_pullback_asts": 2692,
+    "semantic_pullback_atoms_before_quotient": 412,
+    "unique_base_ratio_vectors": 103,
+    "unique_pullback_sign_vectors": 406,
+    "valuation_signatures": 250
+  },
+  "discovery_exact_search": {
+    "candidate": null,
+    "candidate_found": false
+  },
+  "exceptional_fiber_decision": "twenty-four pullback exceptional vectors are discovery-only; zero remain novel on the full eighteen-curve corpus",
+  "experiment": "UORC-056-DIVISOR-AWARE-PULLBACK-RATIO-V2",
+  "full_corpus_catalog": {
+    "admissible_unordered_ratios": 541,
+    "base_exceptional_vectors": 2,
+    "base_nonexceptional_vectors": 21,
+    "multipliers": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "novel_pullback_exceptional_vectors": 0,
+    "pullback_exceptional_vectors": 2,
+    "pullback_nonexceptional_vectors": 78,
+    "ratios_with_canceled_orbit_zero": 463,
+    "raw_exceptional_pullback_asts": 1852,
+    "raw_pullback_asts": 2164,
+    "semantic_pullback_atoms_before_quotient": 84,
+    "unique_base_ratio_vectors": 21,
+    "unique_pullback_sign_vectors": 78,
+    "valuation_signatures": 260
+  },
+  "full_corpus_exact_search": {
+    "candidate": null,
+    "candidate_found": false
+  },
+  "grammar_sha256": "65e20eb28f8d4ccf6dae643ee4ee3ffd2d7eeed61bc285c675a47e2ccc2f899b",
+  "schema_version": "1.0",
+  "transfer_status": "not_reached_no_discovery_candidate"
+}

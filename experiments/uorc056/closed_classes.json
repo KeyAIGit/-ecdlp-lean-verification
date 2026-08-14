@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.2",
+  "registry_id": "UORC-056-CLOSED-CLASSES-001",
+  "status": "scoped_registry_not_universal_lower_bound",
+  "entries": [
+    {
+      "id": "DIRECT-PARITY-KUMMER",
+      "source": "PR-365",
+      "scope": "Any x-only, Kummer, even-theta, y^2, or sign-erasing orbit-norm observable claimed to equal direct canonical scalar parity on an odd prime-order cycle.",
+      "disposition": "closed_in_declared_scope",
+      "reason": "Direct parity is anti-invariant under Q -> -Q and therefore cannot factor through x(Q).",
+      "reopen_condition": "Change the output to a correctly transformed residual bit or introduce explicit orientation data and charge it."
+    },
+    {
+      "id": "FIXED-INDEX-MULTIPLICATIVE-EDS",
+      "source": "PR-365",
+      "scope": "Finite products or ratios of fixed-index transported division-polynomial or elliptic-net observables.",
+      "disposition": "closed_in_declared_scope",
+      "reason": "Their quadratic exponent defect is balanced and does not expose the absolute EDS residue by that mechanism alone.",
+      "reopen_condition": "Provide a nonlocal or index-growing mechanism with an exact unbalanced transformation law and full charged cost."
+    },
+    {
+      "id": "LINEAR-TRANSLATION-REPRESENTATION",
+      "source": "PR-365",
+      "scope": "Globally linear translation representations or fixed theta spaces directly representing canonical parity around an odd cycle.",
+      "disposition": "lower_bounded_in_declared_scope",
+      "reason": "The parity cut has full Fourier support and forces linear-size representation dimension in the stated model.",
+      "reopen_condition": "Use a nonlinear, non-global, generator-sensitive circuit outside the declared linear model."
+    },
+    {
+      "id": "DIRECT-RATIONAL-PARITY-INTERPOLANT",
+      "source": "PR-365",
+      "scope": "Regular rational functions directly outputting plus/minus one parity on all group points, or residual signs on the Kummer line, under the stated regularity assumptions.",
+      "disposition": "degree_lower_bound_only",
+      "reason": "The declared direct interpolation models require degree linear in n.",
+      "reopen_condition": "Exhibit a short high-degree straight-line program or a representation whose construction and evaluation avoid linear charged cost."
+    },
+    {
+      "id": "PROPER-TWO-STAGE-PRIME-NORM-CM-CHAIN",
+      "source": "PR-383",
+      "scope": "A norm-n Eisenstein-CM element decomposed into two proper positive-degree endomorphism or isogeny stages when n is prime.",
+      "disposition": "closed",
+      "reason": "The positive integer stage degrees multiply to prime n, so one stage has degree one.",
+      "reopen_condition": "Use compact evaluation of the full map, transposed evaluation, local data, modular composition, or a non-factor-chain circuit."
+    },
+    {
+      "id": "DEGREE-ONLY-CIRCUIT-LOWER-BOUND",
+      "source": "PR-384",
+      "scope": "Any claim that degree about n by itself implies arithmetic-circuit size about n or sqrt(n).",
+      "disposition": "closed_as_argument",
+      "reason": "Repeated squaring produces exponentially high degree with logarithmic straight-line-program length.",
+      "reopen_condition": "Add a stronger invariant such as support, orientation information, advice, representation construction, or a restricted gate model."
+    },
+    {
+      "id": "TWO-ENDPOINT-ADDITIVE-COBOUNDARY",
+      "source": "PR-385",
+      "scope": "Consecutive-segment summaries whose visible state is only two endpoint values and whose composition is additive with a constant defect.",
+      "disposition": "normal_form_scoped",
+      "reason": "The segment value collapses to endpoint data plus a fixed defect in the declared grammar.",
+      "reopen_condition": "Introduce nonlocal state, nonlinear coupling, or explicitly growing shared state and charge it."
+    },
+    {
+      "id": "TWO-ENDPOINT-CONJUGATED-PRODUCT",
+      "source": "PR-385",
+      "scope": "Consecutive-segment summaries represented as an ordered product conjugated by endpoint basis values, with no additional hidden state.",
+      "disposition": "normal_form_scoped",
+      "reason": "The declared product grammar reduces to endpoint conjugation and does not independently select the absolute orientation.",
+      "reopen_condition": "Compose both orientation branches simultaneously or add a genuinely nonmultiplicative primitive with charged state growth."
+    },
+    {
+      "id": "ALL-INDEX-TERMINAL-MILLER-CHARACTER",
+      "source": "PR-386-V9",
+      "scope": "A quadratic character of one classical terminal Miller function f_(m,P), for arbitrary positive index m, or an explicit product of too few independent terminal functions.",
+      "disposition": "closed_by_V8_odd_support_barrier",
+      "reason": "The terminal divisor m[P]-[mP]-(m-1)[O] has at most two odd-support slots after reduction modulo two, independently of the Miller-loop length.",
+      "reopen_condition": "Use a recursively shared object that is not an explicit product of terminal Miller functions, or leave the one-rational-character model."
+    },
+    {
+      "id": "ODD-DIVISOR-SUPPORT-ONLY-CIRCUIT-LOWER-BOUND",
+      "source": "PR-386-V9",
+      "scope": "Any unrestricted claim that square-root-scale odd divisor support alone implies square-root field-operation or straight-line-program cost.",
+      "disposition": "closed_as_argument",
+      "reason": "Division polynomials have odd support quadratic in the index while their standard doubling recurrences have logarithmic dependency depth and a constant-width window per level.",
+      "reopen_condition": "Add a restricted gate model or another invariant that rules out division-polynomial-style recurrence compression."
+    },
+    {
+      "id": "PURE-DIVISION-POLYNOMIAL-MIXED-MOD4-TRANSFER",
+      "source": "PR-386-V9",
+      "scope": "An unchanged formula chi(psi_m(Q)) claimed to equal canonical parity across a transfer corpus containing fields with q congruent to both 1 and 3 modulo 4.",
+      "disposition": "closed_by_negation_covariance",
+      "reason": "Odd m is invariant under Q -> -Q. Even m remains character-invariant when chi(-1)=+1, while canonical parity is always anti-invariant on an odd cycle.",
+      "reopen_condition": "Specialize to q congruent to 3 modulo 4 with even m, add a charged covariance-correcting factor, or leave the pure division-polynomial character model."
+    },
+    {
+      "id": "PURE-SINGLE-DIVISION-POLYNOMIAL-SECP256K1",
+      "source": "PR-386-V10-V11",
+      "scope": "One global phase times one classical quadratic character chi(psi_m(Q)), for an arbitrary positive index m, on the secp256k1 prime-order subgroup.",
+      "disposition": "closed_for_every_index",
+      "reason": "Odd indices fail negation covariance. Every admissible even index m=2u collapses in square class to chi(psi_2([u]Q)); the published 6*sqrt(p) subgroup Fourier bound is far below the exact parity peak. Independent Paley-tournament and psi_3 all-residue completion arguments give separate large-order certificates.",
+      "reopen_condition": "Use products or ratios of multiple independently pulled factors, a field-valued output without one outer character, adaptive branching, or another mechanism outside the single classical psi_m character model."
+    },
+    {
+      "id": "PURE-SINGLE-DIVISION-POLYNOMIAL-FROZEN-CORPUS",
+      "source": "PR-386-V10",
+      "scope": "One global phase times chi(psi_m(Q)) on each curve of the declared eighteen-curve transfer corpus, with arbitrary positive m and no per-point advice.",
+      "disposition": "closed_by_theorem_plus_complete_multiplier_scans",
+      "reason": "The published 6*sqrt(q) Fourier inequality closes fourteen curves; exhaustive scans of every invertible multiplier class and both global phases close the remaining four. The independent covariance and Paley checks agree on their respective congruence classes.",
+      "reopen_condition": "Change the corpus or leave the pure single-factor division-polynomial character class."
+    }
+  ],
+  "global_warning": "Every entry is scoped. The pure single classical division-polynomial character is closed on secp256k1 and on the declared eighteen-curve corpus, but products or ratios of multiple factors, direct field-valued Y_G evaluation and unrestricted arithmetic circuits remain open. This registry is not a proof that UORC-056 has no sub-root evaluator."
+}

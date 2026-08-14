@@ -1,0 +1,32 @@
+{
+  "claim_boundary": [
+    "divisor-support barrier only",
+    "not an arithmetic-circuit lower bound",
+    "not an ECDLP solver",
+    "fixed public secp256k1 parameters only"
+  ],
+  "conditional_hybrid_bound": {
+    "eta": "nontrivial group character at peak frequency",
+    "form": "|sum_{P in E(F_p)} eta(P) Trace(Kummer(R))_P| <= C*s*sqrt(p)",
+    "proof_components": [
+      "Lang character sheaf",
+      "quadratic Kummer sheaf",
+      "Grothendieck-Ogg-Shafarevich",
+      "Deligne weight-one trace bound"
+    ],
+    "s": "number of geometric points where ord_P(R) is odd",
+    "status": "proof obligation, not yet kernel checked"
+  },
+  "derived_bound": "s >= (cot(pi/(2n))-1)/(C*sqrt(p)+1)",
+  "domain": "odd cyclic group H=<G>, with secp256k1 cofactor-one specialization",
+  "elementary_identity": {
+    "asymptotic_ratio": "cot(pi/(2n))/n -> 2/pi",
+    "peak_frequency": "r=(n-1)/2",
+    "peak_magnitude": "cot(pi/(2n))",
+    "sequence": "s(k)=(-1)^k for 1<=k<n, n odd",
+    "transform": "sum_{k=1}^{n-1} s(k) z^k = (1-z)/(1+z) when z^n=1 and z!=1"
+  },
+  "profile_id": "UORC-056-FOURIER-DIVISOR-BARRIER-V7",
+  "schema_version": "1.0",
+  "target": "sigma([k]G)=(-1)^k for 1<=k<n"
+}

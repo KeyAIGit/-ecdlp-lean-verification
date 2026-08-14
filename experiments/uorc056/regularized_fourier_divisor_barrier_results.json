@@ -1,0 +1,380 @@
+{
+  "certified_elementary_bound": {
+    "cot_lower_bound": "cot(pi/(2*n)) > (98*n^2-121)/(154*n)",
+    "radical_floor": "the script compares integer squares to evaluate floor(A/(B*(sqrt(q)+1))) exactly"
+  },
+  "experiment": "UORC-056-REGULARIZED-FOURIER-DIVISOR-BARRIER-V8",
+  "input_grammar_sha256": "750d3f25333bb30781cb07cda88cd2d9b1cfefcff3fa336693f66c27e3a71900",
+  "proof_kernel": [
+    "The parity sequence has Fourier peak cot(pi/(2n)) at the two near-half frequencies.",
+    "Every character of H extends to E(F_q); the indicator of H is the average over the annihilator H^perp.",
+    "Every resulting full-group character restricts to a faithful odd-order character on H.",
+    "Its Lang local system has geometric order divisible by n and cannot cancel the order-at-most-two quadratic Kummer local system.",
+    "On U=E-S_odd(f), the tensor is rank one, tame, pure of weight zero and geometrically nontrivial.",
+    "Grothendieck-Ogg-Shafarevich gives dim H_c^1(U_bar,F)=s; H_c^0 and H_c^2 vanish.",
+    "The trace formula and Deligne weights give the complete hybrid bound s*sqrt(q).",
+    "Regularization changes at most s rational odd-support terms and omission of O changes at most one term."
+  ],
+  "records": [
+    {
+      "certified_odd_divisor_support_lower_bound": "3",
+      "certified_odd_divisor_support_lower_bound_bits": 1,
+      "certified_rational_map_degree_lower_bound": "2",
+      "floating_point_sharp_support_lower_bound": "3",
+      "label": "discovery_corpus_1_p43_n31",
+      "n": "31",
+      "nonzero_parity_fourier_peak": "1.971831976851125e+01",
+      "peak_frequencies": [
+        15,
+        16
+      ],
+      "q": "43",
+      "regularized_ratio": "2.476807414088765e+00",
+      "regularized_ratio_log2": "1.308481695173",
+      "source": "discovery_corpus"
+    },
+    {
+      "certified_odd_divisor_support_lower_bound": "6",
+      "certified_odd_divisor_support_lower_bound_bits": 2,
+      "certified_rational_map_degree_lower_bound": "3",
+      "floating_point_sharp_support_lower_bound": "6",
+      "label": "discovery_corpus_2_p67_n79",
+      "n": "79",
+      "nonzero_parity_fourier_peak": "5.028633400974072e+01",
+      "peak_frequencies": [
+        39,
+        40
+      ],
+      "q": "67",
+      "regularized_ratio": "5.365752980186695e+00",
+      "regularized_ratio_log2": "2.423780639678",
+      "source": "discovery_corpus"
+    },
+    {
+      "certified_odd_divisor_support_lower_bound": "5",
+      "certified_odd_divisor_support_lower_bound_bits": 2,
+      "certified_rational_map_degree_lower_bound": "3",
+      "floating_point_sharp_support_lower_bound": "5",
+      "label": "discovery_corpus_3_p79_n67",
+      "n": "67",
+      "nonzero_parity_fourier_peak": "4.264570955514765e+01",
+      "peak_frequencies": [
+        33,
+        34
+      ],
+      "q": "79",
+      "regularized_ratio": "4.211659661770027e+00",
+      "regularized_ratio_log2": "2.074388858938",
+      "source": "discovery_corpus"
+    },
+    {
+      "certified_odd_divisor_support_lower_bound": "7",
+      "certified_odd_divisor_support_lower_bound_bits": 2,
+      "certified_rational_map_degree_lower_bound": "4",
+      "floating_point_sharp_support_lower_bound": "7",
+      "label": "discovery_corpus_4_p127_n127",
+      "n": "127",
+      "nonzero_parity_fourier_peak": "8.084658822363042e+01",
+      "peak_frequencies": [
+        63,
+        64
+      ],
+      "q": "127",
+      "regularized_ratio": "6.507767955759379e+00",
+      "regularized_ratio_log2": "2.702162810469",
+      "source": "discovery_corpus"
+    },
+    {
+      "certified_odd_divisor_support_lower_bound": "7",
+      "certified_odd_divisor_support_lower_bound_bits": 2,
+      "certified_rational_map_degree_lower_bound": "4",
+      "floating_point_sharp_support_lower_bound": "7",
+      "label": "discovery_corpus_5_p163_n139",
+      "n": "139",
+      "nonzero_parity_fourier_peak": "8.848638142935697e+01",
+      "peak_frequencies": [
+        69,
+        70
+      ],
+      "q": "163",
+      "regularized_ratio": "6.354722006761206e+00",
+      "regularized_ratio_log2": "2.667829014571",
+      "source": "discovery_corpus"
+    },
+    {
+      "certified_odd_divisor_support_lower_bound": "5",
+      "certified_odd_divisor_support_lower_bound_bits": 2,
+      "certified_rational_map_degree_lower_bound": "3",
+      "floating_point_sharp_support_lower_bound": "5",
+      "label": "holdout_corpus_1_p61_n61",
+      "n": "61",
+      "nonzero_parity_fourier_peak": "3.882522214846061e+01",
+      "peak_frequencies": [
+        30,
+        31
+      ],
+      "q": "61",
+      "regularized_ratio": "4.293320114627519e+00",
+      "regularized_ratio_log2": "2.102093745711",
+      "source": "holdout_corpus"
+    },
+    {
+      "certified_odd_divisor_support_lower_bound": "5",
+      "certified_odd_divisor_support_lower_bound_bits": 2,
+      "certified_rational_map_degree_lower_bound": "3",
+      "floating_point_sharp_support_lower_bound": "5",
+      "label": "holdout_corpus_2_p97_n79",
+      "n": "79",
+      "nonzero_parity_fourier_peak": "5.028633400974072e+01",
+      "peak_frequencies": [
+        39,
+        40
+      ],
+      "q": "97",
+      "regularized_ratio": "4.542997512750238e+00",
+      "regularized_ratio_log2": "2.183644515532",
+      "source": "holdout_corpus"
+    },
+    {
+      "certified_odd_divisor_support_lower_bound": "9",
+      "certified_odd_divisor_support_lower_bound_bits": 3,
+      "certified_rational_map_degree_lower_bound": "5",
+      "floating_point_sharp_support_lower_bound": "9",
+      "label": "holdout_corpus_3_p211_n199",
+      "n": "199",
+      "nonzero_parity_fourier_peak": "1.266847035405933e+02",
+      "peak_frequencies": [
+        99,
+        100
+      ],
+      "q": "211",
+      "regularized_ratio": "8.095195574648875e+00",
+      "regularized_ratio_log2": "3.017065935521",
+      "source": "holdout_corpus"
+    },
+    {
+      "certified_odd_divisor_support_lower_bound": "11",
+      "certified_odd_divisor_support_lower_bound_bits": 3,
+      "certified_rational_map_degree_lower_bound": "6",
+      "floating_point_sharp_support_lower_bound": "11",
+      "label": "holdout_corpus_4_p349_n313",
+      "n": "313",
+      "nonzero_parity_fourier_peak": "1.992603159087056e+02",
+      "peak_frequencies": [
+        156,
+        157
+      ],
+      "q": "349",
+      "regularized_ratio": "1.007341391282264e+01",
+      "regularized_ratio_log2": "3.332480795155",
+      "source": "holdout_corpus"
+    },
+    {
+      "certified_odd_divisor_support_lower_bound": "13",
+      "certified_odd_divisor_support_lower_bound_bits": 3,
+      "certified_rational_map_degree_lower_bound": "7",
+      "floating_point_sharp_support_lower_bound": "13",
+      "label": "holdout_corpus_5_p397_n397",
+      "n": "397",
+      "nonzero_parity_fourier_peak": "2.527367307399497e+02",
+      "peak_frequencies": [
+        198,
+        199
+      ],
+      "q": "397",
+      "regularized_ratio": "1.203051034191525e+01",
+      "regularized_ratio_log2": "3.588625938742",
+      "source": "holdout_corpus"
+    },
+    {
+      "certified_odd_divisor_support_lower_bound": "12",
+      "certified_odd_divisor_support_lower_bound_bits": 3,
+      "certified_rational_map_degree_lower_bound": "6",
+      "floating_point_sharp_support_lower_bound": "12",
+      "label": "holdout_corpus_6_p433_n397",
+      "n": "397",
+      "nonzero_parity_fourier_peak": "2.527367307399497e+02",
+      "peak_frequencies": [
+        198,
+        199
+      ],
+      "q": "433",
+      "regularized_ratio": "1.154297524675382e+01",
+      "regularized_ratio_log2": "3.528943227060",
+      "source": "holdout_corpus"
+    },
+    {
+      "certified_odd_divisor_support_lower_bound": "15",
+      "certified_odd_divisor_support_lower_bound_bits": 3,
+      "certified_rational_map_degree_lower_bound": "8",
+      "floating_point_sharp_support_lower_bound": "15",
+      "label": "holdout_corpus_7_p547_n547",
+      "n": "547",
+      "nonzero_parity_fourier_peak": "3.482300582655726e+02",
+      "peak_frequencies": [
+        273,
+        274
+      ],
+      "q": "547",
+      "regularized_ratio": "1.423772408919060e+01",
+      "regularized_ratio_log2": "3.831646643744",
+      "source": "holdout_corpus"
+    },
+    {
+      "certified_odd_divisor_support_lower_bound": "16",
+      "certified_odd_divisor_support_lower_bound_bits": 4,
+      "certified_rational_map_degree_lower_bound": "8",
+      "floating_point_sharp_support_lower_bound": "16",
+      "label": "holdout_corpus_8_p577_n613",
+      "n": "613",
+      "nonzero_parity_fourier_peak": "3.902470663030813e+02",
+      "peak_frequencies": [
+        306,
+        307
+      ],
+      "q": "577",
+      "regularized_ratio": "1.555692417054975e+01",
+      "regularized_ratio_log2": "3.959484941680",
+      "source": "holdout_corpus"
+    },
+    {
+      "certified_odd_divisor_support_lower_bound": "16",
+      "certified_odd_divisor_support_lower_bound_bits": 4,
+      "certified_rational_map_degree_lower_bound": "8",
+      "floating_point_sharp_support_lower_bound": "16",
+      "label": "holdout_corpus_9_p733_n691",
+      "n": "691",
+      "nonzero_parity_fourier_peak": "4.399035049651073e+02",
+      "peak_frequencies": [
+        345,
+        346
+      ],
+      "q": "733",
+      "regularized_ratio": "1.563382243790758e+01",
+      "regularized_ratio_log2": "3.966598652368",
+      "source": "holdout_corpus"
+    },
+    {
+      "certified_odd_divisor_support_lower_bound": "18",
+      "certified_odd_divisor_support_lower_bound_bits": 4,
+      "certified_rational_map_degree_lower_bound": "9",
+      "floating_point_sharp_support_lower_bound": "18",
+      "label": "holdout_corpus_10_p823_n829",
+      "n": "829",
+      "nonzero_parity_fourier_peak": "5.277571596897081e+02",
+      "peak_frequencies": [
+        414,
+        415
+      ],
+      "q": "823",
+      "regularized_ratio": "1.774311423174971e+01",
+      "regularized_ratio_log2": "4.149187345360",
+      "source": "holdout_corpus"
+    },
+    {
+      "certified_odd_divisor_support_lower_bound": "20",
+      "certified_odd_divisor_support_lower_bound_bits": 4,
+      "certified_rational_map_degree_lower_bound": "10",
+      "floating_point_sharp_support_lower_bound": "20",
+      "label": "holdout_corpus_11_p907_n967",
+      "n": "967",
+      "nonzero_parity_fourier_peak": "6.156107784121630e+02",
+      "peak_frequencies": [
+        483,
+        484
+      ],
+      "q": "907",
+      "regularized_ratio": "1.975196278009204e+01",
+      "regularized_ratio_log2": "4.303924117919",
+      "source": "holdout_corpus"
+    },
+    {
+      "certified_odd_divisor_support_lower_bound": "18",
+      "certified_odd_divisor_support_lower_bound_bits": 4,
+      "certified_rational_map_degree_lower_bound": "9",
+      "floating_point_sharp_support_lower_bound": "18",
+      "label": "holdout_corpus_12_p967_n907",
+      "n": "907",
+      "nonzero_parity_fourier_peak": "5.774135562508690e+02",
+      "peak_frequencies": [
+        453,
+        454
+      ],
+      "q": "967",
+      "regularized_ratio": "1.795869756389382e+01",
+      "regularized_ratio_log2": "4.166610818783",
+      "source": "holdout_corpus"
+    },
+    {
+      "certified_odd_divisor_support_lower_bound": "20",
+      "certified_odd_divisor_support_lower_bound_bits": 4,
+      "certified_rational_map_degree_lower_bound": "10",
+      "floating_point_sharp_support_lower_bound": "20",
+      "label": "holdout_corpus_13_p991_n1009",
+      "n": "1009",
+      "nonzero_parity_fourier_peak": "6.423488313903858e+02",
+      "peak_frequencies": [
+        504,
+        505
+      ],
+      "q": "991",
+      "regularized_ratio": "1.974586886058350e+01",
+      "regularized_ratio_log2": "4.303478945759",
+      "source": "holdout_corpus"
+    },
+    {
+      "certified_odd_divisor_support_lower_bound": "216543324404233567658511113820216134562",
+      "certified_odd_divisor_support_lower_bound_bits": 127,
+      "certified_rational_map_degree_lower_bound": "108271662202116783829255556910108067281",
+      "floating_point_sharp_support_lower_bound": "216630482969909649486417808747042701312",
+      "label": "secp256k1",
+      "n": "115792089237316195423570985008687907852837564279074904382605163141518161494337",
+      "nonzero_parity_fourier_peak": "7.371553349222691e+76",
+      "peak_frequencies": [
+        57896044618658097711785492504343953926418782139537452191302581570759080747168,
+        57896044618658097711785492504343953926418782139537452191302581570759080747169
+      ],
+      "q": "115792089237316195423570985008687907853269984665640564039457584007908834671663",
+      "regularized_ratio": "2.166304829699096e+38",
+      "regularized_ratio_log2": "127.348503870528",
+      "source": "SEC2 public domain parameters; cofactor one"
+    }
+  ],
+  "references": [
+    "P. Deligne, La conjecture de Weil II, Publ. Math. IHES 52 (1980), 137-252.",
+    "C. Cunningham and D. Roe, From the function-sheaf dictionary to quasicharacters of p-adic tori, J. Inst. Math. Jussieu 17 (2018), 1-37.",
+    "M. Perret, Multiplicative character sums and Kummer coverings, Acta Arith. 59 (1991), 279-290.",
+    "SGA 5, Cohomologie l-adique et fonctions L.",
+    "SEC 2, Recommended Elliptic Curve Domain Parameters, Version 2.0 (2010)."
+  ],
+  "review_status": "provisional theorem-level proof assembled from standard sheaf results and executable arithmetic checks; independent specialist review and formalization remain pending",
+  "schema_version": "1.0",
+  "scientific_boundary": [
+    "This is a divisor-support and rational-map-degree barrier, not an arithmetic-circuit lower bound.",
+    "The proof does not produce an evaluator or recover any unknown scalar.",
+    "No external point, wallet, real key or production-sized target is accepted."
+  ],
+  "scope": {
+    "closed": [
+      "single rational quadratic-character evaluators",
+      "finite products and quotients of rational character atoms after collapsing them to one rational function",
+      "divisor-aware local-leading-coefficient regularizations",
+      "all families with odd-divisor support o(n/sqrt(q))"
+    ],
+    "open": [
+      "short straight-line programs defining rational functions of square-root or larger divisor support",
+      "direct field-valued evaluators not reducible to one multiplicative character",
+      "theta, elliptic-unit, EDS or long Miller representations with succinct high degree",
+      "adaptive branching and non-character outputs"
+    ]
+  },
+  "theorem": {
+    "function_setting": "f in F_q(E)^*, s=#{geometric P: ord_P(f) odd}; evaluator equals the quadratic character off the divisor and may use arbitrary unit-modulus regularized values at rational odd support points",
+    "group_setting": "E/F_q with arbitrary finite E(F_q), H=<G> an odd cyclic subgroup of order n",
+    "hybrid_sum_bound": "for every extension theta of the faithful peak character, |sum_{P in E(F_q)} theta(P) Tr(K_f)_P| <= s*sqrt(q)",
+    "map_degree_consequence": "deg(f:E->P^1) >= ceil(s/2)",
+    "regularized_conclusion": "cot(pi/(2*n)) <= s*sqrt(q)+s+1",
+    "support_consequence": "s >= (cot(pi/(2*n))-1)/(sqrt(q)+1)",
+    "target": "lambda_f([k]G)=(-1)^k for 1<=k<n"
+  }
+}
