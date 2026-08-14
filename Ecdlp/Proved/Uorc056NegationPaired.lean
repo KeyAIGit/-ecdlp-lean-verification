@@ -56,18 +56,16 @@ theorem recover_second_from_sum_difference (z w : K) :
   field_simp
   ring
 
-variable (τ : K ≃+* K) (hτ : Function.Involutive τ)
+variable (τ : K ≃+* K) (tau_involutive : Function.Involutive τ)
 
 /-- A Hilbert-90 coboundary has norm one under an involution. -/
 theorem hilbert90_coboundary_norm_one (h : K) (hh : h ≠ 0) :
     (h / τ h) * τ (h / τ h) = 1 := by
   have hτh : τ h ≠ 0 := (map_ne_zero τ).2 hh
-  have hττ : τ (τ h) = h := hτ h
-  calc
-    (h / τ h) * τ (h / τ h) =
-        (h / τ h) * (τ h / τ (τ h)) := by simp only [map_div]
-    _ = (h / τ h) * (τ h / h) := by rw [hττ]
-    _ = 1 := by field_simp [hh, hτh]
+  have hMap : τ (h / τ h) = τ h / τ (τ h) :=
+    map_div₀ τ h (τ h)
+  rw [hMap, tau_involutive h]
+  field_simp [hh, hτh]
 
 /-- The tautological Hilbert-90 representative `1+r` is valid, but already
 requires the norm-one element `r`. -/
@@ -117,12 +115,13 @@ theorem fixed_and_antifixed_eq_zero {a : K}
     calc
       a = τ a := hFixed.symm
       _ = -a := hAnti
-  have h2a : (2 : K) * a = 0 := by
+  have hSum : a + a = 0 := by
     calc
-      (2 : K) * a = a + a := by ring
-      _ = a + (-a) := by rw [hEq]
-      _ = 0 := by ring
-  exact (mul_eq_zero.mp h2a).resolve_left (by norm_num)
+      a + a = a + (-a) := congrArg (fun x : K => a + x) hEq
+      _ = 0 := add_neg_cancel a
+  have hTwo : (2 : K) * a = 0 := by
+    simpa [two_mul] using hSum
+  exact (mul_eq_zero.mp hTwo).resolve_left (by norm_num)
 
 /-- Hence a nonzero anti-fixed target cannot equal a fixed expression. -/
 theorem fixed_ne_nonzero_antifixed {a b : K}
