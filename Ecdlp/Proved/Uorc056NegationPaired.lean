@@ -56,10 +56,11 @@ theorem recover_second_from_sum_difference (z w : K) :
   field_simp
   ring
 
-variable (τ : K ≃+* K) (tau_involutive : Function.Involutive τ)
+variable (τ : K ≃+* K)
 
 /-- A Hilbert-90 coboundary has norm one under an involution. -/
-theorem hilbert90_coboundary_norm_one (h : K) (hh : h ≠ 0) :
+theorem hilbert90_coboundary_norm_one
+    (tau_involutive : Function.Involutive τ) (h : K) (hh : h ≠ 0) :
     (h / τ h) * τ (h / τ h) = 1 := by
   have hτh : τ h ≠ 0 := (map_ne_zero τ).2 hh
   have hMap : τ (h / τ h) = τ h / τ (τ h) :=
