@@ -35,7 +35,7 @@ theorem segment_reflected_normQuotient
     (finish / start) / (reflectedStart / reflectedFinish)
       = (finish * reflectedFinish) / (start * reflectedStart) := by
   simp only [div_eq_mul_inv, mul_inv_rev, inv_inv]
-  ac_rfl
+  simpa [mul_comm, mul_left_comm, mul_assoc]
 
 /-- A full closed segment has unit multiplicative ratio. -/
 theorem closedSegment_ratio (value : α) [Group α] :
