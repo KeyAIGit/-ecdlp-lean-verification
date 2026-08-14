@@ -8,11 +8,19 @@ Status: **C22's divisor-support union theorem does not extend directly to additi
 
 Only the public seven-curve corpus, six public generator replacements, and public secp256k1 constants are used. No external point with unknown scalar, wallet, private key, or production target is accepted.
 
+The exact replay digest is:
+
+```text
+32211b2aa4de10648fa066571a4d389b72736e42682d69f246c1709d4191b251
+```
+
+The targeted GitHub Actions run `31846332776` completed successfully, including deterministic replay, exact coverage assertions, all three Lean files, and artifact upload.
+
 ## 1. Why C22 is not enough
 
 C22 works with a valuation-transparent multiplicative grammar. At divisor level, multiplication, division, powers, and pullbacks add, subtract, scale, or permute divisor vectors. Therefore the support of the output is contained in the union of the charged leaf supports.
 
-Addition behaves differently. For example, two nonzero functions can cancel at a new point:
+Addition behaves differently. Two nonzero functions can cancel at a new point:
 
 ```text
 f(P) != 0,
@@ -25,7 +33,7 @@ Thus an addition-enabled circuit may create zeros not present in the supports of
 The C23 replay includes an exact witness on every retained curve:
 
 ```text
-u=R(P)^2 != 0,
+u=R(y)^2 != 0,
 c=u != 0,
 u-c=0,
 ```
@@ -36,14 +44,14 @@ The relevant invariant for addition is therefore not divisor support. It is two-
 
 ## 2. Two branch worlds
 
-Fix one public query point. Consider two mathematical worlds:
+At any field value where the norm-one twist is finite and nonzero, consider two mathematical worlds:
 
 ```text
-W+ : branch value z=R(P),
-W- : branch value -z=-R(P).
+W+ : branch value z=R(y),
+W- : branch value -z=-R(y).
 ```
 
-The curve, generator, query point, subgroup order, compact norm, public coordinates, and every declared sign-blind atom are identical in the two worlds.
+The curve, generator, public field argument, subgroup order, compact norm, public coordinates, and every declared sign-blind atom are identical in the two worlds.
 
 A leaf family `a_i` is sign-blind when
 
@@ -66,7 +74,7 @@ branch-even derivatives or norm data,
 preprocessing state computed only from the same sign-blind data.
 ```
 
-A value of `z`, one sign of a square root, one half-divisor coefficient, one oriented root evaluation, or any advice correlated with the choice between `z` and `-z` is not sign-blind and is charged as the missing branch-sensitive input.
+A value of `z`, one sign of a square root, one half-divisor coefficient, one oriented-root evaluation, or any advice correlated with the choice between `z` and `-z` is not sign-blind. It is charged as the missing branch-sensitive input.
 
 The global branch flip in this package is distinct from the geometric involution
 
@@ -92,14 +100,14 @@ inversion,
 integer powers.
 ```
 
-If every atom agrees in `W+` and `W-`, then structural induction gives
+If every atom agrees in `W+` and `W-`, structural induction gives
 
 ```text
 boxed:
 Circuit(-z)=Circuit(z).                           (C23.1)
 ```
 
-This is an equality theorem, not a complexity estimate. It holds for arbitrary width, depth, fan-out, repeated squaring, nested fractions, and cancellation patterns, provided the same deterministic field operations are applied to equal leaves.
+This is an equality theorem, not a complexity estimate. It holds for arbitrary finite width, depth, fan-out, repeated squaring, nested fractions, and cancellation patterns, provided the same deterministic field operations are applied to equal leaves.
 
 Let the desired target take different values in the two worlds:
 
@@ -115,7 +123,7 @@ not [Circuit(z)=Target(z)
      and Circuit(-z)=Target(-z)].                 (C23.2)
 ```
 
-For direct branch recovery, `Target(w)=w`, and `(C23.2)` says that a sign-blind circuit cannot recover both `z` and `-z` when they are distinct.
+For direct branch recovery, `Target(w)=w`. Therefore a sign-blind circuit cannot recover both `z` and `-z` when they are distinct.
 
 ## 4. Determinant corollary
 
@@ -153,19 +161,14 @@ an external advice bit.
 
 The determinant can aggregate or transport that datum, but it does not generate it from sign-blind entries.
 
-This complements the earlier determinant packages:
+This complements the earlier packages:
 
 ```text
 FROBENIUS-STICKELBERGER-DETERMINANT-050
-```
-
-showed that standard common-basis elliptic determinants factor into multiplicative net ratios, while
-
-```text
 INDEPENDENT-THETA-ROW-NORMALIZATION-051
 ```
 
-showed that scalar row trivializations contribute only the product of their row factors. C23 is a different statement: it applies abstractly to any determinant whose complete coefficient generator is branch-blind, without assuming a common basis or a particular factorization.
+The first shows that standard common-basis elliptic determinants factor into multiplicative net ratios. The second shows that scalar row trivializations contribute only the product of their row factors. C23 is independent of those factorizations and applies to every determinant whose complete entry generator is branch-blind.
 
 ## 5. Sylvester resultant corollary
 
@@ -208,7 +211,7 @@ sign-blind coefficients -> identical resultants,
 coefficient z inserted explicitly -> resultant transports z.
 ```
 
-For example,
+For example:
 
 ```text
 Res_T(T-z,T)=z.
@@ -216,16 +219,47 @@ Res_T(T-z,T)=z.
 
 This is not a construction of `z`; it places the desired branch directly into a coefficient.
 
-## 6. Exact replay
+## 6. Exact replay domain and coverage
 
-The deterministic replay reconstructs the C22 Hilbert-90 twist on:
+The norm-one twist has zeros and poles at marked subgroup values. Ordinary field evaluation is therefore not defined or is zero at many of the marked values. The finite C23 replay does not pretend otherwise.
+
+It reconstructs the C22 Hilbert-90 twist on:
 
 ```text
 7 public frozen curves,
-6 public generator replacements.
+6 public generator replacements,
 ```
 
-For every valid public subgroup query value it checks:
+and evaluates the complete public `y`-line away from the zero and pole set of `R`. This gives 667 valid pairs of finite nonzero values
+
+```text
+R(y), R(-y)
+```
+
+satisfying
+
+```text
+R(y)R(-y)=1.
+```
+
+The exact per-instance counts are:
+
+```text
+base curves:             33, 41, 41, 57, 71, 85, 117
+generator replacements: 33, 33, 33, 41, 41, 41
+aggregate:               667
+```
+
+Across those values the replay performs:
+
+```text
+7327 rational-circuit equality checks,
+2001 determinant equality checks,
+667 Sylvester-resultant equality checks,
+9995 exact two-branch decoder rejections.
+```
+
+For every valid `y` value it checks:
 
 1. `R(y)R(-y)=1`;
 2. the two global branches `z` and `-z` are distinct;
@@ -236,7 +270,7 @@ For every valid public subgroup query value it checks:
 7. addition creates a new zero from two nonzero sign-blind leaves;
 8. a matrix or resultant supplied directly with the non-fixed leaf `z` transports the branch, demonstrating the exact boundary rather than claiming determinants are intrinsically branch-even.
 
-The replay is a finite sanity check. The rational-circuit and determinant conclusions are proved abstractly in Lean and do not depend on the finite screen.
+The finite replay is a sanity check over concrete function values. The rational-circuit and determinant conclusions are proved abstractly in Lean and do not depend on the finite screen or on subgroup enumeration.
 
 ## 7. Lean formalization
 
@@ -261,6 +295,16 @@ determinant inability to match two separated target branches.
 
 A Sylvester resultant is covered as a determinant whenever its coefficient circuits are sign-blind. The file does not formalize polynomial Sylvester construction itself because the determinant theorem already isolates the required hypothesis at matrix-entry level.
 
+The targeted CI checks:
+
+```text
+Ecdlp/Proved/Uorc056NegationPaired.lean
+Ecdlp/Proved/Uorc056Hilbert90Divisor.lean
+Ecdlp/Proved/Uorc056SignBlindCircuit.lean
+```
+
+All three passed on Lean 4.31.0 with the pinned Mathlib revision.
+
 ## 8. Cost-gate consequence
 
 The theorem is stronger than a linear representation lower bound inside its declared scope. No amount of additional sign-blind computation changes the branch information content:
@@ -274,7 +318,7 @@ C_online arbitrary,
 
 still yields identical outputs in the two branch worlds if all stored and queried data are sign-blind.
 
-Therefore a positive candidate must exhibit at least one branch-sensitive resource. That resource must then be charged in the complete ledger:
+Therefore a positive candidate must exhibit at least one branch-sensitive resource. That resource must be charged in the complete ledger:
 
 ```text
 how it is constructed,
@@ -287,7 +331,7 @@ its behavior under R -> -R,
 its behavior under G -> -G and G -> [u]G.
 ```
 
-Calling the resource a determinant coefficient, pivot, oracle, analytic continuation value, or normalization constant does not make it free.
+Calling the resource a determinant coefficient, pivot, oracle, analytic-continuation value, or normalization constant does not make it free.
 
 ## 9. What C23 closes
 
@@ -317,7 +361,7 @@ Not closed:
 6. a public nonlocal jump law propagating the canonical infinity normalization to the query;
 7. unrestricted circuits whose leaves include a new branch-odd anchor.
 
-Thus the remaining question is no longer whether addition or a determinant can somehow create orientation from nothing. It is:
+Thus the remaining question is no longer whether addition or a determinant can create orientation from nothing. It is:
 
 ```text
 Which public primitive, if any, is genuinely different in the R and -R worlds,

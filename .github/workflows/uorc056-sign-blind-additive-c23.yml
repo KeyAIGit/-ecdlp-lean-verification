@@ -35,7 +35,7 @@ jobs:
             --out /tmp/uorc056_sign_blind_additive_boundary_result.json \
             | tee /tmp/uorc056-sign-blind-additive-c23.log
 
-      - name: Check C23 theorem flags and replay coverage
+      - name: Check exact C23 replay identity and coverage
         run: |
           python3 - <<'PY'
           import json
@@ -44,15 +44,16 @@ jobs:
           result = json.loads(
               Path('/tmp/uorc056_sign_blind_additive_boundary_result.json').read_text()
           )
-          assert len(result['digest']) == 64
+          assert result['digest'] == \
+              '32211b2aa4de10648fa066571a4d389b72736e42682d69f246c1709d4191b251'
           aggregate = result['aggregate']
           assert aggregate['curves'] == 7
           assert aggregate['generator_replacements'] == 6
-          assert aggregate['valid_public_y_branch_pairs'] > 0
-          assert aggregate['rational_circuit_checks'] > 0
-          assert aggregate['determinant_checks'] > 0
-          assert aggregate['resultant_checks'] > 0
-          assert aggregate['exact_two_branch_decoder_rejections'] > 0
+          assert aggregate['valid_public_y_branch_pairs'] == 667
+          assert aggregate['rational_circuit_checks'] == 7327
+          assert aggregate['determinant_checks'] == 2001
+          assert aggregate['resultant_checks'] == 667
+          assert aggregate['exact_two_branch_decoder_rejections'] == 9995
           assert aggregate['addition_created_new_zeros']
           assert not aggregate['c22_support_union_extended_to_addition']
           assert aggregate['all_sign_blind_rational_outputs_equal']
@@ -73,8 +74,9 @@ jobs:
 
           rows = result['cases'] + result['generator_replacements']
           assert len(rows) == 13
+          expected_valid = [33, 41, 41, 57, 71, 85, 117, 33, 33, 33, 41, 41, 41]
+          assert [row['valid_public_y_branch_pairs'] for row in rows] == expected_valid
           for row in rows:
-              assert row['valid_public_y_branch_pairs'] > 0
               assert row['rational_circuit_checks'] > 0
               assert row['determinant_checks'] == 3 * row['valid_public_y_branch_pairs']
               assert row['resultant_checks'] == row['valid_public_y_branch_pairs']
@@ -88,6 +90,8 @@ jobs:
               assert row['all_exact_two_branch_decoders_rejected']
 
           secp = result['secp256k1']
+          assert secp['n'] == \
+              '115792089237316195423570985008687907852837564279074904382605163141518161494337'
           assert secp['n_is_odd']
           assert secp['sign_blind_preprocessing_cannot_select_branch']
           assert secp['sign_blind_determinant_or_resultant_cannot_select_branch']
