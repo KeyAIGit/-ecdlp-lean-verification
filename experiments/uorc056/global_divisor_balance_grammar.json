@@ -20,7 +20,7 @@
     "regular_value": "ratio of products of exact first nonzero local coefficients",
     "uniform_output_negation": true
   },
-  "profile_id": "UORC-056-GLOBAL-DIVISOR-BALANCE-V4",
+  "profile_id": "UORC-056-GLOBAL-DIVISOR-BALANCE-V5",
   "pulled_line_templates": {
     "formula": "L([u]Q), L=a*x+b*y+c",
     "linear_coefficients": [
