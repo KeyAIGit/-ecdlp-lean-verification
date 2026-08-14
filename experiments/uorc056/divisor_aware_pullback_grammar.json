@@ -1,0 +1,41 @@
+{
+  "base_ratio_grammar": "experiments/uorc056/divisor_aware_rational_grammar.json",
+  "cost_model": [
+    "all group additions and doublings used to compute [u]Q are charged",
+    "the base line-ratio coefficient construction and local regularization costs remain charged",
+    "every quadratic character and sign multiplication is charged",
+    "enumerative search is discovery work rather than evaluator advice"
+  ],
+  "forbidden": [
+    "different multipliers in numerator and denominator within one V2 atom",
+    "per-curve multiplier selection",
+    "per-curve coefficients or output phases",
+    "target-indexed exceptional-point patches",
+    "omitting any nonzero subgroup point"
+  ],
+  "profile_id": "UORC-056-DIVISOR-AWARE-PULLBACK-RATIO-V2",
+  "pullback_atoms": {
+    "etale_condition": "p does not divide u on every frozen curve",
+    "evaluation": "blockwise permutation of the exact V1 regularized sign vector by k -> u*k mod n",
+    "formula": "R_u(Q)=R([u]Q) with one common multiplier in numerator and denominator",
+    "multipliers": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "regularization_rule": "If ord_S(L_num)=ord_S(L_den)=m at S=[u]P, then both pullback leading coefficients acquire the same nonzero local multiplier alpha_P^m and it cancels in their ratio."
+  },
+  "schema_version": "1.0",
+  "sign_circuit": {
+    "composition": "product of pullback rational-character atoms",
+    "maximum_weight": 4,
+    "uniform_output_negation": true
+  },
+  "status": "bounded_exact_screen",
+  "transfer_gate": {
+    "claim_boundary": "Failure closes only common-multiplier pullbacks of V1 line ratios through product weight four.",
+    "discovery": "one symbolic pullback AST must be exact on all five base discovery curves",
+    "holdout": "the same AST must be exact on all thirteen base holdout curves"
+  }
+}
