@@ -60,7 +60,7 @@ theorem kummer_sector_square
     (Y1 * Y2) ^ 2 = F ^ 2 := by
   calc
     (Y1 * Y2) ^ 2 = (Y1 ^ 2) * (Y2 ^ 2) := by ring
-    _ = F ^ 2 := by rw [h1, h2]
+    _ = F ^ 2 := by rw [h1, h2]; ring
 
 /-- The three cyclic Kummer-sector numerators multiply to `F^3`. -/
 theorem kummer_sector_orbit_product
@@ -84,7 +84,7 @@ theorem sectorNumerator_zero :
 
 theorem sectorNumerator_neg_two :
     sectorNumerator (-2 : R) = 6 := by
-  ring
+  norm_num [sectorNumerator]
 
 /-- A nontrivial cube root and its square satisfy the same cyclotomic
 quadratic relation. -/
