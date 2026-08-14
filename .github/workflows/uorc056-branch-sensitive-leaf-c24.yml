@@ -1,0 +1,131 @@
+name: UORC056 branch-sensitive leaf C24
+
+on:
+  push:
+    branches:
+      - research/uorc056-branch-sensitive-leaf-c24
+    paths:
+      - 'experiments/parity_lift_000/uorc056_branch_sensitive_leaf_audit.py'
+      - 'Ecdlp/Proved/Uorc056BranchSensitiveLeaf.lean'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_BRANCH_SENSITIVE_LEAF_CLASSIFICATION_C24.md'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_SPARSE_CIRCULANT_C25_PROMPT.md'
+      - '.github/workflows/uorc056-branch-sensitive-leaf-c24.yml'
+      - 'archive/untrusted_intake/parity_lift_000/FROBENIUS_STICKELBERGER_DETERMINANT_050.md'
+      - 'archive/untrusted_intake/parity_lift_000/INDEPENDENT_THETA_ROW_NORMALIZATION_051.md'
+      - 'archive/untrusted_intake/parity_lift_000/TWISTED_THETA_CHARACTERISTIC_052.md'
+      - 'archive/untrusted_intake/parity_lift_000/METAPLECTIC_THETA_INTERTWINER_053.md'
+      - 'archive/untrusted_intake/parity_lift_000/P_ADIC_GLOBAL_BRANCH_054.md'
+      - 'archive/untrusted_intake/parity_lift_000/ANTI_FROBENIUS_ORIENTATION_SEED_031.md'
+      - 'archive/untrusted_intake/parity_lift_000/ABSOLUTE_EDS_SECTION_003.md'
+      - 'archive/untrusted_intake/parity_lift_000/NONLOCAL_ODD_ANCHOR_004.md'
+      - 'archive/untrusted_intake/parity_lift_000/GLV_CARRY_SEPARATION_005.md'
+      - 'archive/untrusted_intake/parity_lift_000/FIELD_PERMUTATION_CARRY_IDENTITY_017.md'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_SPARSE_TWO_TRANSLATION_RESULTANT_C5.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile and replay C24 classification
+        run: |
+          set -o pipefail
+          python3 -m py_compile \
+            experiments/parity_lift_000/uorc056_branch_sensitive_leaf_audit.py
+          python3 experiments/parity_lift_000/uorc056_branch_sensitive_leaf_audit.py \
+            --out /tmp/uorc056_branch_sensitive_leaf_audit_result.json \
+            | tee /tmp/uorc056-branch-sensitive-leaf-c24.log
+
+      - name: Check C24 classification schema and theorem flags
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = json.loads(
+              Path('/tmp/uorc056_branch_sensitive_leaf_audit_result.json').read_text()
+          )
+          assert len(result['digest']) == 64
+          assert result['classification_counts'] == {
+              'branch_sensitive_large_or_seeded': 4,
+              'canonical_sign_blind': 2,
+              'open_cost_unresolved': 1,
+              'public_fast_target_dependent': 2,
+              'transport_only': 2,
+          }
+          aggregate = result['aggregate']
+          assert aggregate['candidate_families'] == 11
+          assert aggregate['all_source_markers_verified']
+          assert aggregate['all_four_transformation_fields_present']
+          assert aggregate['normalization_torsor_collision_boundary_proved']
+          assert aggregate['nonfixed_complete_state_required_for_separated_output']
+          assert not aggregate['branch_sensitive_public_leaf_found']
+          assert not aggregate['branch_sensitive_leaf_constructible_without_advice']
+          assert not aggregate['twisted_theta_survives_C23']
+          assert aggregate['higher_level_theta_nonfixed_linearization_open']
+          assert not aggregate['p_adic_branch_path_publicly_canonical']
+          assert aggregate['anti_frobenius_generator_sensitive_observable_known']
+          assert not aggregate['anti_frobenius_sub_sqrt_evaluator_found']
+          assert aggregate['hidden_GLV_R3_section_known']
+          assert not aggregate['public_GLV_R3_or_carry_decoder_found']
+          assert not aggregate['new_GLV_carry_multiplier_found']
+          assert not aggregate['nonfixed_resultant_coefficient_found']
+          assert not aggregate['compressed_nonfixed_determinant_found']
+          assert aggregate['sparse_resultant_family_structurally_open']
+          assert not aggregate['complete_cost_gate_passed']
+          assert not aggregate['compact_branch_odd_evaluator_found']
+          assert not aggregate['sub_sqrt_evaluator_found']
+          assert not aggregate['parity_oracle_found']
+          assert not aggregate['sub_sqrt_ecdlp_found']
+
+          candidates = result['candidates']
+          assert len(candidates) == 11
+          assert len({row['id'] for row in candidates}) == 11
+          assert all(row['source_markers_verified'] for row in candidates)
+          assert all(len(row['source_sha256']) == 64 for row in candidates)
+          assert not any(row['complete_cost_gate_passed'] for row in candidates)
+
+          collision = result['collision_certificate']
+          assert collision['candidate_decoders_checked'] == 28
+          assert collision['all_invariant_global_selectors_rejected']
+          assert all(
+              row['successful_global_selectors'] == 0
+              for row in collision['orbit_fixtures']
+          )
+
+          finite = result['finite_field_two_world_certificate']
+          assert finite['public_data_collisions'] == 630
+          assert finite['required_state_separations'] == 630
+          assert finite['all_two_world_collision_checks_passed']
+          assert len(result['best_survivors']) == 4
+          PY
+
+      - name: Install elan
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Check C23-C24 Lean certificates
+        run: |
+          lake env lean Ecdlp/Proved/Uorc056SignBlindCircuit.lean
+          lake build Ecdlp.Proved.Uorc056SignBlindCircuit
+          lake env lean Ecdlp/Proved/Uorc056BranchSensitiveLeaf.lean
+
+      - name: Upload C24 audit output
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-branch-sensitive-leaf-c24
+          path: |
+            /tmp/uorc056_branch_sensitive_leaf_audit_result.json
+            /tmp/uorc056-branch-sensitive-leaf-c24.log
+          retention-days: 90
