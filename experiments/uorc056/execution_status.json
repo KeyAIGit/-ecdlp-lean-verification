@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.3",
+  "schema_version": "1.4",
   "package": "UORC-056-EXECUTION-001",
-  "status": "tasks_01_through_22_implemented_with_one_exact_sheaf_obligation",
+  "status": "tasks_01_through_23_implemented_with_provisional_regularized_divisor_barrier",
   "tasks": [
     {
       "task": 1,
@@ -85,7 +85,7 @@
       "task": 14,
       "name": "structural_small_multiple_and_glv_transfer_screen",
       "status": "complete_negative_through_product_weight_four",
-      "evidence": "experiments/uorc056/structural_transfer_grammar.json and scripts/uorc056_structural_transfer.py"
+      "evidence": "experiments/uorc056/structural_transfer_results.json"
     },
     {
       "task": 15,
@@ -97,7 +97,7 @@
       "task": 16,
       "name": "exact_divisor_aware_line_ratio_regularization",
       "status": "complete_negative_through_character_product_weight_four",
-      "evidence": "experiments/uorc056/divisor_aware_rational_results.json and scripts/uorc056_divisor_aware_rational.py"
+      "evidence": "experiments/uorc056/divisor_aware_rational_results.json"
     },
     {
       "task": 17,
@@ -109,11 +109,11 @@
       "task": 18,
       "name": "balanced_products_of_two_lines_with_cross_factor_cancellation",
       "status": "complete_negative_for_reducible_conic_ratios_through_character_product_weight_four",
-      "evidence": "experiments/uorc056/divisor_aware_balanced_product_results.json and scripts/uorc056_divisor_aware_balanced_product.py"
+      "evidence": "experiments/uorc056/divisor_aware_balanced_product_results.json"
     },
     {
       "task": 19,
-      "name": "gate_all_divisor_aware_profiles_in_reproducible_ci",
+      "name": "gate_divisor_aware_profiles_in_reproducible_ci",
       "status": "complete_configuration_committed",
       "evidence": ".github/workflows/uorc056-execution-001.yml"
     },
@@ -121,28 +121,44 @@
       "task": 20,
       "name": "global_cross_factor_cancellation_for_pulled_line_divisors",
       "status": "complete_negative_for_two_numerator_and_two_denominator_pulled_lines",
-      "evidence": "experiments/uorc056/global_divisor_balance_results.json and scripts/uorc056_global_divisor_balance.py"
+      "evidence": "experiments/uorc056/global_divisor_balance_results.json"
     },
     {
       "task": 21,
       "name": "small_public_miller_divisor_balance",
       "status": "complete_negative_for_four_signed_small_miller_primitives",
-      "evidence": "experiments/uorc056/small_miller_balance_results.json and scripts/uorc056_small_miller_balance.py"
+      "evidence": "experiments/uorc056/small_miller_balance_results.json"
     },
     {
       "task": 22,
-      "name": "parity_fourier_peak_and_conditional_divisor_support_reduction",
-      "status": "elementary_spectral_reduction_complete_FDB1_kummer_lang_bound_open",
-      "evidence": "experiments/uorc056/fourier_divisor_barrier_contract.json, experiments/uorc056/fourier_divisor_barrier_results.json, scripts/uorc056_fourier_divisor_barrier.py and notes/reviews/UORC056_FOURIER_DIVISOR_BARRIER_V7.md"
+      "name": "exact_parity_fourier_peak_and_conditional_FDB1_reduction",
+      "status": "complete_historical_checkpoint_superseded_by_task_23",
+      "evidence": "experiments/uorc056/fourier_divisor_barrier_results.json and notes/reviews/UORC056_FOURIER_DIVISOR_BARRIER_V7.md"
+    },
+    {
+      "task": 23,
+      "name": "regularized_subgroup_Fourier_to_divisor_barrier",
+      "status": "provisional_theorem_complete_with_C_equal_1_subgroup_reduction_regularization_and_exact_integer_replay",
+      "evidence": "experiments/uorc056/regularized_fourier_divisor_barrier_results.json, scripts/uorc056_regularized_fourier_divisor_barrier.py and notes/reviews/UORC056_REGULARIZED_FOURIER_DIVISOR_BARRIER_V8.md"
     }
   ],
+  "resolved_problems": [
+    "the near-half parity Fourier coefficient has exact magnitude cot(pi/(2n))",
+    "the marked subgroup need not equal the full rational-point group",
+    "the peak subgroup character extends to the full finite abelian group and the subgroup indicator is an annihilator average",
+    "odd-order Lang monodromy cannot cancel a quadratic Kummer local system",
+    "the genus-one tame conductor constant is one under the declared conventions",
+    "divisor-aware regularization costs at most s rational support terms plus one identity term",
+    "finite products and quotients of quadratic-character atoms collapse to one rational function with aggregate local regularization"
+  ],
   "next_frontier": {
-    "primary": "Source-lock, prove or refute FDB-1: the elliptic Kummer-Lang hybrid trace bound with an exact conductor constant and divisor-aware regularization.",
-    "secondary": [
-      "kernel-check the elementary geometric-series Fourier identity independently of FDB-1",
-      "prove geometric nontriviality of the odd-order Lang character tensored with the quadratic Kummer factor",
-      "after FDB-1, redirect constructive search toward high-degree low-size circuits rather than more bounded divisor dictionaries"
+    "primary": "Connect square-root odd-divisor support to all-in representation and evaluation cost for succinct high-degree straight-line programs.",
+    "focused_subproblems": [
+      "derive degree and odd-support growth bounds for multiplication pullbacks and division-polynomial recurrences as a function of charged circuit size",
+      "determine whether a Miller or EDS addition chain can create Omega(sqrt(n)) odd support with o(sqrt(n)) representation and online cost",
+      "separate direct field-valued Y_G evaluation from mechanisms that collapse to one quadratic character",
+      "formalize the V8 sheaf proof and seek independent specialist review"
     ]
   },
-  "scientific_boundary": "The package gives exact finite ground truth, bounded grammar closures and a complete elementary reduction from a hybrid trace estimate to an odd-divisor-support lower bound. FDB-1 is still an explicit proof obligation. No general arithmetic-circuit lower bound or sub-square-root evaluator is claimed."
+  "scientific_boundary": "V8 is a provisional divisor-support and rational-map-degree theorem, not a general arithmetic-circuit lower bound. The package does not construct a parity evaluator, recover an unknown scalar or claim a sub-square-root ECDLP algorithm."
 }
