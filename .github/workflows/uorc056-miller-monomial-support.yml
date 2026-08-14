@@ -1,0 +1,97 @@
+name: UORC056 Miller monomial support boundary
+
+on:
+  push:
+    branches:
+      - research/uorc056-kummer-factor
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_MILLER_MONOMIAL_SUPPORT_B11.md'
+      - 'experiments/parity_lift_000/uorc056_miller_monomial_support.py'
+      - 'Ecdlp/Proved/MillerMonomialSupportBoundary.lean'
+      - '.github/workflows/uorc056-miller-monomial-support.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact divisor-support replay
+        run: |
+          python3 experiments/parity_lift_000/uorc056_miller_monomial_support.py \
+            --out /tmp/uorc056_miller_monomial_support_results.json \
+            > /tmp/uorc056-miller-monomial-support.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('/tmp/uorc056_miller_monomial_support_results.json').read_text())
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert aggregate['cases'] == 10
+          assert aggregate['oriented_divisor_support'] == 1102
+          assert aggregate['constant_shift_checks'] == 1142
+          assert aggregate['minimum_corrected_support'] == 556
+          assert aggregate['all_coefficients_nonzero']
+          assert secp['bit_length'] == 256
+          assert secp['oriented_divisor_support'] == secp['n']
+          assert secp['minimum_full_orbit_corrected_support'] == secp['middle'] + 1
+          assert secp['corrected_miller_line_atom_lower_bound'] == 14474011154664524427946373126085988481604695534884363047825645392689770186793
+          assert secp['corrected_atom_lower_bound_bit_length'] == 253
+          assert not secp['short_ordinary_miller_monomial_exists_in_declared_class']
+          assert secp['remaining_candidate'] == 'cyclic elliptic shifted factorial / nonlinear endpoint identity'
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/MillerMonomialSupportBoundary.lean; then
+            echo '::error::Miller support theorem contains sorry'
+            exit 1
+          fi
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            for attempt in 1 2 3 4; do
+              if sh /tmp/elan-init.sh -y --default-toolchain none; then
+                installed=1
+                echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+                break
+              fi
+              sleep $((attempt * 3))
+            done
+          fi
+          if [ "$installed" = 0 ]; then
+            echo 'elan unavailable; downloading the pinned Lean distribution directly'
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check support arithmetic
+        run: lake build Ecdlp.Proved.MillerMonomialSupportBoundary
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-miller-monomial-support-results
+          path: |
+            /tmp/uorc056_miller_monomial_support_results.json
+            /tmp/uorc056-miller-monomial-support.log
+          retention-days: 90
