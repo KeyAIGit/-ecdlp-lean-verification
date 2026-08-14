@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "package": "UORC-056-EXECUTION-001",
-  "status": "tasks_01_through_15_implemented_with_bounded_negatives",
+  "status": "tasks_01_through_19_implemented_with_bounded_negatives",
   "tasks": [
     {
       "task": 1,
@@ -92,8 +92,39 @@
       "name": "extended_eighteen_curve_holdout_gate",
       "status": "complete_negative_on_7434_nonzero_orbit_points",
       "evidence": "experiments/uorc056/structural_transfer_results.json"
+    },
+    {
+      "task": 16,
+      "name": "exact_divisor_aware_line_ratio_regularization",
+      "status": "complete_negative_through_character_product_weight_four",
+      "evidence": "experiments/uorc056/divisor_aware_rational_results.json and scripts/uorc056_divisor_aware_rational.py"
+    },
+    {
+      "task": 17,
+      "name": "common_and_mixed_small_multiplier_divisor_pullbacks",
+      "status": "complete_negative_through_character_product_weight_four",
+      "evidence": "experiments/uorc056/divisor_aware_pullback_results.json and experiments/uorc056/divisor_aware_mixed_pullback_results.json"
+    },
+    {
+      "task": 18,
+      "name": "balanced_products_of_two_lines_with_cross_factor_cancellation",
+      "status": "complete_negative_for_reducible_conic_ratios_through_character_product_weight_four",
+      "evidence": "experiments/uorc056/divisor_aware_balanced_product_results.json and scripts/uorc056_divisor_aware_balanced_product.py"
+    },
+    {
+      "task": 19,
+      "name": "gate_all_divisor_aware_profiles_in_reproducible_ci",
+      "status": "complete_configuration_committed",
+      "evidence": ".github/workflows/uorc056-execution-001.yml"
     }
   ],
-  "next_frontier": "A divisor-aware rational circuit grammar that permits symbolic cancellation of numerator and denominator zeros before applying the character, while charging regularization and exceptional-set handling.",
+  "next_frontier": {
+    "primary": "Prove or refute a character-sum divisor-degree barrier for exact parity on the marked cyclic subgroup, using the large Fourier coefficient of the alternating sequence and a twisted multiplicative-character sum bound.",
+    "secondary": [
+      "exact irreducible-conic and general low-divisor-degree rational grammar",
+      "pulled products of lines with independent small multipliers",
+      "uniform EDS or Miller-style factor constructions with all representation costs charged"
+    ]
+  },
   "scientific_boundary": "The package gives exact finite ground truth and bounded grammar closures. It is not a sub-square-root evaluator and does not recover any unknown production scalar."
 }
