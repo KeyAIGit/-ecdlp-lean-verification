@@ -1,9 +1,9 @@
 {
   "entries": [
     {
-      "disposition": "exact_linear_degree_lower_bound",
+      "disposition": "exact_minimum_degree_in_direct_rational_model",
       "id": "DIRECT-FIELD-VALUED-RATIONAL-KUMMER-SECTOR-SECP256K1",
-      "reason": "The floor-sum certificate gives exact sign-fiber sizes (n-1+208)/4 and (n-1-208)/4. A-B and A+B must vanish on the two distinct fibers, so max(deg A,deg B) is at least (n-1+208)/4, a 254-bit degree.",
+      "reason": "The floor-sum certificate gives exact sign-fiber sizes (n-1+208)/4 and (n-1-208)/4, forcing the same lower bound through A-B and A+B. The witness (K_- - K_+)/(K_- + K_+) attains max(deg K_+,deg K_-), so the 254-bit minimum degree is exact.",
       "reopen_condition": "Use a high-degree low-size circuit, modular composition, transposed evaluation, a character output chi(f), or another representation outside direct field-valued rational output.",
       "scope": "An ordinary rational function A(X)/B(X), regular on every secp256k1 half-kernel root, that directly returns the field value J_G(X) in {+1,-1}.",
       "source": "V16"

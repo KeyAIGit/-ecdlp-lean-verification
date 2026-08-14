@@ -66,6 +66,24 @@ theorem involution_of_idempotent
     (2 * e - 1) ^ 2 = 4 * e ^ 2 - 4 * e + 1 := by ring
     _ = 1 := by rw [he]; ring
 
+/-- At a positive-sector root `Kplus = 0`, the factor witness numerator
+`Kminus - Kplus` equals its denominator `Kminus + Kplus`. -/
+theorem rationalWitnessAtPlus
+    (Kplus Kminus : R)
+    (hplus : Kplus = 0) :
+    Kminus - Kplus = Kminus + Kplus := by
+  rw [hplus]
+  ring
+
+/-- At a negative-sector root `Kminus = 0`, the same numerator is the
+negative of its denominator. -/
+theorem rationalWitnessAtMinus
+    (Kplus Kminus : R)
+    (hminus : Kminus = 0) :
+    Kminus - Kplus = -(Kminus + Kplus) := by
+  rw [hminus]
+  ring
+
 /-- Elementary arithmetic core of the direct field-valued rational degree
 barrier: both sign-fiber root counts bound the common degree. -/
 theorem directSignDegreeLowerBound

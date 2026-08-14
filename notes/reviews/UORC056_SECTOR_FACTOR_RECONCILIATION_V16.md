@@ -323,7 +323,7 @@ N_{\mathrm{minority}\,i}
 
 Thus the uniform branch exceeds each minority branch by exactly 104.
 
-## Direct rational degree barrier
+## Exact optimal direct rational degree
 
 Suppose an ordinary rational function
 
@@ -354,18 +354,44 @@ D\ge N_+,\qquad D\ge N_-.
 Consequently
 
 \[
-\boxed{
 D
 \ge
+28948022309329048855892746252171976963209391069768726095651290785379540373636.
+\]
+
+The lower bound is attained exactly. Define
+
+\[
+A(X)=K_{G,-}(X)-K_{G,+}(X),
+\qquad
+B(X)=K_{G,-}(X)+K_{G,+}(X).
+\]
+
+At a positive-sector root, \(K_{G,+}=0\), so \(A/B=+1\).
+At a negative-sector root, \(K_{G,-}=0\), so \(A/B=-1\).
+For secp256k1, \(N_+>N_-\), hence
+
+\[
+\deg A=\deg B=N_+.
+\]
+
+Therefore the minimum possible degree in this direct rational model is exactly
+
+\[
+\boxed{
+D_{\min}
+=
 28948022309329048855892746252171976963209391069768726095651290785379540373636.
 }
 \]
 
-This is a 254-bit degree lower bound, essentially \(2^{254}\).
+This is an exact 254-bit optimum, essentially \(2^{254}\), not only a lower
+bound. The explicit witness is dense because it uses the two full sector
+factors.
 
 The statement is deliberately narrow. It is:
 
-- a degree and explicit-representation lower bound;
+- an exact minimum degree and explicit-representation statement;
 - for an ordinary rational function returning the field values \(+1/-1\);
 - under regularity on all half-kernel roots.
 
@@ -394,6 +420,7 @@ For every one of the 438 marked roots it verifies:
 - equality of the oriented-root and scalar-interpolated sector polynomial;
 - \(J_G^2=1\bmod K_H\);
 - binary factorization \(K_H=K_{G,+}K_{G,-}\);
+- optimal rational reconstruction \((K_{G,-}-K_{G,+})/(K_{G,-}+K_{G,+})\);
 - CRT reconstruction \(J_G=2e_+-1\);
 - four-branch root counts;
 - \(J_{-G}=J_G\);

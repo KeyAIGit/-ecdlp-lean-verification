@@ -4,7 +4,7 @@ import json
 import math
 from pathlib import Path
 from typing import Any, Sequence
-from uorc056_toy_factory import DEFAULT_INSTANCES, build_fixture, interpolate_from_basis, lagrange_basis, poly_add, poly_divmod, poly_mod, poly_mul, poly_scale, poly_sub
+from uorc056_toy_factory import DEFAULT_INSTANCES, build_fixture, interpolate_from_basis, lagrange_basis, poly_add, poly_divmod, poly_eval, poly_mod, poly_mul, poly_scale, poly_sub
 PROFILE_ID = 'UORC-056-SECTOR-FACTOR-RECONCILIATION-V16'
 DEFAULT_OUTPUT = Path('experiments/uorc056/sector_factor_reconciliation_results.json')
 SECP256K1_N = int('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141', 16)
@@ -185,6 +185,19 @@ def curve_record(instance) -> dict[str, Any]:
             raise AssertionError('plus-factor degree does not equal its root count')
         if len(minus_factor) - 1 != minus_count:
             raise AssertionError('minus-factor degree does not equal its root count')
+        rational_numerator = poly_sub(minus_factor, plus_factor, p)
+        rational_denominator = poly_add(minus_factor, plus_factor, p)
+        rational_degree = max(len(rational_numerator) - 1, len(rational_denominator) - 1)
+        if rational_degree != max(plus_count, minus_count):
+            raise AssertionError('optimal rational witness has the wrong degree')
+        for point, expected in zip(half_points, sector_values):
+            x = int(point[0])
+            denominator = poly_eval(rational_denominator, x, p)
+            if denominator == 0:
+                raise AssertionError('optimal rational witness has a pole')
+            value = poly_eval(rational_numerator, x, p) * pow(denominator, -1, p) % p
+            if value != expected:
+                raise AssertionError('optimal rational witness changed the sector sign')
         if branch_reference is None:
             branch_reference = branch_counts
         elif branch_counts != branch_reference:
@@ -223,7 +236,7 @@ def curve_record(instance) -> dict[str, Any]:
     minority_degree = branch_reference['minority_0']
     if not minority_degree == branch_reference['minority_1'] == branch_reference['minority_2']:
         raise AssertionError('the three minority factor degrees must agree')
-    return {'id': instance.instance_id, 'p': p, 'n': n, 'lambda': lam, 'kernel_degree': (n - 1) // 2, 'sector_plus_factor_degree': plus_count, 'sector_minus_factor_degree': minus_count, 'direct_rational_degree_lower_bound': max(plus_count, minus_count), 'canonical_sector_polynomial_degree': representative_degree, 'branch_factor_degrees': branch_reference, 'parity_correlation': correlation, 'floor_sum_A1': certificate['A1'], 'floor_sum_A2': certificate['A2'], 'marked_roots': n - 1, 'kummer_evaluations': (n - 1) * (n - 1) // 2, 'scalar_reconciliation_checks': scalar_reconciliation_checks}
+    return {'id': instance.instance_id, 'p': p, 'n': n, 'lambda': lam, 'kernel_degree': (n - 1) // 2, 'sector_plus_factor_degree': plus_count, 'sector_minus_factor_degree': minus_count, 'direct_rational_degree_lower_bound': max(plus_count, minus_count), 'optimal_direct_rational_degree': max(plus_count, minus_count), 'canonical_sector_polynomial_degree': representative_degree, 'branch_factor_degrees': branch_reference, 'parity_correlation': correlation, 'floor_sum_A1': certificate['A1'], 'floor_sum_A2': certificate['A2'], 'marked_roots': n - 1, 'kummer_evaluations': (n - 1) * (n - 1) // 2, 'scalar_reconciliation_checks': scalar_reconciliation_checks}
 
 def secp256k1_record() -> dict[str, Any]:
     n = SECP256K1_N
@@ -251,7 +264,7 @@ def secp256k1_record() -> dict[str, Any]:
     if 2 * each_minority != minus_degree:
         raise AssertionError('minus sector factor has wrong branch decomposition')
     lower_bound = max(plus_degree, minus_degree)
-    return {'n': n, 'lambda': lam, 'lambda_order_three': True, 'half_kernel_degree': half_kernel_degree, 'floor_sum_A1': certificate['A1'], 'floor_sum_A2': certificate['A2'], 'floor_sum_A1_euclidean_rounds': certificate['A1_euclidean_rounds'], 'floor_sum_A2_euclidean_rounds': certificate['A2_euclidean_rounds'], 'sector_parity_correlation_all_nonzero_scalars': correlation, 'sector_plus_factor_degree': plus_degree, 'sector_minus_factor_degree': minus_degree, 'uniform_branch_factor_degree': uniform, 'each_minority_branch_factor_degree': each_minority, 'direct_field_valued_rational_degree_lower_bound': lower_bound, 'lower_bound_bit_length': lower_bound.bit_length(), 'claim_boundary': 'degree/representation lower bound for an ordinary rational function returning field values +/-1; not an arithmetic-circuit lower bound and not a bound for chi(f)'}
+    return {'n': n, 'lambda': lam, 'lambda_order_three': True, 'half_kernel_degree': half_kernel_degree, 'floor_sum_A1': certificate['A1'], 'floor_sum_A2': certificate['A2'], 'floor_sum_A1_euclidean_rounds': certificate['A1_euclidean_rounds'], 'floor_sum_A2_euclidean_rounds': certificate['A2_euclidean_rounds'], 'sector_parity_correlation_all_nonzero_scalars': correlation, 'sector_plus_factor_degree': plus_degree, 'sector_minus_factor_degree': minus_degree, 'uniform_branch_factor_degree': uniform, 'each_minority_branch_factor_degree': each_minority, 'direct_field_valued_rational_degree_lower_bound': lower_bound, 'direct_field_valued_rational_minimum_degree': lower_bound, 'lower_bound_bit_length': lower_bound.bit_length(), 'claim_boundary': 'degree/representation lower bound for an ordinary rational function returning field values +/-1; not an arithmetic-circuit lower bound and not a bound for chi(f)'}
 
 def run() -> dict[str, Any]:
     diagnostic = diagnostic_floor_sum_replay()
@@ -269,7 +282,7 @@ def run() -> dict[str, Any]:
         raise AssertionError('frozen V16 scalar reconciliation total drifted')
     if aggregate_plus != 11742 or aggregate_minus != 11388:
         raise AssertionError('frozen sector-sign totals drifted')
-    return {'schema_version': '1.0', 'profile_id': PROFILE_ID, 'exact_reconciliation': {'carry_identity': 'c=sigma(Q)sigma(alpha Q)sigma(alpha^2 Q)=g_G(Q)', 'public_residue_bridge': 'c=C3_G(Q)R3_G(Q)=g_G(Q)', 'sector_identity': 'J_G(x(Q))=sigma(Q)g_G(Q)', 'sector_residue_form': 'J_G=C_G(alpha Q)C_G(alpha^2 Q)rho_G(alpha Q)rho_G(alpha^2 Q)', 'sector_R3_form': 'J_G=sigma(Q)C3_G(Q)R3_G(Q)', 'interpretation': 'V15 carry is exactly the legacy GLV carry; the sector is a complementary two-rotation product, not a public correction of R3'}, 'factor_normal_form': {'binary_factorization': 'K_H=K_{G,+}K_{G,-}, roots selected by J_G=+1 and -1', 'crt_idempotent': 'e_+=K_{G,-}*(K_{G,-}^{-1} mod K_{G,+}) mod K_H', 'crt_involution': 'J_G=2e_+-1 mod K_H', 'four_branch_factorization': 'K_H=K_uniform*K_minority0*K_minority1*K_minority2', 'generator_negation': 'J_{-G}=J_G', 'generator_glv_covariance': 'J_{alpha G}(X)=J_G(beta^2 X) mod K_H'}, 'floor_sum_certificate': {'formula': 'S(a;n)=(n-1)-4*A2+8*A1, A1=sum_{j=1}^m floor(a*j/n), A2=sum_{j=1}^m floor(2*a*j/n), m=(n-1)/2', 'diagnostic_odd_moduli_through': diagnostic['odd_moduli_through'], 'diagnostic_unit_multipliers': diagnostic['unit_multipliers'], 'diagnostic_scalar_terms': diagnostic['scalar_terms'], 'all_diagnostics_passed': diagnostic['all_passed']}, 'secp256k1': secp256k1_record(), 'exact_toy_replay': {'curves': len(curve_rows), 'marked_roots': marked_roots, 'kummer_evaluations': kummer_evaluations, 'scalar_reconciliation_checks': scalar_checks, 'aggregate_sector_plus_evaluations': aggregate_plus, 'aggregate_sector_minus_evaluations': aggregate_minus, 'all_canonical_sector_polynomial_degrees_maximal': True, 'curve_rows': curve_rows}, 'decision': 'legacy carry reconciled exactly; direct low-degree field-valued sector rational functions are excluded on secp256k1; compact high-degree circuits remain open', 'next_frontier': ['high-degree low-size or modular-composition evaluation of the sector involution', 'shared evaluation of legacy carry g_G and sector J_G without dense factors', 'additive mixed-CM-weight or field-valued circuits carrying a nontrivial C3 representation', 'formalize the floor-sum count and polynomial root-count transfer beyond the frozen arithmetic core'], 'scientific_boundary': 'No public sub-square-root parity evaluator or ECDLP algorithm is constructed.'}
+    return {'schema_version': '1.0', 'profile_id': PROFILE_ID, 'exact_reconciliation': {'carry_identity': 'c=sigma(Q)sigma(alpha Q)sigma(alpha^2 Q)=g_G(Q)', 'public_residue_bridge': 'c=C3_G(Q)R3_G(Q)=g_G(Q)', 'sector_identity': 'J_G(x(Q))=sigma(Q)g_G(Q)', 'sector_residue_form': 'J_G=C_G(alpha Q)C_G(alpha^2 Q)rho_G(alpha Q)rho_G(alpha^2 Q)', 'sector_R3_form': 'J_G=sigma(Q)C3_G(Q)R3_G(Q)', 'interpretation': 'V15 carry is exactly the legacy GLV carry; the sector is a complementary two-rotation product, not a public correction of R3'}, 'factor_normal_form': {'binary_factorization': 'K_H=K_{G,+}K_{G,-}, roots selected by J_G=+1 and -1', 'crt_idempotent': 'e_+=K_{G,-}*(K_{G,-}^{-1} mod K_{G,+}) mod K_H', 'crt_involution': 'J_G=2e_+-1 mod K_H', 'four_branch_factorization': 'K_H=K_uniform*K_minority0*K_minority1*K_minority2', 'generator_negation': 'J_{-G}=J_G', 'generator_glv_covariance': 'J_{alpha G}(X)=J_G(beta^2 X) mod K_H'}, 'floor_sum_certificate': {'formula': 'S(a;n)=(n-1)-4*A2+8*A1, A1=sum_{j=1}^m floor(a*j/n), A2=sum_{j=1}^m floor(2*a*j/n), m=(n-1)/2', 'diagnostic_odd_moduli_through': diagnostic['odd_moduli_through'], 'diagnostic_unit_multipliers': diagnostic['unit_multipliers'], 'diagnostic_scalar_terms': diagnostic['scalar_terms'], 'all_diagnostics_passed': diagnostic['all_passed']}, 'secp256k1': secp256k1_record(), 'exact_toy_replay': {'curves': len(curve_rows), 'marked_roots': marked_roots, 'kummer_evaluations': kummer_evaluations, 'scalar_reconciliation_checks': scalar_checks, 'aggregate_sector_plus_evaluations': aggregate_plus, 'aggregate_sector_minus_evaluations': aggregate_minus, 'all_canonical_sector_polynomial_degrees_maximal': True, 'curve_rows': curve_rows}, 'decision': 'legacy carry reconciled exactly; the optimal direct field-valued sector rational degree is exact on secp256k1; compact high-degree circuits remain open', 'next_frontier': ['high-degree low-size or modular-composition evaluation of the sector involution', 'shared evaluation of legacy carry g_G and sector J_G without dense factors', 'additive mixed-CM-weight or field-valued circuits carrying a nontrivial C3 representation', 'formalize the floor-sum count and polynomial root-count transfer beyond the frozen arithmetic core'], 'scientific_boundary': 'No public sub-square-root parity evaluator or ECDLP algorithm is constructed.'}
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)

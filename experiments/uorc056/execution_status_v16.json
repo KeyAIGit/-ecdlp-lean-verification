@@ -1,6 +1,6 @@
 {
   "central_target_unchanged": "Y_G(x([k]G))/y([k]G)=(-1)^k",
-  "claim_boundary": "V16 reconciles observables and proves a direct rational degree barrier. It does not construct a public sub-square-root evaluator, prove an unrestricted circuit lower bound, or give an ECDLP algorithm.",
+  "claim_boundary": "V16 reconciles observables and proves the exact minimum direct rational degree. It does not construct a succinct evaluator, prove an unrestricted circuit lower bound, or give an ECDLP algorithm.",
   "exact_replay": {
     "curves": 5,
     "errors": 0,
@@ -25,7 +25,8 @@
     "the parity correlation S(a;n) has an exact two-floor-sum formula computable by Euclidean descent",
     "for secp256k1 S(lambda;n)=208",
     "the secp256k1 sector factor degrees are (n-1+208)/4 and (n-1-208)/4",
-    "any ordinary rational function directly returning field values J_G=+/-1 on the whole half-kernel has degree at least (n-1+208)/4",
+    "the exact minimum degree of an ordinary rational function directly returning J_G=+/-1 on the whole half-kernel is (n-1+208)/4",
+    "the optimum is attained by (K_{G,-}-K_{G,+})/(K_{G,-}+K_{G,+})",
     "the lower bound has bit length 254 and is not an arithmetic-circuit lower bound",
     "on all 438 frozen oriented roots the canonical sector representative has degree deg(K_H)-1"
   ],

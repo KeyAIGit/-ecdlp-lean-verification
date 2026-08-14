@@ -47,6 +47,10 @@ class SectorFactorReconciliationTests(unittest.TestCase):
             28948022309329048855892746252171976963209391069768726095651290785379540373532,
         )
         self.assertEqual(record["lower_bound_bit_length"], 254)
+        self.assertEqual(
+            record["direct_field_valued_rational_minimum_degree"],
+            record["sector_plus_factor_degree"],
+        )
 
     def test_full_frozen_replay(self) -> None:
         result = run()
@@ -73,6 +77,13 @@ class SectorFactorReconciliationTests(unittest.TestCase):
                 row["sector_plus_factor_degree"]
                 + row["sector_minus_factor_degree"],
                 row["kernel_degree"],
+            )
+            self.assertEqual(
+                row["optimal_direct_rational_degree"],
+                max(
+                    row["sector_plus_factor_degree"],
+                    row["sector_minus_factor_degree"],
+                ),
             )
 
 
