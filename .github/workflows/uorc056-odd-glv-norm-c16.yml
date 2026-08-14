@@ -26,9 +26,13 @@ jobs:
           python3 experiments/parity_lift_000/uorc056_odd_glv_norm_replay.py \
             --out /tmp/uorc056_odd_glv_norm_replay_result.json \
             > /tmp/uorc056-odd-glv-norm-c16.log
-          cmp \
-            /tmp/uorc056_odd_glv_norm_replay_result.json \
-            experiments/parity_lift_000/uorc056_odd_glv_norm_replay_result.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          replay = json.loads(Path('/tmp/uorc056_odd_glv_norm_replay_result.json').read_text())
+          committed = json.loads(Path('experiments/parity_lift_000/uorc056_odd_glv_norm_replay_result.json').read_text())
+          assert replay == committed
+          PY
 
       - name: Check exact result flags
         run: |
