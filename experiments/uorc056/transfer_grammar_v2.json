@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0",
+  "grammar_id": "UORC-056-C-SYNTH-V2",
+  "central_target": "For Q=[k]G, compute Y_G(x(Q))/y(Q)=(-1)^k without materializing Y_G or using scalar-indexed advice.",
+  "scope": {
+    "curves": "the five frozen prime-order toy curves y^2=x^3+7 already used by PARITY-LIFT-000",
+    "external_inputs": false,
+    "production_keys": false,
+    "purpose": "discover or reject small transferable sign circuits before any secp256k1 specialization"
+  },
+  "uniformity_rule": {
+    "required": "the identical symbolic atom list and circuit topology must compile unchanged on every validation curve",
+    "forbidden": [
+      "field-specific fitted coefficients",
+      "tables indexed by the hidden scalar",
+      "coefficients of the materialized polynomial Y_G",
+      "free per-curve sign correction",
+      "discarding zeros or poles after seeing the target labels"
+    ],
+    "allowed_public_constants": [
+      "0",
+      "1",
+      "-1",
+      "curve coefficient b=7",
+      "-b",
+      "the two nontrivial cube roots beta and beta^2 selected canonically by field order",
+      "coordinates of G, [2]G and [3]G"
+    ]
+  },
+  "field_observables": [
+    "x(Q)",
+    "y(Q)",
+    "x([2]Q)",
+    "y([2]Q)",
+    "x([3]Q)",
+    "y([3]Q)",
+    "x([4]Q)",
+    "y([4]Q)",
+    "beta*x(Q)",
+    "beta^2*x(Q)",
+    "3*x(Q)^2/(2*y(Q))",
+    "(y([2]Q)-y(Q))/(x([2]Q)-x(Q))"
+  ],
+  "atom_templates": [
+    "chi(C)",
+    "chi(O+C)",
+    "chi(O_i+O_j+C)",
+    "chi(O_i-O_j+C)",
+    "chi(O_i*O_j+C)"
+  ],
+  "small_integer_constants_for_binary_templates": [0, 1, -1, 2, -2, 7, -7],
+  "composition": {
+    "operation": "multiplication of sign atoms",
+    "maximum_weight": 4,
+    "semantic_quotient": "atoms with identical sign vectors on the requested validation subset are interchangeable only for exact search; the lowest declared cost representative is retained",
+    "search": "deterministic meet-in-the-middle"
+  },
+  "admission_gates": [
+    "defined and nonzero on every nonidentity subgroup point of every admitted curve",
+    "exact parity, not correlation",
+    "same symbolic formula on at least three structurally distinct curves",
+    "holdout curves are evaluated without coefficient refitting",
+    "all field, inversion, group, character, sign and public-constant costs are reported",
+    "a finite transfer seed is not called a uniform asymptotic evaluator",
+    "symbolic lifting starts only after an unchanged multi-curve exact candidate exists"
+  ],
+  "claim_boundary": "Absence of a circuit in this bounded grammar is only a scoped negative. Presence of a toy transfer circuit is only a seed requiring proof and asymptotic analysis."
+}
