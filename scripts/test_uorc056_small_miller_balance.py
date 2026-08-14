@@ -13,7 +13,7 @@ class SmallMillerBalanceTests(unittest.TestCase):
 
     def test_frozen_exact_result(self):
         grammar, result = module.run()
-        self.assertEqual(grammar["profile_id"], "UORC-056-SMALL-MILLER-DIVISOR-BALANCE-V5")
+        self.assertEqual(grammar["profile_id"], "UORC-056-SMALL-MILLER-DIVISOR-BALANCE-V6")
         self.assertEqual(result["corpus"]["nonzero_points"], 438)
         self.assertEqual(result["primitive_quotient"]["raw_primitives"], 128)
         self.assertEqual(result["catalog"]["signed_semantic_atoms"], 256)
