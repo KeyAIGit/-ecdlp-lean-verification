@@ -1,0 +1,118 @@
+name: UORC056 sign-blind additive C23
+
+on:
+  push:
+    branches:
+      - research/uorc056-sign-blind-additive-c23
+    paths:
+      - 'experiments/parity_lift_000/uorc056_implicit_hilbert90_boundary.py'
+      - 'experiments/parity_lift_000/uorc056_sign_blind_additive_boundary.py'
+      - 'Ecdlp/Proved/Uorc056NegationPaired.lean'
+      - 'Ecdlp/Proved/Uorc056Hilbert90Divisor.lean'
+      - 'Ecdlp/Proved/Uorc056SignBlindCircuit.lean'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_SIGN_BLIND_ADDITIVE_DETERMINANT_C23.md'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_BRANCH_SENSITIVE_LEAF_C24_PROMPT.md'
+      - '.github/workflows/uorc056-sign-blind-additive-c23.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile and replay C23
+        run: |
+          python3 -m py_compile \
+            experiments/parity_lift_000/uorc056_implicit_hilbert90_boundary.py \
+            experiments/parity_lift_000/uorc056_sign_blind_additive_boundary.py
+          python3 experiments/parity_lift_000/uorc056_sign_blind_additive_boundary.py \
+            --out /tmp/uorc056_sign_blind_additive_boundary_result.json \
+            | tee /tmp/uorc056-sign-blind-additive-c23.log
+
+      - name: Check C23 theorem flags and replay coverage
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = json.loads(
+              Path('/tmp/uorc056_sign_blind_additive_boundary_result.json').read_text()
+          )
+          assert len(result['digest']) == 64
+          aggregate = result['aggregate']
+          assert aggregate['curves'] == 7
+          assert aggregate['generator_replacements'] == 6
+          assert aggregate['valid_public_query_branch_pairs'] > 0
+          assert aggregate['rational_circuit_checks'] > 0
+          assert aggregate['determinant_checks'] > 0
+          assert aggregate['resultant_checks'] > 0
+          assert aggregate['exact_two_branch_decoder_rejections'] > 0
+          assert aggregate['addition_created_new_zeros']
+          assert not aggregate['c22_support_union_extended_to_addition']
+          assert aggregate['all_sign_blind_rational_outputs_equal']
+          assert aggregate['all_sign_blind_determinants_equal']
+          assert aggregate['all_sign_blind_sylvester_resultants_equal']
+          assert aggregate['all_exact_two_branch_decoders_rejected']
+          assert aggregate['sign_blind_additive_circuit_boundary_proved']
+          assert aggregate['sign_blind_determinant_boundary_proved']
+          assert aggregate['sign_blind_resultant_boundary_proved']
+          assert aggregate['determinant_or_resultant_can_only_transport_nonfixed_leaf']
+          assert not aggregate['new_branch_sensitive_leaf_found']
+          assert not aggregate['general_addition_enabled_circuit_blocked']
+          assert aggregate['compressed_nonfixed_resultant_or_determinant_open']
+          assert not aggregate['compact_branch_odd_evaluator_found']
+          assert not aggregate['sub_sqrt_evaluator_found']
+          assert not aggregate['parity_oracle_found']
+          assert not aggregate['sub_sqrt_ecdlp_found']
+
+          rows = result['cases'] + result['generator_replacements']
+          assert len(rows) == 13
+          for row in rows:
+              assert row['valid_public_query_branch_pairs'] > 0
+              assert row['rational_circuit_checks'] > 0
+              assert row['determinant_checks'] == 3 * row['valid_public_query_branch_pairs']
+              assert row['resultant_checks'] == row['valid_public_query_branch_pairs']
+              assert row['addition_zero_witness']['output'] == 0
+              assert row['addition_zero_witness']['nonzero_left_leaf'] != 0
+              assert row['addition_zero_witness']['nonzero_right_leaf'] != 0
+              assert row['addition_zero_witness']['same_output_under_branch_flip']
+              assert row['all_sign_blind_rational_outputs_equal']
+              assert row['all_sign_blind_determinants_equal']
+              assert row['all_sign_blind_sylvester_resultants_equal']
+              assert row['all_exact_two_branch_decoders_rejected']
+
+          secp = result['secp256k1']
+          assert secp['n_is_odd']
+          assert secp['sign_blind_preprocessing_cannot_select_branch']
+          assert secp['sign_blind_determinant_or_resultant_cannot_select_branch']
+          assert secp['branch_sensitive_leaf_generation_remains_open']
+          PY
+
+      - name: Install elan
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Check C20-C23 Lean certificates
+        run: |
+          lake env lean Ecdlp/Proved/Uorc056NegationPaired.lean
+          lake env lean Ecdlp/Proved/Uorc056Hilbert90Divisor.lean
+          lake env lean Ecdlp/Proved/Uorc056SignBlindCircuit.lean
+
+      - name: Upload C23 replay output
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-sign-blind-additive-c23
+          path: |
+            /tmp/uorc056_sign_blind_additive_boundary_result.json
+            /tmp/uorc056-sign-blind-additive-c23.log
+          retention-days: 90
