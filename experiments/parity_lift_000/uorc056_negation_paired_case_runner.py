@@ -26,7 +26,7 @@ def main() -> None:
     if not 0 <= args.index < len(corpus):
         raise SystemExit("case index out of range")
     core = corpus[args.index]
-    split = mod.CORPUS_SPLIT[int(core["p"])]
+    split = mod.CORPUS_SPLIT[int(core[0])]
     row = mod.run_case(core, split)
     args.out_dir.mkdir(parents=True, exist_ok=True)
     path = args.out_dir / f"case_{args.index}.json"
