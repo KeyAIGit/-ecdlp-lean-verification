@@ -36,7 +36,7 @@ theorem localCocycle_constantGauge
   simp only [localCocycle, div_eq_mul_inv, mul_inv_rev]
   calc
     (constant * potential (step point)) *
-        (potential point)⁻¹ * constant⁻¹ =
+        ((potential point)⁻¹ * constant⁻¹) =
       (constant * constant⁻¹) *
         (potential (step point) * (potential point)⁻¹) := by
           ac_rfl
