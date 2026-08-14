@@ -1,0 +1,75 @@
+name: UORC-056 EDS decimation closure V10
+
+on:
+  push:
+    branches:
+      - research/uorc056-execution-001
+    paths:
+      - 'scripts/uorc056_eds_decimation_closure.py'
+      - 'scripts/test_uorc056_eds_decimation_closure.py'
+      - 'Ecdlp/Proved/EdsDecimationClosure.lean'
+      - 'notes/reviews/UORC056_EDS_DECIMATION_CLOSURE_V10.md'
+      - '.github/workflows/uorc056-eds-decimation-v10.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  verify-and-persist:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/uorc056-execution-001
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run exact V10 replay and tests
+        run: |
+          PYTHONPATH=scripts python -m unittest -v scripts/test_uorc056_eds_decimation_closure.py
+          python scripts/uorc056_eds_decimation_closure.py \
+            --out experiments/uorc056/eds_decimation_closure_results.json
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Kernel-check V10 sign skeleton
+        run: |
+          lake exe cache get
+          lake build Ecdlp.Proved.EdsDecimationClosure
+          lake env lean Ecdlp/Proved/EdsDecimationClosure.lean
+
+      - name: Persist deterministic V10 result
+        run: |
+          if git diff --quiet -- experiments/uorc056/eds_decimation_closure_results.json \
+             && git ls-files --error-unmatch experiments/uorc056/eds_decimation_closure_results.json >/dev/null 2>&1; then
+            echo 'V10 result already current.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add experiments/uorc056/eds_decimation_closure_results.json
+          git commit -m 'UORC-056: persist EDS decimation V10 replay'
+          git push origin HEAD:research/uorc056-execution-001
