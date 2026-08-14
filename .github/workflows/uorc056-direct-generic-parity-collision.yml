@@ -1,0 +1,98 @@
+name: UORC056 direct generic parity collision
+
+on:
+  push:
+    branches:
+      - research/uorc056-adversarial-integration
+    paths:
+      - 'notes/reviews/UORC056_DIRECT_GENERIC_PARITY_COLLISION_E1.md'
+      - 'experiments/parity_lift_000/uorc056_direct_generic_parity_collision.py'
+      - 'Ecdlp/Proved/DirectGenericParityCollisionBoundary.lean'
+      - '.github/workflows/uorc056-direct-generic-parity-collision.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact frozen affine-collision replay
+        run: |
+          python3 experiments/parity_lift_000/uorc056_direct_generic_parity_collision.py \
+            --out /tmp/uorc056_direct_generic_parity_collision_results.json \
+            > /tmp/uorc056-direct-generic-parity-collision.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/uorc056_direct_generic_parity_collision_results.json')
+              .read_text()
+          )
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert aggregate['cases'] == 7
+          assert aggregate['total_affine_forms'] == 2479
+          assert aggregate['total_unordered_form_pairs'] == 730164
+          assert aggregate['total_unique_collision_solutions'] == 702603
+          assert aggregate['total_preprocessing_online_tradeoff_checks'] == 40
+          assert aggregate['all_parity_classes_balanced']
+          assert aggregate['all_affine_pairs_have_at_most_one_collision']
+          assert aggregate['all_exact_thresholds_minimal']
+          assert secp['exact_generic_label_lower_bound'] == 2**128
+          assert secp['exact_threshold_verified']
+          assert secp['preprocessing_online_condition'] == 'T(2S+T-1) >= n-1'
+          assert all(
+              item['tradeoff_verified']
+              for item in secp['preprocessing_online_examples'].values()
+          )
+          assert secp['central_target'] == 'UNIFORM-ORIENTED-ROOT-CIRCUIT-056'
+          assert not secp['coordinate_specific_evaluator_ruled_out']
+          assert not secp['public_parity_oracle_found']
+          assert not secp['sub_sqrt_ecdlp_found']
+          PY
+
+      - name: Kernel-check scoped Lean arithmetic
+        run: |
+          if grep -nE '^[[:space:]]*(sorry|admit)([[:space:]]|$)' \
+              Ecdlp/Proved/DirectGenericParityCollisionBoundary.lean; then
+            echo '::error::Lean boundary contains sorry or admit'
+            exit 1
+          fi
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              export PATH="$HOME/.elan/bin:$PATH"
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            export PATH="/tmp/lean-dist/lean-4.31.0-linux/bin:$PATH"
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+          lake exe cache get
+          lake build Ecdlp.Proved.DirectGenericParityCollisionBoundary
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-direct-generic-parity-collision-results
+          path: |
+            /tmp/uorc056_direct_generic_parity_collision_results.json
+            /tmp/uorc056-direct-generic-parity-collision.log
+          retention-days: 90
