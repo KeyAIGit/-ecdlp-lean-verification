@@ -1,0 +1,61 @@
+name: UORC056 odd GLV norm C16
+
+on:
+  push:
+    branches:
+      - research/uorc056-endpoint-gauge
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_ODD_GLV_NORM_BRANCH_C16.md'
+      - 'experiments/parity_lift_000/uorc056_odd_glv_norm_replay.py'
+      - 'experiments/parity_lift_000/uorc056_odd_glv_norm_replay_result.json'
+      - '.github/workflows/uorc056-odd-glv-norm-c16.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile and replay C16
+        run: |
+          python3 -m py_compile experiments/parity_lift_000/uorc056_odd_glv_norm_replay.py
+          python3 experiments/parity_lift_000/uorc056_odd_glv_norm_replay.py \
+            --out /tmp/uorc056_odd_glv_norm_replay_result.json \
+            > /tmp/uorc056-odd-glv-norm-c16.log
+          cmp \
+            /tmp/uorc056_odd_glv_norm_replay_result.json \
+            experiments/parity_lift_000/uorc056_odd_glv_norm_replay_result.json
+
+      - name: Check exact result flags
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('/tmp/uorc056_odd_glv_norm_replay_result.json').read_text())
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          assert aggregate['orders'] == 6
+          assert aggregate['roots_checked'] == 12
+          assert aggregate['all_nonexceptional_orbit_sums_nonzero']
+          assert aggregate['all_support_bounds_pass']
+          assert aggregate['all_pole_degree_bounds_pass']
+          assert not aggregate['sub_sqrt_evaluator_found']
+          assert not aggregate['parity_oracle_found']
+          assert secp['pole_degree_bit_length'] == 254
+          assert secp['descended_pole_degree_at_least'] == '19298681539552699237261830834781317975472927379845817397100860523586360249054'
+          print(json.dumps(aggregate, indent=2, sort_keys=True))
+          print(json.dumps(secp, indent=2, sort_keys=True))
+          PY
+
+      - name: Upload replay output
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-odd-glv-norm-c16
+          path: |
+            /tmp/uorc056_odd_glv_norm_replay_result.json
+            /tmp/uorc056-odd-glv-norm-c16.log
+          retention-days: 90
