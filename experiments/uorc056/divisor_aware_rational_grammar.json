@@ -1,0 +1,219 @@
+{
+  "cost_model": [
+    "construction of every public coefficient is charged",
+    "line evaluation, local-series regularization, field inversion or equivalent ratio construction are charged",
+    "every quadratic character and sign multiplication is charged",
+    "enumerative discovery is not evaluator advice"
+  ],
+  "curve_model": "y^2=x^3+7 over prime fields with odd prime-order marked subgroup",
+  "discovery_corpus": [
+    {
+      "G": [
+        2,
+        12
+      ],
+      "n": 31,
+      "p": 43
+    },
+    {
+      "G": [
+        2,
+        22
+      ],
+      "n": 79,
+      "p": 67
+    },
+    {
+      "G": [
+        1,
+        18
+      ],
+      "n": 67,
+      "p": 79
+    },
+    {
+      "G": [
+        1,
+        32
+      ],
+      "n": 127,
+      "p": 127
+    },
+    {
+      "G": [
+        2,
+        34
+      ],
+      "n": 139,
+      "p": 163
+    }
+  ],
+  "holdout_corpus": [
+    {
+      "G": [
+        2,
+        25
+      ],
+      "n": 61,
+      "p": 61
+    },
+    {
+      "G": [
+        1,
+        28
+      ],
+      "n": 79,
+      "p": 97
+    },
+    {
+      "G": [
+        3,
+        33
+      ],
+      "n": 199,
+      "p": 211
+    },
+    {
+      "G": [
+        2,
+        109
+      ],
+      "n": 313,
+      "p": 349
+    },
+    {
+      "G": [
+        3,
+        35
+      ],
+      "n": 397,
+      "p": 397
+    },
+    {
+      "G": [
+        1,
+        21
+      ],
+      "n": 397,
+      "p": 433
+    },
+    {
+      "G": [
+        2,
+        62
+      ],
+      "n": 547,
+      "p": 547
+    },
+    {
+      "G": [
+        1,
+        68
+      ],
+      "n": 613,
+      "p": 577
+    },
+    {
+      "G": [
+        6,
+        174
+      ],
+      "n": 691,
+      "p": 733
+    },
+    {
+      "G": [
+        1,
+        255
+      ],
+      "n": 829,
+      "p": 823
+    },
+    {
+      "G": [
+        2,
+        165
+      ],
+      "n": 967,
+      "p": 907
+    },
+    {
+      "G": [
+        1,
+        88
+      ],
+      "n": 907,
+      "p": 967
+    },
+    {
+      "G": [
+        1,
+        151
+      ],
+      "n": 1009,
+      "p": 991
+    }
+  ],
+  "line_templates": {
+    "beta_convention": "beta_lo and beta_hi are the two nontrivial roots of z^2+z+1 ordered by canonical integer representative",
+    "constraint": "a and b are not both zero",
+    "formula": "L(Q)=a*x(Q)+b*y(Q)+c",
+    "linear_coefficients": [
+      "zero",
+      "one",
+      "neg_one",
+      "beta_lo",
+      "beta_hi"
+    ],
+    "offsets": [
+      "zero",
+      "one",
+      "neg_one",
+      "two",
+      "neg_two",
+      "curve_b",
+      "neg_curve_b",
+      "x_G",
+      "neg_x_G",
+      "y_G",
+      "neg_y_G",
+      "beta_lo",
+      "beta_hi",
+      "x_G_plus_y_G",
+      "x_G_minus_y_G"
+    ],
+    "raw_count": 360
+  },
+  "local_parameter": {
+    "choice": "t=x-x(P)",
+    "completeness": "A nonzero affine line meets a smooth plane cubic with local intersection multiplicity at most three.",
+    "series_order": 3,
+    "validity": "Every tested nonzero subgroup point has y(P) != 0, so x is unramified and t is a uniformizer."
+  },
+  "profile_id": "UORC-056-DIVISOR-AWARE-LINE-RATIO-V1",
+  "rational_atoms": {
+    "admission": "ord_P(L_num)=ord_P(L_den) at every tested subgroup point",
+    "canonicalization": "unordered line-template pair because chi(R)=chi(R^-1)",
+    "forbidden": [
+      "per-point patch values",
+      "dropping denominator zeros",
+      "numerical epsilon regularization",
+      "per-curve line fitting"
+    ],
+    "formula": "R(Q)=L_num(Q)/L_den(Q)",
+    "regular_value": "ratio of first nonzero local-series coefficients after equal-order cancellation"
+  },
+  "schema_version": "1.0",
+  "sign_circuit": {
+    "atom": "quadratic_character of the regularized rational value",
+    "composition": "product of rational-character atoms",
+    "maximum_weight": 4,
+    "uniform_output_negation": true
+  },
+  "status": "bounded_exact_screen",
+  "transfer_gate": {
+    "claim_boundary": "Failure closes only this line-ratio grammar through product weight four.",
+    "discovery": "the identical symbolic rational AST must equal parity on all five discovery curves",
+    "holdout": "an admitted candidate must run unchanged on all thirteen holdouts"
+  }
+}
