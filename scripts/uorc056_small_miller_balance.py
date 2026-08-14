@@ -300,7 +300,7 @@ def search(
 def grammar_payload() -> dict[str, object]:
     return {
         "schema_version": "1.0",
-        "profile_id": "UORC-056-SMALL-MILLER-DIVISOR-BALANCE-V5",
+        "profile_id": "UORC-056-SMALL-MILLER-DIVISOR-BALANCE-V6",
         "primitive": {
             "formula": "g_(a,b)([u]Q)=ell_([a]G,[b]G)([u]Q)/v_([a+b]G)([u]Q)",
             "signed_marks": list(SMALL_MARKS),
@@ -338,7 +338,7 @@ def run() -> tuple[dict[str, object], dict[str, object]]:
     raw = sum(item.multiplicity for item in primitives)
     result = {
         "schema_version": "1.0",
-        "experiment": "UORC-056-SMALL-MILLER-DIVISOR-BALANCE-V5",
+        "experiment": "UORC-056-SMALL-MILLER-DIVISOR-BALANCE-V6",
         "grammar_sha256": hashlib.sha256(
             stable_json(grammar).encode()
         ).hexdigest(),
