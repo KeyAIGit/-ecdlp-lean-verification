@@ -1,0 +1,338 @@
+{
+  "chain_rule_replay": {
+    "maximum_even_index": 256,
+    "point_index_checks": 53754
+  },
+  "claim_boundary": [
+    "The theorem closes one pure character chi(psi_m(Q)) with an optional global phase.",
+    "The 4*sqrt(q) estimate inherits the provisional V8 sheaf framework.",
+    "No external point, wallet, real key or unknown production scalar is used."
+  ],
+  "corpus": {
+    "all_multiplier_scans_exact_negative": true,
+    "curve_count": 18,
+    "curves_closed_by_certified_fourier_inequality": 17,
+    "curves_closed_by_complete_multiplier_scan_only": 1,
+    "records": [
+      {
+        "best": {
+          "accuracy": "0.800000000",
+          "matches": 24,
+          "output_phase": 1,
+          "total": 30,
+          "u": 8
+        },
+        "certified_fourier_closed": false,
+        "exact_candidates": [],
+        "four_sqrt_q": "2.622975409720800e+01",
+        "multiplier_classes_tested": 30,
+        "n": 31,
+        "p": 43,
+        "parity_peak": "1.971831976851125e+01"
+      },
+      {
+        "best": {
+          "accuracy": "0.641025641",
+          "matches": 50,
+          "output_phase": -1,
+          "total": 78,
+          "u": 22
+        },
+        "certified_fourier_closed": true,
+        "exact_candidates": [],
+        "four_sqrt_q": "3.274141108748980e+01",
+        "multiplier_classes_tested": 78,
+        "n": 79,
+        "p": 67,
+        "parity_peak": "5.028633400974072e+01"
+      },
+      {
+        "best": {
+          "accuracy": "0.696969697",
+          "matches": 46,
+          "output_phase": -1,
+          "total": 66,
+          "u": 10
+        },
+        "certified_fourier_closed": true,
+        "exact_candidates": [],
+        "four_sqrt_q": "3.555277766926235e+01",
+        "multiplier_classes_tested": 66,
+        "n": 67,
+        "p": 79,
+        "parity_peak": "4.264570955514765e+01"
+      },
+      {
+        "best": {
+          "accuracy": "0.603174603",
+          "matches": 76,
+          "output_phase": -1,
+          "total": 126,
+          "u": 1
+        },
+        "certified_fourier_closed": true,
+        "exact_candidates": [],
+        "four_sqrt_q": "4.507771067833858e+01",
+        "multiplier_classes_tested": 126,
+        "n": 127,
+        "p": 127,
+        "parity_peak": "8.084658822363042e+01"
+      },
+      {
+        "best": {
+          "accuracy": "0.608695652",
+          "matches": 84,
+          "output_phase": 1,
+          "total": 138,
+          "u": 9
+        },
+        "certified_fourier_closed": true,
+        "exact_candidates": [],
+        "four_sqrt_q": "5.106858133921482e+01",
+        "multiplier_classes_tested": 138,
+        "n": 139,
+        "p": 163,
+        "parity_peak": "8.848638142935697e+01"
+      },
+      {
+        "best": {
+          "accuracy": "0.500000000",
+          "matches": 30,
+          "output_phase": 1,
+          "total": 60,
+          "u": 1
+        },
+        "certified_fourier_closed": true,
+        "exact_candidates": [],
+        "four_sqrt_q": "3.124099870362662e+01",
+        "multiplier_classes_tested": 60,
+        "n": 61,
+        "p": 61,
+        "parity_peak": "3.882522214846061e+01"
+      },
+      {
+        "best": {
+          "accuracy": "0.500000000",
+          "matches": 39,
+          "output_phase": 1,
+          "total": 78,
+          "u": 1
+        },
+        "certified_fourier_closed": true,
+        "exact_candidates": [],
+        "four_sqrt_q": "3.939543120718442e+01",
+        "multiplier_classes_tested": 78,
+        "n": 79,
+        "p": 97,
+        "parity_peak": "5.028633400974072e+01"
+      },
+      {
+        "best": {
+          "accuracy": "0.606060606",
+          "matches": 120,
+          "output_phase": -1,
+          "total": 198,
+          "u": 2
+        },
+        "certified_fourier_closed": true,
+        "exact_candidates": [],
+        "four_sqrt_q": "5.810335618533580e+01",
+        "multiplier_classes_tested": 198,
+        "n": 199,
+        "p": 211,
+        "parity_peak": "1.266847035405933e+02"
+      },
+      {
+        "best": {
+          "accuracy": "0.500000000",
+          "matches": 156,
+          "output_phase": 1,
+          "total": 312,
+          "u": 1
+        },
+        "certified_fourier_closed": true,
+        "exact_candidates": [],
+        "four_sqrt_q": "7.472616676907762e+01",
+        "multiplier_classes_tested": 312,
+        "n": 313,
+        "p": 349,
+        "parity_peak": "1.992603159087056e+02"
+      },
+      {
+        "best": {
+          "accuracy": "0.500000000",
+          "matches": 198,
+          "output_phase": 1,
+          "total": 396,
+          "u": 1
+        },
+        "certified_fourier_closed": true,
+        "exact_candidates": [],
+        "four_sqrt_q": "7.969943538068510e+01",
+        "multiplier_classes_tested": 396,
+        "n": 397,
+        "p": 397,
+        "parity_peak": "2.527367307399497e+02"
+      },
+      {
+        "best": {
+          "accuracy": "0.500000000",
+          "matches": 198,
+          "output_phase": 1,
+          "total": 396,
+          "u": 1
+        },
+        "certified_fourier_closed": true,
+        "exact_candidates": [],
+        "four_sqrt_q": "8.323460818673925e+01",
+        "multiplier_classes_tested": 396,
+        "n": 397,
+        "p": 433,
+        "parity_peak": "2.527367307399497e+02"
+      },
+      {
+        "best": {
+          "accuracy": "0.560439560",
+          "matches": 306,
+          "output_phase": 1,
+          "total": 546,
+          "u": 30
+        },
+        "certified_fourier_closed": true,
+        "exact_candidates": [],
+        "four_sqrt_q": "9.355212450821200e+01",
+        "multiplier_classes_tested": 546,
+        "n": 547,
+        "p": 547,
+        "parity_peak": "3.482300582655726e+02"
+      },
+      {
+        "best": {
+          "accuracy": "0.500000000",
+          "matches": 306,
+          "output_phase": 1,
+          "total": 612,
+          "u": 1
+        },
+        "certified_fourier_closed": true,
+        "exact_candidates": [],
+        "four_sqrt_q": "9.608329719571451e+01",
+        "multiplier_classes_tested": 612,
+        "n": 613,
+        "p": 577,
+        "parity_peak": "3.902470663030813e+02"
+      },
+      {
+        "best": {
+          "accuracy": "0.500000000",
+          "matches": 345,
+          "output_phase": 1,
+          "total": 690,
+          "u": 1
+        },
+        "certified_fourier_closed": true,
+        "exact_candidates": [],
+        "four_sqrt_q": "1.082958909654471e+02",
+        "multiplier_classes_tested": 690,
+        "n": 691,
+        "p": 733,
+        "parity_peak": "4.399035049651073e+02"
+      },
+      {
+        "best": {
+          "accuracy": "0.557971014",
+          "matches": 462,
+          "output_phase": 1,
+          "total": 828,
+          "u": 69
+        },
+        "certified_fourier_closed": true,
+        "exact_candidates": [],
+        "four_sqrt_q": "1.147519063022484e+02",
+        "multiplier_classes_tested": 828,
+        "n": 829,
+        "p": 823,
+        "parity_peak": "5.277571596897081e+02"
+      },
+      {
+        "best": {
+          "accuracy": "0.548654244",
+          "matches": 530,
+          "output_phase": -1,
+          "total": 966,
+          "u": 47
+        },
+        "certified_fourier_closed": true,
+        "exact_candidates": [],
+        "four_sqrt_q": "1.204657627710048e+02",
+        "multiplier_classes_tested": 966,
+        "n": 967,
+        "p": 907,
+        "parity_peak": "6.156107784121630e+02"
+      },
+      {
+        "best": {
+          "accuracy": "0.549668874",
+          "matches": 498,
+          "output_phase": 1,
+          "total": 906,
+          "u": 81
+        },
+        "certified_fourier_closed": true,
+        "exact_candidates": [],
+        "four_sqrt_q": "1.243864944437297e+02",
+        "multiplier_classes_tested": 906,
+        "n": 907,
+        "p": 967,
+        "parity_peak": "5.774135562508690e+02"
+      },
+      {
+        "best": {
+          "accuracy": "0.551587302",
+          "matches": 556,
+          "output_phase": -1,
+          "total": 1008,
+          "u": 149
+        },
+        "certified_fourier_closed": true,
+        "exact_candidates": [],
+        "four_sqrt_q": "1.259206099095775e+02",
+        "multiplier_classes_tested": 1008,
+        "n": 1009,
+        "p": 991,
+        "parity_peak": "6.423488313903858e+02"
+      }
+    ]
+  },
+  "decision": "the pure single-division-polynomial character route is closed for secp256k1 and for every curve in the frozen eighteen-curve corpus",
+  "experiment": "UORC-056-EVEN-DIVPOLY-FOURIER-COLLAPSE-V10",
+  "input_grammar_sha256": "86d1804b2b299281c96ab956ff3a8631ca2d1c8288aed01898d0ef7aa4047184",
+  "remaining_scope": [
+    "products of multiple independently pulled division-polynomial characters",
+    "direct field-valued Y_G evaluation without one outer quadratic character",
+    "theta or elliptic-unit evaluators",
+    "adaptive branching and non-character outputs"
+  ],
+  "review_status": "the chain-rule reduction, finite exhaustive scans and integer inequalities are executable; the sheaf bound is inherited from the provisional V8 theorem and remains subject to independent review",
+  "schema_version": "1.0",
+  "secp256k1": {
+    "certified_cot_lower_denominator": "17831981742546694095229931691337937809336984898977535274921195123793796870127898",
+    "certified_cot_lower_numerator": "1313965177134374515758254449824172920483163961860162407871418855511711930258317350380314982943852834373429551052708961367569880633913989746726260182540817641",
+    "certified_fourier_closed": true,
+    "certified_inequality": "(98*n^2-121)^2 > 16*(154*n)^2*p",
+    "decision": "no chi(psi_m(Q)) with any positive integer m can equal canonical parity on all nonzero secp256k1 subgroup points",
+    "n": "115792089237316195423570985008687907852837564279074904382605163141518161494337",
+    "p": "115792089237316195423570985008687907853269984665640564039457584007908834671663",
+    "peak_over_four_sqrt_p": "5.415762074247741e+37",
+    "peak_over_four_sqrt_p_log2": "125.348503870528"
+  },
+  "supersedes": "the V9 open even-index q=3 mod 4 EDS-decimation case for pure single division-polynomial characters",
+  "theorem": {
+    "base_trace_bound": "every subgroup Fourier coefficient of chi(psi_2) has magnitude at most 4*sqrt(q)",
+    "even_chain_collapse": "for m=2u, psi_m=(psi_2 o [u])*psi_u^4, so chi(psi_m(Q))=chi(psi_2([u]Q)) whenever gcd(u,n)=1",
+    "necessary_condition": "cot(pi/(2n)) <= 4*sqrt(q)",
+    "odd_index_closure": "psi_m(-Q)=psi_m(Q) for odd m, while canonical parity is anti-invariant",
+    "peak_identity": "canonical parity has a subgroup Fourier coefficient of magnitude cot(pi/(2n))",
+    "support_reason": "div(psi_2)=sum_{T in E[2] minus {O}}[T]-3[O], so the geometric odd support has size four"
+  }
+}
