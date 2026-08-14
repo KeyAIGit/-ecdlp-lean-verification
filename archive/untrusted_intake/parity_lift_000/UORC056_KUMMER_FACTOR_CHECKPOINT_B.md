@@ -1,4 +1,4 @@
-# UNIFORM-ORIENTED-ROOT-CIRCUIT-056 — KUMMER/CM TRACK B CHECKPOINT
+# UNIFORM-ORIENTED-ROOT-CIRCUIT-056 - KUMMER/CM TRACK B CHECKPOINT
 
 Date: 2026-08-14
 
@@ -24,6 +24,9 @@ all-in cost O(n^(1/2-epsilon)).
 | B7 linear CM recurrence | nontrivial eigenline is a full order-`n` character; parity uses all frequencies | no bounded linear state |
 | B8 alternating Miller primitive | exact oriented potential `H_G` found; norm and two-step edge are compact Miller data | positive structural reduction |
 | B9 alternating Miller segment | exact segment composition; explicit support `min(2m+2,n)`; norm gives reflected quotient only | endpoint primitive still missing |
+| B10 sigma multiplication period | parity half has trivial translation stabilizer; prime cycle has no proper nontrivial subgroup period | full kernel norm only |
+| B11 Miller monomial support | direct ordinary Miller/line representation needs linearly many atoms, even after quotient correction | short monomial closed |
+| B12 cyclic elliptic factorial | exact special-function candidate specified; no finite-field sub-root evaluator identified | open nonlinear candidate |
 
 ## Strongest positive result of track B
 
@@ -74,6 +77,20 @@ without knowing or walking m.
 
 This is the concrete structured segment primitive handed to track A.
 
+## Exact cost boundaries obtained in B
+
+For secp256k1:
+
+```text
+standard two-set index work               >= 2^128-1,
+explicit higher-arity resultant root state >= 240615969168004511545033772477625056927,
+translation-polynomial support             = n,
+standard linear CM character support       = n,
+corrected direct Miller/line atom count     >= 14474011154664524427946373126085988481604695534884363047825645392689770186793.
+```
+
+These are scoped representation bounds, not a universal arithmetic-circuit lower bound.
+
 ## What B no longer needs to repeat
 
 Do not repeat:
@@ -84,22 +101,26 @@ ordinary Velu/index systems,
 more explicit resultant levels,
 transposed interpolation with oriented samples supplied,
 linear combinations of finitely many CM characters,
-full dual-character or pairing representations.
+full dual-character or pairing representations,
+proper-period subgroup sigma products,
+short products of ordinary Miller and line atoms.
 ```
 
 ## Remaining B-only possibility
 
-A future B result must be a genuinely nonlinear, endpoint-only CM identity that evaluates `H_G(Q)` or `Y_G(x(Q))` directly from `(G,Q)` and whose state is not:
+The alternating Miller product can be written, under sigma uniformization and up to a point-independent factor, as a ratio of finite elliptic shifted factorials with step `2G`. This is the only clearly identified B-specific nonlinear candidate.
+
+A positive result must give an exact base-field evaluator for that cyclic elliptic factorial without:
 
 ```text
-a path product,
-a square-root-degree intermediate,
-a full dual phase,
-a table of oriented Kummer pairs,
-or a disguised scalar coordinate.
+walking the unknown segment,
+expanding M factors,
+materializing a square-root-degree intermediate,
+using a full dual phase,
+or storing the oriented Kummer table.
 ```
 
-No such identity is presently known.
+The external literature confirms that elliptic shifted factorials and root-of-unity cyclic-dilogarithm identities are genuine special-function classes. The present audit did not identify a formula satisfying this finite-field evaluator and cost gate. This is absence of a found construction, not a theorem of nonexistence.
 
 ## Current verdict
 
@@ -108,5 +129,5 @@ Public parity evaluator                         absent
 Absolute EDS-residue evaluator                  absent
 All-in sub-square-root algorithm                absent
 Positive compact local cocycle                  obtained
-Remaining bottleneck                            endpoint integration / nonlinear endpoint identity
+Remaining bottleneck                            endpoint integration / cyclic elliptic factorial evaluation
 ```
