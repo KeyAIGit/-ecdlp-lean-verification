@@ -27,30 +27,33 @@ section Mul
 
 variable [CommGroup B]
 
- theorem invariant_one (phi : A → A) :
+theorem invariant_one (phi : A → A) :
     Invariant phi (fun _ : A => (1 : B)) := by
   intro x
   rfl
 
- theorem invariant_mul
+theorem invariant_mul
     (phi : A → A) (f g : A → B)
     (hf : Invariant phi f) (hg : Invariant phi g) :
     Invariant phi (fun x => f x * g x) := by
   intro x
+  change f (phi x) * g (phi x) = f x * g x
   rw [hf x, hg x]
 
- theorem invariant_inv
+theorem invariant_inv
     (phi : A → A) (f : A → B)
     (hf : Invariant phi f) :
     Invariant phi (fun x => (f x)⁻¹) := by
   intro x
+  change (f (phi x))⁻¹ = (f x)⁻¹
   rw [hf x]
 
- theorem invariant_zpow
+theorem invariant_zpow
     (phi : A → A) (f : A → B) (e : ℤ)
     (hf : Invariant phi f) :
     Invariant phi (fun x => (f x) ^ e) := by
   intro x
+  change (f (phi x)) ^ e = (f x) ^ e
   rw [hf x]
 
 end Mul
