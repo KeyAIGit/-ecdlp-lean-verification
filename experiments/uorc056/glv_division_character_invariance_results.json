@@ -1,0 +1,1080 @@
+{
+  "all_index_cm_weight_induction": {
+    "even_residue_cases": [
+      {
+        "r_mod_3": 0,
+        "target": 1,
+        "term1_weight": 1,
+        "term2_weight": 1
+      },
+      {
+        "r_mod_3": 1,
+        "target": 0,
+        "term1_weight": 0,
+        "term2_weight": 0
+      },
+      {
+        "r_mod_3": 2,
+        "target": 0,
+        "term1_weight": 0,
+        "term2_weight": 0
+      }
+    ],
+    "odd_residue_cases": [
+      {
+        "r_mod_3": 0,
+        "target": 0,
+        "term1_weight": 0,
+        "term2_weight": 0
+      },
+      {
+        "r_mod_3": 1,
+        "target": 1,
+        "term1_weight": 1,
+        "term2_weight": 1
+      },
+      {
+        "r_mod_3": 2,
+        "target": 0,
+        "term1_weight": 0,
+        "term2_weight": 0
+      }
+    ]
+  },
+  "decision": "all_multiplicative_division_polynomial_character_monomials_are_glv_invariant_and_cannot_equal_secp_parity",
+  "fixed_secp_samples": [
+    {
+      "division_rows": [
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "1",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "2",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "3",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "4",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "5",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "6",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "7",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "8",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "11",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "17",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747167",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747168",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747169",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494335",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494336",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494338",
+          "zero": false
+        }
+      ],
+      "phi_raw_character_invariant": true,
+      "phi_raw_scales_by_beta": true,
+      "scalar": "1"
+    },
+    {
+      "division_rows": [
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "1",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "2",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "3",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "4",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "5",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "6",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "7",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "8",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "11",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "17",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747167",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747168",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747169",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494335",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494336",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494338",
+          "zero": false
+        }
+      ],
+      "phi_raw_character_invariant": true,
+      "phi_raw_scales_by_beta": true,
+      "scalar": "2"
+    },
+    {
+      "division_rows": [
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "1",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "2",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "3",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "4",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "5",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "6",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "7",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "8",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "11",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "17",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747167",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747168",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747169",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494335",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494336",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494338",
+          "zero": false
+        }
+      ],
+      "phi_raw_character_invariant": true,
+      "phi_raw_scales_by_beta": true,
+      "scalar": "3"
+    },
+    {
+      "division_rows": [
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "1",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "2",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "3",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "4",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "5",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "6",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "7",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "8",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "11",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "17",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747167",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747168",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747169",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494335",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494336",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494338",
+          "zero": false
+        }
+      ],
+      "phi_raw_character_invariant": true,
+      "phi_raw_scales_by_beta": true,
+      "scalar": "7"
+    },
+    {
+      "division_rows": [
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "1",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "2",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "3",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "4",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "5",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "6",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "7",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "8",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "11",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "17",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747167",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747168",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747169",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494335",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494336",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494338",
+          "zero": false
+        }
+      ],
+      "phi_raw_character_invariant": true,
+      "phi_raw_scales_by_beta": true,
+      "scalar": "11"
+    },
+    {
+      "division_rows": [
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "1",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "2",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "3",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "4",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "5",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "6",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "7",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "8",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "11",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "17",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747167",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747168",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747169",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494335",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494336",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494338",
+          "zero": false
+        }
+      ],
+      "phi_raw_character_invariant": true,
+      "phi_raw_scales_by_beta": true,
+      "scalar": "123456789"
+    },
+    {
+      "division_rows": [
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "1",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "2",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "3",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "4",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "5",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "6",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "7",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "8",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "11",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "17",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747167",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747168",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747169",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494335",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494336",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494338",
+          "zero": false
+        }
+      ],
+      "phi_raw_character_invariant": true,
+      "phi_raw_scales_by_beta": true,
+      "scalar": "115792089237316195423570985008687907852837564279074904382605163141518161494335"
+    },
+    {
+      "division_rows": [
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "1",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "2",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "3",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "4",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "5",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "6",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "7",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "8",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "11",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "17",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747167",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747168",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "57896044618658097711785492504343953926418782139537452191302581570759080747169",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494335",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": true,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494336",
+          "zero": false
+        },
+        {
+          "character_invariant": true,
+          "divisible_by_3": false,
+          "field_scaling_exact": true,
+          "index": "115792089237316195423570985008687907852837564279074904382605163141518161494338",
+          "zero": false
+        }
+      ],
+      "phi_raw_character_invariant": true,
+      "phi_raw_scales_by_beta": true,
+      "scalar": "115792089237316195423570985008687907852837564279074904382605163141518161494336"
+    }
+  ],
+  "multiplicative_monomial_replay": {
+    "factors": [
+      {
+        "exponent": 1,
+        "index": "57896044618658097711785492504343953926418782139537452191302581570759080747168",
+        "pullback_scalar": "2"
+      },
+      {
+        "exponent": -1,
+        "index": "57896044618658097711785492504343953926418782139537452191302581570759080747169",
+        "pullback_scalar": "3"
+      },
+      {
+        "exponent": 2,
+        "index": "17",
+        "pullback_scalar": "5"
+      },
+      {
+        "exponent": 1,
+        "index": "6",
+        "pullback_scalar": "7"
+      }
+    ],
+    "rows": [
+      {
+        "character": 1,
+        "invariant": true,
+        "scalar": "1"
+      },
+      {
+        "character": 1,
+        "invariant": true,
+        "scalar": "2"
+      },
+      {
+        "character": -1,
+        "invariant": true,
+        "scalar": "3"
+      },
+      {
+        "character": -1,
+        "invariant": true,
+        "scalar": "7"
+      },
+      {
+        "character": -1,
+        "invariant": true,
+        "scalar": "11"
+      }
+    ]
+  },
+  "profile_id": "UORC-056-GLV-DIVISION-CHARACTER-INVARIANCE-V13",
+  "public_certificates": {
+    "alpha_G_equals_lambda_G": true,
+    "beta_cube_root": true,
+    "beta_square_witness": "(beta^2)^2=beta mod p",
+    "chi_beta": 1,
+    "lambda_cube_root_mod_n": true,
+    "lambda_even": true
+  },
+  "schema_version": "1.0",
+  "scientific_boundary": "V13 is a representation-class GLV no-go, not a general arithmetic-circuit lower bound.",
+  "scope": {
+    "closed": [
+      "chi(psi_m([s]Q)) for arbitrary public m,s",
+      "finite products and quotients of such character atoms",
+      "one outer quadratic character applied to any multiplicative monomial of these factors",
+      "products of chi(phi_raw([s]Q)) at arbitrary public scalar pullbacks"
+    ],
+    "open": [
+      "additive mixtures of different CM weights before the final decision",
+      "direct field-valued Y_G evaluation",
+      "oriented Pell/Miller global integration",
+      "theta or elliptic-unit formulas with nontrivial GLV covariance"
+    ]
+  },
+  "target_mismatch": {
+    "reason": "alpha(G)=[lambda]G and the canonical lambda representative is even",
+    "sigma_G_G": -1,
+    "sigma_G_alpha_G": 1
+  }
+}
