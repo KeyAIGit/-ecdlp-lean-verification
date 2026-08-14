@@ -1,0 +1,112 @@
+name: UORC056 oriented principal Pell B7A
+
+on:
+  push:
+    branches:
+      - research/uorc056-kummer-factor
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_ORIENTED_PRINCIPAL_PELL_B7A.md'
+      - 'experiments/parity_lift_000/uorc056_oriented_principal_pell.py'
+      - 'experiments/parity_lift_000/uorc056_oriented_principal_pell_core.py'
+      - 'experiments/parity_lift_000/uorc056_oriented_principal_pell_factor.py'
+      - 'Ecdlp/Proved/OrientedPrincipalPellBoundary.lean'
+      - '.github/workflows/uorc056-oriented-principal-pell-b7a.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact frozen divisor and Pell replay
+        run: |
+          python3 experiments/parity_lift_000/uorc056_oriented_principal_pell.py \
+            --out /tmp/uorc056_oriented_principal_pell_results.json \
+            > /tmp/uorc056-oriented-principal-pell-b7a.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/uorc056_oriented_principal_pell_results.json')
+              .read_text()
+          )
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert aggregate['cases'] == 10
+          assert aggregate['point_ratio_checks'] == 1086
+          assert aggregate['exceptional_point_checks'] == 6
+          assert aggregate['total_selector_checks'] == 1092
+          assert aggregate['all_support_sum_identities_exact']
+          assert aggregate['all_principal_divisors_exact']
+          assert aggregate['all_pell_identities_exact']
+          assert aggregate['all_zero_sets_exact']
+          assert aggregate['all_selector_exceptions_public']
+          assert aggregate['all_negation_covariance_exact']
+          assert aggregate['all_one_level_width_checks_exact']
+          assert secp['n_mod_8'] == 1
+          assert secp['p_mod_4'] == 3
+          assert not secp['anchor_is_already_even']
+          assert len(secp['selector_exception_scalars']) == 2
+          assert secp['norm_constant_character'] == -1
+          assert secp['one_level_index_width_lower_bound_bits'] == 128
+          assert secp['one_level_index_width_witness']['covers_at_least_half']
+          assert secp['central_target'] == 'UNIFORM-ORIENTED-ROOT-CIRCUIT-056'
+          assert not secp['compact_sub_sqrt_evaluator_found']
+          assert not secp['parity_oracle_found']
+          assert not secp['sub_sqrt_ecdlp_found']
+          PY
+
+      - name: Ensure scoped Lean boundary has no sorry
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/OrientedPrincipalPellBoundary.lean; then
+            echo '::error::Lean boundary contains sorry'
+            exit 1
+          fi
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            for attempt in 1 2 3 4; do
+              if sh /tmp/elan-init.sh -y --default-toolchain none; then
+                installed=1
+                echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+                break
+              fi
+              sleep $((attempt * 3))
+            done
+          fi
+          if [ "$installed" = 0 ]; then
+            echo 'elan unavailable; downloading the pinned Lean distribution directly'
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check scoped Lean boundary
+        run: lake build Ecdlp.Proved.OrientedPrincipalPellBoundary
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-oriented-principal-pell-b7a-results
+          path: |
+            /tmp/uorc056_oriented_principal_pell_results.json
+            /tmp/uorc056-oriented-principal-pell-b7a.log
+          retention-days: 90

@@ -1,0 +1,100 @@
+name: UORC056 Cayley-Riccati singularity boundary
+
+on:
+  push:
+    branches:
+      - research/uorc056-kummer-factor
+    paths:
+      - 'notes/reviews/UORC056_CAYLEY_RICCATI_SINGULARITY_B19.md'
+      - 'experiments/parity_lift_000/uorc056_cayley_riccati_singularity.py'
+      - 'Ecdlp/Proved/CayleyRiccatiSingularityBoundary.lean'
+      - '.github/workflows/uorc056-cayley-riccati-singularity.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact projective and cycle replay
+        run: |
+          python3 experiments/parity_lift_000/uorc056_cayley_riccati_singularity.py \
+            --out /tmp/uorc056_cayley_riccati_singularity_results.json \
+            > /tmp/uorc056-cayley-riccati-singularity.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/uorc056_cayley_riccati_singularity_results.json').read_text()
+          )
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert data['package'] == 'UORC056-CAYLEY-RICCATI-SINGULARITY-B19'
+          assert aggregate['field_cases'] == 9
+          assert aggregate['cycle_cases'] == 7
+          assert aggregate['projective_identity_checks'] == 3345
+          assert aggregate['rational_update_checks'] == 2907
+          assert aggregate['fixed_branch_checks'] == 292
+          assert aggregate['cycle_nonidentity_transitions'] == 107
+          assert aggregate['cycle_parity_preserving_transitions'] == 100
+          assert aggregate['cycle_parity_flip_transitions'] == 7
+          assert aggregate['all_regular_multipliers_fix_both_branches']
+          assert aggregate['all_cycles_have_one_wrap_flip']
+          assert secp['translation_step'] == 2
+          assert secp['nonidentity_wrap_flip_scalar'] == secp['n'] - 1
+          assert secp['regular_cayley_multiplier_preserves_plus_branch']
+          assert secp['regular_cayley_multiplier_preserves_minus_branch']
+          assert secp['branch_flip_requires_zero_pole_or_undefined_step']
+          assert secp['riccati_recurrence_is_cayley_conjugate_to_multiplication']
+          assert not secp['local_singularity_location_evaluator_found']
+          assert secp['nonlocal_algebraic_seed_propagation_remains_open']
+          assert secp['central_target'] == 'UNIFORM-ORIENTED-ROOT-CIRCUIT-056'
+          assert not secp['public_parity_oracle_found']
+          assert not secp['sub_sqrt_ecdlp_found']
+          PY
+
+      - name: Kernel-check scoped Lean algebra
+        run: |
+          if grep -nE '^[[:space:]]*(sorry|admit)([[:space:]]|$)' \
+              Ecdlp/Proved/CayleyRiccatiSingularityBoundary.lean; then
+            echo '::error::Lean boundary contains sorry or admit'
+            exit 1
+          fi
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              export PATH="$HOME/.elan/bin:$PATH"
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            export PATH="/tmp/lean-dist/lean-4.31.0-linux/bin:$PATH"
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+          lake exe cache get
+          lake build Ecdlp.Proved.CayleyRiccatiSingularityBoundary
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-cayley-riccati-singularity-results
+          path: |
+            /tmp/uorc056_cayley_riccati_singularity_results.json
+            /tmp/uorc056-cayley-riccati-singularity.log
+          retention-days: 90

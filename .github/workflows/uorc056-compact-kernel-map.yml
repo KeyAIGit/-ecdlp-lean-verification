@@ -1,0 +1,87 @@
+name: UORC056 compact kernel map
+
+on:
+  push:
+    branches:
+      - research/uorc056-kummer-factor
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_COMPACT_FROBENIUS_KERNEL_B3.md'
+      - 'experiments/parity_lift_000/uorc056_compact_frobenius_kernel.py'
+      - '.github/workflows/uorc056-compact-kernel-map.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact frozen polynomial replay
+        run: |
+          python3 experiments/parity_lift_000/uorc056_compact_frobenius_kernel.py \
+            --out /tmp/uorc056_compact_frobenius_kernel_results.json \
+            > /tmp/uorc056-compact-frobenius-kernel.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('/tmp/uorc056_compact_frobenius_kernel_results.json').read_text())
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert aggregate['cases'] == 6
+          assert aggregate['point_checks'] == 318
+          assert aggregate['negation_checks'] == 318
+          assert aggregate['all_factor_checks']
+          assert aggregate['all_cancellation_checks']
+          assert aggregate['all_local_coefficient_checks']
+          assert aggregate['all_declared_data_negation_blind']
+          assert secp['bit_length'] == 256
+          assert secp['cofactor_one']
+          assert secp['reduced_denominator'] == "K(X)^2"
+          assert secp['local_unreduced_numerator'] == "4*y(Q)^2"
+          assert secp['local_reduced_numerator'] == "4*y(Q)^2*K'(x(Q))^2"
+          assert secp['kernel_translation_germ_invariant']
+          assert not secp['selects_marked_root']
+          assert secp['central_target'] == 'UNIFORM-ORIENTED-ROOT-CIRCUIT-056'
+          PY
+
+      - name: Kernel-check existing fixed-point boundary
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/FrobeniusSectionBoundary.lean; then
+            echo '::error::Fixed-point boundary contains sorry'
+            exit 1
+          fi
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+          lake exe cache get
+          lake build Ecdlp.Proved.FrobeniusSectionBoundary
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-compact-kernel-map-results
+          path: |
+            /tmp/uorc056_compact_frobenius_kernel_results.json
+            /tmp/uorc056-compact-frobenius-kernel.log
+          retention-days: 90

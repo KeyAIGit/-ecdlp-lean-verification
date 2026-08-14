@@ -1,0 +1,104 @@
+name: UORC056 cyclic factorial standard boundary
+
+on:
+  push:
+    branches:
+      - research/uorc056-kummer-factor
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_CYCLIC_FACTORIAL_STANDARD_BOUNDARY_B15.md'
+      - 'experiments/parity_lift_000/uorc056_cyclic_factorial_standard_boundary.py'
+      - 'Ecdlp/Proved/CyclicFactorialStandardBoundary.lean'
+      - '.github/workflows/uorc056-cyclic-factorial-standard-boundary.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact toric-shadow replay
+        run: |
+          python3 experiments/parity_lift_000/uorc056_cyclic_factorial_standard_boundary.py \
+            --out /tmp/uorc056_cyclic_factorial_standard_boundary_results.json \
+            > /tmp/uorc056-cyclic-factorial-standard-boundary.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/uorc056_cyclic_factorial_standard_boundary_results.json').read_text()
+          )
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert data['package'] == 'UORC056-CYCLIC-FACTORIAL-STANDARD-BOUNDARY-B15'
+          assert aggregate['cases'] == 5
+          assert aggregate['q_difference_checks'] == 600
+          assert aggregate['fourier_closed_form_checks'] == 82
+          assert aggregate['all_half_polynomials_dense']
+          assert aggregate['all_nonzero_frequencies_present']
+          assert aggregate['all_two_level_bounds_hold']
+          assert secp['bit_length'] == 256
+          assert secp['gcd_n_p_minus_one'] == 1
+          assert secp['standard_two_level_cost_lower_bound_bit_length'] == 129
+          assert secp['extension_degree_bit_length'] == 254
+          assert not secp['base_field_contains_nontrivial_nth_root']
+          assert secp['toric_half_factorial_has_full_linearized_frequency_support']
+          assert not secp['known_q_holonomic_method_meets_fixed_epsilon_subroot_gate']
+          assert secp['endpoint_index_or_full_dual_phase_still_required']
+          assert not secp['public_parity_evaluator_found']
+          assert secp['central_target'] == 'UNIFORM-ORIENTED-ROOT-CIRCUIT-056'
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/CyclicFactorialStandardBoundary.lean; then
+            echo '::error::Cyclic factorial theorem contains sorry'
+            exit 1
+          fi
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            for attempt in 1 2 3 4; do
+              if sh /tmp/elan-init.sh -y --default-toolchain none; then
+                installed=1
+                echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+                break
+              fi
+              sleep $((attempt * 3))
+            done
+          fi
+          if [ "$installed" = 0 ]; then
+            echo 'elan unavailable; downloading the pinned Lean distribution directly'
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check cyclic factorial boundary
+        run: lake build Ecdlp.Proved.CyclicFactorialStandardBoundary
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-cyclic-factorial-standard-boundary-results
+          path: |
+            /tmp/uorc056_cyclic_factorial_standard_boundary_results.json
+            /tmp/uorc056-cyclic-factorial-standard-boundary.log
+          retention-days: 90

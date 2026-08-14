@@ -1,0 +1,100 @@
+name: UORC056 Pell endpoint singular equivalence
+
+on:
+  push:
+    branches:
+      - research/uorc056-kummer-factor
+    paths:
+      - 'notes/reviews/UORC056_PELL_ENDPOINT_SINGULAR_EQUIVALENCE_B20.md'
+      - 'experiments/parity_lift_000/uorc056_pell_endpoint_singular_equivalence.py'
+      - 'Ecdlp/Proved/PellEndpointSingularEquivalenceBoundary.lean'
+      - '.github/workflows/uorc056-pell-endpoint-singular-equivalence.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact Pell and endpoint replay
+        run: |
+          python3 experiments/parity_lift_000/uorc056_pell_endpoint_singular_equivalence.py \
+            --out /tmp/uorc056_pell_endpoint_singular_equivalence_results.json \
+            > /tmp/uorc056-pell-endpoint-singular-equivalence.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/uorc056_pell_endpoint_singular_equivalence_results.json')
+              .read_text()
+          )
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert data['package'] == 'UORC056-PELL-ENDPOINT-SINGULAR-EQUIVALENCE-B20'
+          assert aggregate['cases'] == 10
+          assert aggregate['total_nonzero_endpoint_checks'] == 1092
+          assert aggregate['total_ordinary_pell_checks'] == 1086
+          assert aggregate['total_public_pair_checks'] == 6
+          assert aggregate['common_factor_cases'] == 3
+          assert aggregate['total_common_polynomial_degree'] == 3
+          assert aggregate['all_endpoint_factors_total']
+          assert aggregate['all_classifiers_agree_off_public_pair']
+          assert aggregate['largest_order'] == 313
+          assert secp['n_mod_8'] == 1
+          assert secp['sum_scalar_parity'] == 'even'
+          assert secp['anchor_scalar_parity'] == 'odd'
+          assert secp['pell_common_factor_degree'] == 1
+          assert secp['pell_public_zero_over_zero_points'] == 2
+          assert secp['translated_endpoint_factor_handles_both_public_points']
+          assert secp['pell_singular_cut_is_endpoint_parity_off_public_pair']
+          assert not secp['new_sub_sqrt_mechanism_created']
+          assert secp['central_target'] == 'UNIFORM-ORIENTED-ROOT-CIRCUIT-056'
+          assert not secp['public_parity_oracle_found']
+          assert not secp['sub_sqrt_ecdlp_found']
+          PY
+
+      - name: Kernel-check scoped Lean algebra
+        run: |
+          if grep -nE '^[[:space:]]*(sorry|admit)([[:space:]]|$)' \
+              Ecdlp/Proved/PellEndpointSingularEquivalenceBoundary.lean; then
+            echo '::error::Lean boundary contains sorry or admit'
+            exit 1
+          fi
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              export PATH="$HOME/.elan/bin:$PATH"
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            export PATH="/tmp/lean-dist/lean-4.31.0-linux/bin:$PATH"
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+          lake exe cache get
+          lake build Ecdlp.Proved.PellEndpointSingularEquivalenceBoundary
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-pell-endpoint-singular-equivalence-results
+          path: |
+            /tmp/uorc056_pell_endpoint_singular_equivalence_results.json
+            /tmp/uorc056-pell-endpoint-singular-equivalence.log
+          retention-days: 90

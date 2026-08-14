@@ -1,0 +1,101 @@
+name: UORC056 Miller kernel edge
+
+on:
+  push:
+    branches:
+      - research/uorc056-kummer-factor
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_MILLER_KERNEL_EDGE_B2.md'
+      - 'experiments/parity_lift_000/uorc056_miller_kernel_edge.py'
+      - 'Ecdlp/Proved/RelativeEdgeGauge.lean'
+      - '.github/workflows/uorc056-miller-kernel-edge.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact Miller edge replay
+        run: |
+          python3 experiments/parity_lift_000/uorc056_miller_kernel_edge.py \
+            --out /tmp/uorc056_miller_kernel_edge_results.json \
+            > /tmp/uorc056-miller-kernel-edge.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('/tmp/uorc056_miller_kernel_edge_results.json').read_text())
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert aggregate['cases'] == 10
+          assert aggregate['centres'] == 49
+          assert aggregate['character_checks'] == 5405
+          assert aggregate['gauge_checks'] == 5405
+          assert aggregate['parity_matches'] == 2691
+          assert aggregate['parity_mismatches'] == 2714
+          assert aggregate['maximum_line_steps'] == 12
+          assert aggregate['all_endpoint_constants_query_independent']
+          assert aggregate['all_edges_gauge_invariant']
+          assert aggregate['all_screened_centres_reject_parity']
+          assert secp['bit_length'] == 256
+          assert secp['gcd_n_p_minus_one'] == 1
+          assert secp['inverse_n_mod_p_minus_one_is_odd']
+          assert secp['miller_residual_eds_weight'] == 2
+          assert secp['finite_multiplicative_miller_products_are_gauge_even']
+          assert not secp['does_standard_miller_kernel_data_select_absolute_root']
+          assert secp['central_target'] == 'UNIFORM-ORIENTED-ROOT-CIRCUIT-056'
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/RelativeEdgeGauge.lean; then
+            echo '::error::Relative-edge gauge theorem contains sorry'
+            exit 1
+          fi
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            for attempt in 1 2 3 4; do
+              if sh /tmp/elan-init.sh -y --default-toolchain none; then
+                installed=1
+                echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+                break
+              fi
+              sleep $((attempt * 3))
+            done
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check relative-edge identities
+        run: lake build Ecdlp.Proved.RelativeEdgeGauge
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-miller-kernel-edge-results
+          path: |
+            /tmp/uorc056_miller_kernel_edge_results.json
+            /tmp/uorc056-miller-kernel-edge.log
+          retention-days: 90

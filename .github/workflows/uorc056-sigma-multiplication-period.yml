@@ -1,0 +1,97 @@
+name: UORC056 sigma multiplication period boundary
+
+on:
+  push:
+    branches:
+      - research/uorc056-kummer-factor
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_SIGMA_MULTIPLICATION_PERIOD_B10.md'
+      - 'experiments/parity_lift_000/uorc056_sigma_multiplication_period.py'
+      - 'Ecdlp/Proved/SigmaMultiplicationPeriodBoundary.lean'
+      - '.github/workflows/uorc056-sigma-multiplication-period.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact prime-cycle replay
+        run: |
+          python3 experiments/parity_lift_000/uorc056_sigma_multiplication_period.py \
+            --out /tmp/uorc056_sigma_multiplication_period_results.json \
+            > /tmp/uorc056-sigma-multiplication-period.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('/tmp/uorc056_sigma_multiplication_period_results.json').read_text())
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert aggregate['cases'] == 10
+          assert aggregate['translation_stabilizer_rejections'] == 2184
+          assert aggregate['full_orbit_checks'] == 1092
+          assert aggregate['all_stabilizers_trivial']
+          assert aggregate['all_step_two_orbits_full']
+          assert aggregate['all_halves_not_subgroups']
+          assert secp['bit_length'] == 256
+          assert secp['proper_nontrivial_subgroups'] == 0
+          assert secp['step_two_orbit_length'] == secp['n']
+          assert secp['standard_sigma_subgroup_product'] == 'full kernel or trivial subgroup only'
+          assert not secp['full_kernel_product_selects_orientation']
+          assert secp['b_track_open_problem'] == 'endpoint-only nonlinear alternating-Miller evaluation'
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/SigmaMultiplicationPeriodBoundary.lean; then
+            echo '::error::Sigma period theorem contains sorry'
+            exit 1
+          fi
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            for attempt in 1 2 3 4; do
+              if sh /tmp/elan-init.sh -y --default-toolchain none; then
+                installed=1
+                echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+                break
+              fi
+              sleep $((attempt * 3))
+            done
+          fi
+          if [ "$installed" = 0 ]; then
+            echo 'elan unavailable; downloading the pinned Lean distribution directly'
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check prime-period lemmas
+        run: lake build Ecdlp.Proved.SigmaMultiplicationPeriodBoundary
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-sigma-multiplication-period-results
+          path: |
+            /tmp/uorc056_sigma_multiplication_period_results.json
+            /tmp/uorc056-sigma-multiplication-period.log
+          retention-days: 90
