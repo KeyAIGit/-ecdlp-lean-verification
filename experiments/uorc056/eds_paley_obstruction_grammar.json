@@ -1,0 +1,33 @@
+{
+  "base_corpus_grammar": "experiments/uorc056/divisor_aware_rational_grammar.json",
+  "cost_model": [
+    "one division-polynomial value psi_m(Q)",
+    "one quadratic character",
+    "one optional global sign phase",
+    "all representation and recurrence costs remain charged"
+  ],
+  "forbidden": [
+    "per-point phases",
+    "per-scalar advice",
+    "dropping zeros",
+    "products or ratios silently represented as one atom"
+  ],
+  "profile_id": "UORC-056-EDS-PALEY-OBSTRUCTION-V10",
+  "schema_version": "1.0",
+  "scope": {
+    "field": "odd prime q",
+    "marked_subgroup": "odd order n",
+    "surviving_case": "even m over q=3 mod 4",
+    "target": "delta*chi(psi_m([k]G))=(-1)^k for all 1<=k<n"
+  },
+  "theorem_gate": {
+    "exclusion_condition": "((n-1)/2)^2 > 3q+1",
+    "phase_policy": "delta is one public global sign in {+1,-1}",
+    "proof_objects": [
+      "division-polynomial composition identity",
+      "division-polynomial x-coordinate difference identity",
+      "Paley quadratic-character matrix",
+      "transitive tournament sign matrix"
+    ]
+  }
+}
