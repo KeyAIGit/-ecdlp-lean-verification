@@ -69,27 +69,35 @@ variable [Group Actor] [MulAction Actor World]
 same group orbit. This is the abstract normalization-torsor obstruction. -/
 theorem invariant_public_data_cannot_compute_moving_target
     (publicData : World → Data) (target : World → Output)
-    (hInvariant : ∀ actor world,
-      publicData (actor • world) = publicData world)
+    (hInvariant : ∀ (acting : Actor) (candidate : World),
+      publicData (acting • candidate) = publicData candidate)
     (actor : Actor) (world : World)
     (hTarget : target (actor • world) ≠ target world) :
     ¬ FactorsThrough publicData target := by
   exact not_factorsThrough_of_collision
-    publicData target (actor • world) world
-    (hInvariant actor world) hTarget
+    (publicData := publicData)
+    (target := target)
+    (left := actor • world)
+    (right := world)
+    (hInvariant actor world)
+    hTarget
 
 /-- In particular, invariant quotient data cannot choose every representative
 of a nontrivial orbit. -/
 theorem invariant_public_data_has_no_global_selector
     (publicData : World → Data)
-    (hInvariant : ∀ actor world,
-      publicData (actor • world) = publicData world)
+    (hInvariant : ∀ (acting : Actor) (candidate : World),
+      publicData (acting • candidate) = publicData candidate)
     (actor : Actor) (world : World)
     (hMoves : actor • world ≠ world) :
     ¬ ∃ select : Data → World,
         ∀ candidate, select (publicData candidate) = candidate := by
   simpa [FactorsThrough] using
     (invariant_public_data_cannot_compute_moving_target
+      (Actor := Actor)
+      (World := World)
+      (Data := Data)
+      (Output := World)
       (publicData := publicData)
       (target := fun candidate : World => candidate)
       hInvariant actor world hMoves)
