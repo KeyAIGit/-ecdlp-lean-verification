@@ -1,0 +1,196 @@
+{
+  "aggregate": {
+    "all_nonexceptional_orbit_sums_nonzero": true,
+    "all_pole_degree_bounds_pass": true,
+    "all_support_bounds_pass": true,
+    "orders": 6,
+    "parity_oracle_found": false,
+    "roots_checked": 12,
+    "sub_sqrt_evaluator_found": false
+  },
+  "cases": [
+    {
+      "exception_support": [0, 6, 7, 9, 18],
+      "n": 19,
+      "passed": true,
+      "roots": [
+        {
+          "actual_nonzero_orbits": 6,
+          "coefficient_histogram": {"-1": 2, "-4": 1, "1": 2, "2": 1},
+          "descended_pole_degree": 6,
+          "exceptional_orbits": 3,
+          "guaranteed_nonzero_orbits": 3,
+          "lambda": 7,
+          "pole_degree_lower_bound": 1,
+          "support_lower_bound": 2,
+          "total_orbits": 6
+        },
+        {
+          "actual_nonzero_orbits": 6,
+          "coefficient_histogram": {"-1": 2, "-4": 1, "1": 2, "2": 1},
+          "descended_pole_degree": 6,
+          "exceptional_orbits": 3,
+          "guaranteed_nonzero_orbits": 3,
+          "lambda": 11,
+          "pole_degree_lower_bound": 1,
+          "support_lower_bound": 2,
+          "total_orbits": 6
+        }
+      ]
+    },
+    {
+      "exception_support": [0, 15, 26, 27, 30],
+      "n": 31,
+      "passed": true,
+      "roots": [
+        {
+          "actual_nonzero_orbits": 10,
+          "coefficient_histogram": {"-1": 2, "-2": 1, "-3": 1, "-4": 1, "1": 3, "3": 2},
+          "descended_pole_degree": 11,
+          "exceptional_orbits": 3,
+          "guaranteed_nonzero_orbits": 7,
+          "lambda": 5,
+          "pole_degree_lower_bound": 3,
+          "support_lower_bound": 6,
+          "total_orbits": 10
+        },
+        {
+          "actual_nonzero_orbits": 10,
+          "coefficient_histogram": {"-1": 2, "-2": 1, "-3": 1, "-4": 1, "1": 3, "3": 2},
+          "descended_pole_degree": 11,
+          "exceptional_orbits": 3,
+          "guaranteed_nonzero_orbits": 7,
+          "lambda": 25,
+          "pole_degree_lower_bound": 3,
+          "support_lower_bound": 6,
+          "total_orbits": 10
+        }
+      ]
+    },
+    {
+      "exception_support": [0, 24, 25, 33, 66],
+      "n": 67,
+      "passed": true,
+      "roots": [
+        {
+          "actual_nonzero_orbits": 22,
+          "coefficient_histogram": {"-1": 7, "-2": 1, "-3": 2, "-4": 1, "1": 7, "2": 2, "3": 2},
+          "descended_pole_degree": 19,
+          "exceptional_orbits": 4,
+          "guaranteed_nonzero_orbits": 18,
+          "lambda": 29,
+          "pole_degree_lower_bound": 9,
+          "support_lower_bound": 18,
+          "total_orbits": 22
+        },
+        {
+          "actual_nonzero_orbits": 22,
+          "coefficient_histogram": {"-1": 7, "-2": 1, "-3": 2, "-4": 1, "1": 7, "2": 2, "3": 2},
+          "descended_pole_degree": 19,
+          "exceptional_orbits": 4,
+          "guaranteed_nonzero_orbits": 18,
+          "lambda": 37,
+          "pole_degree_lower_bound": 9,
+          "support_lower_bound": 18,
+          "total_orbits": 22
+        }
+      ]
+    },
+    {
+      "exception_support": [0, 135, 236, 237, 270],
+      "n": 271,
+      "passed": true,
+      "roots": [
+        {
+          "actual_nonzero_orbits": 90,
+          "coefficient_histogram": {"-1": 32, "-2": 3, "-3": 10, "1": 35, "3": 9, "4": 1},
+          "descended_pole_degree": 68,
+          "exceptional_orbits": 4,
+          "guaranteed_nonzero_orbits": 86,
+          "lambda": 28,
+          "pole_degree_lower_bound": 43,
+          "support_lower_bound": 86,
+          "total_orbits": 90
+        },
+        {
+          "actual_nonzero_orbits": 90,
+          "coefficient_histogram": {"-1": 32, "-2": 3, "-3": 10, "1": 35, "3": 9, "4": 1},
+          "descended_pole_degree": 68,
+          "exceptional_orbits": 4,
+          "guaranteed_nonzero_orbits": 86,
+          "lambda": 242,
+          "pole_degree_lower_bound": 43,
+          "support_lower_bound": 86,
+          "total_orbits": 90
+        }
+      ]
+    },
+    {
+      "exception_support": [0, 198, 247, 248, 396],
+      "n": 397,
+      "passed": true,
+      "roots": [
+        {
+          "actual_nonzero_orbits": 131,
+          "coefficient_histogram": {"-1": 50, "-2": 2, "-3": 14, "0": 1, "1": 50, "2": 1, "3": 14},
+          "descended_pole_degree": 96,
+          "exceptional_orbits": 4,
+          "guaranteed_nonzero_orbits": 128,
+          "lambda": 34,
+          "pole_degree_lower_bound": 64,
+          "support_lower_bound": 128,
+          "total_orbits": 132
+        },
+        {
+          "actual_nonzero_orbits": 131,
+          "coefficient_histogram": {"-1": 50, "-2": 2, "-3": 14, "0": 1, "1": 50, "2": 1, "3": 14},
+          "descended_pole_degree": 96,
+          "exceptional_orbits": 4,
+          "guaranteed_nonzero_orbits": 128,
+          "lambda": 362,
+          "pole_degree_lower_bound": 64,
+          "support_lower_bound": 128,
+          "total_orbits": 132
+        }
+      ]
+    },
+    {
+      "exception_support": [0, 53, 54, 216, 432],
+      "n": 433,
+      "passed": true,
+      "roots": [
+        {
+          "actual_nonzero_orbits": 143,
+          "coefficient_histogram": {"-1": 53, "-2": 1, "-3": 18, "0": 1, "1": 52, "2": 2, "3": 17},
+          "descended_pole_degree": 109,
+          "exceptional_orbits": 4,
+          "guaranteed_nonzero_orbits": 140,
+          "lambda": 198,
+          "pole_degree_lower_bound": 70,
+          "support_lower_bound": 140,
+          "total_orbits": 144
+        },
+        {
+          "actual_nonzero_orbits": 143,
+          "coefficient_histogram": {"-1": 53, "-2": 1, "-3": 18, "0": 1, "1": 52, "2": 2, "3": 17},
+          "descended_pole_degree": 109,
+          "exceptional_orbits": 4,
+          "guaranteed_nonzero_orbits": 140,
+          "lambda": 234,
+          "pole_degree_lower_bound": 70,
+          "support_lower_bound": 140,
+          "total_orbits": 144
+        }
+      ]
+    }
+  ],
+  "experiment": "ODD-GLV-NORM-BRANCH-SELECTION-066-C16-LIGHT",
+  "scope": "six frozen prime index cycles and public secp256k1 order",
+  "secp256k1": {
+    "descended_pole_degree_at_least": "19298681539552699237261830834781317975472927379845817397100860523586360249054",
+    "n": "115792089237316195423570985008687907852837564279074904382605163141518161494337",
+    "nonzero_glv_orbits": "38597363079105398474523661669562635950945854759691634794201721047172720498112",
+    "nonzero_quotient_support_at_least": "38597363079105398474523661669562635950945854759691634794201721047172720498108",
+    "pole_degree_bit_length": 254
+  }
+}
