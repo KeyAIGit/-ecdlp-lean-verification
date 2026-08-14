@@ -202,7 +202,7 @@ def search(
 def grammar_payload() -> dict[str, object]:
     return {
         "schema_version": "1.0",
-        "profile_id": "UORC-056-GLOBAL-DIVISOR-BALANCE-V4",
+        "profile_id": "UORC-056-GLOBAL-DIVISOR-BALANCE-V5",
         "curve_model": "y^2=x^3+7 over five frozen odd prime-order toy subgroups",
         "pulled_line_templates": {
             "formula": "L([u]Q), L=a*x+b*y+c",
@@ -243,7 +243,7 @@ def run() -> tuple[dict[str, object], dict[str, object]]:
     raw = sum(item.multiplicity for item in semantics)
     result = {
         "schema_version": "1.0",
-        "experiment": "UORC-056-GLOBAL-DIVISOR-BALANCE-V4",
+        "experiment": "UORC-056-GLOBAL-DIVISOR-BALANCE-V5",
         "grammar_sha256": hashlib.sha256(stable_json(grammar).encode()).hexdigest(),
         "corpus": {
             "curve_count": len(public),
