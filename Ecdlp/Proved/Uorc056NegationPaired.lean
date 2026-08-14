@@ -6,7 +6,7 @@ import Mathlib
 This file formalizes the ring- and field-theoretic identities used by the
 negation-paired quadratic and Hilbert-90 reductions. It deliberately does not
 claim to formalize the geometric nine-point divisor theorem or the odd-prism
-Laurent-support lower bound; those remain executable certificates.
+Laurent-support lower bound; those receive separate scoped certificates.
 -/
 
 namespace Ecdlp.UORC056
@@ -33,7 +33,9 @@ theorem paired_power_sum_recurrence (z w : R) (j : ℕ) :
 theorem paired_power_sum_global_sign (z w : R) (j : ℕ) :
     (-z) ^ j + (-w) ^ j =
       (-1 : R) ^ j * (z ^ j + w ^ j) := by
-  simp [neg_pow]
+  rw [show -z = (-1 : R) * z by ring,
+      show -w = (-1 : R) * w by ring,
+      mul_pow, mul_pow]
   ring
 
 end CommRing
@@ -59,12 +61,12 @@ variable (τ : K ≃+* K) (hτ : Function.Involutive τ)
 /-- A Hilbert-90 coboundary has norm one under an involution. -/
 theorem hilbert90_coboundary_norm_one (h : K) (hh : h ≠ 0) :
     (h / τ h) * τ (h / τ h) = 1 := by
-  have hτh : τ h ≠ 0 := by
-    exact map_ne_zero τ hh
+  have hτh : τ h ≠ 0 := (map_ne_zero τ).2 hh
+  have hττ : τ (τ h) = h := hτ h
   calc
     (h / τ h) * τ (h / τ h) =
-        (h / τ h) * (τ h / τ (τ h)) := by rw [map_div]
-    _ = (h / τ h) * (τ h / h) := by rw [hτ h]
+        (h / τ h) * (τ h / τ (τ h)) := by simp only [map_div]
+    _ = (h / τ h) * (τ h / h) := by rw [hττ]
     _ = 1 := by field_simp [hh, hτh]
 
 /-- The tautological Hilbert-90 representative `1+r` is valid, but already
@@ -83,7 +85,7 @@ Hilbert-90 quotient. -/
 theorem hilbert90_fixed_gauge
     (c h : K) (hc : τ c = c) (hc0 : c ≠ 0) (hh : h ≠ 0) :
     (c * h) / τ (c * h) = h / τ h := by
-  have hτh : τ h ≠ 0 := map_ne_zero τ hh
+  have hτh : τ h ≠ 0 := (map_ne_zero τ).2 hh
   rw [map_mul, hc]
   field_simp [hc0, hh, hτh]
 
@@ -115,14 +117,19 @@ theorem fixed_and_antifixed_eq_zero {a : K}
     calc
       a = τ a := hFixed.symm
       _ = -a := hAnti
-  linarith
+  have h2a : (2 : K) * a = 0 := by
+    calc
+      (2 : K) * a = a + a := by ring
+      _ = a + (-a) := by rw [hEq]
+      _ = 0 := by ring
+  exact (mul_eq_zero.mp h2a).resolve_left (by norm_num)
 
 /-- Hence a nonzero anti-fixed target cannot equal a fixed expression. -/
 theorem fixed_ne_nonzero_antifixed {a b : K}
     (ha : τ a = a) (hb : τ b = -b) (hb0 : b ≠ 0) : a ≠ b := by
   intro hab
   subst a
-  exact hb0 (fixed_and_antifixed_eq_zero τ hb ha)
+  exact hb0 (fixed_and_antifixed_eq_zero τ ha hb)
 
 end Field
 
