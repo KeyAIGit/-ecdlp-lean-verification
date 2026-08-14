@@ -100,8 +100,8 @@
     "candidate": null,
     "candidate_found": false
   },
-  "experiment": "UORC-056-SMALL-MILLER-DIVISOR-BALANCE-V5",
-  "grammar_sha256": "85ce06374b934f7949ba110823be94d606776e7f6363b47a904974e2c955fe7e",
+  "experiment": "UORC-056-SMALL-MILLER-DIVISOR-BALANCE-V6",
+  "grammar_sha256": "ea7387d9f6da804b633e38600098e7e469f55d81d9542ae43252e7a222e09eb0",
   "primitive_quotient": {
     "duplicates_removed": 0,
     "raw_primitives": 128,
