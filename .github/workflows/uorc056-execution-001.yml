@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - 'scripts/uorc056_*.py'
-      - 'scripts/test_uorc056_toy_factory.py'
+      - 'scripts/test_uorc056_*.py'
       - 'experiments/uorc056/**'
       - '.github/workflows/uorc056-execution-001.yml'
   workflow_dispatch:
@@ -33,11 +33,17 @@ jobs:
           python scripts/uorc056_toy_factory.py --output-dir /tmp/uorc056-fixtures --check
           cmp /tmp/uorc056-fixtures/manifest.json experiments/uorc056/expected_fixture_manifest.json
 
-      - name: Run producer unit tests
-        run: PYTHONPATH=scripts python -m unittest -v scripts/test_uorc056_toy_factory.py
+      - name: Run exact producer and synthesis tests
+        run: |
+          PYTHONPATH=scripts python -m unittest -v \
+            scripts/test_uorc056_toy_factory.py \
+            scripts/test_uorc056_circuit_synth.py
 
       - name: Replay every root and parity ratio independently
         run: python scripts/uorc056_sympy_replay.py /tmp/uorc056-fixtures
+
+      - name: Replay bounded circuit synthesis and transfer decision
+        run: python scripts/uorc056_circuit_synth.py --check
 
       - name: Upload exact ground-truth fixtures
         uses: actions/upload-artifact@v4
