@@ -22,11 +22,15 @@ all-in cost O(n^(1/2-epsilon)).
 | B5 higher-arity explicit resultants | root of any explicit binary resultant tree has state `Omega(sqrt(M))` | square-root frontier |
 | B6 transposed linear evaluation | `(I+T)^(-1)` for parity has exact translation support `n` | dense linear state |
 | B7 linear CM recurrence | nontrivial eigenline is a full order-`n` character; parity uses all frequencies | no bounded linear state |
+| B7A oriented principal Pell factor | exact generator-oriented principal section and polynomial-Pell norm equation | positive target normal form; direct construction remains large |
 | B8 alternating Miller primitive | exact oriented potential `H_G` found; norm and two-step edge are compact Miller data | positive structural reduction |
 | B9 alternating Miller segment | exact segment composition; explicit support `min(2m+2,n)`; norm gives reflected quotient only | endpoint primitive still missing |
 | B10 sigma multiplication period | parity half has trivial translation stabilizer; prime cycle has no proper nontrivial subgroup period | full kernel norm only |
 | B11 Miller monomial support | direct ordinary Miller/line representation needs linearly many atoms, even after quotient correction | short monomial closed |
-| B12 cyclic elliptic factorial | exact special-function candidate specified; no finite-field sub-root evaluator identified | open nonlinear candidate |
+| B12 cyclic elliptic factorial | exact elliptic shifted-factorial presentation | candidate presentation, not a separate algorithm |
+| B13 Hilbert-90 integration | projective local cocycle has `O(log n)` SLP; exact normalization is a cyclic norm; standard lift has `n` terms | compact local derivative, dense standard global lift |
+| B14 endpoint/factorial equivalence | endpoint ratios and global cyclic factorial differ only by one public anchor scalar | the two open items are one mechanism |
+| B15 standard cyclic-factorial boundary | root-of-unity shadow has dense half factors and all nonzero frequencies; standard q-holonomic/block routes meet square-root frontier and need hidden index or dual phase | standard special-function routes scoped closed |
 
 ## Strongest positive result of track B
 
@@ -67,29 +71,113 @@ H_G(P+2G)/H_G(P)
 
 has a four-point generalized-Miller divisor. Thus the local oriented edge is compact and public.
 
-The missing operation is now exactly:
+B13 strengthens the local result. For the B7A principal factor `f_G`, the
+translation cocycle
 
 ```text
-from public endpoints P,Q=P+[2m]G,
-evaluate H_G(Q)/H_G(P)
-without knowing or walking m.
+h_G(P)=f_G(P+2G)/f_G(P)
 ```
 
-This is the concrete structured segment primitive handed to track A.
+has a projective representative consisting of one 255-bit Miller loop plus two
+line factors. On secp256k1 that is 445 Miller line steps plus two external line
+factors. The missing operations are its exact cyclic normalization and the
+distinguished multiplicative Hilbert-90 lift.
+
+## The two former open items are one
+
+For any nonzero potential `F`, put
+
+```text
+E(P,Q)=F(Q)/F(P).
+```
+
+Then
+
+```text
+E(P,Q)E(Q,R)=E(P,R).
+```
+
+Conversely, any exact endpoint function with this composition law is recovered
+from one public anchor row:
+
+```text
+F_(P0)(Q)=E(P0,Q),
+E(P,Q)=F_(P0)(Q)/F_(P0)(P).
+```
+
+Therefore:
+
+```text
+endpoint-only segment evaluator
+    <=> cyclic elliptic factorial/global-potential evaluator
+```
+
+up to one harmless scalar gauge. B14 closes them as two separate research
+routes. It does not construct the common evaluator.
 
 ## Exact cost boundaries obtained in B
 
 For secp256k1:
 
 ```text
-standard two-set index work               >= 2^128-1,
-explicit higher-arity resultant root state >= 240615969168004511545033772477625056927,
-translation-polynomial support             = n,
-standard linear CM character support       = n,
-corrected direct Miller/line atom count     >= 14474011154664524427946373126085988481604695534884363047825645392689770186793.
+standard two-set index work                 >= 2^128-1,
+explicit higher-arity resultant root state  >= 240615969168004511545033772477625056927,
+translation-polynomial support               = n,
+standard linear CM character support         = n,
+corrected direct Miller/line atom count       >= 14474011154664524427946373126085988481604695534884363047825645392689770186793,
+standard explicit Hilbert-90/orbit state      = n,
+standard two-level factorial/segment cost     >= 481231938336009023090067544955250113854.
 ```
 
-These are scoped representation bounds, not a universal arithmetic-circuit lower bound.
+The last bound is the exact ceiling obtained from
+
+```text
+w^2 >= 4M,
+M=(n-1)/2.
+```
+
+It is a 129-bit quantity and therefore does not meet any fixed-epsilon
+`n^(1/2-epsilon)` gate.
+
+These are scoped representation/model bounds, not a universal arithmetic-
+circuit lower bound.
+
+## Standard cyclic-factorial closure
+
+The closest toric shadow is
+
+```text
+O_n(X)=product_(j=0)^(M-1)(1-X q^(2j+1)),
+E_n(X)=product_(j=1)^M    (1-X q^(2j)),
+R_n(X)=O_n(X)/E_n(X).
+```
+
+It satisfies
+
+```text
+O_n(X)E_n(X)=(1-X^n)/(1-X),
+R_n(q^2X)/R_n(X)=(1-X)(1-q^2X)/(1-qX)^2.
+```
+
+Thus the local q-difference is constant-size, but both half polynomials have
+all `M+1` coefficients nonzero. The alternating exponent vector has every
+nonzero additive Fourier frequency, with value
+
+```text
+(z-1)/(z+1)
+```
+
+at a nontrivial `n`-th root `z`.
+
+Known indexed q-holonomic algorithms and ordinary baby-step/giant-step product
+methods operate at the square-root frontier. They also require the numerical
+term index or `q^m`. In the elliptic endpoint input that index is hidden, while
+an analogue of `q^m` is a faithful dual character. On secp256k1 the base field
+contains no nontrivial order-`n` root, and an explicit dual phase has extension
+degree `(n-1)/6`.
+
+Hence the standard q-factorial, cyclic-dilogarithm-state, smooth-subgroup FFT,
+and two-level block mechanisms do not supply the required endpoint evaluator.
 
 ## What B no longer needs to repeat
 
@@ -103,31 +191,44 @@ transposed interpolation with oriented samples supplied,
 linear combinations of finitely many CM characters,
 full dual-character or pairing representations,
 proper-period subgroup sigma products,
-short products of ordinary Miller and line atoms.
+short products of ordinary Miller and line atoms,
+explicit n-state Hilbert-90/circulant systems,
+ordinary two-level factorial block products,
+direct import of indexed q-holonomic algorithms,
+root-of-unity states supplied as uncharged advice.
 ```
 
-## Remaining B-only possibility
+## Remaining central object
 
-The alternating Miller product can be written, under sigma uniformization and up to a point-independent factor, as a ratio of finite elliptic shifted factorials with step `2G`. This is the only clearly identified B-specific nonlinear candidate.
-
-A positive result must give an exact base-field evaluator for that cyclic elliptic factorial without:
+After B14 the two named open items are no longer separate. The one remaining
+object is:
 
 ```text
-walking the unknown segment,
-expanding M factors,
-materializing a square-root-degree intermediate,
-using a full dual phase,
-or storing the oriented Kummer table.
+compact distinguished global integration of the public Miller cocycle,
 ```
 
-The external literature confirms that elliptic shifted factorials and root-of-unity cyclic-dilogarithm identities are genuine special-function classes. The present audit did not identify a formula satisfying this finite-field evaluator and cost gate. This is absence of a found construction, not a theorem of nonexistence.
+or equivalently:
+
+```text
+evaluate f_G(Q), H_G(Q), B_G^pol(x(Q))/A_G^pol(x(Q)),
+or Y_G(x(Q))/y(Q)
+without an explicit orbit state, hidden index, dual phase, or square-root-width
+intermediate.
+```
+
+A positive result must be a genuinely nonlinear base-field identity or uniform
+arithmetic circuit outside every scoped class above. A general impossibility
+result would require a new circuit lower bound and has not been proved.
 
 ## Current verdict
 
 ```text
-Public parity evaluator                         absent
-Absolute EDS-residue evaluator                  absent
-All-in sub-square-root algorithm                absent
-Positive compact local cocycle                  obtained
-Remaining bottleneck                            endpoint integration / cyclic elliptic factorial evaluation
+Endpoint-only segment evaluator as separate route        closed by equivalence
+Cyclic factorial standard evaluator classes              scoped closed
+Common unrestricted nonlinear evaluator                  open
+Public parity evaluator                                  absent
+Absolute EDS-residue evaluator                           absent
+All-in sub-square-root algorithm                         absent
+Positive compact local cocycle                           obtained
+Remaining bottleneck                                     distinguished global integration
 ```
