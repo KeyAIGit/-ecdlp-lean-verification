@@ -1,0 +1,111 @@
+name: UORC056 polynomial-Pell sign-seed boundary
+
+on:
+  push:
+    branches:
+      - research/uorc056-kummer-factor
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_POLYNOMIAL_PELL_SIGN_SEED_B17.md'
+      - 'experiments/parity_lift_000/uorc056_polynomial_pell_sign_seed.py'
+      - 'experiments/parity_lift_000/uorc056_hilbert90_integration_core.py'
+      - 'experiments/parity_lift_000/uorc056_oriented_principal_pell_core.py'
+      - 'Ecdlp/Proved/PolynomialPellSignSeedBoundary.lean'
+      - '.github/workflows/uorc056-polynomial-pell-sign-seed.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact Pell conjugation replay
+        run: |
+          python3 experiments/parity_lift_000/uorc056_polynomial_pell_sign_seed.py \
+            --out /tmp/uorc056_polynomial_pell_sign_seed_results.json \
+            > /tmp/uorc056-polynomial-pell-sign-seed.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/uorc056_polynomial_pell_sign_seed_results.json').read_text()
+          )
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert data['package'] == 'UORC056-POLYNOMIAL-PELL-SIGN-SEED-B17'
+          assert aggregate['cases'] == 10
+          assert aggregate['parity_checks'] == 1086
+          assert aggregate['public_exceptions'] == 6
+          assert aggregate['generator_reversal_checks'] == 10
+          assert aggregate['pell_norm_checks'] == 10
+          assert aggregate['marked_seed_checks'] == 20
+          assert aggregate['all_kernel_data_generator_blind']
+          assert aggregate['all_normalized_solutions_conjugate']
+          assert aggregate['all_pell_norms_equal']
+          assert aggregate['all_marked_seeds_exact']
+          assert aggregate['all_explicit_coefficient_counts_exact']
+          assert secp['bit_length'] == 256
+          assert secp['explicit_pell_coefficients'] == (secp['n'] + 1) // 2
+          assert secp['explicit_pell_coefficients_bit_length'] == 255
+          assert not secp['symmetric_pell_data_selects_conjugate']
+          assert secp['public_marked_generator_seed_exists']
+          assert secp['standard_half_gcd_requires_oriented_root_or_dense_output']
+          assert not secp['one_point_seed_subroot_propagation_found']
+          assert not secp['parity_oracle_found']
+          assert not secp['sub_sqrt_ecdlp_found']
+          assert secp['selected_successor'] == 'UORC056-NONLINEAR-SEED-PROPAGATION-B18'
+          PY
+
+      - name: Ensure scoped Lean boundary has no sorry
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/PolynomialPellSignSeedBoundary.lean; then
+            echo '::error::Lean boundary contains sorry'
+            exit 1
+          fi
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            for attempt in 1 2 3 4; do
+              if sh /tmp/elan-init.sh -y --default-toolchain none; then
+                installed=1
+                echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+                break
+              fi
+              sleep $((attempt * 3))
+            done
+          fi
+          if [ "$installed" = 0 ]; then
+            echo 'elan unavailable; downloading the pinned Lean distribution directly'
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check scoped Lean boundary
+        run: lake build Ecdlp.Proved.PolynomialPellSignSeedBoundary
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-polynomial-pell-sign-seed-results
+          path: |
+            /tmp/uorc056_polynomial_pell_sign_seed_results.json
+            /tmp/uorc056-polynomial-pell-sign-seed.log
+          retention-days: 90
