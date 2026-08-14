@@ -1,13 +1,14 @@
 import Mathlib
 
 /-!
-# UORC056 C21 Hilbert-90 divisor certificates
+# UORC056 C21-C22 Hilbert-90 divisor certificates
 
-This file formalizes the combinatorial core of the half-divisor and fixed-field
-gauge lower bounds.  A `τ`-pair is represented by the two integral divisor
-coefficients `u i` and `v i`; the anti-invariant coefficient is their
-difference.  The geometric identification of these coefficients with the
-specific endpoint-gauge divisor remains in the executable replay.
+This file formalizes the combinatorial core of the half-divisor, fixed-field
+gauge, and valuation-transparent multiplicative support lower bounds. A
+`τ`-pair is represented by the two integral divisor coefficients `u i` and
+`v i`; the anti-invariant coefficient is their difference. The geometric
+identification of these coefficients with the specific endpoint-gauge divisor
+remains in the executable replay.
 -/
 
 namespace Ecdlp.UORC056
@@ -63,7 +64,7 @@ section FiniteSupport
 
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
-/-- Cardinal form of the half-divisor support lower bound.  It counts
+/-- Cardinal form of the half-divisor support lower bound. It counts
 `τ`-pairs, not individual points. -/
 theorem half_divisor_support_card_le
     (u v s : ι → ℤ)
@@ -98,5 +99,36 @@ theorem fixed_gauge_cannot_reduce_required_pair_count
     _ = s i := h i
 
 end FiniteSupport
+
+section MultiplicativeSupport
+
+variable {ι κ : Type*} [Fintype κ]
+
+/-- A nonzero finite integer sum has at least one nonzero summand. -/
+theorem finite_sum_ne_zero_has_nonzero_term
+    (g : κ → ℤ) (h : (∑ j, g j) ≠ 0) :
+    ∃ j, g j ≠ 0 := by
+  by_contra hNone
+  push_neg at hNone
+  apply h
+  simp [hNone]
+
+/-- Support-union theorem for the declared valuation-transparent
+multiplicative Hilbert-90 grammar. At divisor level, products, quotients,
+powers, and pullbacks produce a finite integer sum of charged leaf vectors.
+Every nonzero output coordinate therefore occurs in at least one charged leaf
+support. -/
+theorem multiplicative_pair_support_union
+    (leaf : κ → ι → ℤ) (target : ι → ℤ)
+    (hTarget : ∀ i, (∑ j, leaf j i) = target i) :
+    ∀ i, target i ≠ 0 → ∃ j, leaf j i ≠ 0 := by
+  intro i hi
+  apply finite_sum_ne_zero_has_nonzero_term (g := fun j => leaf j i)
+  intro hSum
+  apply hi
+  rw [← hTarget i]
+  exact hSum
+
+end MultiplicativeSupport
 
 end Ecdlp.UORC056
