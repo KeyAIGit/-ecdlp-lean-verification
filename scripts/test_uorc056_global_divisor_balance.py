@@ -12,7 +12,7 @@ class GlobalDivisorBalanceTests(unittest.TestCase):
 
     def test_frozen_exact_result(self):
         grammar, result = module.run()
-        self.assertEqual(grammar["profile_id"], "UORC-056-GLOBAL-DIVISOR-BALANCE-V4")
+        self.assertEqual(grammar["profile_id"], "UORC-056-GLOBAL-DIVISOR-BALANCE-V5")
         self.assertEqual(result["corpus"]["nonzero_points"], 438)
         self.assertEqual(result["template_quotient"]["raw_pulled_line_templates"], 1440)
         self.assertEqual(result["template_quotient"]["unique_exact_local_semantics"], 1280)
