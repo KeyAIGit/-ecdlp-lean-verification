@@ -1,0 +1,114 @@
+name: UORC-056 persist transfer synthesis v2
+
+on:
+  push:
+    branches:
+      - research/uorc056-execution-001
+    paths:
+      - 'scripts/uorc056_transfer_synth_v2.py'
+      - 'scripts/test_uorc056_transfer_synth_v2.py'
+      - 'experiments/uorc056/transfer_grammar_v2.json'
+      - '.github/workflows/uorc056-transfer-synth-v2-record.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: uorc056-transfer-synth-v2-record
+  cancel-in-progress: true
+
+jobs:
+  record:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/uorc056-execution-001
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verify and execute
+        run: |
+          PYTHONPATH=scripts python -m unittest -v \
+            scripts/test_uorc056_transfer_synth_v2.py
+          python scripts/uorc056_transfer_synth_v2.py \
+            --max-weight 4 \
+            --beam-size 192 \
+            --out experiments/uorc056/transfer_synth_v2_results.json
+
+      - name: Render evidence summary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          result_path = Path('experiments/uorc056/transfer_synth_v2_results.json')
+          data = json.loads(result_path.read_text())
+          all_five = data['exact_all_five']
+          train = data['exact_train_first_three_then_unmodified_holdout']
+          near = data['near_miss_all_five']
+          lines = [
+              '# UORC-056 transfer synthesis v2 result',
+              '',
+              f"Decision: **{data['decision']}**",
+              '',
+              '## Exact gates',
+              '',
+              f"- Exact on all five frozen curves: `{all_five['found']}`.",
+              f"- Minimum all-five weight: `{all_five['minimum_weight']}`.",
+              f"- Exact on the first three curves: `{train['found']}`.",
+              f"- Minimum first-three weight: `{train['minimum_weight']}`.",
+              f"- Symbolic lifting: `{data['symbolic_lifting_status']}`.",
+              '',
+              '## Catalogue',
+              '',
+              f"- Raw symbolic atoms: `{data['catalogue']['raw_symbolic_atoms']}`.",
+              f"- Valid on all five curves: `{data['catalogue']['valid_nonzero_on_all_curves']}`.",
+              f"- All-curve semantic classes: `{data['catalogue']['all_curve_semantic_classes']}`.",
+              '',
+              '## Diagnostic near miss',
+              '',
+              f"- Errors: `{near['subset_errors']}` of `{near['subset_total']}`.",
+              f"- Accuracy: `{near['subset_accuracy']:.12f}`.",
+              f"- Formula: `{near['formula']}`.",
+              '',
+              'The near miss is not an exact candidate and is not promoted.',
+              '',
+              '## Single-curve seeds',
+              '',
+          ]
+          for row in data['single_curve_minimum_seeds']:
+              lines.append(
+                  f"- `{row['subset'][0]}`: found=`{row['found']}`, "
+                  f"minimum_weight=`{row['minimum_weight']}`."
+              )
+          lines.extend([
+              '',
+              '## Scientific boundary',
+              '',
+              'This result closes or advances only the explicitly frozen bounded grammar. '
+              'It does not by itself establish a uniform sub-square-root evaluator.',
+              '',
+          ])
+          Path('experiments/uorc056/TRANSFER_SYNTH_V2_RESULT.md').write_text(
+              '\n'.join(lines), encoding='utf-8'
+          )
+          PY
+
+      - name: Commit deterministic result
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            experiments/uorc056/transfer_synth_v2_results.json \
+            experiments/uorc056/TRANSFER_SYNTH_V2_RESULT.md
+          if git diff --cached --quiet; then
+            echo 'deterministic evidence already current'
+          else
+            git commit -m 'research: record UORC-056 transfer synthesis v2 result'
+            git push origin HEAD:research/uorc056-execution-001
+          fi
