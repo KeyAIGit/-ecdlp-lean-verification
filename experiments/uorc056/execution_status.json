@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.2",
+  "schema_version": "1.3",
   "package": "UORC-056-EXECUTION-001",
-  "status": "tasks_01_through_21_implemented_with_bounded_negatives",
+  "status": "tasks_01_through_22_implemented_with_one_exact_sheaf_obligation",
   "tasks": [
     {
       "task": 1,
@@ -128,15 +128,21 @@
       "name": "small_public_miller_divisor_balance",
       "status": "complete_negative_for_four_signed_small_miller_primitives",
       "evidence": "experiments/uorc056/small_miller_balance_results.json and scripts/uorc056_small_miller_balance.py"
+    },
+    {
+      "task": 22,
+      "name": "parity_fourier_peak_and_conditional_divisor_support_reduction",
+      "status": "elementary_spectral_reduction_complete_FDB1_kummer_lang_bound_open",
+      "evidence": "experiments/uorc056/fourier_divisor_barrier_contract.json, experiments/uorc056/fourier_divisor_barrier_results.json, scripts/uorc056_fourier_divisor_barrier.py and notes/reviews/UORC056_FOURIER_DIVISOR_BARRIER_V7.md"
     }
   ],
   "next_frontier": {
-    "primary": "Prove or refute a character-sum divisor-degree barrier for exact parity on the marked cyclic subgroup, using the large Fourier coefficient of the alternating sequence and a twisted multiplicative-character sum bound.",
+    "primary": "Source-lock, prove or refute FDB-1: the elliptic Kummer-Lang hybrid trace bound with an exact conductor constant and divisor-aware regularization.",
     "secondary": [
-      "exact irreducible-conic and general low-divisor-degree rational grammar",
-      "globally balanced pulled products with more than four total factors or larger public multipliers",
-      "index-growing EDS or Miller constructions with all representation and normalization costs charged"
+      "kernel-check the elementary geometric-series Fourier identity independently of FDB-1",
+      "prove geometric nontriviality of the odd-order Lang character tensored with the quadratic Kummer factor",
+      "after FDB-1, redirect constructive search toward high-degree low-size circuits rather than more bounded divisor dictionaries"
     ]
   },
-  "scientific_boundary": "The package gives exact finite ground truth and bounded grammar closures. It is not a sub-square-root evaluator and does not recover any unknown production scalar."
+  "scientific_boundary": "The package gives exact finite ground truth, bounded grammar closures and a complete elementary reduction from a hybrid trace estimate to an odd-divisor-support lower bound. FDB-1 is still an explicit proof obligation. No general arithmetic-circuit lower bound or sub-square-root evaluator is claimed."
 }
