@@ -168,7 +168,7 @@ def sign_bits(template: Template, curve_contexts: Sequence[Context]) -> int | No
         curve = (p, n, generator)
         kind = template[0]
         if kind == "phase":
-            sign = base.quadratic_character(symbol(template[1], curve), p)
+            sign = base.chi(symbol(template[1], curve), p)
             if sign == 0:
                 return None
             if sign == -1:
@@ -184,7 +184,7 @@ def sign_bits(template: Template, curve_contexts: Sequence[Context]) -> int | No
                 point = points[(multiplier * scalar) % n]
                 assert point is not None
                 value = x_coefficient * point[0] + y_coefficient * point[1] + constant
-                sign = base.quadratic_character(value, p)
+                sign = base.chi(value, p)
                 if sign == 0:
                     return None
                 if sign == -1:
@@ -203,7 +203,7 @@ def sign_bits(template: Template, curve_contexts: Sequence[Context]) -> int | No
                 + right_coefficient * coordinate(right_point, right[0])
                 + constant
             )
-            sign = base.quadratic_character(value, p)
+            sign = base.chi(value, p)
             if sign == 0:
                 return None
             if sign == -1:
