@@ -14,14 +14,12 @@ The file does not formalize elliptic curves, Kummer algebras, transposed
 multipoint evaluation, secp256k1, parity recovery, or ECDLP.
 -/
 
-open scoped BigOperators
-
 namespace Ecdlp.ParityLift
 
 /-- Finite alternating geometric-series identity over a commutative ring. -/
 theorem one_add_mul_alternating_sum
     {R : Type*} [CommRing R] (X : R) (n : ℕ) :
-    (1 + X) * (∑ j in Finset.range n, (-X) ^ j)
+    (1 + X) * Finset.sum (Finset.range n) (fun j => (-X) ^ j)
       = 1 - (-X) ^ n := by
   induction n with
   | zero => simp
