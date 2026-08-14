@@ -2,42 +2,50 @@
 
 ## Status
 
-V10 closes the pure single-division-polynomial character route that V9 left
-open on fields with `q=3 mod 4`.
+V10 closes the pure single-division-polynomial character route left open by
+V9. The secp256k1 conclusion no longer depends on the provisional V8 sheaf
+constant: it follows from the published subgroup character-sum estimate of
+Shparlinski and Stange.
 
-The new observation is that the apparently high-degree even division
-polynomial never needs to be treated as a high-conductor function on the marked
-subgroup. The chain rule removes its square factor and conjugates the fixed
-second division polynomial by a subgroup automorphism. The Fourier conductor
-therefore stays equal to four, independently of the index.
+Two exact facts drive the result:
 
-The algebraic reduction, exact corpus scans and secp256k1 inequality are
-machine checked. The hybrid character-sum bound is inherited from the
-provisional V8 sheaf theorem, so independent specialist review and formalization
-remain pending.
+```text
+psi_(2u)(Q)=psi_2([u]Q)*psi_u(Q)^4,
+
+max_r |sum_{k=1}^{n-1} (-1)^k exp(-2*pi*i*r*k/n)|
+  = cot(pi/(2n)).
+```
+
+The first collapses every even index to a pullback of the fixed function
+`psi_2=2y`. The second says that exact parity forces a Fourier coefficient of
+size `cot(pi/(2n))`.
+
+For `psi_2`, the published theorem gives the sufficient upper bound
+`6*sqrt(q)`. A sharper `4*sqrt(q)` conductor calculation is retained as a
+provisional refinement, not as the basis of the secp256k1 claim.
 
 ## 1. Setting
 
-Let `E/F_q` be an elliptic curve over an odd finite field and let
+Let
 
 ```text
-H=<G> subset E(F_q),     |H|=n,
+E/F_q,
+H=<G>,
+|H|=n,
 ```
 
-where `n>=3` is odd. Let `chi` be the quadratic character. We ask whether there
-exist a positive integer `m` and a global phase `epsilon in {+1,-1}` such that
+where `q` is odd and `n>=3` is odd. Let `chi` be the quadratic character. The
+pure route asks whether there are a positive integer `m` and one global phase
+`epsilon in {+1,-1}` such that
 
 ```text
-chi(psi_m([k]G))=epsilon*(-1)^k,
+epsilon*chi(psi_m([k]G))=(-1)^k,
 1<=k<n.
 ```
 
-Allowing the global phase makes the no-go statement stronger than the
-canonically normalized target.
-
-If `gcd(m,n)>1`, then some nonzero point of `H` is an `m`-torsion zero of
-`psi_m`, so an everywhere-defined exact sign evaluator is already impossible.
-Hence only `gcd(m,n)=1` requires analysis.
+If `gcd(m,n)>1`, a nonzero subgroup point is an `m`-torsion zero of `psi_m`, so
+an everywhere-defined sign evaluator is impossible. Only `gcd(m,n)=1` needs
+analysis.
 
 ## 2. Odd indices fail covariance
 
@@ -47,15 +55,14 @@ Division polynomials satisfy
 psi_m(-Q)=(-1)^(m+1) psi_m(Q).
 ```
 
-For odd `m`, the function is invariant under `Q -> -Q`, and therefore its
-quadratic character is invariant. Canonical parity on an odd cycle is
-anti-invariant:
+For odd `m`, `chi(psi_m(Q))` is invariant under `Q -> -Q`. Canonical parity on
+an odd cycle is anti-invariant:
 
 ```text
 (-1)^(n-k)=-(-1)^k.
 ```
 
-Thus every odd index is impossible over every odd field.
+Hence every odd index is excluded.
 
 ## 3. Every even index collapses to psi_2
 
@@ -65,241 +72,231 @@ Write
 m=2u.
 ```
 
-The normalized division-polynomial chain rule is
+The normalized chain rule is
 
 ```text
 psi_(ab)=(psi_a o [b])*psi_b^(a^2).
 ```
 
-Taking `a=2` gives
+With `a=2`,
 
 ```text
 psi_(2u)(Q)=psi_2([u]Q)*psi_u(Q)^4.
 ```
 
-On the nonzero marked orbit, `psi_u(Q)` is nonzero because `gcd(u,n)=1`.
-Taking the quadratic character kills the fourth power:
+Because `gcd(u,n)=1`, `psi_u` is nonzero on the nonzero marked orbit. Taking
+the quadratic character removes the fourth power:
 
 ```text
 chi(psi_(2u)(Q))=chi(psi_2([u]Q)).
 ```
 
-This identity is the decisive reduction. It says that the character sequence
-for an arbitrarily large even index is merely a multiplicative decimation of
-the fixed sequence
+Thus an arbitrarily large even index does not create a new sign sequence. It
+only permutes the fixed sequence
 
 ```text
-tau(k)=chi(psi_2([k]G)).
+tau(k)=chi(psi_2([k]G))=chi(2y([k]G)).
 ```
 
-The large divisor of `psi_(2u)` is a pullback artifact. On `H`, multiplication
-by `u` is a permutation and the character sees only `psi_2`.
+The executable replay checks this identity on 53,754 point-index pairs across
+the five discovery curves for even indices through 256.
 
 ## 4. Fourier peak forced by parity
 
-Let
+Take the near-half frequency
 
 ```text
 r=(n-1)/2.
 ```
 
-The exact near-half Fourier coefficient of canonical parity has magnitude
+The exact parity coefficient has magnitude
 
 ```text
-abs(sum_{k=1}^{n-1} (-1)^k exp(-2*pi*i*r*k/n))
+|sum_{k=1}^{n-1} (-1)^k exp(-2*pi*i*r*k/n)|
   = cot(pi/(2n)).
 ```
 
-Suppose an even-index formula were exact. Substituting `j=u*k mod n` gives
+Multiplication by an invertible `u mod n` merely permutes the subgroup and
+changes the frequency. Therefore an exact even-index evaluator would force
+some subgroup Fourier coefficient of `chi(psi_2)` to have magnitude
+`cot(pi/(2n))`.
+
+## 5. Published 6*sqrt(q) bound
+
+Shparlinski and Stange prove the following subgroup character-sum estimate. For
+a subgroup `H`, a group character `omega`, a multiplicative character `chi`
+and a rational function `f` that is not a perfect power of the relevant order,
 
 ```text
-sum_{k=1}^{n-1} chi(psi_2([u*k]G)) exp(-2*pi*i*r*k/n)
-
-= sum_{j=1}^{n-1} chi(psi_2([j]G))
-    exp(-2*pi*i*r*u^(-1)*j/n).
+|sum_{Q in H} omega(Q)*chi(f(Q))|
+  <= 2*deg(f)*sqrt(q).
 ```
 
-Thus exact parity would force a subgroup Fourier coefficient of the fixed
-trace function `chi(psi_2)` to have magnitude `cot(pi/(2n))`.
+For the classical second division polynomial,
 
-## 5. The fixed conductor is four
+```text
+psi_2=2y,
+deg(psi_2:E->P^1)=3.
+```
 
-In odd characteristic,
+It is not a square in the function field. Hence every subgroup Fourier
+coefficient of `chi(psi_2)` satisfies
+
+```text
+|S| <= 6*sqrt(q).
+```
+
+A necessary condition for any pure division-polynomial parity formula is
+therefore
+
+```text
+cot(pi/(2n)) <= 6*sqrt(q).                (V10.1)
+```
+
+This bound is published and is the primary secp256k1 certificate.
+
+## 6. Sharper provisional 4*sqrt(q) refinement
+
+The divisor of `psi_2` is
 
 ```text
 div(psi_2)
  = sum_{T in E[2] minus {O}} [T] - 3[O].
 ```
 
-Over the algebraic closure there are three nonidentity 2-torsion points. Each
-zero has odd order one, and the pole at `O` has odd order three. Therefore
+Its geometric odd-valuation support has four points. The V8 Kummer-sheaf
+conductor calculation therefore suggests the sharper bound
 
 ```text
-s(psi_2)=4.
+|S| <= 4*sqrt(q),
 ```
 
-The subgroup has odd order, so no nonzero point of `H` lies in this divisor.
-There is no regularization error on the evaluated orbit.
-
-Apply the V8 subgroup-character extension and annihilator averaging argument to
-the quadratic Kummer sheaf of `psi_2`. The near-half character is faithful of
-odd order, so its Lang local system cannot cancel the order-two Kummer system.
-On the genus-one curve punctured at the four odd-support points,
-Grothendieck-Ogg-Shafarevich gives
+and the stronger necessary condition
 
 ```text
-dim H_c^1=4.
+cot(pi/(2n)) <= 4*sqrt(q).                (V10.2)
 ```
 
-The trace formula and Deligne weights give, for every subgroup frequency,
+This refinement remains subject to specialist review. No secp256k1 conclusion
+in V10 depends on accepting it.
+
+## 7. secp256k1 certificate
+
+The machine certificate uses the rational lower bound
 
 ```text
-abs(sum_{j=1}^{n-1} chi(psi_2([j]G))*eta([j]G))
-  <= 4*sqrt(q).
+cot(pi/(2n)) > (98*n^2-121)/(154*n).
 ```
 
-Consequently, a necessary condition for any pure division-polynomial parity
-formula is
+For the published estimate it verifies the exact integer inequality
 
 ```text
-cot(pi/(2n)) <= 4*sqrt(q).
+(98*n^2-121)^2 > 36*(154*n)^2*p.
 ```
 
-This condition is independent of `m`.
-
-## 6. secp256k1 is closed for every index
-
-The machine certificate uses
+For secp256k1,
 
 ```text
-cot(pi/(2n)) > (98*n^2-121)/(154*n)
+cot(pi/(2n))/(6*sqrt(p))
+  approximately 3.610508049498494e37,
+
+log2 of this ratio
+  approximately 124.763541369807.
 ```
 
-and verifies the exact integer inequality
-
-```text
-(98*n^2-121)^2 > 16*(154*n)^2*p.
-```
-
-For the public secp256k1 parameters,
-
-```text
-cot(pi/(2n))/(4*sqrt(p))
-  approximately 5.415762074247741e37,
-```
-
-with base-two logarithm
-
-```text
-125.348503870528.
-```
-
-Therefore, for every positive integer `m`,
+Therefore no positive integer `m` and no one-bit global phase can make
 
 ```text
 chi(psi_m(Q))
 ```
 
-cannot equal canonical parity on all nonzero secp256k1 subgroup points, even
-after allowing one global sign phase.
+equal canonical parity on every nonzero secp256k1 subgroup point.
 
-This completely closes the pure single-division-polynomial character route.
+The independent Paley-tournament theorem in
+`UORC056_EDS_PALEY_OBSTRUCTION_V10.md` reaches the same secp256k1 conclusion by
+a different argument.
 
-## 7. Frozen-corpus result
+## 8. Frozen-corpus result
 
-The certified Fourier inequality closes 17 of the 18 frozen curves. The only
-small exception is
-
-```text
-p=43, n=31,
-```
-
-where the inequality is too weak:
+The published `6*sqrt(q)` inequality closes 14 of the 18 frozen curves. The
+four curves outside that numerical inequality are
 
 ```text
-cot(pi/(2n)) approximately 19.7183,
-4*sqrt(p) approximately 26.2298.
+(p,n)=(43,31), (79,67), (61,61), (97,79).
 ```
 
-For that curve, V10 exhausts every invertible multiplier class `u mod n` and
-allows both global phases. There is no exact candidate. The best class is
+For all four, and also as a redundant check for the other fourteen, V10 scans
+every invertible multiplier class `u mod n` and both global phases. No exact
+candidate exists anywhere in the 18-curve corpus.
+
+The sharper provisional `4*sqrt(q)` inequality closes 17 of the 18 curves; only
+`p=43,n=31` then needs the finite scan. On that smallest curve the best class
+is
 
 ```text
 u=8,
 24/30 matches.
 ```
 
-The same complete multiplier scan is run on all 18 curves and finds no exact
-candidate anywhere.
+## 9. Compatibility with exact small witnesses
 
-The chain identity is independently replayed on the five discovery curves for
-53,754 point-index pairs.
-
-## 8. Relation to V9
-
-V9 represented the surviving even-index case as
+The corrected Ward audit freezes exact small mechanisms on separate curves of
+orders 5 and 7:
 
 ```text
-chi(psi_m([k]G))=rho_(m*k),
-rho_j=chi(psi_j(G)).
+chi(psi_2([k]G))=(-1)^k.
 ```
 
-V10 uses `m=2u` and the chain rule once more:
+These examples do not contradict V10. Both lie below the large-order Fourier
+threshold, so condition (V10.1) does not exclude them. Their role is important:
+they refute an unconditional algebraic no-go, while the Fourier and Paley
+arguments explain why the same pure mechanism cannot scale to secp256k1.
 
-```text
-rho_(2u*k)=chi(psi_2([u*k]G)).
-```
+## 10. What is closed
 
-Hence the apparent EDS decimation is not a genuinely high-index EDS mechanism
-for a single division polynomial. It is a permutation of one fixed low-
-conductor Kummer trace function.
-
-The V9 support-to-cost counterexample remains valid as a statement about
-rational functions and straight-line programs. What disappears is its status
-as a possible exact parity evaluator.
-
-## 9. What V10 closes
+V10 closes:
 
 - every odd-index pure division-polynomial character by negation covariance;
-- every even-index pure division-polynomial character when
-  `cot(pi/(2n))>4*sqrt(q)`;
+- every even-index pure character satisfying the published inequality
+  `cot(pi/(2n))>6*sqrt(q)`;
 - every positive index on secp256k1;
-- every positive index on all 18 frozen curves, using the complete small-curve
-  scan for the one case outside the asymptotic inequality;
-- the V9 open `q=3 mod 4` pure EDS-decimation branch.
+- every positive index on the declared 18-curve corpus, combining the theorem
+  with complete multiplier scans;
+- the V9 open pure EDS-decimation branch for secp256k1.
 
-## 10. What remains open
+## 11. What remains open
 
 V10 does not close:
 
-1. products of several independently pulled division-polynomial characters;
-2. a recursively shared construction whose final output does not collapse to
-   one `chi(psi_m)`;
+1. products or ratios of several independently pulled division-polynomial
+   factors;
+2. shared arithmetic circuits whose final character does not collapse to one
+   `chi(psi_m)`;
 3. direct field-valued evaluation of `Y_G(x(Q))/y(Q)`;
-4. theta, elliptic-unit or compact oriented-root formulas;
+4. theta or elliptic-unit constructions;
 5. adaptive branching and non-character output models.
 
-The next rational-character question is whether a product of a sub-root number
-of low-conductor pullbacks can exploit cancellations or shared evaluation to
-beat the V8 support requirement. The more distinct remaining branch is direct
-field-valued evaluation of `Y_G`, where no outer quadratic character is taken.
+The next rational-character target should be a bounded multi-factor theorem,
+not a larger search over a single index `m`. A natural question is whether a
+product of `s` low-conductor pullbacks can be reduced to at most `O(s)` base
+trace functions and therefore needs `s=Omega(n/sqrt(q))` to reproduce the
+parity Fourier peak.
 
-## 11. Primary references
+## 12. Primary references
 
+- I. E. Shparlinski and K. E. Stange, *Character Sums with Division
+  Polynomials*, Canadian Mathematical Bulletin 55 (2012), 850-857. Lemma 5
+  gives the subgroup bound `2*deg(f)*sqrt(q)`.
 - K. E. Stange, *Division polynomials for arbitrary isogenies*, Research in
-  Number Theory 12 (2026), Article 53. The paper states the divisor,
-  recurrence, `O(log n)` computation and chain rule for normalized division
-  polynomials.
+  Number Theory 12 (2026), Article 53, for normalized division-polynomial
+  recurrences and chain rules.
 - J. H. Silverman, *p-adic properties of division polynomials and elliptic
-  divisibility sequences*, Mathematische Annalen 332 (2005), 443-471. The
-  paper gives the normalized chain rule and finite-field periodicity.
-- P. Deligne, *La conjecture de Weil II*, Publications Mathematiques de
-  l'IHES 52 (1980), 137-252.
-- SGA 5, *Cohomologie l-adique et fonctions L*.
+  divisibility sequences*, Mathematische Annalen 332 (2005), 443-471.
 
 ## Claim boundary
 
-V10 is a scoped no-go theorem for one pure quadratic character of one classical
-division polynomial, with an optional global phase. Its Fourier bound inherits
-the provisional V8 sheaf framework. It does not prove a lower bound for all
+This is a scoped no-go theorem for one quadratic character of one classical
+division polynomial, with one optional global phase. The published
+`6*sqrt(q)` estimate is sufficient for secp256k1. The sharper `4*sqrt(q)`
+constant remains provisional. The package does not prove a lower bound for all
 arithmetic circuits and does not recover any unknown scalar.
