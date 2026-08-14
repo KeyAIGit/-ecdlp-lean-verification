@@ -34,6 +34,6 @@ theorem markedSeed_negation
 theorem pellSelector_negA
     {K : Type*} [Field K] (A B y : K) (_hA : A ≠ 0) :
     (-y * B) / (-A) = -((-y * B) / A) := by
-  simp [neg_mul]
+  simp only [neg_mul, neg_div, div_neg, neg_neg]
 
 end Ecdlp.ParityLift
