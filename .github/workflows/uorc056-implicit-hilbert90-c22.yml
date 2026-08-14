@@ -1,0 +1,109 @@
+name: UORC056 implicit Hilbert90 C22
+
+on:
+  push:
+    branches:
+      - research/uorc056-hilbert90-completion
+    paths:
+      - 'experiments/parity_lift_000/uorc056_odd_symmetric_glv_invariants.py'
+      - 'experiments/parity_lift_000/uorc056_odd_rational_functional_boundary.py'
+      - 'experiments/parity_lift_000/uorc056_implicit_hilbert90_boundary.py'
+      - 'Ecdlp/Proved/Uorc056NegationPaired.lean'
+      - 'Ecdlp/Proved/Uorc056Hilbert90Divisor.lean'
+      - '.github/workflows/uorc056-implicit-hilbert90-c22.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile and replay C22
+        run: |
+          python3 -m py_compile \
+            experiments/parity_lift_000/uorc056_odd_symmetric_glv_invariants.py \
+            experiments/parity_lift_000/uorc056_odd_rational_functional_boundary.py \
+            experiments/parity_lift_000/uorc056_implicit_hilbert90_boundary.py
+          python3 experiments/parity_lift_000/uorc056_implicit_hilbert90_boundary.py \
+            --out /tmp/uorc056_implicit_hilbert90_boundary_result.json \
+            > /tmp/uorc056-implicit-hilbert90-c22.log
+
+      - name: Check C22 theorem flags and exact transfer bounds
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = json.loads(Path('/tmp/uorc056_implicit_hilbert90_boundary_result.json').read_text())
+          assert result['digest'] == '3277bed10cc96ae7b0648ca8bdf1c2086d1dddfff060d41fa6311a7393a76d1f'
+          aggregate = result['aggregate']
+          assert aggregate['curves'] == 7
+          assert aggregate['generator_replacements'] == 6
+          assert aggregate['all_norm_one_pair_vectors_verified']
+          assert aggregate['all_pair_support_union_certificates_verified']
+          assert aggregate['all_public_y_order_linear_complexities_nonconstant']
+          assert aggregate['implicit_grammar_lower_bound_proved']
+          assert not aggregate['implicit_H_evaluator_found']
+          assert not aggregate['public_jump_law_found']
+          assert not aggregate['transposed_single_value_evaluator_found']
+          assert not aggregate['canonical_infinity_propagation_found']
+          assert not aggregate['compact_branch_odd_evaluator_found']
+          assert not aggregate['sub_sqrt_evaluator_found']
+          assert not aggregate['parity_oracle_found']
+          assert not aggregate['sub_sqrt_ecdlp_found']
+
+          expected = [
+              (43, 31, 5, 8, 11),
+              (61, 61, 10, 15, 15),
+              (67, 79, 13, 20, 17),
+              (79, 67, 11, 16, 20),
+              (97, 79, 13, 20, 24),
+              (127, 127, 21, 32, 32),
+              (163, 139, 23, 34, 41),
+          ]
+          for row, exp in zip(result['cases'], expected):
+              got = (
+                  row['p'], row['n'], row['tau_pair_support'], row['R_poles'],
+                  row['public_y_order_diagnostic']['linear_complexity_over_Fp'],
+              )
+              assert got == exp
+
+          secp = result['secp256k1']
+          assert secp['H_pole_lower_bound'] == \
+              '14474011154664524427946373126085988481604695534884363047825645392689770186812'
+          assert secp['H_tau_pair_support_lower_bound'] == \
+              '19298681539552699237261830834781317975472927379845817397100860523586360249052'
+          assert secp['alternative_factor_pole_degree_needed_for_support_below_sqrt'] == \
+              '19298681539552699237261830834781317975302786196385348165369173219870476143325'
+          assert secp['multiplicative_atom_query_bounds']['16'] == \
+              '1206167596222043702328864427173832373467057961240363587318803782724147515566'
+          PY
+
+      - name: Install elan
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Check C20-C22 Lean certificates
+        run: |
+          lake env lean Ecdlp/Proved/Uorc056NegationPaired.lean
+          lake env lean Ecdlp/Proved/Uorc056Hilbert90Divisor.lean
+          lake env lean Ecdlp/Proved/ScalarParity.lean
+
+      - name: Upload C22 replay output
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-implicit-hilbert90-c22
+          path: |
+            /tmp/uorc056_implicit_hilbert90_boundary_result.json
+            /tmp/uorc056-implicit-hilbert90-c22.log
+          retention-days: 90
