@@ -41,7 +41,8 @@ jobs:
             scripts/test_uorc056_structural_transfer.py \
             scripts/test_uorc056_divisor_aware_rational.py \
             scripts/test_uorc056_divisor_aware_pullback.py \
-            scripts/test_uorc056_divisor_aware_mixed_pullback.py
+            scripts/test_uorc056_divisor_aware_mixed_pullback.py \
+            scripts/test_uorc056_divisor_aware_balanced_product.py
 
       - name: Replay every root and parity ratio independently
         run: python scripts/uorc056_sympy_replay.py /tmp/uorc056-fixtures
@@ -53,6 +54,7 @@ jobs:
           python scripts/uorc056_divisor_aware_rational.py --check
           python scripts/uorc056_divisor_aware_pullback.py --check
           python scripts/uorc056_divisor_aware_mixed_pullback.py --check
+          python scripts/uorc056_divisor_aware_balanced_product.py --check
 
       - name: Upload exact ground-truth fixtures
         uses: actions/upload-artifact@v4
