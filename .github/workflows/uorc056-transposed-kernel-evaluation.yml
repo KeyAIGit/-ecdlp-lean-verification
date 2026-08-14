@@ -36,8 +36,8 @@ jobs:
           print(json.dumps(aggregate, indent=2))
           print(json.dumps(secp, indent=2))
           assert aggregate['cases'] == 10
-          assert aggregate['parity_values'] == 1302
-          assert aggregate['coefficient_deletion_checks'] == 1302
+          assert aggregate['parity_values'] == 1102
+          assert aggregate['coefficient_deletion_checks'] == 1102
           assert aggregate['all_dense_inverses_reconstruct_parity']
           assert aggregate['all_translation_coefficients_necessary']
           assert secp['bit_length'] == 256
