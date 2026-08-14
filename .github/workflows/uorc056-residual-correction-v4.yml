@@ -1,0 +1,74 @@
+name: UORC-056 residual correction v4
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/uorc056_residual_correction_v4.py'
+      - 'scripts/test_uorc056_residual_correction_v4.py'
+      - 'experiments/uorc056/residual_correction_v4.json'
+      - '.github/workflows/uorc056-residual-correction-v4.yml'
+  push:
+    branches:
+      - research/uorc056-execution-001
+    paths:
+      - 'scripts/uorc056_residual_correction_v4.py'
+      - 'scripts/test_uorc056_residual_correction_v4.py'
+      - 'experiments/uorc056/residual_correction_v4.json'
+      - '.github/workflows/uorc056-residual-correction-v4.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  residual-correction:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run focused unit tests
+        run: |
+          PYTHONPATH=scripts python -m unittest -v \
+            scripts/test_uorc056_residual_correction_v4.py
+
+      - name: Exhaust residual corrections and diagnostics
+        run: |
+          PYTHONPATH=scripts python scripts/uorc056_residual_correction_v4.py \
+            --beam-size 192 \
+            --out /tmp/uorc056-residual-v4.json \
+            | tee /tmp/uorc056-residual-v4-summary.txt
+
+      - name: Enforce exact-result boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('/tmp/uorc056-residual-v4.json').read_text())
+          assert data['experiment'] == 'UORC-056-RESIDUAL-CORRECTION-V4'
+          assert len(data['residual_diagnostics']) == 5
+          assert data['claim_boundary']
+          search = data['correction_search']
+          print(json.dumps({
+              'decision': data['decision'],
+              'selected_errors': data['selected_v2_near_miss']['errors'],
+              'searched_singles': search['searched_singles'],
+              'searched_pairs': search['searched_pairs'],
+              'exact_corrections': len(search['exact_corrections']),
+              'best_corrected_errors': search['best_combined_total_errors'],
+          }, indent=2))
+          PY
+
+      - name: Upload residual evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-residual-correction-v4
+          path: |
+            /tmp/uorc056-residual-v4.json
+            /tmp/uorc056-residual-v4-summary.txt
+          if-no-files-found: error
