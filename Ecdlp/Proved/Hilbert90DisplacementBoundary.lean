@@ -49,7 +49,15 @@ theorem localCocycle_constantGauge
     (potential : X → K) (step : X → X) (constant : K) (point : X) :
     localCocycle (fun x => constant * potential x) step point
       = localCocycle potential step point := by
-  simp [localCocycle, div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm]
+  simp only [localCocycle, div_eq_mul_inv, mul_inv_rev]
+  calc
+    (constant * potential (step point))
+        * ((potential point)⁻¹ * constant⁻¹)
+        = (constant * constant⁻¹)
+            * (potential (step point) * (potential point)⁻¹) := by
+              ac_rfl
+    _ = potential (step point) * (potential point)⁻¹ := by
+          simp
 
 /-- Potentials with the same cocycle have a step-invariant pointwise ratio. -/
 theorem equalCocycles_ratioInvariant
@@ -65,8 +73,20 @@ theorem equalCocycles_ratioInvariant
         = (localCocycle first step point * first point)
             / (localCocycle second step point * second point) := by
               rw [hfirst, hsecond]
-    _ = first point / second point := by
+    _ = (localCocycle second step point * first point)
+            / (localCocycle second step point * second point) := by
           rw [h]
-          simp [div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm]
+    _ = first point / second point := by
+          simp only [div_eq_mul_inv, mul_inv_rev]
+          calc
+            (localCocycle second step point * first point)
+                * ((second point)⁻¹
+                    * (localCocycle second step point)⁻¹)
+                = (localCocycle second step point
+                    * (localCocycle second step point)⁻¹)
+                    * (first point * (second point)⁻¹) := by
+                      ac_rfl
+            _ = first point * (second point)⁻¹ := by
+                  simp
 
 end Ecdlp.ParityLift
