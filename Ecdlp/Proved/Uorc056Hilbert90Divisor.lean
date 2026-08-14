@@ -36,7 +36,7 @@ coefficient in every representing half-divisor. -/
 theorem pair_difference_ne_zero_support (u v : ℤ)
     (h : u - v ≠ 0) : u ≠ 0 ∨ v ≠ 0 := by
   by_contra hZero
-  push_neg at hZero
+  push Not at hZero
   exact h (by simp [hZero.1, hZero.2])
 
 section Support
@@ -81,7 +81,8 @@ theorem half_divisor_support_card_le
   exact Fintype.card_le_of_injective f (by
     intro a b hab
     apply Subtype.ext
-    exact congrArg Subtype.val hab)
+    simpa [f] using congrArg
+      (fun x : {i // u i ≠ 0 ∨ v i ≠ 0} => x.1) hab)
 
 /-- The same card bound after an arbitrary fixed-field gauge, represented by a
 common coefficient `c i` on both points of every pair. -/
@@ -109,7 +110,7 @@ theorem finite_sum_ne_zero_has_nonzero_term
     (g : κ → ℤ) (h : (∑ j, g j) ≠ 0) :
     ∃ j, g j ≠ 0 := by
   by_contra hNone
-  push_neg at hNone
+  push Not at hNone
   apply h
   simp [hNone]
 
