@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """Corrected UORC-056 EDS-decimation audit V10.
 
-The valid conclusion is narrower than the first V10 attempt.  An exact even
-EDS decimation on q=3 mod 4 would force the EDS residue row of the re-marked
-generator P=[m]G to be all +1.  Such rows are NOT impossible: this replay
-verifies explicit counterexamples and the correct Silverman/Ward torsion
-quasi-period normalization.
+The first V10 no-go attempt was false.  Exact even EDS decimations actually
+exist on small q=3 mod 4 prime-order examples.  This replay verifies both the
+correct Silverman/Ward normalization and explicit exact parity witnesses, while
+keeping the secp256k1 arbitrary-index question open.
 
 The script checks only frozen/public toy curves.  It accepts no external point
 or scalar and does not attempt a production-sized discrete log.
@@ -27,14 +26,17 @@ from uorc056_division_polynomial_frontier import (
 PROFILE_ID = "UORC-056-EDS-DECIMATION-AUDIT-V10"
 DEFAULT_GRAMMAR = Path("experiments/uorc056/divisor_aware_rational_grammar.json")
 DEFAULT_OUTPUT = Path("experiments/uorc056/eds_decimation_closure_results.json")
-COUNTEREXAMPLES = (
-    (59, 5, (31, 11)),
-    (83, 7, (74, 5)),
+
+# Each tuple is (p,n,G,m,P=[m]G).  In both cases m=2 is an exact parity
+# decimation and P has an all-residue nonzero EDS row.
+EXACT_DECIMATION_EXAMPLES = (
+    (59, 5, (22, 25), 2, (31, 11)),
+    (83, 7, (70, 36), 2, (74, 5)),
 )
 
 
 def ward_constants(evaluator: DivisionPolynomialEvaluator, order: int) -> tuple[int, int]:
-    """Silverman Theorem 8 normalization from F_(r+1), F_(r+2)."""
+    """Silverman Theorem 8 normalization from the r+1 and r+2 terms."""
     p = evaluator.prime
     psi_2 = evaluator.value(2)
     psi_np1 = evaluator.value(order + 1)
@@ -80,30 +82,64 @@ def residue_row(evaluator: DivisionPolynomialEvaluator, order: int) -> list[int]
     return result
 
 
-def counterexample_record(prime: int, order: int, point: tuple[int, int]) -> dict[str, Any]:
-    if ec_mul(order, point, prime, 0) is not None:
-        raise AssertionError("counterexample point does not have declared order")
-    if any(ec_mul(k, point, prime, 0) is None for k in range(1, order)):
-        raise AssertionError("counterexample order is not exact")
-    evaluator = DivisionPolynomialEvaluator(prime, 0, 7, point)
-    row = residue_row(evaluator, order)
+def exact_decimation_record(
+    prime: int,
+    order: int,
+    generator: tuple[int, int],
+    m: int,
+    expected_remarked: tuple[int, int],
+) -> dict[str, Any]:
+    if ec_mul(order, generator, prime, 0) is not None:
+        raise AssertionError("witness generator does not have declared order")
+    remarked = ec_mul(m, generator, prime, 0)
+    if remarked != expected_remarked:
+        raise AssertionError("re-marked witness point drifted")
+
+    generator_eval = DivisionPolynomialEvaluator(prime, 0, 7, generator)
+    rho_m = quadratic_character(generator_eval.value(m), prime)
+    if rho_m != -1:
+        raise AssertionError("exact witness must have rho_m=-1")
+
+    outputs = []
+    for k in range(1, order):
+        query = ec_mul(k, generator, prime, 0)
+        assert query is not None
+        evaluator = DivisionPolynomialEvaluator(prime, 0, 7, query)
+        sign = quadratic_character(evaluator.value(m), prime)
+        target = -1 if k & 1 else 1
+        if sign != target:
+            raise AssertionError("small exact EDS decimation witness drifted")
+        outputs.append(sign)
+
+    remarked_eval = DivisionPolynomialEvaluator(prime, 0, 7, remarked)
+    row = residue_row(remarked_eval, order)
     if not all(sign == 1 for sign in row):
-        raise AssertionError("counterexample no longer has an all-residue row")
-    ward = check_ward(evaluator, order)
-    # Specialized recurrence: psi_(2n+1) = -psi_(n+1)^3 psi_(n-1).
-    lhs = evaluator.value(2 * order + 1)
-    rhs = (-pow(evaluator.value(order + 1), 3, prime) * evaluator.value(order - 1)) % prime
+        raise AssertionError("re-marked witness row is no longer all-residue")
+    ward = check_ward(remarked_eval, order)
+
+    lhs = remarked_eval.value(2 * order + 1)
+    rhs = (
+        -pow(remarked_eval.value(order + 1), 3, prime)
+        * remarked_eval.value(order - 1)
+    ) % prime
     if lhs != rhs:
         raise AssertionError("specialized EDS recurrence failed")
+
     return {
         "p": prime,
         "n": order,
-        "P": list(point),
+        "G": list(generator),
+        "m": m,
+        "P_equals_mG": list(remarked),
         "p_mod_4": prime % 4,
         "chi_minus_one": quadratic_character(-1, prime),
-        "residue_row": row,
-        "all_nonzero_terms_are_residues": True,
-        "ward": ward,
+        "rho_m_at_G": rho_m,
+        "decimation_outputs": outputs,
+        "target_parity": [(-1 if k & 1 else 1) for k in range(1, order)],
+        "exact_parity_decimation": True,
+        "remarked_residue_row": row,
+        "remarked_row_all_residue": True,
+        "ward_at_remarked_generator": ward,
         "specialized_recurrence_exact": True,
     }
 
@@ -148,7 +184,8 @@ def screen_even_decimations(prime: int, order: int, generator: tuple[int, int]) 
 
 def run(grammar_path: Path) -> dict[str, Any]:
     discovery, _ = load_corpora(grammar_path)
-    counterexamples = [counterexample_record(*row) for row in COUNTEREXAMPLES]
+    witnesses = [exact_decimation_record(*row) for row in EXACT_DECIMATION_EXAMPLES]
+
     screens = []
     exact_total = 0
     for prime, order, generator in discovery:
@@ -156,41 +193,42 @@ def run(grammar_path: Path) -> dict[str, Any]:
         exact_total += len(screen["exact_candidates"])
         screens.append({"p": prime, "n": order, **screen})
     if exact_total:
-        raise AssertionError("bounded V10 discovery screen found an exact candidate")
+        raise AssertionError("base discovery corpus unexpectedly acquired an exact candidate")
 
     return {
-        "schema_version": "1.1",
+        "schema_version": "1.2",
         "profile_id": PROFILE_ID,
-        "status": "closure_attempt_retracted_after_primary_normalization_check",
-        "valid_reduction": (
-            "if even m over q=3 mod 4 gives parity, then for P=[m]G the row "
-            "chi(psi_k(P)), 1<=k<n, is identically +1"
+        "status": "universal_closure_refuted_by_exact_small_curve_witnesses",
+        "exact_equivalence": (
+            "for even m with n not dividing m: chi(psi_m([k]G))=(-1)^k for all k "
+            "iff rho_m(G)=-1 and the re-marked generator P=[m]G has "
+            "chi(psi_k(P))=+1 for every 1<=k<n"
         ),
-        "invalid_step": (
-            "all-residue generator rows were claimed impossible using an incorrect "
-            "Ward-constant normalization; the primary Silverman normalization uses "
-            "the n+1 and n+2 terms and permits chi(a)=+1, chi(b)=-1"
+        "normalization_correction": (
+            "Silverman Theorem 8 uses the n+1 and n+2 terms for the Ward "
+            "constants; the earlier n-1/n-2 inference was invalid"
         ),
-        "counterexamples": counterexamples,
-        "bounded_discovery_even_decimation_screen": {
+        "exact_small_curve_witnesses": witnesses,
+        "bounded_base_discovery_screen": {
             "curves": screens,
             "exact_candidates": exact_total,
         },
-        "decision": "even_eds_decimation_frontier_remains_open",
+        "decision": "even_eds_decimation_is_a_real_mechanism_on_small_curves_secp_case_open",
         "next_frontier": [
-            "classify Ward sign invariants under generator change P=[m]G",
-            "test compatibility of an all-residue re-marked row with rho_m=-1 relative to G",
-            "derive an exact generator-change cocycle for EDS residue signs",
+            "derive generator-change laws for Ward sign invariants and the all-residue property",
+            "use character-sum bounds to rule out an all-residue row in the large-order secp256k1 regime if constants can be made explicit",
+            "otherwise seek secp-specific constraints from CM/GLV on all-residue generators",
             "direct field-valued Y_G and compact global Miller-cocycle integration remain open",
         ],
         "sources": [
             "Silverman, p-adic properties of division polynomials and elliptic divisibility sequences, Theorem 8",
+            "Shparlinski-Stange, Character Sums with Division Polynomials",
             "Stange, Division polynomials for arbitrary isogenies (2026), recurrence and chain rule",
             "Bhakta, Character sums of division polynomials twisted by multiplicative functions (2026), Lemma 2.3",
         ],
         "scientific_boundary": (
-            "V10 corrects a failed no-go argument. It neither finds nor rules out "
-            "an arbitrary even secp256k1 EDS decimation."
+            "V10 proves small exact witnesses and an exact re-marking equivalence. "
+            "It does not decide whether any even decimation exists for secp256k1."
         ),
     }
 
