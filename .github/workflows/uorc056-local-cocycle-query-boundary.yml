@@ -1,0 +1,107 @@
+name: UORC056 local cocycle query boundary
+
+on:
+  push:
+    branches:
+      - research/uorc056-kummer-factor
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_LOCAL_COCYCLE_QUERY_BOUNDARY_B18.md'
+      - 'experiments/parity_lift_000/uorc056_local_cocycle_query_boundary.py'
+      - 'experiments/parity_lift_000/uorc056_oriented_principal_pell_core.py'
+      - 'Ecdlp/Proved/LocalCocycleQueryBoundary.lean'
+      - '.github/workflows/uorc056-local-cocycle-query-boundary.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exhaustive abstract query replay
+        run: |
+          python3 experiments/parity_lift_000/uorc056_local_cocycle_query_boundary.py \
+            --out /tmp/uorc056_local_cocycle_query_boundary_results.json \
+            > /tmp/uorc056-local-cocycle-query-boundary.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/uorc056_local_cocycle_query_boundary_results.json').read_text()
+          )
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert data['package'] == 'UORC056-LOCAL-COCYCLE-QUERY-BOUNDARY-B18'
+          assert aggregate['cases'] == 3
+          assert aggregate['query_masks'] == 10368
+          assert aggregate['target_pairs'] == 119552
+          assert aggregate['disconnected_pairs'] == 98856
+          assert aggregate['connected_pairs'] == 20696
+          assert aggregate['gauge_checks'] == 98856
+          assert aggregate['all_component_gauges_indistinguishable']
+          assert aggregate['all_minimum_queries_equal_cycle_distance']
+          assert aggregate['all_worst_targets_are_midpoints']
+          assert secp['bit_length'] == 256
+          assert secp['worst_case_local_edge_queries'] == (secp['n'] - 1) // 2
+          assert secp['worst_case_local_edge_queries_bit_length'] == 255
+          assert secp['all_target_edge_table_minimum'] == secp['n'] - 1
+          assert not secp['black_box_edge_only_model_is_subroot']
+          assert secp['nonlocal_algebraic_identity_remains_open']
+          assert not secp['parity_oracle_found']
+          assert not secp['sub_sqrt_ecdlp_found']
+          assert secp['central_target'] == 'UNIFORM-ORIENTED-ROOT-CIRCUIT-056'
+          PY
+
+      - name: Ensure scoped Lean boundary has no sorry
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/LocalCocycleQueryBoundary.lean; then
+            echo '::error::Lean boundary contains sorry'
+            exit 1
+          fi
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            for attempt in 1 2 3 4; do
+              if sh /tmp/elan-init.sh -y --default-toolchain none; then
+                installed=1
+                echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+                break
+              fi
+              sleep $((attempt * 3))
+            done
+          fi
+          if [ "$installed" = 0 ]; then
+            echo 'elan unavailable; downloading the pinned Lean distribution directly'
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check scoped Lean boundary
+        run: lake build Ecdlp.Proved.LocalCocycleQueryBoundary
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-local-cocycle-query-boundary-results
+          path: |
+            /tmp/uorc056_local_cocycle_query_boundary_results.json
+            /tmp/uorc056-local-cocycle-query-boundary.log
+          retention-days: 90
