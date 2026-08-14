@@ -1,0 +1,111 @@
+{
+  "cases": [
+    {
+      "G": [2, 12],
+      "beta": 6,
+      "endpoint_correction_indices": [15, 26, 27, 30],
+      "exceptional_orbits": 3,
+      "lambda": 5,
+      "n": 31,
+      "newton_scalar_checks": 512,
+      "nonexceptional_type2": 3,
+      "nonexceptional_type3": 1,
+      "orbit_valuation_checks": 21,
+      "p": 43,
+      "parity_orbit_counts": [2, 3, 3, 2]
+    },
+    {
+      "G": [2, 25],
+      "beta": 13,
+      "endpoint_correction_indices": [30, 37, 38, 60],
+      "exceptional_orbits": 4,
+      "lambda": 47,
+      "n": 61,
+      "newton_scalar_checks": 512,
+      "nonexceptional_type2": 5,
+      "nonexceptional_type3": 2,
+      "orbit_valuation_checks": 48,
+      "p": 61,
+      "parity_orbit_counts": [3, 7, 7, 3]
+    },
+    {
+      "G": [2, 22],
+      "beta": 29,
+      "endpoint_correction_indices": [39, 68, 69, 78],
+      "exceptional_orbits": 4,
+      "lambda": 23,
+      "n": 79,
+      "newton_scalar_checks": 512,
+      "nonexceptional_type2": 8,
+      "nonexceptional_type3": 3,
+      "orbit_valuation_checks": 66,
+      "p": 67,
+      "parity_orbit_counts": [4, 9, 9, 4]
+    },
+    {
+      "G": [1, 18],
+      "beta": 23,
+      "endpoint_correction_indices": [24, 25, 33, 66],
+      "exceptional_orbits": 4,
+      "lambda": 29,
+      "n": 67,
+      "newton_scalar_checks": 512,
+      "nonexceptional_type2": 7,
+      "nonexceptional_type3": 2,
+      "orbit_valuation_checks": 54,
+      "p": 79,
+      "parity_orbit_counts": [3, 8, 8, 3]
+    },
+    {
+      "G": [1, 28],
+      "beta": 35,
+      "endpoint_correction_indices": [39, 68, 69, 78],
+      "exceptional_orbits": 4,
+      "lambda": 55,
+      "n": 79,
+      "newton_scalar_checks": 512,
+      "nonexceptional_type2": 8,
+      "nonexceptional_type3": 3,
+      "orbit_valuation_checks": 66,
+      "p": 97,
+      "parity_orbit_counts": [4, 9, 9, 4]
+    },
+    {
+      "G": [1, 32],
+      "beta": 19,
+      "endpoint_correction_indices": [63, 110, 111, 126],
+      "exceptional_orbits": 4,
+      "lambda": 107,
+      "n": 127,
+      "newton_scalar_checks": 512,
+      "nonexceptional_type2": 14,
+      "nonexceptional_type3": 4,
+      "orbit_valuation_checks": 114,
+      "p": 127,
+      "parity_orbit_counts": [6, 15, 15, 6]
+    },
+    {
+      "G": [2, 34],
+      "beta": 58,
+      "endpoint_correction_indices": [51, 52, 69, 138],
+      "exceptional_orbits": 4,
+      "lambda": 96,
+      "n": 139,
+      "newton_scalar_checks": 512,
+      "nonexceptional_type2": 18,
+      "nonexceptional_type3": 5,
+      "orbit_valuation_checks": 126,
+      "p": 163,
+      "parity_orbit_counts": [5, 18, 18, 5]
+    }
+  ],
+  "experiment": "ODD-POLYNOMIAL-TRACE-FUNCTIONAL-068-C18",
+  "full_result_sha256": "d207bd1b3a68ec7ba46504045f8d142fabeb2a798ce9746da1a042809b6de30c",
+  "secp256k1": {
+    "n": "115792089237316195423570985008687907852837564279074904382605163141518161494337",
+    "odd_polynomial_trace_pole_degree_at_least": "9649340769776349618630915417390658987736463689922908698550430261793180124526",
+    "odd_polynomial_trace_quotient_support_at_least": "19298681539552699237261830834781317975472927379845817397100860523586360249052",
+    "pole_degree_bit_length": 253,
+    "support_bit_length": 254
+  }
+}
