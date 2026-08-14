@@ -64,22 +64,30 @@ jobs:
           assert not secp['sub_sqrt_ecdlp_found']
           PY
 
-      - name: Kernel-check scoped Lean boundary
+      - name: Ensure scoped Lean boundary has no sorry
         run: |
           if grep -nI 'sorry' Ecdlp/Proved/OrientedPrincipalPellBoundary.lean; then
             echo '::error::Lean boundary contains sorry'
             exit 1
           fi
+
+      - name: Install Lean toolchain
+        run: |
           installed=0
           if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
               https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
               -o /tmp/elan-init.sh; then
-            if sh /tmp/elan-init.sh -y --default-toolchain none; then
-              installed=1
-              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-            fi
+            for attempt in 1 2 3 4; do
+              if sh /tmp/elan-init.sh -y --default-toolchain none; then
+                installed=1
+                echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+                break
+              fi
+              sleep $((attempt * 3))
+            done
           fi
           if [ "$installed" = 0 ]; then
+            echo 'elan unavailable; downloading the pinned Lean distribution directly'
             curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
               https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
               -o /tmp/lean.tar.zst
@@ -87,8 +95,12 @@ jobs:
             tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
             echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
           fi
-          lake exe cache get
-          lake build Ecdlp.Proved.OrientedPrincipalPellBoundary
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check scoped Lean boundary
+        run: lake build Ecdlp.Proved.OrientedPrincipalPellBoundary
 
       - name: Upload exact replay artifact
         uses: actions/upload-artifact@v4
