@@ -37,13 +37,16 @@ jobs:
         run: |
           PYTHONPATH=scripts python -m unittest -v \
             scripts/test_uorc056_toy_factory.py \
-            scripts/test_uorc056_circuit_synth.py
+            scripts/test_uorc056_circuit_synth.py \
+            scripts/test_uorc056_structural_transfer.py
 
       - name: Replay every root and parity ratio independently
         run: python scripts/uorc056_sympy_replay.py /tmp/uorc056-fixtures
 
-      - name: Replay bounded circuit synthesis and transfer decision
-        run: python scripts/uorc056_circuit_synth.py --check
+      - name: Replay bounded circuit synthesis and transfer decisions
+        run: |
+          python scripts/uorc056_circuit_synth.py --check
+          python scripts/uorc056_structural_transfer.py --check
 
       - name: Upload exact ground-truth fixtures
         uses: actions/upload-artifact@v4
