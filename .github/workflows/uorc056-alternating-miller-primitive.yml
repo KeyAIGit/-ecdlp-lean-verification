@@ -1,0 +1,100 @@
+name: UORC056 alternating Miller primitive
+
+on:
+  push:
+    branches:
+      - research/uorc056-kummer-factor
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_ALTERNATING_MILLER_PRIMITIVE_B8.md'
+      - 'experiments/parity_lift_000/uorc056_alternating_miller_primitive.py'
+      - 'Ecdlp/Proved/AlternatingMillerPrimitive.lean'
+      - '.github/workflows/uorc056-alternating-miller-primitive.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact alternating-divisor replay
+        run: |
+          python3 experiments/parity_lift_000/uorc056_alternating_miller_primitive.py \
+            --out /tmp/uorc056_alternating_miller_primitive_results.json \
+            > /tmp/uorc056-alternating-miller-primitive.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('/tmp/uorc056_alternating_miller_primitive_results.json').read_text())
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert aggregate['cases'] == 10
+          assert aggregate['line_divisor_checks'] == 1092
+          assert aggregate['local_parity_checks'] == 1082
+          assert aggregate['all_alternating_divisors_exact']
+          assert aggregate['all_principalizations_exact']
+          assert aggregate['all_full_miller_partitions_exact']
+          assert aggregate['all_involution_norms_exact']
+          assert aggregate['all_two_step_divisors_exact']
+          assert secp['bit_length'] == 256
+          assert secp['alternating_edges'] == secp['middle']
+          assert secp['two_step_divisor_support_points'] == 4
+          assert secp['two_step_scalar_coefficient_bit_length'] == 255
+          assert secp['local_edge_has_logarithmic_addition_chain_description']
+          assert not secp['absolute_segment_value_known']
+          assert secp['selected_successor'] == 'UORC056-ALTERNATING-MILLER-SEGMENT-B9'
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/AlternatingMillerPrimitive.lean; then
+            echo '::error::Alternating Miller theorem contains sorry'
+            exit 1
+          fi
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            for attempt in 1 2 3 4; do
+              if sh /tmp/elan-init.sh -y --default-toolchain none; then
+                installed=1
+                echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+                break
+              fi
+              sleep $((attempt * 3))
+            done
+          fi
+          if [ "$installed" = 0 ]; then
+            echo 'elan unavailable; downloading the pinned Lean distribution directly'
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check alternating Miller arithmetic
+        run: lake build Ecdlp.Proved.AlternatingMillerPrimitive
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-alternating-miller-primitive-results
+          path: |
+            /tmp/uorc056_alternating_miller_primitive_results.json
+            /tmp/uorc056-alternating-miller-primitive.log
+          retention-days: 90
