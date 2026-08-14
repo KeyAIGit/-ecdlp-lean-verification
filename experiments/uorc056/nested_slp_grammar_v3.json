@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "grammar_id": "UORC-056-NESTED-SLP-V3",
+  "central_target": "For Q=[k]G, compute Y_G(x(Q))/y(Q)=(-1)^k.",
+  "difference_from_v2": "V2 multiplies quadratic characters of shallow factors. V3 builds one nested field expression by a straight-line program and applies quadratic character only at the endpoint.",
+  "seeds": {
+    "observables": [
+      "x(Q)", "y(Q)", "x([2]Q)", "y([2]Q)",
+      "x([3]Q)", "y([3]Q)", "x([4]Q)", "y([4]Q)",
+      "beta*x(Q)", "beta^2*x(Q)",
+      "3*x(Q)^2/(2*y(Q))",
+      "(y([2]Q)-y(Q))/(x([2]Q)-x(Q))"
+    ],
+    "public_symbolic_constants": [
+      "0", "1", "-1", "2", "-2", "7", "-7",
+      "beta", "beta^2",
+      "x(G)", "y(G)", "x([2]G)", "y([2]G)",
+      "x([3]G)", "y([3]G)"
+    ],
+    "field_specific_fitted_constants": false
+  },
+  "gates": ["neg", "add", "sub", "mul", "inv"],
+  "endpoint": "quadratic_character",
+  "search": {
+    "semantic_domain": "the complete nonidentity orbits of all five frozen curves",
+    "exact_gate": "zero endpoint values are undefined and cannot count as matches",
+    "ordering": "increasing arithmetic gate count",
+    "pruning": "deterministic multi-curve beam with field-value semantic deduplication",
+    "negative_claim": "none beyond the explicitly explored beam"
+  },
+  "cost": {
+    "charged": [
+      "field additions", "field multiplications", "field inversions",
+      "small-multiple group operations", "CM multiplications",
+      "quadratic character", "public constant construction",
+      "representation and beam/search advice"
+    ],
+    "forbidden_free_objects": ["Y_G coefficients", "scalar-indexed tables", "per-curve fitted phases"]
+  },
+  "promotion_gate": "An identical exact expression must pass all five curves before symbolic lifting. A beam miss is not a lower bound."
+}
