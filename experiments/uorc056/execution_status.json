@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "package": "UORC-056-EXECUTION-001",
+  "status": "tasks_01_through_08_implemented",
+  "tasks": [
+    {
+      "task": 1,
+      "name": "freeze_machine_readable_contract",
+      "status": "complete",
+      "evidence": "experiments/uorc056/uorc056_contract.json"
+    },
+    {
+      "task": 2,
+      "name": "register_closed_mechanism_classes",
+      "status": "complete",
+      "evidence": "experiments/uorc056/closed_classes.json"
+    },
+    {
+      "task": 3,
+      "name": "provide_sage_loader_and_replay",
+      "status": "complete_not_run_in_lightweight_container",
+      "evidence": "experiments/uorc056/sage/uorc056_replay.sage"
+    },
+    {
+      "task": 4,
+      "name": "construct_exact_kernel_polynomial",
+      "status": "complete",
+      "evidence": "scripts/uorc056_toy_factory.py"
+    },
+    {
+      "task": 5,
+      "name": "construct_exact_oriented_root_for_every_marked_generator",
+      "status": "complete",
+      "evidence": "scripts/uorc056_toy_factory.py"
+    },
+    {
+      "task": 6,
+      "name": "verify_square_congruence",
+      "status": "complete_in_two_backends",
+      "evidence": "scripts/uorc056_toy_factory.py and scripts/uorc056_sympy_replay.py"
+    },
+    {
+      "task": 7,
+      "name": "verify_full_parity_ratio",
+      "status": "complete_for_all_438_marked_roots_and_all_nonzero_scalars",
+      "evidence": "scripts/uorc056_toy_factory.py and scripts/uorc056_sympy_replay.py"
+    },
+    {
+      "task": 8,
+      "name": "independent_second_backend_replay",
+      "status": "complete_with_sympy_and_sage_script_supplied",
+      "evidence": "scripts/uorc056_sympy_replay.py and experiments/uorc056/sage/uorc056_replay.sage"
+    }
+  ],
+  "scientific_boundary": "This package materializes finite toy ground truth. It is not a sub-square-root evaluator and does not recover any unknown production scalar."
+}
