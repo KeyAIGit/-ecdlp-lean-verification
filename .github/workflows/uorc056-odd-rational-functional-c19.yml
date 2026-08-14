@@ -7,6 +7,7 @@ on:
     paths:
       - 'archive/untrusted_intake/parity_lift_000/UORC056_ODD_RATIONAL_FUNCTIONAL_C19.md'
       - 'archive/untrusted_intake/parity_lift_000/UORC056_NEGATION_PAIRED_QUADRATIC_C20_PROMPT.md'
+      - 'experiments/parity_lift_000/uorc056_odd_symmetric_glv_invariants.py'
       - 'experiments/parity_lift_000/uorc056_odd_rational_functional_boundary.py'
       - 'experiments/parity_lift_000/uorc056_odd_rational_case_runner.py'
       - 'experiments/parity_lift_000/uorc056_odd_rational_assemble.py'
@@ -26,6 +27,7 @@ jobs:
       - name: Compile C19 replay
         run: |
           python3 -m py_compile \
+            experiments/parity_lift_000/uorc056_odd_symmetric_glv_invariants.py \
             experiments/parity_lift_000/uorc056_odd_rational_functional_boundary.py \
             experiments/parity_lift_000/uorc056_odd_rational_case_runner.py \
             experiments/parity_lift_000/uorc056_odd_rational_assemble.py \
