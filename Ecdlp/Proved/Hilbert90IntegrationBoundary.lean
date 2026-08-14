@@ -22,7 +22,7 @@ theorem halfPlusOne_double (m : ℤ) :
 /-- A finite product of consecutive multiplicative coboundaries telescopes. -/
 theorem telescopingDivProduct
     {K : Type*} [CommGroup K] (a : ℕ → K) (m : ℕ) :
-    (∏ i in Finset.range m, a (i + 1) / a i) = a m / a 0 := by
+    (Finset.range m).prod (fun i => a (i + 1) / a i) = a m / a 0 := by
   induction m with
   | zero => simp
   | succ m ih =>
@@ -33,7 +33,7 @@ theorem telescopingDivProduct
 theorem cyclicCoboundaryNorm
     {K : Type*} [CommGroup K] (a : ℕ → K) (n : ℕ)
     (hcycle : a n = a 0) :
-    (∏ i in Finset.range n, a (i + 1) / a i) = 1 := by
+    (Finset.range n).prod (fun i => a (i + 1) / a i) = 1 := by
   rw [telescopingDivProduct, hcycle]
   simp
 
