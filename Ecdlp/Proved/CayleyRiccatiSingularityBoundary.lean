@@ -33,35 +33,33 @@ def riccatiDenominator {R : Type*} [Ring R] (c r : R) : R :=
 
 /-- The inverse-Cayley numerator after diagonal multiplication. -/
 theorem cayleyDiagonal_numerator
-    {R : Type*} [Ring R] (c r : R) :
+    {R : Type*} [CommRing R] (c r : R) :
     c * cayleyNumerator r - cayleyDenominator r =
       riccatiNumerator c r := by
-  simp [cayleyNumerator, cayleyDenominator, riccatiNumerator]
+  simp only [cayleyNumerator, cayleyDenominator, riccatiNumerator]
   ring
 
 /-- The inverse-Cayley denominator after diagonal multiplication. -/
 theorem cayleyDiagonal_denominator
-    {R : Type*} [Ring R] (c r : R) :
+    {R : Type*} [CommRing R] (c r : R) :
     c * cayleyNumerator r + cayleyDenominator r =
       riccatiDenominator c r := by
-  simp [cayleyNumerator, cayleyDenominator, riccatiDenominator]
+  simp only [cayleyNumerator, cayleyDenominator, riccatiDenominator]
   ring
 
 /-- The `+1` selector branch is projectively fixed by every regular diagonal
 multiplier: numerator and denominator remain equal. -/
 theorem riccati_fixed_one
-    {R : Type*} [Ring R] (c : R) :
+    {R : Type*} [CommRing R] (c : R) :
     riccatiNumerator c 1 = riccatiDenominator c 1 := by
   simp [riccatiNumerator, riccatiDenominator]
-  ring
 
 /-- The `-1` selector branch is projectively fixed: the updated numerator is the
 negative of the updated denominator. -/
 theorem riccati_fixed_negOne
-    {R : Type*} [Ring R] (c : R) :
+    {R : Type*} [CommRing R] (c : R) :
     riccatiNumerator c (-1) = -riccatiDenominator c (-1) := by
   simp [riccatiNumerator, riccatiDenominator]
-  ring
 
 /-- A finite nonzero multiplier keeps the `+1` pair nonzero in characteristic
 not two. -/
@@ -69,7 +67,17 @@ theorem riccati_one_pair_nonzero
     {K : Type*} [Field K] (c : K)
     (hc : c ≠ 0) (htwo : (2 : K) ≠ 0) :
     riccatiNumerator c 1 ≠ 0 ∧ riccatiDenominator c 1 ≠ 0 := by
-  constructor <;> simp [riccatiNumerator, riccatiDenominator, hc, htwo]
+  have hnum : riccatiNumerator c 1 = (2 : K) * c := by
+    simp only [riccatiNumerator]
+    ring
+  have hden : riccatiDenominator c 1 = (2 : K) * c := by
+    simp only [riccatiDenominator]
+    ring
+  constructor
+  · rw [hnum]
+    exact mul_ne_zero htwo hc
+  · rw [hden]
+    exact mul_ne_zero htwo hc
 
 /-- The `-1` projective pair is nonzero in characteristic not two. -/
 theorem riccati_negOne_pair_nonzero
@@ -77,6 +85,16 @@ theorem riccati_negOne_pair_nonzero
     (htwo : (2 : K) ≠ 0) :
     riccatiNumerator c (-1) ≠ 0 ∧
       riccatiDenominator c (-1) ≠ 0 := by
-  constructor <;> simp [riccatiNumerator, riccatiDenominator, htwo]
+  have hnum : riccatiNumerator c (-1) = -(2 : K) := by
+    simp only [riccatiNumerator]
+    ring
+  have hden : riccatiDenominator c (-1) = (2 : K) := by
+    simp only [riccatiDenominator]
+    ring
+  constructor
+  · rw [hnum]
+    exact neg_ne_zero.mpr htwo
+  · rw [hden]
+    exact htwo
 
 end Ecdlp.ParityLift
