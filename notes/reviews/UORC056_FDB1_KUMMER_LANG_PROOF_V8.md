@@ -1,256 +1,75 @@
-# UORC-056 FDB-1 Kummer-Lang proof V8
+# UORC-056 FDB-1 Kummer-Lang source audit V8
 
-Status: **source-locked mathematical proof complete; Lean kernel formalization unavailable in the current library stack**.
+Status: **source-lock audit complete; theorem remains provisional pending independent specialist review; Lean kernel formalization is unavailable in the current library stack**.
 
-The central UORC-056 target is unchanged:
+This note is a source and normalization audit for the subgroup-general theorem in
+`UORC056_REGULARIZED_FOURIER_DIVISOR_BARRIER_V8.md`. It is not a second,
+competing theorem statement.
+
+The central UORC-056 target remains
 
 \[
 A(E,G,Q)=\frac{Y_G(x(Q))}{y(Q)}=(-1)^k,
 \qquad Q=[k]G.
 \]
 
-This checkpoint proves an asymptotic obstruction for exact evaluators represented by a quadratic character of a rational function. It does not prove a lower bound for unrestricted arithmetic circuits.
+The result below obstructs exact evaluators that collapse to a quadratic
+character of a rational function. It is not a lower bound for unrestricted
+arithmetic circuits.
 
-## 1. Exact theorem
+## 1. Subgroup-general statement
 
 Let \(q\) be odd, let \(E/\mathbb F_q\) be an elliptic curve, and let
 
 \[
-\eta:E(\mathbb F_q)\longrightarrow \mathbb C^\times
+H=\langle G\rangle\subseteq E(\mathbb F_q)
 \]
 
-be a nontrivial character of odd order. Let
+have odd order \(n\). Let
 
 \[
-R\in\mathbb F_q(E)^\times.
+f\in\mathbb F_q(E)^\times,
 \]
 
-Define the geometric odd-valuation support
+and define
 
 \[
-S_{\rm odd}(R)
+S_{\rm odd}(f)
 =
 \left\{
 P\in E(\overline{\mathbb F}_q):
-\operatorname{ord}_P(R)\equiv1\pmod2
+\operatorname{ord}_P(f)\equiv1\pmod2
 \right\},
 \qquad
-s(R)=\#S_{\rm odd}(R).
+s(f)=\#S_{\rm odd}(f).
 \]
 
-Let \(t_R(P)\) be the trace function of the quadratic Kummer middle extension associated with \(R\). Thus, at rational points outside \(S_{\rm odd}(R)\),
+Away from the divisor, let the evaluator equal \(\chi(f(P))\). At rational
+odd-support points, allow any unit-modulus regularized value, including the
+local-leading-coefficient convention used in the V1-V6 screens.
+
+If
 
 \[
-t_R(P)=\chi(R(P)),
+\widetilde\chi_f([k]G)=(-1)^k,
+\qquad 1\le k<n,
 \]
 
-and at a rational point in \(S_{\rm odd}(R)\),
-
-\[
-t_R(P)=0.
-\]
-
-Then
-
-\[
-\boxed{
-\left|
-\sum_{P\in E(\mathbb F_q)}
-\eta(P)t_R(P)
-\right|
-\le
-s(R)\sqrt q
-}.
-\tag{FDB-1}
-\]
-
-If \(s(R)=0\), the sum is exactly zero.
-
-The constant is one. No degree surrogate is needed: the controlling invariant is the number of geometric points where the valuation of \(R\) is odd.
-
-## 2. Source-locked ingredients
-
-### 2.1 Character sheaf for \(\eta\)
-
-For a smooth connected commutative group over a finite field, the function-sheaf dictionary identifies characters of the finite group of rational points with rank-one character sheaves. Applied to \(E\), it gives a rank-one lisse sheaf
-
-\[
-\mathcal L_\eta
-\]
-
-on all of \(E\), pure of weight zero, whose trace function is \(\eta\), up to the harmless inverse convention for geometric versus arithmetic Frobenius.
-
-The precise source is Cunningham and Roe, *From the function-sheaf dictionary to quasicharacters of p-adic tori*, Theorem 3.6. Since \(E\) is connected, its component group is trivial, so the trace-of-Frobenius map is an isomorphism on isomorphism classes.
-
-### 2.2 Quadratic Kummer sheaf for \(R\)
-
-Pull back the quadratic Kummer local system on \(\mathbb G_m\) by \(R\). After extending across points with even valuation, one obtains a rank-one sheaf
-
-\[
-\mathcal K_R
-\]
-
-lisse on
-
-\[
-U=E\setminus S_{\rm odd}(R).
-\]
-
-It is tame at every point of \(S_{\rm odd}(R)\), has Swan conductor zero, and is pure of weight zero. Its local inertia action at every point of \(S_{\rm odd}(R)\) is the nontrivial quadratic character, so the middle-extension stalk has no inertia invariants and its trace there is zero.
-
-This is the curve-pullback form of the Kummer construction in Fouvry, Kowalski and Michel, *Trace functions over finite fields and applications*, Theorem 2.3.1.
-
-### 2.3 Euler characteristic and weights
-
-For a rank-one lisse sheaf \(\mathcal F\) on an open curve \(U=C\setminus S\), the Grothendieck-Ogg-Shafarevich formula is
-
-\[
-\chi_c(U_{\overline{\mathbb F}_q},\mathcal F)
-=
-\operatorname{rank}(\mathcal F)(2-2g(C)-\#S)
--
-\sum_{x\in S}\operatorname{Swan}_x(\mathcal F).
-\]
-
-The general curve formula is SGA 5, Expose X, formula 7.2. The genus-zero specialization and the cohomological trace-bound mechanism are presented in Fouvry, Kowalski and Michel, Theorems 4.1.7 and 4.1.9.
-
-Deligne's weight theorem bounds every Frobenius eigenvalue on \(H_c^1\) by \(\sqrt q\) for a weight-zero sheaf.
-
-## 3. Geometric nontriviality
-
-Set
-
-\[
-\mathcal F
-=
-\mathcal L_\eta\otimes\mathcal K_R
-\quad\text{on }U.
-\]
-
-The only possible obstruction to square-root cancellation would be geometric triviality of \(\mathcal F\).
-
-The geometric order of \(\mathcal L_\eta\) equals the order of \(\eta\). Indeed, if a tensor power \(\mathcal L_\eta^{\otimes a}\) were geometrically trivial, its trace function would be a constant arithmetic twist. Evaluation at the identity gives that constant as one, so \(\eta^a=1\). The converse follows from the character-sheaf dictionary.
-
-Therefore \(\mathcal L_\eta\) has odd geometric order greater than one. The geometric order of \(\mathcal K_R\) divides two. Hence
-
-\[
-\mathcal L_\eta\otimes\mathcal K_R
-\not\simeq
-\mathbf 1
-\]
-
-geometrically.
-
-For the parity peak character on an odd cyclic group of order \(n\),
-
-\[
-r_\star=\frac{n-1}{2},
-\qquad
-\gcd(r_\star,n)=1,
-\]
-
-so the peak character has exact order \(n\). The required odd-order hypothesis is automatic.
-
-## 4. Cohomological dimension
-
-The sheaf \(\mathcal F\) is rank one, tame, and geometrically nontrivial.
-
-First,
-
-\[
-H_c^0(U_{\overline{\mathbb F}_q},\mathcal F)=0.
-\]
-
-When \(S_{\rm odd}(R)\ne\varnothing\), the open curve is nonproper and a nonzero lisse section cannot have compact support. When the support is empty, geometric nontriviality removes global invariants.
-
-Second, Poincare duality and geometric nontriviality give
-
-\[
-H_c^2(U_{\overline{\mathbb F}_q},\mathcal F)=0.
-\]
-
-Since \(E\) has genus one and all Swan conductors vanish, Grothendieck-Ogg-Shafarevich gives
-
-\[
-\chi_c(U,\mathcal F)
-=2-2\cdot1-s(R)
-=-s(R).
-\]
-
-Consequently,
+then the provisional theorem is
 
 \[
 \boxed{
-\dim H_c^1(U_{\overline{\mathbb F}_q},\mathcal F)=s(R)
-}.
-\]
-
-This also covers \(s(R)=0\), where all three compactly supported cohomology groups vanish.
-
-## 5. Trace estimate
-
-The Grothendieck-Lefschetz trace formula gives
-
-\[
-\sum_{P\in E(\mathbb F_q)}
-\eta(P)t_R(P)
-=
--
-\operatorname{Tr}
-\left(
-\operatorname{Frob}_q
-\mid
-H_c^1(U_{\overline{\mathbb F}_q},\mathcal F)
-\right).
-\]
-
-The sheaf \(\mathcal F\) is pure of weight zero. Deligne's theorem therefore bounds each of the \(s(R)\) eigenvalues by \(\sqrt q\). The triangle inequality proves
-
-\[
-\left|
-\sum_{P\in E(\mathbb F_q)}
-\eta(P)t_R(P)
-\right|
-\le
-s(R)\sqrt q.
-\]
-
-This proves FDB-1 with \(C_{\rm sh}=1\).
-
-## 6. Divisor-aware regularization
-
-Suppose an evaluator replaces the middle-extension value zero at a rational odd-support point by the quadratic character of a first nonzero local coefficient. Call the resulting function \(\widetilde\chi_R\).
-
-At every rational point outside the odd support,
-
-\[
-\widetilde\chi_R(P)=t_R(P).
-\]
-
-At a rational point of odd support, the two values differ in absolute value by one. Therefore
-
-\[
-\left|
-\sum_{P\in E(\mathbb F_q)}
-\eta(P)\widetilde\chi_R(P)
-\right|
-\le
-s(R)\sqrt q+s(R).
-\]
-
-If the target parity sequence is specified only on nonidentity points, adding or removing the identity changes the coefficient by at most one. Thus an exact rational-character parity evaluator satisfies
-
-\[
 \cot\!\left(\frac{\pi}{2n}\right)
 \le
-s(R)\sqrt q+s(R)+1,
+s(f)\sqrt q+s(f)+1
+}
 \]
 
 and hence
 
 \[
 \boxed{
- s(R)
+ s(f)
 \ge
 \frac{
 \cot\!\left(\frac{\pi}{2n}\right)-1
@@ -261,45 +80,229 @@ and hence
 \tag{FDB-2}
 \]
 
-For \(n\asymp q\), this is
+For \(n\asymp q\), this gives
 
 \[
-s(R)=\Omega(\sqrt n).
+s(f)=\Omega(\sqrt n).
 \]
 
-## 7. secp256k1 consequence
+## 2. Exact Fourier input
 
-For secp256k1, the cofactor is one and
+For odd \(n\), put
 
 \[
-E(\mathbb F_p)=\langle G\rangle
+\sigma([k]G)=(-1)^k,
+\qquad 1\le k<n.
 \]
 
-has odd prime order \(n\). The peak character therefore has exact odd order \(n\), and FDB-1 applies directly.
+At the near-half frequency
 
-Using the fixed public values of \(p\) and \(n\), FDB-2 gives
+\[
+r_\star=\frac{n-1}{2},
+\]
+
+one has
+
+\[
+\sum_{k=1}^{n-1}(-1)^kz^k
+=
+\frac{1-z}{1+z},
+\qquad
+z=e^{-2\pi i r_\star/n},
+\]
+
+and therefore
 
 \[
 \boxed{
- s(R)
-\ge
-216630482969909636093804454941121895872
+\left|
+\sum_{k=1}^{n-1}(-1)^kz^k
+\right|
+=
+\cot\!\left(\frac{\pi}{2n}\right)
 }.
 \]
 
-This is approximately \(2^{127.35}\) geometric odd-valuation points.
-
-Accordingly, no exact divisor-aware evaluator of the form
+Moreover,
 
 \[
-Q\longmapsto\chi(R(Q))
+\gcd\!\left(\frac{n-1}{2},n\right)=1,
 \]
 
-can realize canonical parity when the square-free divisor support of \(R\) is \(o(\sqrt n)\).
+so the peak character on \(H\) is faithful and has exact odd order \(n\).
+
+This part is elementary and is independently replayed by the V7 and V8
+scripts.
+
+## 3. From the subgroup to complete elliptic sums
+
+Let
+
+\[
+A=E(\mathbb F_q),
+\qquad m=[A:H].
+\]
+
+Every character of a subgroup of a finite abelian group extends to the full
+group. Extend the faithful peak character \(\eta\) of \(H\) to a character
+\(\theta\) of \(A\). With
+
+\[
+H^\perp=
+\{\psi\in\widehat A:\psi|_H=1\},
+\]
+
+orthogonality gives
+
+\[
+1_H(P)=\frac1m\sum_{\psi\in H^\perp}\psi(P).
+\]
+
+Thus every subgroup sum is the average of complete sums twisted by
+\(\theta\psi\). Each twist still restricts to the faithful odd-order character
+\(\eta\) on \(H\). This removes any cofactor-one assumption.
+
+## 4. Source-locked sheaf inputs
+
+For every complete twist \(\theta\psi\), use the rank-one Lang character sheaf
+
+\[
+\mathcal L_{\theta\psi}
+\]
+
+on \(E\). Its trace function is the corresponding finite-group character,
+up to the standard inverse convention between arithmetic and geometric
+Frobenius.
+
+For \(f\), use the quadratic Kummer middle extension
+
+\[
+\mathcal K_f.
+\]
+
+It is rank one, lisse on
+
+\[
+U=E\setminus S_{\rm odd}(f),
+\]
+
+tame at every puncture, pure of weight zero, and has Swan conductor zero. At a
+rational odd-support point its middle-extension trace is zero. Even-order
+zeros and poles are not punctures for the square-free Kummer class.
+
+The tensor
+
+\[
+\mathcal F_\psi
+=
+\mathcal L_{\theta\psi}\otimes\mathcal K_f
+\]
+
+is geometrically nontrivial. Its Lang factor restricts to an odd-order faithful
+character on \(H\), while the Kummer factor has geometric order dividing two.
+They cannot cancel.
+
+## 5. Exact conductor constant
+
+The sheaf \(\mathcal F_\psi\) is rank one, tame and geometrically nontrivial.
+Consequently,
+
+\[
+H_c^0(U_{\overline{\mathbb F}_q},\mathcal F_\psi)=0,
+\qquad
+H_c^2(U_{\overline{\mathbb F}_q},\mathcal F_\psi)=0.
+\]
+
+Since \(E\) has genus one, Grothendieck-Ogg-Shafarevich gives
+
+\[
+\chi_c(U_{\overline{\mathbb F}_q},\mathcal F_\psi)
+=2-2\cdot1-s(f)
+=-s(f).
+\]
+
+Hence
+
+\[
+\boxed{
+\dim H_c^1(U_{\overline{\mathbb F}_q},\mathcal F_\psi)=s(f)
+}.
+\]
+
+The Grothendieck-Lefschetz trace formula and Deligne's weight theorem then give
+
+\[
+\boxed{
+\left|
+\sum_{P\in E(\mathbb F_q)}
+(\theta\psi)(P)t_f(P)
+\right|
+\le
+s(f)\sqrt q
+}.
+\tag{FDB-1}
+\]
+
+Averaging over \(H^\perp\) preserves the same upper bound for the subgroup
+sum. Under these conventions the sheaf constant is exactly one.
+
+## 6. Divisor-aware regularization
+
+At a rational odd-support point, the middle-extension trace is zero, while the
+evaluator may return a unit-modulus regularized value. Each replacement changes
+the sum by at most one. There are at most \(s(f)\) such rational points.
+Adding or removing the identity changes the nonidentity Fourier coefficient by
+at most one more term.
+
+Therefore
+
+\[
+\cot\!\left(\frac{\pi}{2n}\right)
+\le
+s(f)\sqrt q+s(f)+1,
+\]
+
+which proves the transfer from FDB-1 to FDB-2.
+
+Products and quotients of quadratic-character atoms collapse to one rational
+function. Local orders add and local leading units multiply. Thus the theorem
+covers the aggregate regularization used by V1-V6, not only a single primitive
+atom.
+
+## 7. Certified secp256k1 consequence
+
+For secp256k1, the public parameters have cofactor one. The executable V8
+certificate avoids trusting a floating-point cotangent by proving an explicit
+rational lower bound for \(\cot(\pi/(2n))\) and using exact integer square
+comparisons for the radical denominator.
+
+It certifies
+
+\[
+\boxed{
+ s(f)
+\ge
+216543324404233567658511113820216134562
+}
+\]
+
+and therefore
+
+\[
+\boxed{
+\deg(f:E\to\mathbb P^1)
+\ge
+108271662202116783829255556910108067281
+}.
+\]
+
+The certified support bound has binary size 127. A separate high-precision
+calculation gives a slightly larger analytic estimate, but that estimate is not
+used as the rigorous integer certificate.
 
 ## 8. Independent published cross-check
 
-Kohel and Shparlinski, *On Exponential Sums and Group Generators for Elliptic Curves over Finite Fields*, prove a direct hybrid character-sum estimate of the form
+Kohel and Shparlinski prove a direct hybrid estimate of the form
 
 \[
 \left|
@@ -310,41 +313,64 @@ Kohel and Shparlinski, *On Exponential Sums and Group Generators for Elliptic Cu
 2\deg(f)\sqrt q
 \]
 
-under the standard nontriviality condition. Their degree-based theorem is weaker than FDB-1 when large square factors are present, but it independently confirms the square-root cancellation mechanism for a group-character twist of a rational-character trace.
+under their standard nontriviality condition. This degree-based result is
+weaker when large square factors are present, but independently confirms the
+same complete-sum square-root cancellation mechanism.
 
 ## 9. Exact scope
 
-FDB-1 and FDB-2 close, asymptotically, all exact rational-character mechanisms whose geometric odd divisor support is \(o(\sqrt n)\), including any fixed-divisor-degree family and all bounded V1-V6 dictionaries.
+The provisional theorem closes exact rational-character mechanisms with
 
-They do not close:
+\[
+s(f)=o\!\left(\frac{n}{\sqrt q}\right).
+\]
 
-1. high-degree rational functions represented by short nonlinear straight-line programs;
-2. direct field-valued evaluation of \(Y_G(x(Q))/y(Q)\) without an outer quadratic character;
-3. transposed or modular-composition representations that avoid materializing the divisor;
+For secp256k1 this means every such mechanism with odd divisor support below
+square-root scale. It subsumes the bounded affine, pulled-line, reducible-conic,
+global-balance and small-Miller character dictionaries.
+
+It does not close:
+
+1. high-degree rational functions represented by short nonlinear
+   straight-line programs;
+2. direct field-valued evaluation of \(Y_G(x(Q))/y(Q)\) without an outer
+   quadratic character;
+3. transposed or modular-composition representations that avoid materializing
+   the divisor;
 4. level-\(n\) theta or elliptic-unit formulas with compact evaluation;
-5. index-growing EDS or Miller constructions with compact global normalization;
-6. non-rational special-function representations.
+5. index-growing EDS or Miller recurrences with compact global normalization;
+6. non-rational special-function representations;
+7. adaptive branching or general arithmetic circuits.
 
-A large divisor can be generated by a small circuit, so divisor support is not a circuit-size lower bound.
+Large divisor support is not by itself a circuit-size lower bound.
 
-## 10. Formalization boundary
+## 10. Verification boundary
 
-The elementary parity Fourier identity is suitable for Lean and should be kernel-checked separately.
-
-The current Mathlib stack does not provide the full infrastructure required to formalize FDB-1 end to end: Lang character sheaves, quadratic Kummer middle extensions, compactly supported etale cohomology, Grothendieck-Ogg-Shafarevich and Deligne weights. For that reason the status is:
+The status is deliberately split:
 
 ```text
-mathematical proof: complete and source-locked
-numerical consequence: reproducibly checked
-Lean kernel proof: unavailable in the current library stack
+source-lock and normalization audit: complete
+arithmetic specialization: reproducibly certified
+independent specialist review: pending
+peer review: absent
+Lean kernel proof of the sheaf theorem: unavailable in the current stack
 ```
 
-This boundary is explicit. No `axiom`, `sorry`, or informal placeholder is being presented as a kernel-checked theorem.
+The current Mathlib environment does not jointly provide Lang character
+sheaves, quadratic Kummer middle extensions, compactly supported etale
+cohomology, Grothendieck-Ogg-Shafarevich and Deligne weights. No `axiom`,
+`sorry`, or informal placeholder is presented as a kernel-checked theorem.
 
 ## 11. Primary references
 
-1. Clifton Cunningham and David Roe, *From the function-sheaf dictionary to quasicharacters of p-adic tori*, especially Theorem 3.6.
-2. Etienne Fouvry, Emmanuel Kowalski and Philippe Michel, *Trace functions over finite fields and applications*, especially Theorems 2.3.1, 4.1.7 and 4.1.9.
-3. Alexander Grothendieck et al., *Cohomologie l-adique et fonctions L*, SGA 5, Expose X, formula 7.2.
-4. Pierre Deligne, *La conjecture de Weil II*, Publications Mathematiques de l'IHES 52 (1980), 137-252.
-5. David Kohel and Igor Shparlinski, *On Exponential Sums and Group Generators for Elliptic Curves over Finite Fields*, ANTS-IV, LNCS 1838 (2000), 395-404.
+1. Clifton Cunningham and David Roe, *From the function-sheaf dictionary to
+   quasicharacters of p-adic tori*, especially Theorem 3.6.
+2. Etienne Fouvry, Emmanuel Kowalski and Philippe Michel, *Trace functions over
+   finite fields and applications*, especially Theorems 2.3.1, 4.1.7 and
+   4.1.9.
+3. SGA 5, Expose X, formula 7.2.
+4. Pierre Deligne, *La conjecture de Weil II*, Publications Mathematiques de
+   l'IHES 52 (1980), 137-252.
+5. David Kohel and Igor Shparlinski, *On Exponential Sums and Group Generators
+   for Elliptic Curves over Finite Fields*, ANTS-IV, LNCS 1838 (2000),
+   395-404.
