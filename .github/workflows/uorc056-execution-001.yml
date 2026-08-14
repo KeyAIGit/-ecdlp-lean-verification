@@ -33,12 +33,13 @@ jobs:
           python scripts/uorc056_toy_factory.py --output-dir /tmp/uorc056-fixtures --check
           cmp /tmp/uorc056-fixtures/manifest.json experiments/uorc056/expected_fixture_manifest.json
 
-      - name: Run exact producer and synthesis tests
+      - name: Run exact producer, synthesis and regularization tests
         run: |
           PYTHONPATH=scripts python -m unittest -v \
             scripts/test_uorc056_toy_factory.py \
             scripts/test_uorc056_circuit_synth.py \
-            scripts/test_uorc056_structural_transfer.py
+            scripts/test_uorc056_structural_transfer.py \
+            scripts/test_uorc056_divisor_aware_rational.py
 
       - name: Replay every root and parity ratio independently
         run: python scripts/uorc056_sympy_replay.py /tmp/uorc056-fixtures
@@ -47,6 +48,7 @@ jobs:
         run: |
           python scripts/uorc056_circuit_synth.py --check
           python scripts/uorc056_structural_transfer.py --check
+          python scripts/uorc056_divisor_aware_rational.py --check
 
       - name: Upload exact ground-truth fixtures
         uses: actions/upload-artifact@v4
