@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.2",
+  "schema_version": "1.3",
   "registry_id": "UORC-056-CLOSED-CLASSES-001",
   "status": "scoped_registry_not_universal_lower_bound",
   "entries": [
@@ -64,7 +64,7 @@
       "source": "PR-385",
       "scope": "Consecutive-segment summaries represented as an ordered product conjugated by endpoint basis values, with no additional hidden state.",
       "disposition": "normal_form_scoped",
-      "reason": "The declared product grammar reduces to endpoint conjugation and does not independently select the absolute orientation.",
+      "reason": "The declared product grammar reduces to endpoint conjugation and does not indepently select the absolute orientation.",
       "reopen_condition": "Compose both orientation branches simultaneously or add a genuinely nonmultiplicative primitive with charged state growth."
     },
     {
@@ -97,7 +97,7 @@
       "scope": "One global phase times one classical quadratic character chi(psi_m(Q)), for an arbitrary positive index m, on the secp256k1 prime-order subgroup.",
       "disposition": "closed_for_every_index",
       "reason": "Odd indices fail negation covariance. Every admissible even index m=2u collapses in square class to chi(psi_2([u]Q)); the published 6*sqrt(p) subgroup Fourier bound is far below the exact parity peak. Independent Paley-tournament and psi_3 all-residue completion arguments give separate large-order certificates.",
-      "reopen_condition": "Use products or ratios of multiple independently pulled factors, a field-valued output without one outer character, adaptive branching, or another mechanism outside the single classical psi_m character model."
+      "reopen_condition": "Use a field-valued output, additive mixtures of different CM weights, adaptive branching, or another mechanism outside the finite multiplicative classical division-polynomial character class."
     },
     {
       "id": "PURE-SINGLE-DIVISION-POLYNOMIAL-FROZEN-CORPUS",
@@ -106,7 +106,31 @@
       "disposition": "closed_by_theorem_plus_complete_multiplier_scans",
       "reason": "The published 6*sqrt(q) Fourier inequality closes fourteen curves; exhaustive scans of every invertible multiplier class and both global phases close the remaining four. The independent covariance and Paley checks agree on their respective congruence classes.",
       "reopen_condition": "Change the corpus or leave the pure single-factor division-polynomial character class."
+    },
+    {
+      "id": "FINITE-MULTIPLICATIVE-DIVISION-POLYNOMIAL-CHARACTERS-SECP256K1",
+      "source": "PR-386-V13",
+      "scope": "Any finite product or quotient of quadratic characters chi(psi_m([u]Q)) on secp256k1, with arbitrary public positive indices, public nonzero scalar pullbacks, repeated factors, cancellations where the resulting rational character is defined, and one global phase.",
+      "disposition": "closed_for_arbitrary_finite_factor_count",
+      "reason": "Every division-polynomial character atom is invariant under the order-three secp256k1 GLV automorphism because its CM scaling factor is a power of the square cube root beta. Products, quotients, pullbacks and global phase remain GLV-invariant, whereas canonical parity is not GLV-invariant.",
+      "reopen_condition": "Use additive mixtures of different CM weights, a field-valued output, an object carrying a nontrivial GLV representation, adaptive branching, or a non-character arithmetic circuit."
+    },
+    {
+      "id": "V14-A-MODE-AS-INDEPENT-ORIENTATION-CHANNEL",
+      "source": "PR-386-V14-V15",
+      "scope": "Treating the V14 invariant quantity A(T)/y(Q), the four-state selector u=xB/A, and the GLV carry as three indepent hidden orientation observables.",
+      "disposition": "collapsed_to_exact_two_bit_normal_form",
+      "reason": "V15 proves A/y=c*(1+u^3/6) and sigma(Q)=c*h(u), with h(u)=(u^3+u^2-2u+6)/6. The remaining normal form contains one GLV carry bit and one Kummer sector bit, not three independent targets.",
+      "reopen_condition": "Exhibit a representation in which the charged shared computation of the two surviving bits is asymptotically smaller than evaluating either dense component separately."
+    },
+    {
+      "id": "FINITE-DIVPOLY-CHARACTER-AS-KUMMER-SECTOR-BIT-SECP256K1",
+      "source": "PR-386-V13-V15",
+      "scope": "A finite multiplicative division-polynomial quadratic-character monomial claimed to equal the V15 Kummer sector bit J_G(x(Q)).",
+      "disposition": "closed_by_GLV_covariance",
+      "reason": "The monomial is GLV-invariant by V13, while J_G(x(alpha Q)) cycles from kappa0 to kappa1 and is not constant on the secp256k1 GLV orbit.",
+      "reopen_condition": "Use additive CM-weight mixing, direct oriented-root values, or another object with the sector bit's nontrivial C3 transformation law."
     }
   ],
-  "global_warning": "Every entry is scoped. The pure single classical division-polynomial character is closed on secp256k1 and on the declared eighteen-curve corpus, but products or ratios of multiple factors, direct field-valued Y_G evaluation and unrestricted arithmetic circuits remain open. This registry is not a proof that UORC-056 has no sub-root evaluator."
+  "global_warning": "Every entry is scoped. On secp256k1, one classical division-polynomial character and the entire finite multiplicative class of such characters are closed, including arbitrary factor count and public scalar pullbacks. V15 also reduces the CM threefold normal form to a GLV carry bit times a Kummer sector bit. Additive CM-weight mixtures, direct field-valued Y_G evaluation, compact carry or sector decoders, adaptive outputs and unrestricted arithmetic circuits remain open. This registry is not a proof that UORC-056 has no sub-root evaluator."
 }
