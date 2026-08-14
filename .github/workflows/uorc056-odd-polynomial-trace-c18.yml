@@ -1,0 +1,63 @@
+name: UORC056 odd polynomial trace C18
+
+on:
+  push:
+    branches:
+      - research/uorc056-endpoint-gauge
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_ODD_POLYNOMIAL_TRACE_C18.md'
+      - 'experiments/parity_lift_000/uorc056_odd_polynomial_trace_replay.py'
+      - 'experiments/parity_lift_000/uorc056_odd_polynomial_trace_ci_summary.json'
+      - '.github/workflows/uorc056-odd-polynomial-trace-c18.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile and replay C18
+        run: |
+          python3 -m py_compile experiments/parity_lift_000/uorc056_odd_polynomial_trace_replay.py
+          python3 experiments/parity_lift_000/uorc056_odd_polynomial_trace_replay.py \
+            --summary experiments/parity_lift_000/uorc056_odd_polynomial_trace_ci_summary.json \
+            --out /tmp/uorc056_odd_polynomial_trace_replay_result.json \
+            > /tmp/uorc056-odd-polynomial-trace-c18.log
+
+      - name: Check theorem flags
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('/tmp/uorc056_odd_polynomial_trace_replay_result.json').read_text())
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          assert aggregate['curves'] == 7
+          assert aggregate['orbit_valuation_checks'] == 495
+          assert aggregate['newton_scalar_checks'] == 3584
+          assert aggregate['full_result_sha256'] == 'd207bd1b3a68ec7ba46504045f8d142fabeb2a798ce9746da1a042809b6de30c'
+          assert aggregate['all_public_corpus_checks']
+          assert aggregate['all_type2_type3_patterns_pass']
+          assert aggregate['all_support_bounds_pass']
+          assert not aggregate['sub_sqrt_evaluator_found']
+          assert not aggregate['parity_oracle_found']
+          assert secp['support_bit_length'] == 254
+          assert secp['pole_degree_bit_length'] == 253
+          assert secp['support_lower_bound'] == '19298681539552699237261830834781317975472927379845817397100860523586360249052'
+          assert secp['pole_degree_lower_bound'] == '9649340769776349618630915417390658987736463689922908698550430261793180124526'
+          print(json.dumps(aggregate, indent=2, sort_keys=True))
+          print(json.dumps(secp, indent=2, sort_keys=True))
+          PY
+
+      - name: Upload replay output
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-odd-polynomial-trace-c18
+          path: |
+            /tmp/uorc056_odd_polynomial_trace_replay_result.json
+            /tmp/uorc056-odd-polynomial-trace-c18.log
+          retention-days: 90
