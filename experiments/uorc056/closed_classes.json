@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "registry_id": "UORC-056-CLOSED-CLASSES-001",
   "status": "scoped_registry_not_universal_lower_bound",
   "entries": [
@@ -90,7 +90,23 @@
       "disposition": "closed_by_negation_covariance",
       "reason": "Odd m is invariant under Q -> -Q. Even m remains character-invariant when chi(-1)=+1, while canonical parity is always anti-invariant on an odd cycle.",
       "reopen_condition": "Specialize to q congruent to 3 modulo 4 with even m, add a charged covariance-correcting factor, or leave the pure division-polynomial character model."
+    },
+    {
+      "id": "PURE-SINGLE-DIVISION-POLYNOMIAL-SECP256K1",
+      "source": "PR-386-V10-V11",
+      "scope": "One global phase times one classical quadratic character chi(psi_m(Q)), for an arbitrary positive index m, on the secp256k1 prime-order subgroup.",
+      "disposition": "closed_for_every_index",
+      "reason": "Odd indices fail negation covariance. Every admissible even index m=2u collapses in square class to chi(psi_2([u]Q)); the published 6*sqrt(p) subgroup Fourier bound is far below the exact parity peak. Independent Paley-tournament and psi_3 all-residue completion arguments give separate large-order certificates.",
+      "reopen_condition": "Use products or ratios of multiple independently pulled factors, a field-valued output without one outer character, adaptive branching, or another mechanism outside the single classical psi_m character model."
+    },
+    {
+      "id": "PURE-SINGLE-DIVISION-POLYNOMIAL-FROZEN-CORPUS",
+      "source": "PR-386-V10",
+      "scope": "One global phase times chi(psi_m(Q)) on each curve of the declared eighteen-curve transfer corpus, with arbitrary positive m and no per-point advice.",
+      "disposition": "closed_by_theorem_plus_complete_multiplier_scans",
+      "reason": "The published 6*sqrt(q) Fourier inequality closes fourteen curves; exhaustive scans of every invertible multiplier class and both global phases close the remaining four. The independent covariance and Paley checks agree on their respective congruence classes.",
+      "reopen_condition": "Change the corpus or leave the pure single-factor division-polynomial character class."
     }
   ],
-  "global_warning": "Every entry is scoped. This registry is not a proof that UORC-056 has no sub-root evaluator. The even-index q=3 mod 4 EDS-decimation case remains open."
+  "global_warning": "Every entry is scoped. The pure single classical division-polynomial character is closed on secp256k1 and on the declared eighteen-curve corpus, but products or ratios of multiple factors, direct field-valued Y_G evaluation and unrestricted arithmetic circuits remain open. This registry is not a proof that UORC-056 has no sub-root evaluator."
 }
