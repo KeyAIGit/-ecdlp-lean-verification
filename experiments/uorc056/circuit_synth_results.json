@@ -1,0 +1,36 @@
+{
+  "claim_boundary": [
+    "The active profile is a strict subgrammar of C_SYNTH_V1.",
+    "Rediscovery on p=43 validates the synthesis engine but is not a scalable evaluator.",
+    "A candidate requires unchanged transfer to at least three structural curves and a symbolic identity."
+  ],
+  "decision": "finite_nontransfer_seed",
+  "deep_case": {
+    "generator": [2, 12],
+    "n": 31,
+    "p": 43
+  },
+  "enumeration": {
+    "global_sign_quotient": true,
+    "maximum_product_weight": 4,
+    "projective_normalized_forms": 1893,
+    "unique_semantic_sign_vectors": 877,
+    "valid_nonvanishing_forms": 878
+  },
+  "experiment": "UORC-056-C-SYNTH-V1-AFFINE-CHAR-PRODUCT",
+  "grammar_sha256": "a5355655a5846570f122dd63315ac7998eaa06a850515d9c54dbc46274439640",
+  "minimum_exact_seed": {
+    "expression": "phase * product_i chi(a_i*x(Q)+b_i*y(Q)+c_i)",
+    "forms": [[1, 0, 17], [1, 1, 41], [1, 42, 41], [0, 1, 0]],
+    "phase": 1,
+    "weight": 4
+  },
+  "schema_version": "1.0",
+  "unchanged_integer_formula_transfer": [
+    {"defined_on_full_orbit": true, "exact": true, "exact_up_to_global_sign": true, "n": 31, "p": 43},
+    {"defined_on_full_orbit": false, "exact": false, "exact_up_to_global_sign": false, "n": 79, "p": 67},
+    {"defined_on_full_orbit": false, "exact": false, "exact_up_to_global_sign": false, "n": 67, "p": 79},
+    {"defined_on_full_orbit": false, "exact": false, "exact_up_to_global_sign": false, "n": 127, "p": 127},
+    {"defined_on_full_orbit": false, "exact": false, "exact_up_to_global_sign": false, "n": 139, "p": 163}
+  ]
+}
