@@ -1,0 +1,61 @@
+{
+  "claim_boundary": "A negative result closes only globally divisor-balanced 2-by-2 products in this declared pulled-line dictionary.",
+  "cost_model": [
+    "all [u]Q group operations are charged",
+    "all line coefficient construction and evaluations are charged",
+    "all local regularization, inversions, characters and sign products are charged",
+    "enumerative discovery cost is not evaluator advice"
+  ],
+  "curve_model": "y^2=x^3+7 over five frozen odd prime-order toy subgroups",
+  "forbidden": [
+    "per-point patches or omitted exceptional points",
+    "per-curve AST fitting",
+    "target-indexed orientation tables",
+    "uncharged coefficient or representation advice"
+  ],
+  "global_balance_circuit": {
+    "admission": "ord_P(L1)+ord_P(L2)=ord_P(L3)+ord_P(L4) at every tested subgroup point",
+    "formula": "chi((L1*L2)/(L3*L4))",
+    "important_extension": "zeros and poles may cancel across different circuit factors; no individual ratio atom is required to be regular",
+    "regular_value": "ratio of products of exact first nonzero local coefficients",
+    "uniform_output_negation": true
+  },
+  "profile_id": "UORC-056-GLOBAL-DIVISOR-BALANCE-V4",
+  "pulled_line_templates": {
+    "formula": "L([u]Q), L=a*x+b*y+c",
+    "linear_coefficients": [
+      "zero",
+      "one",
+      "neg_one",
+      "beta_lo",
+      "beta_hi"
+    ],
+    "local_parameter": "t=x-x(P)",
+    "multipliers": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "offsets": [
+      "zero",
+      "one",
+      "neg_one",
+      "two",
+      "neg_two",
+      "curve_b",
+      "neg_curve_b",
+      "x_G",
+      "neg_x_G",
+      "y_G",
+      "neg_y_G",
+      "beta_lo",
+      "beta_hi",
+      "x_G_plus_y_G",
+      "x_G_minus_y_G"
+    ],
+    "pullback_leading_coefficient": "c*alpha_(u,P)^m with alpha=u*y([u]P)/y(P)",
+    "raw_count": 1440
+  },
+  "schema_version": "1.0"
+}
