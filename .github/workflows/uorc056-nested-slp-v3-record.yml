@@ -1,0 +1,93 @@
+name: UORC-056 persist nested SLP v3
+
+on:
+  push:
+    branches:
+      - research/uorc056-execution-001
+    paths:
+      - 'scripts/uorc056_nested_slp_v3.py'
+      - 'scripts/uorc056_nested_slp_v3_runner.py'
+      - 'scripts/test_uorc056_nested_slp_v3.py'
+      - 'experiments/uorc056/nested_slp_grammar_v3.json'
+      - '.github/workflows/uorc056-nested-slp-v3-record.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: uorc056-nested-slp-v3-record
+  cancel-in-progress: true
+
+jobs:
+  record:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/uorc056-execution-001
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verify and execute nested SLP search
+        run: |
+          PYTHONPATH=scripts python -m unittest -v \
+            scripts/test_uorc056_nested_slp_v3.py
+          PYTHONPATH=scripts python scripts/uorc056_nested_slp_v3_runner.py \
+            --max-size 4 \
+            --beam-size 96 \
+            --out experiments/uorc056/nested_slp_v3_results.json
+
+      - name: Render result summary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('experiments/uorc056/nested_slp_v3_results.json').read_text())
+          best = data['best_all_five_near_miss']
+          lines = [
+              '# UORC-056 nested SLP v3 result',
+              '',
+              f"Decision: **{data['decision']}**",
+              '',
+              f"- Minimum exact all-five size: `{data['minimum_exact_all_five_size']}`.",
+              f"- Exact all-five candidates: `{len(data['exact_all_five_candidates'])}`.",
+              f"- Exact first-three candidates: `{len(data['exact_first_three_candidates'])}`.",
+              f"- Symbolic lifting: `{data['symbolic_lifting_status']}`.",
+              '',
+              '## Best all-five diagnostic',
+              '',
+              f"- Penalty: `{None if best is None else best['total_penalty_all_five']}`.",
+              f"- Expression: `{None if best is None else best['expression']}`.",
+              '',
+              '## Layer statistics',
+              '',
+              '```json',
+              json.dumps(data['layer_statistics'], indent=2),
+              '```',
+              '',
+              'The search is beam-pruned beyond the seed layer. A miss is not a lower bound.',
+              '',
+          ]
+          Path('experiments/uorc056/NESTED_SLP_V3_RESULT.md').write_text(
+              '\n'.join(lines), encoding='utf-8'
+          )
+          PY
+
+      - name: Commit deterministic evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            experiments/uorc056/nested_slp_v3_results.json \
+            experiments/uorc056/NESTED_SLP_V3_RESULT.md
+          if git diff --cached --quiet; then
+            echo 'deterministic evidence already current'
+          else
+            git commit -m 'research: record UORC-056 nested SLP v3 result'
+            git push origin HEAD:research/uorc056-execution-001
+          fi
