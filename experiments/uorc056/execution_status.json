@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "package": "UORC-056-EXECUTION-001",
-  "status": "tasks_01_through_08_implemented",
+  "status": "tasks_01_through_15_implemented_with_bounded_negatives",
   "tasks": [
     {
       "task": 1,
@@ -50,7 +50,50 @@
       "name": "independent_second_backend_replay",
       "status": "complete_with_sympy_and_sage_script_supplied",
       "evidence": "scripts/uorc056_sympy_replay.py and experiments/uorc056/sage/uorc056_replay.sage"
+    },
+    {
+      "task": 9,
+      "name": "freeze_typed_circuit_grammar",
+      "status": "complete",
+      "evidence": "experiments/uorc056/circuit_grammar.json"
+    },
+    {
+      "task": 10,
+      "name": "implement_exact_bounded_affine_character_synthesis",
+      "status": "complete",
+      "evidence": "scripts/uorc056_circuit_synth.py"
+    },
+    {
+      "task": 11,
+      "name": "semantic_quotient_and_global_phase_normalization",
+      "status": "complete",
+      "evidence": "scripts/uorc056_circuit_synth.py and scripts/test_uorc056_circuit_synth.py"
+    },
+    {
+      "task": 12,
+      "name": "rediscover_known_finite_p43_seed",
+      "status": "complete_minimum_weight_four_in_declared_family",
+      "evidence": "experiments/uorc056/circuit_synth_results.json"
+    },
+    {
+      "task": 13,
+      "name": "unchanged_integer_formula_transfer_gate",
+      "status": "complete_negative",
+      "evidence": "experiments/uorc056/circuit_synth_results.json"
+    },
+    {
+      "task": 14,
+      "name": "structural_small_multiple_and_glv_transfer_screen",
+      "status": "complete_negative_through_product_weight_four",
+      "evidence": "experiments/uorc056/structural_transfer_grammar.json and scripts/uorc056_structural_transfer.py"
+    },
+    {
+      "task": 15,
+      "name": "extended_eighteen_curve_holdout_gate",
+      "status": "complete_negative_on_7434_nonzero_orbit_points",
+      "evidence": "experiments/uorc056/structural_transfer_results.json"
     }
   ],
-  "scientific_boundary": "This package materializes finite toy ground truth. It is not a sub-square-root evaluator and does not recover any unknown production scalar."
+  "next_frontier": "A divisor-aware rational circuit grammar that permits symbolic cancellation of numerator and denominator zeros before applying the character, while charging regularization and exceptional-set handling.",
+  "scientific_boundary": "The package gives exact finite ground truth and bounded grammar closures. It is not a sub-square-root evaluator and does not recover any unknown production scalar."
 }
