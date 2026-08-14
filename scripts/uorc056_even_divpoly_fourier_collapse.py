@@ -10,13 +10,15 @@ single division polynomial, this package proves:
       chi(psi_m(Q)) = chi(psi_2([u]Q));
 
 * a near-half Fourier coefficient of parity has magnitude cot(pi/(2n));
-* the subgroup Fourier coefficients of chi(psi_2) are bounded by 4*sqrt(q),
-  because psi_2 has four geometric odd-valuation support points.
+* Shparlinski-Stange Lemma 5 bounds every subgroup Fourier coefficient of
+  chi(psi_2) by 6*sqrt(q), because the rational map psi_2=2y has degree three;
+* the sharper odd-support conductor calculation gives 4*sqrt(q), but that
+  refinement remains part of the provisional V8 sheaf package.
 
 Hence no pure division-polynomial character can equal canonical parity whenever
-cot(pi/(2n)) > 4*sqrt(q). The inequality is certified by exact integer
-arithmetic. The one frozen curve not covered by the asymptotic inequality is
-closed by exhaustive scanning of every multiplier class u modulo n.
+cot(pi/(2n)) > 6*sqrt(q). The published bound closes secp256k1 independently of
+V8. Four small frozen curves outside that inequality are closed by exhaustive
+scanning of every multiplier class u modulo n.
 """
 
 from __future__ import annotations
@@ -52,9 +54,26 @@ def certified_cot_lower_fraction(n: int) -> tuple[int, int]:
     return 98 * n * n - 121, 154 * n
 
 
-def certified_peak_exceeds_four_sqrt(q: int, n: int) -> bool:
+def certified_peak_exceeds_constant_sqrt(
+    q: int,
+    n: int,
+    constant: int,
+) -> bool:
+    if constant <= 0:
+        raise ValueError("constant must be positive")
     numerator, denominator = certified_cot_lower_fraction(n)
-    return numerator * numerator > 16 * denominator * denominator * q
+    return (
+        numerator * numerator
+        > constant * constant * denominator * denominator * q
+    )
+
+
+def certified_peak_exceeds_four_sqrt(q: int, n: int) -> bool:
+    return certified_peak_exceeds_constant_sqrt(q, n, 4)
+
+
+def certified_peak_exceeds_six_sqrt(q: int, n: int) -> bool:
+    return certified_peak_exceeds_constant_sqrt(q, n, 6)
 
 
 def parse_corpora(grammar_path: Path) -> tuple[Curve, ...]:
@@ -100,6 +119,9 @@ def exhaustive_multiplier_scan(curve: Curve) -> dict[str, Any]:
                 }
             if matches == order - 1:
                 candidates.append({"u": multiplier, "output_phase": phase})
+
+    published_closed = certified_peak_exceeds_six_sqrt(prime, order)
+    sharp_closed = certified_peak_exceeds_four_sqrt(prime, order)
     return {
         "p": prime,
         "n": order,
@@ -115,8 +137,13 @@ def exhaustive_multiplier_scan(curve: Curve) -> dict[str, Any]:
         },
         "parity_peak": f"{parity_peak(order):.15e}",
         "four_sqrt_q": f"{4.0 * math.sqrt(prime):.15e}",
-        "certified_fourier_closed": certified_peak_exceeds_four_sqrt(
-            prime, order
+        "six_sqrt_q": f"{6.0 * math.sqrt(prime):.15e}",
+        "certified_sharp_fourier_closed": sharp_closed,
+        "certified_published_fourier_closed": published_closed,
+        "closure_basis": (
+            "published_6sqrt_bound"
+            if published_closed
+            else "complete_multiplier_scan"
         ),
     }
 
@@ -157,12 +184,21 @@ def verify_chain_collapse(
 
 def secp_record() -> dict[str, Any]:
     numerator, denominator = certified_cot_lower_fraction(SECP256K1_N)
-    closed = certified_peak_exceeds_four_sqrt(
-        SECP256K1_P, SECP256K1_N
+    published_closed = certified_peak_exceeds_six_sqrt(
+        SECP256K1_P,
+        SECP256K1_N,
     )
-    if not closed:
+    sharp_closed = certified_peak_exceeds_four_sqrt(
+        SECP256K1_P,
+        SECP256K1_N,
+    )
+    if not published_closed or not sharp_closed:
         raise AssertionError("secp256k1 Fourier closure unexpectedly failed")
-    ratio = parity_peak(SECP256K1_N) / (
+
+    ratio_six = parity_peak(SECP256K1_N) / (
+        6.0 * math.sqrt(SECP256K1_P)
+    )
+    ratio_four = parity_peak(SECP256K1_N) / (
         4.0 * math.sqrt(SECP256K1_P)
     )
     return {
@@ -170,12 +206,18 @@ def secp_record() -> dict[str, Any]:
         "n": str(SECP256K1_N),
         "certified_cot_lower_numerator": str(numerator),
         "certified_cot_lower_denominator": str(denominator),
-        "certified_inequality": (
+        "certified_published_inequality": (
+            "(98*n^2-121)^2 > 36*(154*n)^2*p"
+        ),
+        "certified_published_six_sqrt_closed": published_closed,
+        "peak_over_six_sqrt_p": f"{ratio_six:.15e}",
+        "peak_over_six_sqrt_p_log2": f"{math.log2(ratio_six):.12f}",
+        "certified_sharp_inequality": (
             "(98*n^2-121)^2 > 16*(154*n)^2*p"
         ),
-        "certified_fourier_closed": closed,
-        "peak_over_four_sqrt_p": f"{ratio:.15e}",
-        "peak_over_four_sqrt_p_log2": f"{math.log2(ratio):.12f}",
+        "certified_sharp_four_sqrt_closed": sharp_closed,
+        "peak_over_four_sqrt_p": f"{ratio_four:.15e}",
+        "peak_over_four_sqrt_p_log2": f"{math.log2(ratio_four):.12f}",
         "decision": (
             "no chi(psi_m(Q)) with any positive integer m can equal "
             "canonical parity on all nonzero secp256k1 subgroup points"
@@ -189,22 +231,29 @@ def run(grammar_path: Path) -> dict[str, Any]:
     if any(row["exact_candidates"] for row in scans):
         raise AssertionError("unexpected exact psi_2 multiplier candidate")
     chain_replay = verify_chain_collapse(curves[:5])
-    fourier_closed = sum(row["certified_fourier_closed"] for row in scans)
-    finite_closed = len(scans) - fourier_closed
+
+    published_closed = sum(
+        row["certified_published_fourier_closed"] for row in scans
+    )
+    sharp_closed = sum(
+        row["certified_sharp_fourier_closed"] for row in scans
+    )
 
     grammar_bytes = grammar_path.read_bytes()
     return {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "experiment": PROFILE_ID,
         "review_status": (
-            "the chain-rule reduction, finite exhaustive scans and integer "
-            "inequalities are executable; the sheaf bound is inherited from "
-            "the provisional V8 theorem and remains subject to independent review"
+            "the chain-rule reduction, complete multiplier scans, exact integer "
+            "certificates and the published 6*sqrt(q) subgroup-character estimate "
+            "are independently reproducible; the sharper 4*sqrt(q) sheaf-conductor "
+            "refinement remains subject to specialist review"
         ),
         "input_grammar_sha256": hashlib.sha256(grammar_bytes).hexdigest(),
         "theorem": {
             "odd_index_closure": (
-                "psi_m(-Q)=psi_m(Q) for odd m, while canonical parity is anti-invariant"
+                "psi_m(-Q)=psi_m(Q) for odd m, while canonical parity is "
+                "anti-invariant"
             ),
             "even_chain_collapse": (
                 "for m=2u, psi_m=(psi_2 o [u])*psi_u^4, so "
@@ -214,20 +263,36 @@ def run(grammar_path: Path) -> dict[str, Any]:
                 "canonical parity has a subgroup Fourier coefficient of "
                 "magnitude cot(pi/(2n))"
             ),
-            "base_trace_bound": (
-                "every subgroup Fourier coefficient of chi(psi_2) has "
-                "magnitude at most 4*sqrt(q)"
+            "published_base_trace_bound": (
+                "Shparlinski-Stange Lemma 5 gives every subgroup Fourier "
+                "coefficient of chi(psi_2) magnitude at most 6*sqrt(q), "
+                "because deg(psi_2)=3"
+            ),
+            "published_necessary_condition": (
+                "cot(pi/(2n)) <= 6*sqrt(q)"
+            ),
+            "sharp_base_trace_bound": (
+                "the odd-support conductor calculation gives the sharper "
+                "provisional bound 4*sqrt(q)"
+            ),
+            "sharp_necessary_condition": (
+                "cot(pi/(2n)) <= 4*sqrt(q)"
             ),
             "support_reason": (
-                "div(psi_2)=sum_{T in E[2] minus {O}}[T]-3[O], "
-                "so the geometric odd support has size four"
+                "div(psi_2)=sum_{T in E[2] minus {O}}[T]-3[O], so the "
+                "geometric odd support has size four and psi_2 is not a square"
             ),
-            "necessary_condition": "cot(pi/(2n)) <= 4*sqrt(q)",
         },
         "corpus": {
             "curve_count": len(scans),
-            "curves_closed_by_certified_fourier_inequality": fourier_closed,
-            "curves_closed_by_complete_multiplier_scan_only": finite_closed,
+            "curves_closed_by_published_six_sqrt_inequality": published_closed,
+            "curves_requiring_complete_multiplier_scan_under_published_bound": (
+                len(scans) - published_closed
+            ),
+            "curves_closed_by_sharp_four_sqrt_inequality": sharp_closed,
+            "curves_requiring_complete_multiplier_scan_under_sharp_bound": (
+                len(scans) - sharp_closed
+            ),
             "all_multiplier_scans_exact_negative": True,
             "records": scans,
         },
@@ -235,7 +300,14 @@ def run(grammar_path: Path) -> dict[str, Any]:
         "secp256k1": secp_record(),
         "decision": (
             "the pure single-division-polynomial character route is closed "
-            "for secp256k1 and for every curve in the frozen eighteen-curve corpus"
+            "for secp256k1 by the published 6*sqrt(q) theorem and for every "
+            "curve in the frozen eighteen-curve corpus by that theorem plus "
+            "complete multiplier scans"
+        ),
+        "independent_cross_check": (
+            "the q=3 mod 4 secp256k1 case is also closed by the elementary "
+            "Paley tournament obstruction in "
+            "UORC056_EDS_PALEY_OBSTRUCTION_V10"
         ),
         "supersedes": (
             "the V9 open even-index q=3 mod 4 EDS-decimation case for pure "
@@ -249,7 +321,8 @@ def run(grammar_path: Path) -> dict[str, Any]:
         ],
         "claim_boundary": [
             "The theorem closes one pure character chi(psi_m(Q)) with an optional global phase.",
-            "The 4*sqrt(q) estimate inherits the provisional V8 sheaf framework.",
+            "The published 6*sqrt(q) estimate is enough for secp256k1; the sharper 4*sqrt(q) estimate remains a provisional refinement.",
+            "Finite multiplier scans are complete only for the declared eighteen toy curves.",
             "No external point, wallet, real key or unknown production scalar is used.",
         ],
     }
