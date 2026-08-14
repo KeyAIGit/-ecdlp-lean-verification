@@ -1,0 +1,46 @@
+{
+  "fixtures": [
+    {
+      "field_prime": 43,
+      "id": "E7-P43-N31",
+      "kernel_degree": 15,
+      "path": "E7-P43-N31.json",
+      "sha256": "2c3bde30333cc231dba27da6cbe56e2f6701ef73494c1e401bb666f328014344",
+      "subgroup_order": 31
+    },
+    {
+      "field_prime": 67,
+      "id": "E7-P67-N79",
+      "kernel_degree": 39,
+      "path": "E7-P67-N79.json",
+      "sha256": "5ca60dd9100816a7a7e43149710372ca017deae7418f87525e7b442a245a169b",
+      "subgroup_order": 79
+    },
+    {
+      "field_prime": 79,
+      "id": "E7-P79-N67",
+      "kernel_degree": 33,
+      "path": "E7-P79-N67.json",
+      "sha256": "fd159e99f80025cf15c05c5e59e6951d52e36486df709d7083dd7d422561540f",
+      "subgroup_order": 67
+    },
+    {
+      "field_prime": 127,
+      "id": "E7-P127-N127",
+      "kernel_degree": 63,
+      "path": "E7-P127-N127.json",
+      "sha256": "217dd1afb93ad618ac9604cd1864cc69620d565aaeb265b362c650f9ae45c0e7",
+      "subgroup_order": 127
+    },
+    {
+      "field_prime": 163,
+      "id": "E7-P163-N139",
+      "kernel_degree": 69,
+      "path": "E7-P163-N139.json",
+      "sha256": "42605af981bff7fb69c54b0c3ce9e695cd216052cb1e70d307678d58b10f37bc",
+      "subgroup_order": 139
+    }
+  ],
+  "generator": "scripts/uorc056_toy_factory.py",
+  "schema_version": "1.0"
+}
