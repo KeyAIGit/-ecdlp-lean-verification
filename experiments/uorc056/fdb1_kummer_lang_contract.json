@@ -1,0 +1,55 @@
+{
+  "claim_boundary": {
+    "closed": [
+      "exact single quadratic-character rational evaluators with o(sqrt(n)) geometric odd divisor support",
+      "divisor-aware local-leading-coefficient regularizations of the same class",
+      "all bounded V1-V6 rational-character dictionaries"
+    ],
+    "not_closed": [
+      "high-degree low-size straight-line programs",
+      "direct field-valued evaluation without an outer quadratic character",
+      "transposed or modular-composition representations",
+      "level-n theta or elliptic-unit formulas",
+      "index-growing EDS or Miller constructions",
+      "general arithmetic circuits"
+    ]
+  },
+  "cohomological_proof": {
+    "character_sheaf": "rank-one lisse weight-zero Lang character sheaf L_eta on E with trace eta",
+    "geometric_nontriviality": "ord_geom(L_eta)=ord(eta) is odd and greater than one, while ord_geom(K_R) divides two",
+    "kummer_sheaf": "rank-one quadratic Kummer middle extension, lisse outside odd valuation support, tame with Swan zero",
+    "tensor": "F=L_eta tensor K_R",
+    "vanishing": [
+      "H_c^0(U_bar,F)=0",
+      "H_c^2(U_bar,F)=0"
+    ],
+    "euler_characteristic": "chi_c(U_bar,F)=-s(R) because genus(E)=1, rank(F)=1 and all Swan conductors vanish",
+    "dimension": "dim H_c^1(U_bar,F)=s(R)",
+    "weight_bound": "all Frobenius eigenvalues on H_c^1 have complex absolute value at most sqrt(q)",
+    "constant": 1
+  },
+  "domain": {
+    "base_field": "F_q with q odd",
+    "curve": "elliptic curve E/F_q",
+    "group_character": "nontrivial eta:E(F_q)->C^x of odd order",
+    "rational_function": "R in F_q(E)^x",
+    "support": "S_odd(R)={P in E(Fbar_q): ord_P(R) is odd}",
+    "support_size": "s(R)=#S_odd(R)"
+  },
+  "formalization_status": {
+    "mathematical_proof": "complete_source_locked",
+    "numerical_specialization": "reproducibly_checked",
+    "lean_kernel": "not_available_in_current_mathlib_stack",
+    "reason": "Lang character sheaves, Kummer middle extensions, compactly supported etale cohomology, Grothendieck-Ogg-Shafarevich and Deligne weights are not jointly formalized in the repository library stack"
+  },
+  "profile_id": "UORC-056-FDB1-KUMMER-LANG-V8",
+  "regularized_corollary": {
+    "fourier_peak": "cot(pi/(2n))",
+    "identity_allowance": 1,
+    "support_point_allowance": "at most s(R)",
+    "bound": "s(R) >= (cot(pi/(2n))-1)/(sqrt(q)+1)"
+  },
+  "schema_version": "1.0",
+  "theorem": "|sum_{P in E(F_q)} eta(P) t_R(P)| <= s(R)*sqrt(q)",
+  "trace_function": "t_R is the quadratic Kummer middle-extension trace: chi(R(P)) off odd support and zero at rational odd-support points"
+}
