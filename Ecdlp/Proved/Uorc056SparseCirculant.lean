@@ -104,7 +104,7 @@ theorem constant_observable_blocks_parity_decoder
         decode (observable 2) = scalarParity 2 := by
   apply observable_collision_blocks_parity_decoder observable 1 2
   · exact hConstant 1 2
-  · simp
+  · norm_num [scalarParity]
 
 /-- If a coefficient-symmetric extraction is constant on a full Möbius orbit
 and that orbit contains opposite parity, it cannot be an exact parity decoder.
