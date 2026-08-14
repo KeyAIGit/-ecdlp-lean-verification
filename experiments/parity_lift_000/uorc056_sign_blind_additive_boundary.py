@@ -12,6 +12,10 @@ scoped grammar has the same value in the global branch worlds R and -R, and
 arbitrary rational arithmetic, determinants, and Sylvester resultants preserve
 that equality. A determinant or resultant becomes branch-sensitive only after
 a branch-sensitive entry or coefficient is supplied explicitly.
+
+The norm-one twist has zeros and poles at marked subgroup values, so the finite
+replay evaluates it on the complete public y-line away from its zero and pole
+set. The abstract two-world theorem is independent of this finite domain.
 """
 from __future__ import annotations
 
@@ -21,7 +25,6 @@ import importlib.util
 import json
 from pathlib import Path
 import sys
-from typing import Callable
 
 HERE = Path(__file__).resolve().parent
 
@@ -189,15 +192,15 @@ def sign_blind_polynomials(
     return cubic, quadratic
 
 
-def public_query_values(points) -> list[int]:
-    return sorted({point[1] for point in points[1:] if point is not None})
+def public_y_values(p: int) -> range:
+    return range(p)
 
 
 def run_case(case, split: str) -> dict[str, object]:
     p, n, G, beta, lam = case
-    C, points, rational, _finite, poles = c22.build_twist(case)
+    C, _points, rational, _finite, poles = c22.build_twist(case)
 
-    valid_queries = 0
+    valid_y_values = 0
     rational_circuit_checks = 0
     determinant_checks = 0
     resultant_checks = 0
@@ -207,7 +210,7 @@ def run_case(case, split: str) -> dict[str, object]:
     addition_zero_witness: dict[str, object] | None = None
     branch_transport_witnesses = 0
 
-    for public_y in public_query_values(points):
+    for public_y in public_y_values(p):
         branch = eval_rational(C, rational, public_y)
         tau_branch = eval_rational(C, rational, (-public_y) % p)
         if branch is None or tau_branch is None:
@@ -220,7 +223,7 @@ def run_case(case, split: str) -> dict[str, object]:
         opposite = (-branch) % p
         if branch == opposite:
             raise AssertionError("odd-characteristic branch pair collapsed")
-        valid_queries += 1
+        valid_y_values += 1
 
         positive_values = sign_blind_circuit_values(p, branch, public_y)
         negative_values = sign_blind_circuit_values(p, opposite, public_y)
@@ -291,8 +294,8 @@ def run_case(case, split: str) -> dict[str, object]:
             raise AssertionError("branch-sensitive resultant transport failed")
         branch_transport_witnesses += 2
 
-    if valid_queries == 0:
-        raise AssertionError("no valid public query values")
+    if valid_y_values == 0:
+        raise AssertionError("no valid public y-line evaluation values")
     if addition_zero_witness is None:
         raise AssertionError("no addition zero witness")
 
@@ -304,7 +307,7 @@ def run_case(case, split: str) -> dict[str, object]:
         "lambda": lam,
         "split": split,
         "R_poles": poles,
-        "valid_public_query_branch_pairs": valid_queries,
+        "valid_public_y_branch_pairs": valid_y_values,
         "rational_circuit_checks": rational_circuit_checks,
         "determinant_checks": determinant_checks,
         "resultant_checks": resultant_checks,
@@ -382,8 +385,8 @@ def main() -> None:
     aggregate = {
         "curves": len(cases),
         "generator_replacements": len(replacements),
-        "valid_public_query_branch_pairs": sum(
-            row["valid_public_query_branch_pairs"] for row in rows
+        "valid_public_y_branch_pairs": sum(
+            row["valid_public_y_branch_pairs"] for row in rows
         ),
         "rational_circuit_checks": sum(row["rational_circuit_checks"] for row in rows),
         "determinant_checks": sum(row["determinant_checks"] for row in rows),

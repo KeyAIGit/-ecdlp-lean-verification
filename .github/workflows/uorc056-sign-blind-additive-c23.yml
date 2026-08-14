@@ -27,6 +27,7 @@ jobs:
 
       - name: Compile and replay C23
         run: |
+          set -o pipefail
           python3 -m py_compile \
             experiments/parity_lift_000/uorc056_implicit_hilbert90_boundary.py \
             experiments/parity_lift_000/uorc056_sign_blind_additive_boundary.py
@@ -47,7 +48,7 @@ jobs:
           aggregate = result['aggregate']
           assert aggregate['curves'] == 7
           assert aggregate['generator_replacements'] == 6
-          assert aggregate['valid_public_query_branch_pairs'] > 0
+          assert aggregate['valid_public_y_branch_pairs'] > 0
           assert aggregate['rational_circuit_checks'] > 0
           assert aggregate['determinant_checks'] > 0
           assert aggregate['resultant_checks'] > 0
@@ -73,10 +74,10 @@ jobs:
           rows = result['cases'] + result['generator_replacements']
           assert len(rows) == 13
           for row in rows:
-              assert row['valid_public_query_branch_pairs'] > 0
+              assert row['valid_public_y_branch_pairs'] > 0
               assert row['rational_circuit_checks'] > 0
-              assert row['determinant_checks'] == 3 * row['valid_public_query_branch_pairs']
-              assert row['resultant_checks'] == row['valid_public_query_branch_pairs']
+              assert row['determinant_checks'] == 3 * row['valid_public_y_branch_pairs']
+              assert row['resultant_checks'] == row['valid_public_y_branch_pairs']
               assert row['addition_zero_witness']['output'] == 0
               assert row['addition_zero_witness']['nonzero_left_leaf'] != 0
               assert row['addition_zero_witness']['nonzero_right_leaf'] != 0
