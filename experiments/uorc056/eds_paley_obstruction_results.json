@@ -1,0 +1,353 @@
+{
+  "claim_boundary": [
+    "V10 closes one pure factor delta*chi(psi_m(Q)) for every index m; it does not close products or ratios of several division-polynomial factors.",
+    "The theorem is an algebraic impossibility result, not an evaluator and not an ECDLP algorithm.",
+    "The Paley argument applies to q=3 mod 4; q=1 mod 4 was already closed by negation covariance.",
+    "No external target point, wallet, real key or unknown production scalar is used."
+  ],
+  "corpus": {
+    "discovery_curves": 5,
+    "holdout_curves": 13,
+    "q_1_mod_4_closed_by_covariance": 7,
+    "q_3_mod_4_closed_by_paley": 11,
+    "q_3_mod_4_tested_by_paley": 11,
+    "total_curves": 18,
+    "unresolved_curves": 0
+  },
+  "curve_certificates": [
+    {
+      "G": [
+        2,
+        12
+      ],
+      "composition_checks": 63,
+      "difference_identity_checks": 105,
+      "field_mod_4": 3,
+      "half_orbit_x_count": 15,
+      "n": 31,
+      "p": 43,
+      "paley_correlation": -1,
+      "paley_necessary_left": 225,
+      "paley_necessary_right": 130,
+      "status": "excluded_by_paley_tournament_bound",
+      "strict_margin": 95
+    },
+    {
+      "G": [
+        2,
+        22
+      ],
+      "composition_checks": 63,
+      "difference_identity_checks": 741,
+      "field_mod_4": 3,
+      "half_orbit_x_count": 39,
+      "n": 79,
+      "p": 67,
+      "paley_correlation": -1,
+      "paley_necessary_left": 1521,
+      "paley_necessary_right": 202,
+      "status": "excluded_by_paley_tournament_bound",
+      "strict_margin": 1319
+    },
+    {
+      "G": [
+        1,
+        18
+      ],
+      "composition_checks": 63,
+      "difference_identity_checks": 528,
+      "field_mod_4": 3,
+      "half_orbit_x_count": 33,
+      "n": 67,
+      "p": 79,
+      "paley_correlation": -1,
+      "paley_necessary_left": 1089,
+      "paley_necessary_right": 238,
+      "status": "excluded_by_paley_tournament_bound",
+      "strict_margin": 851
+    },
+    {
+      "G": [
+        1,
+        32
+      ],
+      "composition_checks": 63,
+      "difference_identity_checks": 1953,
+      "field_mod_4": 3,
+      "half_orbit_x_count": 63,
+      "n": 127,
+      "p": 127,
+      "paley_correlation": -1,
+      "paley_necessary_left": 3969,
+      "paley_necessary_right": 382,
+      "status": "excluded_by_paley_tournament_bound",
+      "strict_margin": 3587
+    },
+    {
+      "G": [
+        2,
+        34
+      ],
+      "composition_checks": 63,
+      "difference_identity_checks": 2346,
+      "field_mod_4": 3,
+      "half_orbit_x_count": 69,
+      "n": 139,
+      "p": 163,
+      "paley_correlation": -1,
+      "paley_necessary_left": 4761,
+      "paley_necessary_right": 490,
+      "status": "excluded_by_paley_tournament_bound",
+      "strict_margin": 4271
+    },
+    {
+      "G": [
+        2,
+        25
+      ],
+      "composition_checks": 63,
+      "field_mod_4": 1,
+      "n": 61,
+      "p": 61,
+      "reason": "psi_m(-Q)=-psi_m(Q) for even m but chi(-1)=+1, so the character is invariant while parity is anti-invariant",
+      "status": "excluded_by_even_index_negation_covariance"
+    },
+    {
+      "G": [
+        1,
+        28
+      ],
+      "composition_checks": 63,
+      "field_mod_4": 1,
+      "n": 79,
+      "p": 97,
+      "reason": "psi_m(-Q)=-psi_m(Q) for even m but chi(-1)=+1, so the character is invariant while parity is anti-invariant",
+      "status": "excluded_by_even_index_negation_covariance"
+    },
+    {
+      "G": [
+        3,
+        33
+      ],
+      "composition_checks": 63,
+      "difference_identity_checks": 4851,
+      "field_mod_4": 3,
+      "half_orbit_x_count": 99,
+      "n": 199,
+      "p": 211,
+      "paley_correlation": -1,
+      "paley_necessary_left": 9801,
+      "paley_necessary_right": 634,
+      "status": "excluded_by_paley_tournament_bound",
+      "strict_margin": 9167
+    },
+    {
+      "G": [
+        2,
+        109
+      ],
+      "composition_checks": 63,
+      "field_mod_4": 1,
+      "n": 313,
+      "p": 349,
+      "reason": "psi_m(-Q)=-psi_m(Q) for even m but chi(-1)=+1, so the character is invariant while parity is anti-invariant",
+      "status": "excluded_by_even_index_negation_covariance"
+    },
+    {
+      "G": [
+        3,
+        35
+      ],
+      "composition_checks": 63,
+      "field_mod_4": 1,
+      "n": 397,
+      "p": 397,
+      "reason": "psi_m(-Q)=-psi_m(Q) for even m but chi(-1)=+1, so the character is invariant while parity is anti-invariant",
+      "status": "excluded_by_even_index_negation_covariance"
+    },
+    {
+      "G": [
+        1,
+        21
+      ],
+      "composition_checks": 63,
+      "field_mod_4": 1,
+      "n": 397,
+      "p": 433,
+      "reason": "psi_m(-Q)=-psi_m(Q) for even m but chi(-1)=+1, so the character is invariant while parity is anti-invariant",
+      "status": "excluded_by_even_index_negation_covariance"
+    },
+    {
+      "G": [
+        2,
+        62
+      ],
+      "composition_checks": 63,
+      "difference_identity_checks": 37128,
+      "field_mod_4": 3,
+      "half_orbit_x_count": 273,
+      "n": 547,
+      "p": 547,
+      "paley_correlation": -1,
+      "paley_necessary_left": 74529,
+      "paley_necessary_right": 1642,
+      "status": "excluded_by_paley_tournament_bound",
+      "strict_margin": 72887
+    },
+    {
+      "G": [
+        1,
+        68
+      ],
+      "composition_checks": 63,
+      "field_mod_4": 1,
+      "n": 613,
+      "p": 577,
+      "reason": "psi_m(-Q)=-psi_m(Q) for even m but chi(-1)=+1, so the character is invariant while parity is anti-invariant",
+      "status": "excluded_by_even_index_negation_covariance"
+    },
+    {
+      "G": [
+        6,
+        174
+      ],
+      "composition_checks": 63,
+      "field_mod_4": 1,
+      "n": 691,
+      "p": 733,
+      "reason": "psi_m(-Q)=-psi_m(Q) for even m but chi(-1)=+1, so the character is invariant while parity is anti-invariant",
+      "status": "excluded_by_even_index_negation_covariance"
+    },
+    {
+      "G": [
+        1,
+        255
+      ],
+      "composition_checks": 63,
+      "difference_identity_checks": 85491,
+      "field_mod_4": 3,
+      "half_orbit_x_count": 414,
+      "n": 829,
+      "p": 823,
+      "paley_correlation": -1,
+      "paley_necessary_left": 171396,
+      "paley_necessary_right": 2470,
+      "status": "excluded_by_paley_tournament_bound",
+      "strict_margin": 168926
+    },
+    {
+      "G": [
+        2,
+        165
+      ],
+      "composition_checks": 63,
+      "difference_identity_checks": 116403,
+      "field_mod_4": 3,
+      "half_orbit_x_count": 483,
+      "n": 967,
+      "p": 907,
+      "paley_correlation": -1,
+      "paley_necessary_left": 233289,
+      "paley_necessary_right": 2722,
+      "status": "excluded_by_paley_tournament_bound",
+      "strict_margin": 230567
+    },
+    {
+      "G": [
+        1,
+        88
+      ],
+      "composition_checks": 63,
+      "difference_identity_checks": 102378,
+      "field_mod_4": 3,
+      "half_orbit_x_count": 453,
+      "n": 907,
+      "p": 967,
+      "paley_correlation": -1,
+      "paley_necessary_left": 205209,
+      "paley_necessary_right": 2902,
+      "status": "excluded_by_paley_tournament_bound",
+      "strict_margin": 202307
+    },
+    {
+      "G": [
+        1,
+        151
+      ],
+      "composition_checks": 63,
+      "difference_identity_checks": 126756,
+      "field_mod_4": 3,
+      "half_orbit_x_count": 504,
+      "n": 1009,
+      "p": 991,
+      "paley_correlation": -1,
+      "paley_necessary_left": 254016,
+      "paley_necessary_right": 2974,
+      "status": "excluded_by_paley_tournament_bound",
+      "strict_margin": 251042
+    }
+  ],
+  "decision": "all_single_pure_division_polynomial_character_evaluators_closed_on_the_18_curve_corpus_and_secp256k1",
+  "experiment": "UORC-056-EDS-PALEY-OBSTRUCTION-V10",
+  "grammar_sha256": "d4b24fbd1bfc957957f757f3286fbfdc7525afed4bc73a906dde99b3a19c4bce",
+  "phase_normalization_truth_table": [
+    {
+      "chi_psi_k_at_R": 1,
+      "chi_psi_k_at_phase_normalized_R": 1,
+      "output_phase": 1,
+      "scalar_parity": 1
+    },
+    {
+      "chi_psi_k_at_R": 1,
+      "chi_psi_k_at_phase_normalized_R": 1,
+      "output_phase": 1,
+      "scalar_parity": 0
+    },
+    {
+      "chi_psi_k_at_R": 1,
+      "chi_psi_k_at_phase_normalized_R": 1,
+      "output_phase": -1,
+      "scalar_parity": 1
+    },
+    {
+      "chi_psi_k_at_R": -1,
+      "chi_psi_k_at_phase_normalized_R": 1,
+      "output_phase": -1,
+      "scalar_parity": 0
+    }
+  ],
+  "review_status": "self-contained mathematical proof and executable identity certificates complete; independent peer review and formal-assistant transcription remain pending",
+  "schema_version": "1.0",
+  "secp256k1": {
+    "equivalent_integer_test": "(n-1)^2 > 12p+4",
+    "excluded": true,
+    "half_orbit_x_count": "57896044618658097711785492504343953926418782139537452191302581570759080747168",
+    "left_bit_length": 510,
+    "n": "115792089237316195423570985008687907852837564279074904382605163141518161494337",
+    "p": "115792089237316195423570985008687907853269984665640564039457584007908834671663",
+    "p_mod_4": 3,
+    "paley_necessary_left": "3351951982485649274893506249551461531844806025153475530284231774264571250658914936558225686146810751174407776078494401033089749879221936568241129140020224",
+    "paley_necessary_right": "347376267711948586270712955026063723559809953996921692118372752023726504014990",
+    "right_bit_length": 258,
+    "strict_margin": "3351951982485649274893506249551461531844806025153475530284231774264571250658567560290513737560540038219381712354934591079092828187103563816217402636005234"
+  },
+  "theorem": {
+    "assumptions": [
+      "q is an odd prime with q=3 mod 4",
+      "H=<G> has odd order n",
+      "m is even and the character is defined on every nonzero subgroup point",
+      "delta is one global sign phase"
+    ],
+    "contrapositive": "if ((n-1)/2)^2 > 3q+1 then no even index m and no global phase delta can realize canonical parity",
+    "necessary_condition": "((n-1)/2)^2 <= 3q+1",
+    "proof_chain": [
+      "composition makes chi(psi_k(R'))=+1 for every 1<=k<n after at most replacing R=[m]G by -R",
+      "the division-polynomial difference identity makes chi(x([i]R')-x([j]R'))=+1 for 1<=i<j<=(n-1)/2",
+      "these distinct x-coordinates form a transitive subtournament in the Paley tournament",
+      "the Paley character matrix M satisfies MM^T=qI-J and has operator norm sqrt(q)",
+      "the transitive sign matrix T obeys ||T||^2 >= (t^2-1)/3 for t=(n-1)/2",
+      "therefore t^2<=3q+1"
+    ],
+    "target": "delta*chi(psi_m([k]G))=(-1)^k for every 1<=k<n"
+  }
+}
