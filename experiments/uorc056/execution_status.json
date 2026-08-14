@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "package": "UORC-056-EXECUTION-001",
-  "status": "tasks_01_through_19_implemented_with_bounded_negatives",
+  "status": "tasks_01_through_21_implemented_with_bounded_negatives",
   "tasks": [
     {
       "task": 1,
@@ -116,14 +116,26 @@
       "name": "gate_all_divisor_aware_profiles_in_reproducible_ci",
       "status": "complete_configuration_committed",
       "evidence": ".github/workflows/uorc056-execution-001.yml"
+    },
+    {
+      "task": 20,
+      "name": "global_cross_factor_cancellation_for_pulled_line_divisors",
+      "status": "complete_negative_for_two_numerator_and_two_denominator_pulled_lines",
+      "evidence": "experiments/uorc056/global_divisor_balance_results.json and scripts/uorc056_global_divisor_balance.py"
+    },
+    {
+      "task": 21,
+      "name": "small_public_miller_divisor_balance",
+      "status": "complete_negative_for_four_signed_small_miller_primitives",
+      "evidence": "experiments/uorc056/small_miller_balance_results.json and scripts/uorc056_small_miller_balance.py"
     }
   ],
   "next_frontier": {
     "primary": "Prove or refute a character-sum divisor-degree barrier for exact parity on the marked cyclic subgroup, using the large Fourier coefficient of the alternating sequence and a twisted multiplicative-character sum bound.",
     "secondary": [
       "exact irreducible-conic and general low-divisor-degree rational grammar",
-      "pulled products of lines with independent small multipliers",
-      "uniform EDS or Miller-style factor constructions with all representation costs charged"
+      "globally balanced pulled products with more than four total factors or larger public multipliers",
+      "index-growing EDS or Miller constructions with all representation and normalization costs charged"
     ]
   },
   "scientific_boundary": "The package gives exact finite ground truth and bounded grammar closures. It is not a sub-square-root evaluator and does not recover any unknown production scalar."
