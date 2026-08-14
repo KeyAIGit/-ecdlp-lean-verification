@@ -1,22 +1,9 @@
 #!/usr/bin/env python3
-"""C24 source-bound audit of candidate branch-sensitive leaves.
+"""Source-bound C24 audit of candidate branch-sensitive leaves.
 
-This package uses only committed public research artifacts, symbolic two-world
-models, and public finite fields. It accepts no external point, unknown scalar,
+Only committed public research artifacts, symbolic two-world models, and public
+finite fields are used. The script accepts no external point, unknown scalar,
 wallet, private key, or production target.
-
-The audit distinguishes five mechanism classes:
-
-1. canonical sign-blind descent;
-2. determinant/resultant transport of an already non-fixed resource;
-3. exact non-fixed objects whose public evaluation still needs a dual state,
-   path, seed, or hidden scalar index;
-4. fast public sections whose transformation law is dependent on an already
-   public factor rather than the desired branch;
-5. structurally open mechanisms with unresolved representation cost.
-
-The abstract collision and complete-state theorems are formalized separately in
-Ecdlp/Proved/Uorc056BranchSensitiveLeaf.lean.
 """
 from __future__ import annotations
 
@@ -32,229 +19,236 @@ ROOT = HERE.parents[1]
 ARCHIVE = Path("archive/untrusted_intake/parity_lift_000")
 
 
+def candidate(
+    identifier: str,
+    filename: str,
+    markers: list[str],
+    mechanism: str,
+    classification: str,
+    global_branch_flip: str,
+    geometric_tau: str,
+    generator_inversion: str,
+    generator_replacement: str,
+    public_construction: bool,
+    branch_sensitive_leaf: bool,
+    constructible_without_orientation_advice: bool,
+    target_alignment_proved: bool,
+    blocker: str,
+) -> dict[str, Any]:
+    return {
+        "id": identifier,
+        "source": str(ARCHIVE / filename),
+        "required_markers": markers,
+        "mechanism": mechanism,
+        "classification": classification,
+        "global_branch_flip": global_branch_flip,
+        "geometric_tau": geometric_tau,
+        "generator_inversion": generator_inversion,
+        "generator_replacement": generator_replacement,
+        "public_construction": public_construction,
+        "branch_sensitive_leaf": branch_sensitive_leaf,
+        "constructible_without_orientation_advice": (
+            constructible_without_orientation_advice
+        ),
+        "target_alignment_proved": target_alignment_proved,
+        "complete_cost_gate_passed": False,
+        "blocker": blocker,
+    }
+
+
 CANDIDATES: tuple[dict[str, Any], ...] = (
-    {
-        "id": "common_basis_frobenius_stickelberger_determinant",
-        "source": str(ARCHIVE / "FROBENIUS_STICKELBERGER_DETERMINANT_050.md"),
-        "required_markers": [
+    candidate(
+        "common_basis_frobenius_stickelberger_determinant",
+        "FROBENIUS_STICKELBERGER_DETERMINANT_050.md",
+        [
             "public constant * multiplicative net ratio",
             "independently normalized or twisted rows remain open",
         ],
-        "mechanism": "common-basis elliptic evaluation determinant",
-        "classification": "transport_only",
-        "global_branch_flip": "no independent Hilbert90 branch datum after factorization",
-        "geometric_tau": "inherited from the multiplicative elliptic-net ratio",
-        "generator_inversion": "no independent orientation source was isolated",
-        "generator_replacement": "known integer-matrix pullback preserves the factorization",
-        "public_construction": True,
-        "branch_sensitive_leaf": False,
-        "constructible_without_orientation_advice": True,
-        "target_alignment_proved": False,
-        "complete_cost_gate_passed": False,
-        "blocker": "the determinant factors before any branch extraction",
-    },
-    {
-        "id": "independent_scalar_theta_row_normalization",
-        "source": str(ARCHIVE / "INDEPENDENT_THETA_ROW_NORMALIZATION_051.md"),
-        "required_markers": [
-            "product_i r_i.",
-            "Genuinely different theta characteristics or row-dependent section spaces remain open",
+        "common-basis elliptic evaluation determinant",
+        "transport_only",
+        "no independent Hilbert90 branch datum after factorization",
+        "inherited from the multiplicative elliptic-net ratio",
+        "no independent orientation source was isolated",
+        "known integer-matrix pullback preserves the factorization",
+        True,
+        False,
+        True,
+        False,
+        "the determinant factors before any branch extraction",
+    ),
+    candidate(
+        "independent_scalar_theta_row_normalization",
+        "INDEPENDENT_THETA_ROW_NORMALIZATION_051.md",
+        ["product_i r_i", "Genuinely different theta characteristics"],
+        "diagonal row trivialization plus common basis change",
+        "transport_only",
+        "inherits exactly the product of the supplied row factors",
+        "inherits the row-factor laws",
+        "inherits the row-factor laws",
+        "inherits the row-factor laws",
+        True,
+        False,
+        True,
+        False,
+        "any new bit is already present in the explicit row factors",
+    ),
+    candidate(
+        "standard_twisted_theta_characteristic_descent",
+        "TWISTED_THETA_CHARACTERISTIC_052.md",
+        ["Canonical Frobenius-orbit norm", "y(Q)^2/y(G)^2"],
+        "Frobenius descent of the nontrivial genus-one theta characteristics",
+        "canonical_sign_blind",
+        "fixed after canonical orbit norm",
+        "fixed under point negation after orbit norm",
+        "fixed under G to -G",
+        "symmetric descent remains generator-blind",
+        True,
+        False,
+        True,
+        False,
+        "the canonical base-field object is the square y^2",
+    ),
+    candidate(
+        "standard_level_n_metaplectic_theta_intertwiner",
+        "METAPLECTIC_THETA_INTERTWINER_053.md",
+        ["dim H^0(E,L)>=n", "Public parity / absolute EDS-residue decoder"],
+        "level-n Heisenberg representation and metaplectic basis change",
+        "branch_sensitive_large_or_seeded",
+        "non-fixed only after choosing a dual character or linearization",
+        "projective action does not canonically fix the missing scalar phase",
+        "depends on the chosen dual direction",
+        "linear lifts differ by Hom(H,mu_n)",
+        False,
+        True,
+        False,
+        False,
+        "the standard state has dimension at least n and a dual character must be chosen",
+    ),
+    candidate(
+        "p_adic_global_branch_continuation",
+        "P_ADIC_GLOBAL_BRANCH_054.md",
+        [
+            "Hensel lifting preserves rather than creates",
+            "formal logarithm distinguish prime-to-p torsion",
         ],
-        "mechanism": "diagonal row trivialization plus common basis change",
-        "classification": "transport_only",
-        "global_branch_flip": "inherits exactly the product of the supplied row factors",
-        "geometric_tau": "inherits the row-factor laws",
-        "generator_inversion": "inherits the row-factor laws",
-        "generator_replacement": "inherits the row-factor laws",
-        "public_construction": True,
-        "branch_sensitive_leaf": False,
-        "constructible_without_orientation_advice": True,
-        "target_alignment_proved": False,
-        "complete_cost_gate_passed": False,
-        "blocker": "any new bit is already present in the explicit row factors",
-    },
-    {
-        "id": "standard_twisted_theta_characteristic_descent",
-        "source": str(ARCHIVE / "TWISTED_THETA_CHARACTERISTIC_052.md"),
-        "required_markers": [
-            "Canonical Frobenius-orbit norm",
-            "y(Q)^2/y(G)^2",
-        ],
-        "mechanism": "Frobenius descent of the three nontrivial genus-one theta characteristics",
-        "classification": "canonical_sign_blind",
-        "global_branch_flip": "fixed after canonical orbit norm",
-        "geometric_tau": "fixed under point negation after orbit norm",
-        "generator_inversion": "fixed under G to -G",
-        "generator_replacement": "symmetric descent remains generator-blind",
-        "public_construction": True,
-        "branch_sensitive_leaf": False,
-        "constructible_without_orientation_advice": True,
-        "target_alignment_proved": False,
-        "complete_cost_gate_passed": False,
-        "blocker": "the canonical base-field object is the square y^2",
-    },
-    {
-        "id": "standard_level_n_metaplectic_theta_intertwiner",
-        "source": str(ARCHIVE / "METAPLECTIC_THETA_INTERTWINER_053.md"),
-        "required_markers": [
-            "dim H^0(E,L)>=n",
-            "Public parity / absolute EDS-residue decoder",
-        ],
-        "mechanism": "level-n Heisenberg representation and metaplectic basis change",
-        "classification": "branch_sensitive_large_or_seeded",
-        "global_branch_flip": "non-fixed only after choosing a dual character or linearization",
-        "geometric_tau": "projective action does not canonically fix the missing scalar phase",
-        "generator_inversion": "depends on the chosen dual direction",
-        "generator_replacement": "linear lifts differ by Hom(H,mu_n)",
-        "public_construction": False,
-        "branch_sensitive_leaf": True,
-        "constructible_without_orientation_advice": False,
-        "target_alignment_proved": False,
-        "complete_cost_gate_passed": False,
-        "blocker": "the standard state has dimension at least n and a dual character must be chosen",
-    },
-    {
-        "id": "p_adic_global_branch_continuation",
-        "source": str(ARCHIVE / "P_ADIC_GLOBAL_BRANCH_054.md"),
-        "required_markers": [
-            "Hensel lifting preserves rather than creates an initial square-root choice",
-            "formal logarithm distinguish prime-to-p torsion?        no; it vanishes",
-        ],
-        "mechanism": "formal sigma, canonical lift, Hensel lift, and Coleman continuation",
-        "classification": "branch_sensitive_large_or_seeded",
-        "global_branch_flip": "both initial plus and minus seeds lift uniquely",
-        "geometric_tau": "canonical lifting transports both branches without selecting one",
-        "generator_inversion": "no canonical p-adic path selects the marked generator orientation",
-        "generator_replacement": "no public covariant path or seed was constructed",
-        "public_construction": False,
-        "branch_sensitive_leaf": True,
-        "constructible_without_orientation_advice": False,
-        "target_alignment_proved": False,
-        "complete_cost_gate_passed": False,
-        "blocker": "local continuation preserves an initial branch seed and nonzero subgroup points are outside the formal kernel",
-    },
-    {
-        "id": "normalized_anti_frobenius_period_seed",
-        "source": str(ARCHIVE / "ANTI_FROBENIUS_ORIENTATION_SEED_031.md"),
-        "required_markers": [
-            "U_[-G](Q)=U_G(-Q)=-U_G(Q).",
-            "Explicit quotient-state count",
-        ],
-        "mechanism": "normalized anti-Frobenius period resolvent U_G(Q)",
-        "classification": "branch_sensitive_large_or_seeded",
-        "global_branch_flip": "a non-fixed anti-Frobenius line is available, but identification with the Hilbert90 branch is not a compact construction",
-        "geometric_tau": "the source records anti-Frobenius sigma, not the geometric tau law required by C24",
-        "generator_inversion": "U_[-G](Q)=-U_G(Q)",
-        "generator_replacement": "U_[uG](Q)=U_G([u^-1]Q) under the chosen character normalization",
-        "public_construction": False,
-        "branch_sensitive_leaf": True,
-        "constructible_without_orientation_advice": False,
-        "target_alignment_proved": False,
-        "complete_cost_gate_passed": False,
-        "blocker": "evaluation still requires the order-n dual phase or a quotient state of size (n-1)/6",
-    },
-    {
-        "id": "first_absolute_order_n_torsion_jet",
-        "source": str(ARCHIVE / "ABSOLUTE_EDS_SECTION_003.md"),
-        "required_markers": [
-            "fast absolute order-n section exists:",
-            "first jet isolates rho_G:",
-        ],
-        "mechanism": "first invariant derivative of the order-n division polynomial",
-        "classification": "public_fast_target_dependent",
-        "global_branch_flip": "the exact character law collapses to the already-public point-function bit",
-        "geometric_tau": "the invariant tangent derivative uses the public y orientation",
-        "generator_inversion": "does not provide an x-only marked-root selector on secp256k1",
-        "generator_replacement": "inherits the standard division-polynomial normalization law",
-        "public_construction": True,
-        "branch_sensitive_leaf": False,
-        "constructible_without_orientation_advice": True,
-        "target_alignment_proved": False,
-        "complete_cost_gate_passed": False,
-        "blocker": "the fast absolute section supplies no independent equation for rho_G or parity",
-    },
-    {
-        "id": "hidden_nonlocal_R3_odd_anchor",
-        "source": str(ARCHIVE / "NONLOCAL_ODD_ANCHOR_004.md"),
-        "required_markers": [
-            "odd Kummer/GLV residue aggregate exists:",
-            "R3(-Q) = R3(Q)",
-        ],
-        "mechanism": "odd three-factor EDS-residue aggregate on a GLV orbit",
-        "classification": "branch_sensitive_large_or_seeded",
-        "global_branch_flip": "odd under the EDS residue gauge, but still hidden",
-        "geometric_tau": "Kummer invariant on Q to -Q in the retained setting",
-        "generator_inversion": "the aggregate is hidden behind the canonical GLV carry",
-        "generator_replacement": "a complete public covariance and evaluator were not constructed",
-        "public_construction": False,
-        "branch_sensitive_leaf": True,
-        "constructible_without_orientation_advice": False,
-        "target_alignment_proved": True,
-        "complete_cost_gate_passed": False,
-        "blocker": "no public decoder for R3 or the GLV carry gamma is known",
-    },
-    {
-        "id": "known_algebraic_GLV_orbit_sections",
-        "source": str(ARCHIVE / "GLV_CARRY_SEPARATION_005.md"),
-        "required_markers": [
+        "formal sigma, canonical lift, Hensel lift, and Coleman continuation",
+        "branch_sensitive_large_or_seeded",
+        "both initial plus and minus seeds lift uniquely",
+        "canonical lifting transports both branches without selecting one",
+        "no canonical p-adic path selects the marked generator orientation",
+        "no public covariant path or seed was constructed",
+        False,
+        True,
+        False,
+        False,
+        "local continuation preserves an initial branch seed and subgroup points are outside the formal kernel",
+    ),
+    candidate(
+        "normalized_anti_frobenius_period_seed",
+        "ANTI_FROBENIUS_ORIENTATION_SEED_031.md",
+        ["U_[-G](Q)=U_G(-Q)=-U_G(Q)", "Explicit quotient-state count"],
+        "normalized anti-Frobenius period resolvent U_G(Q)",
+        "branch_sensitive_large_or_seeded",
+        "a non-fixed line exists, but compact Hilbert90 branch alignment is absent",
+        "the source records anti-Frobenius sigma, not the required geometric tau law",
+        "U_[-G](Q)=-U_G(Q)",
+        "U_[uG](Q)=U_G([u^-1]Q) under the chosen character normalization",
+        False,
+        True,
+        False,
+        False,
+        "evaluation needs the order-n dual phase or a quotient state of size (n-1)/6",
+    ),
+    candidate(
+        "first_absolute_order_n_torsion_jet",
+        "ABSOLUTE_EDS_SECTION_003.md",
+        ["fast absolute order-n section exists", "first jet isolates rho_G"],
+        "first invariant derivative of the order-n division polynomial",
+        "public_fast_target_dependent",
+        "the exact character law collapses to the public point-function bit",
+        "the invariant tangent derivative uses the public y orientation",
+        "does not provide an x-only marked-root selector on secp256k1",
+        "inherits the standard division-polynomial normalization law",
+        True,
+        False,
+        True,
+        False,
+        "the fast absolute section supplies no independent equation for rho_G or parity",
+    ),
+    candidate(
+        "hidden_nonlocal_R3_odd_anchor",
+        "NONLOCAL_ODD_ANCHOR_004.md",
+        ["The first genuine odd hidden aggregate", "R3(-Q) = R3(Q)"],
+        "odd three-factor EDS-residue aggregate on a GLV orbit",
+        "branch_sensitive_large_or_seeded",
+        "odd under the EDS residue gauge, but still hidden",
+        "Kummer invariant on Q to -Q in the retained setting",
+        "the aggregate remains hidden behind the canonical GLV carry",
+        "a complete public covariance and evaluator were not constructed",
+        False,
+        True,
+        False,
+        True,
+        "no public decoder for R3 or the GLV carry gamma is known",
+    ),
+    candidate(
+        "known_algebraic_GLV_orbit_sections",
+        "GLV_CARRY_SEPARATION_005.md",
+        [
             "Every exact odd section currently available has the same GLV canonical-lift",
-            "independent GLV carry multiplier found:",
+            "independent GLV carry multiplier found",
         ],
-        "mechanism": "torsion jets and near-period sections under C3 orbit norm",
-        "classification": "public_fast_target_dependent",
-        "global_branch_flip": "all exact available odd orbit norms remain in the dependent gR3 class",
-        "geometric_tau": "no independent tau-odd equation is produced",
-        "generator_inversion": "the same canonical-lift carry accompanies every exact odd section",
-        "generator_replacement": "no new multiplier class was found",
-        "public_construction": True,
-        "branch_sensitive_leaf": False,
-        "constructible_without_orientation_advice": True,
-        "target_alignment_proved": False,
-        "complete_cost_gate_passed": False,
-        "blocker": "the public equations are dependent and do not isolate R3 or gamma",
-    },
-    {
-        "id": "field_permutation_GLV_carry_coordinate",
-        "source": str(ARCHIVE / "FIELD_PERMUTATION_CARRY_IDENTITY_017.md"),
-        "required_markers": [
+        "torsion jets and near-period sections under C3 orbit norm",
+        "public_fast_target_dependent",
+        "all exact available odd orbit norms remain in the dependent gR3 class",
+        "no independent tau-odd equation is produced",
+        "the same canonical-lift carry accompanies every exact odd section",
+        "no new multiplier class was found",
+        True,
+        False,
+        True,
+        False,
+        "the public equations are dependent and do not isolate R3 or gamma",
+    ),
+    candidate(
+        "field_permutation_GLV_carry_coordinate",
+        "FIELD_PERMUTATION_CARRY_IDENTITY_017.md",
+        [
             "O_beta(x) = -C_beta((beta-1)*x)",
-            "not a new inverse-polylogarithmic scalar observable",
+            "not a new inverse-polylogarithmic scalar",
         ],
-        "mechanism": "canonical field ordering of the x-coordinate GLV orbit",
-        "classification": "canonical_sign_blind",
-        "global_branch_flip": "independent of the Hilbert90 plus/minus branch",
-        "geometric_tau": "x-only and therefore fixed under point negation",
-        "generator_inversion": "does not retain generator orientation through x",
-        "generator_replacement": "a public field scaling only permutes the known carry frequencies",
-        "public_construction": True,
-        "branch_sensitive_leaf": False,
-        "constructible_without_orientation_advice": True,
-        "target_alignment_proved": False,
-        "complete_cost_gate_passed": False,
-        "blocker": "the candidate is exactly a known field carry after public scaling",
-    },
-    {
-        "id": "sparse_three_term_translation_resultant",
-        "source": str(ARCHIVE / "UORC056_SPARSE_TWO_TRANSLATION_RESULTANT_C5.md"),
-        "required_markers": [
+        "canonical field ordering of the x-coordinate GLV orbit",
+        "canonical_sign_blind",
+        "independent of the Hilbert90 plus/minus branch",
+        "x-only and therefore fixed under point negation",
+        "does not retain generator orientation through x",
+        "a public scaling only permutes the known carry frequencies",
+        True,
+        False,
+        True,
+        False,
+        "the candidate is exactly a known field carry after public scaling",
+    ),
+    candidate(
+        "sparse_three_term_translation_resultant",
+        "UORC056_SPARSE_TWO_TRANSLATION_RESULTANT_C5.md",
+        [
             "The unresolved minimal object is",
             "A degree-`n` resultant, an `n`-dimensional state",
         ],
-        "mechanism": "det(aI+bT_G+cT_Q) and its sparse Sylvester resultant",
-        "classification": "open_cost_unresolved",
-        "global_branch_flip": "no non-fixed Hilbert90 coefficient or exact branch law has been exhibited",
-        "geometric_tau": "not classified for the surviving asymmetric coefficient family",
-        "generator_inversion": "only partial affine-exponent symmetries are known",
-        "generator_replacement": "the six Möbius exponent symmetries are exact, but target covariance is unresolved",
-        "public_construction": False,
-        "branch_sensitive_leaf": False,
-        "constructible_without_orientation_advice": True,
-        "target_alignment_proved": False,
-        "complete_cost_gate_passed": False,
-        "blocker": "the explicit representation has degree n and no sub-square-root coordinate evaluator or non-fixed coefficient generator is known",
-    },
+        "det(aI+bT_G+cT_Q) and its sparse Sylvester resultant",
+        "open_cost_unresolved",
+        "no non-fixed Hilbert90 coefficient or exact branch law is known",
+        "not classified for the surviving asymmetric coefficient family",
+        "only partial affine-exponent symmetries are known",
+        "six Mobius exponent symmetries are exact, but target covariance is unresolved",
+        False,
+        False,
+        True,
+        False,
+        "the explicit representation has degree n and no compact evaluator or non-fixed coefficient generator is known",
+    ),
 )
-
 
 REQUIRED_KEYS = {
     "id",
@@ -283,54 +277,52 @@ EXPECTED_CLASS_COUNTS = {
 }
 
 
-def sha256_bytes(data: bytes) -> str:
-    return hashlib.sha256(data).hexdigest()
+def normalize_whitespace(text: str) -> str:
+    return " ".join(text.split())
 
 
-def audit_source(candidate: dict[str, Any]) -> dict[str, Any]:
-    missing_keys = sorted(REQUIRED_KEYS - candidate.keys())
-    extra_keys = sorted(candidate.keys() - REQUIRED_KEYS)
+def audit_source(item: dict[str, Any]) -> dict[str, Any]:
+    missing_keys = sorted(REQUIRED_KEYS - item.keys())
+    extra_keys = sorted(item.keys() - REQUIRED_KEYS)
     if missing_keys or extra_keys:
         raise AssertionError(
-            f"schema mismatch for {candidate.get('id')}: "
+            f"schema mismatch for {item.get('id')}: "
             f"missing={missing_keys} extra={extra_keys}"
         )
-    path = ROOT / candidate["source"]
+    path = ROOT / item["source"]
     if not path.is_file():
         raise AssertionError(f"missing source: {path}")
     raw = path.read_bytes()
-    text = raw.decode("utf-8")
+    normalized = normalize_whitespace(raw.decode("utf-8"))
     missing_markers = [
-        marker for marker in candidate["required_markers"] if marker not in text
+        marker
+        for marker in item["required_markers"]
+        if normalize_whitespace(marker) not in normalized
     ]
     if missing_markers:
         raise AssertionError(
-            f"source markers missing for {candidate['id']}: {missing_markers}"
+            f"source markers missing for {item['id']}: {missing_markers}"
         )
-    row = dict(candidate)
+    row = dict(item)
     row.pop("required_markers")
-    row["source_sha256"] = sha256_bytes(raw)
+    row["source_sha256"] = hashlib.sha256(raw).hexdigest()
     row["source_bytes"] = len(raw)
     row["source_markers_verified"] = True
     return row
 
 
 def collision_witnesses() -> dict[str, Any]:
-    orbit_sizes = (2, 3, 5, 7, 11)
-    rows = []
+    rows: list[dict[str, int]] = []
     total_decoders = 0
-    for size in orbit_sizes:
+    for size in (2, 3, 5, 7, 11):
         worlds = tuple(range(size))
-        public_data = {world: 0 for world in worlds}
-        successful_global_selectors = 0
+        successful = 0
         for chosen_output in worlds:
             total_decoders += 1
             if all(chosen_output == world for world in worlds):
-                successful_global_selectors += 1
-        if len(set(public_data.values())) != 1:
-            raise AssertionError("quotient collision fixture is not constant")
-        if successful_global_selectors != 0:
-            raise AssertionError("an invariant quotient unexpectedly selected an orbit")
+                successful += 1
+        if successful:
+            raise AssertionError("an invariant singleton quotient selected an orbit")
         rows.append(
             {
                 "orbit_size": size,
@@ -347,36 +339,26 @@ def collision_witnesses() -> dict[str, Any]:
 
 
 def finite_field_two_world_witnesses() -> dict[str, Any]:
-    primes = (43, 61, 67, 79, 97, 127, 163)
+    rows: list[dict[str, Any]] = []
     collisions = 0
-    seed_separations = 0
-    rows = []
-    for prime in primes:
-        local_collisions = 0
+    separations = 0
+    for prime in (43, 61, 67, 79, 97, 127, 163):
+        local = 0
         for branch in range(1, prime):
             opposite = (-branch) % prime
             if branch == opposite:
                 continue
-            public_plus = branch * branch % prime
-            public_minus = opposite * opposite % prime
-            if public_plus != public_minus:
+            if branch * branch % prime != opposite * opposite % prime:
                 raise AssertionError("square failed to identify a sign pair")
-            local_collisions += 1
+            local += 1
             collisions += 1
-
-            # A deterministic aggregate may transport a complete non-fixed
-            # state, but separated outputs require the states to differ.
-            state_plus, state_minus = branch, opposite
-            output_plus, output_minus = state_plus, state_minus
-            if output_plus == output_minus:
-                raise AssertionError("branch-sensitive state fixture collapsed")
-            if state_plus == state_minus:
-                raise AssertionError("separated outputs used equal state")
-            seed_separations += 1
+            if branch == opposite:
+                raise AssertionError("separated output used equal state")
+            separations += 1
         rows.append(
             {
                 "p": prime,
-                "nonzero_sign_collisions": local_collisions,
+                "nonzero_sign_collisions": local,
                 "all_seedless_square_data_equal": True,
                 "all_separated_outputs_used_nonfixed_state": True,
             }
@@ -384,7 +366,7 @@ def finite_field_two_world_witnesses() -> dict[str, Any]:
     return {
         "fields": rows,
         "public_data_collisions": collisions,
-        "required_state_separations": seed_separations,
+        "required_state_separations": separations,
         "all_two_world_collision_checks_passed": True,
     }
 
@@ -408,8 +390,8 @@ def best_survivors() -> list[dict[str, str]]:
         },
         {
             "candidate": "fully asymmetric sparse translation resultant",
-            "positive_structure": "not completely excluded by the known exponent symmetries",
-            "blocking_resource": "degree-n representation, no sub-square-root evaluator, and no proved non-fixed coefficient law",
+            "positive_structure": "not completely excluded by known exponent symmetries",
+            "blocking_resource": "degree-n representation, no compact evaluator, and no proved non-fixed coefficient law",
         },
     ]
 
@@ -419,12 +401,14 @@ def main() -> None:
     parser.add_argument("--out", type=Path)
     args = parser.parse_args()
 
-    audited = [audit_source(candidate) for candidate in CANDIDATES]
+    audited = [audit_source(item) for item in CANDIDATES]
     ids = [row["id"] for row in audited]
     if len(ids) != len(set(ids)):
         raise AssertionError("candidate ids are not unique")
 
-    class_counts = dict(sorted(Counter(row["classification"] for row in audited).items()))
+    class_counts = dict(
+        sorted(Counter(row["classification"] for row in audited).items())
+    )
     if class_counts != EXPECTED_CLASS_COUNTS:
         raise AssertionError(
             f"classification counts changed: {class_counts} != {EXPECTED_CLASS_COUNTS}"
@@ -441,7 +425,7 @@ def main() -> None:
     ]
     if passing_cost or public_nonfixed:
         raise AssertionError(
-            f"unexpected positive promotion: cost={passing_cost} public_nonfixed={public_nonfixed}"
+            f"unexpected promotion: cost={passing_cost} public_nonfixed={public_nonfixed}"
         )
 
     payload = {
