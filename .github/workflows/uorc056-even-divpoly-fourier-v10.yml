@@ -1,0 +1,41 @@
+name: UORC-056 even divpoly Fourier V10
+
+on:
+  pull_request:
+    paths:
+      - "scripts/uorc056_even_divpoly_fourier_collapse.py"
+      - "scripts/test_uorc056_even_divpoly_fourier_collapse.py"
+      - "experiments/uorc056/even_divpoly_fourier_collapse_results.json"
+      - "notes/reviews/UORC056_EVEN_DIVPOLY_FOURIER_COLLAPSE_V10.md"
+      - "scripts/uorc056_eds_decimation_closure.py"
+      - "scripts/test_uorc056_eds_decimation_closure.py"
+      - "experiments/uorc056/eds_decimation_closure_results.json"
+      - "notes/reviews/UORC056_EDS_DECIMATION_CLOSURE_V10.md"
+      - "scripts/uorc056_division_polynomial_frontier.py"
+      - "experiments/uorc056/divisor_aware_rational_grammar.json"
+      - ".github/workflows/uorc056-even-divpoly-fourier-v10.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-fourier-and-ward-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Unit tests
+        env:
+          PYTHONPATH: scripts
+        run: |
+          python3 -m unittest -v \
+            scripts/test_uorc056_even_divpoly_fourier_collapse.py \
+            scripts/test_uorc056_eds_decimation_closure.py
+      - name: Frozen artifact replay
+        run: |
+          python3 scripts/uorc056_even_divpoly_fourier_collapse.py --check
+          python3 scripts/uorc056_eds_decimation_closure.py --check
