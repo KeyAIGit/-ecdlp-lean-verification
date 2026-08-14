@@ -1,0 +1,110 @@
+name: UORC056 odd rational functional C19
+
+on:
+  push:
+    branches:
+      - research/uorc056-endpoint-gauge
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_ODD_RATIONAL_FUNCTIONAL_C19.md'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_NEGATION_PAIRED_QUADRATIC_C20_PROMPT.md'
+      - 'experiments/parity_lift_000/uorc056_odd_rational_functional_boundary.py'
+      - 'experiments/parity_lift_000/uorc056_odd_rational_case_runner.py'
+      - 'experiments/parity_lift_000/uorc056_odd_rational_assemble.py'
+      - 'experiments/parity_lift_000/uorc056_odd_rational_generator_replacements.py'
+      - '.github/workflows/uorc056-odd-rational-functional-c19.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile C19 replay
+        run: |
+          python3 -m py_compile \
+            experiments/parity_lift_000/uorc056_odd_rational_functional_boundary.py \
+            experiments/parity_lift_000/uorc056_odd_rational_case_runner.py \
+            experiments/parity_lift_000/uorc056_odd_rational_assemble.py \
+            experiments/parity_lift_000/uorc056_odd_rational_generator_replacements.py
+
+      - name: Replay seven public curves in isolated processes
+        run: |
+          mkdir -p /tmp/uorc056-c19
+          for i in 0 1 2 3 4 5 6; do
+            python3 experiments/parity_lift_000/uorc056_odd_rational_case_runner.py "$i" \
+              --out-dir /tmp/uorc056-c19
+          done
+
+      - name: Assemble deterministic C19 result
+        run: |
+          python3 experiments/parity_lift_000/uorc056_odd_rational_assemble.py \
+            --workdir /tmp/uorc056-c19 \
+            --out /tmp/uorc056-c19/uorc056_odd_rational_functional_boundary_result.json \
+            --summary /tmp/uorc056-c19/uorc056_odd_rational_functional_summary.json
+
+      - name: Replay public generator replacements
+        run: |
+          python3 experiments/parity_lift_000/uorc056_odd_rational_generator_replacements.py \
+            --out /tmp/uorc056-c19/uorc056_odd_rational_generator_replacements_result.json
+
+      - name: Check theorem flags and deterministic digest
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path('/tmp/uorc056-c19')
+          result = json.loads((root / 'uorc056_odd_rational_functional_boundary_result.json').read_text())
+          generated_summary = json.loads((root / 'uorc056_odd_rational_functional_summary.json').read_text())
+          replacements = json.loads((root / 'uorc056_odd_rational_generator_replacements_result.json').read_text())
+
+          assert generated_summary['result_sha256_without_digest_field'] == \
+              '983edb4d3dbf75e2f60e9c9fd1dfcd6b45aa64b5e9c0747b59323274dd53c3fb'
+          assert result['result_sha256_without_digest_field'] == \
+              '983edb4d3dbf75e2f60e9c9fd1dfcd6b45aa64b5e9c0747b59323274dd53c3fb'
+
+          aggregate = result['aggregate']
+          assert aggregate['odd_rational_normal_form_classified']
+          assert aggregate['local_order_pair_classified']
+          assert aggregate['compact_negation_product_found']
+          assert not aggregate['constant_coefficient_balanced_subsqrt_divisor_support_found_in_screen']
+          assert not aggregate['bounded_rational_synthesis_subsqrt_divisor_support_found_in_screen']
+          assert not aggregate['sub_sqrt_evaluator_found']
+          assert not aggregate['parity_oracle_found']
+          assert not aggregate['sub_sqrt_ecdlp_found']
+
+          assert result['bounded_synthesis_audit']['all_template_orbit_valuations_resolved_within_series_window']
+          assert result['bounded_synthesis_audit']['total_template_curve_instances'] == 1134
+          assert [row['bounded_synthesis']['minimum_metric_support_poles_uncertain'][0]
+                  for row in result['cases']] == [9, 16, 25, 21, 25, 41, 43]
+          assert all(row['negation_reciprocity']['K_signature']['degrees'] == [1, 0, 3]
+                     for row in result['cases'])
+          assert all(row['negation_reciprocity']['K_divisor_support_size'] == 9
+                     for row in result['cases'])
+
+          secp = result['secp256k1']
+          assert secp['both_negative_unbalanced_support_bit_length'] == 253
+          assert secp['opposite_sign_support_bit_length'] == 254
+          assert secp['all_positive_support_bit_length'] == 255
+
+          replacement_flags = replacements['aggregate']
+          assert replacement_flags['replacements'] == 6
+          assert replacement_flags['all_lambda_covariance_checks_pass']
+          assert replacement_flags['all_compact_negation_products_degree_1_over_3']
+          assert replacement_flags['all_s1_ratio_spectra_nonconstant']
+          assert not replacement_flags['parity_oracle_found']
+          PY
+
+      - name: Upload C19 replay outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-odd-rational-functional-c19
+          path: |
+            /tmp/uorc056-c19/uorc056_odd_rational_functional_boundary_result.json
+            /tmp/uorc056-c19/uorc056_odd_rational_functional_summary.json
+            /tmp/uorc056-c19/uorc056_odd_rational_generator_replacements_result.json
+          retention-days: 90
