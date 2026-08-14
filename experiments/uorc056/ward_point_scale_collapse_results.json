@@ -1,0 +1,365 @@
+{
+  "decision": "ward_quasiperiod_constants_collapse_to_public_point_scale",
+  "frozen_corpus": {
+    "curves": 18,
+    "points_checked": 7434,
+    "rows": [
+      {
+        "chi_a_values": [
+          1
+        ],
+        "chi_b_values": [
+          -1,
+          1
+        ],
+        "gcd_n_p_minus_one": 1,
+        "n": 31,
+        "p": 43,
+        "points_checked": 30
+      },
+      {
+        "chi_a_values": [
+          1
+        ],
+        "chi_b_values": [
+          -1,
+          1
+        ],
+        "gcd_n_p_minus_one": 1,
+        "n": 79,
+        "p": 67,
+        "points_checked": 78
+      },
+      {
+        "chi_a_values": [
+          1
+        ],
+        "chi_b_values": [
+          -1,
+          1
+        ],
+        "gcd_n_p_minus_one": 1,
+        "n": 67,
+        "p": 79,
+        "points_checked": 66
+      },
+      {
+        "chi_a_values": [
+          1
+        ],
+        "chi_b_values": [
+          -1,
+          1
+        ],
+        "gcd_n_p_minus_one": 1,
+        "n": 127,
+        "p": 127,
+        "points_checked": 126
+      },
+      {
+        "chi_a_values": [
+          1
+        ],
+        "chi_b_values": [
+          -1,
+          1
+        ],
+        "gcd_n_p_minus_one": 1,
+        "n": 139,
+        "p": 163,
+        "points_checked": 138
+      },
+      {
+        "chi_a_values": [
+          1
+        ],
+        "chi_b_values": [
+          -1,
+          1
+        ],
+        "gcd_n_p_minus_one": 1,
+        "n": 61,
+        "p": 61,
+        "points_checked": 60
+      },
+      {
+        "chi_a_values": [
+          1
+        ],
+        "chi_b_values": [
+          -1,
+          1
+        ],
+        "gcd_n_p_minus_one": 1,
+        "n": 79,
+        "p": 97,
+        "points_checked": 78
+      },
+      {
+        "chi_a_values": [
+          1
+        ],
+        "chi_b_values": [
+          -1,
+          1
+        ],
+        "gcd_n_p_minus_one": 1,
+        "n": 199,
+        "p": 211,
+        "points_checked": 198
+      },
+      {
+        "chi_a_values": [
+          1
+        ],
+        "chi_b_values": [
+          -1,
+          1
+        ],
+        "gcd_n_p_minus_one": 1,
+        "n": 313,
+        "p": 349,
+        "points_checked": 312
+      },
+      {
+        "chi_a_values": [
+          1
+        ],
+        "chi_b_values": [
+          -1,
+          1
+        ],
+        "gcd_n_p_minus_one": 1,
+        "n": 397,
+        "p": 397,
+        "points_checked": 396
+      },
+      {
+        "chi_a_values": [
+          1
+        ],
+        "chi_b_values": [
+          -1,
+          1
+        ],
+        "gcd_n_p_minus_one": 1,
+        "n": 397,
+        "p": 433,
+        "points_checked": 396
+      },
+      {
+        "chi_a_values": [
+          1
+        ],
+        "chi_b_values": [
+          -1,
+          1
+        ],
+        "gcd_n_p_minus_one": 1,
+        "n": 547,
+        "p": 547,
+        "points_checked": 546
+      },
+      {
+        "chi_a_values": [
+          1
+        ],
+        "chi_b_values": [
+          -1,
+          1
+        ],
+        "gcd_n_p_minus_one": 1,
+        "n": 613,
+        "p": 577,
+        "points_checked": 612
+      },
+      {
+        "chi_a_values": [
+          1
+        ],
+        "chi_b_values": [
+          -1,
+          1
+        ],
+        "gcd_n_p_minus_one": 1,
+        "n": 691,
+        "p": 733,
+        "points_checked": 690
+      },
+      {
+        "chi_a_values": [
+          1
+        ],
+        "chi_b_values": [
+          -1,
+          1
+        ],
+        "gcd_n_p_minus_one": 1,
+        "n": 829,
+        "p": 823,
+        "points_checked": 828
+      },
+      {
+        "chi_a_values": [
+          1
+        ],
+        "chi_b_values": [
+          -1,
+          1
+        ],
+        "gcd_n_p_minus_one": 1,
+        "n": 967,
+        "p": 907,
+        "points_checked": 966
+      },
+      {
+        "chi_a_values": [
+          1
+        ],
+        "chi_b_values": [
+          -1,
+          1
+        ],
+        "gcd_n_p_minus_one": 1,
+        "n": 907,
+        "p": 967,
+        "points_checked": 906
+      },
+      {
+        "chi_a_values": [
+          1
+        ],
+        "chi_b_values": [
+          -1,
+          1
+        ],
+        "gcd_n_p_minus_one": 1,
+        "n": 1009,
+        "p": 991,
+        "points_checked": 1008
+      }
+    ]
+  },
+  "next_frontier": "distinguished global orientation/seed propagation, not functions of Ward a_Q,b_Q alone",
+  "profile_id": "UORC-056-WARD-POINT-SCALE-COLLAPSE-V12",
+  "schema_version": "1.0",
+  "scientific_boundary": "V12 is an information-equivalence result for the classical Ward state, not a general circuit lower bound.",
+  "secp256k1": {
+    "chi_phi_raw_G": -1,
+    "fixed_samples": [
+      {
+        "a_n_equals_b_squared": true,
+        "a_power_identity": true,
+        "b_power_identity": true,
+        "chi_a": 1,
+        "chi_b": -1,
+        "chi_phi_raw": -1,
+        "chi_w_k": 1,
+        "parity": -1,
+        "phi_recovered_from_b": true,
+        "scalar": "1",
+        "ward_b_times_eds_residue": -1
+      },
+      {
+        "a_n_equals_b_squared": true,
+        "a_power_identity": true,
+        "b_power_identity": true,
+        "chi_a": 1,
+        "chi_b": 1,
+        "chi_phi_raw": 1,
+        "chi_w_k": 1,
+        "parity": 1,
+        "phi_recovered_from_b": true,
+        "scalar": "2",
+        "ward_b_times_eds_residue": 1
+      },
+      {
+        "a_n_equals_b_squared": true,
+        "a_power_identity": true,
+        "b_power_identity": true,
+        "chi_a": 1,
+        "chi_b": 1,
+        "chi_phi_raw": 1,
+        "chi_w_k": -1,
+        "parity": -1,
+        "phi_recovered_from_b": true,
+        "scalar": "3",
+        "ward_b_times_eds_residue": -1
+      },
+      {
+        "a_n_equals_b_squared": true,
+        "a_power_identity": true,
+        "b_power_identity": true,
+        "chi_a": 1,
+        "chi_b": 1,
+        "chi_phi_raw": 1,
+        "chi_w_k": -1,
+        "parity": -1,
+        "phi_recovered_from_b": true,
+        "scalar": "7",
+        "ward_b_times_eds_residue": -1
+      },
+      {
+        "a_n_equals_b_squared": true,
+        "a_power_identity": true,
+        "b_power_identity": true,
+        "chi_a": 1,
+        "chi_b": -1,
+        "chi_phi_raw": -1,
+        "chi_w_k": 1,
+        "parity": -1,
+        "phi_recovered_from_b": true,
+        "scalar": "11",
+        "ward_b_times_eds_residue": -1
+      },
+      {
+        "a_n_equals_b_squared": true,
+        "a_power_identity": true,
+        "b_power_identity": true,
+        "chi_a": 1,
+        "chi_b": -1,
+        "chi_phi_raw": -1,
+        "chi_w_k": 1,
+        "parity": -1,
+        "phi_recovered_from_b": true,
+        "scalar": "123456789",
+        "ward_b_times_eds_residue": -1
+      },
+      {
+        "a_n_equals_b_squared": true,
+        "a_power_identity": true,
+        "b_power_identity": true,
+        "chi_a": 1,
+        "chi_b": -1,
+        "chi_phi_raw": -1,
+        "chi_w_k": 1,
+        "parity": -1,
+        "phi_recovered_from_b": true,
+        "scalar": "115792089237316195423570985008687907852837564279074904382605163141518161494335",
+        "ward_b_times_eds_residue": -1
+      },
+      {
+        "a_n_equals_b_squared": true,
+        "a_power_identity": true,
+        "b_power_identity": true,
+        "chi_a": 1,
+        "chi_b": 1,
+        "chi_phi_raw": 1,
+        "chi_w_k": 1,
+        "parity": 1,
+        "phi_recovered_from_b": true,
+        "scalar": "115792089237316195423570985008687907852837564279074904382605163141518161494336",
+        "ward_b_times_eds_residue": 1
+      }
+    ],
+    "gcd_n_p_minus_one": 1,
+    "interpretation": "Ward b supplies exactly the public chi(phi_raw(Q)) factor; multiplication by the hidden chi(psi_k(G)) is still required for parity"
+  },
+  "theorem": {
+    "characters": "chi(a_P)=+1 and chi(b_P)=chi(phi_raw(P))",
+    "hypothesis": "P in E(F_p) has odd order n and gcd(n,p-1)=1",
+    "reconstruction": "phi_raw(P)=b_P^(-(n^2)^(-1) mod (p-1))",
+    "ward_a": "a_P=phi_raw(P)^(-2n)",
+    "ward_b": "b_P=phi_raw(P)^(-n^2)"
+  }
+}
