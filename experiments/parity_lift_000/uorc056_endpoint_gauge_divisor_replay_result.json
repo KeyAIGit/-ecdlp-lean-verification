@@ -1,0 +1,102 @@
+{
+  "aggregate": {
+    "all_L_divisor_checks": 1224,
+    "compact_line_bundle_cocycle_found": true,
+    "endpoint_gauge_degree_is_r_or_r_plus_one": true,
+    "orders": 6,
+    "sub_sqrt_evaluator_found": false
+  },
+  "cases": [
+    {
+      "all_L_checks": 20,
+      "class_index_a": 7,
+      "endpoint_gauge_degree": 6,
+      "m": 9,
+      "n": 19,
+      "passed": true,
+      "r": 5,
+      "target_compact_support": [
+        0,
+        6,
+        7,
+        18
+      ]
+    },
+    {
+      "all_L_checks": 32,
+      "class_index_a": 27,
+      "endpoint_gauge_degree": 9,
+      "m": 15,
+      "n": 31,
+      "passed": true,
+      "r": 8,
+      "target_compact_support": [
+        0,
+        26,
+        27,
+        30
+      ]
+    },
+    {
+      "all_L_checks": 68,
+      "class_index_a": 25,
+      "endpoint_gauge_degree": 18,
+      "m": 33,
+      "n": 67,
+      "passed": true,
+      "r": 17,
+      "target_compact_support": [
+        0,
+        24,
+        25,
+        66
+      ]
+    },
+    {
+      "all_L_checks": 272,
+      "class_index_a": 237,
+      "endpoint_gauge_degree": 69,
+      "m": 135,
+      "n": 271,
+      "passed": true,
+      "r": 68,
+      "target_compact_support": [
+        0,
+        236,
+        237,
+        270
+      ]
+    },
+    {
+      "all_L_checks": 398,
+      "class_index_a": 248,
+      "endpoint_gauge_degree": 99,
+      "m": 198,
+      "n": 397,
+      "passed": true,
+      "r": 99,
+      "target_compact_support": [
+        0,
+        247,
+        248,
+        396
+      ]
+    },
+    {
+      "all_L_checks": 434,
+      "class_index_a": 54,
+      "endpoint_gauge_degree": 109,
+      "m": 216,
+      "n": 433,
+      "passed": true,
+      "r": 108,
+      "target_compact_support": [
+        0,
+        53,
+        54,
+        432
+      ]
+    }
+  ],
+  "experiment": "UORC056_C13_ENDPOINT_GAUGE_DIVISOR_REPLAY"
+}
