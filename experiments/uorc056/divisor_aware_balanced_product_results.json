@@ -1,0 +1,265 @@
+{
+  "base_grammar_sha256": "750d3f25333bb30781cb07cda88cd2d9b1cfefcff3fa336693f66c27e3a71900",
+  "best_discovery_correlations": {
+    "weight_one": {
+      "accuracy": "0.579908676",
+      "atoms": [
+        {
+          "canceled_orbit_zero": false,
+          "canceled_point_count": 0,
+          "denominator_product": [
+            {
+              "a": "one",
+              "b": "zero",
+              "c": "two"
+            },
+            {
+              "a": "beta_hi",
+              "b": "zero",
+              "c": "two"
+            }
+          ],
+          "numerator_product": [
+            {
+              "a": "zero",
+              "b": "one",
+              "c": "zero"
+            },
+            {
+              "a": "one",
+              "b": "zero",
+              "c": "zero"
+            }
+          ]
+        }
+      ],
+      "matches": 254,
+      "output_phase": 1,
+      "total": 438
+    },
+    "weight_two": {
+      "accuracy": "0.593607306",
+      "atoms": [
+        {
+          "canceled_orbit_zero": false,
+          "canceled_point_count": 0,
+          "denominator_product": [
+            {
+              "a": "one",
+              "b": "zero",
+              "c": "curve_b"
+            },
+            {
+              "a": "beta_lo",
+              "b": "zero",
+              "c": "curve_b"
+            }
+          ],
+          "numerator_product": [
+            {
+              "a": "zero",
+              "b": "one",
+              "c": "zero"
+            },
+            {
+              "a": "one",
+              "b": "zero",
+              "c": "two"
+            }
+          ]
+        },
+        {
+          "canceled_orbit_zero": true,
+          "canceled_point_count": 6,
+          "denominator_product": [
+            {
+              "a": "zero",
+              "b": "beta_lo",
+              "c": "x_G"
+            },
+            {
+              "a": "zero",
+              "b": "beta_lo",
+              "c": "neg_x_G"
+            }
+          ],
+          "numerator_product": [
+            {
+              "a": "zero",
+              "b": "beta_lo",
+              "c": "two"
+            },
+            {
+              "a": "zero",
+              "b": "beta_lo",
+              "c": "neg_two"
+            }
+          ]
+        }
+      ],
+      "matches": 260,
+      "output_phase": -1,
+      "total": 438
+    }
+  },
+  "best_full_corpus_correlations": {
+    "weight_one": {
+      "accuracy": "0.509819747",
+      "atoms": [
+        {
+          "canceled_orbit_zero": false,
+          "canceled_point_count": 0,
+          "denominator_product": [
+            {
+              "a": "one",
+              "b": "zero",
+              "c": "curve_b"
+            },
+            {
+              "a": "beta_lo",
+              "b": "zero",
+              "c": "curve_b"
+            }
+          ],
+          "numerator_product": [
+            {
+              "a": "zero",
+              "b": "one",
+              "c": "zero"
+            },
+            {
+              "a": "one",
+              "b": "zero",
+              "c": "zero"
+            }
+          ]
+        }
+      ],
+      "matches": 3790,
+      "output_phase": 1,
+      "total": 7434
+    },
+    "weight_two": {
+      "accuracy": "0.509819747",
+      "atoms": [
+        {
+          "canceled_orbit_zero": false,
+          "canceled_point_count": 0,
+          "denominator_product": [
+            {
+              "a": "zero",
+              "b": "one",
+              "c": "zero"
+            },
+            {
+              "a": "zero",
+              "b": "one",
+              "c": "zero"
+            }
+          ],
+          "numerator_product": [
+            {
+              "a": "zero",
+              "b": "one",
+              "c": "zero"
+            },
+            {
+              "a": "zero",
+              "b": "one",
+              "c": "zero"
+            }
+          ]
+        },
+        {
+          "canceled_orbit_zero": false,
+          "canceled_point_count": 0,
+          "denominator_product": [
+            {
+              "a": "one",
+              "b": "zero",
+              "c": "curve_b"
+            },
+            {
+              "a": "beta_lo",
+              "b": "zero",
+              "c": "curve_b"
+            }
+          ],
+          "numerator_product": [
+            {
+              "a": "zero",
+              "b": "one",
+              "c": "zero"
+            },
+            {
+              "a": "one",
+              "b": "zero",
+              "c": "zero"
+            }
+          ]
+        }
+      ],
+      "matches": 3790,
+      "output_phase": 1,
+      "total": 7434
+    }
+  },
+  "claim_boundary": [
+    "This is complete only for ratios of unordered products of two declared affine line templates and products of at most four character atoms.",
+    "It admits aggregate cross-factor cancellation but does not cover irreducible conics, higher-degree functions, pulled line products, EDS factors or unrestricted straight-line programs.",
+    "Orders add and local leading coefficients multiply exactly; no exceptional point is patched or omitted.",
+    "No external point, wallet, real key or production-sized discrete-log target is accepted."
+  ],
+  "corpus": {
+    "discovery_curves": 5,
+    "discovery_nonzero_points": 438,
+    "full_corpus_nonzero_points": 7434,
+    "holdout_curves": 13
+  },
+  "decision": "no_exact_balanced_line_product_divisor_circuit_weight_le_4",
+  "discovery_catalog": {
+    "admissible_unordered_product_ratios": 104855,
+    "exceptional_sign_vectors": 541,
+    "line_templates": 360,
+    "maximum_semantic_products_per_valuation_class": 97,
+    "nonexceptional_sign_vectors": 757,
+    "novel_exceptional_sign_vectors": 429,
+    "ratios_with_canceled_orbit_zero": 100102,
+    "semantic_product_profiles": 48204,
+    "unique_sign_vectors": 1186,
+    "unordered_line_products": 64980,
+    "valuation_signatures": 31375
+  },
+  "discovery_exact_search": {
+    "candidate": null,
+    "candidate_found": false,
+    "maximum_pair_xor_multiplicity": 570,
+    "pair_count": 702705,
+    "pair_xor_classes": 13874
+  },
+  "exceptional_fiber_decision": "aggregate cross-factor cancellation creates 429 discovery-only semantic vectors, but zero remain novel on the full eighteen-curve corpus",
+  "experiment": "UORC-056-DIVISOR-AWARE-BALANCED-LINE-PRODUCT-RATIO-V4",
+  "full_corpus_catalog": {
+    "admissible_unordered_product_ratios": 68930,
+    "exceptional_sign_vectors": 22,
+    "line_templates": 360,
+    "maximum_semantic_products_per_valuation_class": 21,
+    "nonexceptional_sign_vectors": 32,
+    "novel_exceptional_sign_vectors": 0,
+    "ratios_with_canceled_orbit_zero": 68699,
+    "semantic_product_profiles": 48218,
+    "unique_sign_vectors": 32,
+    "unordered_line_products": 64980,
+    "valuation_signatures": 33930
+  },
+  "full_corpus_exact_search": {
+    "candidate": null,
+    "candidate_found": false,
+    "maximum_pair_xor_multiplicity": 16,
+    "pair_count": 496,
+    "pair_xor_classes": 31
+  },
+  "grammar_sha256": "18aecefc3f7c0035f97b3a67575e03410cc5072fc2ae9c5330ea672e647a3e8e",
+  "schema_version": "1.0",
+  "transfer_status": "not_reached_no_discovery_candidate"
+}
