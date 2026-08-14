@@ -32,7 +32,7 @@ theorem endpointRatio_compose
     endpointRatio potential first middle
       * endpointRatio potential middle last
       = endpointRatio potential first last := by
-  simp [endpointRatio, div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm]
+  simp [endpointRatio, div_eq_mul_inv, mul_assoc, mul_left_comm]
 
 /-- A composable endpoint function is recovered from one anchor row. -/
 theorem endpoint_eq_anchor_ratio
@@ -62,7 +62,14 @@ theorem endpointRatio_constantGauge
     (potential : X → K) (constant : K) (source target : X) :
     endpointRatio (fun point => constant * potential point) source target
       = endpointRatio potential source target := by
-  simp [endpointRatio, div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm]
+  simp only [endpointRatio, div_eq_mul_inv, mul_inv_rev]
+  calc
+    (constant * potential target) * ((potential source)⁻¹ * constant⁻¹)
+        = (constant * constant⁻¹)
+            * (potential target * (potential source)⁻¹) := by
+              ac_rfl
+    _ = potential target * (potential source)⁻¹ := by
+          simp
 
 /-- Any two-level product cover `m ≤ b*g`, charged by `b+g`, lies on the
 square-root frontier. -/
