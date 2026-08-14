@@ -1,158 +1,35 @@
 {
-  "schema_version": "1.5",
+  "schema_version": "1.6",
   "package": "UORC-056-EXECUTION-001",
-  "status": "tasks_01_through_25_implemented_with_provisional_V8_barrier_and_V9_EDS_frontier",
+  "status": "tasks_01_through_27_implemented_with_V10_small_exact_witnesses_and_V11_secp_single_division_polynomial_closure",
   "tasks": [
-    {
-      "task": 1,
-      "name": "freeze_machine_readable_contract",
-      "status": "complete",
-      "evidence": "experiments/uorc056/uorc056_contract.json"
-    },
-    {
-      "task": 2,
-      "name": "register_closed_mechanism_classes",
-      "status": "complete",
-      "evidence": "experiments/uorc056/closed_classes.json"
-    },
-    {
-      "task": 3,
-      "name": "provide_sage_loader_and_replay",
-      "status": "complete_not_run_in_lightweight_container",
-      "evidence": "experiments/uorc056/sage/uorc056_replay.sage"
-    },
-    {
-      "task": 4,
-      "name": "construct_exact_kernel_polynomial",
-      "status": "complete",
-      "evidence": "scripts/uorc056_toy_factory.py"
-    },
-    {
-      "task": 5,
-      "name": "construct_exact_oriented_root_for_every_marked_generator",
-      "status": "complete",
-      "evidence": "scripts/uorc056_toy_factory.py"
-    },
-    {
-      "task": 6,
-      "name": "verify_square_congruence",
-      "status": "complete_in_two_backends",
-      "evidence": "scripts/uorc056_toy_factory.py and scripts/uorc056_sympy_replay.py"
-    },
-    {
-      "task": 7,
-      "name": "verify_full_parity_ratio",
-      "status": "complete_for_all_438_marked_roots_and_all_nonzero_scalars",
-      "evidence": "scripts/uorc056_toy_factory.py and scripts/uorc056_sympy_replay.py"
-    },
-    {
-      "task": 8,
-      "name": "independent_second_backend_replay",
-      "status": "complete_with_sympy_and_sage_script_supplied",
-      "evidence": "scripts/uorc056_sympy_replay.py and experiments/uorc056/sage/uorc056_replay.sage"
-    },
-    {
-      "task": 9,
-      "name": "freeze_typed_circuit_grammar",
-      "status": "complete",
-      "evidence": "experiments/uorc056/circuit_grammar.json"
-    },
-    {
-      "task": 10,
-      "name": "implement_exact_bounded_affine_character_synthesis",
-      "status": "complete",
-      "evidence": "scripts/uorc056_circuit_synth.py"
-    },
-    {
-      "task": 11,
-      "name": "semantic_quotient_and_global_phase_normalization",
-      "status": "complete",
-      "evidence": "scripts/uorc056_circuit_synth.py and scripts/test_uorc056_circuit_synth.py"
-    },
-    {
-      "task": 12,
-      "name": "rediscover_known_finite_p43_seed",
-      "status": "complete_minimum_weight_four_in_declared_family",
-      "evidence": "experiments/uorc056/circuit_synth_results.json"
-    },
-    {
-      "task": 13,
-      "name": "unchanged_integer_formula_transfer_gate",
-      "status": "complete_negative",
-      "evidence": "experiments/uorc056/circuit_synth_results.json"
-    },
-    {
-      "task": 14,
-      "name": "structural_small_multiple_and_glv_transfer_screen",
-      "status": "complete_negative_through_product_weight_four",
-      "evidence": "experiments/uorc056/structural_transfer_results.json"
-    },
-    {
-      "task": 15,
-      "name": "extended_eighteen_curve_holdout_gate",
-      "status": "complete_negative_on_7434_nonzero_orbit_points",
-      "evidence": "experiments/uorc056/structural_transfer_results.json"
-    },
-    {
-      "task": 16,
-      "name": "exact_divisor_aware_line_ratio_regularization",
-      "status": "complete_negative_through_character_product_weight_four",
-      "evidence": "experiments/uorc056/divisor_aware_rational_results.json"
-    },
-    {
-      "task": 17,
-      "name": "common_and_mixed_small_multiplier_divisor_pullbacks",
-      "status": "complete_negative_through_character_product_weight_four",
-      "evidence": "experiments/uorc056/divisor_aware_pullback_results.json and experiments/uorc056/divisor_aware_mixed_pullback_results.json"
-    },
-    {
-      "task": 18,
-      "name": "balanced_products_of_two_lines_with_cross_factor_cancellation",
-      "status": "complete_negative_for_reducible_conic_ratios_through_character_product_weight_four",
-      "evidence": "experiments/uorc056/divisor_aware_balanced_product_results.json"
-    },
-    {
-      "task": 19,
-      "name": "gate_divisor_aware_profiles_in_reproducible_ci",
-      "status": "complete_configuration_committed",
-      "evidence": ".github/workflows/uorc056-execution-001.yml"
-    },
-    {
-      "task": 20,
-      "name": "global_cross_factor_cancellation_for_pulled_line_divisors",
-      "status": "complete_negative_for_two_numerator_and_two_denominator_pulled_lines",
-      "evidence": "experiments/uorc056/global_divisor_balance_results.json"
-    },
-    {
-      "task": 21,
-      "name": "small_public_miller_divisor_balance",
-      "status": "complete_negative_for_four_signed_small_miller_primitives",
-      "evidence": "experiments/uorc056/small_miller_balance_results.json"
-    },
-    {
-      "task": 22,
-      "name": "exact_parity_fourier_peak_and_conditional_FDB1_reduction",
-      "status": "complete_historical_checkpoint_superseded_by_task_23",
-      "evidence": "experiments/uorc056/fourier_divisor_barrier_results.json and notes/reviews/UORC056_FOURIER_DIVISOR_BARRIER_V7.md"
-    },
-    {
-      "task": 23,
-      "name": "regularized_subgroup_Fourier_to_divisor_barrier",
-      "status": "provisional_theorem_complete_with_C_equal_1_subgroup_reduction_regularization_and_exact_integer_replay",
-      "evidence": "experiments/uorc056/regularized_fourier_divisor_barrier_results.json, scripts/uorc056_regularized_fourier_divisor_barrier.py, notes/reviews/UORC056_REGULARIZED_FOURIER_DIVISOR_BARRIER_V8.md and notes/reviews/UORC056_FDB1_KUMMER_LANG_PROOF_V8.md"
-    },
-    {
-      "task": 24,
-      "name": "division_polynomial_support_cost_separation_and_all_index_Miller_closure",
-      "status": "complete_mechanism_separation_with_open_even_index_q_3_mod_4_EDS_decimation_case",
-      "evidence": "experiments/uorc056/division_polynomial_frontier_results.json, scripts/uorc056_division_polynomial_frontier.py and notes/reviews/UORC056_DIVISION_POLYNOMIAL_FRONTIER_V9.md"
-    },
-    {
-      "task": 25,
-      "name": "gate_V9_frontier_in_reproducible_CI",
-      "status": "complete_configuration_committed",
-      "evidence": ".github/workflows/uorc056-execution-001.yml and scripts/test_uorc056_division_polynomial_frontier.py"
-    }
+    {"task":1,"name":"freeze_machine_readable_contract","status":"complete","evidence":"experiments/uorc056/uorc056_contract.json"},
+    {"task":2,"name":"register_closed_mechanism_classes","status":"complete","evidence":"experiments/uorc056/closed_classes.json"},
+    {"task":3,"name":"provide_sage_loader_and_replay","status":"complete_not_run_in_lightweight_container","evidence":"experiments/uorc056/sage/uorc056_replay.sage"},
+    {"task":4,"name":"construct_exact_kernel_polynomial","status":"complete","evidence":"scripts/uorc056_toy_factory.py"},
+    {"task":5,"name":"construct_exact_oriented_root_for_every_marked_generator","status":"complete","evidence":"scripts/uorc056_toy_factory.py"},
+    {"task":6,"name":"verify_square_congruence","status":"complete_in_two_backends","evidence":"scripts/uorc056_toy_factory.py and scripts/uorc056_sympy_replay.py"},
+    {"task":7,"name":"verify_full_parity_ratio","status":"complete_for_all_438_marked_roots_and_all_nonzero_scalars","evidence":"scripts/uorc056_toy_factory.py and scripts/uorc056_sympy_replay.py"},
+    {"task":8,"name":"independent_second_backend_replay","status":"complete_with_sympy_and_sage_script_supplied","evidence":"scripts/uorc056_sympy_replay.py and experiments/uorc056/sage/uorc056_replay.sage"},
+    {"task":9,"name":"freeze_typed_circuit_grammar","status":"complete","evidence":"experiments/uorc056/circuit_grammar.json"},
+    {"task":10,"name":"implement_exact_bounded_affine_character_synthesis","status":"complete","evidence":"scripts/uorc056_circuit_synth.py"},
+    {"task":11,"name":"semantic_quotient_and_global_phase_normalization","status":"complete","evidence":"scripts/uorc056_circuit_synth.py and scripts/test_uorc056_circuit_synth.py"},
+    {"task":12,"name":"rediscover_known_finite_p43_seed","status":"complete_minimum_weight_four_in_declared_family","evidence":"experiments/uorc056/circuit_synth_results.json"},
+    {"task":13,"name":"unchanged_integer_formula_transfer_gate","status":"complete_negative","evidence":"experiments/uorc056/circuit_synth_results.json"},
+    {"task":14,"name":"structural_small_multiple_and_glv_transfer_screen","status":"complete_negative_through_product_weight_four","evidence":"experiments/uorc056/structural_transfer_results.json"},
+    {"task":15,"name":"extended_eighteen_curve_holdout_gate","status":"complete_negative_on_7434_nonzero_orbit_points","evidence":"experiments/uorc056/structural_transfer_results.json"},
+    {"task":16,"name":"exact_divisor_aware_line_ratio_regularization","status":"complete_negative_through_character_product_weight_four","evidence":"experiments/uorc056/divisor_aware_rational_results.json"},
+    {"task":17,"name":"common_and_mixed_small_multiplier_divisor_pullbacks","status":"complete_negative_through_character_product_weight_four","evidence":"experiments/uorc056/divisor_aware_pullback_results.json and experiments/uorc056/divisor_aware_mixed_pullback_results.json"},
+    {"task":18,"name":"balanced_products_of_two_lines_with_cross_factor_cancellation","status":"complete_negative_for_reducible_conic_ratios_through_character_product_weight_four","evidence":"experiments/uorc056/divisor_aware_balanced_product_results.json"},
+    {"task":19,"name":"gate_divisor_aware_profiles_in_reproducible_ci","status":"complete_configuration_committed","evidence":".github/workflows/uorc056-execution-001.yml"},
+    {"task":20,"name":"global_cross_factor_cancellation_for_pulled_line_divisors","status":"complete_negative_for_two_numerator_and_two_denominator_pulled_lines","evidence":"experiments/uorc056/global_divisor_balance_results.json"},
+    {"task":21,"name":"small_public_miller_divisor_balance","status":"complete_negative_for_four_signed_small_miller_primitives","evidence":"experiments/uorc056/small_miller_balance_results.json"},
+    {"task":22,"name":"exact_parity_fourier_peak_and_conditional_FDB1_reduction","status":"complete_historical_checkpoint_superseded_by_task_23","evidence":"experiments/uorc056/fourier_divisor_barrier_results.json and notes/reviews/UORC056_FOURIER_DIVISOR_BARRIER_V7.md"},
+    {"task":23,"name":"regularized_subgroup_Fourier_to_divisor_barrier","status":"provisional_theorem_complete_with_C_equal_1_subgroup_reduction_regularization_and_exact_integer_replay","evidence":"experiments/uorc056/regularized_fourier_divisor_barrier_results.json, scripts/uorc056_regularized_fourier_divisor_barrier.py, notes/reviews/UORC056_REGULARIZED_FOURIER_DIVISOR_BARRIER_V8.md and notes/reviews/UORC056_FDB1_KUMMER_LANG_PROOF_V8.md"},
+    {"task":24,"name":"division_polynomial_support_cost_separation_and_all_index_Miller_closure","status":"complete_mechanism_separation_with_even_q_3_mod_4_case_reduced_to_EDS_decimation","evidence":"experiments/uorc056/division_polynomial_frontier_results.json, scripts/uorc056_division_polynomial_frontier.py and notes/reviews/UORC056_DIVISION_POLYNOMIAL_FRONTIER_V9.md"},
+    {"task":25,"name":"gate_V9_frontier_in_reproducible_CI","status":"complete_configuration_committed","evidence":".github/workflows/uorc056-execution-001.yml and scripts/test_uorc056_division_polynomial_frontier.py"},
+    {"task":26,"name":"EDS_decimation_remarking_equivalence_and_small_exact_witnesses","status":"complete_with_corrected_Ward_normalization_and_exact_orders_5_and_7_m_equals_2_witnesses","evidence":"experiments/uorc056/eds_decimation_closure_results.json, scripts/uorc056_eds_decimation_closure.py, Ecdlp/Proved/EdsDecimationClosure.lean and notes/reviews/UORC056_EDS_DECIMATION_CLOSURE_V10.md"},
+    {"task":27,"name":"explicit_large_order_all_residue_barrier_for_secp256k1","status":"complete_source_locked_character_sum_reduction_with_kernel_checked_exact_integer_certificate","evidence":"scripts/uorc056_all_residue_large_order_barrier.py, Ecdlp/Proved/EdsAllResidueCompletionBoundary.lean and notes/reviews/UORC056_ALL_RESIDUE_LARGE_ORDER_BARRIER_V11.md"}
   ],
   "resolved_problems": [
     "the near-half parity Fourier coefficient has exact magnitude cot(pi/(2n))",
@@ -165,18 +42,22 @@
     "a classical terminal Miller function has at most two odd divisor-support slots for every index",
     "large odd divisor support alone does not force large straight-line evaluation cost because division-polynomial recurrences create quadratic support with logarithmic dependency depth",
     "odd-index division-polynomial characters and even-index characters over q=1 mod 4 fail the required negation covariance",
-    "the remaining secp256k1 pure division-polynomial case is exactly an even decimation k -> rho_(m*k) of the EDS residue sequence"
+    "an exact even EDS decimation is equivalent to rho_m(G)=-1 plus an all-residue EDS row at the re-marked generator P=[m]G",
+    "exact even EDS parity decimations genuinely exist on small q=3 mod 4 prime-order examples at orders 5 and 7",
+    "the first V10 Ward no-go attempt was invalid and was retracted after correcting the torsion normalization",
+    "a fixed psi_3 character-sum completion bound rules out an all-residue generator at the secp256k1 order",
+    "therefore no single classical division-polynomial quadratic-character chi(psi_m(Q)) computes canonical parity on secp256k1 for any index m"
   ],
   "next_frontier": {
-    "primary": "Classify even EDS decimations k -> rho_(m*k) on a prime-order cycle and determine whether any can equal canonical parity.",
+    "primary": "Return to the central non-single-division-polynomial mechanisms: direct field-valued Y_G evaluation and compact distinguished global integration of the oriented Miller cocycle.",
     "focused_subproblems": [
-      "derive exact quadratic-character quasi-periodicity of rho_j=chi(psi_j(G)) modulo the point order n",
-      "identify the Ward or elliptic-net cocycle governing multiplication of the EDS index by an even m",
-      "prove or refute existence of m with rho_(m*k)=(-1)^k for every 1<=k<n on q=3 mod 4 curves",
-      "if a candidate m survives, charge construction, representation and online evaluation under the full UORC cost gate",
-      "keep direct field-valued Y_G, theta and elliptic-unit evaluators as separate non-character branches",
-      "formalize and independently review the V8 and V9 theorem-level arguments"
+      "search for short high-degree field-valued circuits whose output is Y_G(x(Q))/y(Q) directly rather than one outer quadratic character",
+      "derive a compact global integration or branch-selector identity for the public oriented Miller cocycle without an orbit walk, hidden index or square-root-width state",
+      "classify products or ratios of multiple high-index division-polynomial factors separately; V11 closes only one classical psi_m character",
+      "test transposed or modular-composition representations that avoid materializing the oriented divisor",
+      "test level-n theta and elliptic-unit formulas with generator-sensitive normalization",
+      "formalize and independently review the V8 and V11 analytic inputs"
     ]
   },
-  "scientific_boundary": "V8 and V9 provide provisional divisor-support, mechanism-separation and scoped no-go results. They do not construct a parity evaluator, recover an unknown scalar or claim a sub-square-root ECDLP algorithm."
+  "scientific_boundary": "V8-V11 provide provisional divisor, EDS-mechanism and secp-specific representation closures. They do not construct the central parity evaluator, prove a general arithmetic-circuit lower bound, recover an unknown scalar or claim a sub-square-root ECDLP algorithm."
 }
