@@ -1,0 +1,34 @@
+{
+  "central_target_unchanged": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "claim_boundary": "V16 reconciles observables and proves a direct rational degree barrier. It does not construct a public sub-square-root evaluator, prove an unrestricted circuit lower bound, or give an ECDLP algorithm.",
+  "exact_replay": {
+    "curves": 5,
+    "errors": 0,
+    "floor_sum_diagnostic_scalar_terms": 2240852,
+    "floor_sum_diagnostic_unit_multipliers": 13230,
+    "kummer_evaluations": 23130,
+    "marked_roots": 438,
+    "scalar_reconciliation_checks": 46260
+  },
+  "next_frontier": [
+    "high-degree low-size or modular-composition sector evaluation",
+    "shared carry and sector circuits",
+    "additive mixed-CM-weight outputs with nontrivial C3 covariance",
+    "representation-specific lower bounds stronger than degree alone"
+  ],
+  "package": "UORC-056-SECTOR-FACTOR-RECONCILIATION-V16",
+  "parent_head": "1537256ef9ad29409ad83823fe1e257595e32e03",
+  "results": [
+    "the V15 three-sign carry c is exactly the legacy GLV carry g_G",
+    "the Kummer sector is J_G=sigma(Q)g_G(Q), not the old R3_G observable",
+    "K_H factors exactly as K_{G,+}K_{G,-}, and J_G=2e_+-1 by CRT",
+    "the parity correlation S(a;n) has an exact two-floor-sum formula computable by Euclidean descent",
+    "for secp256k1 S(lambda;n)=208",
+    "the secp256k1 sector factor degrees are (n-1+208)/4 and (n-1-208)/4",
+    "any ordinary rational function directly returning field values J_G=+/-1 on the whole half-kernel has degree at least (n-1+208)/4",
+    "the lower bound has bit length 254 and is not an arithmetic-circuit lower bound",
+    "on all 438 frozen oriented roots the canonical sector representative has degree deg(K_H)-1"
+  ],
+  "schema_version": "1.0",
+  "status": "implemented_and_locally_replayed_pending_GitHub_workflow_approval"
+}
