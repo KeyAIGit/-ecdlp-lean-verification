@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.4",
+  "schema_version": "1.5",
   "package": "UORC-056-EXECUTION-001",
-  "status": "tasks_01_through_23_implemented_with_provisional_regularized_divisor_barrier",
+  "status": "tasks_01_through_25_implemented_with_provisional_V8_barrier_and_V9_EDS_frontier",
   "tasks": [
     {
       "task": 1,
@@ -139,7 +139,19 @@
       "task": 23,
       "name": "regularized_subgroup_Fourier_to_divisor_barrier",
       "status": "provisional_theorem_complete_with_C_equal_1_subgroup_reduction_regularization_and_exact_integer_replay",
-      "evidence": "experiments/uorc056/regularized_fourier_divisor_barrier_results.json, scripts/uorc056_regularized_fourier_divisor_barrier.py and notes/reviews/UORC056_REGULARIZED_FOURIER_DIVISOR_BARRIER_V8.md"
+      "evidence": "experiments/uorc056/regularized_fourier_divisor_barrier_results.json, scripts/uorc056_regularized_fourier_divisor_barrier.py, notes/reviews/UORC056_REGULARIZED_FOURIER_DIVISOR_BARRIER_V8.md and notes/reviews/UORC056_FDB1_KUMMER_LANG_PROOF_V8.md"
+    },
+    {
+      "task": 24,
+      "name": "division_polynomial_support_cost_separation_and_all_index_Miller_closure",
+      "status": "complete_mechanism_separation_with_open_even_index_q_3_mod_4_EDS_decimation_case",
+      "evidence": "experiments/uorc056/division_polynomial_frontier_results.json, scripts/uorc056_division_polynomial_frontier.py and notes/reviews/UORC056_DIVISION_POLYNOMIAL_FRONTIER_V9.md"
+    },
+    {
+      "task": 25,
+      "name": "gate_V9_frontier_in_reproducible_CI",
+      "status": "complete_configuration_committed",
+      "evidence": ".github/workflows/uorc056-execution-001.yml and scripts/test_uorc056_division_polynomial_frontier.py"
     }
   ],
   "resolved_problems": [
@@ -149,16 +161,22 @@
     "odd-order Lang monodromy cannot cancel a quadratic Kummer local system",
     "the genus-one tame conductor constant is one under the declared conventions",
     "divisor-aware regularization costs at most s rational support terms plus one identity term",
-    "finite products and quotients of quadratic-character atoms collapse to one rational function with aggregate local regularization"
+    "finite products and quotients of quadratic-character atoms collapse to one rational function with aggregate local regularization",
+    "a classical terminal Miller function has at most two odd divisor-support slots for every index",
+    "large odd divisor support alone does not force large straight-line evaluation cost because division-polynomial recurrences create quadratic support with logarithmic dependency depth",
+    "odd-index division-polynomial characters and even-index characters over q=1 mod 4 fail the required negation covariance",
+    "the remaining secp256k1 pure division-polynomial case is exactly an even decimation k -> rho_(m*k) of the EDS residue sequence"
   ],
   "next_frontier": {
-    "primary": "Connect square-root odd-divisor support to all-in representation and evaluation cost for succinct high-degree straight-line programs.",
+    "primary": "Classify even EDS decimations k -> rho_(m*k) on a prime-order cycle and determine whether any can equal canonical parity.",
     "focused_subproblems": [
-      "derive degree and odd-support growth bounds for multiplication pullbacks and division-polynomial recurrences as a function of charged circuit size",
-      "determine whether a Miller or EDS addition chain can create Omega(sqrt(n)) odd support with o(sqrt(n)) representation and online cost",
-      "separate direct field-valued Y_G evaluation from mechanisms that collapse to one quadratic character",
-      "formalize the V8 sheaf proof and seek independent specialist review"
+      "derive exact quadratic-character quasi-periodicity of rho_j=chi(psi_j(G)) modulo the point order n",
+      "identify the Ward or elliptic-net cocycle governing multiplication of the EDS index by an even m",
+      "prove or refute existence of m with rho_(m*k)=(-1)^k for every 1<=k<n on q=3 mod 4 curves",
+      "if a candidate m survives, charge construction, representation and online evaluation under the full UORC cost gate",
+      "keep direct field-valued Y_G, theta and elliptic-unit evaluators as separate non-character branches",
+      "formalize and independently review the V8 and V9 theorem-level arguments"
     ]
   },
-  "scientific_boundary": "V8 is a provisional divisor-support and rational-map-degree theorem, not a general arithmetic-circuit lower bound. The package does not construct a parity evaluator, recover an unknown scalar or claim a sub-square-root ECDLP algorithm."
+  "scientific_boundary": "V8 and V9 provide provisional divisor-support, mechanism-separation and scoped no-go results. They do not construct a parity evaluator, recover an unknown scalar or claim a sub-square-root ECDLP algorithm."
 }
