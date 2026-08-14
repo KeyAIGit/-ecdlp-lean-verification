@@ -28,8 +28,7 @@ theorem markedSeed_negation
     {R : Type*} [Ring R] (A B y : R)
     (hseed : A = y * B) :
     -A = (-y) * B := by
-  rw [hseed]
-  ring
+  simpa [hseed]
 
 /-- The oriented rational selector changes sign under quadratic conjugation. -/
 theorem pellSelector_negA
