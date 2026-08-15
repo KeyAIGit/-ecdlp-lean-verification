@@ -1,0 +1,121 @@
+name: UORC056 oriented source rank C31
+
+on:
+  push:
+    branches:
+      - research/uorc056-oriented-source-rank-c31
+    paths:
+      - 'experiments/parity_lift_000/uorc056_oriented_source_rank.py'
+      - 'experiments/parity_lift_000/test_uorc056_oriented_source_rank.py'
+      - 'Ecdlp/Proved/Uorc056OrientedSourceRank.lean'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_ORIENTED_SOURCE_RANK_C31.md'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_C_TRACK_LINEAGE_C31.json'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_FIXED_G_NONLINEAR_SOURCE_C32_PROMPT.md'
+      - '.github/workflows/uorc056-oriented-source-rank-c31.yml'
+  pull_request:
+    branches:
+      - research/uorc056-local-branch-normal-form-c30
+    paths:
+      - 'experiments/parity_lift_000/uorc056_oriented_source_rank.py'
+      - 'experiments/parity_lift_000/test_uorc056_oriented_source_rank.py'
+      - 'Ecdlp/Proved/Uorc056OrientedSourceRank.lean'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_ORIENTED_SOURCE_RANK_C31.md'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_C_TRACK_LINEAGE_C31.json'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_FIXED_G_NONLINEAR_SOURCE_C32_PROMPT.md'
+      - '.github/workflows/uorc056-oriented-source-rank-c31.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Compile C31 Python
+        run: |
+          python -m py_compile \
+            experiments/parity_lift_000/uorc056_oriented_source_rank.py \
+            experiments/parity_lift_000/test_uorc056_oriented_source_rank.py
+
+      - name: Run C31 unit tests and exact replay
+        run: |
+          PYTHONPATH=experiments/parity_lift_000 python -m unittest -v \
+            experiments/parity_lift_000/test_uorc056_oriented_source_rank.py
+          PYTHONPATH=experiments/parity_lift_000 python \
+            experiments/parity_lift_000/uorc056_oriented_source_rank.py \
+            --out /tmp/uorc056_oriented_source_rank_result.json
+
+      - name: Check C31 machine-readable scope
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = json.loads(Path(
+              '/tmp/uorc056_oriented_source_rank_result.json'
+          ).read_text())
+          assert result['profile_id'] == 'UORC-056-ORIENTED-SOURCE-RANK-C31'
+          replay = result['exact_replay']
+          assert replay['curves'] == 5
+          assert replay['half_kernel_dimensions_sum'] == 219
+          assert replay['half_source_entries_checked'] == 11565
+          assert replay['all_marker_source_entries_checked'] == 23130
+          assert replay['marker_formula_checks'] == 23130
+          assert replay['generator_negation_checks'] == 23130
+          assert replay['full_rank_curves'] == 5
+          assert replay['auxiliary_fourier_orders'] == 5
+          assert replay['errors'] == 0
+          assert all(row['support_pattern_exact'] for row in replay['auxiliary_fourier_rows'])
+          decision = result['decision']
+          assert decision['marked_generator_source_formula_verified']
+          assert decision['characteristic_zero_half_source_rank_exact']
+          assert decision['frozen_base_field_half_source_rank_full']
+          assert not decision['fixed_linear_dictionary_subroot_possible_char0']
+          assert not decision['secp_base_field_half_source_rank_proved']
+          assert not decision['nonlinear_oriented_source_compiler_found']
+          assert not decision['parity_oracle_found']
+          assert not decision['sub_sqrt_ecdlp_found']
+          assert len(result['digest']) == 64
+          PY
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Kernel-check C31 linear transfer core
+        run: |
+          lake exe cache get
+          lake build Ecdlp.Proved.Uorc056OrientedSourceRank
+          lake env lean Ecdlp/Proved/Uorc056OrientedSourceRank.lean
+
+      - name: Upload C31 replay
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-oriented-source-rank-c31
+          path: |
+            /tmp/uorc056_oriented_source_rank_result.json
+          retention-days: 90
