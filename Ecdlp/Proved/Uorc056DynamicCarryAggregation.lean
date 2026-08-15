@@ -78,7 +78,7 @@ theorem generator_blind_decoder_obstruction
     (targetLeft targetRight : Output)
     (hleft : decoder (state left) = targetLeft)
     (hright : decoder (state right) = targetRight)
-    (hsep : targetLeft != targetRight) :
+    (hsep : targetLeft ≠ targetRight) :
     False := by
   apply hsep
   calc
@@ -135,10 +135,10 @@ theorem secpThreeCarryThirdSumCertificate :
 
 
 theorem secpThreeCarryMultipliersNonzero :
-    secpThreeCarryA != 0 ∧
-    secpThreeCarryB != 0 ∧
-    secpThreeCarryT != 0 ∧
-    secpInverseTwo != 0 := by
+    secpThreeCarryA ≠ 0 ∧
+    secpThreeCarryB ≠ 0 ∧
+    secpThreeCarryT ≠ 0 ∧
+    secpInverseTwo ≠ 0 := by
   native_decide
 
 end Ecdlp.Uorc056DynamicCarryAggregation
