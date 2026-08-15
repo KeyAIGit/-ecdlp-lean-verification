@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "track": "UNIFORM-ORIENTED-ROOT-CIRCUIT-056 / C-track",
+  "package": "C32",
+  "canonical_id": "PUBLIC-ANCHOR-FIXED-G-NONLINEAR-PROPAGATION-082",
+  "branch": "research/uorc056-public-anchor-propagation-c32",
+  "parent_branch": "research/uorc056-secp-source-defect-c31a",
+  "parent_package": "C31A forced secp256k1 source-rank defect",
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "public_anchor": "Y_G(x(G))=-y(G)",
+  "scope": "Fixed-generator, nonlocal, nonlinear propagation from the canonical public anchor to one public query.",
+  "excluded_repetitions": [
+    "black-box local walking and multi-seed tables",
+    "endpoint oracle renamed from a global potential",
+    "dyadic or mixed-radix explicit branch trees",
+    "local rational gauges E+O*Y",
+    "fixed autonomous algebraic state",
+    "fixed low-rank all-generator linear dictionary"
+  ],
+  "first_attack": "anchor-normalized one-coordinate Hilbert-90 evaluation",
+  "status": "active_contract_no_positive_evaluator",
+  "claim_boundary": "No parity oracle, sub-root evaluator, or sub-square-root ECDLP algorithm is claimed."
+}
