@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "track": "UNIFORM-ORIENTED-ROOT-CIRCUIT-056 / C-track",
+  "package": "C33",
+  "canonical_id": "ORIENTED-ADDITION-CARRY-COCYCLE-083",
+  "branch": "research/uorc056-oriented-addition-cocycle-c33",
+  "parent_branch": "research/uorc056-public-anchor-propagation-c32",
+  "parent_package": "C32 public-anchor nonlocal propagation contract",
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "public_anchor": "Y_G(x(G))=-y(G)",
+  "exact_new_object": "C_G(P,Q)=sigma_G(P)sigma_G(Q)sigma_G(P+Q)",
+  "main_result": "The lifted addition law exists, but its missing factor is the canonical modular carry cocycle. A diagonal carry after public halving is parity itself.",
+  "closed_classes": [
+    "direct binary lifted-addition state with an assumed carry bit",
+    "normalized binary carry-free gauge beyond parity",
+    "base-field multiplicative carry-free scalar gauge beyond parity",
+    "generator-blind standard addition circuits as carry evaluators",
+    "fixed separated linear carry dictionaries below rank n",
+    "fixed-jump carry monomials with fewer than n-1 factors",
+    "ordinary direct rational carry fibres below pole degree n-1"
+  ],
+  "successor": "DYNAMIC-ORIENTED-CARRY-AGGREGATION-C34",
+  "status": "scoped_negative_with_exact_lifted_addition_normal_form",
+  "claim_boundary": "No unrestricted nonlinear-circuit lower bound, parity oracle, sub-root evaluator, or sub-square-root ECDLP algorithm is claimed."
+}
