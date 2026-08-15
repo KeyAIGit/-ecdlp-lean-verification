@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "track": "UNIFORM-ORIENTED-ROOT-CIRCUIT-056 / C-track",
+  "package": "C31",
+  "canonical_id": "GENERATOR-ORIENTED-SOURCE-RANK-081",
+  "branch": "research/uorc056-oriented-source-rank-c31",
+  "parent_branch": "research/uorc056-local-branch-normal-form-c30",
+  "parent_package": "C30 local quadratic-branch normal form",
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "scope": "Fixed linear source dictionaries spanning the marked-generator oriented-root family; characteristic-zero theorem plus exact frozen finite-field replay.",
+  "result": "The marked-generator source family has characteristic-zero rank (n-1)/2. All five frozen base-field matrices have full half rank. A fixed sub-half-rank linear dictionary cannot contain the whole oriented family in the declared scope.",
+  "claim_boundary": "The secp256k1 base-field matrix rank is not proved. Nonlinear fixed-G source compilers and unrestricted circuits remain open.",
+  "successor": {
+    "package": "C32",
+    "canonical_id": "FIXED-G-NONLINEAR-SOURCE-COMPILER-082",
+    "prompt": "archive/untrusted_intake/parity_lift_000/UORC056_FIXED_G_NONLINEAR_SOURCE_C32_PROMPT.md"
+  },
+  "parallel_stack_note": "C31 continues C30. V15-V19 remains a separate stacked representation line."
+}
