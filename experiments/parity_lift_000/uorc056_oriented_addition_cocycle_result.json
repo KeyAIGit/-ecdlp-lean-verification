@@ -1,0 +1,402 @@
+{
+  "aggregate": {
+    "all_frozen_carry_matrices_full_rank": true,
+    "anchor_checks": 438,
+    "binary_gauge_solutions_across_screens": 5,
+    "errors": 0,
+    "frozen_oriented_addition_checks": 5371236,
+    "frozen_scalar_carry_checks": 5417496,
+    "marked_generators": 438,
+    "query_halving_checks": 46260,
+    "scalar_cocycle_checks": 45586,
+    "scalar_orders": 12,
+    "scalar_pair_checks": 48164
+  },
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "decision": {
+    "all_point_public_Q_replay_passed": true,
+    "base_field_multiplicative_carry_free_state_found": false,
+    "binary_carry_free_gauge_found_beyond_parity": false,
+    "compact_branch_odd_evaluator_found": false,
+    "complete_cost_gate_passed": false,
+    "doubling_carry_is_parity_complete": true,
+    "dynamic_carry_aggregation_found": false,
+    "exact_lifted_addition_law_found": true,
+    "exact_oriented_root_extraction_found": false,
+    "exact_parity_extraction_found": false,
+    "fixed_jump_linear_subroot_integration_found": false,
+    "fixed_jump_multiplicative_subroot_integration_found": false,
+    "generator_blind_standard_addition_formula_can_supply_carry": false,
+    "missing_factor_identified_as_carry_cocycle": true,
+    "nonlocal_propagation_law_found": false,
+    "numeric_scalar_control_used": false,
+    "parity_oracle_found": false,
+    "public_oriented_anchor_used": true,
+    "sub_sqrt_ecdlp_found": false,
+    "sub_sqrt_evaluator_found": false
+  },
+  "digest": "f99393a9f8dd0ff1a4f5cd865d93258ac33c13d3fe824fba2150f2b823ad3270",
+  "exact_normal_form": {
+    "carry_definition": "C_G(P,Q)=sigma_G(P)*sigma_G(Q)*sigma_G(P+Q)",
+    "cocycle": "C(P,Q)C(P+Q,R)=C(Q,R)C(P,Q+R)",
+    "negative_half_decoder": "sigma(Q)=-C([(n-1)/2]Q,[(n-1)/2]Q)",
+    "oriented_addition": "Y(P+Q)*y(P)*y(Q)=C(P,Q)*Y(P)*Y(Q)*y(P+Q)",
+    "public_halving_decoder": "sigma(Q)=C([2^-1]Q,[2^-1]Q)",
+    "scalar_formula": "C(a,b)=+1 if [a]_n+[b]_n<n, else -1"
+  },
+  "frozen_curve_replay": [
+    {
+      "anchor_checks": 30,
+      "carry_matrix_full_rank_mod_p": true,
+      "carry_matrix_nonzero_rank_mod_p": true,
+      "generic_generator_negation_checks": 26100,
+      "instance": "E7-P43-N31",
+      "marked_generators": 30,
+      "n": 31,
+      "oriented_addition_checks": 26100,
+      "p": 43,
+      "query_halving_checks": 900,
+      "scalar_carry_checks": 27000
+    },
+    {
+      "anchor_checks": 78,
+      "carry_matrix_full_rank_mod_p": true,
+      "carry_matrix_nonzero_rank_mod_p": true,
+      "generic_generator_negation_checks": 468468,
+      "instance": "E7-P67-N79",
+      "marked_generators": 78,
+      "n": 79,
+      "oriented_addition_checks": 468468,
+      "p": 67,
+      "query_halving_checks": 6084,
+      "scalar_carry_checks": 474552
+    },
+    {
+      "anchor_checks": 66,
+      "carry_matrix_full_rank_mod_p": true,
+      "carry_matrix_nonzero_rank_mod_p": true,
+      "generic_generator_negation_checks": 283140,
+      "instance": "E7-P79-N67",
+      "marked_generators": 66,
+      "n": 67,
+      "oriented_addition_checks": 283140,
+      "p": 79,
+      "query_halving_checks": 4356,
+      "scalar_carry_checks": 287496
+    },
+    {
+      "anchor_checks": 126,
+      "carry_matrix_full_rank_mod_p": true,
+      "carry_matrix_nonzero_rank_mod_p": true,
+      "generic_generator_negation_checks": 1984500,
+      "instance": "E7-P127-N127",
+      "marked_generators": 126,
+      "n": 127,
+      "oriented_addition_checks": 1984500,
+      "p": 127,
+      "query_halving_checks": 15876,
+      "scalar_carry_checks": 2000376
+    },
+    {
+      "anchor_checks": 138,
+      "carry_matrix_full_rank_mod_p": true,
+      "carry_matrix_nonzero_rank_mod_p": true,
+      "generic_generator_negation_checks": 2609028,
+      "instance": "E7-P163-N139",
+      "marked_generators": 138,
+      "n": 139,
+      "oriented_addition_checks": 2609028,
+      "p": 163,
+      "query_halving_checks": 19044,
+      "scalar_carry_checks": 2628072
+    }
+  ],
+  "gauge_replay": [
+    {
+      "candidate_gauges": 4,
+      "order": 3,
+      "solutions": 1,
+      "unique_solution_is_parity": true
+    },
+    {
+      "candidate_gauges": 16,
+      "order": 5,
+      "solutions": 1,
+      "unique_solution_is_parity": true
+    },
+    {
+      "candidate_gauges": 64,
+      "order": 7,
+      "solutions": 1,
+      "unique_solution_is_parity": true
+    },
+    {
+      "candidate_gauges": 1024,
+      "order": 11,
+      "solutions": 1,
+      "unique_solution_is_parity": true
+    },
+    {
+      "candidate_gauges": 4096,
+      "order": 13,
+      "solutions": 1,
+      "unique_solution_is_parity": true
+    }
+  ],
+  "matrix_replay": [
+    {
+      "all_linear_coefficients_nonzero": true,
+      "all_nontrivial_jump_product_is_parity": true,
+      "exact_full_determinant_checked": true,
+      "exact_nonzero_determinant_checked": true,
+      "expected_full_determinant": -4,
+      "expected_nonzero_determinant": -2,
+      "full_rank": 3,
+      "modulus": null,
+      "nonzero_rank": 2,
+      "order": 3,
+      "unique_fixed_jump_product_verified": true
+    },
+    {
+      "all_linear_coefficients_nonzero": true,
+      "all_nontrivial_jump_product_is_parity": true,
+      "exact_full_determinant_checked": true,
+      "exact_nonzero_determinant_checked": true,
+      "expected_full_determinant": 16,
+      "expected_nonzero_determinant": 8,
+      "full_rank": 5,
+      "modulus": null,
+      "nonzero_rank": 4,
+      "order": 5,
+      "unique_fixed_jump_product_verified": true
+    },
+    {
+      "all_linear_coefficients_nonzero": true,
+      "all_nontrivial_jump_product_is_parity": true,
+      "exact_full_determinant_checked": true,
+      "exact_nonzero_determinant_checked": true,
+      "expected_full_determinant": -64,
+      "expected_nonzero_determinant": -32,
+      "full_rank": 7,
+      "modulus": null,
+      "nonzero_rank": 6,
+      "order": 7,
+      "unique_fixed_jump_product_verified": true
+    },
+    {
+      "all_linear_coefficients_nonzero": true,
+      "all_nontrivial_jump_product_is_parity": true,
+      "exact_full_determinant_checked": true,
+      "exact_nonzero_determinant_checked": true,
+      "expected_full_determinant": -1024,
+      "expected_nonzero_determinant": -512,
+      "full_rank": 11,
+      "modulus": null,
+      "nonzero_rank": 10,
+      "order": 11,
+      "unique_fixed_jump_product_verified": true
+    },
+    {
+      "all_linear_coefficients_nonzero": true,
+      "all_nontrivial_jump_product_is_parity": true,
+      "exact_full_determinant_checked": true,
+      "exact_nonzero_determinant_checked": true,
+      "expected_full_determinant": 4096,
+      "expected_nonzero_determinant": 2048,
+      "full_rank": 13,
+      "modulus": null,
+      "nonzero_rank": 12,
+      "order": 13,
+      "unique_fixed_jump_product_verified": true
+    },
+    {
+      "all_linear_coefficients_nonzero": true,
+      "all_nontrivial_jump_product_is_parity": true,
+      "exact_full_determinant_checked": true,
+      "exact_nonzero_determinant_checked": true,
+      "expected_full_determinant": 65536,
+      "expected_nonzero_determinant": 32768,
+      "full_rank": 17,
+      "modulus": null,
+      "nonzero_rank": 16,
+      "order": 17,
+      "unique_fixed_jump_product_verified": null
+    },
+    {
+      "all_linear_coefficients_nonzero": true,
+      "all_nontrivial_jump_product_is_parity": true,
+      "exact_full_determinant_checked": true,
+      "exact_nonzero_determinant_checked": true,
+      "expected_full_determinant": -262144,
+      "expected_nonzero_determinant": -131072,
+      "full_rank": 19,
+      "modulus": null,
+      "nonzero_rank": 18,
+      "order": 19,
+      "unique_fixed_jump_product_verified": null
+    },
+    {
+      "all_linear_coefficients_nonzero": true,
+      "all_nontrivial_jump_product_is_parity": true,
+      "exact_full_determinant_checked": true,
+      "exact_nonzero_determinant_checked": true,
+      "expected_full_determinant": -1073741824,
+      "expected_nonzero_determinant": -536870912,
+      "full_rank": 31,
+      "modulus": null,
+      "nonzero_rank": 30,
+      "order": 31,
+      "unique_fixed_jump_product_verified": null
+    }
+  ],
+  "next_frontier": "DYNAMIC-ORIENTED-CARRY-AGGREGATION-C34",
+  "profile_id": "UORC-056-ORIENTED-ADDITION-COCYCLE-C33",
+  "scalar_replay": [
+    {
+      "cocycle_checks": 27,
+      "diagonal_checks": 2,
+      "generator_negation_covariance_checks": 9,
+      "halving_checks": 3,
+      "opposite_pair_checks": 2,
+      "order": 3,
+      "pair_checks": 9,
+      "reconstruction_checks": 9
+    },
+    {
+      "cocycle_checks": 125,
+      "diagonal_checks": 4,
+      "generator_negation_covariance_checks": 25,
+      "halving_checks": 5,
+      "opposite_pair_checks": 4,
+      "order": 5,
+      "pair_checks": 25,
+      "reconstruction_checks": 25
+    },
+    {
+      "cocycle_checks": 343,
+      "diagonal_checks": 6,
+      "generator_negation_covariance_checks": 49,
+      "halving_checks": 7,
+      "opposite_pair_checks": 6,
+      "order": 7,
+      "pair_checks": 49,
+      "reconstruction_checks": 49
+    },
+    {
+      "cocycle_checks": 1331,
+      "diagonal_checks": 10,
+      "generator_negation_covariance_checks": 121,
+      "halving_checks": 11,
+      "opposite_pair_checks": 10,
+      "order": 11,
+      "pair_checks": 121,
+      "reconstruction_checks": 121
+    },
+    {
+      "cocycle_checks": 2197,
+      "diagonal_checks": 12,
+      "generator_negation_covariance_checks": 169,
+      "halving_checks": 13,
+      "opposite_pair_checks": 12,
+      "order": 13,
+      "pair_checks": 169,
+      "reconstruction_checks": 169
+    },
+    {
+      "cocycle_checks": 4913,
+      "diagonal_checks": 16,
+      "generator_negation_covariance_checks": 289,
+      "halving_checks": 17,
+      "opposite_pair_checks": 16,
+      "order": 17,
+      "pair_checks": 289,
+      "reconstruction_checks": 289
+    },
+    {
+      "cocycle_checks": 6859,
+      "diagonal_checks": 18,
+      "generator_negation_covariance_checks": 361,
+      "halving_checks": 19,
+      "opposite_pair_checks": 18,
+      "order": 19,
+      "pair_checks": 361,
+      "reconstruction_checks": 361
+    },
+    {
+      "cocycle_checks": 29791,
+      "diagonal_checks": 30,
+      "generator_negation_covariance_checks": 961,
+      "halving_checks": 31,
+      "opposite_pair_checks": 30,
+      "order": 31,
+      "pair_checks": 961,
+      "reconstruction_checks": 961
+    },
+    {
+      "cocycle_checks": 0,
+      "diagonal_checks": 66,
+      "generator_negation_covariance_checks": 4489,
+      "halving_checks": 67,
+      "opposite_pair_checks": 66,
+      "order": 67,
+      "pair_checks": 4489,
+      "reconstruction_checks": 4489
+    },
+    {
+      "cocycle_checks": 0,
+      "diagonal_checks": 78,
+      "generator_negation_covariance_checks": 6241,
+      "halving_checks": 79,
+      "opposite_pair_checks": 78,
+      "order": 79,
+      "pair_checks": 6241,
+      "reconstruction_checks": 6241
+    },
+    {
+      "cocycle_checks": 0,
+      "diagonal_checks": 126,
+      "generator_negation_covariance_checks": 16129,
+      "halving_checks": 127,
+      "opposite_pair_checks": 126,
+      "order": 127,
+      "pair_checks": 16129,
+      "reconstruction_checks": 16129
+    },
+    {
+      "cocycle_checks": 0,
+      "diagonal_checks": 138,
+      "generator_negation_covariance_checks": 19321,
+      "halving_checks": 139,
+      "opposite_pair_checks": 138,
+      "order": 139,
+      "pair_checks": 19321,
+      "reconstruction_checks": 19321
+    }
+  ],
+  "schema_version": "1.0",
+  "scientific_boundary": "C33 closes direct binary lifted-addition states, carry-free scalar gauges, generator-blind standard addition leaves, fixed separated linear carry dictionaries and fixed-jump carry monomials. It does not close a richer field-valued nonautonomous circuit that aggregates dynamic carry factors implicitly.",
+  "secp256k1": {
+    "base_field_nontrivial_multiplicative_gauge_character_exists": false,
+    "direct_fixed_G_carry_fibre_pole_degree_lower_bound": 115792089237316195423570985008687907852837564279074904382605163141518161494336,
+    "fixed_jump_product_factors_required": 115792089237316195423570985008687907852837564279074904382605163141518161494336,
+    "full_carry_matrix_determinant_absolute_value": "2^(n-1)",
+    "full_carry_matrix_determinant_bit_length": 115792089237316195423570985008687907852837564279074904382605163141518161494337,
+    "full_carry_matrix_rank": 115792089237316195423570985008687907852837564279074904382605163141518161494337,
+    "gcd_n_p_minus_one": 1,
+    "inverse_two_mod_n": 57896044618658097711785492504343953926418782139537452191302581570759080747169,
+    "n": 115792089237316195423570985008687907852837564279074904382605163141518161494337,
+    "n_is_odd": true,
+    "negative_half_multiplier": 57896044618658097711785492504343953926418782139537452191302581570759080747168,
+    "nonzero_carry_matrix_rank": 115792089237316195423570985008687907852837564279074904382605163141518161494336,
+    "p": 115792089237316195423570985008687907853269984665640564039457584007908834671663
+  },
+  "theorems": {
+    "base_field_gauge_uniqueness": "Any F_p^*-valued trivialization of the carry differs from sigma by a character H->F_p^*. For secp256k1 gcd(n,p-1)=1, so the character is trivial.",
+    "binary_carry_gauge_uniqueness": "A normalized +/-1 cochain with coboundary C is sigma itself, because two trivializations differ by a homomorphism from an odd cyclic group to +/-1.",
+    "carry_matrix_rank": "The n by n carry matrix has determinant (-1)^(n(n-1)/2)*2^(n-1), hence full rank in every field of characteristic different from two.",
+    "direct_carry_rational_degree": "A rational function F(P,G)=C_G(P,G) regular on H has F-1 zero at n-1 points and is nonzero, so its pole degree is at least n-1.",
+    "extension_field_dichotomy": "Over an extension, every nontrivial character on prime H has full order n. Removing carry by a multiplicative state therefore imports a faithful dual phase.",
+    "fixed_jump_product_minimality": "The product of carry fibres over jumps 1,...,n-1 equals parity, and every one of the n-1 thresholds is necessary.",
+    "generator_blind_local_addition_obstruction": "For P,Q,P+Q nonzero, changing G to -G negates C_G(P,Q), while ordinary addition coordinates and line data are unchanged."
+  }
+}

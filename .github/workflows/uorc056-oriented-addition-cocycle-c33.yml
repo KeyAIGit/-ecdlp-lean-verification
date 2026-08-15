@@ -1,0 +1,127 @@
+name: UORC056 oriented addition cocycle C33
+
+on:
+  push:
+    branches:
+      - research/uorc056-oriented-addition-cocycle-c33
+    paths:
+      - 'experiments/parity_lift_000/uorc056_oriented_addition_cocycle.py'
+      - 'experiments/parity_lift_000/test_uorc056_oriented_addition_cocycle.py'
+      - 'experiments/parity_lift_000/uorc056_oriented_addition_cocycle_result.json'
+      - 'Ecdlp/Proved/Uorc056OrientedAdditionCocycle.lean'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_ORIENTED_ADDITION_COCYCLE_C33.md'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_C_TRACK_LINEAGE_C33.json'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_DYNAMIC_CARRY_AGGREGATION_C34_PROMPT.md'
+      - '.github/workflows/uorc056-oriented-addition-cocycle-c33.yml'
+  pull_request:
+    branches:
+      - research/uorc056-public-anchor-propagation-c32
+    paths:
+      - 'experiments/parity_lift_000/uorc056_oriented_addition_cocycle.py'
+      - 'experiments/parity_lift_000/test_uorc056_oriented_addition_cocycle.py'
+      - 'experiments/parity_lift_000/uorc056_oriented_addition_cocycle_result.json'
+      - 'Ecdlp/Proved/Uorc056OrientedAdditionCocycle.lean'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_ORIENTED_ADDITION_COCYCLE_C33.md'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_C_TRACK_LINEAGE_C33.json'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_DYNAMIC_CARRY_AGGREGATION_C34_PROMPT.md'
+      - '.github/workflows/uorc056-oriented-addition-cocycle-c33.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Compile, test and replay C33
+        run: |
+          python -m py_compile \
+            experiments/parity_lift_000/uorc056_oriented_addition_cocycle.py \
+            experiments/parity_lift_000/test_uorc056_oriented_addition_cocycle.py
+          PYTHONPATH=experiments/parity_lift_000 python -m unittest -v \
+            experiments/parity_lift_000/test_uorc056_oriented_addition_cocycle.py
+          PYTHONPATH=experiments/parity_lift_000 python \
+            experiments/parity_lift_000/uorc056_oriented_addition_cocycle.py \
+            --check \
+            --out experiments/parity_lift_000/uorc056_oriented_addition_cocycle_result.json
+
+      - name: Check C33 machine-readable boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = json.loads(Path(
+              'experiments/parity_lift_000/uorc056_oriented_addition_cocycle_result.json'
+          ).read_text())
+          assert result['profile_id'] == 'UORC-056-ORIENTED-ADDITION-COCYCLE-C33'
+          aggregate = result['aggregate']
+          assert aggregate['marked_generators'] == 438
+          assert aggregate['anchor_checks'] == 438
+          assert aggregate['query_halving_checks'] == 46260
+          assert aggregate['frozen_oriented_addition_checks'] == 5371236
+          assert aggregate['frozen_scalar_carry_checks'] == 5417496
+          assert aggregate['scalar_cocycle_checks'] == 45586
+          assert aggregate['all_frozen_carry_matrices_full_rank']
+          assert aggregate['errors'] == 0
+          secp = result['secp256k1']
+          assert secp['gcd_n_p_minus_one'] == 1
+          assert secp['full_carry_matrix_rank'] == secp['n']
+          assert secp['nonzero_carry_matrix_rank'] == secp['n'] - 1
+          assert secp['fixed_jump_product_factors_required'] == secp['n'] - 1
+          assert secp['direct_fixed_G_carry_fibre_pole_degree_lower_bound'] == secp['n'] - 1
+          decision = result['decision']
+          assert decision['public_oriented_anchor_used']
+          assert decision['exact_lifted_addition_law_found']
+          assert decision['missing_factor_identified_as_carry_cocycle']
+          assert decision['doubling_carry_is_parity_complete']
+          assert not decision['binary_carry_free_gauge_found_beyond_parity']
+          assert not decision['base_field_multiplicative_carry_free_state_found']
+          assert not decision['dynamic_carry_aggregation_found']
+          assert not decision['nonlocal_propagation_law_found']
+          assert decision['all_point_public_Q_replay_passed']
+          assert not decision['parity_oracle_found']
+          assert not decision['sub_sqrt_ecdlp_found']
+          assert len(result['digest']) == 64
+          PY
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Kernel-check C33 algebra and secp arithmetic
+        run: |
+          lake exe cache get
+          lake build Ecdlp.Proved.Uorc056OrientedAdditionCocycle
+          lake env lean Ecdlp/Proved/Uorc056OrientedAdditionCocycle.lean
+
+      - name: Upload C33 certificate
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-oriented-addition-cocycle-c33
+          path: experiments/parity_lift_000/uorc056_oriented_addition_cocycle_result.json
+          retention-days: 90
