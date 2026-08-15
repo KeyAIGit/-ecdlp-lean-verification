@@ -1,0 +1,131 @@
+name: UORC056 autonomous state rigidity C29
+
+on:
+  push:
+    branches:
+      - research/uorc056-autonomous-state-rigidity-c29
+    paths:
+      - 'experiments/parity_lift_000/uorc056_autonomous_state_rigidity.py'
+      - 'experiments/parity_lift_000/test_uorc056_autonomous_state_rigidity.py'
+      - 'experiments/parity_lift_000/uorc056_autonomous_state_rigidity_result.json'
+      - 'Ecdlp/Proved/Uorc056AutonomousStateRigidity.lean'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_AUTONOMOUS_STATE_RIGIDITY_C29.md'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_C_TRACK_LINEAGE_C29.json'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_TARGET_DEPENDENT_ORIENTED_COMPILER_C30_PROMPT.md'
+      - '.github/workflows/uorc056-autonomous-state-rigidity-c29.yml'
+  pull_request:
+    branches:
+      - research/uorc056-nonlinear-public-q-state-c28
+    paths:
+      - 'experiments/parity_lift_000/uorc056_autonomous_state_rigidity.py'
+      - 'experiments/parity_lift_000/test_uorc056_autonomous_state_rigidity.py'
+      - 'experiments/parity_lift_000/uorc056_autonomous_state_rigidity_result.json'
+      - 'Ecdlp/Proved/Uorc056AutonomousStateRigidity.lean'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_AUTONOMOUS_STATE_RIGIDITY_C29.md'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_C_TRACK_LINEAGE_C29.json'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_TARGET_DEPENDENT_ORIENTED_COMPILER_C30_PROMPT.md'
+      - '.github/workflows/uorc056-autonomous-state-rigidity-c29.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Compile C29 Python
+        run: |
+          python -m py_compile \
+            experiments/parity_lift_000/uorc056_autonomous_state_rigidity.py \
+            experiments/parity_lift_000/test_uorc056_autonomous_state_rigidity.py
+
+      - name: Run C29 unit tests and frozen replay
+        run: |
+          PYTHONPATH=experiments/parity_lift_000 python -m unittest -v \
+            experiments/parity_lift_000/test_uorc056_autonomous_state_rigidity.py
+          PYTHONPATH=experiments/parity_lift_000 python \
+            experiments/parity_lift_000/uorc056_autonomous_state_rigidity.py \
+            --check \
+            --out experiments/parity_lift_000/uorc056_autonomous_state_rigidity_result.json
+
+      - name: Check C29 machine-readable scope
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = json.loads(Path(
+              'experiments/parity_lift_000/uorc056_autonomous_state_rigidity_result.json'
+          ).read_text())
+          assert result['profile_id'] == 'UORC-056-AUTONOMOUS-STATE-RIGIDITY-C29'
+          assert len(result['finite_state_controls']) == 7
+          assert all(
+              row['canonical_parity_minimal_cyclic_period'] == row['order']
+              for row in result['finite_state_controls']
+          )
+          assert all(
+              row['faithful_cycle_distinct_states'] == row['order']
+              for row in result['finite_state_controls']
+          )
+          assert all(
+              not row['two_state_autonomous_update_exists']
+              for row in result['finite_state_controls']
+          )
+          assert len(result['pgl2_frozen_diagnostics']) == 5
+          assert sum(
+              row['gcd_n_pgl2_order'] == 1
+              for row in result['pgl2_frozen_diagnostics']
+          ) == 4
+          assert result['secp256k1']['gcd_n_pgl2_order'] == 1
+          assert result['secp256k1']['one_coordinate_global_autonomous_rational_recurrence_excluded']
+          decision = result['decision']
+          assert decision['faithful_n_phase_required_for_autonomous_state']
+          assert decision['finite_orbit_recurrence_without_cost_is_vacuous']
+          assert decision['global_genus_zero_autonomous_state_excluded']
+          assert decision['global_genus_one_state_is_isogeny_recoding']
+          assert not decision['global_autonomous_algebraic_escape_found']
+          assert not decision['nonautonomous_oriented_composition_found']
+          assert not decision['parity_oracle_found']
+          assert not decision['sub_sqrt_ecdlp_found']
+          PY
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Kernel-check C29 semantic and arithmetic core
+        run: |
+          lake exe cache get
+          lake build Ecdlp.Proved.Uorc056AutonomousStateRigidity
+          lake env lean Ecdlp/Proved/Uorc056AutonomousStateRigidity.lean
+
+      - name: Upload C29 replay
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-autonomous-state-rigidity-c29
+          path: experiments/parity_lift_000/uorc056_autonomous_state_rigidity_result.json
+          retention-days: 90
