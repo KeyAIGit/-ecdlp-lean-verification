@@ -155,7 +155,7 @@ theorem additive_recoding_keeps_scalar
     (k : Nat)
     (P : G) :
     φ (k • P) = k • φ P := by
-  exact map_nsmul φ P k
+  exact map_nsmul φ k P
 
 /-- Arithmetic premise consumed after the global rational semiconjugacy
 argument identifies an order-`n` element of `PGL₂(F_p)`. -/
