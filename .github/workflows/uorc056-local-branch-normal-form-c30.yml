@@ -1,0 +1,120 @@
+name: UORC056 local branch normal form C30
+
+on:
+  push:
+    branches:
+      - research/uorc056-local-branch-normal-form-c30
+    paths:
+      - 'experiments/parity_lift_000/uorc056_local_branch_normal_form.py'
+      - 'experiments/parity_lift_000/test_uorc056_local_branch_normal_form.py'
+      - 'Ecdlp/Proved/Uorc056LocalBranchNormalForm.lean'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_LOCAL_BRANCH_NORMAL_FORM_C30.md'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_C_TRACK_LINEAGE_C30.json'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_NONLOCAL_ORIENTED_SEED_C31_PROMPT.md'
+      - '.github/workflows/uorc056-local-branch-normal-form-c30.yml'
+  pull_request:
+    branches:
+      - research/uorc056-autonomous-state-rigidity-c29
+    paths:
+      - 'experiments/parity_lift_000/uorc056_local_branch_normal_form.py'
+      - 'experiments/parity_lift_000/test_uorc056_local_branch_normal_form.py'
+      - 'Ecdlp/Proved/Uorc056LocalBranchNormalForm.lean'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_LOCAL_BRANCH_NORMAL_FORM_C30.md'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_C_TRACK_LINEAGE_C30.json'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_NONLOCAL_ORIENTED_SEED_C31_PROMPT.md'
+      - '.github/workflows/uorc056-local-branch-normal-form-c30.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Compile C30 Python
+        run: |
+          python -m py_compile \
+            experiments/parity_lift_000/uorc056_local_branch_normal_form.py \
+            experiments/parity_lift_000/test_uorc056_local_branch_normal_form.py
+
+      - name: Run C30 unit tests and frozen replay
+        run: |
+          PYTHONPATH=experiments/parity_lift_000 python -m unittest -v \
+            experiments/parity_lift_000/test_uorc056_local_branch_normal_form.py
+          PYTHONPATH=experiments/parity_lift_000 python \
+            experiments/parity_lift_000/uorc056_local_branch_normal_form.py \
+            --out /tmp/uorc056_local_branch_normal_form_result.json
+
+      - name: Check C30 machine-readable scope
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = json.loads(Path(
+              '/tmp/uorc056_local_branch_normal_form_result.json'
+          ).read_text())
+          assert result['profile_id'] == 'UORC-056-LOCAL-BRANCH-NORMAL-FORM-C30'
+          replay = result['exact_replay']
+          assert replay['curves'] == 5
+          assert replay['marked_generators'] == 438
+          assert replay['kernel_derivative_gauge_checks'] == 23130
+          assert replay['local_character_scalar_checks'] == 46260
+          assert replay['local_character_masks_tested_per_global_grammar'] == 16
+          assert replay['local_character_exact_survivors'] == 0
+          assert replay['errors'] == 0
+          decision = result['decision']
+          assert decision['quadratic_branch_normal_form_compiler_built']
+          assert not decision['branch_even_rational_circuit_creates_orientation']
+          assert decision['everywhere_branch_separating_local_certificate_is_unit_equivalent']
+          assert decision['kernel_derivative_is_unit_gauge']
+          assert decision['kernel_derivative_gauge_reduces_to_oriented_root']
+          assert not decision['local_kernel_derivative_character_candidate_found']
+          assert not decision['public_oriented_seed_found']
+          assert not decision['target_dependent_nonlocal_compiler_found']
+          assert not decision['parity_oracle_found']
+          assert not decision['sub_sqrt_ecdlp_found']
+          assert len(result['digest']) == 64
+          PY
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Kernel-check C30 rank-two algebra core
+        run: |
+          lake exe cache get
+          lake build Ecdlp.Proved.Uorc056LocalBranchNormalForm
+          lake env lean Ecdlp/Proved/Uorc056LocalBranchNormalForm.lean
+
+      - name: Upload C30 replay
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-local-branch-normal-form-c30
+          path: |
+            /tmp/uorc056_local_branch_normal_form_result.json
+          retention-days: 90
