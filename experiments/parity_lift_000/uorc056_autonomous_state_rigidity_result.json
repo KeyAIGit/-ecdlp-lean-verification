@@ -1,0 +1,190 @@
+{
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "decision": {
+    "compact_branch_odd_evaluator_found": false,
+    "complete_cost_gate_passed": false,
+    "exact_parity_extraction_found": false,
+    "faithful_n_phase_required_for_autonomous_state": true,
+    "finite_orbit_recurrence_without_cost_is_vacuous": true,
+    "global_autonomous_algebraic_escape_found": false,
+    "global_genus_one_state_is_isogeny_recoding": true,
+    "global_genus_zero_autonomous_state_excluded": true,
+    "high_degree_low_size_state_blocked": false,
+    "joint_A_B_recurrence_found": false,
+    "modular_composition_state_found": false,
+    "nonautonomous_oriented_composition_found": false,
+    "parity_oracle_found": false,
+    "public_branch_sensitive_seed_found": false,
+    "sub_sqrt_ecdlp_found": false,
+    "sub_sqrt_evaluator_found": false
+  },
+  "finite_autonomous_state_theorem": {
+    "consequence": "An autonomous exact state cannot be a genuine two-state or four-state summary. It carries a faithful n-phase orbit, even if encoded in one field element.",
+    "decoder_with_Q_warning": "If the decoder also receives Q, collision arguments on S alone are invalid. The complete state is then (Q,S(Q)); its Q-coordinate already carries the original marked subgroup point, so the builder/decoder composition is the original parity problem in another factorization.",
+    "four_state_consequence": "Neither (g_G,J_G) nor W_G=g_G+2J_G can be a closed autonomous state under Q->Q+G with a state-only decoder: they have only four values, while an exact autonomous orbit requires n distinct semantic states.",
+    "scope_warning": "Distinct semantic values are not by themselves a memory or circuit lower bound; one field element can hold n values.",
+    "statement": "For odd n, the cyclic word sigma(k)=(-1)^k on Z/nZ has minimal period n. Therefore any deterministic autonomous state orbit with a state-only exact decoder must have n distinct states on the marked cycle."
+  },
+  "finite_fit_warning": {
+    "consequence": "A recurrence verified only on a frozen n-point orbit is tautological unless its compiler, coefficients and uniform cost are independently compact.",
+    "statement": "Any prescribed successor relation on n distinct field states can be interpolated by a polynomial of degree below n."
+  },
+  "finite_state_controls": [
+    {
+      "canonical_parity_minimal_cyclic_period": 5,
+      "faithful_cycle_distinct_states": 5,
+      "finite_interpolation": {
+        "all_cycle_edges_verified": true,
+        "auxiliary_field_prime": 11,
+        "coefficient_slots": 5,
+        "finite_fit_is_linear_size": true,
+        "interpolated_degree": 4,
+        "nonzero_coefficients": 4,
+        "order": 5
+      },
+      "order": 5,
+      "state_equals_output_decoder_conflict": null,
+      "two_state_autonomous_update_exists": false,
+      "two_state_transition_targets": {"-1": [1], "1": [-1, 1]}
+    },
+    {
+      "canonical_parity_minimal_cyclic_period": 7,
+      "faithful_cycle_distinct_states": 7,
+      "finite_interpolation": {
+        "all_cycle_edges_verified": true,
+        "auxiliary_field_prime": 17,
+        "coefficient_slots": 7,
+        "finite_fit_is_linear_size": true,
+        "interpolated_degree": 6,
+        "nonzero_coefficients": 6,
+        "order": 7
+      },
+      "order": 7,
+      "state_equals_output_decoder_conflict": null,
+      "two_state_autonomous_update_exists": false,
+      "two_state_transition_targets": {"-1": [1], "1": [-1, 1]}
+    },
+    {
+      "canonical_parity_minimal_cyclic_period": 11,
+      "faithful_cycle_distinct_states": 11,
+      "finite_interpolation": {
+        "all_cycle_edges_verified": true,
+        "auxiliary_field_prime": 23,
+        "coefficient_slots": 11,
+        "finite_fit_is_linear_size": true,
+        "interpolated_degree": 10,
+        "nonzero_coefficients": 10,
+        "order": 11
+      },
+      "order": 11,
+      "state_equals_output_decoder_conflict": null,
+      "two_state_autonomous_update_exists": false,
+      "two_state_transition_targets": {"-1": [1], "1": [-1, 1]}
+    },
+    {
+      "canonical_parity_minimal_cyclic_period": 13,
+      "faithful_cycle_distinct_states": 13,
+      "finite_interpolation": {
+        "all_cycle_edges_verified": true,
+        "auxiliary_field_prime": 29,
+        "coefficient_slots": 13,
+        "finite_fit_is_linear_size": true,
+        "interpolated_degree": 12,
+        "nonzero_coefficients": 13,
+        "order": 13
+      },
+      "order": 13,
+      "state_equals_output_decoder_conflict": null,
+      "two_state_autonomous_update_exists": false,
+      "two_state_transition_targets": {"-1": [1], "1": [-1, 1]}
+    },
+    {
+      "canonical_parity_minimal_cyclic_period": 17,
+      "faithful_cycle_distinct_states": 17,
+      "finite_interpolation": {
+        "all_cycle_edges_verified": true,
+        "auxiliary_field_prime": 37,
+        "coefficient_slots": 17,
+        "finite_fit_is_linear_size": true,
+        "interpolated_degree": 16,
+        "nonzero_coefficients": 17,
+        "order": 17
+      },
+      "order": 17,
+      "state_equals_output_decoder_conflict": null,
+      "two_state_autonomous_update_exists": false,
+      "two_state_transition_targets": {"-1": [1], "1": [-1, 1]}
+    },
+    {
+      "canonical_parity_minimal_cyclic_period": 19,
+      "faithful_cycle_distinct_states": 19,
+      "finite_interpolation": {
+        "all_cycle_edges_verified": true,
+        "auxiliary_field_prime": 41,
+        "coefficient_slots": 19,
+        "finite_fit_is_linear_size": true,
+        "interpolated_degree": 18,
+        "nonzero_coefficients": 19,
+        "order": 19
+      },
+      "order": 19,
+      "state_equals_output_decoder_conflict": null,
+      "two_state_autonomous_update_exists": false,
+      "two_state_transition_targets": {"-1": [1], "1": [-1, 1]}
+    },
+    {
+      "canonical_parity_minimal_cyclic_period": 31,
+      "faithful_cycle_distinct_states": 31,
+      "finite_interpolation": {
+        "all_cycle_edges_verified": true,
+        "auxiliary_field_prime": 67,
+        "coefficient_slots": 31,
+        "finite_fit_is_linear_size": true,
+        "interpolated_degree": 30,
+        "nonzero_coefficients": 31,
+        "order": 31
+      },
+      "order": 31,
+      "state_equals_output_decoder_conflict": null,
+      "two_state_autonomous_update_exists": false,
+      "two_state_transition_targets": {"-1": [1], "1": [-1, 1]}
+    }
+  ],
+  "global_semiconjugacy_theorem": {
+    "degree_growth_consequence": "A fixed global autonomous update cannot use repeated degree growth to integrate translation. On the normalized image it is a finite-order automorphism.",
+    "genus_one": "After using S(O) as origin, S is an isogeny phi:E->X and the update is translation by phi(G). Thus phi(Q)=[k]phi(G): the same hidden canonical scalar is merely recoded on an isogenous curve.",
+    "genus_one_scope": "The isogeny classification is a reduction, not a theorem that isogenous coordinates can never help. Any claimed advantage must be supplied by a separate public evaluator on the isogenous marked subgroup; autonomous compression itself has not removed the hidden scalar.",
+    "genus_zero": "X is P1 because S(O) is rational. The induced update has order n in PGL2(F_p). secp256k1 excludes this because gcd(n,p(p^2-1))=1.",
+    "normalized_image": "The normalization X of S(E) is a projective curve of genus at most one.",
+    "premise": "A nonconstant algebraic state S:E->V satisfies the global identity S(P+G)=R(S(P)) for one fixed algebraic update R.",
+    "scope_warning": "The theorem does not cover a recurrence fitted only on the finite subgroup, a nonautonomous target-dependent composition chain, branching, or a decoder that uses additional public coordinates not included in the complete state image."
+  },
+  "next_frontier": "The surviving mechanism must be nonautonomous or target-dependent: a short composition/compiler that evaluates the oriented branch at one public Q without realizing every translation step as one fixed state update and without fitting an n-coefficient orbit table.",
+  "pgl2_frozen_diagnostics": [
+    {"characteristic_order_exception": false, "gcd_n_pgl2_order": 1, "n": 31, "order_n_element_not_excluded_by_group_order": false, "p": 43, "pgl2_order": 79464},
+    {"characteristic_order_exception": false, "gcd_n_pgl2_order": 1, "n": 79, "order_n_element_not_excluded_by_group_order": false, "p": 67, "pgl2_order": 300696},
+    {"characteristic_order_exception": false, "gcd_n_pgl2_order": 1, "n": 67, "order_n_element_not_excluded_by_group_order": false, "p": 79, "pgl2_order": 492960},
+    {"characteristic_order_exception": true, "gcd_n_pgl2_order": 127, "n": 127, "order_n_element_not_excluded_by_group_order": true, "p": 127, "pgl2_order": 2048256},
+    {"characteristic_order_exception": false, "gcd_n_pgl2_order": 1, "n": 139, "order_n_element_not_excluded_by_group_order": false, "p": 163, "pgl2_order": 4330584}
+  ],
+  "profile_id": "UORC-056-AUTONOMOUS-STATE-RIGIDITY-C29",
+  "schema_version": "1.0",
+  "scientific_boundary": "C29 classifies autonomous exact states. It is not an unrestricted arithmetic-circuit, modular-composition, parity, or ECDLP lower bound.",
+  "secp256k1": {
+    "additional_states_beyond_public_G_Q_not_interpreted": "The orbit count is semantic, not a storage lower bound; one field element can take n values if a valid order-n action exists.",
+    "gcd_n_pgl2_order": 1,
+    "n": 115792089237316195423570985008687907852837564279074904382605163141518161494337,
+    "n_divides_pgl2_order": false,
+    "one_coordinate_global_autonomous_rational_recurrence_excluded": true,
+    "p": 115792089237316195423570985008687907853269984665640564039457584007908834671663,
+    "pgl2_order": 1552518092300708935148979488462502555256886017116696611139052038025878194357368142547116732051099868977365799328146258387304206040018767644762034840549025747863934693362281410577779222126474508109581854191834156725288549466296159584,
+    "state_orbit_required_distinct_states": 115792089237316195423570985008687907852837564279074904382605163141518161494337,
+    "state_orbit_required_distinct_states_bit_length": 256
+  },
+  "shift_witnesses": {
+    "5": {"1": [0, 1], "2": [3, 0], "3": [0, 3], "4": [1, 0]},
+    "7": {"1": [0, 1], "2": [5, 0], "3": [0, 3], "4": [3, 0], "5": [0, 5], "6": [1, 0]},
+    "11": {"1": [0, 1], "2": [9, 0], "3": [0, 3], "4": [7, 0], "5": [0, 5], "6": [5, 0], "7": [0, 7], "8": [3, 0], "9": [0, 9], "10": [1, 0]},
+    "13": {"1": [0, 1], "2": [11, 0], "3": [0, 3], "4": [9, 0], "5": [0, 5], "6": [7, 0], "7": [0, 7], "8": [5, 0], "9": [0, 9], "10": [3, 0], "11": [0, 11], "12": [1, 0]}
+  }
+}
