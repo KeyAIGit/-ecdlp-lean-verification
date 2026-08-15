@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "lineage_id": "UORC-056-C-TRACK-C29",
+  "status": "stacked_research_package",
+  "package": {
+    "sequence": "C29",
+    "task_id": "AUTONOMOUS-STATE-RIGIDITY-078",
+    "branch": "research/uorc056-autonomous-state-rigidity-c29",
+    "parent_branch": "research/uorc056-nonlinear-public-q-state-c28",
+    "parent_head_at_start": "955cf67fe8591caffd8f84fe84e79c552c6215d0",
+    "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k"
+  },
+  "predecessors": [
+    {
+      "sequence": "C27",
+      "task_id": "PUBLIC-Q-LACUNARY-RESULTANT-CONTROL-076",
+      "branch": "research/uorc056-public-q-resultant-c27",
+      "disposition": "linear_trace_and_coordinate_sparse_operator_models_scoped_closed"
+    },
+    {
+      "sequence": "C28",
+      "task_id": "NONLINEAR-PUBLIC-Q-ALGEBRAIC-STATE-077",
+      "branch": "research/uorc056-nonlinear-public-q-state-c28",
+      "disposition": "low_pole_degree_rational_states_scoped_closed"
+    }
+  ],
+  "c29_results": [
+    "canonical parity on an odd cycle has minimal cyclic period n",
+    "an exact autonomous state with a state-only decoder requires n distinct semantic states",
+    "the four-state pair (g_G,J_G) and W_G cannot be closed autonomous translation states",
+    "finite-orbit recurrence fitting is vacuous without a charged uniform compiler",
+    "a global algebraic autonomous state has normalized image of genus zero or one",
+    "the genus-zero case is excluded for secp256k1 by gcd(n,p(p^2-1))=1",
+    "the genus-one case is an isogeny recoding that preserves the same scalar k"
+  ],
+  "claim_boundary": [
+    "semantic state cardinality is not a memory lower bound",
+    "finite interpolation is a warning, not a universal coefficient lower bound",
+    "the genus-one classification is a reduction, not a theorem against every isogeny-based algorithm",
+    "nonautonomous and target-dependent arithmetic circuits remain open"
+  ],
+  "successor": {
+    "sequence": "C30",
+    "task_id": "TARGET-DEPENDENT-ORIENTED-COMPILER-079",
+    "recommended_branch": "research/uorc056-target-dependent-oriented-compiler-c30"
+  },
+  "parallel_tracks": [
+    {
+      "branch": "research/uorc056-shared-parity-cauchy-v19",
+      "relation": "parallel_V_track_not_an_ancestor_of_C29"
+    },
+    {
+      "branch": "research/uorc056-compact-state-factorization-v20",
+      "relation": "unused_publication_branch_created_from_V19_not_canonical_C_track"
+    }
+  ]
+}
