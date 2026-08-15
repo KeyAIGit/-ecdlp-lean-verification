@@ -1,0 +1,164 @@
+{
+  "ab_state_boundary": {
+    "compiled_pole_upper_bound": "4*a+3*b+9",
+    "decoder": "(2A^2+2AxB-x^2B^2)/(2yA), with B(x)=2 and B(y)=3",
+    "equal_coordinate_bound": "7*delta+9",
+    "minimum_budget": 57896044618658097711785492504343953926418782139537452191302581570759080747169,
+    "minimum_common_polynomial_degree_bits": 250,
+    "minimum_coordinate_pole_budget_bits": 253,
+    "polynomial_in_T_rule": "T=x^3 has pole degree 6; if deg A,deg B<=d, decoder budget<=42d+9",
+    "polynomial_minimum_budget": 57896044618658097711785492504343953926418782139537452191302581570759080747183,
+    "polynomial_predecessor_budget": 57896044618658097711785492504343953926418782139537452191302581570759080747141,
+    "predecessor_budget": 57896044618658097711785492504343953926418782139537452191302581570759080747162,
+    "secp256k1_minimum_common_polynomial_degree": 1378477252825192802661559345341522712533780527131844099792918608827597160647,
+    "secp256k1_minimum_coordinate_pole_budget": 8270863516951156815969356072049136275202683162791064598757511652965582963880
+  },
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "closed_classes": [
+    "ordinary rational parity functions with pole degree below (n-1)/2",
+    "bounded-pole rational states whose declared decoder compiles below the half-order budget",
+    "A/B CM state with both coordinate pole budgets below the exact C28 threshold",
+    "polynomial-in-T A/B states below the exact common-degree threshold"
+  ],
+  "decision": {
+    "all_point_public_Q_replay_passed": false,
+    "bounded_dimensional_nonlinear_state_found": false,
+    "compact_branch_odd_evaluator_found": false,
+    "complete_cost_gate_passed": false,
+    "exact_Hilbert90_branch_bridge_found": false,
+    "exact_parity_extraction_found": false,
+    "high_degree_low_size_state_blocked": false,
+    "joint_A_B_recurrence_found": false,
+    "low_degree_algebraic_state_blocked": true,
+    "modular_composition_state_found": false,
+    "parity_oracle_found": false,
+    "pole_budget_tool_built": true,
+    "public_branch_sensitive_seed_found": false,
+    "sub_sqrt_ecdlp_found": false,
+    "sub_sqrt_evaluator_found": false,
+    "translation_defect_bound_proved": true
+  },
+  "digest": "593cabc70da562d0f4ecdfce7483272fc7c693a8d6c71643217e3abd605361de",
+  "finite_controls": {
+    "all_square_residual_zero_counts_passed": true,
+    "all_translation_defect_counts_passed": true,
+    "cases": [
+      {
+        "field_prime": 11,
+        "half": 2,
+        "interpolating_polynomial_degree": 3,
+        "order": 5,
+        "parity_function_pole_degree": 3,
+        "square_residual_marked_roots": 4,
+        "square_residual_pole_degree": 6,
+        "translation_defect_marked_roots": 3,
+        "translation_defect_pole_degree": 3
+      },
+      {
+        "field_prime": 17,
+        "half": 3,
+        "interpolating_polynomial_degree": 5,
+        "order": 7,
+        "parity_function_pole_degree": 5,
+        "square_residual_marked_roots": 6,
+        "square_residual_pole_degree": 10,
+        "translation_defect_marked_roots": 5,
+        "translation_defect_pole_degree": 5
+      },
+      {
+        "field_prime": 23,
+        "half": 5,
+        "interpolating_polynomial_degree": 9,
+        "order": 11,
+        "parity_function_pole_degree": 9,
+        "square_residual_marked_roots": 10,
+        "square_residual_pole_degree": 18,
+        "translation_defect_marked_roots": 9,
+        "translation_defect_pole_degree": 9
+      },
+      {
+        "field_prime": 29,
+        "half": 6,
+        "interpolating_polynomial_degree": 11,
+        "order": 13,
+        "parity_function_pole_degree": 11,
+        "square_residual_marked_roots": 12,
+        "square_residual_pole_degree": 22,
+        "translation_defect_marked_roots": 11,
+        "translation_defect_pole_degree": 11
+      },
+      {
+        "field_prime": 67,
+        "half": 15,
+        "interpolating_polynomial_degree": 29,
+        "order": 31,
+        "parity_function_pole_degree": 29,
+        "square_residual_marked_roots": 30,
+        "square_residual_pole_degree": 58,
+        "translation_defect_marked_roots": 29,
+        "translation_defect_pole_degree": 29
+      }
+    ]
+  },
+  "not_closed": [
+    "high-degree low-size arithmetic circuits",
+    "implicit modular composition",
+    "nonrational algebraic correspondences without a declared pole budget",
+    "theta, p-adic, elliptic-unit, or Hilbert-90 branch-sensitive states",
+    "unrestricted arithmetic circuits"
+  ],
+  "pole_budget_compiler": {
+    "ab_decoder_compilation": {
+      "a_budget": 8270863516951156815969356072049136275202683162791064598757511652965582963880,
+      "b_budget": 8270863516951156815969356072049136275202683162791064598757511652965582963880,
+      "closed_form": "4*a+3*b+9",
+      "decoder_budget": 57896044618658097711785492504343953926418782139537452191302581570759080747169,
+      "denominator_budget": 8270863516951156815969356072049136275202683162791064598757511652965582963883,
+      "numerator_budget": 49625181101706940895816136432294817651216098976746387592545069917793497783286
+    },
+    "rational_function_controls": {
+      "all_checks_passed": true,
+      "deterministic_rational_functions_per_field": 4,
+      "exact_budget_checks": 204,
+      "fields": 3
+    },
+    "rules": {
+      "addition": "B(f+g)<=B(f)+B(g)",
+      "constant": 0,
+      "inversion": "B(1/f)=B(f) for nonzero f",
+      "multiplication": "B(fg)<=B(f)+B(g)",
+      "negation": "B(-f)=B(f)",
+      "power": "B(f^m)=m*B(f)"
+    }
+  },
+  "pole_zero_theorem": {
+    "conclusion": "deg_poles(f)>=(n-1)/2",
+    "hypotheses": "f is a nonconstant rational function on a smooth projective curve, regular on the n-1 marked nonzero subgroup points, char != 2, and f([k]G)=(-1)^k",
+    "pole_transfer": "deg_poles(h)=2*deg_poles(f)",
+    "residual": "h=f^2-1 is nonzero and has at least n-1 marked zeros",
+    "secp256k1_lower_bound": 57896044618658097711785492504343953926418782139537452191302581570759080747168,
+    "secp256k1_lower_bound_bits": 255
+  },
+  "profile_id": "UORC-056-NONLINEAR-POLE-BUDGET-C28",
+  "schema_version": "1.0",
+  "straight_line_program_boundary": {
+    "general_bound": "with total initial pole budget B0 and s binary arithmetic gates, the degree-only compiler gives output budget<=2^s*B0",
+    "interpretation": "degree/pole arguments force only logarithmically many gates; they do not exclude a high-degree low-size nonlinear recurrence",
+    "minimum_gate_counts_for_secp_half": {
+      "1": 255,
+      "10": 252,
+      "100": 249,
+      "256": 247,
+      "5": 253,
+      "7": 253
+    }
+  },
+  "successor": "HIGH-DEGREE-LOW-SIZE-BRANCH-STATE-078: search or bound a uniform nonlocal nonlinear recurrence whose pole degree grows exponentially while its branch-sensitive public seed and full circuit remain compact",
+  "translation_defect_theorem": {
+    "conclusion": "deg_poles(f)>=(n-1)/2",
+    "defect": "Delta_f(P)=f(P+G)+f(P)",
+    "marked_zeros": "at least n-2 consecutive non-wrap subgroup edges",
+    "nonzero_reason": "if Delta_f were identically zero, n odd iterations would give f=-f, hence f=0 in characteristic not 2",
+    "pole_transfer": "deg_poles(Delta_f)<=2*deg_poles(f)"
+  }
+}
