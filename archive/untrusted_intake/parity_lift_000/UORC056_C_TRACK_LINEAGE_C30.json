@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "track": "UNIFORM-ORIENTED-ROOT-CIRCUIT-056 / C-track",
+  "package": "C30",
+  "canonical_id": "LOCAL-QUADRATIC-BRANCH-NORMAL-FORM-080",
+  "branch": "research/uorc056-local-branch-normal-form-c30",
+  "parent_branch": "research/uorc056-autonomous-state-rigidity-c29",
+  "parent_package": "C29 autonomous algebraic-state rigidity",
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "scope": "Everywhere-regular one-point rational certificates in one quadratic branch, public unit gauges, and the frozen four-atom kernel-derivative character grammar.",
+  "result": "Every local rational certificate reduces to E+O*Y. Nonunit O collides on a component; unit O recovers Y. K_H' is a unit gauge, not a new compression. No local derivative-character product survives the frozen all-point replay.",
+  "claim_boundary": "No unrestricted circuit lower bound, nonlocal modular-composition lower bound, parity evaluator, or sub-square-root ECDLP algorithm is claimed.",
+  "successor": {
+    "package": "C31",
+    "canonical_id": "NONLOCAL-ORIENTED-SEED-GENERATION-081",
+    "prompt": "archive/untrusted_intake/parity_lift_000/UORC056_NONLOCAL_ORIENTED_SEED_C31_PROMPT.md"
+  },
+  "parallel_stack_note": "V15-V19 is a separate stacked representation line. C30 continues only C29 and must not reuse V-version numbers."
+}
