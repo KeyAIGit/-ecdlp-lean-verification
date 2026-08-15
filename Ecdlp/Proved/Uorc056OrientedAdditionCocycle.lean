@@ -123,7 +123,7 @@ theorem odd_order_involution_trivial
 /-- A public additive recoding preserves the same scalar multiplier. -/
 theorem additive_recoding_keeps_scalar
     {G H : Type*} [AddMonoid G] [AddMonoid H]
-    (phi : G ->+ H)
+    (phi : G →+ H)
     (k : Nat)
     (P : G) :
     phi (k • P) = k • phi P := by
