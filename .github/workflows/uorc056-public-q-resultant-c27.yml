@@ -1,0 +1,147 @@
+name: UORC056 public-Q operator sketch C27
+
+on:
+  push:
+    branches:
+      - research/uorc056-public-q-resultant-c27
+    paths:
+      - 'experiments/parity_lift_000/uorc056_public_q_operator_sketch.py'
+      - 'experiments/parity_lift_000/test_uorc056_public_q_operator_sketch.py'
+      - 'experiments/parity_lift_000/uorc056_public_q_operator_sketch_result.json'
+      - 'Ecdlp/Proved/Uorc056PublicQOperatorSketch.lean'
+      - '.github/workflows/uorc056-public-q-resultant-c27.yml'
+  pull_request:
+    branches:
+      - research/uorc056-asymmetric-resultant-c26
+    paths:
+      - 'experiments/parity_lift_000/uorc056_public_q_operator_sketch.py'
+      - 'experiments/parity_lift_000/test_uorc056_public_q_operator_sketch.py'
+      - 'experiments/parity_lift_000/uorc056_public_q_operator_sketch_result.json'
+      - 'Ecdlp/Proved/Uorc056PublicQOperatorSketch.lean'
+      - '.github/workflows/uorc056-public-q-resultant-c27.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Compile C27 package
+        run: |
+          python3 -m py_compile \
+            experiments/parity_lift_000/uorc056_public_q_operator_sketch.py \
+            experiments/parity_lift_000/test_uorc056_public_q_operator_sketch.py
+
+      - name: Run C27 unit tests
+        run: |
+          PYTHONPATH=experiments/parity_lift_000 \
+            python3 -m unittest -v \
+            experiments/parity_lift_000/test_uorc056_public_q_operator_sketch.py
+
+      - name: Check frozen C27 replay
+        run: |
+          python3 experiments/parity_lift_000/uorc056_public_q_operator_sketch.py \
+            --check \
+            --out experiments/parity_lift_000/uorc056_public_q_operator_sketch_result.json
+
+      - name: Check exact C27 result boundaries
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path(
+              'experiments/parity_lift_000/'
+              'uorc056_public_q_operator_sketch_result.json'
+          )
+          result = json.loads(path.read_text(encoding='utf-8'))
+          assert result['digest'] == \
+              '909142870a65d643282f323b589a290cbf4e150f8bb7c06f6a07e5dbe6857315'
+
+          linear = result['linear_state_theorem']
+          assert linear['lucas_prime_certificates']['certificate_nodes'] == 45
+          assert linear['lucas_prime_certificates']['all_required_factor_primes_certified']
+          assert linear['secp256k1_minimum_nontrivial_dimension'] == \
+              19298681539552699237261830834781317975472927379845817397100860523586360249056
+          assert linear['secp256k1_minimum_nontrivial_dimension_bits'] == 254
+          assert not linear['secp256k1_below_sqrt_gate']
+          assert len(linear['toy_rows']) == 5
+          assert sum(
+              row['semisimple_linear_theorem_applies']
+              for row in linear['toy_rows']
+          ) == 4
+
+          trace = result['sparse_trace_sketch_theorem']
+          assert trace['secp256k1_distinct_atom_lower_bound'] == \
+              57896044618658097711785492504343953926418782139537452191302581570759080747168
+          assert trace['secp256k1_lower_bound_bits'] == 255
+          assert trace['bound_is_tight_in_expanded_atom_model']
+          assert sum(
+              row['subsets_below_half_checked']
+              for row in trace['small_exhaustive_checks']
+          ) == 1999
+          assert sum(
+              row['direct_trace_checks']
+              for row in trace['frozen_replay']
+          ) == 876
+          assert all(row['tight_trace_decoder_passed'] for row in trace['frozen_replay'])
+          assert all(row['tight_krylov_decoder_passed'] for row in trace['frozen_replay'])
+
+          krylov = result['coordinate_sparse_krylov_theorem']
+          assert krylov['secp256k1_cross_support_lower_bound'] == \
+              trace['secp256k1_distinct_atom_lower_bound']
+          assert krylov['bound_is_tight_in_coordinate_sparse_model']
+
+          moment = result['newton_moment_corollary']
+          assert moment['secp256k1_minimum_full_moment_depth'] == \
+              70296448064902889502766530
+          assert moment['secp256k1_minimum_depth_bits'] == 86
+          assert moment['previous_depth_capacity'] < \
+              trace['secp256k1_distinct_atom_lower_bound'] <= \
+              moment['minimum_depth_capacity']
+
+          decision = result['decision']
+          assert not any(decision.values())
+          PY
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Kernel-check C27 arithmetic and information transfer
+        run: |
+          lake exe cache get
+          lake build Ecdlp.Proved.Uorc056PublicQOperatorSketch
+          lake env lean Ecdlp/Proved/Uorc056PublicQOperatorSketch.lean
+
+      - name: Upload C27 exact replay
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-public-q-operator-sketch-c27
+          path: experiments/parity_lift_000/uorc056_public_q_operator_sketch_result.json
+          retention-days: 90
