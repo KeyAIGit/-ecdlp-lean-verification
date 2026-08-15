@@ -1,0 +1,116 @@
+name: UORC056 secp source defect C31A
+
+on:
+  push:
+    branches:
+      - research/uorc056-secp-source-defect-c31a
+    paths:
+      - 'experiments/parity_lift_000/uorc056_secp_source_defect.py'
+      - 'experiments/parity_lift_000/test_uorc056_secp_source_defect.py'
+      - 'Ecdlp/Proved/Uorc056SecpSourceDefect.lean'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_SECP_SOURCE_DEFECT_C31A.md'
+      - '.github/workflows/uorc056-secp-source-defect-c31a.yml'
+  pull_request:
+    branches:
+      - research/uorc056-oriented-source-rank-c31
+    paths:
+      - 'experiments/parity_lift_000/uorc056_secp_source_defect.py'
+      - 'experiments/parity_lift_000/test_uorc056_secp_source_defect.py'
+      - 'Ecdlp/Proved/Uorc056SecpSourceDefect.lean'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_SECP_SOURCE_DEFECT_C31A.md'
+      - '.github/workflows/uorc056-secp-source-defect-c31a.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install exact arithmetic dependency
+        run: python -m pip install --disable-pip-version-check sympy
+
+      - name: Compile and test C31A
+        run: |
+          python -m py_compile \
+            experiments/parity_lift_000/uorc056_secp_source_defect.py \
+            experiments/parity_lift_000/test_uorc056_secp_source_defect.py
+          PYTHONPATH=experiments/parity_lift_000 python -m unittest -v \
+            experiments/parity_lift_000/test_uorc056_secp_source_defect.py
+          PYTHONPATH=experiments/parity_lift_000 python \
+            experiments/parity_lift_000/uorc056_secp_source_defect.py \
+            --out /tmp/uorc056_secp_source_defect_result.json
+
+      - name: Check C31A machine-readable boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = json.loads(Path(
+              '/tmp/uorc056_secp_source_defect_result.json'
+          ).read_text())
+          assert result['profile_id'] == 'UORC-056-SECP-SOURCE-DEFECT-C31A'
+          secp = result['secp256k1']
+          assert secp['orders_equal_half_dimension']
+          assert secp['evaluation_map_kernel_size'] == 2
+          assert secp['characters_with_chi_2_equal_inverse_2'] == 2
+          assert secp['those_characters_are_odd']
+          assert secp['forced_zero_eigenvalues'] == 2
+          assert secp['half_source_nullity_lower_bound'] == 2
+          assert not secp['exact_nullity_proved']
+          screen = result['small_exact_replay']
+          assert screen['pairs'] > 0
+          assert screen['all_nullities_at_least_two']
+          decision = result['decision']
+          assert not decision['secp_base_field_full_rank']
+          assert decision['secp_base_field_rank_defect_proved']
+          assert decision['secp_base_field_nullity_lower_bound'] == 2
+          assert not decision['secp_base_field_exact_rank_proved']
+          assert decision['fixed_dictionary_dimension_reduction_found'] == 2
+          assert not decision['subroot_fixed_dictionary_found']
+          assert not decision['parity_oracle_found']
+          assert not decision['sub_sqrt_ecdlp_found']
+          assert len(result['digest']) == 64
+          PY
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Kernel-check C31A algebra and secp arithmetic
+        run: |
+          lake exe cache get
+          lake build Ecdlp.Proved.Uorc056SecpSourceDefect
+          lake env lean Ecdlp/Proved/Uorc056SecpSourceDefect.lean
+
+      - name: Upload C31A certificate
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-secp-source-defect-c31a
+          path: /tmp/uorc056_secp_source_defect_result.json
+          retention-days: 90
