@@ -10,7 +10,7 @@ fixed secp256k1 integer certificates.
 The executable companion proves two exact operator identities and replays their
 finite consequences:
 
-* a fixed sparse trace atom `Tr(T_G^a T_Q^b)` differs from its baseline at at
+* a fixed sparse trace atom `Tr(T_G^a T_Q^b)` differs from its baseline at
   most one nonzero scalar;
 * a coordinate-sparse bilinear probe can differ from zero only on its charged
   support-difference set.
