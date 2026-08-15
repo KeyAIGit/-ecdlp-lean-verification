@@ -45,7 +45,15 @@
       "order": 5,
       "state_equals_output_decoder_conflict": null,
       "two_state_autonomous_update_exists": false,
-      "two_state_transition_targets": {"-1": [1], "1": [-1, 1]}
+      "two_state_transition_targets": {
+        "-1": [
+          1
+        ],
+        "1": [
+          -1,
+          1
+        ]
+      }
     },
     {
       "canonical_parity_minimal_cyclic_period": 7,
@@ -62,7 +70,15 @@
       "order": 7,
       "state_equals_output_decoder_conflict": null,
       "two_state_autonomous_update_exists": false,
-      "two_state_transition_targets": {"-1": [1], "1": [-1, 1]}
+      "two_state_transition_targets": {
+        "-1": [
+          1
+        ],
+        "1": [
+          -1,
+          1
+        ]
+      }
     },
     {
       "canonical_parity_minimal_cyclic_period": 11,
@@ -79,7 +95,15 @@
       "order": 11,
       "state_equals_output_decoder_conflict": null,
       "two_state_autonomous_update_exists": false,
-      "two_state_transition_targets": {"-1": [1], "1": [-1, 1]}
+      "two_state_transition_targets": {
+        "-1": [
+          1
+        ],
+        "1": [
+          -1,
+          1
+        ]
+      }
     },
     {
       "canonical_parity_minimal_cyclic_period": 13,
@@ -96,7 +120,15 @@
       "order": 13,
       "state_equals_output_decoder_conflict": null,
       "two_state_autonomous_update_exists": false,
-      "two_state_transition_targets": {"-1": [1], "1": [-1, 1]}
+      "two_state_transition_targets": {
+        "-1": [
+          1
+        ],
+        "1": [
+          -1,
+          1
+        ]
+      }
     },
     {
       "canonical_parity_minimal_cyclic_period": 17,
@@ -113,7 +145,15 @@
       "order": 17,
       "state_equals_output_decoder_conflict": null,
       "two_state_autonomous_update_exists": false,
-      "two_state_transition_targets": {"-1": [1], "1": [-1, 1]}
+      "two_state_transition_targets": {
+        "-1": [
+          1
+        ],
+        "1": [
+          -1,
+          1
+        ]
+      }
     },
     {
       "canonical_parity_minimal_cyclic_period": 19,
@@ -130,7 +170,15 @@
       "order": 19,
       "state_equals_output_decoder_conflict": null,
       "two_state_autonomous_update_exists": false,
-      "two_state_transition_targets": {"-1": [1], "1": [-1, 1]}
+      "two_state_transition_targets": {
+        "-1": [
+          1
+        ],
+        "1": [
+          -1,
+          1
+        ]
+      }
     },
     {
       "canonical_parity_minimal_cyclic_period": 31,
@@ -147,7 +195,15 @@
       "order": 31,
       "state_equals_output_decoder_conflict": null,
       "two_state_autonomous_update_exists": false,
-      "two_state_transition_targets": {"-1": [1], "1": [-1, 1]}
+      "two_state_transition_targets": {
+        "-1": [
+          1
+        ],
+        "1": [
+          -1,
+          1
+        ]
+      }
     }
   ],
   "global_semiconjugacy_theorem": {
@@ -161,11 +217,46 @@
   },
   "next_frontier": "The surviving mechanism must be nonautonomous or target-dependent: a short composition/compiler that evaluates the oriented branch at one public Q without realizing every translation step as one fixed state update and without fitting an n-coefficient orbit table.",
   "pgl2_frozen_diagnostics": [
-    {"characteristic_order_exception": false, "gcd_n_pgl2_order": 1, "n": 31, "order_n_element_not_excluded_by_group_order": false, "p": 43, "pgl2_order": 79464},
-    {"characteristic_order_exception": false, "gcd_n_pgl2_order": 1, "n": 79, "order_n_element_not_excluded_by_group_order": false, "p": 67, "pgl2_order": 300696},
-    {"characteristic_order_exception": false, "gcd_n_pgl2_order": 1, "n": 67, "order_n_element_not_excluded_by_group_order": false, "p": 79, "pgl2_order": 492960},
-    {"characteristic_order_exception": true, "gcd_n_pgl2_order": 127, "n": 127, "order_n_element_not_excluded_by_group_order": true, "p": 127, "pgl2_order": 2048256},
-    {"characteristic_order_exception": false, "gcd_n_pgl2_order": 1, "n": 139, "order_n_element_not_excluded_by_group_order": false, "p": 163, "pgl2_order": 4330584}
+    {
+      "characteristic_order_exception": false,
+      "gcd_n_pgl2_order": 1,
+      "n": 31,
+      "order_n_element_not_excluded_by_group_order": false,
+      "p": 43,
+      "pgl2_order": 79464
+    },
+    {
+      "characteristic_order_exception": false,
+      "gcd_n_pgl2_order": 1,
+      "n": 79,
+      "order_n_element_not_excluded_by_group_order": false,
+      "p": 67,
+      "pgl2_order": 300696
+    },
+    {
+      "characteristic_order_exception": false,
+      "gcd_n_pgl2_order": 1,
+      "n": 67,
+      "order_n_element_not_excluded_by_group_order": false,
+      "p": 79,
+      "pgl2_order": 492960
+    },
+    {
+      "characteristic_order_exception": true,
+      "gcd_n_pgl2_order": 127,
+      "n": 127,
+      "order_n_element_not_excluded_by_group_order": true,
+      "p": 127,
+      "pgl2_order": 2048256
+    },
+    {
+      "characteristic_order_exception": false,
+      "gcd_n_pgl2_order": 1,
+      "n": 139,
+      "order_n_element_not_excluded_by_group_order": false,
+      "p": 163,
+      "pgl2_order": 4330584
+    }
   ],
   "profile_id": "UORC-056-AUTONOMOUS-STATE-RIGIDITY-C29",
   "schema_version": "1.0",
@@ -182,9 +273,141 @@
     "state_orbit_required_distinct_states_bit_length": 256
   },
   "shift_witnesses": {
-    "5": {"1": [0, 1], "2": [3, 0], "3": [0, 3], "4": [1, 0]},
-    "7": {"1": [0, 1], "2": [5, 0], "3": [0, 3], "4": [3, 0], "5": [0, 5], "6": [1, 0]},
-    "11": {"1": [0, 1], "2": [9, 0], "3": [0, 3], "4": [7, 0], "5": [0, 5], "6": [5, 0], "7": [0, 7], "8": [3, 0], "9": [0, 9], "10": [1, 0]},
-    "13": {"1": [0, 1], "2": [11, 0], "3": [0, 3], "4": [9, 0], "5": [0, 5], "6": [7, 0], "7": [0, 7], "8": [5, 0], "9": [0, 9], "10": [3, 0], "11": [0, 11], "12": [1, 0]}
+    "11": {
+      "1": [
+        0,
+        1
+      ],
+      "10": [
+        1,
+        0
+      ],
+      "2": [
+        9,
+        0
+      ],
+      "3": [
+        0,
+        3
+      ],
+      "4": [
+        7,
+        0
+      ],
+      "5": [
+        0,
+        5
+      ],
+      "6": [
+        5,
+        0
+      ],
+      "7": [
+        0,
+        7
+      ],
+      "8": [
+        3,
+        0
+      ],
+      "9": [
+        0,
+        9
+      ]
+    },
+    "13": {
+      "1": [
+        0,
+        1
+      ],
+      "10": [
+        3,
+        0
+      ],
+      "11": [
+        0,
+        11
+      ],
+      "12": [
+        1,
+        0
+      ],
+      "2": [
+        11,
+        0
+      ],
+      "3": [
+        0,
+        3
+      ],
+      "4": [
+        9,
+        0
+      ],
+      "5": [
+        0,
+        5
+      ],
+      "6": [
+        7,
+        0
+      ],
+      "7": [
+        0,
+        7
+      ],
+      "8": [
+        5,
+        0
+      ],
+      "9": [
+        0,
+        9
+      ]
+    },
+    "5": {
+      "1": [
+        0,
+        1
+      ],
+      "2": [
+        3,
+        0
+      ],
+      "3": [
+        0,
+        3
+      ],
+      "4": [
+        1,
+        0
+      ]
+    },
+    "7": {
+      "1": [
+        0,
+        1
+      ],
+      "2": [
+        5,
+        0
+      ],
+      "3": [
+        0,
+        3
+      ],
+      "4": [
+        3,
+        0
+      ],
+      "5": [
+        0,
+        5
+      ],
+      "6": [
+        1,
+        0
+      ]
+    }
   }
 }
