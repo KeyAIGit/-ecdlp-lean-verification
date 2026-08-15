@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0",
+  "registry_id": "UORC056-PACKAGE-REGISTRY-2026-08-15",
+  "purpose": "Resolve historical numeric-label collisions and make stacked ancestry machine-readable without changing branch history.",
+  "naming_policy": {
+    "canonical_id_format": "UORC056-<TRACK>-<SEQUENCE>-<DESCRIPTOR>",
+    "parallel_packages_must_use_suffixes": true,
+    "numeric_label_alone_is_not_unique": true,
+    "branch_name_and_pr_number_are_required_identifiers": true,
+    "targeted_ci_and_canonical_promotion_ci_are_separate_status_fields": true
+  },
+  "packages": [
+    {
+      "canonical_id": "UORC056-V16A-SECTOR-FACTOR-RECONCILIATION",
+      "historical_label": "V16",
+      "branch": "research/uorc056-sector-factor-reconciliation-v16",
+      "pr": 389,
+      "status": "parallel_stacked_draft",
+      "note": "First historical V16 package. Retain branch and PR; use V16A in cross-track references."
+    },
+    {
+      "canonical_id": "UORC056-V16B-IDEMPOTENT-FACTORIZATION",
+      "historical_label": "V16",
+      "branch": "research/uorc056-idempotent-factorization-v16",
+      "pr": 394,
+      "status": "parallel_stacked_draft",
+      "note": "Second historical V16 package. Retain branch and PR; use V16B in cross-track references."
+    },
+    {
+      "canonical_id": "UORC056-V19-SHARED-PARITY-CAUCHY",
+      "historical_label": "V19",
+      "branch": "research/uorc056-shared-parity-cauchy-v19",
+      "pr": 395,
+      "status": "parallel_v_track_draft",
+      "ancestor_of_c_track": false
+    },
+    {
+      "canonical_id": "UORC056-C27-PUBLIC-Q-OPERATOR-SKETCH",
+      "historical_label": "C27",
+      "branch": "research/uorc056-public-q-resultant-c27",
+      "pr": 396,
+      "base": "research/uorc056-asymmetric-resultant-c26",
+      "targeted_ci": "green",
+      "canonical_promotion": "not_requested",
+      "headline": "Linear quotient, sparse trace, and coordinate-sparse Krylov compact-state lower bounds."
+    },
+    {
+      "canonical_id": "UORC056-C28-NONLINEAR-POLE-BUDGET",
+      "historical_label": "C28",
+      "branch": "research/uorc056-nonlinear-public-q-state-c28",
+      "pr": 397,
+      "base": "research/uorc056-public-q-resultant-c27",
+      "targeted_ci": "green",
+      "canonical_promotion": "not_requested",
+      "headline": "Half-order rational pole-degree theorem, translation-defect theorem, and exact A/B state thresholds."
+    }
+  ],
+  "ci_status_model": {
+    "scientific_package_verification": "Dedicated package workflow must pass Python replay, frozen artifact checks, and scoped Lean certificates.",
+    "canonical_promotion_gate": "Repository-wide generated-state and quarantine gates govern promotion to canonical surfaces.",
+    "expected_quarantine_failure": "A draft under archive/untrusted_intake may fail the canonical Docs Sync quarantine step even when the scientific package workflow is green.",
+    "ui_problem": "GitHub renders the expected quarantine failure as a red PR check unless promotion and research-draft workflows are separated by policy or path-aware gating."
+  },
+  "current_scientific_status": {
+    "public_parity_evaluator_found": false,
+    "compact_state_found": false,
+    "sub_square_root_ecdlp_found": false,
+    "closed_through_c28": [
+      "small base-field linear quotient states",
+      "fixed sparse trace sketches",
+      "coordinate-sparse Krylov sketches",
+      "ordinary low-pole-degree rational parity states",
+      "ordinary low-degree polynomial-in-T A/B states"
+    ],
+    "surviving_frontier": "High-degree low-size nonlocal nonlinear state with a public branch-sensitive seed and complete charged cost."
+  }
+}
