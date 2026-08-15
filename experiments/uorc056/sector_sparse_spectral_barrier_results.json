@@ -1,0 +1,135 @@
+{
+  "decision": "Exact sparse additive-character sums with o(sqrt(n)) frequencies cannot evaluate the Kummer sector bit on all nonzero secp256k1 scalars.",
+  "exact_argument": {
+    "case_H_nonzero": "H is a nonzero multiple of delta_0, so every nonzero frequency belongs to S+S",
+    "case_H_zero": "F is a nonconstant binary function on the full prime cycle; the prime cyclotomic polynomial forces all n Fourier coefficients to be nonzero",
+    "conclusion": "m(m+1)/2 >= n-1",
+    "square_residual": "H=F^2-1 vanishes at every nonzero scalar",
+    "unordered_pair_bound": "|S+S| <= m(m+1)/2"
+  },
+  "exact_toy_replay": {
+    "all_canonical_circulants_full_rank_mod_prime": true,
+    "all_pair_basis_constructions_cover": true,
+    "all_sequences_binary_even_nonconstant": true,
+    "curve_rows": [
+      {
+        "canonical_binary_extension_full_rank_mod_prime": true,
+        "canonical_full_cycle_sum": 7,
+        "deterministic_pair_basis_size": 11,
+        "deterministic_pair_basis_upper_bound": 11,
+        "id": "E7-P43-N31",
+        "lambda": 5,
+        "n": 31,
+        "nonzero_domain_sparse_frequency_lower_bound": 8,
+        "nonzero_minus_count": 12,
+        "nonzero_plus_count": 18,
+        "nonzero_sector_sum": 6,
+        "pair_basis_covers_group": true,
+        "rank_certificate_gcd_degree": 0,
+        "rank_certificate_prime": 1000003
+      },
+      {
+        "canonical_binary_extension_full_rank_mod_prime": true,
+        "canonical_full_cycle_sum": 7,
+        "deterministic_pair_basis_size": 17,
+        "deterministic_pair_basis_upper_bound": 17,
+        "id": "E7-P67-N79",
+        "lambda": 23,
+        "n": 79,
+        "nonzero_domain_sparse_frequency_lower_bound": 12,
+        "nonzero_minus_count": 36,
+        "nonzero_plus_count": 42,
+        "nonzero_sector_sum": 6,
+        "pair_basis_covers_group": true,
+        "rank_certificate_gcd_degree": 0,
+        "rank_certificate_prime": 1000003
+      },
+      {
+        "canonical_binary_extension_full_rank_mod_prime": true,
+        "canonical_full_cycle_sum": 3,
+        "deterministic_pair_basis_size": 16,
+        "deterministic_pair_basis_upper_bound": 17,
+        "id": "E7-P79-N67",
+        "lambda": 29,
+        "n": 67,
+        "nonzero_domain_sparse_frequency_lower_bound": 11,
+        "nonzero_minus_count": 32,
+        "nonzero_plus_count": 34,
+        "nonzero_sector_sum": 2,
+        "pair_basis_covers_group": true,
+        "rank_certificate_gcd_degree": 0,
+        "rank_certificate_prime": 1000003
+      },
+      {
+        "canonical_binary_extension_full_rank_mod_prime": true,
+        "canonical_full_cycle_sum": 7,
+        "deterministic_pair_basis_size": 22,
+        "deterministic_pair_basis_upper_bound": 23,
+        "id": "E7-P127-N127",
+        "lambda": 107,
+        "n": 127,
+        "nonzero_domain_sparse_frequency_lower_bound": 16,
+        "nonzero_minus_count": 60,
+        "nonzero_plus_count": 66,
+        "nonzero_sector_sum": 6,
+        "pair_basis_covers_group": true,
+        "rank_certificate_gcd_degree": 0,
+        "rank_certificate_prime": 1000003
+      },
+      {
+        "canonical_binary_extension_full_rank_mod_prime": true,
+        "canonical_full_cycle_sum": -5,
+        "deterministic_pair_basis_size": 23,
+        "deterministic_pair_basis_upper_bound": 23,
+        "id": "E7-P163-N139",
+        "lambda": 96,
+        "n": 139,
+        "nonzero_domain_sparse_frequency_lower_bound": 17,
+        "nonzero_minus_count": 72,
+        "nonzero_plus_count": 66,
+        "nonzero_sector_sum": -6,
+        "pair_basis_covers_group": true,
+        "rank_certificate_gcd_degree": 0,
+        "rank_certificate_prime": 1000003
+      }
+    ],
+    "curves": 5,
+    "nonzero_scalars": 438
+  },
+  "model": {
+    "candidate": "F(k)=sum_{r in S} c_r exp(2*pi*i*r*k/n), required to equal J_G(k) in {+1,-1} for every k!=0",
+    "support_size": "m=|S| after zero coefficients are removed",
+    "zero_point_is_free": true
+  },
+  "next_frontier": [
+    "nonlinear low-size circuits whose frequency support grows by multiplication",
+    "modular-composition and recurrence representations not charged by expanded support",
+    "shared carry-sector circuits",
+    "sparse rational character quotients with separately charged numerator and denominator supports"
+  ],
+  "profile_id": "UORC-056-SECTOR-SPARSE-SPECTRAL-BARRIER-V17",
+  "schema_version": "1.0",
+  "scientific_boundary": "No public sector decoder, parity evaluator, or ECDLP algorithm is constructed.",
+  "secp256k1": {
+    "canonical_binary_extension_dc_sum": 209,
+    "canonical_binary_extension_fourier_support": 115792089237316195423570985008687907852837564279074904382605163141518161494337,
+    "claim_boundary": "The bound applies to one exact linear combination of additive characters on the scalar cycle. It is not an arithmetic-circuit lower bound because multiplication can create many frequencies.",
+    "lambda": 37718080363155996902926221483475020450927657555482586988616620542887997980018,
+    "lower_bound_below_2_pow_129": true,
+    "lower_bound_bit_length": 129,
+    "lower_bound_exceeds_2_pow_128": true,
+    "n": 115792089237316195423570985008687907852837564279074904382605163141518161494337,
+    "nonzero_domain_sparse_frequency_lower_bound": 481231938336009023090067544955250113853,
+    "pair_count_at_lower_bound": 115792089237316195423570985008687907852918703886686300247256510812562356309731,
+    "pair_count_slack": 81139607611395864651347671044194815395,
+    "sector_minus_half_kernel_degree": 28948022309329048855892746252171976963209391069768726095651290785379540373532,
+    "sector_plus_half_kernel_degree": 28948022309329048855892746252171976963209391069768726095651290785379540373636,
+    "support_only_pair_basis_block": 340282366920938463463374607431768211456,
+    "support_only_pair_basis_size_upper_bound": 680564733841876926926749214863536422911
+  },
+  "tightness_boundary": {
+    "construction": "For b=ceil(sqrt(n)), S={0,...,b-1} union {0,b,2b,...,(b-1)b} satisfies S+S=Z/nZ",
+    "interpretation": "The support-cardinality argument is exponent-tight at one half. Coverage of S+S is necessary, not sufficient for coefficients that evaluate the sector bit.",
+    "size": "|S| <= 2*ceil(sqrt(n))-1"
+  }
+}

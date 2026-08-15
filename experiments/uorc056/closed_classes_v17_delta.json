@@ -1,0 +1,17 @@
+{
+  "entries": [
+    {
+      "disposition": "sub_square_root_expanded_support_impossible",
+      "id": "SPARSE-ADDITIVE-CHARACTER-KUMMER-SECTOR-SECP256K1",
+      "reason": "The square residual F^2-1 is either zero, forcing full prime-cycle Fourier support, or a nonzero point mass at zero, forcing every nonzero frequency into S+S. Since |S+S|<=m(m+1)/2, m is at least 481231938336009023090067544955250113853, which exceeds 2^128.",
+      "reopen_condition": "Use nonlinear multiplication gates without expanding support, modular composition, recurrence compression, a rational character quotient, or another representation whose charged size is not the number of expanded frequencies.",
+      "scope": "One exact linear combination F(k)=sum_{r in S} c_r exp(2*pi*i*r*k/n), with arbitrary complex coefficients, required to return J_G(k) in {+1,-1} for every nonzero secp256k1 scalar; F(0) is unrestricted.",
+      "source": "V17"
+    }
+  ],
+  "global_warning": "The bound is model-specific. It does not imply a general arithmetic-circuit lower bound or an ECDLP lower bound outside the stated representation.",
+  "parent_registry": "UORC-056-CLOSED-CLASSES-V16-DELTA",
+  "registry_delta_id": "UORC-056-CLOSED-CLASSES-V17-DELTA",
+  "schema_version": "1.0",
+  "status": "scoped_delta_for_stacked_V17_review"
+}

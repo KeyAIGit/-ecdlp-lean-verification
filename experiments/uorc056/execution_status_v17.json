@@ -1,0 +1,31 @@
+{
+  "central_target_unchanged": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "claim_boundary": "This is a lower bound for one exact expanded linear additive-character sum. It is not an arithmetic-circuit lower bound and does not close compressed nonlinear evaluation.",
+  "exact_replay": {
+    "curves": 5,
+    "errors": 0,
+    "nonzero_scalars": 438,
+    "unit_tests": 4
+  },
+  "next_frontier": [
+    "nonlinear circuits with multiplicative spectral growth",
+    "modular-composition or recurrence-compressed sector evaluation",
+    "shared carry-sector circuits",
+    "sparse rational character quotients"
+  ],
+  "package": "UORC-056-SECTOR-SPARSE-SPECTRAL-BARRIER-V17",
+  "parent_head": "e6c1966e2d68baea0b4aff407e4fd5050360946d",
+  "results": [
+    "for F(k)=sum_{r in S} c_r zeta_n^(rk) matching J_G(k) on every k!=0, H=F^2-1 is supported at zero",
+    "if H=0, the nonconstant binary prime-cycle function has full Fourier support n",
+    "if H!=0, every nonzero frequency lies in S+S",
+    "the unordered-pair count gives m(m+1)/2 >= n-1",
+    "the exact secp256k1 support lower bound is 481231938336009023090067544955250113853",
+    "the lower bound is strictly between 2^128 and 2^129",
+    "the canonical extension J_G(0)=1 has DC sum 209 and full support n",
+    "a deterministic additive basis of size at most 2 ceil(sqrt(n))-1 shows the support-only exponent is tight",
+    "five frozen curves and 438 nonzero scalars pass exact replay and modular circulant certificates"
+  ],
+  "schema_version": "1.0",
+  "status": "implemented_and_locally_replayed_pending_GitHub_workflow_approval"
+}
