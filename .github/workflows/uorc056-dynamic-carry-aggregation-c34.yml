@@ -1,0 +1,114 @@
+name: UORC056 dynamic carry aggregation C34
+
+on:
+  push:
+    branches:
+      - research/uorc056-dynamic-carry-aggregation-c34
+    paths:
+      - 'experiments/parity_lift_000/uorc056_dynamic_carry_aggregation.py'
+      - 'experiments/parity_lift_000/test_uorc056_dynamic_carry_aggregation.py'
+      - 'Ecdlp/Proved/Uorc056DynamicCarryAggregation.lean'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_DYNAMIC_CARRY_AGGREGATION_C34.md'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_C_TRACK_LINEAGE_C34.json'
+      - '.github/workflows/uorc056-dynamic-carry-aggregation-c34.yml'
+  pull_request:
+    branches:
+      - research/uorc056-oriented-addition-cocycle-c33
+    paths:
+      - 'experiments/parity_lift_000/uorc056_dynamic_carry_aggregation.py'
+      - 'experiments/parity_lift_000/test_uorc056_dynamic_carry_aggregation.py'
+      - 'Ecdlp/Proved/Uorc056DynamicCarryAggregation.lean'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_DYNAMIC_CARRY_AGGREGATION_C34.md'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_C_TRACK_LINEAGE_C34.json'
+      - '.github/workflows/uorc056-dynamic-carry-aggregation-c34.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Compile, test and replay C34
+        run: |
+          python -m py_compile \
+            experiments/parity_lift_000/uorc056_dynamic_carry_aggregation.py \
+            experiments/parity_lift_000/test_uorc056_dynamic_carry_aggregation.py
+          PYTHONPATH=experiments/parity_lift_000 python -m unittest -v \
+            experiments/parity_lift_000/test_uorc056_dynamic_carry_aggregation.py
+          PYTHONPATH=experiments/parity_lift_000 python \
+            experiments/parity_lift_000/uorc056_dynamic_carry_aggregation.py \
+            --out /tmp/uorc056_dynamic_carry_aggregation_result.json
+
+      - name: Check C34 machine-readable boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = json.loads(Path(
+              '/tmp/uorc056_dynamic_carry_aggregation_result.json'
+          ).read_text())
+          assert result['profile_id'] == 'UORC-056-DYNAMIC-CARRY-AGGREGATION-C34'
+          aggregate = result['aggregate']
+          assert aggregate['dag_instances'] == 24
+          assert aggregate['chain_profile_checks'] == 450
+          assert aggregate['orders_with_distinct_chain_supports'] == 8
+          assert aggregate['frozen_three_carry_checks'] == 46260
+          assert aggregate['single_carry_classification_exact_on_all_screens']
+          assert aggregate['two_noncomplete_carry_survivors'] == 0
+          assert aggregate['three_carry_factors_noncomplete_on_all_declared_orders']
+          assert aggregate['errors'] == 0
+          decision = result['decision']
+          assert decision['addition_dag_compiler_built']
+          assert decision['carry_product_chain_independence_proved']
+          assert decision['all_public_chains_reduce_to_canonical_aggregate']
+          assert decision['three_carry_semantic_compression_found']
+          assert decision['q_only_field_aggregate_blocked']
+          assert not decision['public_anchor_consumed_by_three_carry_formula']
+          assert not decision['anchor_dependent_field_aggregate_found']
+          assert not decision['parity_oracle_found']
+          assert not decision['sub_sqrt_ecdlp_found']
+          assert len(result['digest']) == 64
+          PY
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Kernel-check C34 algebra and secp arithmetic
+        run: |
+          lake exe cache get
+          lake build Ecdlp.Proved.Uorc056DynamicCarryAggregation
+          lake env lean Ecdlp/Proved/Uorc056DynamicCarryAggregation.lean
+
+      - name: Upload C34 certificate
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-dynamic-carry-aggregation-c34
+          path: /tmp/uorc056_dynamic_carry_aggregation_result.json
+          retention-days: 90

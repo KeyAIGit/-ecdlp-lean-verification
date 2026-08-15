@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "track": "UNIFORM-ORIENTED-ROOT-CIRCUIT-056 / C-track",
+  "package": "C34",
+  "canonical_id": "DYNAMIC-ORIENTED-CARRY-AGGREGATION-084",
+  "branch": "research/uorc056-dynamic-carry-aggregation-c34",
+  "parent_branch": "research/uorc056-oriented-addition-cocycle-c33",
+  "parent_package": "C33 oriented addition carry cocycle",
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "main_results": [
+    "Every public addition DAG compiles to A_m(Q)=sigma(Q)^m sigma([m]Q)",
+    "Different DAG supports are chain-independent as scalar functions",
+    "Parity has an exact constant three-carry semantic factorization",
+    "The chosen three factors are individually non-parity-complete on the declared exact screens",
+    "A Q-only field realization is generator-blind and cannot decode marked parity"
+  ],
+  "successor": "ANCHOR-MIXED-CARRY-RESULTANT-C35",
+  "status": "positive_semantic_compression_without_public_field_evaluator",
+  "claim_boundary": "No anchor-dependent carry aggregate, public parity oracle, sub-root evaluator or sub-square-root ECDLP algorithm is claimed."
+}
