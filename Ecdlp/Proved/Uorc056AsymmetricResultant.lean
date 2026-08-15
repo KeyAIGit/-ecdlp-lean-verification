@@ -30,7 +30,7 @@ open Ecdlp.ParityLift
 ignores that multiplier, then the extracted values collide. Opposite scalar
 parity therefore rules out one decoder correct at both indices. -/
 theorem scaleInvariant_extraction_collision_blocks_parity_decoder
-    {K X : Type*}
+    {K X : Type*} [Mul K]
     (value : ℕ → K) (extract : K → X) (mu : K)
     (left right : ℕ)
     (hScale : value right = mu * value left)
@@ -51,7 +51,7 @@ theorem scaleInvariant_extraction_collision_blocks_parity_decoder
 /-- A scale-invariant extraction is constant along any finite chain whose
 successive values differ by the same scale. -/
 theorem scaleInvariant_three_cycle
-    {K X : Type*}
+    {K X : Type*} [Mul K]
     (extract : K → X) (mu z : K)
     (hInvariant : ∀ value, extract (mu * value) = extract value) :
     extract (mu * (mu * z)) = extract z := by
