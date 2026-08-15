@@ -1,0 +1,124 @@
+{
+  "closed_class": "sparse additive-character numerator/denominator quotient with sub-square-root union support",
+  "decision": "A quotient of two sparse additive-character sums cannot evaluate the Kummer sector bit on all nonzero secp256k1 scalars with o(sqrt(n)) distinct expanded frequencies.",
+  "dichotomy": {
+    "H_nonzero": {
+      "count": "t(t+1)/2 >= n",
+      "identity": "H is a nonzero multiple of delta_0",
+      "spectral_consequence": "every frequency lies in (S_A+S_A) union (S_B+S_B), which is contained in T+T"
+    },
+    "H_zero": {
+      "fiber_support": "A-B is supported on the negative sector plus possibly zero; A+B is supported on the positive sector plus possibly zero",
+      "identity": "(A-B)(A+B)=0 pointwise",
+      "prime_uncertainty": "|supp f|+|supp fhat|>=n+1 on Z/nZ for prime n",
+      "source": "Terence Tao, arXiv:math/0308286"
+    },
+    "residual": "H=A^2-B^2 vanishes on every nonzero scalar"
+  },
+  "exact_toy_arithmetic_replay": {
+    "all_root_bounds_minimal": true,
+    "all_square_exact_bounds_stronger": true,
+    "curve_rows": [
+      {
+        "A_minus_B_frequency_union_lower_bound": 19,
+        "A_plus_B_frequency_union_lower_bound": 13,
+        "H_nonzero_frequency_union_lower_bound": 8,
+        "id": "E7-P43-N31",
+        "lambda": 5,
+        "n": 31,
+        "nonzero_minus_scalars": 12,
+        "nonzero_plus_scalars": 18,
+        "sector_correlation": 6,
+        "square_exact_frequency_union_lower_bound": 19,
+        "universal_sparse_rational_frequency_union_lower_bound": 8
+      },
+      {
+        "A_minus_B_frequency_union_lower_bound": 43,
+        "A_plus_B_frequency_union_lower_bound": 37,
+        "H_nonzero_frequency_union_lower_bound": 13,
+        "id": "E7-P67-N79",
+        "lambda": 23,
+        "n": 79,
+        "nonzero_minus_scalars": 36,
+        "nonzero_plus_scalars": 42,
+        "sector_correlation": 6,
+        "square_exact_frequency_union_lower_bound": 43,
+        "universal_sparse_rational_frequency_union_lower_bound": 13
+      },
+      {
+        "A_minus_B_frequency_union_lower_bound": 35,
+        "A_plus_B_frequency_union_lower_bound": 33,
+        "H_nonzero_frequency_union_lower_bound": 12,
+        "id": "E7-P79-N67",
+        "lambda": 29,
+        "n": 67,
+        "nonzero_minus_scalars": 32,
+        "nonzero_plus_scalars": 34,
+        "sector_correlation": 2,
+        "square_exact_frequency_union_lower_bound": 35,
+        "universal_sparse_rational_frequency_union_lower_bound": 12
+      },
+      {
+        "A_minus_B_frequency_union_lower_bound": 67,
+        "A_plus_B_frequency_union_lower_bound": 61,
+        "H_nonzero_frequency_union_lower_bound": 16,
+        "id": "E7-P127-N127",
+        "lambda": 107,
+        "n": 127,
+        "nonzero_minus_scalars": 60,
+        "nonzero_plus_scalars": 66,
+        "sector_correlation": 6,
+        "square_exact_frequency_union_lower_bound": 67,
+        "universal_sparse_rational_frequency_union_lower_bound": 16
+      },
+      {
+        "A_minus_B_frequency_union_lower_bound": 67,
+        "A_plus_B_frequency_union_lower_bound": 73,
+        "H_nonzero_frequency_union_lower_bound": 17,
+        "id": "E7-P163-N139",
+        "lambda": 96,
+        "n": 139,
+        "nonzero_minus_scalars": 72,
+        "nonzero_plus_scalars": 66,
+        "sector_correlation": -6,
+        "square_exact_frequency_union_lower_bound": 73,
+        "universal_sparse_rational_frequency_union_lower_bound": 17
+      }
+    ],
+    "curves": 5
+  },
+  "model": {
+    "charged_support": "T=S_A union S_B, t=|T|",
+    "denominator": "B(k)=sum_{r in S_B} b_r exp(2*pi*i*r*k/n)",
+    "numerator": "A(k)=sum_{r in S_A} a_r exp(2*pi*i*r*k/n)",
+    "requirement": "B(k)!=0 and A(k)/B(k)=J_G(k) in {+1,-1} for every k!=0",
+    "zero_point_is_free": true
+  },
+  "next_frontier": [
+    "nonlinear circuits that generate dense spectra without expanded storage",
+    "modular-composition or recurrence-compressed sector evaluation",
+    "shared carry-sector circuits",
+    "representation-specific circuit lower bounds"
+  ],
+  "profile_id": "UORC-056-SECTOR-SPARSE-RATIONAL-SPECTRAL-BARRIER-V18",
+  "schema_version": "1.0",
+  "scientific_boundary": "No public sector decoder, parity evaluator, or ECDLP algorithm is constructed.",
+  "secp256k1": {
+    "A_minus_B_frequency_union_lower_bound": 57896044618658097711785492504343953926418782139537452191302581570759080747273,
+    "A_plus_B_frequency_union_lower_bound": 57896044618658097711785492504343953926418782139537452191302581570759080747065,
+    "H_nonzero_frequency_union_lower_bound": 481231938336009023090067544955250113853,
+    "H_nonzero_lower_bound_bit_length": 129,
+    "H_nonzero_pair_capacity": 115792089237316195423570985008687907852918703886686300247256510812562356309731,
+    "H_nonzero_pair_capacity_slack": 81139607611395864651347671044194815394,
+    "claim_boundary": "The support cost is the union of nonzero additive-character frequencies used by numerator and denominator. The result is not a lower bound for nonlinear circuits that do not expand this union.",
+    "lambda": 37718080363155996902926221483475020450927657555482586988616620542887997980018,
+    "n": 115792089237316195423570985008687907852837564279074904382605163141518161494337,
+    "nonzero_minus_scalars": 57896044618658097711785492504343953926418782139537452191302581570759080747064,
+    "nonzero_plus_scalars": 57896044618658097711785492504343953926418782139537452191302581570759080747272,
+    "sector_correlation": 208,
+    "square_exact_frequency_union_lower_bound": 57896044618658097711785492504343953926418782139537452191302581570759080747273,
+    "universal_lower_bound_below_2_pow_129": true,
+    "universal_lower_bound_exceeds_2_pow_128": true,
+    "universal_sparse_rational_frequency_union_lower_bound": 481231938336009023090067544955250113853
+  }
+}

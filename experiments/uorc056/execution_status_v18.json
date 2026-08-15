@@ -1,0 +1,29 @@
+{
+  "central_target_unchanged": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "claim_boundary": "The support cost is the union of expanded additive-character frequencies in numerator and denominator. This is not a nonlinear arithmetic-circuit lower bound.",
+  "exact_replay": {
+    "curves": 5,
+    "errors": 0,
+    "unit_tests": 4
+  },
+  "next_frontier": [
+    "nonlinear circuits that generate dense spectra without expanded storage",
+    "modular-composition or recurrence-compressed sector evaluation",
+    "shared carry-sector circuits",
+    "representation-specific circuit lower bounds"
+  ],
+  "package": "UORC-056-SECTOR-SPARSE-RATIONAL-SPECTRAL-BARRIER-V18",
+  "parent_head": "de9084fc6f5568234544619b14975999ad74e6c9",
+  "results": [
+    "for A/B matching J_G on every nonzero scalar, H=A^2-B^2 is supported at zero",
+    "if H is nonzero, every frequency is covered by (S_A+S_A) union (S_B+S_B), contained in T+T",
+    "the nonzero-residual branch forces t(t+1)/2>=n",
+    "the exact secp256k1 universal union-support lower bound is 481231938336009023090067544955250113853",
+    "if H is zero, U=A-B and V=A+B have complementary sector supports",
+    "prime-order uncertainty forces t>=57896044618658097711785492504343953926418782139537452191302581570759080747273 in the square-exact branch",
+    "the square-exact branch lower bound is 255-bit and essentially n/2",
+    "five frozen curves pass the exact cardinality and minimal-root replay"
+  ],
+  "schema_version": "1.0",
+  "status": "implemented_and_locally_replayed_pending_GitHub_workflow_approval"
+}

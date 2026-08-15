@@ -1,0 +1,77 @@
+name: UORC-056 sector sparse rational spectral barrier V18
+
+on:
+  push:
+    branches:
+      - research/uorc056-sector-sparse-rational-spectral-v18
+    paths:
+      - 'scripts/uorc056_sector_sparse_rational_spectral_barrier.py'
+      - 'scripts/test_uorc056_sector_sparse_rational_spectral_barrier.py'
+      - 'Ecdlp/Proved/SectorSparseRationalSpectralBarrier.lean'
+      - 'notes/reviews/UORC056_SECTOR_SPARSE_RATIONAL_SPECTRAL_BARRIER_V18.md'
+      - 'experiments/uorc056/sector_sparse_rational_spectral_barrier_results.json'
+      - 'experiments/uorc056/execution_status_v18.json'
+      - 'experiments/uorc056/closed_classes_v18_delta.json'
+      - '.github/workflows/uorc056-sector-sparse-rational-spectral-v18.yml'
+  pull_request:
+    branches:
+      - research/uorc056-sector-sparse-spectral-v17
+    paths:
+      - 'scripts/uorc056_sector_sparse_rational_spectral_barrier.py'
+      - 'scripts/test_uorc056_sector_sparse_rational_spectral_barrier.py'
+      - 'Ecdlp/Proved/SectorSparseRationalSpectralBarrier.lean'
+      - 'notes/reviews/UORC056_SECTOR_SPARSE_RATIONAL_SPECTRAL_BARRIER_V18.md'
+      - 'experiments/uorc056/sector_sparse_rational_spectral_barrier_results.json'
+      - 'experiments/uorc056/execution_status_v18.json'
+      - 'experiments/uorc056/closed_classes_v18_delta.json'
+      - '.github/workflows/uorc056-sector-sparse-rational-spectral-v18.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run exact V18 replay and tests
+        run: |
+          PYTHONPATH=scripts python -m unittest -v \
+            scripts/test_uorc056_sector_sparse_rational_spectral_barrier.py
+          PYTHONPATH=scripts python \
+            scripts/uorc056_sector_sparse_rational_spectral_barrier.py \
+            --check \
+            --out experiments/uorc056/sector_sparse_rational_spectral_barrier_results.json
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Kernel-check V18 arithmetic
+        run: |
+          lake exe cache get
+          lake build Ecdlp.Proved.SectorSparseRationalSpectralBarrier
+          lake env lean Ecdlp/Proved/SectorSparseRationalSpectralBarrier.lean

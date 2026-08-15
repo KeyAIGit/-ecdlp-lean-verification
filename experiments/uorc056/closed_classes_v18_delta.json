@@ -1,0 +1,17 @@
+{
+  "entries": [
+    {
+      "disposition": "sub_square_root_union_support_impossible",
+      "id": "SPARSE-RATIONAL-ADDITIVE-CHARACTER-KUMMER-SECTOR-SECP256K1",
+      "reason": "H=A^2-B^2 is supported at zero. If H is nonzero, full spectral support of the point mass forces T+T to cover the whole cycle, so t(t+1)/2>=n. If H is zero, prime-order uncertainty applied to A-B and A+B gives a stronger approximately n/2 bound.",
+      "reopen_condition": "Use a nonlinear implicit-spectrum circuit, modular composition, recurrence compression, p-adic or theta evaluation, or another representation whose charged size is not expanded union support.",
+      "scope": "A quotient A(k)/B(k) of two exact additive-character sums, with B(k) nonzero and quotient equal to J_G(k) for every nonzero secp256k1 scalar. Cost is the number of distinct expanded frequencies in S_A union S_B; the value at zero is free.",
+      "source": "V18"
+    }
+  ],
+  "global_warning": "This is a representation-specific support lower bound. It is not an unrestricted arithmetic-circuit or ECDLP lower bound.",
+  "parent_registry": "UORC-056-CLOSED-CLASSES-V17-DELTA",
+  "registry_delta_id": "UORC-056-CLOSED-CLASSES-V18-DELTA",
+  "schema_version": "1.0",
+  "status": "scoped_delta_for_stacked_V18_review"
+}
