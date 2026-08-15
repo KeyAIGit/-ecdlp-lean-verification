@@ -1,5 +1,4 @@
 import Mathlib
-import Ecdlp.Proved.Uorc056AsymmetricResultant
 
 /-!
 # UORC056 C27 public-Q operator-state barriers
