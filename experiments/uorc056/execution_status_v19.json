@@ -1,0 +1,35 @@
+{
+  "central_target_unchanged": "Y_G(x([k]G))/y([k]G)=g_G(Q)J_G(x(Q))=(-1)^k",
+  "claim_boundary": "The bounds charge expanded additive-character support. They are not unrestricted arithmetic-circuit, modular-composition, recurrence, or ECDLP lower bounds.",
+  "exact_replay": {
+    "canonical_and_free_identity_DFT_checks": 5,
+    "errors": 0,
+    "exhaustive_cauchy_minors": 6895,
+    "sampled_cauchy_minors": 160,
+    "unit_tests": 6
+  },
+  "next_frontier": [
+    "deeper nonlinear circuits with implicit dense spectra",
+    "modular-composition and transposed evaluation",
+    "recurrence-compressed high-degree GLV-Kummer objects",
+    "p-adic, theta, elliptic-unit, or other non-spectral representations",
+    "unrestricted shared arithmetic circuits for g_G*J_G"
+  ],
+  "package": "UORC-056-SHARED-PARITY-CAUCHY-BARRIER-V19",
+  "parent_branch": "research/uorc056-sector-sparse-rational-spectral-v18",
+  "parent_head": "bbcc56cbc3489e039179fd7819269be146a10120",
+  "results": [
+    "for odd n, canonical parity has Fourier transform 2/(1+zeta^(-r)) and full support n",
+    "allowing an arbitrary identity value can cancel at most one frequency, so exact nonzero-domain parity still needs support at least n-1",
+    "one bilinear product of sparse character sums forces |S_A||S_B|>=n-1",
+    "the exact secp256k1 separately charged bilinear leaf-sum lower bound is 680564733841876926926749214863536422911=2^129-1",
+    "the exact secp256k1 shared-dictionary bilinear lower bound is 481231938336009023090067544955250113853",
+    "for A/B equal to parity on every nonzero scalar, the Fourier equations form a full-spark Cauchy system with one defect column",
+    "the direct rational model forces |S_A|+|S_B|>=n, and this bound is exact",
+    "the shared frequency union satisfies |S_A union S_B|>=(n+1)/2",
+    "for secp256k1 the shared-union lower bound is 57896044618658097711785492504343953926418782139537452191302581570759080747169",
+    "6895 exhaustive Cauchy minors and 160 frozen-order sampled minors pass with zero failures"
+  ],
+  "schema_version": "1.0",
+  "status": "implemented_and_locally_replayed_pending_GitHub_CI"
+}
