@@ -1,0 +1,218 @@
+{
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "closed_classes": [
+    "nontrivial base-field linear quotient state below ord_n(p)",
+    "fixed sparse trace sketches with fewer than (n-1)/2 relative-translation atoms",
+    "coordinate-sparse bilinear/Krylov probes with total cross-support below (n-1)/2"
+  ],
+  "coordinate_sparse_krylov_theorem": {
+    "bound_is_tight_in_coordinate_sparse_model": true,
+    "exact_lower_bound": "sum_i |supp(u_i)|*|supp(v_i)| >= (n-1)/2",
+    "invariant": "probe i is zero outside at most |supp(u_i)|*|supp(v_i)| relative translations",
+    "model": "fixed probes u_i^T T_G^a_i T_Q^b_i v_i with coordinate-sparse public vectors; every support coordinate and cross pair is charged",
+    "secp256k1_cross_support_lower_bound": 57896044618658097711785492504343953926418782139537452191302581570759080747168,
+    "secp256k1_lower_bound_bits": 255
+  },
+  "decision": {
+    "a_eq_b_exact_value_formula_found": false,
+    "all_point_public_Q_replay_passed": false,
+    "compact_branch_odd_evaluator_found": false,
+    "complete_cost_gate_passed": false,
+    "exact_Hilbert90_branch_bridge_found": false,
+    "exact_parity_extraction_found": false,
+    "numeric_k_control_eliminated": false,
+    "parity_oracle_found": false,
+    "projective_cubic_exact_phase_decoder_found": false,
+    "sub_sqrt_ecdlp_found": false,
+    "sub_sqrt_evaluator_found": false,
+    "sublinear_base_field_linear_quotient_found": false,
+    "sublinear_black_box_determinant_found": false,
+    "sublinear_coordinate_sparse_krylov_found": false,
+    "sublinear_numeric_k_lacunary_algorithm_found": false,
+    "sublinear_public_Q_operator_representation_found": false,
+    "sublinear_sparse_trace_sketch_found": false
+  },
+  "digest": "909142870a65d643282f323b589a290cbf4e150f8bb7c06f6a07e5dbe6857315",
+  "input_contracts": {
+    "numeric_k": "(n,k,a,b,c); may branch on k and is not credited as public-Q",
+    "public_Q": "(E,G,Q=[k]G,n,a,b,c); k, its bits, quotients and tables are forbidden inputs"
+  },
+  "linear_state_theorem": {
+    "formalization_boundary": "Python verifies the complete Lucas certificates and exact multiplicative-order witnesses. Lean checks the generic information/counting transfer and fixed secp integer bounds, not the full finite-field representation theorem.",
+    "lucas_prime_certificates": {
+      "all_required_factor_primes_certified": true,
+      "certificate_nodes": 45,
+      "largest_certified_prime": 341948486974166000522343609283189
+    },
+    "secp256k1_below_sqrt_gate": false,
+    "secp256k1_minimum_nontrivial_dimension": 19298681539552699237261830834781317975472927379845817397100860523586360249056,
+    "secp256k1_minimum_nontrivial_dimension_bits": 254,
+    "secp256k1_order_certificate": {
+      "base": 115792089237316195423570985008687907853269984665640564039457584007908834671663,
+      "exact_order": 19298681539552699237261830834781317975472927379845817397100860523586360249056,
+      "exact_order_bits": 254,
+      "factorization": {
+        "107361793816595537": 1,
+        "149": 1,
+        "174723607534414371449": 1,
+        "2": 5,
+        "341948486974166000522343609283189": 1,
+        "631": 1
+      },
+      "modulus": 115792089237316195423570985008687907852837564279074904382605163141518161494337,
+      "proper_divisor_witnesses": {
+        "107361793816595537": 52647893795144340796375696822039036288676007339498814680325117642364973308111,
+        "149": 113848384323150997424351651422524525961041473396787494875146048855700736723997,
+        "174723607534414371449": 46778582684962379812666014000626710679154713018175810857708576519608093091099,
+        "2": 115792089237316195423570985008687907852837564279074904382605163141518161494336,
+        "341948486974166000522343609283189": 28534239557337853226592268113194591356344802232226391584782486955805809019029,
+        "631": 31265026888672388003236863988121926787096379329002004289029755233561343799398
+      }
+    },
+    "statement": "For char(F_p) not dividing prime n, every nontrivial F_p-linear representation of C_n has dimension at least ord_n(p). A representation below that dimension is trivial and makes every state built only from rho(G),rho(Q) independent of k.",
+    "toy_rows": [
+      {
+        "field_prime": 43,
+        "minimum_nontrivial_base_field_linear_dimension": 30,
+        "semisimple_linear_theorem_applies": true,
+        "subgroup_order": 31
+      },
+      {
+        "field_prime": 67,
+        "minimum_nontrivial_base_field_linear_dimension": 13,
+        "semisimple_linear_theorem_applies": true,
+        "subgroup_order": 79
+      },
+      {
+        "field_prime": 79,
+        "minimum_nontrivial_base_field_linear_dimension": 66,
+        "semisimple_linear_theorem_applies": true,
+        "subgroup_order": 67
+      },
+      {
+        "field_prime": 127,
+        "reason": "base-field characteristic divides subgroup order",
+        "semisimple_linear_theorem_applies": false,
+        "subgroup_order": 127
+      },
+      {
+        "field_prime": 163,
+        "minimum_nontrivial_base_field_linear_dimension": 69,
+        "semisimple_linear_theorem_applies": true,
+        "subgroup_order": 139
+      }
+    ]
+  },
+  "newton_moment_corollary": {
+    "expanded_nonconstant_atom_capacity": "d(d+1)(d+2)/6",
+    "minimum_depth_capacity": 57896044618658097711785493956686279548550929028906312007570007593188194555460,
+    "previous_depth_capacity": 57896044618658097711785491485890974277756329941740511669745059249481599051745,
+    "scope": "expanded traces of all powers (aI+bT_G+cT_Q)^m for 1<=m<=d, with m<n and every relative-translation monomial charged",
+    "secp256k1_minimum_depth_bits": 86,
+    "secp256k1_minimum_full_moment_depth": 70296448064902889502766530,
+    "warning": "This cubic-depth corollary is not a lower bound against an implicit nonlinear moment recurrence whose expanded atoms are never materialized."
+  },
+  "not_closed": [
+    "nonlinear implicit-spectrum arithmetic circuits",
+    "structured dense vectors generated and queried without linear storage",
+    "black-box determinant algorithms outside the declared sparse probes",
+    "modular composition and nonlinear algebraic-state recurrences",
+    "p-adic, theta, elliptic-unit, or Hilbert-90 branch-sensitive states"
+  ],
+  "profile_id": "UORC-056-PUBLIC-Q-OPERATOR-SKETCH-C27",
+  "schema_version": "1.0",
+  "sparse_trace_sketch_theorem": {
+    "bound_is_tight_in_expanded_atom_model": true,
+    "exact_lower_bound": "(n-1)/2 distinct nonzero exceptional ratios",
+    "frozen_replay": [
+      {
+        "direct_trace_checks": 60,
+        "half_parity_fibre": 15,
+        "krylov_cross_support_lower_bound": 15,
+        "order": 31,
+        "tight_krylov_cross_support": 15,
+        "tight_krylov_decoder_passed": true,
+        "tight_trace_atoms": 15,
+        "tight_trace_decoder_passed": true,
+        "trace_atom_lower_bound": 15
+      },
+      {
+        "direct_trace_checks": 156,
+        "half_parity_fibre": 39,
+        "krylov_cross_support_lower_bound": 39,
+        "order": 79,
+        "tight_krylov_cross_support": 39,
+        "tight_krylov_decoder_passed": true,
+        "tight_trace_atoms": 39,
+        "tight_trace_decoder_passed": true,
+        "trace_atom_lower_bound": 39
+      },
+      {
+        "direct_trace_checks": 132,
+        "half_parity_fibre": 33,
+        "krylov_cross_support_lower_bound": 33,
+        "order": 67,
+        "tight_krylov_cross_support": 33,
+        "tight_krylov_decoder_passed": true,
+        "tight_trace_atoms": 33,
+        "tight_trace_decoder_passed": true,
+        "trace_atom_lower_bound": 33
+      },
+      {
+        "direct_trace_checks": 252,
+        "half_parity_fibre": 63,
+        "krylov_cross_support_lower_bound": 63,
+        "order": 127,
+        "tight_krylov_cross_support": 63,
+        "tight_krylov_decoder_passed": true,
+        "tight_trace_atoms": 63,
+        "tight_trace_decoder_passed": true,
+        "trace_atom_lower_bound": 63
+      },
+      {
+        "direct_trace_checks": 276,
+        "half_parity_fibre": 69,
+        "krylov_cross_support_lower_bound": 69,
+        "order": 139,
+        "tight_krylov_cross_support": 69,
+        "tight_krylov_decoder_passed": true,
+        "tight_trace_atoms": 69,
+        "tight_trace_decoder_passed": true,
+        "trace_atom_lower_bound": 69
+      }
+    ],
+    "identity": "Tr(T_G^a T_Q^b)=n if a+b*k=0 mod n, else 0",
+    "invariant": "outside the union E of exceptional ratios -a/b, the entire transcript is constant",
+    "model": "r public channels Tr(sum c_ab T_G^a T_Q^b), with fixed k-independent sparse monomial supports; expanded relative translation atoms are charged",
+    "secp256k1_distinct_atom_lower_bound": 57896044618658097711785492504343953926418782139537452191302581570759080747168,
+    "secp256k1_lower_bound_bits": 255,
+    "small_exhaustive_checks": [
+      {
+        "all_complements_mixed": true,
+        "half": 2,
+        "order": 5,
+        "subsets_below_half_checked": 5
+      },
+      {
+        "all_complements_mixed": true,
+        "half": 3,
+        "order": 7,
+        "subsets_below_half_checked": 22
+      },
+      {
+        "all_complements_mixed": true,
+        "half": 5,
+        "order": 11,
+        "subsets_below_half_checked": 386
+      },
+      {
+        "all_complements_mixed": true,
+        "half": 6,
+        "order": 13,
+        "subsets_below_half_checked": 1586
+      }
+    ],
+    "tight_witness": "one trace channel summing one monomial for every odd canonical scalar; this is exactly the forbidden half-orbit table"
+  },
+  "successor": "NONLINEAR-PUBLIC-Q-ALGEBRAIC-STATE-077: bound or construct bounded-dimensional nonlinear rational dynamics with an explicit branch-sensitive public leaf and complete cost ledger"
+}
