@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0",
+  "track": "UNIFORM-ORIENTED-ROOT-CIRCUIT-056 / C",
+  "status": "stacked_research_lineage_not_main",
+  "protected_branches": [
+    "main",
+    "research/parity-lift-000"
+  ],
+  "chain": [
+    {
+      "id": "C23",
+      "branch": "research/uorc056-sign-blind-additive-c23",
+      "result": "sign-blind rational circuits, determinants, and resultants cannot manufacture branch sensitivity"
+    },
+    {
+      "id": "C24",
+      "branch": "research/uorc056-branch-sensitive-leaf-c24",
+      "result": "surviving branch-sensitive leaf families classified; no compact public leaf passes the cost gate"
+    },
+    {
+      "id": "C25",
+      "branch": "research/uorc056-sparse-circulant-c25",
+      "result": "sparse circulant symmetry classes and coefficient strata audited"
+    },
+    {
+      "id": "C26",
+      "branch": "research/uorc056-asymmetric-resultant-c26",
+      "result": "asymmetric sparse-resultant extraction boundary; public-Q control remains open"
+    },
+    {
+      "id": "C27",
+      "branch": "research/uorc056-public-q-resultant-c27",
+      "pr": 396,
+      "result": "base-field linear quotient, sparse trace, and coordinate-sparse Krylov compact-state boundaries",
+      "workflow": ".github/workflows/uorc056-public-q-resultant-c27.yml",
+      "targeted_workflow_status": "green"
+    },
+    {
+      "id": "C28",
+      "branch": "research/uorc056-nonlinear-public-q-state-c28",
+      "parent": "research/uorc056-public-q-resultant-c27",
+      "result": "half-order pole-degree theorem, translation-defect theorem, pole-budget compiler, and exact A/B low-degree state thresholds",
+      "source_prompt": "archive/untrusted_intake/parity_lift_000/UORC056_NONLINEAR_PUBLIC_Q_STATE_C28_PROMPT.md",
+      "result_note": "archive/untrusted_intake/parity_lift_000/UORC056_NONLINEAR_POLE_BUDGET_C28.md",
+      "workflow": ".github/workflows/uorc056-nonlinear-pole-budget-c28.yml"
+    }
+  ],
+  "next": {
+    "id": "C29",
+    "name": "HIGH-DEGREE-LOW-SIZE-BRANCH-STATE-078",
+    "required_object": "uniform nonlocal nonlinear recurrence with exponentially growing pole degree and a public branch-sensitive seed",
+    "excluded_repeats": [
+      "small base-field linear quotient",
+      "fixed sparse trace dictionary",
+      "coordinate-sparse Krylov table",
+      "low-pole-degree rational state",
+      "ordinary low-degree polynomial-in-T A/B state"
+    ]
+  },
+  "parallel_nonancestor_packages": [
+    {
+      "id": "V19",
+      "branch": "research/uorc056-shared-parity-cauchy-v19",
+      "pr": 395,
+      "reason": "separate stacked V-track; not an ancestor of C27 or C28"
+    }
+  ],
+  "governance": {
+    "merge_to_main_authorized": false,
+    "targeted_workflow_is_package_verifier": true,
+    "global_canonical_ci_may_reject_quarantined_research_intake": true,
+    "claim_boundary": "No public parity evaluator or sub-square-root ECDLP algorithm is registered."
+  }
+}
