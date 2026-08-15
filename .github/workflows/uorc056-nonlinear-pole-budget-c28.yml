@@ -1,0 +1,138 @@
+name: UORC056 nonlinear pole budget C28
+
+on:
+  push:
+    branches:
+      - research/uorc056-nonlinear-public-q-state-c28
+    paths:
+      - 'experiments/parity_lift_000/uorc056_nonlinear_pole_budget.py'
+      - 'experiments/parity_lift_000/test_uorc056_nonlinear_pole_budget.py'
+      - 'experiments/parity_lift_000/uorc056_nonlinear_pole_budget_result.json'
+      - 'Ecdlp/Proved/Uorc056NonlinearPoleBudget.lean'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_NONLINEAR_POLE_BUDGET_C28.md'
+      - '.github/workflows/uorc056-nonlinear-pole-budget-c28.yml'
+  pull_request:
+    branches:
+      - research/uorc056-public-q-resultant-c27
+    paths:
+      - 'experiments/parity_lift_000/uorc056_nonlinear_pole_budget.py'
+      - 'experiments/parity_lift_000/test_uorc056_nonlinear_pole_budget.py'
+      - 'experiments/parity_lift_000/uorc056_nonlinear_pole_budget_result.json'
+      - 'Ecdlp/Proved/Uorc056NonlinearPoleBudget.lean'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_NONLINEAR_POLE_BUDGET_C28.md'
+      - '.github/workflows/uorc056-nonlinear-pole-budget-c28.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Compile C28 package
+        run: |
+          python3 -m py_compile \
+            experiments/parity_lift_000/uorc056_nonlinear_pole_budget.py \
+            experiments/parity_lift_000/test_uorc056_nonlinear_pole_budget.py
+
+      - name: Run C28 tests
+        run: |
+          PYTHONPATH=experiments/parity_lift_000 \
+            python3 -m unittest -v \
+            experiments/parity_lift_000/test_uorc056_nonlinear_pole_budget.py
+
+      - name: Check frozen C28 replay
+        run: |
+          python3 experiments/parity_lift_000/uorc056_nonlinear_pole_budget.py \
+            --check \
+            --out experiments/parity_lift_000/uorc056_nonlinear_pole_budget_result.json
+
+      - name: Check exact C28 boundaries
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path(
+              'experiments/parity_lift_000/'
+              'uorc056_nonlinear_pole_budget_result.json'
+          )
+          result = json.loads(path.read_text(encoding='utf-8'))
+          assert result['digest'] == \
+              '593cabc70da562d0f4ecdfce7483272fc7c693a8d6c71643217e3abd605361de'
+
+          pole = result['pole_zero_theorem']
+          assert pole['secp256k1_lower_bound'] == \
+              57896044618658097711785492504343953926418782139537452191302581570759080747168
+          assert pole['secp256k1_lower_bound_bits'] == 255
+
+          controls = result['finite_controls']['cases']
+          assert len(controls) == 5
+          assert sum(row['square_residual_marked_roots'] for row in controls) == 62
+          assert sum(row['translation_defect_marked_roots'] for row in controls) == 57
+
+          compiler = result['pole_budget_compiler']
+          assert compiler['rational_function_controls']['exact_budget_checks'] == 204
+          assert compiler['ab_decoder_compilation']['closed_form'] == '4*a+3*b+9'
+
+          ab = result['ab_state_boundary']
+          assert ab['secp256k1_minimum_coordinate_pole_budget'] == \
+              8270863516951156815969356072049136275202683162791064598757511652965582963880
+          assert ab['minimum_coordinate_pole_budget_bits'] == 253
+          assert ab['predecessor_budget'] < pole['secp256k1_lower_bound'] <= ab['minimum_budget']
+          assert ab['secp256k1_minimum_common_polynomial_degree'] == \
+              1378477252825192802661559345341522712533780527131844099792918608827597160647
+          assert ab['minimum_common_polynomial_degree_bits'] == 250
+          assert ab['polynomial_predecessor_budget'] < pole['secp256k1_lower_bound'] <= ab['polynomial_minimum_budget']
+
+          gates = result['straight_line_program_boundary']['minimum_gate_counts_for_secp_half']
+          assert gates == {'1': 255, '5': 253, '7': 253, '10': 252, '100': 249, '256': 247}
+
+          decision = result['decision']
+          assert decision['pole_budget_tool_built']
+          assert decision['translation_defect_bound_proved']
+          assert decision['low_degree_algebraic_state_blocked']
+          assert not decision['high_degree_low_size_state_blocked']
+          assert not decision['parity_oracle_found']
+          PY
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Kernel-check C28 compiler and arithmetic
+        run: |
+          lake exe cache get
+          lake build Ecdlp.Proved.Uorc056NonlinearPoleBudget
+          lake env lean Ecdlp/Proved/Uorc056NonlinearPoleBudget.lean
+
+      - name: Upload C28 exact replay
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-nonlinear-pole-budget-c28
+          path: experiments/parity_lift_000/uorc056_nonlinear_pole_budget_result.json
+          retention-days: 90
