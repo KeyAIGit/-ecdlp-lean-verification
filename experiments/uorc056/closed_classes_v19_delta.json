@@ -1,0 +1,25 @@
+{
+  "entries": [
+    {
+      "disposition": "sub_square_root_expanded_leaf_support_impossible",
+      "id": "DIRECT-PARITY-ONE-BILINEAR-SPARSE-SPECTRAL-SECP256K1",
+      "reason": "Any function agreeing with odd-cycle parity on every nonzero scalar has Fourier support at least n-1. A pointwise product A*B has Fourier support inside S_A+S_B, so |S_A||S_B|>=n-1. This forces separately charged leaf support at least ceil(2*sqrt(n-1)) and a shared-dictionary pair-cover of root scale.",
+      "reopen_condition": "Use a deeper nonlinear circuit, modular composition, recurrence compression, or another implicit representation that is not one bilinear gate over expanded sparse character leaves.",
+      "scope": "One pointwise product of two exact additive-character sums whose output equals g_G(Q)J_G(x(Q))=(-1)^k for every nonzero secp256k1 scalar. The identity value is free.",
+      "source": "V19"
+    },
+    {
+      "disposition": "sublinear_expanded_support_impossible",
+      "id": "DIRECT-PARITY-SPARSE-RATIONAL-CAUCHY-SECP256K1",
+      "reason": "A/B parity agreement gives A=sigma*B+d*delta_0. On frequencies outside S_A, the coefficients of B and d satisfy a Cauchy system with nodes zeta^(-r), zeta^s, and 0. Every square minor is nonzero, so |S_A|+|S_B|>=n. Even charging the union once gives |S_A union S_B|>=(n+1)/2.",
+      "reopen_condition": "Use a nonlinear implicit-spectrum circuit, modular composition, transposed evaluation, recurrence compression, p-adic or theta evaluation, elliptic units, or another representation not expressible as one sparse character quotient.",
+      "scope": "A quotient A(k)/B(k) of exact additive-character sums, with B(k) nonzero and quotient equal to g_G(Q)J_G(x(Q))=(-1)^k for every nonzero secp256k1 scalar. Coefficients are arbitrary complex values and the identity value is free.",
+      "source": "V19"
+    }
+  ],
+  "global_warning": "These are representation-specific expanded-support lower bounds. They are not unrestricted arithmetic-circuit or ECDLP lower bounds.",
+  "parent_registry": "UORC-056-CLOSED-CLASSES-V18-DELTA",
+  "registry_delta_id": "UORC-056-CLOSED-CLASSES-V19-DELTA",
+  "schema_version": "1.0",
+  "status": "scoped_delta_for_stacked_V19_review"
+}

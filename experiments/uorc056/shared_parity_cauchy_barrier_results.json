@@ -1,0 +1,149 @@
+{
+  "central_identity": "sigma_G(Q)=g_G(Q)*J_G(x(Q))=(-1)^k for Q=[k]G",
+  "closed_classes": [
+    "one bilinear product with o(sqrt(n)) expanded leaf support",
+    "one sparse character quotient with o(n) separate or union support"
+  ],
+  "direct_parity_spectrum": {
+    "exact_witness": "F(0)=0 and F(k)=(-1)^k for k!=0",
+    "formula": "sigmahat(r)=2/(1+zeta^(-r)) for odd n",
+    "free_identity_formula": "Fhat(r)=2/(1+zeta^(-r))+d",
+    "lower_bound": "|supp(Fhat)|>=n-1"
+  },
+  "direct_sparse_rational": {
+    "Cauchy_nodes": "x_r=zeta^(-r), y_s=zeta^s, defect column y=0",
+    "Fourier_system": "Ahat(r)=(1/n)*sum_s 2*Bhat(s)/(1+zeta^(s-r))+d",
+    "canonical_identity_result": "|S_A|+|S_B|>=n+1",
+    "defect": "A=sigma*B+d*delta_0",
+    "exact_witness": "B=1; A(0)=0 and A(k)=(-1)^k for k!=0",
+    "free_identity_result": "|S_A|+|S_B|>=n",
+    "model": "A(k)/B(k)=(-1)^k and B(k)!=0 for every k!=0",
+    "shared_union_result": "|S_A union S_B|>=ceil(n/2)"
+  },
+  "finite_field_replay": {
+    "canonical_and_free_identity_DFT_checks": 5,
+    "exhaustive": [
+      {
+        "expected_minors": 461,
+        "failures": 0,
+        "field_prime": 11,
+        "minors_checked": 461,
+        "n": 5,
+        "root": 4,
+        "size_counts": {
+          "1": 30,
+          "2": 150,
+          "3": 200,
+          "4": 75,
+          "5": 6
+        }
+      },
+      {
+        "expected_minors": 6434,
+        "failures": 0,
+        "field_prime": 29,
+        "minors_checked": 6434,
+        "n": 7,
+        "root": 16,
+        "size_counts": {
+          "1": 56,
+          "2": 588,
+          "3": 1960,
+          "4": 2450,
+          "5": 1176,
+          "6": 196,
+          "7": 8
+        }
+      }
+    ],
+    "exhaustive_cauchy_minors": 6895,
+    "failures": 0,
+    "frozen": [
+      {
+        "bilinear_leaf_sum_bound": 11,
+        "canonical_support": 31,
+        "free_identity_support": 30,
+        "id": "E7-P43-N31",
+        "n": 31,
+        "rational_total_bound": 31,
+        "rational_union_bound": 16,
+        "sampled_minors": 32
+      },
+      {
+        "bilinear_leaf_sum_bound": 18,
+        "canonical_support": 79,
+        "free_identity_support": 78,
+        "id": "E7-P67-N79",
+        "n": 79,
+        "rational_total_bound": 79,
+        "rational_union_bound": 40,
+        "sampled_minors": 32
+      },
+      {
+        "bilinear_leaf_sum_bound": 17,
+        "canonical_support": 67,
+        "free_identity_support": 66,
+        "id": "E7-P79-N67",
+        "n": 67,
+        "rational_total_bound": 67,
+        "rational_union_bound": 34,
+        "sampled_minors": 32
+      },
+      {
+        "bilinear_leaf_sum_bound": 23,
+        "canonical_support": 127,
+        "free_identity_support": 126,
+        "id": "E7-P127-N127",
+        "n": 127,
+        "rational_total_bound": 127,
+        "rational_union_bound": 64,
+        "sampled_minors": 32
+      },
+      {
+        "bilinear_leaf_sum_bound": 24,
+        "canonical_support": 139,
+        "free_identity_support": 138,
+        "id": "E7-P163-N139",
+        "n": 139,
+        "rational_total_bound": 139,
+        "rational_union_bound": 70,
+        "sampled_minors": 32
+      }
+    ],
+    "sampled_cauchy_minors_on_frozen_orders": 160
+  },
+  "one_bilinear_gate": {
+    "leaf_sum": "|S_A|+|S_B|>=ceil(2*sqrt(n-1))",
+    "model": "F=A*B for sparse additive-character sums A,B",
+    "separate_support": "|S_A|*|S_B|>=n-1",
+    "shared_dictionary": "|T|(|T|+1)/2>=n-1"
+  },
+  "profile_id": "UORC-056-SHARED-PARITY-CAUCHY-BARRIER-V19",
+  "remaining_frontier": [
+    "deeper nonlinear implicit-spectrum circuits",
+    "modular composition and transposed evaluation",
+    "recurrence-compressed GLV-Kummer objects",
+    "p-adic, theta, elliptic-unit, and other non-spectral representations"
+  ],
+  "schema_version": "1.0",
+  "scientific_boundary": "No public parity evaluator, sub-square-root ECDLP algorithm, or unrestricted arithmetic-circuit lower bound is claimed.",
+  "secp256k1": {
+    "bilinear_leaf_sum_gap_below_2_pow_129": 1,
+    "bilinear_leaf_sum_lower_bound": 680564733841876926926749214863536422911,
+    "bilinear_leaf_sum_lower_bound_bit_length": 129,
+    "bilinear_shared_dictionary_lower_bound": 481231938336009023090067544955250113853,
+    "bilinear_shared_dictionary_lower_bound_bit_length": 129,
+    "direct_parity_spectrum_support_with_canonical_identity": 115792089237316195423570985008687907852837564279074904382605163141518161494337,
+    "direct_parity_spectrum_support_with_free_identity_lower_bound": 115792089237316195423570985008687907852837564279074904382605163141518161494336,
+    "direct_sparse_rational_canonical_identity_lower_bound": 115792089237316195423570985008687907852837564279074904382605163141518161494338,
+    "direct_sparse_rational_separate_support_lower_bound": 115792089237316195423570985008687907852837564279074904382605163141518161494337,
+    "direct_sparse_rational_separate_support_lower_bound_exact": true,
+    "direct_sparse_rational_shared_union_lower_bound": 57896044618658097711785492504343953926418782139537452191302581570759080747169,
+    "direct_sparse_rational_shared_union_lower_bound_bit_length": 255,
+    "n": 115792089237316195423570985008687907852837564279074904382605163141518161494337,
+    "rational_separate_support_below_2_pow_256": true,
+    "rational_separate_support_exceeds_2_pow_255": true,
+    "rational_union_below_2_pow_255": true,
+    "rational_union_exceeds_2_pow_254": true
+  }
+}
