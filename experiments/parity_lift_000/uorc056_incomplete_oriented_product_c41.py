@@ -5,6 +5,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+from typing import Callable
 
 from uorc056_c39_half_miller import TOYS
 from uorc056_incomplete_oriented_product_c41_probe import curve_probe
@@ -28,81 +29,83 @@ def antisymmetric_monomials(degree: int) -> int:
     return (total_monomials(degree) - diagonal_monomials(degree)) // 2
 
 
+def first_count_exceeding(limit: int, counter: Callable[[int], int]) -> int:
+    if limit < 0:
+        return 0
+    low, high = -1, 1
+    while counter(high) <= limit:
+        low, high = high, 2 * high
+    while high - low > 1:
+        middle = (low + high) // 2
+        if counter(middle) <= limit:
+            low = middle
+        else:
+            high = middle
+    return high
+
+
 def first_total_degree_over_rows(rows: int) -> int:
-    degree = 0
-    while total_monomials(degree) <= rows:
-        degree += 1
-    return degree
+    return first_count_exceeding(rows, total_monomials)
 
 
 def first_symmetric_degree_over_pairs(pairs: int) -> int:
-    degree = 0
-    while symmetric_monomials(degree) <= pairs:
-        degree += 1
-    return degree
+    return first_count_exceeding(pairs, symmetric_monomials)
 
 
 def analyze_curve(row: tuple[int, int, tuple[int, int], int, int]) -> dict[str, object]:
-    result = curve_probe(row)
-    n = int(result['n'])
-    m = int(result['m'])
+    raw = curve_probe(row)
+    n = int(raw['n'])
+    m = int(raw['m'])
     rows = n - 1
 
-    decomposition = result['functional_decompositions']
-    all_indecomposable = all(not candidates for candidates in decomposition.values())
+    decompositions = raw['functional_decompositions']
+    all_indecomposable = all(not candidates for candidates in decompositions.values())
 
-    recurrence = result['coefficient_recurrence']
-    recurrence_maximal = True
     recurrence_summary: dict[str, object] = {}
-    for name, profile in recurrence.items():
+    recurrence_maximal = True
+    for name, profile in raw['coefficient_recurrence'].items():
         coefficient_count = int(profile['coefficient_count'])
         finite_window_maximum = (coefficient_count + 1) // 2
-        ascending = int(profile['ascending'])
-        descending = int(profile['descending'])
-        recurrence_maximal &= (
-            ascending == finite_window_maximum
-            and descending == finite_window_maximum
+        both_maximal = (
+            int(profile['ascending']) == finite_window_maximum
+            and int(profile['descending']) == finite_window_maximum
         )
+        recurrence_maximal &= both_maximal
         recurrence_summary[name] = {
             **profile,
             'finite_window_maximum': finite_window_maximum,
-            'both_directions_maximal': (
-                ascending == finite_window_maximum
-                and descending == finite_window_maximum
-            ),
+            'both_directions_maximal': both_maximal,
         }
 
     general_degree = first_total_degree_over_rows(rows)
     symmetric_degree = first_symmetric_degree_over_pairs(m)
-    transitions = result['state_transitions']
     transition_summary: dict[str, object] = {}
     all_nonnegation_generic = True
     all_rational_generic = True
-    negation_explained = True
+    all_negation_explained = True
 
-    for name, profile in transitions.items():
+    for name, profile in raw['state_transitions'].items():
         bivariate = profile['first_bivariate_relation']
         rational = profile['first_rational_transition']
         bivariate_degree = int(bivariate['degree'])
-        rational_degree = int(rational['degree'])
 
-        if name != 'negation':
-            expected_bivariate_rank = rows
-            bivariate_generic = (
-                bivariate_degree == general_degree
-                and bool(bivariate['forced_by_dimension'])
-                and int(bivariate['rank']) == expected_bivariate_rank
-            )
-            all_nonnegation_generic &= bivariate_generic
-            involution_explanation = None
-        else:
-            degree = bivariate_degree
-            symmetric_columns = symmetric_monomials(degree)
-            antisymmetric_columns = antisymmetric_monomials(degree)
+        involution_explanation = None
+        if name == 'negation':
+            symmetric_columns = symmetric_monomials(bivariate_degree)
+            antisymmetric_columns = antisymmetric_monomials(bivariate_degree)
             expected_rank = min(symmetric_columns, m) + min(antisymmetric_columns, m)
             previous_symmetric = (
-                symmetric_monomials(degree - 1) if degree else 0
+                symmetric_monomials(bivariate_degree - 1)
+                if bivariate_degree
+                else 0
             )
+            bivariate_explained = (
+                bivariate_degree == symmetric_degree
+                and symmetric_columns > m
+                and previous_symmetric <= m
+                and int(bivariate['rank']) == expected_rank
+            )
+            all_negation_explained &= bivariate_explained
             involution_explanation = {
                 'unordered_pairs': m,
                 'symmetric_columns': symmetric_columns,
@@ -111,42 +114,42 @@ def analyze_curve(row: tuple[int, int, tuple[int, int], int, int]) -> dict[str, 
                 'previous_degree_symmetric_columns': previous_symmetric,
                 'first_symmetric_dimension_threshold': symmetric_degree,
             }
-            negation_explained &= (
-                degree == symmetric_degree
-                and symmetric_columns > m
-                and previous_symmetric <= m
-                and int(bivariate['rank']) == expected_rank
+        else:
+            bivariate_explained = (
+                bivariate_degree == general_degree
+                and bool(bivariate['forced_by_dimension'])
+                and int(bivariate['rank']) == rows
             )
-            bivariate_generic = negation_explained
+            all_nonnegation_generic &= bivariate_explained
 
-        rational_generic = (
-            rational_degree == m
+        rational_explained = (
+            int(rational['degree']) == m
             and bool(rational['forced_by_dimension'])
             and int(rational['rank']) == rows
             and int(rational['columns']) == rows + 2
         )
-        all_rational_generic &= rational_generic
+        all_rational_generic &= rational_explained
 
         transition_summary[name] = {
             **profile,
-            'bivariate_relation_explained_by_dimension': bivariate_generic,
-            'rational_transition_explained_by_dimension': rational_generic,
+            'bivariate_relation_explained_by_dimension': bivariate_explained,
+            'rational_transition_explained_by_dimension': rational_explained,
             'swap_involution_explanation': involution_explanation,
         }
 
     return {
-        'p': int(result['p']),
+        'p': int(raw['p']),
         'n': n,
         'm': m,
-        'declared_polynomials': len(decomposition),
+        'declared_polynomials': len(decompositions),
         'all_declared_polynomials_indecomposable': all_indecomposable,
-        'functional_decompositions': decomposition,
+        'functional_decompositions': decompositions,
         'all_coefficient_recurrences_maximal_on_finite_window': recurrence_maximal,
         'coefficient_recurrence': recurrence_summary,
         'general_bivariate_interpolation_degree': general_degree,
         'negation_symmetric_interpolation_degree': symmetric_degree,
         'all_nonnegation_bivariate_relations_dimension_forced': all_nonnegation_generic,
-        'negation_relation_exactly_explained_by_swap_involution': negation_explained,
+        'negation_relation_exactly_explained_by_swap_involution': all_negation_explained,
         'all_rational_transitions_dimension_forced': all_rational_generic,
         'state_transitions': transition_summary,
         'errors': 0,
