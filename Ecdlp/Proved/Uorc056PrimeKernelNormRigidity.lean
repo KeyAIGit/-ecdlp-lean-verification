@@ -18,9 +18,9 @@ theorem unorderedProduct_swap
 
 /-- The ordered difference changes sign when the two factors are swapped. -/
 theorem orderedDifference_swap
-    {R : Type*} [Ring R] (even odd : R) :
+    {R : Type*} [AddCommGroup R] (even odd : R) :
     even - odd = -(odd - even) := by
-  ring
+  abel
 
 /-- Symmetric data cannot simultaneously equal the two opposite ordered
     differences when two is nonzero and the factors are distinct. -/
