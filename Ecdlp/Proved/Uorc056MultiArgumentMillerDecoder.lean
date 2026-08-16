@@ -38,14 +38,14 @@ theorem defect_cocycle
       defect state Q T * defect state P (Q + T) := by
   unfold defect
   rw [add_assoc]
-  field_simp [hstate]
-  ring
+  field_simp [hstate] <;> ring
 
 /-- Algebraic normal form of a defect after a common scalar and an inverse
 n-th-power gauge are inserted into a nonzero field-valued state.
 
-The variables stand for values at `P`, `Q`, and `P+Q`. -/
-theorem defect_of_scaled_power_gauge
+The variables stand for values at `P`, `Q`, and `P+Q`. The power quotient is
+written in expanded form so that denominator clearing checks it directly. -/
+theorem defect_of_scaled_power_gauge_expanded
     {K : Type*} [Field K]
     (c fP fQ fPQ hP hQ hPQ : K)
     (n : Nat)
@@ -58,9 +58,19 @@ theorem defect_of_scaled_power_gauge
     (hhPQ : hPQ ≠ 0) :
     (c * fPQ * (hPQ ^ n)⁻¹) /
         ((c * fP * (hP ^ n)⁻¹) * (c * fQ * (hQ ^ n)⁻¹)) =
-      c⁻¹ * (fPQ / (fP * fQ)) * ((hP * hQ / hPQ) ^ n) := by
-  field_simp [hc, hfP, hfQ, hfPQ, hhP, hhQ, hhPQ]
-  ring
+      c⁻¹ * (fPQ / (fP * fQ)) *
+        ((hP ^ n * hQ ^ n) / hPQ ^ n) := by
+  field_simp [hc, hfP, hfQ, hfPQ, hhP, hhQ, hhPQ] <;> ring
+
+/-- The expanded power quotient is the n-th power of the one-step gauge. -/
+theorem power_gauge_recombine
+    {K : Type*} [Field K]
+    (hP hQ hPQ : K)
+    (n : Nat)
+    (hhPQ : hPQ ≠ 0) :
+    (hP ^ n * hQ ^ n) / hPQ ^ n =
+      (hP * hQ / hPQ) ^ n := by
+  field_simp [hhPQ] <;> ring
 
 /-- Number of monomials in two variables of total degree at most `d`. -/
 def pairMonomials (d : Nat) : Nat :=
