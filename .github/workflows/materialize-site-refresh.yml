@@ -1,0 +1,35 @@
+name: Materialize site refresh
+
+on:
+  push:
+    branches:
+      - feat/verified-results-site-refresh
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Materialize generated and patched files
+        run: python scripts/run_materialize_site_refresh.py
+      - name: Validate materialized surface
+        run: |
+          python -m py_compile scripts/build_dashboard.py scripts/build_results_portal.py scripts/test_build_results_portal.py
+          python scripts/test_build_results_portal.py
+          python scripts/build_results_portal.py --check
+          node --check assets/site.js
+      - name: Create materialized commit on staging ref
+        run: |
+          git config user.name "KeyAI automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Materialize verified results portal and site refresh"
+          git push --force origin HEAD:refs/heads/automation/site-refresh-output

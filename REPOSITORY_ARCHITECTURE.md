@@ -32,6 +32,8 @@ Machine-readable companions:
 - `repo/AUTOMATION_INVENTORY.json` classifies every workflow.
 - `repo/BRANCH_INVENTORY.json` records the dated, non-destructive remote-branch
   snapshot; ancestry alone never authorizes deletion.
+- `VERIFIED_ALL.md` is a generated navigation view over the isolated ECDLP and
+  ResearchOS ledgers. It is not a third canonical ledger and owns no theorem row.
 - `repo/FINAL_REVIEW_PACKET.md` is the frozen adversarial-review contract for
   draft PR #235. It is historical input. `TASK-010` owns the accepted v0.2
   sanitation review. `TASK-017` records the completed exact set-theoretic
@@ -49,12 +51,12 @@ Their checks live under `scripts/check_*inventory.py`,
 ## Operating Principle
 
 The repository is a verified research asset, not just a pile of proofs. Every
-change should preserve three invariants:
+change should preserve five invariants:
 
 1. Lean elaboration and the kernel remain the proof authority; uses of
    `native_decide` additionally trust the compiler and are disclosed by the axiom audit.
 2. `STATUS.md` and `data/stats.json` remain the canonical human/machine
-   snapshot for live counts.
+   snapshot for live ECDLP counts.
 3. Cleanup happens by classification first, then review, then movement or
    deletion in a separate PR.
 4. Product claims resolve to `repo/PRODUCT_MODEL.json`, while pilot evidence and
@@ -81,9 +83,9 @@ publication reviewers. Each audience needs a stable route through the repo.
 | Research Engine v0.2 lifecycle | Immutable candidate versions, registered generation bindings, evidence-bound validator independence, append-only lifecycle, scenario scoring, exhaustive portfolio comparison, deferred state, frozen calibration, and dated owner decisions | `repo/RESEARCH_ENGINE_LIFECYCLE_V0.json`, `repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json`, `data/research_engine_v02_state.json`, `data/research_engine_shadow_intake.json` | Engine computes admissible/recommended only. Validator design is not validator readiness; source independence requires human attestation. Shadow stubs are research questions, not hypotheses. Authorization and route promotion remain zero. |
 | Hypothesis-space run memory | SHA-256-anchored operational benchmark records, pipeline failures, and deltas between distinct deterministic map roots | `repo/HYPOTHESIS_SPACE_RUN_LEDGER_V1.json`, `experiments/engine/hypothesis_space_runs/`, `data/hypothesis_space_run_state.json` | Operational runs do not create scientific outcomes. Cold cells are structural rejects, repeated roots are not new coverage, and no run record can train the ranker or authorize work. |
 | Product and pilot decision layer | Product category, reference-deployment boundary, customer hypotheses, discovery evidence, safety, and MVP gates | `repo/PRODUCT_MODEL.json`, `repo/PILOT_PROTOCOL.json` | Both JSON contracts are canonical. Public surfaces are generated from them; planned features and unvalidated users remain explicit. |
-| Verified ledger and trust boundary | Human-auditable theorem ledgers and scope statements | `VERIFIED.md`, `VERIFIED_RESEARCHOS.md`, `TRUST_REPORT.md`, `ABSTRACT_SCOPE.md`, `BARRIERS.md`, `COVERAGE.md` | Keep counts delegated to `STATUS.md`/`data/stats.json`; keep scope wording adversarially honest. The ResearchOS ledger never feeds the ECDLP headline counts (`scripts/check_ledger_isolation.py`). |
-| Generated machine views | Derived stats, registries, graphs, engine state, audits, badges, and snapshots | `data/stats.json`, `data/{result_registry,researchos_result_registry,source_registry,knowledge_graph,research_engine_state,research_engine_v02_state,research_engine_shadow_intake}.json`, `Ecdlp/LedgerAxiomAudit.lean`, `ResearchOS/LedgerAxiomAudit.lean`, `badges/theorems.json`, `STATUS.md` | Do not hand-edit. Change generators and regenerate. |
-| Public surfaces | Product thesis, operator workspace, route explorer, and external-pilot contract | `index.html`, `dashboard.html`, `explore.html`, `pilot.html`, `assets/`, `fonts/`, `CNAME` | Generate all four pages through `scripts/site_generator.py`; canonical counters must remain useful without JavaScript. |
+| Verified ledgers and trust boundary | Human-auditable theorem ledgers, generated cross-ledger navigation, and scope statements | `VERIFIED.md`, `VERIFIED_RESEARCHOS.md`, `VERIFIED_ALL.md`, `TRUST_REPORT.md`, `ABSTRACT_SCOPE.md`, `BARRIERS.md`, `COVERAGE.md` | Add theorem rows only to a canonical ledger. Generate `VERIFIED_ALL.md`; never treat its combined browsing total as a shared distinct-result denominator. Keep counts delegated to `STATUS.md`/`data/stats.json`; the ResearchOS ledger never feeds ECDLP headline counts (`scripts/check_ledger_isolation.py`). |
+| Generated machine views | Derived stats, registries, graphs, engine state, audits, badges, snapshots, and cross-ledger navigation | `data/stats.json`, `data/{result_registry,researchos_result_registry,source_registry,knowledge_graph,research_engine_state,research_engine_v02_state,research_engine_shadow_intake}.json`, `Ecdlp/LedgerAxiomAudit.lean`, `ResearchOS/LedgerAxiomAudit.lean`, `badges/theorems.json`, `STATUS.md`, `VERIFIED_ALL.md` | Do not hand-edit. Change generators and regenerate. |
+| Public surfaces | Product thesis, verified-results portal, operator workspace, route explorer, and external-pilot contract | `index.html`, `results.html`, `dashboard.html`, `explore.html`, `pilot.html`, `sitemap.xml`, `robots.txt`, `assets/`, `fonts/`, `CNAME` | Generate the five HTML pages through `scripts/build_dashboard.py`, which runs `scripts/site_generator.py` and then `scripts/build_results_portal.py`. Maintain the cross-page navigation and visual clarity layer in `assets/site.js` and `assets/site-refresh.css`; canonical counters must remain useful without JavaScript. |
 | Research OS control plane | Routed research/product tasks, hypotheses, formal architecture, automation, and agent orientation | `AGENTS.md`, `CLAUDE.md`, `ROADMAP.md`, `tasks/NEXT.md`, `tasks/ECDLP_RESEARCH.md`, `tasks/KEYAI_PRODUCT.md`, `experiments/HYPOTHESES.yaml`, `REPOSITORY_ARCHITECTURE.md`, `repo/` | Keep short, current, and executable by low-context agents. Never count product activity as ECDLP progress. |
 | Reproducible experiments | Non-kernel scripts, manifests, review-anchored outcomes, and measured evidence | `experiments/` | Measurements are evidence, never proofs. Only the selected bounded sequence may run; promotion remains separately gated. |
 | Automation and scripts | CI, generators, checks, autonomous loops, server helpers | `.github/workflows/`, `scripts/`, `requirements.txt`, `prompts/` | Prefer explicit gates over narrative promises. Scripts that generate committed artifacts must document outputs. |
@@ -94,9 +96,10 @@ publication reviewers. Each audience needs a stable route through the repo.
 
 | Question | Source of truth | Derived or supporting views |
 |---|---|---|
-| How many verified ledger rows/distinct results/modules exist now? | `data/stats.json`, generated from `VERIFIED.md` | `STATUS.md`, `badges/theorems.json`, site counters |
-| What is actually proved? | `Ecdlp/Proved/*.lean` plus `VERIFIED.md` | `data/knowledge_graph.json`, `data/knowledge_graph.md` |
-| Which exact declarations does each ledger row cite? | `data/result_registry.json` | `Ecdlp/LedgerAxiomAudit.lean` |
+| How many verified ECDLP ledger rows/distinct results/modules exist now? | `data/stats.json`, generated from `VERIFIED.md` | `STATUS.md`, `badges/theorems.json`, site counters |
+| Where can a human browse both verified surfaces without merging them? | `VERIFIED.md` and `VERIFIED_RESEARCHOS.md` remain canonical | generated `VERIFIED_ALL.md`, `results.html` |
+| What is actually proved in ECDLP? | `Ecdlp/Proved/*.lean` plus `VERIFIED.md` | `data/knowledge_graph.json`, `data/knowledge_graph.md` |
+| Which exact declarations does each ECDLP ledger row cite? | `data/result_registry.json` | `Ecdlp/LedgerAxiomAudit.lean` |
 | Which kernel-checked non-ECDLP (ResearchOS) results exist, under which per-row axiom base? | `VERIFIED_RESEARCHOS.md`, generated `data/researchos_result_registry.json` | `ResearchOS/LedgerAxiomAudit.lean`, `scripts/check_ledger_isolation.py` |
 | What is the formal critical path and release boundary? | `repo/FORMAL_SUBSTRATE.json` | semantic edges in `data/knowledge_graph.json` |
 | Which route should be pursued for the exact secp256k1 objective? | `repo/ECDLP_DECISION_SUBSTRATE.json` | `repo/ECDLP_DECISION_SUBSTRATE.md`, decision edges in `data/knowledge_graph.json` |
@@ -105,7 +108,7 @@ publication reviewers. Each audience needs a stable route through the repo.
 | Which bounded exploration runs next, under what budget, and what did prior runs establish? | `repo/RESEARCH_ENGINE_V0.json`, `experiments/engine/outcomes/` | `data/research_engine_state.json`, engine edges in `data/knowledge_graph.json` |
 | Which million-space projections actually ran, how fast, and did the pipeline fail? | anchored records under `experiments/engine/hypothesis_space_runs/` | `data/hypothesis_space_run_state.json`, run-memory section in `data/knowledge_graph.json` |
 | Which research questions enter shadow intake, and which candidates are admissible, recommended, or owner-authorized? | `repo/RESEARCH_ENGINE_LIFECYCLE_V0.json`, `repo/RESEARCH_ENGINE_V0_2_ACCEPTANCE.json` | `data/research_engine_v02_state.json`, `data/research_engine_shadow_intake.json` |
-| What product exists now, for whom, and what qualifies as MVP? | `repo/PRODUCT_MODEL.json` | `index.html`, `dashboard.html`, `explore.html`, `pilot.html`, `tasks/KEYAI_PRODUCT.md` |
+| What product exists now, for whom, and what qualifies as MVP? | `repo/PRODUCT_MODEL.json` | `index.html`, `results.html`, `dashboard.html`, `explore.html`, `pilot.html`, `tasks/KEYAI_PRODUCT.md` |
 | What may TASK-011 collect, what evidence closes discovery, and what may unlock TASK-012? | `repo/PILOT_PROTOCOL.json` | `.github/ISSUE_TEMPLATE/keyai-pilot.yml`, `pilot.html`, `STATUS.md` |
 | What detailed evidence exists for each attack family? | `data/attack_registry.json` | `notes/RESEARCH_MAP.md` |
 | What corpus claims exist? | `data/KG_CLAIM_FORMALIZATION_v1.csv` | `data/frontier_map.json`, `targets/*.json` |
@@ -124,6 +127,8 @@ possible:
 |---|---|
 | `data/stats.json`, `badges/theorems.json` | `scripts/gen_stats.py` |
 | `STATUS.md` | `scripts/gen_status.py` |
+| `VERIFIED_ALL.md`, `results.html`, `sitemap.xml`, `robots.txt` | `scripts/build_results_portal.py` |
+| cross-page Results navigation and visual clarity layer | `assets/site.js`, `assets/site-refresh.css`; checked by `scripts/build_results_portal.py --check` and `node --check assets/site.js` |
 | `data/frontier_map.json` | `scripts/build_frontier_map.py` |
 | `data/knowledge_graph.json`, `data/knowledge_graph.md` | `scripts/build_knowledge_graph.py` |
 | `data/hypothesis_space_run_state.json` | `scripts/hypothesis_space_run_ledger.py` |
@@ -138,8 +143,9 @@ possible:
 | `Ecdlp/LedgerAxiomAudit.lean` | `scripts/gen_axiom_audit.py` |
 | `ResearchOS/LedgerAxiomAudit.lean` | `scripts/gen_axiom_audit.py` |
 | `COVERAGE.md` | `scripts/coverage_report.py` |
-| `index.html`, `dashboard.html`, `explore.html`, `pilot.html` | `scripts/build_dashboard.py` compatibility entry point → `scripts/site_generator.py` |
+| `index.html`, `dashboard.html`, `results.html`, `explore.html`, `pilot.html`, `sitemap.xml`, `robots.txt` | `scripts/build_dashboard.py`: `scripts/site_generator.py` followed by `scripts/build_results_portal.py` |
 | obvious cross-surface drift | `scripts/check_status_consistency.py`, `scripts/check_counts.py` |
+| verified-results portal drift | `scripts/build_results_portal.py --check`, `scripts/test_build_results_portal.py` |
 | repository artifact classification | `scripts/check_repo_artifacts.py` |
 | formal dependency/release map | `scripts/check_formal_substrate.py` |
 | ECDLP route and foundation decisions | `scripts/check_ecdlp_decision_substrate.py` |
