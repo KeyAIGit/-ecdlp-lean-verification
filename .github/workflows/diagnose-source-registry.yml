@@ -1,0 +1,45 @@
+name: Diagnose source registry drift
+
+on:
+  push:
+    branches:
+      - feat/verified-results-site-refresh
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compare source registry provenance
+        run: |
+          cp data/source_registry.json /tmp/source_registry_before.json
+          python scripts/gen_source_registry.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          before = json.loads(Path('/tmp/source_registry_before.json').read_text())
+          after = json.loads(Path('data/source_registry.json').read_text())
+          b = {row['id']: set(row['where_used']) for row in before['sources']}
+          a = {row['id']: set(row['where_used']) for row in after['sources']}
+          for source_id in sorted(a):
+              added = sorted(a[source_id] - b[source_id])
+              removed = sorted(b[source_id] - a[source_id])
+              if added or removed:
+                  print(source_id)
+                  if added:
+                      print('  added:', ', '.join(added))
+                  if removed:
+                      print('  removed:', ', '.join(removed))
+          PY
+          python scripts/hypothesis_funnel.py || true
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          state = json.loads(Path('data/hypothesis_funnel_state.json').read_text())
+          print('new_parent_root:', state['bulk_contract']['merkle_root_sha256'])
+          print('new_source_registry_sha:', state['source_bindings']['evidence_input_sha256']['data/source_registry.json'])
+          PY
