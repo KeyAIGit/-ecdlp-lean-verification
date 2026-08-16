@@ -27,7 +27,8 @@ jobs:
         run: |
           git config user.name "KeyAI automation"
           git config user.email "actions@users.noreply.github.com"
-          git restore --source=HEAD -- .github/workflows
+          rm -f .github/workflows/public-results.yml
+          git restore --source=HEAD -- .github/workflows/materialize-site-refresh.yml
           git add -A
           if git diff --cached --quiet; then
             exit 0
