@@ -1,0 +1,27 @@
+name: UORC056 anchor mixed Miller C35
+
+on:
+  push:
+    branches: [research/uorc056-anchor-mixed-miller-c35]
+  pull_request:
+    branches: [research/uorc056-dynamic-carry-aggregation-c34]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile and replay C35
+        run: |
+          python -m py_compile experiments/parity_lift_000/uorc056_anchor_mixed_miller_c35.py
+          python experiments/parity_lift_000/uorc056_anchor_mixed_miller_c35.py | tee /tmp/c35.txt
+          grep -q UORC056_C35_CHARACTER_SPAN_INCONSISTENT /tmp/c35.txt
+          grep -q 'features= 196' /tmp/c35.txt
