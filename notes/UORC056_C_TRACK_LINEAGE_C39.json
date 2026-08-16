@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "track": "UNIFORM-ORIENTED-ROOT-CIRCUIT-056 / C-track",
+  "package": "C39",
+  "canonical_id": "PARITY-ORBIT-FACTORIZATION-AND-CHARACTER-SPAN-089",
+  "branch": "research/uorc056-parity-orbit-factorization-c39",
+  "parent_branch": "research/uorc056-half-index-miller-c37",
+  "parent_package": "C37 half-index Miller quadratic branch",
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "state": "M_((n-1)/2)(G,Q,S)",
+  "result": "The even/odd orbit quotient is the exact degree-optimal explicit rational decoder, but its ordered difference is a new generator-sensitive polynomial square-root branch. Arbitrary products of all trace-linear power-character atoms are inconsistent with parity on all frozen curves.",
+  "successor": "ON-DEMAND-ORIENTED-NORM-EVALUATION-C40",
+  "status": "exact_structural_boundary_no_parity_oracle",
+  "claim_boundary": "No short non-materializing resultant evaluator, parity oracle, unrestricted circuit lower bound, or sub-square-root ECDLP algorithm is claimed."
+}
