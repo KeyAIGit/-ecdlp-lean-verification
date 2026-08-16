@@ -1,0 +1,302 @@
+{
+  "aggregate": {
+    "curves": 5,
+    "defect_cocycle_checks": 54192,
+    "errors": 0,
+    "joint_injective_shifts": 520,
+    "joint_mixed_parity_shifts": 0,
+    "polynomial_degree_le_3_survivors": 0,
+    "rational_degree_le_2_nonzero_relations": 0,
+    "shift_query_tuples": 54192,
+    "twist_shifts": 520
+  },
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "claim_boundary": {
+    "finite_screen_only": [
+      "injectivity of the three-defect tuple on all 520 frozen shifts",
+      "absence of total-degree at most three polynomial decoders",
+      "absence of total-degree at most two rational relations"
+    ],
+    "not_claimed": [
+      "nonexistence of every nonlinear decoder",
+      "a multivariate circuit lower bound",
+      "a parity oracle",
+      "a sub-square-root ECDLP algorithm"
+    ],
+    "proved": [
+      "the abstract multiplicative defect cocycle identity",
+      "the defect-gauge normal form from the C35 shifted-state gauge",
+      "exact all-shift collision and bounded-degree matrix replay",
+      "maximal canonical evaluation rank until dimension count forces interpolation relations"
+    ]
+  },
+  "curve_results": [
+    {
+      "all_shift_low_degree_screen": {
+        "minimum_rank_in_both_declared_matrices": 20,
+        "polynomial_columns": 20,
+        "polynomial_degree_le_3_survivors": 0,
+        "rational_columns": 20,
+        "rational_degree_le_2_nonzero_relations": 0
+      },
+      "canonical_shift": {
+        "three_coordinate_first_rational_relation": {
+          "columns": 40,
+          "degree": 3,
+          "monomials_per_side": 20,
+          "nullity": 10,
+          "rank": 30
+        },
+        "three_coordinate_polynomial_threshold": {
+          "degree": 4,
+          "monomials": 35,
+          "rank": 30
+        },
+        "two_coordinate_first_rational_relation": {
+          "columns": 42,
+          "degree": 5,
+          "monomials_per_side": 21,
+          "nullity": 12,
+          "rank": 30
+        },
+        "two_coordinate_polynomial_threshold": {
+          "degree": 7,
+          "monomials": 36,
+          "rank": 30
+        }
+      },
+      "defect_cocycle_checks": 1680,
+      "errors": 0,
+      "instance": "E7-P43-N31",
+      "joint_state": {
+        "injective_shifts": 56,
+        "maximum_distinct_tuples": 30,
+        "minimum_distinct_tuples": 30,
+        "mixed_parity_shifts": 0,
+        "single_defect_pure_shift_counts": [42, 50, 54]
+      },
+      "n": 31,
+      "p": 43,
+      "twist_shifts": 56
+    },
+    {
+      "all_shift_low_degree_screen": {
+        "minimum_rank_in_both_declared_matrices": 20,
+        "polynomial_columns": 20,
+        "polynomial_degree_le_3_survivors": 0,
+        "rational_columns": 20,
+        "rational_degree_le_2_nonzero_relations": 0
+      },
+      "canonical_shift": {
+        "three_coordinate_first_rational_relation": {
+          "columns": 112,
+          "degree": 5,
+          "monomials_per_side": 56,
+          "nullity": 34,
+          "rank": 78
+        },
+        "three_coordinate_polynomial_threshold": {
+          "degree": 6,
+          "monomials": 84,
+          "rank": 78
+        },
+        "two_coordinate_first_rational_relation": {
+          "columns": 90,
+          "degree": 8,
+          "monomials_per_side": 45,
+          "nullity": 12,
+          "rank": 78
+        },
+        "two_coordinate_polynomial_threshold": {
+          "degree": 11,
+          "monomials": 78,
+          "rank": 78
+        }
+      },
+      "defect_cocycle_checks": 4368,
+      "errors": 0,
+      "instance": "E7-P67-N79",
+      "joint_state": {
+        "injective_shifts": 56,
+        "maximum_distinct_tuples": 78,
+        "minimum_distinct_tuples": 78,
+        "mixed_parity_shifts": 0,
+        "single_defect_pure_shift_counts": [42, 50, 44]
+      },
+      "n": 79,
+      "p": 67,
+      "twist_shifts": 56
+    },
+    {
+      "all_shift_low_degree_screen": {
+        "minimum_rank_in_both_declared_matrices": 20,
+        "polynomial_columns": 20,
+        "polynomial_degree_le_3_survivors": 0,
+        "rational_columns": 20,
+        "rational_degree_le_2_nonzero_relations": 0
+      },
+      "canonical_shift": {
+        "three_coordinate_first_rational_relation": {
+          "columns": 70,
+          "degree": 4,
+          "monomials_per_side": 35,
+          "nullity": 4,
+          "rank": 66
+        },
+        "three_coordinate_polynomial_threshold": {
+          "degree": 6,
+          "monomials": 84,
+          "rank": 66
+        },
+        "two_coordinate_first_rational_relation": {
+          "columns": 72,
+          "degree": 7,
+          "monomials_per_side": 36,
+          "nullity": 6,
+          "rank": 66
+        },
+        "two_coordinate_polynomial_threshold": {
+          "degree": 10,
+          "monomials": 66,
+          "rank": 66
+        }
+      },
+      "defect_cocycle_checks": 6072,
+      "errors": 0,
+      "instance": "E7-P79-N67",
+      "joint_state": {
+        "injective_shifts": 92,
+        "maximum_distinct_tuples": 66,
+        "minimum_distinct_tuples": 66,
+        "mixed_parity_shifts": 0,
+        "single_defect_pure_shift_counts": [82, 82, 80]
+      },
+      "n": 67,
+      "p": 79,
+      "twist_shifts": 92
+    },
+    {
+      "all_shift_low_degree_screen": {
+        "minimum_rank_in_both_declared_matrices": 20,
+        "polynomial_columns": 20,
+        "polynomial_degree_le_3_survivors": 0,
+        "rational_columns": 20,
+        "rational_degree_le_2_nonzero_relations": 0
+      },
+      "canonical_shift": {
+        "three_coordinate_first_rational_relation": {
+          "columns": 168,
+          "degree": 6,
+          "monomials_per_side": 84,
+          "nullity": 42,
+          "rank": 126
+        },
+        "three_coordinate_polynomial_threshold": {
+          "degree": 8,
+          "monomials": 165,
+          "rank": 126
+        },
+        "two_coordinate_first_rational_relation": {
+          "columns": 132,
+          "degree": 10,
+          "monomials_per_side": 66,
+          "nullity": 6,
+          "rank": 126
+        },
+        "two_coordinate_polynomial_threshold": {
+          "degree": 15,
+          "monomials": 136,
+          "rank": 126
+        }
+      },
+      "defect_cocycle_checks": 16128,
+      "errors": 0,
+      "instance": "E7-P127-N127",
+      "joint_state": {
+        "injective_shifts": 128,
+        "maximum_distinct_tuples": 126,
+        "minimum_distinct_tuples": 126,
+        "mixed_parity_shifts": 0,
+        "single_defect_pure_shift_counts": [86, 108, 104]
+      },
+      "n": 127,
+      "p": 127,
+      "twist_shifts": 128
+    },
+    {
+      "all_shift_low_degree_screen": {
+        "minimum_rank_in_both_declared_matrices": 20,
+        "polynomial_columns": 20,
+        "polynomial_degree_le_3_survivors": 0,
+        "rational_columns": 20,
+        "rational_degree_le_2_nonzero_relations": 0
+      },
+      "canonical_shift": {
+        "three_coordinate_first_rational_relation": {
+          "columns": 168,
+          "degree": 6,
+          "monomials_per_side": 84,
+          "nullity": 30,
+          "rank": 138
+        },
+        "three_coordinate_polynomial_threshold": {
+          "degree": 8,
+          "monomials": 165,
+          "rank": 138
+        },
+        "two_coordinate_first_rational_relation": {
+          "columns": 156,
+          "degree": 11,
+          "monomials_per_side": 78,
+          "nullity": 18,
+          "rank": 138
+        },
+        "two_coordinate_polynomial_threshold": {
+          "degree": 16,
+          "monomials": 153,
+          "rank": 138
+        }
+      },
+      "defect_cocycle_checks": 25944,
+      "errors": 0,
+      "instance": "E7-P163-N139",
+      "joint_state": {
+        "injective_shifts": 188,
+        "maximum_distinct_tuples": 138,
+        "minimum_distinct_tuples": 138,
+        "mixed_parity_shifts": 0,
+        "single_defect_pure_shift_counts": [158, 160, 160]
+      },
+      "n": 139,
+      "p": 163,
+      "twist_shifts": 188
+    }
+  ],
+  "decision": {
+    "arbitrary_lookup_decoder_exists_on_frozen_curves": true,
+    "canonical_early_interpolation_structure_found": false,
+    "compact_public_three_defect_state_found": true,
+    "joint_state_injective_on_every_frozen_shift": true,
+    "lookup_decoder_is_cost_acceptable": false,
+    "parity_oracle_found": false,
+    "polynomial_total_degree_le_3_decoder_found": false,
+    "rational_total_degree_le_2_decoder_found": false,
+    "sub_sqrt_ecdlp_found": false,
+    "sub_sqrt_evaluator_found": false,
+    "successor": "CUBICAL-MILLER-DEFECT-ELIMINATION-C37"
+  },
+  "digest": "f6917795e67bba2a15ec75cd4d8968221d63ab222181c32e44e5f01152b6e9a3",
+  "field_defect": {
+    "carry_analogy": "C_G(P,R) is the same multiplicative defect construction applied to sigma_G.",
+    "cocycle": "Delta(P,R)Delta(P+R,T)=Delta(R,T)Delta(P,R+T)",
+    "definition": "Delta_S(P,R)=M_S(P+R)/(M_S(P)M_S(R))",
+    "shift_gauge": "Every shifted field defect differs from one base Miller defect by one common scalar and an explicit n-th-power line coboundary."
+  },
+  "profile_id": "UORC-056-MULTI-ARGUMENT-MILLER-DECODER-C36",
+  "schema_version": "1.0",
+  "three_defect_state": {
+    "cost": "A constant number of O(log n) shifted Miller evaluations and field operations.",
+    "pairs": "(Q,A), (A,B), (-T,-B), with A=2Q, T=-Q/2, B=T-A",
+    "state": "D_S(Q)=(Delta_S(Q,A),Delta_S(A,B),Delta_S(-T,-B))"
+  }
+}

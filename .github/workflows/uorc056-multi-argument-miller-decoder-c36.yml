@@ -1,0 +1,124 @@
+name: UORC056 multi argument Miller decoder C36
+
+on:
+  push:
+    branches:
+      - research/uorc056-multi-argument-miller-decoder-c36
+    paths:
+      - 'experiments/parity_lift_000/uorc056_multi_argument_miller_decoder_c36.py'
+      - 'experiments/parity_lift_000/test_uorc056_multi_argument_miller_decoder_c36.py'
+      - 'experiments/parity_lift_000/uorc056_multi_argument_miller_decoder_c36_result.json'
+      - 'Ecdlp/Proved/Uorc056MultiArgumentMillerDecoder.lean'
+      - 'notes/UORC056_MULTI_ARGUMENT_MILLER_DECODER_C36.md'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_C_TRACK_LINEAGE_C36.json'
+      - '.github/workflows/uorc056-multi-argument-miller-decoder-c36.yml'
+  pull_request:
+    branches:
+      - research/uorc056-anchor-mixed-miller-c35
+    paths:
+      - 'experiments/parity_lift_000/uorc056_multi_argument_miller_decoder_c36.py'
+      - 'experiments/parity_lift_000/test_uorc056_multi_argument_miller_decoder_c36.py'
+      - 'experiments/parity_lift_000/uorc056_multi_argument_miller_decoder_c36_result.json'
+      - 'Ecdlp/Proved/Uorc056MultiArgumentMillerDecoder.lean'
+      - 'notes/UORC056_MULTI_ARGUMENT_MILLER_DECODER_C36.md'
+      - 'archive/untrusted_intake/parity_lift_000/UORC056_C_TRACK_LINEAGE_C36.json'
+      - '.github/workflows/uorc056-multi-argument-miller-decoder-c36.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Compile, test and replay C36
+        run: |
+          python -m py_compile \
+            experiments/parity_lift_000/uorc056_multi_argument_miller_decoder_c36.py \
+            experiments/parity_lift_000/test_uorc056_multi_argument_miller_decoder_c36.py
+          PYTHONPATH=experiments/parity_lift_000 python -m unittest -v \
+            experiments/parity_lift_000/test_uorc056_multi_argument_miller_decoder_c36.py
+          PYTHONPATH=experiments/parity_lift_000 python \
+            experiments/parity_lift_000/uorc056_multi_argument_miller_decoder_c36.py \
+            --check \
+            --out /tmp/uorc056_multi_argument_miller_decoder_c36_result.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          committed = json.loads(Path(
+              'experiments/parity_lift_000/uorc056_multi_argument_miller_decoder_c36_result.json'
+          ).read_text())
+          replayed = json.loads(Path(
+              '/tmp/uorc056_multi_argument_miller_decoder_c36_result.json'
+          ).read_text())
+          assert committed == replayed
+          PY
+
+      - name: Check machine-readable decision boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = json.loads(Path(
+              '/tmp/uorc056_multi_argument_miller_decoder_c36_result.json'
+          ).read_text())
+          assert result['profile_id'] == 'UORC-056-MULTI-ARGUMENT-MILLER-DECODER-C36'
+          aggregate = result['aggregate']
+          assert aggregate['twist_shifts'] == 520
+          assert aggregate['shift_query_tuples'] == 54192
+          assert aggregate['joint_injective_shifts'] == 520
+          assert aggregate['joint_mixed_parity_shifts'] == 0
+          assert aggregate['polynomial_degree_le_3_survivors'] == 0
+          assert aggregate['rational_degree_le_2_nonzero_relations'] == 0
+          assert aggregate['defect_cocycle_checks'] == 54192
+          assert aggregate['errors'] == 0
+          decision = result['decision']
+          assert decision['compact_public_three_defect_state_found']
+          assert decision['joint_state_injective_on_every_frozen_shift']
+          assert not decision['lookup_decoder_is_cost_acceptable']
+          assert not decision['parity_oracle_found']
+          assert not decision['sub_sqrt_ecdlp_found']
+          assert len(result['digest']) == 64
+          PY
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Kernel-check C36 algebra and threshold arithmetic
+        run: |
+          lake exe cache get
+          lake build Ecdlp.Proved.Uorc056MultiArgumentMillerDecoder
+          lake env lean Ecdlp/Proved/Uorc056MultiArgumentMillerDecoder.lean
+
+      - name: Upload C36 certificate
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-multi-argument-miller-decoder-c36
+          path: /tmp/uorc056_multi_argument_miller_decoder_c36_result.json
+          retention-days: 90

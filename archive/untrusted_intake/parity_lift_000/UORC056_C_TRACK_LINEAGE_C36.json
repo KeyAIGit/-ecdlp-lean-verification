@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "track": "UNIFORM-ORIENTED-ROOT-CIRCUIT-056 / C-track",
+  "package": "C36",
+  "canonical_id": "MULTI-ARGUMENT-MILLER-DECODER-084",
+  "branch": "research/uorc056-multi-argument-miller-decoder-c36",
+  "parent_branch": "research/uorc056-anchor-mixed-miller-c35",
+  "parent_package": "C35 shifted Miller gauge and torus collapse",
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "public_state": "Three shifted-Miller multiplicative defects at the exact C34 carry locations.",
+  "positive_result": "The three-defect tuple is injective on every one of the 520 frozen anti-rational shifts.",
+  "main_boundary": "No total-degree at most three polynomial decoder and no nonzero total-degree at most two rational relation exists on any frozen shift; canonical ranks remain maximal until dimension count forces interpolation relations.",
+  "successor": "CUBICAL-MILLER-DEFECT-ELIMINATION-C37",
+  "status": "exact_bounded_decoder_boundary_no_parity_oracle",
+  "claim_boundary": "No unrestricted nonlinear-decoder lower bound, parity oracle, or sub-square-root ECDLP algorithm is claimed."
+}
