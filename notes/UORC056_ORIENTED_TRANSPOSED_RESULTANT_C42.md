@@ -2,7 +2,7 @@
 
 Date: 2026-08-16
 
-Status: exact positive normal form plus scoped negative decoder boundary. No cheap parity decoder, parity oracle, or sub-square-root ECDLP algorithm is claimed.
+Status: exact positive normal form plus scoped negative decoder boundary. The specialized Python, machine-readable, Lean, and artifact workflow is green. No cheap parity decoder, parity oracle, or sub-square-root ECDLP algorithm is claimed.
 
 ## 1. Central target
 
@@ -381,6 +381,8 @@ The combined exact replay covers
 0 anti-Frobenius survivors,
 0 arithmetic errors.
 ```
+
+The specialized GitHub Actions run passes Python compilation, exact unit replay, machine-readable decision gates, Lean kernel checks, and artifact upload.
 
 ## 9. Decision
 
