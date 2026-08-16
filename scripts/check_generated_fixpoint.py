@@ -69,11 +69,20 @@ PURE_ARTIFACTS = [
     "data/knowledge_graph.md",
     "COVERAGE.md",
     "STATUS.md",
+    "VERIFIED_ALL.md",
     "repo/ECDLP_DECISION_SUBSTRATE.md",
     "bundles/MANIFEST.json",
 ]
 
-SITE_ARTIFACTS = ["dashboard.html", "index.html", "explore.html", "pilot.html"]
+SITE_ARTIFACTS = [
+    "dashboard.html",
+    "index.html",
+    "results.html",
+    "sitemap.xml",
+    "robots.txt",
+    "explore.html",
+    "pilot.html",
+]
 ALL_ARTIFACTS = PURE_ARTIFACTS + SITE_ARTIFACTS
 
 
