@@ -46,6 +46,7 @@ on:
       - "scripts/build_results_portal.py"
       - "scripts/test_build_results_portal.py"
       - ".github/workflows/public-results.yml"
+  workflow_dispatch:
 
 permissions:
   contents: read
