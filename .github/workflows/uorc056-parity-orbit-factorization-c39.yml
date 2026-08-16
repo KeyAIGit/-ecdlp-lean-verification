@@ -1,0 +1,113 @@
+name: UORC056 parity orbit factorization C39
+
+on:
+  push:
+    branches:
+      - research/uorc056-parity-orbit-factorization-c39
+    paths:
+      - 'experiments/parity_lift_000/uorc056_c39_half_miller.py'
+      - 'experiments/parity_lift_000/uorc056_c39_orbit.py'
+      - 'experiments/parity_lift_000/uorc056_c39_character_span.py'
+      - 'experiments/parity_lift_000/uorc056_parity_orbit_factorization_c39_compact.py'
+      - 'experiments/parity_lift_000/test_uorc056_parity_orbit_factorization_c39_compact.py'
+      - 'Ecdlp/Proved/Uorc056ParityOrbitFactorization.lean'
+      - 'notes/UORC056_PARITY_ORBIT_FACTORIZATION_C39.md'
+      - 'notes/UORC056_C_TRACK_LINEAGE_C39.json'
+      - '.github/workflows/uorc056-parity-orbit-factorization-c39.yml'
+  pull_request:
+    branches:
+      - research/uorc056-half-index-miller-c37
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install exact replay dependency
+        run: python -m pip install --disable-pip-version-check numpy
+
+      - name: Compile, test and replay C39
+        run: |
+          python -m py_compile \
+            experiments/parity_lift_000/uorc056_c39_half_miller.py \
+            experiments/parity_lift_000/uorc056_c39_orbit.py \
+            experiments/parity_lift_000/uorc056_c39_character_span.py \
+            experiments/parity_lift_000/uorc056_parity_orbit_factorization_c39_compact.py \
+            experiments/parity_lift_000/test_uorc056_parity_orbit_factorization_c39_compact.py
+          PYTHONPATH=experiments/parity_lift_000 python -m unittest -v \
+            experiments/parity_lift_000/test_uorc056_parity_orbit_factorization_c39_compact.py
+          PYTHONPATH=experiments/parity_lift_000 python \
+            experiments/parity_lift_000/uorc056_parity_orbit_factorization_c39_compact.py \
+            --out /tmp/uorc056_parity_orbit_factorization_c39_result.json
+
+      - name: Check machine-readable boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          result = json.loads(Path(
+              '/tmp/uorc056_parity_orbit_factorization_c39_result.json'
+          ).read_text())
+          assert result['profile_id'] == 'UORC-056-PARITY-ORBIT-FACTORIZATION-C39'
+          aggregate = result['aggregate']
+          assert aggregate['curves'] == 5
+          assert aggregate['orbit_decoder_checks'] == 438
+          assert aggregate['all_orbit_polynomials_degree_optimal']
+          assert aggregate['all_B_units_on_half_kernel']
+          assert aggregate['all_even_odd_polynomials_dense_except_at_most_one_coefficient']
+          assert aggregate['all_trace_power_character_product_grammars_inconsistent']
+          assert aggregate['trace_power_atoms_declared'] == 7307232
+          assert aggregate['trace_power_valid_atoms'] == 4188642
+          decision = result['decision']
+          assert decision['exact_orbit_decoder_found']
+          assert decision['rational_degree_optimality_proved']
+          assert decision['orbit_factorization_reduces_to_oriented_square_root_branch']
+          assert decision['arbitrary_products_of_all_trace_linear_power_characters_closed_on_frozen_corpus']
+          assert not decision['short_subroot_orbit_decoder_found']
+          assert not decision['parity_oracle_found']
+          assert not decision['sub_sqrt_ecdlp_found']
+          assert len(result['digest']) == 64
+          PY
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Kernel-check C39 algebra and secp arithmetic
+        run: |
+          lake exe cache get
+          lake build Ecdlp.Proved.Uorc056ParityOrbitFactorization
+          lake env lean Ecdlp/Proved/Uorc056ParityOrbitFactorization.lean
+
+      - name: Upload C39 certificate
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-parity-orbit-factorization-c39
+          path: /tmp/uorc056_parity_orbit_factorization_c39_result.json
+          retention-days: 90
