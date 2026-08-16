@@ -54,11 +54,10 @@ theorem orbitDiscriminant
 /-- Swapping the ordered factors negates the decoder. -/
 theorem orbitDecoder_swap
     {K : Type*} [Field K]
-    (pEven pOdd : K)
-    (hden : pOdd + pEven ≠ 0) :
+    (pEven pOdd : K) :
     orbitDecoder pOdd pEven = -orbitDecoder pEven pOdd := by
   unfold orbitDecoder
-  field_simp
+  rw [add_comm pEven pOdd]
   ring
 
 /-- Algebraic classification of a degree-minimal decoder after the root-count
