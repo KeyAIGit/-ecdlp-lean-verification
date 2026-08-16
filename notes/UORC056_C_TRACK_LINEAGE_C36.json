@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "track": "UNIFORM-ORIENTED-ROOT-CIRCUIT-056 / C-track",
+  "package": "C36",
+  "canonical_id": "REGULARIZED-ANCHOR-MILLER-TRANSLATION-084",
+  "branch": "research/uorc056-regularized-anchor-miller-c36",
+  "parent_branch": "research/uorc056-anchor-mixed-miller-c35",
+  "parent_package": "C35 anchor-mixed Miller boundary",
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "closed_class": "Regularized same-subgroup n-Miller translation quotients, constant products, shift ratios, Frobenius norms and norm-one extraction.",
+  "main_identity": "f_(n,P)(S+Q)/f_(n,P)(S)=h_(P,Q)(S)^n for P,Q in one cyclic n-subgroup.",
+  "twist_collapse": "The unique n-th root of the trace-zero norm-one quotient is a Mobius function of x(Q-P/2).",
+  "successor": "MIXED-INDEX-ELLIPTIC-NET-OR-RESULTANT-C37",
+  "status": "scoped_negative_no_parity_evaluator",
+  "claim_boundary": "No unrestricted circuit lower bound, parity oracle, sub-root evaluator, or sub-square-root ECDLP algorithm is claimed."
+}
