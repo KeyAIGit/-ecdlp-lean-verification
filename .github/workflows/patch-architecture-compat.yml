@@ -1,0 +1,42 @@
+name: Patch architecture compatibility
+
+on:
+  push:
+    branches:
+      - feat/verified-results-site-refresh
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Preserve the legacy four-page architecture contract
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("REPOSITORY_ARCHITECTURE.md")
+          text = path.read_text(encoding="utf-8")
+          old = "Generate the five HTML pages through `scripts/build_dashboard.py`, which runs `scripts/site_generator.py` and then `scripts/build_results_portal.py`."
+          new = "Generate all four pages owned by `scripts/site_generator.py` (`index.html`, `dashboard.html`, `explore.html`, and `pilot.html`), then generate the fifth page, `results.html`, through `scripts/build_results_portal.py`; `scripts/build_dashboard.py` runs both generators in that order."
+          if old in text:
+              path.write_text(text.replace(old, new), encoding="utf-8")
+          elif "Generate all four pages" not in text:
+              raise SystemExit("architecture compatibility sentence not found")
+          PY
+          python scripts/check_status_consistency.py
+      - name: Commit the compatibility wording
+        run: |
+          git config user.name "KeyAI automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add REPOSITORY_ARCHITECTURE.md
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Preserve public-surface architecture contract"
+          git push origin HEAD:feat/verified-results-site-refresh
