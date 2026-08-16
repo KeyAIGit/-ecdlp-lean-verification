@@ -74,8 +74,14 @@ protocol algebra, GLV structure, Semaev and division-polynomial results, attack
 applicability, and exact route decisions. The repository does not claim a
 shortcut for the plain single-target secp256k1 discrete logarithm problem.
 
+The classical boundary map remains tied to its primary literature: Shoup and
+Nechaev for generic-group lower bounds; Pollard and Pohlig-Hellman for baseline
+algorithms; MOV and Frey-Rück for pairing transfers; Smart for anomalous-curve
+attacks; Schoof for point-counting context; and Shor for the quantum boundary.
+These references delimit scope. They do not imply a new attack.
+
 The current route decision is machine-readable in
-[`repo/ECDLP_DECISION_SUBSTRATE.json`](repo/ECDLP_DECISION_SUBSTRATE.json).
+[`repo/ECDLP_DECISION_SUBSTRATE.json`](repo/ECLD_DECISION_SUBSTRATE.json).
 Do not infer route priority from theorem volume or from a missing Mathlib module.
 
 ### ResearchOS and RH Stage 0
@@ -132,7 +138,7 @@ Agents begin with [`AGENTS.md`](AGENTS.md). Human contributors should also read
 
 ## Authorship and AI disclosure
 
-The human maintainer bears intellectual responsibility for every claim of
+The human maintainer bears intellectual responsibility for every claim od
 novelty and significance. AI systems have assisted with formalization, code,
 proof search, testing, and organization. They are tools, not authors. The Lean
 kernel establishes acceptance of the declared proof terms; it does not validate
