@@ -1,0 +1,92 @@
+name: UORC056 spectral root transport C39
+
+on:
+  push:
+    branches:
+      - research/uorc056-spectral-root-transport-c39
+    paths:
+      - 'experiments/parity_lift_000/uorc056_spectral_root_transport_c39.py'
+      - 'experiments/parity_lift_000/test_uorc056_spectral_root_transport_c39.py'
+      - 'Ecdlp/Proved/Uorc056SpectralRootTransport.lean'
+      - 'notes/UORC056_SPECTRAL_ROOT_TRANSPORT_C39.md'
+      - '.github/workflows/uorc056-spectral-root-transport-c39.yml'
+  pull_request:
+    branches:
+      - research/uorc056-half-index-miller-c37
+    paths:
+      - 'experiments/parity_lift_000/uorc056_spectral_root_transport_c39.py'
+      - 'experiments/parity_lift_000/test_uorc056_spectral_root_transport_c39.py'
+      - 'Ecdlp/Proved/Uorc056SpectralRootTransport.lean'
+      - 'notes/UORC056_SPECTRAL_ROOT_TRANSPORT_C39.md'
+      - '.github/workflows/uorc056-spectral-root-transport-c39.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Compile, test and replay C39
+        run: |
+          python -m py_compile \
+            experiments/parity_lift_000/uorc056_spectral_root_transport_c39.py \
+            experiments/parity_lift_000/test_uorc056_spectral_root_transport_c39.py
+          PYTHONPATH=experiments/parity_lift_000 python -m unittest -v \
+            experiments/parity_lift_000/test_uorc056_spectral_root_transport_c39.py
+          PYTHONPATH=experiments/parity_lift_000 python \
+            experiments/parity_lift_000/uorc056_spectral_root_transport_c39.py \
+            --out /tmp/uorc056_spectral_root_transport_c39.json
+
+      - name: Check machine-readable decision boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          result = json.loads(Path('/tmp/uorc056_spectral_root_transport_c39.json').read_text())
+          assert result['profile_id'] == 'UORC-056-SPECTRAL-ROOT-TRANSPORT-C39'
+          aggregate = result['aggregate']
+          assert aggregate['curves'] == 5
+          assert aggregate['query_cases'] == 438
+          assert aggregate['inversion_checks'] == 438
+          assert aggregate['all_square_root_congruences']
+          assert aggregate['all_reciprocal_orbit_identities']
+          assert aggregate['all_corrections_dense']
+          assert aggregate['all_dickson_expansions_dense']
+          assert aggregate['direct_character_survivors'] == 0
+          assert aggregate['errors'] == 0
+          decision = result['decision']
+          assert decision['spectral_factor_reduced_to_oriented_square_root']
+          assert not decision['cheap_parity_decoder_found']
+          assert not decision['parity_oracle_found']
+          assert len(result['digest']) == 64
+          PY
+
+      - name: Install Lean toolchain
+        run: |
+          curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+            https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Kernel-check C39 algebra
+        run: |
+          lake exe cache get
+          lake build Ecdlp.Proved.Uorc056SpectralRootTransport
+          lake env lean Ecdlp/Proved/Uorc056SpectralRootTransport.lean
+
+      - name: Upload C39 certificate
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-spectral-root-transport-c39
+          path: /tmp/uorc056_spectral_root_transport_c39.json
+          retention-days: 90
