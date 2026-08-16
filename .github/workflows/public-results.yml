@@ -1,0 +1,70 @@
+name: Public results portal
+
+on:
+  pull_request:
+    paths:
+      - "VERIFIED.md"
+      - "VERIFIED_RESEARCHOS.md"
+      - "VERIFIED_ALL.md"
+      - "data/stats.json"
+      - "data/researchos_result_registry.json"
+      - "repo/PRODUCT_MODEL.json"
+      - "CNAME"
+      - "results.html"
+      - "sitemap.xml"
+      - "robots.txt"
+      - "index.html"
+      - "dashboard.html"
+      - "explore.html"
+      - "pilot.html"
+      - "assets/site-refresh.css"
+      - "assets/site.js"
+      - "scripts/build_dashboard.py"
+      - "scripts/build_results_portal.py"
+      - "scripts/test_build_results_portal.py"
+      - ".github/workflows/public-results.yml"
+  push:
+    branches: [main]
+    paths:
+      - "VERIFIED.md"
+      - "VERIFIED_RESEARCHOS.md"
+      - "VERIFIED_ALL.md"
+      - "data/stats.json"
+      - "data/researchos_result_registry.json"
+      - "repo/PRODUCT_MODEL.json"
+      - "CNAME"
+      - "results.html"
+      - "sitemap.xml"
+      - "robots.txt"
+      - "index.html"
+      - "dashboard.html"
+      - "explore.html"
+      - "pilot.html"
+      - "assets/site-refresh.css"
+      - "assets/site.js"
+      - "scripts/build_dashboard.py"
+      - "scripts/build_results_portal.py"
+      - "scripts/test_build_results_portal.py"
+      - ".github/workflows/public-results.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compile portal code
+        run: python -m py_compile scripts/build_dashboard.py scripts/build_results_portal.py scripts/test_build_results_portal.py
+      - name: Check public-site JavaScript
+        run: node --check assets/site.js
+      - name: Run portal unit tests
+        run: python scripts/test_build_results_portal.py
+      - name: Check generated portal freshness
+        run: python scripts/build_results_portal.py --check
+      - name: Check repository artifact classification
+        run: python scripts/check_repo_artifacts.py
