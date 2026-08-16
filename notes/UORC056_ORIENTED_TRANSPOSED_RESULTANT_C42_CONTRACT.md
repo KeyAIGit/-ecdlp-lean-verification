@@ -2,7 +2,7 @@
 
 Date: 2026-08-16
 
-Status: fulfilled by the canonical C42 package in
+Status: fulfilled by the canonical, green C42 package in
 `notes/UORC056_ORIENTED_TRANSPOSED_RESULTANT_C42.md`.
 
 ## Contract outcome
@@ -12,13 +12,14 @@ The completed package derives and verifies:
 1. exact target-root localization of the C39 orbit factors;
 2. the exact GLV cubic relative norm
    `c0^3 + T*c1^3 + T^2*c2^3 - 3*T*c0*c1*c2`;
-3. the reduction of the outer determinant dimension from `(n-1)/2` to
-   `(n-1)/6`;
+3. reduction of the outer determinant dimension from `(n-1)/2` to `(n-1)/6`;
 4. the fact that query-root localization returns the original missing branch
    `Y_G(x(Q))/y(Q)` rather than bypassing it;
 5. a complete affine quadratic-character screen of the anti-Frobenius
    `2 by 2` minor on five frozen curves and one held-out curve;
-6. an exact secp256k1 representation and two-level product cost ledger.
+6. an exact secp256k1 representation and two-level product cost ledger;
+7. successful Python replay, machine-readable gates, Lean kernel checks, and
+   artifact upload in the specialized GitHub Actions workflow.
 
 The declared explicit and two-level mechanisms do not meet the fixed-epsilon
 sub-square-root gate. No unrestricted resultant or arithmetic-circuit lower
