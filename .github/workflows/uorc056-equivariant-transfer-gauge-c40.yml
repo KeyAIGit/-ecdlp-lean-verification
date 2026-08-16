@@ -1,0 +1,96 @@
+name: UORC056 equivariant transfer gauge C40
+
+on:
+  push:
+    branches:
+      - research/uorc056-equivariant-transfer-gauge-c40
+    paths:
+      - 'experiments/parity_lift_000/uorc056_equivariant_transfer_gauge_c40.py'
+      - 'experiments/parity_lift_000/test_uorc056_equivariant_transfer_gauge_c40.py'
+      - 'Ecdlp/Proved/Uorc056EquivariantTransferGaugeC40.lean'
+      - 'notes/UORC056_EQUIVARIANT_TRANSFER_GAUGE_C40.md'
+      - '.github/workflows/uorc056-equivariant-transfer-gauge-c40.yml'
+  pull_request:
+    branches:
+      - research/uorc056-spectral-root-transport-c39-v2
+    paths:
+      - 'experiments/parity_lift_000/uorc056_equivariant_transfer_gauge_c40.py'
+      - 'experiments/parity_lift_000/test_uorc056_equivariant_transfer_gauge_c40.py'
+      - 'Ecdlp/Proved/Uorc056EquivariantTransferGaugeC40.lean'
+      - 'notes/UORC056_EQUIVARIANT_TRANSFER_GAUGE_C40.md'
+      - '.github/workflows/uorc056-equivariant-transfer-gauge-c40.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install exact arithmetic dependency
+        run: python -m pip install --disable-pip-version-check sympy
+
+      - name: Compile, test and replay C40
+        run: |
+          python -m py_compile \
+            experiments/parity_lift_000/uorc056_equivariant_transfer_gauge_c40.py \
+            experiments/parity_lift_000/test_uorc056_equivariant_transfer_gauge_c40.py
+          PYTHONPATH=experiments/parity_lift_000 python -m unittest -v \
+            experiments/parity_lift_000/test_uorc056_equivariant_transfer_gauge_c40.py
+          PYTHONPATH=experiments/parity_lift_000 python \
+            experiments/parity_lift_000/uorc056_equivariant_transfer_gauge_c40.py \
+            --out /tmp/uorc056_equivariant_transfer_gauge_c40.json
+
+      - name: Check machine-readable boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = json.loads(Path('/tmp/uorc056_equivariant_transfer_gauge_c40.json').read_text())
+          assert result['profile_id'] == 'UORC-056-EQUIVARIANT-TRANSFER-GAUGE-C40'
+          aggregate = result['aggregate']
+          assert aggregate['curves'] == 5
+          assert aggregate['pair_components'] == 219
+          assert aggregate['deterministic_gauge_checks'] > 0
+          assert aggregate['all_coordinate_maps_dense']
+          assert aggregate['all_transfer_polynomials_dense']
+          assert aggregate['errors'] == 0
+          secp = result['secp256k1']
+          assert secp['order_of_two_on_pair_quotient'] == secp['pair_components']
+          assert secp['doubling_action_transitive']
+          decision = result['decision']
+          assert not decision['public_action_coherence_selects_orientation']
+          assert not decision['cheap_parity_decoder_found']
+          assert not decision['parity_oracle_found']
+          assert len(result['digest']) == 64
+          PY
+
+      - name: Install Lean toolchain
+        run: |
+          curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+            https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Kernel-check C40 algebra
+        run: |
+          lake exe cache get
+          lake build Ecdlp.Proved.Uorc056EquivariantTransferGaugeC40
+          lake env lean Ecdlp/Proved/Uorc056EquivariantTransferGaugeC40.lean
+
+      - name: Upload C40 certificate
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-equivariant-transfer-gauge-c40
+          path: /tmp/uorc056_equivariant_transfer_gauge_c40.json
+          retention-days: 90
