@@ -31,10 +31,8 @@ theorem defect_cocycle
     (state : A -> R) (P Q T : A) :
     defect state P Q * defect state (P + Q) T =
       defect state Q T * defect state P (Q + T) := by
-  unfold defect
-  rw [add_assoc]
-  simp only [div_eq_mul_inv, mul_inv_rev]
-  group
+  simp [defect, add_assoc, div_eq_mul_inv, mul_inv_rev,
+    mul_assoc, mul_left_comm, mul_comm]
 
 /-- Algebraic normal form of a defect after a common scalar and an inverse
 n-th-power gauge are inserted into the state.
@@ -47,8 +45,8 @@ theorem defect_of_scaled_power_gauge
     (c * fPQ * (hPQ ^ n)⁻¹) /
         ((c * fP * (hP ^ n)⁻¹) * (c * fQ * (hQ ^ n)⁻¹)) =
       c⁻¹ * (fPQ / (fP * fQ)) * ((hP * hQ / hPQ) ^ n) := by
-  simp only [div_eq_mul_inv, mul_inv_rev, inv_inv, inv_pow, mul_pow]
-  group
+  simp [div_eq_mul_inv, mul_inv_rev, inv_pow, mul_pow,
+    mul_assoc, mul_left_comm, mul_comm]
 
 /-- Number of monomials in two variables of total degree at most `d`. -/
 def pairMonomials (d : Nat) : Nat :=
