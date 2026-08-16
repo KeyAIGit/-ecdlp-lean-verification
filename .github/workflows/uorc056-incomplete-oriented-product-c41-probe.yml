@@ -1,0 +1,29 @@
+name: UORC056 incomplete oriented product C41 probe
+
+on:
+  push:
+    branches: [research/uorc056-incomplete-oriented-product-c41]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run C41 structural probe
+        run: |
+          PYTHONPATH=experiments/parity_lift_000 python \
+            experiments/parity_lift_000/uorc056_incomplete_oriented_product_c41_probe.py \
+            --out /tmp/uorc056_c41_probe.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-incomplete-oriented-product-c41-probe
+          path: /tmp/uorc056_c41_probe.json
+          retention-days: 30
