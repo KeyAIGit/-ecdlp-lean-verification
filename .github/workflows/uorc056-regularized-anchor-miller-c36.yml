@@ -1,0 +1,28 @@
+name: UORC056 regularized anchor Miller C36
+
+on:
+  push:
+    branches: [research/uorc056-regularized-anchor-miller-c36]
+  pull_request:
+    branches: [research/uorc056-anchor-mixed-miller-c35]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile and replay C36
+        run: |
+          python -m py_compile experiments/parity_lift_000/uorc056_regularized_anchor_miller_c36.py
+          python experiments/parity_lift_000/uorc056_regularized_anchor_miller_c36.py | tee /tmp/c36.txt
+          grep -q UORC056_REGULARIZED_ANCHOR_MILLER_C36_OK /tmp/c36.txt
+          grep -q 'Fn_F3_pair_separates_curves= 5' /tmp/c36.txt
+          grep -q 'affine_character_decoder_failures= 5' /tmp/c36.txt
