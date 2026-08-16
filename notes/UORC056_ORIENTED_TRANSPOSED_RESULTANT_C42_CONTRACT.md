@@ -2,116 +2,50 @@
 
 Date: 2026-08-16
 
-Status: active research contract. No parity evaluator is claimed.
+Status: fulfilled by the canonical C42 package in
+`notes/UORC056_ORIENTED_TRANSPOSED_RESULTANT_C42.md`.
 
-## 1. Input inherited from C39 to C41
+## Contract outcome
 
-The compact public state is
+The completed package derives and verifies:
 
-\[
-F_G(Q)=M_{(n-1)/2}(G,Q,S).
-\]
+1. exact target-root localization of the C39 orbit factors;
+2. the exact GLV cubic relative norm
+   `c0^3 + T*c1^3 + T^2*c2^3 - 3*T*c0*c1*c2`;
+3. the reduction of the outer determinant dimension from `(n-1)/2` to
+   `(n-1)/6`;
+4. the fact that query-root localization returns the original missing branch
+   `Y_G(x(Q))/y(Q)` rather than bypassing it;
+5. a complete affine quadratic-character screen of the anti-Frobenius
+   `2 by 2` minor on five frozen curves and one held-out curve;
+6. an exact secp256k1 representation and two-level product cost ledger.
 
-C39 gives the exact decoder
+The declared explicit and two-level mechanisms do not meet the fixed-epsilon
+sub-square-root gate. No unrestricted resultant or arithmetic-circuit lower
+bound is claimed.
 
-\[
-(-1)^k=
-\frac{\Delta(F_G(Q))}{\Sigma(F_G(Q))},
-\]
-
-where
-
-\[
-\Sigma=P_{\rm odd}+P_{\rm even},
-\qquad
-\Delta=P_{\rm odd}-P_{\rm even}.
-\]
-
-The explicit factors have degree `(n-1)/2`. C40 excludes ordinary full-kernel isogeny norms and subgroup-norm towers. C41 excludes, on the frozen corpus, ordinary polynomial composition, short linear coefficient recurrence, and low-degree single-state transitions.
-
-## 2. Exact C42 target
-
-Construct an evaluator
+## Canonical files
 
 ```text
-State = TransposedOrientedNorm(E,G,Q,S),
-Output = Decode(E,G,Q,S,State),
+notes/UORC056_ORIENTED_TRANSPOSED_RESULTANT_C42.md
+experiments/parity_lift_000/uorc056_c42_glv_transposed_resultant.py
+experiments/parity_lift_000/uorc056_c42_antifrobenius_minor.py
+experiments/parity_lift_000/uorc056_oriented_transposed_resultant_c42.py
+experiments/parity_lift_000/test_uorc056_oriented_transposed_resultant_c42.py
+Ecdlp/Proved/Uorc056OrientedTransposedResultant.lean
+.github/workflows/uorc056-oriented-transposed-resultant-c42.yml
 ```
 
-such that
-
-\[
-Output=(-1)^k,
-\qquad Q=[k]G,
-\]
-
-without materializing any of
+## Decision
 
 ```text
-P_even,
-P_odd,
-Sigma,
-Delta,
-K_H,
-Y_G on all half-kernel roots,
-an O(sqrt(n))-width block table.
+exact query-root localization                  found
+exact GLV cubic relative norm                  found
+asymptotic exponent improvement                no
+anti-Frobenius affine-character decoder        no
+cheap parity decoder                           not found
+parity oracle                                  not found
+sub-square-root ECDLP                          not found
 ```
 
-The full charged cost must satisfy
-
-\[
-C_{preprocessing}+C_{advice}+C_{memory}+C_{representation}+C_{online}
-=O(n^{1/2-\varepsilon})
-\]
-
-for one fixed `epsilon>0`.
-
-## 3. First candidate representations
-
-C42 may use one of the following only if it gives a literal on-demand value algorithm:
-
-1. a transposed resultant that computes `Delta(F_G(Q))` without constructing the resultant polynomial;
-2. a structured determinant with displacement rank `o(sqrt(n))`;
-3. a target-dependent modular-composition circuit whose relation matrices are generated in sub-root cost;
-4. an elliptic-net incomplete norm with a proved marked-half recurrence;
-5. a transfer matrix carrying the ordered square-root branch from the public anchor.
-
-A generic degree-`m` resultant or modular-composition call is not a positive result. Its input representation already has size `Theta(m)` unless a special compiler is supplied.
-
-## 4. Mandatory tests
-
-Every candidate must expose:
-
-```text
-where the generator marking enters,
-why G -> -G negates the oriented output,
-why no unknown scalar digit controls the circuit,
-why no dense degree-m object is hidden in advice,
-all-point correctness on frozen curves,
-held-out curve validation,
-a complete cost ledger.
-```
-
-## 5. Negative gate
-
-A negative C42 package must name an exact grammar, for example:
-
-```text
-bounded-displacement determinant,
-bounded relation-matrix modular composition,
-fixed-depth elliptic-net resultant,
-fixed-width transfer matrix,
-canonical square-root selector family.
-```
-
-It must prove a rank, width, representation, collision, or reduction boundary for that grammar. No unrestricted resultant, circuit, or ECDLP lower bound may be claimed.
-
-## 6. First attack order
-
-```text
-1. derive the direct evaluation functional for Delta at z=F_G(Q);
-2. search for low-displacement multiplication matrices in the half-kernel algebra;
-3. test whether GLV block decomposition reduces the oriented determinant dimension;
-4. test canonical square-root selectors with held-out curves;
-5. compare any surviving compiler against the exact 129-bit interpolation frontier from C41.
-```
+The successor is `LOCAL-GLV-GAUGE-BREAKING-C43`.
