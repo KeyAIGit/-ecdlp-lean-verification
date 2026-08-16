@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "track": "UNIFORM-ORIENTED-ROOT-CIRCUIT-056 / C-track",
+  "package": "C40",
+  "canonical_id": "PRIME-KERNEL-NORM-RIGIDITY-090",
+  "branch": "research/uorc056-prime-kernel-norm-rigidity-c40",
+  "parent_branch": "research/uorc056-parity-orbit-factorization-c39",
+  "parent_package": "C39 parity orbit factorization",
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "result": "The full rational subgroup is the compact fibre of Frobenius-minus-identity, but each parity half has size (n-1)/2 and is neither a subgroup nor a coset in the prime-order group. Full isogeny norms and subgroup-norm towers cannot select the ordered half-orbit branch.",
+  "successor": "INCOMPLETE-ORIENTED-PRODUCT-C41",
+  "status": "scoped_negative_no_parity_oracle",
+  "claim_boundary": "No lower bound for unrestricted incomplete products, resultants, elliptic nets, arithmetic circuits, or ECDLP is claimed."
+}

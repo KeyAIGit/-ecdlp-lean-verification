@@ -1,0 +1,102 @@
+name: UORC056 prime kernel norm rigidity C40
+
+on:
+  push:
+    branches:
+      - research/uorc056-prime-kernel-norm-rigidity-c40
+    paths:
+      - 'experiments/parity_lift_000/uorc056_prime_kernel_norm_rigidity_c40.py'
+      - 'experiments/parity_lift_000/test_uorc056_prime_kernel_norm_rigidity_c40.py'
+      - 'Ecdlp/Proved/Uorc056PrimeKernelNormRigidity.lean'
+      - 'notes/UORC056_PRIME_KERNEL_NORM_RIGIDITY_C40.md'
+      - 'notes/UORC056_C_TRACK_LINEAGE_C40.json'
+      - '.github/workflows/uorc056-prime-kernel-norm-rigidity-c40.yml'
+  pull_request:
+    branches:
+      - research/uorc056-parity-orbit-factorization-c39
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install inherited C39 dependency
+        run: python -m pip install --disable-pip-version-check numpy
+
+      - name: Compile, test and replay C40
+        run: |
+          python -m py_compile \
+            experiments/parity_lift_000/uorc056_prime_kernel_norm_rigidity_c40.py \
+            experiments/parity_lift_000/test_uorc056_prime_kernel_norm_rigidity_c40.py
+          PYTHONPATH=experiments/parity_lift_000 python -m unittest -v \
+            experiments/parity_lift_000/test_uorc056_prime_kernel_norm_rigidity_c40.py
+          PYTHONPATH=experiments/parity_lift_000 python \
+            experiments/parity_lift_000/uorc056_prime_kernel_norm_rigidity_c40.py \
+            --out /tmp/uorc056_prime_kernel_norm_rigidity_c40_result.json
+
+      - name: Check machine-readable boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          result = json.loads(Path('/tmp/uorc056_prime_kernel_norm_rigidity_c40_result.json').read_text())
+          assert result['profile_id'] == 'UORC-056-PRIME-KERNEL-NORM-RIGIDITY-C40'
+          aggregate = result['aggregate']
+          assert aggregate['curves'] == 5
+          assert aggregate['full_product_translation_checks'] == 443
+          assert aggregate['frobenius_kernel_checks'] == 443
+          assert aggregate['frobenius_fibre_checks'] == 443
+          assert aggregate['all_point_counts_equal_prime_subgroup_orders']
+          assert aggregate['all_marked_halves_non_subgroups']
+          assert aggregate['all_full_orbit_polynomials_marking_invariant']
+          decision = result['decision']
+          assert decision['compact_full_kernel_norm_geometry_found']
+          assert decision['ordinary_isogeny_norm_decoder_closed']
+          assert decision['subgroup_norm_tower_decoder_closed']
+          assert not decision['incomplete_oriented_half_norm_evaluator_found']
+          assert not decision['parity_oracle_found']
+          assert not decision['sub_sqrt_ecdlp_found']
+          assert len(result['digest']) == 64
+          PY
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Kernel-check C40 algebra and secp arithmetic
+        run: |
+          lake exe cache get
+          lake build Ecdlp.Proved.Uorc056PrimeKernelNormRigidity
+          lake env lean Ecdlp/Proved/Uorc056PrimeKernelNormRigidity.lean
+
+      - name: Upload C40 certificate
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-prime-kernel-norm-rigidity-c40
+          path: /tmp/uorc056_prime_kernel_norm_rigidity_c40_result.json
+          retention-days: 90
