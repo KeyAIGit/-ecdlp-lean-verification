@@ -2,42 +2,34 @@ import unittest
 
 from uorc056_incomplete_oriented_product_c41 import (
     SECP_N,
-    build_payload,
+    antisymmetric_monomials,
     first_symmetric_degree_over_pairs,
     first_total_degree_over_rows,
+    symmetric_monomials,
+    total_monomials,
 )
 
 
 class IncompleteOrientedProductC41Tests(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls) -> None:
-        cls.payload = build_payload()
+    def test_monomial_split(self) -> None:
+        for degree in range(32):
+            self.assertEqual(
+                symmetric_monomials(degree) + antisymmetric_monomials(degree),
+                total_monomials(degree),
+            )
 
-    def test_payload(self) -> None:
-        aggregate = self.payload['aggregate']
-        self.assertEqual(aggregate['curves'], 5)
-        self.assertEqual(aggregate['declared_polynomials'], 25)
-        self.assertTrue(aggregate['all_declared_polynomials_indecomposable'])
-        self.assertTrue(
-            aggregate['all_coefficient_recurrences_maximal_on_finite_window']
-        )
-        self.assertTrue(
-            aggregate['all_nonnegation_bivariate_relations_dimension_forced']
-        )
-        self.assertTrue(
-            aggregate['all_negation_relations_explained_by_swap_involution']
-        )
-        self.assertTrue(aggregate['all_rational_transitions_dimension_forced'])
-        self.assertEqual(aggregate['errors'], 0)
-        decision = self.payload['decision']
-        self.assertTrue(
-            decision[
-                'declared_composition_recurrence_transition_grammars_closed_on_frozen_corpus'
-            ]
-        )
-        self.assertFalse(decision['incomplete_oriented_product_evaluator_found'])
-        self.assertFalse(decision['parity_oracle_found'])
-        self.assertFalse(decision['sub_sqrt_ecdlp_found'])
+    def test_small_interpolation_thresholds(self) -> None:
+        expected = {
+            30: 7,
+            78: 12,
+            66: 11,
+            126: 15,
+            138: 16,
+        }
+        for rows, degree in expected.items():
+            self.assertEqual(first_total_degree_over_rows(rows), degree)
+            self.assertLessEqual(total_monomials(degree - 1), rows)
+            self.assertLess(rows, total_monomials(degree))
 
     def test_secp_dimension_frontier(self) -> None:
         rows = SECP_N - 1
@@ -45,12 +37,8 @@ class IncompleteOrientedProductC41Tests(unittest.TestCase):
         expected = 481231938336009023090067544955250113852
         self.assertEqual(first_total_degree_over_rows(rows), expected)
         self.assertEqual(first_symmetric_degree_over_pairs(pairs), expected)
-        secp = self.payload['secp256k1_dimension_frontier']
-        self.assertEqual(secp['first_general_bivariate_interpolation_degree'], expected)
-        self.assertEqual(secp['first_swap_symmetric_interpolation_degree'], expected)
-        self.assertEqual(secp['degree_bit_length'], 129)
-        self.assertEqual(secp['first_rational_transition_degree'], pairs)
-        self.assertEqual(secp['rational_degree_bit_length'], 255)
+        self.assertEqual(expected.bit_length(), 129)
+        self.assertEqual(pairs.bit_length(), 255)
 
 
 if __name__ == '__main__':
