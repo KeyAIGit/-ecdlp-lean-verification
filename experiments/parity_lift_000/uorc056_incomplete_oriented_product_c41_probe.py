@@ -3,16 +3,14 @@ from __future__ import annotations
 
 import argparse
 import json
-import math
 from pathlib import Path
 
 from uorc056_c39_half_miller import TOYS, half_sequence
-from uorc056_c39_orbit import add, sub, scale, mul, roots, trim, rank
+from uorc056_c39_orbit import add, sub, scale, mul, roots, trim
 
 
 def degree(poly):
-    poly = trim(poly[:])
-    return len(poly) - 1
+    return len(trim(poly[:])) - 1
 
 
 def poly_pow(poly, exponent):
@@ -33,8 +31,7 @@ def proper_divisors(value):
 
 
 def monic_normalize(poly):
-    lead = poly[-1]
-    return scale(poly, lead.inv())
+    return scale(poly, poly[-1].inv())
 
 
 def decompose_candidate(poly, right_degree, field_one):
@@ -43,15 +40,12 @@ def decompose_candidate(poly, right_degree, field_one):
     if n % right_degree:
         return None
     left_degree = n // right_degree
-    if left_degree < 2:
-        return None
-    p = field_one.p
-    if left_degree % p == 0:
+    if left_degree < 2 or left_degree % field_one.p == 0:
         return None
     zero = field_one * 0
     h = [zero for _ in range(right_degree + 1)]
     h[right_degree] = field_one
-    inv_left = field_one * pow(left_degree, -1, p)
+    inv_left = field_one * pow(left_degree, -1, field_one.p)
     for offset in range(1, right_degree):
         current_power = poly_pow(h, left_degree)
         index = n - offset
@@ -128,60 +122,77 @@ def berlekamp_massey(sequence):
     return L
 
 
-def total_degree_exponents(variables, total_degree):
-    if variables == 2:
-        return [(i, j) for i in range(total_degree + 1) for j in range(total_degree + 1 - i)]
-    raise ValueError
+class IncrementalColumnRank:
+    def __init__(self):
+        self.basis = {}
+        self.columns = 0
 
+    @property
+    def rank(self):
+        return len(self.basis)
 
-def evaluate_relation_rows(xs, ys, total_degree):
-    exponents = total_degree_exponents(2, total_degree)
-    rows = []
-    for x, y in zip(xs, ys):
-        xp = [x ** 0]
-        yp = [y ** 0]
-        for _ in range(total_degree):
-            xp.append(xp[-1] * x)
-            yp.append(yp[-1] * y)
-        rows.append([xp[i] * yp[j] for i, j in exponents])
-    return rows, len(exponents)
+    def add(self, column):
+        vector = column[:]
+        self.columns += 1
+        for pivot in sorted(self.basis):
+            if vector[pivot]:
+                factor = vector[pivot]
+                basis_vector = self.basis[pivot]
+                vector = [left - factor * right for left, right in zip(vector, basis_vector)]
+        pivot = next((index for index, value in enumerate(vector) if value), None)
+        if pivot is None:
+            return False
+        inverse = vector[pivot].inv()
+        vector = [value * inverse for value in vector]
+        self.basis[pivot] = vector
+        return True
 
 
 def first_bivariate_relation(xs, ys, max_degree=64):
     row_count = len(xs)
-    for degree_bound in range(max_degree + 1):
-        matrix, columns = evaluate_relation_rows(xs, ys, degree_bound)
-        matrix_rank = rank(matrix)
-        if matrix_rank < columns:
+    one = xs[0] ** 0
+    x_powers = [[one] for _ in xs]
+    y_powers = [[one] for _ in ys]
+    basis = IncrementalColumnRank()
+    for total_degree in range(max_degree + 1):
+        if total_degree:
+            for index, value in enumerate(xs):
+                x_powers[index].append(x_powers[index][-1] * value)
+            for index, value in enumerate(ys):
+                y_powers[index].append(y_powers[index][-1] * value)
+        for x_degree in range(total_degree + 1):
+            y_degree = total_degree - x_degree
+            column = [
+                x_powers[row][x_degree] * y_powers[row][y_degree]
+                for row in range(row_count)
+            ]
+            basis.add(column)
+        if basis.rank < basis.columns:
             return {
-                'degree': degree_bound,
-                'columns': columns,
-                'rank': matrix_rank,
-                'forced_by_dimension': columns > row_count,
+                'degree': total_degree,
+                'columns': basis.columns,
+                'rank': basis.rank,
+                'forced_by_dimension': basis.columns > row_count,
             }
     return None
 
 
-def rational_transition_rank(xs, ys, degree_bound):
-    matrix = []
-    for x, y in zip(xs, ys):
-        powers = [x ** 0]
-        for _ in range(degree_bound):
-            powers.append(powers[-1] * x)
-        matrix.append(powers + [-y * value for value in powers])
-    return rank(matrix), 2 * (degree_bound + 1)
-
-
 def first_rational_transition(xs, ys, max_degree=128):
     row_count = len(xs)
+    one = xs[0] ** 0
+    powers = [one for _ in xs]
+    basis = IncrementalColumnRank()
     for degree_bound in range(max_degree + 1):
-        matrix_rank, columns = rational_transition_rank(xs, ys, degree_bound)
-        if matrix_rank < columns:
+        if degree_bound:
+            powers = [power * x for power, x in zip(powers, xs)]
+        basis.add(powers)
+        basis.add([-y * power for y, power in zip(ys, powers)])
+        if basis.rank < basis.columns:
             return {
                 'degree': degree_bound,
-                'columns': columns,
-                'rank': matrix_rank,
-                'forced_by_dimension': columns > row_count,
+                'columns': basis.columns,
+                'rank': basis.rank,
+                'forced_by_dimension': basis.columns > row_count,
             }
     return None
 
@@ -193,15 +204,12 @@ def curve_probe(row):
     odd_values = [values[k] for k in range(1, n, 2)]
     p_even = roots(even_values, one)
     p_odd = roots(odd_values, one)
-    sigma_poly = add(p_even, p_odd)
-    delta_poly = sub(p_odd, p_even)
-    pi_poly = mul(p_even, p_odd)
     polynomials = {
         'P_even': p_even,
         'P_odd': p_odd,
-        'Sigma': sigma_poly,
-        'Delta': delta_poly,
-        'Pi': pi_poly,
+        'Sigma': add(p_even, p_odd),
+        'Delta': sub(p_odd, p_even),
+        'Pi': mul(p_even, p_odd),
     }
     decomposition = {}
     recurrence = {}
@@ -246,7 +254,10 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--out', type=Path)
     args = parser.parse_args()
-    payload = {'profile_id': 'UORC-056-INCOMPLETE-ORIENTED-PRODUCT-C41-PROBE', 'curves': [curve_probe(row) for row in TOYS]}
+    payload = {
+        'profile_id': 'UORC-056-INCOMPLETE-ORIENTED-PRODUCT-C41-PROBE',
+        'curves': [curve_probe(row) for row in TOYS],
+    }
     if args.out:
         args.out.write_text(json.dumps(payload, indent=2, sort_keys=True) + '\n')
     print('UORC056_INCOMPLETE_ORIENTED_PRODUCT_C41_PROBE_OK')
