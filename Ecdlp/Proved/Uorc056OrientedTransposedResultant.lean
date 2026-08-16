@@ -18,7 +18,8 @@ executable replay.
 namespace Ecdlp.Uorc056OrientedTransposedResultant
 
 /-- At a query value `z = a + y*b`, the difference-over-sum of the two
-    `a +/- Y*b` branches returns the relative orientation `s` when `Y=s*y`. -/
+    plus-or-minus `Y*b` branches returns the relative orientation `s` when
+    `Y=s*y`. -/
 theorem localizedBranchDecoder
     {K : Type*} [Field K]
     (a b y s : K)
