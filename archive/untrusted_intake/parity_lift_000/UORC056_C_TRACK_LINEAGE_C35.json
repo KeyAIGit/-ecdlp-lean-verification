@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "track": "UNIFORM-ORIENTED-ROOT-CIRCUIT-056 / C-track",
+  "package": "C35",
+  "canonical_id": "ANCHOR-MIXED-SHIFTED-MILLER-GAUGE-083",
+  "branch": "research/uorc056-anchor-mixed-miller-c35",
+  "parent_branch": "research/uorc056-dynamic-carry-aggregation-c34",
+  "parent_package": "C34 dynamic carry aggregation and three-carry compression",
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "positive_result": "A marked-generator-sensitive shifted Miller state M_S(P)=f_G(P+S)/f_G(S) is publicly evaluable by an O(log n) Miller chain.",
+  "main_boundary": "All anti-rational shifts are explicit n-th-power line gauges of one base Miller potential, while the norm-one component collapses to a centered public Kummer coordinate.",
+  "finite_screens": [
+    "520 anti-rational twist shifts and 54192 shift-query values",
+    "zero quadratic-character shift survivors",
+    "zero low-order seven-location monomial survivors across all five frozen curves",
+    "dense univariate parity interpolation on each canonical toy Miller state"
+  ],
+  "successor": "MULTI-ARGUMENT-MILLER-DECODER-C36",
+  "status": "exact_boundary_no_parity_evaluator",
+  "claim_boundary": "No unrestricted decoder lower bound, parity oracle, sub-root evaluator, or sub-square-root ECDLP algorithm is claimed."
+}
