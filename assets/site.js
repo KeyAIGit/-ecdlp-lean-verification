@@ -1,6 +1,90 @@
 (function () {
   "use strict";
 
+  /* KEYAI_RESULTS_PORTAL_V1 */
+  (function setupResultsPortal() {
+    var refreshPage = document.body.getAttribute("data-page");
+    var repository = "https://github.com/KeyAIGit/-ecdlp-lean-verification";
+    if (!document.querySelector('link[href*="site-refresh.css"]')) {
+      var stylesheet = document.createElement("link");
+      stylesheet.rel = "stylesheet";
+      stylesheet.href = "assets/site-refresh.css?v=20260816-1";
+      document.head.appendChild(stylesheet);
+    }
+
+    var nav = document.querySelector(".primary-nav");
+    if (nav && !nav.querySelector('[data-nav-page="results"]')) {
+      var resultLink = document.createElement("a");
+      resultLink.setAttribute("data-nav-page", "results");
+      resultLink.href = "results.html";
+      resultLink.textContent = "Results";
+      var routeLink = nav.querySelector('[data-nav-page="routes"]');
+      nav.insertBefore(resultLink, routeLink || null);
+    }
+    var footer = document.querySelector(".footer-links");
+    if (footer && !footer.querySelector('a[href="results.html"]')) {
+      var footerLink = document.createElement("a");
+      footerLink.href = "results.html";
+      footerLink.textContent = "Verified results";
+      footer.insertBefore(footerLink, footer.firstElementChild);
+    }
+
+    function guideLink(href, label, description) {
+      var link = document.createElement("a");
+      link.href = href;
+      var name = document.createElement("span");
+      name.textContent = label;
+      var detail = document.createElement("strong");
+      detail.textContent = description;
+      link.appendChild(name);
+      link.appendChild(detail);
+      return link;
+    }
+
+    function setupWorkspaceGuide() {
+      if (refreshPage !== "workspace" || document.querySelector(".workspace-guide")) return;
+      var tabbar = document.querySelector(".tabbar-wrap");
+      if (!tabbar || !tabbar.parentNode) return;
+      var section = document.createElement("section");
+      section.className = "workspace-guide";
+      section.setAttribute("aria-label", "Workspace orientation");
+      var grid = document.createElement("div");
+      grid.className = "shell workspace-guide__grid";
+      grid.appendChild(guideLink("results.html", "Verified results", "Find the checked theorem surface"));
+      grid.appendChild(guideLink("explore.html", "Route decisions", "See what is selected, parked, or closed"));
+      grid.appendChild(guideLink(repository + "/blob/main/STATUS.md", "Canonical snapshot", "Use one source for live numbers"));
+      grid.appendChild(guideLink(repository + "/blob/main/REPOSITORY_ARCHITECTURE.md", "Repository map", "Understand ownership and edit policy"));
+      section.appendChild(grid);
+      tabbar.parentNode.insertBefore(section, tabbar);
+    }
+
+    function setupHomeResultsRibbon() {
+      if (refreshPage !== "product" || document.querySelector(".results-ribbon")) return;
+      var target = document.getElementById("product");
+      if (!target || !target.parentNode) return;
+      var section = document.createElement("section");
+      section.className = "results-ribbon";
+      section.innerHTML = '<div class="shell results-ribbon__inner"><div><p class="eyebrow">Verified results</p><h2>Two ledgers, one clear entry point.</h2><p>Browse ECDLP and ResearchOS results together without merging their canonical schemas or counters.</p></div><div class="results-ribbon__facts"><span>Current counts load from the canonical registries</span></div><a class="button" href="results.html">Browse verified results</a></div>';
+      target.parentNode.insertBefore(section, target);
+      if (!("fetch" in window)) return;
+      Promise.all([
+        fetch("data/stats.json", { cache: "no-store" }).then(function (r) { return r.json(); }),
+        fetch("data/researchos_result_registry.json", { cache: "no-store" }).then(function (r) { return r.json(); })
+      ]).then(function (values) {
+        var a = Number(values[0].ledger_rows);
+        var b = Number(values[1].ledger_rows);
+        if (!Number.isFinite(a) || !Number.isFinite(b)) return;
+        section.querySelector(".results-ribbon__facts").innerHTML =
+          "<span><strong>" + (a + b) + "</strong> cross-ledger entries</span>" +
+          "<span><strong>" + a + "</strong> ECDLP rows</span>" +
+          "<span><strong>" + b + "</strong> ResearchOS rows</span>";
+      }).catch(function () {});
+    }
+
+    setupWorkspaceGuide();
+    setupHomeResultsRibbon();
+  })();
+
   var body = document.body;
   var page = body.getAttribute("data-page");
   document.querySelectorAll("[data-nav-page]").forEach(function (link) {

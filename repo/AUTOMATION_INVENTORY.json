@@ -24,6 +24,14 @@
       "reason": "Regenerates and drift-gates canonical derived artifacts."
     },
     {
+      "file": ".github/workflows/public-results.yml",
+      "class": "core_gate",
+      "trigger_policy": "scoped_push_pr_manual",
+      "disposition": "keep",
+      "spends_external_budget": false,
+      "reason": "Checks the generated cross-ledger results portal, public navigation assets, and repository artifact classification without changing either canonical ledger."
+    },
+    {
       "file": ".github/workflows/corpus-manifest-check.yml",
       "class": "core_gate",
       "trigger_policy": "scoped_push_pr_manual",

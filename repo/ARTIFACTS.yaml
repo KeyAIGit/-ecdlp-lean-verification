@@ -102,12 +102,16 @@ classes:
       - data/stats.json
       - badges/theorems.json
       - STATUS.md
+      - VERIFIED_ALL.md
       - data/frontier_map.json
       - data/knowledge_graph.json
       - data/knowledge_graph.md
       - COVERAGE.md
       - index.html
       - dashboard.html
+      - results.html
+      - sitemap.xml
+      - robots.txt
       - explore.html
       - pilot.html
       - bundles/MANIFEST.json
@@ -140,6 +144,7 @@ classes:
       - scripts/coverage_report.py
       - scripts/build_dashboard.py
       - scripts/site_generator.py
+      - scripts/build_results_portal.py
       - scripts/export_agent_bundle.py
       - scripts/gen_result_registry.py
       - scripts/gen_source_registry.py
@@ -161,6 +166,7 @@ classes:
       - scripts/check_status_consistency.py
       - scripts/check_counts.py
       - scripts/check_repo_artifacts.py
+      - scripts/build_results_portal.py --check
       - scripts/export_agent_bundle.py --check
       - scripts/gen_result_registry.py --check
       - scripts/gen_researchos_registry.py --check
@@ -199,6 +205,9 @@ classes:
     paths:
       - index.html
       - dashboard.html
+      - results.html
+      - sitemap.xml
+      - robots.txt
       - explore.html
       - pilot.html
       - assets/
@@ -228,6 +237,7 @@ classes:
       - experiments/HYPOTHESES.yaml
       - REPOSITORY_ARCHITECTURE.md
       - repo/ARTIFACTS.yaml
+      - repo/README.md
       - repo/CLEANUP_PLAN.md
       - repo/FORMAL_SUBSTRATE.json
       - repo/ECDLP_DECISION_SUBSTRATE.json
@@ -393,6 +403,9 @@ classes:
 allowed_overlap_paths:
   - index.html
   - dashboard.html
+  - results.html
+  - sitemap.xml
+  - robots.txt
   - explore.html
   - pilot.html
   - Ecdlp/LedgerAxiomAudit.lean
