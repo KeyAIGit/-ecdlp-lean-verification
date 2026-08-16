@@ -134,12 +134,12 @@ class IncrementalColumnRank:
     def add(self, column):
         vector = column[:]
         self.columns += 1
-        for pivot in sorted(self.basis):
+        for pivot in sorted(self.basis, reverse=True):
             if vector[pivot]:
                 factor = vector[pivot]
                 basis_vector = self.basis[pivot]
                 vector = [left - factor * right for left, right in zip(vector, basis_vector)]
-        pivot = next((index for index, value in enumerate(vector) if value), None)
+        pivot = next((index for index in range(len(vector) - 1, -1, -1) if vector[index]), None)
         if pivot is None:
             return False
         inverse = vector[pivot].inv()
