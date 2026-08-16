@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "track": "UNIFORM-ORIENTED-ROOT-CIRCUIT-056 / C-track",
+  "package": "C37",
+  "canonical_id": "HALF-INDEX-MILLER-QUADRATIC-BRANCH-085",
+  "branch": "research/uorc056-half-index-miller-c37",
+  "parent_branch": "research/uorc056-regularized-anchor-miller-c36",
+  "parent_package": "C36 regularized same-subgroup n-Miller gauge collapse",
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "main_identity": "f_(n,P)=f_((n-1)/2,P)^2*ell_(hP,hP)",
+  "compact_state_candidate": "M_h(P,Q,S)=f_(h,P)(S+Q)/f_(h,P)(S), h=(n-1)/2",
+  "positive_result": "The state is public, O(log n), generator-sensitive, and selects one square-root branch over an explicit public radicand.",
+  "negative_result": "No ordinary quadratic decoder, no single maximal 2-primary decoder, and no seven-C34-location multiplicative monomial decoder survives the frozen corpus.",
+  "rational_boundary": "On every frozen curve, any one-variable rational decoder A(S)/B(S) has max degree at least (n-1)/2.",
+  "successor": "MIXED-SOURCE-ELLIPTIC-NET-C38",
+  "status": "positive_compact_state_candidate_decoder_open",
+  "claim_boundary": "No arbitrary nonlinear decoder lower bound, parity oracle, sub-root evaluator, or sub-square-root ECDLP algorithm is claimed."
+}
