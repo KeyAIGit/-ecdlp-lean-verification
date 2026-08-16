@@ -6,7 +6,8 @@ import Ecdlp.Proved.Uorc056AnchorMixedMiller
 
 This file kernel-checks the algebraic core of C36:
 
-* the multiplicative defect of any state is a normalized 2-cocycle;
+* the multiplicative defect of a nonzero field-valued state is a normalized
+  2-cocycle;
 * a scaled n-th-power gauge changes the defect by the corresponding explicit
   n-th-power coboundary and one common scalar;
 * the exact monomial-dimension thresholds used in the frozen polynomial and
@@ -19,34 +20,47 @@ stated in the accompanying note and replayed by exact Python.
 
 namespace Ecdlp.Uorc056MultiArgumentMillerDecoder
 
-/-- Multiplicative addition defect of a nonzero field-valued state. -/
+/-- Multiplicative addition defect of a field-valued state. The accompanying
+results assume that every evaluated state value is nonzero. -/
 def defect
-    {A R : Type*} [Add A] [CommGroup R]
-    (state : A -> R) (P Q : A) : R :=
+    {A K : Type*} [Add A] [Field K]
+    (state : A -> K) (P Q : A) : K :=
   state (P + Q) / (state P * state Q)
 
-/-- Every multiplicative defect is an exact normalized 2-cocycle. -/
+/-- Every multiplicative defect of a nonzero field-valued state is an exact
+normalized 2-cocycle. -/
 theorem defect_cocycle
-    {A R : Type*} [AddSemigroup A] [CommGroup R]
-    (state : A -> R) (P Q T : A) :
+    {A K : Type*} [AddSemigroup A] [Field K]
+    (state : A -> K)
+    (hstate : forall X, state X ≠ 0)
+    (P Q T : A) :
     defect state P Q * defect state (P + Q) T =
       defect state Q T * defect state P (Q + T) := by
-  simp [defect, add_assoc, div_eq_mul_inv, mul_inv_rev,
-    mul_assoc, mul_left_comm, mul_comm]
+  unfold defect
+  rw [add_assoc]
+  field_simp [hstate]
+  ring
 
 /-- Algebraic normal form of a defect after a common scalar and an inverse
-n-th-power gauge are inserted into the state.
+n-th-power gauge are inserted into a nonzero field-valued state.
 
 The variables stand for values at `P`, `Q`, and `P+Q`. -/
 theorem defect_of_scaled_power_gauge
-    {R : Type*} [CommGroup R]
-    (c fP fQ fPQ hP hQ hPQ : R)
-    (n : Nat) :
+    {K : Type*} [Field K]
+    (c fP fQ fPQ hP hQ hPQ : K)
+    (n : Nat)
+    (hc : c ≠ 0)
+    (hfP : fP ≠ 0)
+    (hfQ : fQ ≠ 0)
+    (hfPQ : fPQ ≠ 0)
+    (hhP : hP ≠ 0)
+    (hhQ : hQ ≠ 0)
+    (hhPQ : hPQ ≠ 0) :
     (c * fPQ * (hPQ ^ n)⁻¹) /
         ((c * fP * (hP ^ n)⁻¹) * (c * fQ * (hQ ^ n)⁻¹)) =
       c⁻¹ * (fPQ / (fP * fQ)) * ((hP * hQ / hPQ) ^ n) := by
-  simp [div_eq_mul_inv, mul_inv_rev, inv_pow, mul_pow,
-    mul_assoc, mul_left_comm, mul_comm]
+  field_simp [hc, hfP, hfQ, hfPQ, hhP, hhQ, hhPQ]
+  ring
 
 /-- Number of monomials in two variables of total degree at most `d`. -/
 def pairMonomials (d : Nat) : Nat :=
