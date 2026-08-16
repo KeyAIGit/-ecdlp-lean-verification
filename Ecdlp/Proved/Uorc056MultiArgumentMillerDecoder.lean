@@ -33,6 +33,7 @@ theorem defect_cocycle
       defect state Q T * defect state P (Q + T) := by
   unfold defect
   rw [add_assoc]
+  simp only [div_eq_mul_inv, mul_inv_rev]
   group
 
 /-- Algebraic normal form of a defect after a common scalar and an inverse
@@ -46,7 +47,7 @@ theorem defect_of_scaled_power_gauge
     (c * fPQ * (hPQ ^ n)⁻¹) /
         ((c * fP * (hP ^ n)⁻¹) * (c * fQ * (hQ ^ n)⁻¹)) =
       c⁻¹ * (fPQ / (fP * fQ)) * ((hP * hQ / hPQ) ^ n) := by
-  simp only [div_eq_mul_inv, mul_inv_rev, inv_inv, mul_pow]
+  simp only [div_eq_mul_inv, mul_inv_rev, inv_inv, inv_pow, mul_pow]
   group
 
 /-- Number of monomials in two variables of total degree at most `d`. -/
