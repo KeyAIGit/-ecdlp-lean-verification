@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "track": "UNIFORM-ORIENTED-ROOT-CIRCUIT-056 / C-track",
+  "package": "C41",
+  "canonical_id": "INCOMPLETE-ORIENTED-PRODUCT-COMPRESSION-091",
+  "branch": "research/uorc056-incomplete-oriented-product-c41",
+  "parent_branch": "research/uorc056-prime-kernel-norm-rigidity-c40",
+  "parent_package": "C40 prime-kernel norm rigidity",
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "state": "M_((n-1)/2)(G,Q,S)",
+  "result": "Across the five frozen curves, none of the 25 parity-orbit polynomials has a nontrivial polynomial composition; every coefficient sequence has maximal finite-window linear complexity; and successor, doubling, negation, and GLV state relations appear only at ordinary interpolation thresholds, with negation exactly explained by the swap involution.",
+  "secp_general_bivariate_dimension_threshold": "481231938336009023090067544955250113852",
+  "successor": "ORIENTED-TRANSPOSED-RESULTANT-C42",
+  "status": "scoped_frozen_boundary_no_parity_oracle",
+  "claim_boundary": "No production secp256k1 relation lower bound, unrestricted arithmetic-circuit lower bound, parity oracle, or sub-square-root ECDLP algorithm is claimed."
+}
