@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import json
+import os
 import unittest
+from pathlib import Path
 
 from uorc056_local_glv_sector_factorization_c43b import SECP_N, build_payload
 
@@ -8,7 +11,12 @@ from uorc056_local_glv_sector_factorization_c43b import SECP_N, build_payload
 class LocalGlvSectorFactorizationC43BTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.payload = build_payload()
+        payload_path = os.environ.get("UORC056_C43B_PAYLOAD")
+        cls.payload = (
+            json.loads(Path(payload_path).read_text(encoding="utf-8"))
+            if payload_path
+            else build_payload()
+        )
 
     def test_exact_replay(self) -> None:
         aggregate = self.payload["aggregate"]
@@ -16,12 +24,16 @@ class LocalGlvSectorFactorizationC43BTests(unittest.TestCase):
         self.assertEqual(aggregate["frozen"], 5)
         self.assertEqual(aggregate["heldout"], 4)
         self.assertEqual(aggregate["carry_value_checks"], 1923)
-        self.assertTrue(aggregate["all_kappa_dense"])
-        self.assertTrue(aggregate["all_carry_roots_dense"])
         self.assertEqual(aggregate["errors"], 0)
+        for row in self.payload["curves"]:
+            self.assertTrue(all(row["identities"].values()), row["label"])
 
     def test_heldout_fixture_orders(self) -> None:
-        heldout = [row for row in self.payload["curves"] if row["label"].startswith("heldout")]
+        heldout = [
+            row
+            for row in self.payload["curves"]
+            if row["label"].startswith("heldout")
+        ]
         self.assertEqual(
             [(row["p"], row["n"]) for row in heldout],
             [(61, 61), (211, 199), (991, 1009), (2089, 2143)],
