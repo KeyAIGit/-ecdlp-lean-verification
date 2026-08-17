@@ -6,12 +6,22 @@ on:
       - "experiments/parity_lift_000/uorc056_local_glv_sector_factorization_c43b.py"
       - "experiments/parity_lift_000/test_uorc056_local_glv_sector_factorization_c43b.py"
       - "Ecdlp/Proved/Uorc056LocalGlvGaugeBreaking.lean"
+      - "notes/UORC056_C_TRACK_LINEAGE_C43B.json"
+      - "notes/UORC056_C43_C43B_COMPOSED_AUTHORITY_2026_08_17.md"
+      - "scripts/check_uorc056_c43_composed_authority.py"
+      - "scripts/test_uorc056_c43_composed_authority.py"
+      - "repo/ARTIFACTS.yaml"
       - ".github/workflows/uorc056-local-glv-gauge-breaking-c43.yml"
   pull_request:
     paths:
       - "experiments/parity_lift_000/uorc056_local_glv_sector_factorization_c43b.py"
       - "experiments/parity_lift_000/test_uorc056_local_glv_sector_factorization_c43b.py"
       - "Ecdlp/Proved/Uorc056LocalGlvGaugeBreaking.lean"
+      - "notes/UORC056_C_TRACK_LINEAGE_C43B.json"
+      - "notes/UORC056_C43_C43B_COMPOSED_AUTHORITY_2026_08_17.md"
+      - "scripts/check_uorc056_c43_composed_authority.py"
+      - "scripts/test_uorc056_c43_composed_authority.py"
+      - "repo/ARTIFACTS.yaml"
       - ".github/workflows/uorc056-local-glv-gauge-breaking-c43.yml"
 
 jobs:
@@ -21,6 +31,8 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -64,6 +76,10 @@ jobs:
           assert decision["parity_oracle_found"] is False
           assert decision["sub_sqrt_ecdlp_found"] is False
           PY
+      - name: Check SHA-bound composed C43 authority
+        run: python scripts/check_uorc056_c43_composed_authority.py
+      - name: Test composed-frontier regressions
+        run: PYTHONPATH=scripts python -m unittest -v scripts/test_uorc056_c43_composed_authority.py
       - name: Install Lean toolchain
         run: |
           curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
