@@ -1,0 +1,67 @@
+{
+  "package": "GLOBAL-MONODROMY-SECTION-009",
+  "scope": "exact scalar identities, fifteen frozen toy GLV groups, and fixed secp256k1 arithmetic only; no external or production target",
+  "cyclotomic_section": "M(k)=prod_{j=0}^2(1-zeta_n^(lambda^j*k)); sign(Im M(k))=(-1)^gamma",
+  "proof_skeleton": [
+    "1-zeta^a=-2*i*zeta^(a/2)*sin(pi*a/n) for 0<a<n",
+    "all three sine factors are positive for canonical representatives",
+    "sum of representatives is gamma*n with gamma in {1,2}",
+    "therefore M(k)=8*i*(-1)^gamma*product(sin(pi*k_j/n))"
+  ],
+  "toy_cases": [
+    {"order":31,"lam":25,"points_checked":30,"phase_mismatches":0,"pure_imaginary_failures":0,"glv_invariance_failures":0,"anti_kummer_failures":0,"minimum_abs_imaginary_part":"0.224381290872661142352914266041","maximum_relative_real_part":"1.2142626e-100"},
+    {"order":67,"lam":29,"points_checked":66,"phase_mismatches":0,"pure_imaginary_failures":0,"glv_invariance_failures":0,"anti_kummer_failures":0,"minimum_abs_imaginary_part":"0.0989133730827923444858977654335","maximum_relative_real_part":"2.9865753e-101"},
+    {"order":19,"lam":7,"points_checked":18,"phase_mismatches":0,"pure_imaginary_failures":0,"glv_invariance_failures":0,"anti_kummer_failures":0,"minimum_abs_imaginary_part":"0.909589395891053084862090067402","maximum_relative_real_part":"1.7150008e-100"},
+    {"order":547,"lam":506,"points_checked":546,"phase_mismatches":0,"pure_imaginary_failures":0,"glv_invariance_failures":0,"anti_kummer_failures":0,"minimum_abs_imaginary_part":"0.00244101947901482138997237579874","maximum_relative_real_part":"1.4950022e-97"},
+    {"order":967,"lam":824,"points_checked":966,"phase_mismatches":0,"pure_imaginary_failures":0,"glv_invariance_failures":0,"anti_kummer_failures":0,"minimum_abs_imaginary_part":"0.00175680221747819776050028215457","maximum_relative_real_part":"3.6708826e-97"},
+    {"order":1093,"lam":151,"points_checked":1092,"phase_mismatches":0,"pure_imaginary_failures":0,"glv_invariance_failures":0,"anti_kummer_failures":0,"minimum_abs_imaginary_part":"0.00138410826633024664577109638748","maximum_relative_real_part":"2.4990572e-98"},
+    {"order":271,"lam":242,"points_checked":270,"phase_mismatches":0,"pure_imaginary_failures":0,"glv_invariance_failures":0,"anti_kummer_failures":0,"minimum_abs_imaginary_part":"0.00975692789504364153760062149077","maximum_relative_real_part":"2.7009211e-98"},
+    {"order":1249,"lam":93,"points_checked":1248,"phase_mismatches":0,"pure_imaginary_failures":0,"glv_invariance_failures":0,"anti_kummer_failures":0,"minimum_abs_imaginary_part":"0.00109254855983084474340167683014","maximum_relative_real_part":"8.5034796e-97"},
+    {"order":433,"lam":198,"points_checked":432,"phase_mismatches":0,"pure_imaginary_failures":0,"glv_invariance_failures":0,"anti_kummer_failures":0,"minimum_abs_imaginary_part":"0.00773488582354980453079922780725","maximum_relative_real_part":"1.6285715e-98"},
+    {"order":571,"lam":461,"points_checked":570,"phase_mismatches":0,"pure_imaginary_failures":0,"glv_invariance_failures":0,"anti_kummer_failures":0,"minimum_abs_imaginary_part":"0.00361651488636707318808651707531","maximum_relative_real_part":"1.5490793e-97"},
+    {"order":367,"lam":283,"points_checked":366,"phase_mismatches":0,"pure_imaginary_failures":0,"glv_invariance_failures":0,"anti_kummer_failures":0,"minimum_abs_imaginary_part":"0.012801278536629977031596745383","maximum_relative_real_part":"3.997887e-98"},
+    {"order":397,"lam":362,"points_checked":396,"phase_mismatches":0,"pure_imaginary_failures":0,"glv_invariance_failures":0,"anti_kummer_failures":0,"minimum_abs_imaginary_part":"0.00460141405176632713631285362461","maximum_relative_real_part":"3.1966064e-98"},
+    {"order":811,"lam":130,"points_checked":810,"phase_mismatches":0,"pure_imaginary_failures":0,"glv_invariance_failures":0,"anti_kummer_failures":0,"minimum_abs_imaginary_part":"0.00215361238228706305038208828215","maximum_relative_real_part":"2.7736485e-97"},
+    {"order":3469,"lam":1683,"points_checked":3468,"phase_mismatches":0,"pure_imaginary_failures":0,"glv_invariance_failures":0,"anti_kummer_failures":0,"minimum_abs_imaginary_part":"0.000123276229502324885881331260623","maximum_relative_real_part":"7.9299227e-97"},
+    {"order":4021,"lam":1812,"points_checked":4020,"phase_mismatches":0,"pure_imaginary_failures":0,"glv_invariance_failures":0,"anti_kummer_failures":0,"minimum_abs_imaginary_part":"0.000276083562130227390602721516053","maximum_relative_real_part":"3.6720196e-96"}
+  ],
+  "toy_aggregate": {"cases":15,"points_checked":14298,"phase_mismatches":0,"pure_imaginary_failures":0,"glv_invariance_failures":0,"anti_kummer_failures":0},
+  "secp256k1_embedding_certificate": {
+    "p":115792089237316195423570985008687907853269984665640564039457584007908834671663,
+    "n":115792089237316195423570985008687907852837564279074904382605163141518161494337,
+    "lambda":37718080363155996902926221483475020450927657555482586988616620542887997980018,
+    "embedding_degree":19298681539552699237261830834781317975472927379845817397100860523586360249056,
+    "embedding_degree_factorization":[
+      {"prime":2,"exponent":5,"p_pow_degree_over_prime_mod_n":115792089237316195423570985008687907852837564279074904382605163141518161494336},
+      {"prime":149,"exponent":1,"p_pow_degree_over_prime_mod_n":113848384323150997424351651422524525961041473396787494875146048855700736723997},
+      {"prime":631,"exponent":1,"p_pow_degree_over_prime_mod_n":31265026888672388003236863988121926787096379329002004289029755233561343799398},
+      {"prime":107361793816595537,"exponent":1,"p_pow_degree_over_prime_mod_n":52647893795144340796375696822039036288676007339498814680325117642364973308111},
+      {"prime":174723607534414371449,"exponent":1,"p_pow_degree_over_prime_mod_n":46778582684962379812666014000626710679154713018175810857708576519608093091099},
+      {"prime":341948486974166000522343609283189,"exponent":1,"p_pow_degree_over_prime_mod_n":28534239557337853226592268113194591356344802232226391584782486955805809019029}
+    ],
+    "p_pow_degree_mod_n":1,
+    "p_pow_half_degree_mod_n":115792089237316195423570985008687907852837564279074904382605163141518161494336,
+    "embedding_degree_log2":253.41503749927884,
+    "sqrt_n_log2":128.0,
+    "explicit_extension_over_sqrt_n_log2_ratio":125.41503749927884,
+    "gcd_embedding_degree_with_three":1,
+    "interpretation":"An explicit Weil/Tate-pairing realization of the cyclotomic phase requires an n-th-root-of-unity field of degree ord_n(p)=(n-1)/6."
+  },
+  "route_decisions": {
+    "universal_cyclotomic_cover":"exact carry decoder exists once zeta_n^k is available",
+    "pairing":"not sub-sqrt in explicit representation: independent n-torsion and mu_n require extension degree (n-1)/6",
+    "glv_self_pairing":"degenerate because phi(Q)=[lambda]Q lies on the same n-torsion line",
+    "frobenius_trace_norm":"half-Frobenius sends M to -M; odd traces vanish and norms/squares discard the sign",
+    "standard_theta_level":"translation by an order-n point on one theta space requires level/degree divisible by n, so the explicit representation is at least n-dimensional",
+    "p_adic":"prime-to-p torsion has zero formal logarithm; adjoining mu_n has the same unramified degree ord_n(p)"
+  },
+  "public_carry_decoder_found":false,
+  "public_R3_decoder_found":false,
+  "unconditional_sub_sqrt_algorithm_found":false,
+  "claim_boundary":[
+    "The cyclotomic phase identity is exact.",
+    "The embedding-degree certificate is exact for the fixed secp256k1 constants.",
+    "The route decisions are scoped to explicit pairing, standard theta-level, Frobenius trace/norm, and formal-logarithm realizations.",
+    "No universal impossibility theorem for arbitrary algorithms is claimed."
+  ]
+}

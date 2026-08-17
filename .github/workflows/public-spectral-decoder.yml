@@ -1,0 +1,98 @@
+name: Public spectral decoder census
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - experiments/parity_lift_000/public_spectral_decoder_screen.py
+      - .github/workflows/public-spectral-decoder.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: public-spectral-decoder-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  census:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Install numerical dependency
+        run: python3 -m pip install --disable-pip-version-check numpy
+
+      - name: Run frozen spectral census
+        run: |
+          python3 experiments/parity_lift_000/public_spectral_decoder_screen.py \
+            --out public_spectral_decoder_results.json \
+            > /tmp/public-spectral.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('public_spectral_decoder_results.json').read_text())
+          print(json.dumps(data['aggregate'], indent=2))
+          print('\nLargest cases:')
+          for case in sorted(data['cases'], key=lambda row: row['order'])[-6:]:
+              print({
+                  'order': case['order'],
+                  'best': case['best_candidate'],
+                  'max_nonzero_abs': case['best_max_nonzero_abs'],
+                  'times_sqrt_n': case['best_times_sqrt_order'],
+                  'times_log_n': case['best_times_log_order'],
+                  'ge_0_10': case['candidates_ge_0_10'],
+                  'ge_inverse_log': case['candidates_ge_inverse_log'],
+              })
+          PY
+
+      - name: Post research decision to PR 365
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY' > /tmp/comment.md
+          import json
+          import os
+          from pathlib import Path
+          data = json.loads(Path('public_spectral_decoder_results.json').read_text())
+          agg = data['aggregate']
+          names = agg['candidate_names_repeatedly_ge_0_10_on_large_cases']
+          print('## PUBLIC-SPECTRAL-DECODER-011 automated census')
+          print()
+          print(f"Commit: `{os.environ['GITHUB_SHA']}`")
+          print()
+          print('```json')
+          print(json.dumps(agg, indent=2))
+          print('```')
+          print()
+          print('| order | best public observable | max nonzero Fourier coefficient | coefficient*sqrt(n) | coefficient*log(n) |')
+          print('|---:|---|---:|---:|---:|')
+          for case in sorted(data['cases'], key=lambda row: row['order'])[-6:]:
+              print(
+                  f"| {case['order']} | `{case['best_candidate']}` | "
+                  f"{case['best_max_nonzero_abs']:.8f} | "
+                  f"{case['best_times_sqrt_order']:.6f} | "
+                  f"{case['best_times_log_order']:.6f} |"
+              )
+          print()
+          if names:
+              print('Decision: **positive spectral follow-up required** for: ' + ', '.join(f'`{name}`' for name in names))
+              print('A formula and a literal local-SFT recovery proof are required before any secp256k1 claim.')
+          else:
+              print('Decision: **no repeated constant-heavy public spectrum in the frozen census**. The observed candidates remain compatible with square-root-scale character sums.')
+          PY
+          gh api --method POST \
+            repos/${GITHUB_REPOSITORY}/issues/365/comments \
+            -f body="$(cat /tmp/comment.md)"
+
+      - name: Upload census
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-spectral-decoder-results
+          path: public_spectral_decoder_results.json

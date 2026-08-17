@@ -1,0 +1,106 @@
+name: Twisted theta characteristic
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - 'archive/untrusted_intake/parity_lift_000/TWISTED_THETA_CHARACTERISTIC_052.md'
+      - 'experiments/parity_lift_000/twisted_theta_characteristic.py'
+      - 'Ecdlp/Proved/TwistedThetaCharacteristic.lean'
+      - '.github/workflows/twisted-theta-characteristic.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact theta-characteristic replay
+        run: |
+          python3 experiments/parity_lift_000/twisted_theta_characteristic.py \
+            --out /tmp/twisted_theta_characteristic_results.json \
+            > /tmp/twisted-theta-characteristic.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('/tmp/twisted_theta_characteristic_results.json').read_text())
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert aggregate['cases'] == 6
+          assert aggregate['split_two_torsion_cases'] == 2
+          assert aggregate['nonsplit_two_torsion_cases'] == 4
+          assert aggregate['total_curve_checks'] == 1212
+          assert aggregate['total_negation_invariance_checks'] == 1212
+          assert aggregate['total_split_norm_checks'] == 702
+          assert aggregate['total_normalized_norm_checks'] == 702
+          assert aggregate['total_characteristic_checks'] == 2106
+          assert aggregate['total_characteristic_matches_parity'] == 1053
+          assert aggregate['total_characteristic_mismatches_parity'] == 1053
+          assert aggregate['exact_characteristic_parity_decoders'] == 0
+          assert aggregate['all_standard_twists_reject_oriented_root']
+          assert secp['bit_length'] == 256
+          assert secp['cofactor'] == 1
+          assert secp['group_order_is_odd']
+          assert not secp['nontrivial_rational_two_torsion']
+          assert secp['base_field_theta_characteristics'] == 1
+          assert secp['geometric_theta_characteristics'] == 4
+          assert secp['nontrivial_characteristic_frobenius_orbit_degree'] == 3
+          assert not secp['does_standard_twisted_characteristic_select_oriented_sqrt']
+          assert secp['selected_successor'] == 'METAPLECTIC-THETA-INTERTWINER-053'
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/TwistedThetaCharacteristic.lean; then
+            echo '::error::Twisted theta-characteristic theorem contains sorry'
+            exit 1
+          fi
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            for attempt in 1 2 3 4; do
+              if sh /tmp/elan-init.sh -y --default-toolchain none; then
+                installed=1
+                echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+                break
+              fi
+              sleep $((attempt * 3))
+            done
+          fi
+          if [ "$installed" = 0 ]; then
+            echo 'elan unavailable; downloading the pinned Lean distribution directly'
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check theta-characteristic identities
+        run: lake build Ecdlp.Proved.TwistedThetaCharacteristic
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: twisted-theta-characteristic-results
+          path: |
+            /tmp/twisted_theta_characteristic_results.json
+            /tmp/twisted-theta-characteristic.log
+          retention-days: 90

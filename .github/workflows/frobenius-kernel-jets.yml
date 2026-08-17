@@ -1,0 +1,96 @@
+name: Frobenius kernel jet screen
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - experiments/parity_lift_000/frobenius_kernel_jet_screen.py
+      - .github/workflows/frobenius-kernel-jets.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run frozen compact-jet screen
+        run: |
+          python3 experiments/parity_lift_000/frobenius_kernel_jet_screen.py \
+            --out frobenius_kernel_jet_results.json \
+            > /tmp/frobenius-kernel-jets.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('frobenius_kernel_jet_results.json').read_text())
+          print(json.dumps(data['aggregate'], indent=2))
+          for case in sorted(data['cases'], key=lambda row: row['order'])[-6:]:
+              print({
+                  'order': case['order'],
+                  'jets': case['nonvanishing_raw_jets'],
+                  'exact_carry': case['exact_carry_decoder'],
+                  'exact_r3': case['exact_r3_decoder'],
+                  'exact_normalized': case['exact_normalized_orbit_decoder'],
+                  'carry_best': case['best_carry_accuracy'],
+                  'carry_q95': case['carry_null_q95'],
+                  'r3_best': case['best_r3_accuracy'],
+                  'r3_q95': case['r3_null_q95'],
+              })
+          PY
+
+      - name: Post decision to PR 365
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY' > /tmp/comment.md
+          import json
+          import os
+          from pathlib import Path
+          data = json.loads(Path('frobenius_kernel_jet_results.json').read_text())
+          agg = data['aggregate']
+          positive = (
+              agg['exact_carry_decoders'] > 0
+              or agg['exact_r3_decoders'] > 0
+              or agg['large_carry_cases_strictly_above_null_q95'] >= 2
+              or agg['large_r3_cases_strictly_above_null_q95'] >= 2
+          )
+          print('## FROBENIUS-KERNEL-JETS-014 automated decision')
+          print()
+          print(f"Commit: `{os.environ['GITHUB_SHA']}`")
+          print()
+          print('```json')
+          print(json.dumps(agg, indent=2))
+          print('```')
+          print()
+          print('| order | nonzero jets | exact carry | exact R3 | carry best / q95 | R3 best / q95 |')
+          print('|---:|---|---|---|---:|---:|')
+          for case in sorted(data['cases'], key=lambda row: row['order'])[-6:]:
+              print(
+                  f"| {case['order']} | `{case['nonvanishing_raw_jets']}` | "
+                  f"`{case['exact_carry_decoder']}` | `{case['exact_r3_decoder']}` | "
+                  f"{case['best_carry_accuracy']:.6f} / {case['carry_null_q95']:.6f} | "
+                  f"{case['best_r3_accuracy']:.6f} / {case['r3_null_q95']:.6f} |"
+              )
+          print()
+          if positive:
+              print('Decision: **positive compact-jet follow-up required**. A literal invariantization and compact evaluation proof are the next gate.')
+          else:
+              print('Decision: **no admitted carry/R3 separation through jet order eight** under the frozen matched-null protocol.')
+          PY
+          gh api --method POST \
+            repos/${GITHUB_REPOSITORY}/issues/365/comments \
+            -f body="$(cat /tmp/comment.md)"
+
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: frobenius-kernel-jet-results
+          path: frobenius_kernel_jet_results.json

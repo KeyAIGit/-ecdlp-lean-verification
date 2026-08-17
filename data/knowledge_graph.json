@@ -37,9 +37,9 @@
     "decision_level_bounded_authorizations": 1,
     "selected_structural_routes": 1,
     "promoted_routes": 0,
-    "edges": 1187,
+    "edges": 1189,
     "by_edge_type": {
-      "imports": 525,
+      "imports": 527,
       "member_of": 307,
       "grounded_in_source_claim": 62,
       "requires_foundation": 41,
@@ -12777,6 +12777,11 @@
       "type": "imports"
     },
     {
+      "from": "Ecdlp.Proved.ScalarParity",
+      "to": "Ecdlp.Proved.EdsResidueBalance",
+      "type": "imports"
+    },
+    {
       "from": "Ecdlp.Proved.SchnorrSoundness",
       "to": "Ecdlp.Secp256k1Verified",
       "type": "imports"
@@ -14104,6 +14109,11 @@
     {
       "from": "Ecdlp",
       "to": "Ecdlp.Proved.CompressedDivisionPoly",
+      "type": "imports"
+    },
+    {
+      "from": "Ecdlp",
+      "to": "Ecdlp.Proved.ScalarParity",
       "type": "imports"
     },
     {

@@ -7,8 +7,8 @@
   "anonymous_instance_exemptions": 7,
   "unresolved_reference_count": 0,
   "coverage_percent": 100.0,
-  "declaration_count": 1176,
-  "distinct_qualified_names": 1176,
+  "declaration_count": 1192,
+  "distinct_qualified_names": 1192,
   "verified_md_citations": 677,
   "unresolved_references": [],
   "resolution_exemptions": [
@@ -13270,6 +13270,27 @@
       "file": "Ecdlp/Proved/EllSequenceRecOne.lean",
       "line": 23
     },
+    "Ecdlp.EdsResidue.fixedIndexQuadraticBalance": {
+      "name": "fixedIndexQuadraticBalance",
+      "namespace": "Ecdlp.EdsResidue",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EdsResidueBalance.lean",
+      "line": 32
+    },
+    "Ecdlp.EdsResidue.fixedIndexQuadraticDefect_zero": {
+      "name": "fixedIndexQuadraticDefect_zero",
+      "namespace": "Ecdlp.EdsResidue",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EdsResidueBalance.lean",
+      "line": 46
+    },
+    "Ecdlp.EdsResidue.fixedIndexTermQuadraticBalance": {
+      "name": "fixedIndexTermQuadraticBalance",
+      "namespace": "Ecdlp.EdsResidue",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/EdsResidueBalance.lean",
+      "line": 25
+    },
     "Ecdlp.Frontier.addOrderOf_dvd_iff'": {
       "name": "addOrderOf_dvd_iff'",
       "namespace": "Ecdlp.Frontier",
@@ -15586,6 +15607,97 @@
       "kind": "theorem",
       "file": "Ecdlp/Proved/P256TwistSecurity.lean",
       "line": 245
+    },
+    "Ecdlp.ParityLift.bitsValue": {
+      "name": "bitsValue",
+      "namespace": "Ecdlp.ParityLift",
+      "kind": "def",
+      "file": "Ecdlp/Proved/ScalarParity.lean",
+      "line": 127
+    },
+    "Ecdlp.ParityLift.no_global_alternating_translation_observable": {
+      "name": "no_global_alternating_translation_observable",
+      "namespace": "Ecdlp.ParityLift",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ScalarParity.lean",
+      "line": 68
+    },
+    "Ecdlp.ParityLift.parityOracle_recovers_dlog": {
+      "name": "parityOracle_recovers_dlog",
+      "namespace": "Ecdlp.ParityLift",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ScalarParity.lean",
+      "line": 135
+    },
+    "Ecdlp.ParityLift.parityPeel": {
+      "name": "parityPeel",
+      "namespace": "Ecdlp.ParityLift",
+      "kind": "def",
+      "file": "Ecdlp/Proved/ScalarParity.lean",
+      "line": 103
+    },
+    "Ecdlp.ParityLift.parityPeel_lt": {
+      "name": "parityPeel_lt",
+      "namespace": "Ecdlp.ParityLift",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ScalarParity.lean",
+      "line": 107
+    },
+    "Ecdlp.ParityLift.parityTrace": {
+      "name": "parityTrace",
+      "namespace": "Ecdlp.ParityLift",
+      "kind": "def",
+      "file": "Ecdlp/Proved/ScalarParity.lean",
+      "line": 118
+    },
+    "Ecdlp.ParityLift.parity_reconstruct_step": {
+      "name": "parity_reconstruct_step",
+      "namespace": "Ecdlp.ParityLift",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ScalarParity.lean",
+      "line": 112
+    },
+    "Ecdlp.ParityLift.scalarParity": {
+      "name": "scalarParity",
+      "namespace": "Ecdlp.ParityLift",
+      "kind": "def",
+      "file": "Ecdlp/Proved/ScalarParity.lean",
+      "line": 20
+    },
+    "Ecdlp.ParityLift.scalarParity_lt_two": {
+      "name": "scalarParity_lt_two",
+      "namespace": "Ecdlp.ParityLift",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ScalarParity.lean",
+      "line": 29
+    },
+    "Ecdlp.ParityLift.scalarParity_neg": {
+      "name": "scalarParity_neg",
+      "namespace": "Ecdlp.ParityLift",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ScalarParity.lean",
+      "line": 35
+    },
+    "Ecdlp.ParityLift.scalarParity_not_factor_through_Kummer": {
+      "name": "scalarParity_not_factor_through_Kummer",
+      "namespace": "Ecdlp.ParityLift",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ScalarParity.lean",
+      "line": 47
+    },
+    "Ecdlp.ParityLift.scalarParity_one": {
+      "name": "scalarParity_one",
+      "namespace": "Ecdlp.ParityLift",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ScalarParity.lean",
+      "line": 25
+    },
+    "Ecdlp.ParityLift.scalarParity_zero": {
+      "name": "scalarParity_zero",
+      "namespace": "Ecdlp.ParityLift",
+      "kind": "theorem",
+      "file": "Ecdlp/Proved/ScalarParity.lean",
+      "line": 22
     },
     "Ecdlp.PohligHellman.component": {
       "name": "component",

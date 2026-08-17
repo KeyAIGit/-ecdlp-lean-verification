@@ -1,0 +1,103 @@
+{
+  "scope": "five frozen prime-order toy curves y^2=x^3+7 only",
+  "deep_search": true,
+  "curves": [
+    {
+      "p": 43,
+      "order": 31,
+      "generator": [2, 12],
+      "valid_projective_affine_lines": 878,
+      "unique_line_sign_vectors": 877,
+      "exact_weight_one": false,
+      "exact_weight_two": false,
+      "chi_y_best_matches": 24,
+      "chi_y_total": 30,
+      "chi_y_best_accuracy": 0.8,
+      "chi_y_best_generator_multiplier": 8,
+      "chi_y_best_global_sign": -1,
+      "deep_search_limit": 4,
+      "deep_minimum_weight": 4,
+      "deep_exact_forms": [[1, 0, 17], [1, 1, 41], [1, 42, 41], [0, 1, 0]]
+    },
+    {
+      "p": 67,
+      "order": 79,
+      "generator": [2, 22],
+      "valid_projective_affine_lines": 1294,
+      "unique_line_sign_vectors": 1294,
+      "exact_weight_one": false,
+      "exact_weight_two": false,
+      "chi_y_best_matches": 50,
+      "chi_y_total": 78,
+      "chi_y_best_accuracy": 0.6410256410256411,
+      "chi_y_best_generator_multiplier": 22,
+      "chi_y_best_global_sign": 1,
+      "deep_search_limit": 4,
+      "deep_minimum_weight": null,
+      "deep_exact_forms": null
+    },
+    {
+      "p": 79,
+      "order": 67,
+      "generator": [1, 18],
+      "valid_projective_affine_lines": 2504,
+      "unique_line_sign_vectors": 2504,
+      "exact_weight_one": false,
+      "exact_weight_two": false,
+      "chi_y_best_matches": 46,
+      "chi_y_total": 66,
+      "chi_y_best_accuracy": 0.696969696969697,
+      "chi_y_best_generator_multiplier": 10,
+      "chi_y_best_global_sign": -1,
+      "deep_search_limit": 3,
+      "deep_minimum_weight": null,
+      "deep_exact_forms": null
+    },
+    {
+      "p": 127,
+      "order": 127,
+      "generator": [1, 32],
+      "valid_projective_affine_lines": 5442,
+      "unique_line_sign_vectors": 5442,
+      "exact_weight_one": false,
+      "exact_weight_two": false,
+      "chi_y_best_matches": 76,
+      "chi_y_total": 126,
+      "chi_y_best_accuracy": 0.6031746031746031,
+      "chi_y_best_generator_multiplier": 1,
+      "chi_y_best_global_sign": -1,
+      "deep_search_limit": null,
+      "deep_minimum_weight": null,
+      "deep_exact_forms": null
+    },
+    {
+      "p": 163,
+      "order": 139,
+      "generator": [2, 34],
+      "valid_projective_affine_lines": 10472,
+      "unique_line_sign_vectors": 10472,
+      "exact_weight_one": false,
+      "exact_weight_two": false,
+      "chi_y_best_matches": 84,
+      "chi_y_total": 138,
+      "chi_y_best_accuracy": 0.6086956521739131,
+      "chi_y_best_generator_multiplier": 9,
+      "chi_y_best_global_sign": -1,
+      "deep_search_limit": null,
+      "deep_minimum_weight": null,
+      "deep_exact_forms": null
+    }
+  ],
+  "p43_exact_identity": {
+    "generator": [2, 12],
+    "formula": "(x+17)*(x+y+41)*(x+42*y+41)*y mod 43",
+    "equals": "(-1)^k for Q=[k]G and 1<=k<31",
+    "minimum_within_line_product_family": 4
+  },
+  "claim_boundary": [
+    "Finite toy interpolation is not an ECDLP algorithm.",
+    "No external or production-sized input is accepted.",
+    "Failure at bounded product weight is scoped to affine-line character factors.",
+    "High algebraic degree may still admit low evaluation complexity."
+  ]
+}

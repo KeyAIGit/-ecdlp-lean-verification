@@ -1,0 +1,160 @@
+name: Secp factor 13441 canonical-orbit nonlinear CV
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - experiments/parity_lift_000/secp_13441_canonical_orbit_ml_cv.py
+      - experiments/parity_lift_000/secp_13441_character_screen.py
+      - experiments/parity_lift_000/secp_13441_within_curve_cv.py
+      - Ecdlp/Proved/Secp13441WithinCurveBoundary.lean
+      - .github/workflows/secp-13441-canonical-orbit-ml.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: secp-13441-canonical-orbit-ml-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Install exact and ML dependencies
+        run: >-
+          python3 -m pip install --disable-pip-version-check
+          numpy sympy scikit-learn
+
+      - name: Run frozen canonical-orbit nonlinear screen
+        run: |
+          python3 experiments/parity_lift_000/secp_13441_canonical_orbit_ml_cv.py \
+            --out /tmp/secp_13441_canonical_orbit_ml_results.json \
+            > /tmp/secp-13441-canonical-orbit-ml.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/secp_13441_canonical_orbit_ml_results.json').read_text()
+          )
+          print(json.dumps(data['aggregate'], indent=2))
+          print(json.dumps(data['variant_summary'], indent=2))
+          print('largest-order rows:')
+          for row in sorted(
+              data['evaluations'],
+              key=lambda item: (
+                  item['order'], item['target'], item['model']
+              ),
+          )[-24:]:
+              print({
+                  'target': row['target'],
+                  'model': row['model'],
+                  'order': row['order'],
+                  'sampled_orbits': row['sampled_orbits'],
+                  'balanced_accuracy': row['observed_balanced_accuracy'],
+                  'balanced_advantage': row['observed_balanced_advantage'],
+                  'null_q99': row['null_q99_balanced_accuracy'],
+                  'empirical_upper_p': row['empirical_upper_p'],
+                  'z_score': row['z_score'],
+                  'above_q99': row['strictly_above_null_q99'],
+              })
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/Secp13441WithinCurveBoundary.lean; then
+            echo "::error::Canonical-orbit boundary theorem contains sorry"
+            exit 1
+          fi
+
+      - name: Install elan
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check orientation boundary
+        run: lake build Ecdlp.Proved.Secp13441WithinCurveBoundary
+
+      - name: Post nonlinear decision to research PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY' > /tmp/comment.md
+          import json
+          import os
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/secp_13441_canonical_orbit_ml_results.json').read_text()
+          )
+          aggregate = data['aggregate']
+          print('## SECP-13441-CANONICAL-ORBIT-ML-025')
+          print()
+          print(f"Commit: `{os.environ['GITHUB_SHA']}`")
+          print()
+          print('```json')
+          print(json.dumps(aggregate, indent=2))
+          print('```')
+          print()
+          print('| variant | curves | q95 | q99 | z>=3 | mean balanced accuracy | largest accuracy | largest-two min advantage | screen | strong |')
+          print('|---|---:|---:|---:|---:|---:|---:|---:|---|---|')
+          for name, row in data['variant_summary'].items():
+              print(
+                  f"| `{name}` | {row['eligible_curves']} | "
+                  f"{row['q95_exceedances']} | {row['q99_exceedances']} | "
+                  f"{row['z_ge_3_exceedances']} | "
+                  f"{row['mean_balanced_accuracy']:.6f} | "
+                  f"{row['largest_order_balanced_accuracy']:.6f} | "
+                  f"{row['largest_two_minimum_balanced_advantage']:.6f} | "
+                  f"{row['screen_admitted_signal']} | "
+                  f"{row['strong_admitted_signal']} |"
+              )
+          print()
+          if aggregate['screen_admitted_variants']:
+              print(
+                  'Decision: **nonlinear same-curve screen gate passed** for: '
+                  + ', '.join(
+                      f'`{name}`'
+                      for name in aggregate['screen_admitted_variants']
+                  )
+              )
+              print(
+                  'Required next step: independent frozen replay, ablation, '
+                  'fixed-circuit export, and a literal recovery reduction. '
+                  'No secp256k1 claim is made.'
+              )
+          else:
+              print(
+                  'Decision: **no tested nonlinear same-curve public circuit '
+                  'passed the frozen q99 and largest-two scaling gate.**'
+              )
+          print()
+          print(
+              'Boundary: this covers three fixed bounded-capacity models on '
+              'complete order-13441 phase and C6-invariant public coordinate '
+              'features. It is not a lower bound against arbitrary nonlinear '
+              'circuits.'
+          )
+          PY
+          gh api --method POST \
+            repos/${GITHUB_REPOSITORY}/issues/365/comments \
+            -f body="$(cat /tmp/comment.md)"
+
+      - name: Upload nonlinear screen artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: secp-13441-canonical-orbit-ml-results
+          path: /tmp/secp_13441_canonical_orbit_ml_results.json

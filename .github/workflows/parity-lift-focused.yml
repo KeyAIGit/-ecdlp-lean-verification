@@ -1,0 +1,212 @@
+name: Parity-lift focused verification
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - Ecdlp/Proved/GlvNormalizationRigidity.lean
+      - Ecdlp/Proved/GlvNormalizationRigidityScope.lean
+      - Ecdlp/Proved/EisensteinRootPhaseBoundary.lean
+      - Ecdlp/Proved/GlobalMonodromyBoundary.lean
+      - Ecdlp/Proved/GlobalMonodromyCarry.lean
+      - Ecdlp/Proved/FrobeniusCmSectionRigidity.lean
+      - Ecdlp/Proved/SesquilinearCmPairingBoundary.lean
+      - experiments/parity_lift_000/glv_normalization_rigidity_screen.py
+      - experiments/parity_lift_000/glv_normalization_rigidity_results.json
+      - experiments/parity_lift_000/global_monodromy_embedding_degree.py
+      - experiments/parity_lift_000/global_monodromy_section_screen.py
+      - experiments/parity_lift_000/global_monodromy_section_results.json
+      - experiments/parity_lift_000/ordered_coordinate_carry_screen.py
+      - experiments/parity_lift_000/ordered_coordinate_carry_results.json
+      - experiments/parity_lift_000/mixed_weight_pencil_screen.py
+      - experiments/parity_lift_000/mixed_weight_pencil_runner.py
+      - experiments/parity_lift_000/frobenius_cm_section_boundary.py
+      - experiments/parity_lift_000/sesquilinear_cm_pairing_boundary.py
+      - experiments/parity_lift_000/sesquilinear_cm_pairing_results.json
+      - .github/workflows/parity-lift-focused.yml
+  workflow_dispatch:
+
+concurrency:
+  group: parity-lift-focused-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  focused:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Install focused screen dependencies
+        run: python3 -m pip install --disable-pip-version-check numpy mpmath sympy
+
+      - name: Replay frozen rigidity screen
+        run: |
+          python3 experiments/parity_lift_000/glv_normalization_rigidity_screen.py \
+            --out /tmp/glv_normalization_rigidity_results.json > /tmp/rigidity-screen.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          replay = json.loads(Path('/tmp/glv_normalization_rigidity_results.json').read_text())
+          frozen = json.loads(Path(
+              'experiments/parity_lift_000/glv_normalization_rigidity_results.json'
+          ).read_text())
+
+          differences = []
+          def walk(left, right, path='$'):
+              if type(left) is not type(right):
+                  differences.append((path, left, right))
+                  return
+              if isinstance(left, dict):
+                  for key in sorted(set(left) | set(right)):
+                      if key not in left:
+                          differences.append((f'{path}.{key}', '<missing>', right[key]))
+                      elif key not in right:
+                          differences.append((f'{path}.{key}', left[key], '<missing>'))
+                      else:
+                          walk(left[key], right[key], f'{path}.{key}')
+              elif isinstance(left, list):
+                  if len(left) != len(right):
+                      differences.append((f'{path}.length', len(left), len(right)))
+                  for index, (litem, ritem) in enumerate(zip(left, right)):
+                      walk(litem, ritem, f'{path}[{index}]')
+              elif left != right:
+                  differences.append((path, left, right))
+
+          walk(replay, frozen)
+          if differences:
+              print('semantic rigidity replay differences:')
+              for path, replay_value, frozen_value in differences[:100]:
+                  print(f'  {path}: replay={replay_value!r} frozen={frozen_value!r}')
+              raise SystemExit(1)
+          print('semantic rigidity replay: PASS')
+          PY
+          tail -n 20 /tmp/rigidity-screen.log
+
+      - name: Verify exact monodromy embedding-degree certificate
+        run: |
+          python3 experiments/parity_lift_000/global_monodromy_embedding_degree.py \
+            > /tmp/global-monodromy.log
+          cp experiments/parity_lift_000/global_monodromy_embedding_degree_results.json \
+            /tmp/global_monodromy_embedding_degree_results.json
+          tail -n 40 /tmp/global-monodromy.log
+
+      - name: Replay exact cyclotomic carry section
+        run: |
+          python3 experiments/parity_lift_000/global_monodromy_section_screen.py \
+            --out /tmp/global_monodromy_section_results.json \
+            > /tmp/global-monodromy-section.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          replay = json.loads(Path('/tmp/global_monodromy_section_results.json').read_text())
+          frozen = json.loads(Path(
+              'experiments/parity_lift_000/global_monodromy_section_results.json'
+          ).read_text())
+          if replay != frozen:
+              raise SystemExit('global monodromy section replay differs from frozen result')
+          print('global monodromy section replay: PASS')
+          PY
+          tail -n 30 /tmp/global-monodromy-section.log
+
+      - name: Replay ordered-coordinate carry escape
+        run: |
+          python3 experiments/parity_lift_000/ordered_coordinate_carry_screen.py \
+            --out /tmp/ordered_coordinate_carry_results.json \
+            > /tmp/ordered-coordinate.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          replay = json.loads(Path('/tmp/ordered_coordinate_carry_results.json').read_text())
+          frozen = json.loads(Path(
+              'experiments/parity_lift_000/ordered_coordinate_carry_results.json'
+          ).read_text())
+          if replay != frozen:
+              raise SystemExit('ordered-coordinate replay differs from frozen result')
+          print('ordered-coordinate carry replay: PASS')
+          PY
+          tail -n 30 /tmp/ordered-coordinate.log
+
+      - name: Verify secp256k1 Frobenius CM section collapse
+        run: |
+          python3 experiments/parity_lift_000/frobenius_cm_section_boundary.py \
+            > /tmp/frobenius-cm.log
+          cp experiments/parity_lift_000/frobenius_cm_section_boundary_results.json \
+            /tmp/frobenius_cm_section_boundary_results.json
+          tail -n 80 /tmp/frobenius-cm.log
+
+      - name: Replay sesquilinear CM pairing boundary
+        run: |
+          python3 experiments/parity_lift_000/sesquilinear_cm_pairing_boundary.py \
+            --out /tmp/sesquilinear_cm_pairing_results.json \
+            > /tmp/sesquilinear-cm.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          replay = json.loads(Path('/tmp/sesquilinear_cm_pairing_results.json').read_text())
+          frozen = json.loads(Path(
+              'experiments/parity_lift_000/sesquilinear_cm_pairing_results.json'
+          ).read_text())
+          if replay != frozen:
+              raise SystemExit('sesquilinear CM replay differs from frozen result')
+          print('sesquilinear CM pairing replay: PASS')
+          PY
+          tail -n 50 /tmp/sesquilinear-cm.log
+
+      - name: Run mixed-weight section pencil screen
+        run: |
+          python3 experiments/parity_lift_000/mixed_weight_pencil_runner.py \
+            --out /tmp/mixed_weight_pencil_results.json \
+            > /tmp/mixed-weight.log
+          tail -n 120 /tmp/mixed-weight.log
+
+      - name: Upload focused research results
+        uses: actions/upload-artifact@v4
+        with:
+          name: parity-lift-focused-results
+          path: |
+            /tmp/global_monodromy_embedding_degree_results.json
+            /tmp/global_monodromy_section_results.json
+            /tmp/ordered_coordinate_carry_results.json
+            /tmp/frobenius_cm_section_boundary_results.json
+            /tmp/sesquilinear_cm_pairing_results.json
+            /tmp/mixed_weight_pencil_results.json
+          if-no-files-found: error
+
+      - name: Reject incomplete focused proofs
+        run: |
+          if grep -nI 'sorry' \
+            Ecdlp/Proved/GlvNormalizationRigidity.lean \
+            Ecdlp/Proved/GlvNormalizationRigidityScope.lean \
+            Ecdlp/Proved/GlobalMonodromyBoundary.lean \
+            Ecdlp/Proved/GlobalMonodromyCarry.lean \
+            Ecdlp/Proved/FrobeniusCmSectionRigidity.lean \
+            Ecdlp/Proved/SesquilinearCmPairingBoundary.lean; then
+            echo "::error::Focused parity-lift proof contains sorry"
+            exit 1
+          fi
+
+      - name: Install elan
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check rigidity and monodromy modules
+        run: |
+          lake build Ecdlp.Proved.GlvNormalizationRigidity
+          lake build Ecdlp.Proved.GlvNormalizationRigidityScope
+          lake build Ecdlp.Proved.EisensteinRootPhaseBoundary
+          lake build Ecdlp.Proved.GlobalMonodromyBoundary
+          lake build Ecdlp.Proved.GlobalMonodromyCarry
+          lake build Ecdlp.Proved.FrobeniusCmSectionRigidity
+          lake build Ecdlp.Proved.SesquilinearCmPairingBoundary

@@ -1,0 +1,135 @@
+name: Mixed-y hybrid Fourier transfer
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - experiments/parity_lift_000/mixed_y_hybrid_transfer.py
+      - experiments/parity_lift_000/public_spectral_decoder_screen_v2.py
+      - Ecdlp/Proved/MixedYHybridTransferBoundary.lean
+      - archive/untrusted_intake/parity_lift_000/MIXED_Y_HYBRID_TRANSFER_016.md
+      - .github/workflows/mixed-y-hybrid-transfer.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: mixed-y-hybrid-transfer-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Install numerical dependency
+        run: python3 -m pip install --disable-pip-version-check numpy
+
+      - name: Replay normalization-aware public spectral census
+        run: |
+          python3 experiments/parity_lift_000/public_spectral_decoder_screen_v2.py \
+            --out /tmp/public_spectral_decoder_v2_results.json \
+            > /tmp/public-spectral-v2.log
+          tail -n 40 /tmp/public-spectral-v2.log
+
+      - name: Verify mixed-y finite Fourier transfer
+        run: |
+          python3 experiments/parity_lift_000/mixed_y_hybrid_transfer.py \
+            --spectral-results /tmp/public_spectral_decoder_v2_results.json \
+            --out /tmp/mixed_y_hybrid_transfer_results.json \
+            > /tmp/mixed-y-transfer.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/mixed_y_hybrid_transfer_results.json').read_text()
+          )
+          print(json.dumps(data['aggregate'], indent=2))
+          print(json.dumps(data['selected_large_summary'], indent=2))
+          if not data['aggregate']['all_selected_large_candidates_below_inverse_log']:
+              raise SystemExit('selected mixed-y candidate crossed inverse-log gate')
+          if data['aggregate']['maximum_quadratic_gauss_error'] > 1e-10:
+              raise SystemExit('quadratic Gauss-spectrum replay failed')
+          if data['aggregate']['maximum_carry_half_tensor_factorization_error'] > 1e-8:
+              raise SystemExit('carry-half tensor factorization replay failed')
+          if data['aggregate']['maximum_carry_chi_tensor_factorization_error'] > 1e-8:
+              raise SystemExit('carry-chi tensor factorization replay failed')
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/MixedYHybridTransferBoundary.lean; then
+            echo "::error::Mixed-y transfer boundary contains sorry"
+            exit 1
+          fi
+
+      - name: Install elan
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check mixed-y arithmetic envelope
+        run: lake build Ecdlp.Proved.MixedYHybridTransferBoundary
+
+      - name: Post mixed-y boundary to research PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY' > /tmp/comment.md
+          import json
+          import os
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/mixed_y_hybrid_transfer_results.json').read_text()
+          )
+          agg = data['aggregate']
+          summary = data['selected_large_summary']
+          print('## MIXED-Y-HYBRID-TRANSFER-016')
+          print()
+          print(f"Commit: `{os.environ['GITHUB_SHA']}`")
+          print()
+          print('```json')
+          print(json.dumps(agg, indent=2))
+          print('```')
+          print()
+          print('| candidate | largest-order coefficient | max coefficient*sqrt(n) | cases >= 1/log(n) | conditional transfer |')
+          print('|---|---:|---:|---:|---|')
+          transfer = data['transfer_consequences']
+          for name in ('half_y', 'chi_y', 'field_carry_x*half_y', 'field_carry_x*chi_y'):
+              row = summary[name]
+              print(
+                  f"| `{name}` | {row['largest_order_coefficient']:.8f} | "
+                  f"{row['maximum_coefficient_times_sqrt_order']:.6f} | "
+                  f"{row['cases_ge_inverse_log']} | `{transfer[name]}` |"
+              )
+          print()
+          print('Decision: **all four selected mixed-y observables remain below the inverse-log spectral gate on the frozen large cases. Under the stated fixed-conductor square-root hybrid-sum theorem, each route is too small for a polynomial-time local-SFT reduction.**')
+          print()
+          print('Boundary: finite Fourier identities and Lean bookkeeping are verified here. The mixed Artin-Schreier, Kummer, and additive-Kummer square-root estimates remain external analytic inputs, not Lean theorems.')
+          PY
+          gh api \
+            --method POST \
+            repos/${GITHUB_REPOSITORY}/issues/365/comments \
+            -f body="$(cat /tmp/comment.md)"
+
+      - name: Upload mixed-y artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: mixed-y-hybrid-transfer-results
+          path: |
+            /tmp/public_spectral_decoder_v2_results.json
+            /tmp/mixed_y_hybrid_transfer_results.json
+          if-no-files-found: error

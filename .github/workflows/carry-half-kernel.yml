@@ -1,0 +1,100 @@
+name: Carry half-kernel section screen
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - experiments/parity_lift_000/carry_half_kernel_screen.py
+      - .github/workflows/carry-half-kernel.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: carry-half-kernel-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run frozen half-kernel screen
+        run: |
+          python3 experiments/parity_lift_000/carry_half_kernel_screen.py \
+            --out carry_half_kernel_results.json \
+            > /tmp/carry-half-kernel.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('carry_half_kernel_results.json').read_text())
+          print(json.dumps(data['aggregate'], indent=2))
+          for case in sorted(data['cases'], key=lambda row: row['order'])[-6:]:
+              print({
+                  'order': case['order'],
+                  'degree': case['half_kernel_degree'],
+                  'derivative_carry': case['derivative_carry_accuracy'],
+                  'derivative_r3': case['derivative_r3_accuracy'],
+                  'density': case['half_coefficient_density'],
+                  'density_null_q05': case['null_q05_density'],
+                  'complexity_ratio': case['half_linear_complexity_ratio'],
+                  'complexity_null_q05': case['null_q05_complexity_ratio'],
+              })
+          PY
+
+      - name: Post research decision to PR 365
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY' > /tmp/comment.md
+          import json
+          import os
+          from pathlib import Path
+          data = json.loads(Path('carry_half_kernel_results.json').read_text())
+          agg = data['aggregate']
+          positive = (
+              agg['exact_derivative_carry_decoders'] > 0
+              or agg['exact_derivative_r3_decoders'] > 0
+              or agg['large_order_mean_half_linear_complexity_ratio'] < 0.20
+              or agg['large_order_mean_half_coefficient_density'] < 0.50
+          )
+          print('## CARRY-HALF-KERNEL-012 automated decision')
+          print()
+          print(f"Commit: `{os.environ['GITHUB_SHA']}`")
+          print()
+          print('```json')
+          print(json.dumps(agg, indent=2))
+          print('```')
+          print()
+          print('| order | deg H | chi(P prime) vs carry | chi(y P prime) vs R3 | H density | H recurrence ratio |')
+          print('|---:|---:|---:|---:|---:|---:|')
+          for case in sorted(data['cases'], key=lambda row: row['order'])[-6:]:
+              print(
+                  f"| {case['order']} | {case['half_kernel_degree']} | "
+                  f"{case['derivative_carry_accuracy']:.6f} | "
+                  f"{case['derivative_r3_accuracy']:.6f} | "
+                  f"{case['half_coefficient_density']:.6f} | "
+                  f"{case['half_linear_complexity_ratio']:.6f} |"
+              )
+          print()
+          if positive:
+              print('Decision: **positive structural follow-up required** under the predeclared diagnostic gate. A literal public evaluation circuit is still required.')
+          else:
+              print('Decision: the exact half-kernel section exists, but the canonical derivative is not an exact decoder and the frozen half factors show no low-complexity signal under the declared proxies.')
+          PY
+          gh api --method POST \
+            repos/${GITHUB_REPOSITORY}/issues/365/comments \
+            -f body="$(cat /tmp/comment.md)"
+
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: carry-half-kernel-results
+          path: carry_half_kernel_results.json

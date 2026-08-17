@@ -1,0 +1,98 @@
+name: Dyadic branch compression
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - 'experiments/parity_lift_000/dyadic_branch_compression.py'
+      - 'Ecdlp/Proved/DyadicBranchCompression.lean'
+      - '.github/workflows/dyadic-branch-compression.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run exact dyadic-branch replay
+        run: |
+          python3 experiments/parity_lift_000/dyadic_branch_compression.py \
+            --out /tmp/dyadic_branch_compression_results.json \
+            > /tmp/dyadic-branch-compression.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('/tmp/dyadic_branch_compression_results.json').read_text())
+          aggregate = data['aggregate']
+          secp = data['secp256k1']
+          print(json.dumps(aggregate, indent=2))
+          print(json.dumps(secp, indent=2))
+          assert aggregate['orders'] == 62
+          assert aggregate['total_depths'] == 320
+          assert aggregate['total_scalar_checks'] == 23208
+          assert aggregate['total_wrong_branch_checks'] == 417984
+          assert aggregate['total_correction_pair_checks'] == 97154
+          assert aggregate['all_corrections_distinct']
+          assert aggregate['all_correct_branches_recover_quotient']
+          assert aggregate['all_wrong_branches_rejected']
+          assert secp['bit_length'] == 256
+          assert secp['ceil_sqrt_n'] == 2**128
+          assert secp['pollard_depth'] == 128
+          assert secp['branch_states_at_pollard_depth'] == 2**128
+          assert secp['first_depth_above_pollard'] == 129
+          assert secp['selected_successor'] == 'NONLINEAR-DYADIC-SELECTOR-044'
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/DyadicBranchCompression.lean; then
+            echo '::error::Dyadic branch theorem contains sorry'
+            exit 1
+          fi
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            for attempt in 1 2 3 4; do
+              if sh /tmp/elan-init.sh -y --default-toolchain none; then
+                installed=1
+                echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+                break
+              fi
+              sleep $((attempt * 3))
+            done
+          fi
+          if [ "$installed" = 0 ]; then
+            echo 'elan unavailable; downloading the pinned Lean distribution directly'
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check dyadic branch identities
+        run: lake build Ecdlp.Proved.DyadicBranchCompression
+
+      - name: Upload exact replay artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dyadic-branch-compression-results
+          path: |
+            /tmp/dyadic_branch_compression_results.json
+            /tmp/dyadic-branch-compression.log
+          retention-days: 90

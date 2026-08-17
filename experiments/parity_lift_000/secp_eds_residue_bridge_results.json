@@ -1,0 +1,113 @@
+{
+  "scope": "fixed public secp256k1 parameters and fixed known scalars only",
+  "p_hex": "0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f",
+  "n_hex": "0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141",
+  "gcd_n_p_minus_one": 1,
+  "phi_raw_g_hex": "0xee45a5d3582bcc343de09e2560a984ff1cbda1b74b117071860c29563f329c94",
+  "chi_phi_raw_g": -1,
+  "raw_bridge": "(-1)^k = chi(phi_raw([k]G))*chi(W_G(k)), because chi(phi_raw(G))=-1",
+  "normalized_bridge": "(-1)^k = -chi(W_tilde_G(k))*chi(W_G(k))",
+  "normalization_audit": {
+    "raw_point_function": "phi_raw([k]G)=phi_raw(G)^(k^2)*W_G(k)",
+    "normalized_periodic_eds": "W_tilde_G(k)=phi_raw([k]G)/phi_raw(G)=phi_raw(G)^(k^2-1)*W_G(k)",
+    "published_display": "Lauter-Stange prints the k^2-1 exponent directly on phi([k]P); the branch treats this as a source-level normalization discrepancy",
+    "all_fixed_samples_pass_both_internal_forms": true
+  },
+  "samples": [
+    {
+      "scalar": "1",
+      "phi_raw_q_hex": "0xee45a5d3582bcc343de09e2560a984ff1cbda1b74b117071860c29563f329c94",
+      "chi_phi_raw_q": -1,
+      "chi_w_k": 1,
+      "raw_product_equals_minus_one_pow_k": -1,
+      "normalized_bridge_equals_minus_one_pow_k": -1,
+      "parity_sign": -1,
+      "raw_point_k_squared_identity": true,
+      "normalized_eds_k_squared_minus_one_identity": true
+    },
+    {
+      "scalar": "2",
+      "phi_raw_q_hex": "0x117788dd4beb12d9c6420a1059606b869f522c22f7d49d42cdb645925b98cc80",
+      "chi_phi_raw_q": 1,
+      "chi_w_k": 1,
+      "raw_product_equals_minus_one_pow_k": 1,
+      "normalized_bridge_equals_minus_one_pow_k": 1,
+      "parity_sign": 1,
+      "raw_point_k_squared_identity": true,
+      "normalized_eds_k_squared_minus_one_identity": true
+    },
+    {
+      "scalar": "3",
+      "phi_raw_q_hex": "0x8ee8c7df331924c4a8094a0ef3b9f1e80ade3e9b0ec901d01721cb0454c5418a",
+      "chi_phi_raw_q": 1,
+      "chi_w_k": -1,
+      "raw_product_equals_minus_one_pow_k": -1,
+      "normalized_bridge_equals_minus_one_pow_k": -1,
+      "parity_sign": -1,
+      "raw_point_k_squared_identity": true,
+      "normalized_eds_k_squared_minus_one_identity": true
+    },
+    {
+      "scalar": "7",
+      "phi_raw_q_hex": "0x14e419bae67b60bc6a2ccb15a872f6817befbe6fa393b0655fb7c3fae0edce3d",
+      "chi_phi_raw_q": 1,
+      "chi_w_k": -1,
+      "raw_product_equals_minus_one_pow_k": -1,
+      "normalized_bridge_equals_minus_one_pow_k": -1,
+      "parity_sign": -1,
+      "raw_point_k_squared_identity": true,
+      "normalized_eds_k_squared_minus_one_identity": true
+    },
+    {
+      "scalar": "11",
+      "phi_raw_q_hex": "0xabe079babbddb1e8ad76cee6641879ed7aaebfd35d0492cf269fb381497fe5b7",
+      "chi_phi_raw_q": -1,
+      "chi_w_k": 1,
+      "raw_product_equals_minus_one_pow_k": -1,
+      "normalized_bridge_equals_minus_one_pow_k": -1,
+      "parity_sign": -1,
+      "raw_point_k_squared_identity": true,
+      "normalized_eds_k_squared_minus_one_identity": true
+    },
+    {
+      "scalar": "123456789",
+      "phi_raw_q_hex": "0x12b4e4b5a211f6d85d722aa49413cbe5afe39c71bac45b708f1b05800b59992",
+      "chi_phi_raw_q": -1,
+      "chi_w_k": 1,
+      "raw_product_equals_minus_one_pow_k": -1,
+      "normalized_bridge_equals_minus_one_pow_k": -1,
+      "parity_sign": -1,
+      "raw_point_k_squared_identity": true,
+      "normalized_eds_k_squared_minus_one_identity": true
+    },
+    {
+      "scalar": "115792089237316195423570985008687907852837564279074904382605163141518161494335",
+      "phi_raw_q_hex": "0xee887722b414ed2639bdf5efa69f947960add3dd082b62bd3249ba6ca4672faf",
+      "chi_phi_raw_q": -1,
+      "chi_w_k": 1,
+      "raw_product_equals_minus_one_pow_k": -1,
+      "normalized_bridge_equals_minus_one_pow_k": -1,
+      "parity_sign": -1,
+      "raw_point_k_squared_identity": true,
+      "normalized_eds_k_squared_minus_one_identity": true
+    },
+    {
+      "scalar": "115792089237316195423570985008687907852837564279074904382605163141518161494336",
+      "phi_raw_q_hex": "0x11ba5a2ca7d433cbc21f61da9f567b00e3425e48b4ee8f8e79f3d6a8c0cd5f9b",
+      "chi_phi_raw_q": 1,
+      "chi_w_k": 1,
+      "raw_product_equals_minus_one_pow_k": 1,
+      "normalized_bridge_equals_minus_one_pow_k": 1,
+      "parity_sign": 1,
+      "raw_point_k_squared_identity": true,
+      "normalized_eds_k_squared_minus_one_identity": true
+    }
+  ],
+  "claim_boundary": [
+    "This verifies a public structural condition, not a discrete logarithm.",
+    "The hidden value chi(W_G(k)) is not computed from an unknown target.",
+    "The program accepts no external point or scalar.",
+    "Independent CAS and source-level review remain required before promotion.",
+    "The source normalization discrepancy is not labelled an erratum without author confirmation."
+  ]
+}

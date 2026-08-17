@@ -1,0 +1,99 @@
+name: Public spectral decoder census v2
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - experiments/parity_lift_000/public_spectral_decoder_screen_v2.py
+      - .github/workflows/public-spectral-decoder-v2.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: public-spectral-decoder-v2-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  census:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Install numerical dependency
+        run: python3 -m pip install --disable-pip-version-check numpy
+
+      - name: Run normalization-aware frozen census
+        run: |
+          python3 experiments/parity_lift_000/public_spectral_decoder_screen_v2.py \
+            --out public_spectral_decoder_v2_results.json \
+            > /tmp/public-spectral-v2.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('public_spectral_decoder_v2_results.json').read_text())
+          print(json.dumps(data['aggregate'], indent=2))
+          for case in sorted(data['cases'], key=lambda row: row['order'])[-6:]:
+              print({
+                  'order': case['order'],
+                  's': case['point_scale_character'],
+                  'best': case['best_candidate'],
+                  'max_nonzero_abs': case['best_max_nonzero_abs'],
+                  'times_sqrt_n': case['best_times_sqrt_order'],
+                  'times_log_n': case['best_times_log_order'],
+                  'ge_0_10': case['candidates_ge_0_10'],
+                  'ge_inverse_log': case['candidates_ge_inverse_log'],
+              })
+          PY
+
+      - name: Post corrected decision to PR 365
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY' > /tmp/comment.md
+          import json
+          import os
+          from pathlib import Path
+          data = json.loads(Path('public_spectral_decoder_v2_results.json').read_text())
+          agg = data['aggregate']
+          names = agg['candidate_names_repeatedly_ge_inverse_log_on_large_cases']
+          print('## PUBLIC-SPECTRAL-DECODER-011-V2 normalization-aware census')
+          print()
+          print(f"Commit: `{os.environ['GITHUB_SHA']}`")
+          print()
+          print('This supersedes the secp-specialized first census. The point-function character is evaluated as `s^k*rho(k)` on every frozen curve.')
+          print()
+          print('```json')
+          print(json.dumps(agg, indent=2))
+          print('```')
+          print()
+          print('| order | s | best public observable | max Fourier coefficient | coefficient*sqrt(n) | coefficient*log(n) |')
+          print('|---:|---:|---|---:|---:|---:|')
+          for case in sorted(data['cases'], key=lambda row: row['order'])[-6:]:
+              print(
+                  f"| {case['order']} | {case['point_scale_character']} | "
+                  f"`{case['best_candidate']}` | {case['best_max_nonzero_abs']:.8f} | "
+                  f"{case['best_times_sqrt_order']:.6f} | {case['best_times_log_order']:.6f} |"
+              )
+          print()
+          if names:
+              print('Decision: **positive spectral follow-up required** for: ' + ', '.join(f'`{name}`' for name in names))
+              print('No secp256k1 or complexity claim follows until the same coefficient is proved and linked to a literal local-SFT decoder.')
+          else:
+              print('Decision: **no repeated inverse-log-heavy public spectrum in this frozen census**. The tested observables remain compatible with square-root-scale character sums.')
+          PY
+          gh api --method POST \
+            repos/${GITHUB_REPOSITORY}/issues/365/comments \
+            -f body="$(cat /tmp/comment.md)"
+
+      - name: Upload corrected census
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-spectral-decoder-v2-results
+          path: public_spectral_decoder_v2_results.json

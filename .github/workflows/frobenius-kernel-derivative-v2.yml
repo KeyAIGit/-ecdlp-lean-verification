@@ -1,0 +1,76 @@
+name: Frobenius kernel derivative identity v2
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - experiments/parity_lift_000/frobenius_kernel_derivative_identity_v2.py
+      - .github/workflows/frobenius-kernel-derivative-v2.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Run normalization-aware identity
+        run: |
+          python3 experiments/parity_lift_000/frobenius_kernel_derivative_identity_v2.py \
+            --out frobenius_kernel_derivative_v2_results.json \
+            > /tmp/frobenius-derivative-v2.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('frobenius_kernel_derivative_v2_results.json').read_text())
+          print(json.dumps(data['aggregate'], indent=2))
+          for case in data['cases']:
+              print({
+                  'order': case['order'],
+                  's': case['point_scale_character'],
+                  'kummer': case['rho_kummer_invariant'],
+                  'raw_exact': case['exact_raw_derivative_up_to_sign'],
+                  'invariant_exact': case['exact_invariant_derivative_up_to_sign'],
+                  'sign': case['invariant_global_sign'],
+              })
+          if data['aggregate']['exact_invariant_identities'] != data['aggregate']['cases']:
+              raise SystemExit('normalization-aware derivative identity failed')
+          PY
+
+      - name: Post verified result to PR 365
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY' > /tmp/comment.md
+          import json
+          import os
+          from pathlib import Path
+          data = json.loads(Path('frobenius_kernel_derivative_v2_results.json').read_text())
+          print('## FROBENIUS-KERNEL-DERIVATIVE-013-V2 verified identity')
+          print()
+          print(f"Commit: `{os.environ['GITHUB_SHA']}`")
+          print()
+          print('```json')
+          print(json.dumps(data['aggregate'], indent=2))
+          print('```')
+          print()
+          print('The invariant derivative of the horizontal kernel polynomial agrees up to a curve-global sign with `s^gamma * R3`. For the secp256k1 normalization `s=-1`, this is the already-public `g*R3`, not a separate decoder.')
+          PY
+          gh api --method POST \
+            repos/${GITHUB_REPOSITORY}/issues/365/comments \
+            -f body="$(cat /tmp/comment.md)"
+
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: frobenius-kernel-derivative-v2
+          path: frobenius_kernel_derivative_v2_results.json

@@ -1,0 +1,145 @@
+name: Public coordinate spectral barrier
+
+on:
+  push:
+    branches:
+      - research/parity-lift-000
+    paths:
+      - experiments/parity_lift_000/public_coordinate_spectral_barrier.py
+      - experiments/parity_lift_000/cm_coordinate_carry_screen.py
+      - experiments/parity_lift_000/public_spectral_decoder_screen_v2.py
+      - Ecdlp/Proved/PublicCoordinateSpectralBoundary.lean
+      - archive/untrusted_intake/parity_lift_000/PUBLIC_COORDINATE_SPECTRAL_BARRIER_014.md
+      - .github/workflows/public-coordinate-spectral-barrier.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: public-coordinate-spectral-barrier-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Install numerical dependency
+        run: python3 -m pip install --disable-pip-version-check numpy
+
+      - name: Replay CM coordinate carry screen
+        run: |
+          python3 experiments/parity_lift_000/cm_coordinate_carry_screen.py \
+            --out /tmp/cm_coordinate_carry_results.json \
+            > /tmp/cm-coordinate.log
+          tail -n 40 /tmp/cm-coordinate.log
+
+      - name: Replay normalization-aware public spectral census
+        run: |
+          python3 experiments/parity_lift_000/public_spectral_decoder_screen_v2.py \
+            --out /tmp/public_spectral_decoder_v2_results.json \
+            > /tmp/public-spectral-v2.log
+          tail -n 40 /tmp/public-spectral-v2.log
+
+      - name: Verify field Fourier identities and corrected statistical gate
+        run: |
+          python3 experiments/parity_lift_000/public_coordinate_spectral_barrier.py \
+            --cm-results /tmp/cm_coordinate_carry_results.json \
+            --spectral-results /tmp/public_spectral_decoder_v2_results.json \
+            --out /tmp/public_coordinate_spectral_barrier_results.json \
+            > /tmp/public-coordinate-barrier.log
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/public_coordinate_spectral_barrier_results.json').read_text()
+          )
+          print(json.dumps(data['aggregate'], indent=2))
+          print(json.dumps(data['statistical_audit'], indent=2))
+          print(json.dumps(data['corrected_spectral_census'], indent=2))
+          if data['aggregate']['repeated_inverse_log_public_spectrum_found']:
+              raise SystemExit('unexpected repeated inverse-log public spectrum')
+          if data['aggregate']['scale_qualified_coordinate_decoder_found']:
+              raise SystemExit('unexpected scale-qualified coordinate decoder')
+          PY
+
+      - name: Reject incomplete theorem core
+        run: |
+          if grep -nI 'sorry' Ecdlp/Proved/PublicCoordinateSpectralBoundary.lean; then
+            echo "::error::Public coordinate spectral boundary contains sorry"
+            exit 1
+          fi
+
+      - name: Install elan
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check arithmetic boundary
+        run: lake build Ecdlp.Proved.PublicCoordinateSpectralBoundary
+
+      - name: Post corrected boundary to research PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY' > /tmp/comment.md
+          import json
+          import os
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/public_coordinate_spectral_barrier_results.json').read_text()
+          )
+          agg = data['aggregate']
+          stats = data['statistical_audit']
+          spectral = data['corrected_spectral_census']
+          print('## PUBLIC-COORDINATE-SPECTRAL-BARRIER-014')
+          print()
+          print(f"Commit: `{os.environ['GITHUB_SHA']}`")
+          print()
+          print('```json')
+          print(json.dumps(agg, indent=2))
+          print('```')
+          print()
+          print(f"Exact coordinate-carry decoder orders: `{stats['exact_carry_decoder_orders']}`")
+          print(f"Scale-qualified exact decoder orders: `{stats['exact_carry_decoder_orders_scale_qualified']}`")
+          print(f"Scale-qualified nominal q95 exceedances: `{stats['scale_qualified_q95_exceedance_orders']}`")
+          print(f"Holm-Bonferroni carry passes: `{stats['holm_bonferroni_carry_pass_orders']}`")
+          print(f"Chance of at least one nominal q95 exceedance across all 15 cases: `{stats['chance_at_least_one_nominal_q95_exceedance_all_cases']:.6f}`")
+          print()
+          print(
+              'Largest corrected public coefficient: '
+              f"`{spectral['largest_order_best_public_coefficient']:.8f}` "
+              f"at order `{spectral['largest_order']}` from "
+              f"`{spectral['largest_order_best_candidate']}`."
+          )
+          print()
+          print('Decision: **the direct `half_x` and `field_carry_x` local-SFT routes are square-root-scale, and the broader frozen census has no repeated inverse-log-heavy candidate.**')
+          print()
+          print('Boundary: this closes low-field-Fourier-L1 x-coordinate observables under the source-pinned elliptic Gaussian-sum estimate. It does not close arbitrary y-dependent or high-complexity circuits.')
+          PY
+          gh api \
+            --method POST \
+            repos/${GITHUB_REPOSITORY}/issues/365/comments \
+            -f body="$(cat /tmp/comment.md)"
+
+      - name: Upload barrier artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-coordinate-spectral-barrier-results
+          path: |
+            /tmp/cm_coordinate_carry_results.json
+            /tmp/public_spectral_decoder_v2_results.json
+            /tmp/public_coordinate_spectral_barrier_results.json
+          if-no-files-found: error

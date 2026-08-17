@@ -1,0 +1,39 @@
+{
+  "scope": "fifteen frozen j=0 toy subgroups only; no secp256k1 target",
+  "cover": "u^3=y-c with c^2=7",
+  "descent": "s=u+u^p, d=(u-u^p)/c, then X=-6/d, Y=9s/d",
+  "target_curve": "E': Y^2=X^3-27*7",
+  "isogenies": {
+    "dual": "E_b -> E_-27b: ((x^3+4b)/x^2, y(x^3-8b)/x^3)",
+    "forward": "E_-27b -> E_b: ((X^3-108b)/(9X^2), -Y(X^3+216b)/(27X^3))",
+    "composition": "forward o dual = -[3]",
+    "subgroup_inverse": "root lift = [-3^(-1) mod r] * dual(Q)"
+  },
+  "cases": [
+    {"p":43,"order":31,"base_generator":[2,12],"nonzero_points":30,"root_phase_checks":30,"cover_equation_checks":30,"target_curve_checks":30,"forward_map_checks":30,"inverse_isogeny_checks":30,"composition_checks":30,"distinct_mu3_phases":3},
+    {"p":79,"order":67,"base_generator":[1,18],"nonzero_points":66,"root_phase_checks":66,"cover_equation_checks":66,"target_curve_checks":66,"forward_map_checks":66,"inverse_isogeny_checks":66,"composition_checks":66,"distinct_mu3_phases":3},
+    {"p":151,"order":19,"base_generator":[70,122],"nonzero_points":18,"root_phase_checks":18,"cover_equation_checks":18,"target_curve_checks":18,"forward_map_checks":18,"inverse_isogeny_checks":18,"composition_checks":18,"distinct_mu3_phases":3},
+    {"p":547,"order":547,"base_generator":[2,62],"nonzero_points":546,"root_phase_checks":546,"cover_equation_checks":546,"target_curve_checks":546,"forward_map_checks":546,"inverse_isogeny_checks":546,"composition_checks":546,"distinct_mu3_phases":3},
+    {"p":907,"order":967,"base_generator":[2,165],"nonzero_points":966,"root_phase_checks":966,"cover_equation_checks":966,"target_curve_checks":966,"forward_map_checks":966,"inverse_isogeny_checks":966,"composition_checks":966,"distinct_mu3_phases":3},
+    {"p":1051,"order":1093,"base_generator":[3,385],"nonzero_points":1092,"root_phase_checks":1092,"cover_equation_checks":1092,"target_curve_checks":1092,"forward_map_checks":1092,"inverse_isogeny_checks":1092,"composition_checks":1092,"distinct_mu3_phases":3},
+    {"p":1087,"order":271,"base_generator":[1017,688],"nonzero_points":270,"root_phase_checks":270,"cover_equation_checks":270,"target_curve_checks":270,"forward_map_checks":270,"inverse_isogeny_checks":270,"composition_checks":270,"distinct_mu3_phases":3},
+    {"p":1303,"order":1249,"base_generator":[1,201],"nonzero_points":1248,"root_phase_checks":1248,"cover_equation_checks":1248,"target_curve_checks":1248,"forward_map_checks":1248,"inverse_isogeny_checks":1248,"composition_checks":1248,"distinct_mu3_phases":3},
+    {"p":1663,"order":433,"base_generator":[126,1375],"nonzero_points":432,"root_phase_checks":432,"cover_equation_checks":432,"target_curve_checks":432,"forward_map_checks":432,"inverse_isogeny_checks":432,"composition_checks":432,"distinct_mu3_phases":3},
+    {"p":2347,"order":571,"base_generator":[2107,1535],"nonzero_points":570,"root_phase_checks":570,"cover_equation_checks":570,"target_curve_checks":570,"forward_map_checks":570,"inverse_isogeny_checks":570,"composition_checks":570,"distinct_mu3_phases":3},
+    {"p":2671,"order":367,"base_generator":[83,2009],"nonzero_points":366,"root_phase_checks":366,"cover_equation_checks":366,"target_curve_checks":366,"forward_map_checks":366,"inverse_isogeny_checks":366,"composition_checks":366,"distinct_mu3_phases":3},
+    {"p":2851,"order":397,"base_generator":[2276,1015],"nonzero_points":396,"root_phase_checks":396,"cover_equation_checks":396,"target_curve_checks":396,"forward_map_checks":396,"inverse_isogeny_checks":396,"composition_checks":396,"distinct_mu3_phases":3},
+    {"p":3319,"order":811,"base_generator":[177,298],"nonzero_points":810,"root_phase_checks":810,"cover_equation_checks":810,"target_curve_checks":810,"forward_map_checks":810,"inverse_isogeny_checks":810,"composition_checks":810,"distinct_mu3_phases":3},
+    {"p":3571,"order":3469,"base_generator":[4,1706],"nonzero_points":3468,"root_phase_checks":3468,"cover_equation_checks":3468,"target_curve_checks":3468,"forward_map_checks":3468,"inverse_isogeny_checks":3468,"composition_checks":3468,"distinct_mu3_phases":3},
+    {"p":3931,"order":4021,"base_generator":[4,1427],"nonzero_points":4020,"root_phase_checks":4020,"cover_equation_checks":4020,"target_curve_checks":4020,"forward_map_checks":4020,"inverse_isogeny_checks":4020,"composition_checks":4020,"distinct_mu3_phases":3}
+  ],
+  "aggregate": {
+    "cases": 15,
+    "total_nonzero_points": 14298,
+    "all_checks_passed": true
+  },
+  "conclusion": "After the public mu_3 norm correction, the canonical cube-root lift is exactly the rational inverse of a degree-three isogeny on every frozen subgroup. It is a structured reparameterization, not an independent hidden-bit source.",
+  "claim_boundary": [
+    "Bounded exact replay of explicit identities, not a universal ECDLP lower bound.",
+    "No external point, wallet, key, or production target is accepted."
+  ]
+}

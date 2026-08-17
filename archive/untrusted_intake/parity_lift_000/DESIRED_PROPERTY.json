@@ -1,0 +1,126 @@
+{
+  "schema_version": "0.3-untrusted",
+  "parked_id": "PARKED-M-GENERATOR-RELATIVE-PARITY-LIFT",
+  "research_line": "PARITY-LIFT-000",
+  "status": "desired_properties_only",
+  "scientific_identity": "research_question_seed",
+  "threat_model": "classical-single-target-plain",
+  "target_family": "odd-prime-order elliptic-curve groups",
+  "primary_instance": "secp256k1 point group",
+  "question": "Given public G and Q=[k]G, can the absolute EDS residue rho_G(Q)=chi(psi_k(G)) be computed below the matched generic square-root baseline without first recovering k?",
+  "exact_reduction": {
+    "raw_public_point_function": "phi_raw(Q)=(W_Q(q-1)/W_Q(q-1+n))^(1/n^2)",
+    "hidden_residue_bit": "rho_G(Q)=chi(W_G(k))=chi(psi_k(G))",
+    "raw_bridge": "chi(phi_raw(Q))=chi(phi_raw(G))^(k^2)*rho_G(Q)",
+    "normalized_sequence": "W_tilde_G(k)=phi_raw(Q)/phi_raw(G)=phi_raw(G)^(k^2-1)*W_G(k)",
+    "secp256k1_conditions": [
+      "chi(phi_raw(G))=-1",
+      "p mod 4 = 3",
+      "rho_G(-Q)=rho_G(Q) on nonidentity points"
+    ],
+    "secp256k1_parity_decoder": "(-1)^k=chi(phi_raw(Q))*rho_G(Q)",
+    "normalization_blocker": "the published k^2-1 display is treated as a source-level normalization discrepancy until independently reviewed or author-confirmed"
+  },
+  "two_layer_model": {
+    "public_sign_layer": "Q -> chi(phi_raw(Q)); this layer is sign-sensitive and changes under Q -> -Q",
+    "hidden_kummer_layer": "x(Q) -> rho_G(Q); on secp256k1 this bit is invariant under Q -> -Q",
+    "composition": "multiplying the public sign layer by the hidden Kummer layer returns canonical scalar parity"
+  },
+  "required_interface": {
+    "input": [
+      "curve parameters",
+      "odd-prime-order generator G",
+      "public point Q in <G>"
+    ],
+    "residue_decoder_output": "rho_G(Q)",
+    "final_decoder_output": "rep_G(Q) mod 2 after multiplication by the public raw-point-function character",
+    "correctness": "exact on every nonidentity canonical scalar representative 1 <= k < ord(G)",
+    "recovery": "bind the exact adaptive parity-to-full-DLP reduction",
+    "cost": "price public point scaling, residue decoder, precision, preprocessing, memory, exceptions, and all adaptive calls"
+  },
+  "hard_gates": [
+    "distinguishes a direct parity decoder from a residual EDS-residue decoder",
+    "for a direct parity decoder, does not erase Q versus -Q",
+    "for a secp256k1 residual decoder, proves or explicitly uses rho_G(-Q)=rho_G(Q) before factoring through Kummer",
+    "normalization is computable without the hidden scalar",
+    "computes an absolute EDS residue rather than only relative consecutive residues",
+    "does not hide an exponential table or a k-step orbit walk",
+    "covers zeros, poles, chart changes, extension fields, and exceptional points",
+    "supplies an independent recovery validator",
+    "beats the matched Pollard-rho baseline in total online work",
+    "separates algebraic degree from evaluation complexity",
+    "does not infer an algorithm from a coordinate re-encoding alone"
+  ],
+  "closed_mechanism_classes": [
+    {
+      "id": "DIRECT-PARITY-THROUGH-KUMMER",
+      "scope": "direct parity decoders factoring through representations satisfying pi(Q)=pi(-Q)",
+      "reason": "canonical scalar parity is complemented by point negation"
+    },
+    {
+      "id": "GLOBAL-ORDER-TWO-TRANSLATION-PHASE",
+      "scope": "nonzero observables satisfying F(Q+G)=-F(Q) globally",
+      "reason": "an odd translation cycle cannot support a nonzero order-two character"
+    },
+    {
+      "id": "SMALL-FIXED-LINEAR-THETA-SPACE",
+      "scope": "one fixed theta section space with globally linear translation by the full-order generator",
+      "reason": "the line-bundle degree and representation dimension must be at least ord(G)"
+    },
+    {
+      "id": "BOUNDED-DEGREE-DIRECT-PARITY-SIGN-FUNCTION",
+      "scope": "rational functions taking exactly +1 or -1 parity values on every group point",
+      "reason": "the pole degree is at least ceil(ord(G)/2)"
+    },
+    {
+      "id": "BOUNDED-DEGREE-DIRECT-KUMMER-RESIDUE-FUNCTION",
+      "scope": "rational functions on the Kummer line directly taking exactly +1 or -1 EDS-residue values",
+      "reason": "under the stated regularity assumptions the degree is at least (ord(G)-1)/4"
+    },
+    {
+      "id": "FIXED-INDEX-DIVISION-POLYNOMIAL-PRODUCTS",
+      "scope": "finite products or ratios of fixed-index values psi_m(Q)",
+      "reason": "the elliptic-net transformation exponent is quadratically balanced and cancels the absolute k^2 orientation term"
+    },
+    {
+      "id": "GLV-RELATIVE-EDS-CYCLE",
+      "scope": "relations obtained only by evaluating fixed division-polynomial indices around the order-three GLV orbit",
+      "reason": "the resulting equations remain relative and balanced and do not determine the absolute EDS residue"
+    }
+  ],
+  "surviving_mechanism_classes": [
+    "a Kummer-invariant character decoder chi(f(x(Q)))=rho_G(Q) with sub-square-root total evaluation cost",
+    "an unbalanced theta, sigma, or elliptic-net section whose public evaluation fixes the absolute EDS residue",
+    "a statistic or correlation that fixes the absolute EDS residue from publicly computable relative residues",
+    "a p-adic or analytic normalization with exact precision and truncation cost",
+    "a nonlocal multi-point or multi-model relation that breaks balance without supplying equivalent hidden input",
+    "high algebraic degree with provably low circuit or recurrence complexity and an exact absolute-residue theorem"
+  ],
+  "next_packages": [
+    {
+      "id": "EDS-RESIDUE-BALANCE-001",
+      "goal": "kernel-check the fixed-index quadratic balance obstruction"
+    },
+    {
+      "id": "EDS-RESIDUE-SOURCE-002",
+      "goal": "independently audit the raw point-function and normalized-periodic-EDS conventions and replay the secp256k1 public nonresidue condition"
+    },
+    {
+      "id": "KUMMER-RESIDUE-001",
+      "goal": "formalize the residual negation law and secp256k1 Kummer invariance"
+    },
+    {
+      "id": "EDS-RESIDUE-ABSOLUTE-003",
+      "goal": "search only for mechanisms that compute the absolute residue bit rather than another balanced relative identity"
+    }
+  ],
+  "lifecycle": {
+    "executable": false,
+    "admissible": false,
+    "recommended": false,
+    "authorized": false,
+    "route_promotion": false,
+    "exact_target_experiment": false
+  },
+  "boundary": "This quarantined desired-property record is not a mechanism, hypothesis, candidate, result, route selection, or experiment authorization."
+}

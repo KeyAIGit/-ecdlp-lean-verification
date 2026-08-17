@@ -1,0 +1,49 @@
+{
+  "package": "SESQUILINEAR-CM-PAIRING-011",
+  "scope": "fixed secp256k1 constants and source-level pairing domains only; no external or production target",
+  "constants": {
+    "p": 115792089237316195423570985008687907853269984665640564039457584007908834671663,
+    "n": 115792089237316195423570985008687907852837564279074904382605163141518161494337,
+    "lambda": 37718080363155996902926221483475020450927657555482586988616620542887997980018,
+    "lambda_relation_mod_n": 0
+  },
+  "order_dependent_annihilator": {
+    "alpha": "lambda-omega",
+    "norm": 1422653586281494019210924998581018368711149552159986077359356804880901784100148080301762813881907985366944521692070509556500913554812365692570936325260343,
+    "norm_bits": 509,
+    "norm_over_n": 12286276166636580012140862095472453253950970278553425451194017527274075467639,
+    "norm_over_n_bits": 253,
+    "action_on_H": 0,
+    "conjugate_action_on_H": 75436160726311993805852442966950040901855315110965173977233241085775995960037,
+    "conjugate_action_inverse_mod_n": 52049339249440132347096509016808591601273271149061544929325695065753442342879,
+    "conjugate_kernel_intersection_H": "{O}",
+    "tate_quotient_for_conjugate_alpha_on_H": "zero because the conjugate action is a unit"
+  },
+  "integer_alpha_n": {
+    "weil_pairing_on_H_times_H": "trivial: every classical Weil factor pairs dependent scalar multiples on one cyclic line",
+    "base_field_tate_target": "trivial",
+    "gcd_n_p_minus_1": 1,
+    "reason": "x -> x^n is a bijection of F_p^*",
+    "nondegenerate_field_requires_mu_n": true,
+    "minimum_mu_n_extension_degree": 19298681539552699237261830834781317975472927379845817397100860523586360249056,
+    "minimum_mu_n_extension_degree_log2": 253.41503749927884,
+    "explicit_degree_minus_sqrt_n_bits": 125.41503749927884,
+    "odd_order_output_has_binary_character": false
+  },
+  "route_decision": {
+    "W_hat_lambda_minus_omega": "Q can occupy only the alpha-kernel input; no nonzero rational-line point occupies the conjugate-kernel input",
+    "T_hat_lambda_minus_omega": "same missing conjugate-kernel first input",
+    "T_hat_conjugate_alpha": "G is admissible in the first input, but every Q in H is zero in E/[conjugate_alpha]E",
+    "W_hat_n": "identically trivial on H x H",
+    "T_hat_n_over_F_p": "identically trivial in the base-field quotient",
+    "T_hat_n_over_extension": "potentially nondegenerate but requires the same enormous mu_n extension; evaluation gives an odd-order target character, not a binary carry"
+  },
+  "public_carry_decoder_found": false,
+  "public_R3_decoder_found": false,
+  "unconditional_sub_sqrt_algorithm_found": false,
+  "claim_boundary": [
+    "The fixed scalar and divisibility statements are exact.",
+    "The pairing domain and nondegeneracy requirements are source-level inputs.",
+    "This closes the natural sesquilinear Weil/Tate constructions on the rational line, not arbitrary pairings."
+  ]
+}
