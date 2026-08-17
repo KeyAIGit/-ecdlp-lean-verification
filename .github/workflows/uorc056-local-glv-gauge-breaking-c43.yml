@@ -24,16 +24,20 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Compile, test and replay corrected local GLV C43B
+      - name: Compile and replay corrected local GLV C43B
         run: |
           python -m py_compile \
             experiments/parity_lift_000/uorc056_local_glv_sector_factorization_c43b.py \
             experiments/parity_lift_000/test_uorc056_local_glv_sector_factorization_c43b.py
-          PYTHONPATH=experiments/parity_lift_000 python -m unittest -v \
-            experiments/parity_lift_000/test_uorc056_local_glv_sector_factorization_c43b.py
           PYTHONPATH=experiments/parity_lift_000 python \
             experiments/parity_lift_000/uorc056_local_glv_sector_factorization_c43b.py \
             --out /tmp/uorc056_local_glv_sector_factorization_c43b.json
+      - name: Test the emitted exact certificate
+        env:
+          UORC056_C43B_PAYLOAD: /tmp/uorc056_local_glv_sector_factorization_c43b.json
+        run: |
+          PYTHONPATH=experiments/parity_lift_000 python -m unittest -v \
+            experiments/parity_lift_000/test_uorc056_local_glv_sector_factorization_c43b.py
       - name: Check machine-readable local GLV boundary
         run: |
           python - <<'PY'
@@ -47,6 +51,9 @@ jobs:
           assert data["aggregate"]["curves"] == 9
           assert data["aggregate"]["carry_value_checks"] == 1923
           assert data["aggregate"]["errors"] == 0
+          assert all(
+              all(curve["identities"].values()) for curve in data["curves"]
+          )
           decision = data["decision"]
           assert decision["exact_glv_carry_root_found"] is True
           assert decision["exact_sector_root_found"] is True
