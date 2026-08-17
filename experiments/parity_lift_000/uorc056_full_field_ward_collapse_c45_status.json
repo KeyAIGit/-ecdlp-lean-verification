@@ -1,0 +1,10 @@
+{
+  "profile_id": "UORC-056-FULL-FIELD-WARD-COLLAPSE-C45",
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "main_identity": "psi_(n+a)(Q)/psi_a(Q)=Phi_raw(Q)^(-n*(n+2*a))",
+  "aggregate": {"toy_curves": 8, "secp_fixed_instance": 1, "sampled_scalars": 294, "raw_checks": 294, "full_field_channel_checks": 2352, "offset_recurrence_checks": 2058, "canonical_phase_checks": 294, "errors": 0},
+  "decision": {"full_field_near_period_family_constructed": true, "full_field_near_period_family_collapses_to_raw_state": true, "varying_ward_offset_adds_independent_information": false, "raw_state_is_publicly_polylog_evaluable": true, "cheap_nonlinear_raw_state_decoder_found": false, "second_independent_open_section_found": false, "public_ordered_sector_evaluator_found": false, "parity_oracle_found": false, "sub_sqrt_ecdlp_found": false},
+  "successor": "SECOND-INDEPENDENT-OPEN-SECTION-C46",
+  "replay_digest": "e8752a79d7a0a6ad77695865a982967573be62f030e1be7e6395ea2760d1fd23",
+  "claim_boundary": "Closes independence of the Ward near-period full-field family, not arbitrary nonlinear functions of Phi_raw or unrestricted circuits."
+}
