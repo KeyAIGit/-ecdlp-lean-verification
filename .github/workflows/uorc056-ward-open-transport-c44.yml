@@ -1,0 +1,78 @@
+name: UORC056 Ward open transport C44
+
+on:
+  push:
+    branches: [research/uorc056-ward-open-transport-c44]
+    paths:
+      - 'experiments/parity_lift_000/uorc056_ward_open_transport_c44.py'
+      - 'experiments/parity_lift_000/test_uorc056_ward_open_transport_c44.py'
+      - 'experiments/parity_lift_000/uorc056_ward_open_transport_c44_results.json'
+      - 'Ecdlp/Proved/Uorc056WardOpenTransportC44.lean'
+      - 'notes/UORC056_WARD_OPEN_TRANSPORT_C44.md'
+      - '.github/workflows/uorc056-ward-open-transport-c44.yml'
+  pull_request:
+    branches: [research/uorc056-local-glv-gauge-breaking-c43]
+    paths:
+      - 'experiments/parity_lift_000/uorc056_ward_open_transport_c44.py'
+      - 'experiments/parity_lift_000/test_uorc056_ward_open_transport_c44.py'
+      - 'experiments/parity_lift_000/uorc056_ward_open_transport_c44_results.json'
+      - 'Ecdlp/Proved/Uorc056WardOpenTransportC44.lean'
+      - 'notes/UORC056_WARD_OPEN_TRANSPORT_C44.md'
+      - '.github/workflows/uorc056-ward-open-transport-c44.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile, test, and replay C44
+        run: |
+          python -m py_compile experiments/parity_lift_000/uorc056_ward_open_transport_c44.py experiments/parity_lift_000/test_uorc056_ward_open_transport_c44.py
+          PYTHONPATH=experiments/parity_lift_000 python -m unittest -v experiments/parity_lift_000/test_uorc056_ward_open_transport_c44.py
+          PYTHONPATH=experiments/parity_lift_000 python experiments/parity_lift_000/uorc056_ward_open_transport_c44.py --out /tmp/uorc056_ward_open_transport_c44_results.json
+          python -c "import json; assert json.load(open('experiments/parity_lift_000/uorc056_ward_open_transport_c44_results.json')) == json.load(open('/tmp/uorc056_ward_open_transport_c44_results.json'))"
+      - name: Check machine-readable boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          result=json.loads(Path('/tmp/uorc056_ward_open_transport_c44_results.json').read_text())
+          assert result['profile_id']=='UORC-056-WARD-OPEN-TRANSPORT-C44'
+          ward=result['ward_character_normal_form']
+          assert ward['chi_A']==1 and ward['chi_B']==-1
+          assert ward['finite_products_stay_in_four_classes'] and len(ward['classes'])==4
+          assert all(row['neither_global_phase_is_parity'] for row in ward['classes'])
+          transport=result['multiplier_transport']
+          assert transport['doubling_glv_cycles']==32
+          assert transport['one_public_anchor_leaves_free_cycle_signs']==31
+          assert transport['seven_pair_action_transitive']
+          decision=result['decision']
+          assert decision['ward_period_lattice_multiplicative_character_class_closed']
+          assert not decision['public_ordered_sector_evaluator_found']
+          assert not decision['parity_oracle_found']
+          assert not decision['sub_sqrt_ecdlp_found']
+          assert len(result['digest'])==64
+          PY
+      - name: Install Lean toolchain
+        run: |
+          curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Kernel-check C44 algebra
+        run: |
+          lake exe cache get
+          lake build Ecdlp.Proved.Uorc056WardOpenTransportC44
+          lake env lean Ecdlp/Proved/Uorc056WardOpenTransportC44.lean
+      - uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-ward-open-transport-c44
+          path: /tmp/uorc056_ward_open_transport_c44_results.json
+          retention-days: 90

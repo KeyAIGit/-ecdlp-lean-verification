@@ -1,0 +1,68 @@
+{
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "claim_boundary": [
+    "The four-class closure is for the declared multiplicative quadratic-character period-lattice grammar.",
+    "The cycle counts and order certificates are exact fixed secp256k1 arithmetic.",
+    "The multiplier-localization statement is a reduction, not an unconditional complexity lower bound.",
+    "No unrestricted full-field Miller, theta, elliptic-unit, p-adic, or arithmetic-circuit class is closed."
+  ],
+  "decision": {
+    "cheap_orbit_localization_found": false,
+    "doubling_and_glv_select_global_ordered_sector": false,
+    "parity_oracle_found": false,
+    "public_ordered_sector_evaluator_found": false,
+    "sub_sqrt_ecdlp_found": false,
+    "transitive_multiplier_exists": true,
+    "ward_period_lattice_multiplicative_character_algorithm_found": false,
+    "ward_period_lattice_multiplicative_character_class_closed": true
+  },
+  "digest": "971042f06ff2b20851f9e260e7224cabb927cf26e97ddfbd4ec0a1bfcecd2ed4",
+  "multiplier_transport": {
+    "doubling_glv_cycles": 32,
+    "lambda_equals_power_of_two": true,
+    "lambda_power_exponent": 1206167596222043702328864427173832373467057961240363587318803782724147515566,
+    "localization_boundary": "using a transitive multiplier still requires locating Q=+-[7^t]G or evaluating an anchor-to-query open transport directly",
+    "number_of_residual_anchor_assignments": 2147483648,
+    "one_public_anchor_leaves_free_cycle_signs": 31,
+    "order_of_seven_mod_n": 115792089237316195423570985008687907852837564279074904382605163141518161494336,
+    "order_of_seven_on_pair_quotient": 57896044618658097711785492504343953926418782139537452191302581570759080747168,
+    "order_of_two_bit_length": 250,
+    "order_of_two_mod_n": 1809251394333065553493296640760748560200586941860545380978205674086221273349,
+    "pair_quotient_components": 57896044618658097711785492504343953926418782139537452191302581570759080747168,
+    "seven_pair_action_transitive": true,
+    "transitive_public_multiplier": 7
+  },
+  "profile_id": "UORC-056-WARD-OPEN-TRANSPORT-C44",
+  "schema_version": "1.0",
+  "scope": "fixed public secp256k1 constants and known small scalar witnesses; no external target or unknown production scalar",
+  "successor": {
+    "id": "FULL-FIELD-OPEN-ROOT-TRANSPORT-C45",
+    "reject": "any candidate that reduces to a finite monomial in Ward near-period characters or requires the hidden multiplier-orbit exponent",
+    "target": "construct one unsquared anchor-to-query field transport whose value retains orientation before any quadratic character, norm, square, closed loop, or orbit-index localization"
+  },
+  "ward_character_normal_form": {
+    "all_finite_multiplicative_period_lattice_character_decoders_closed": true,
+    "alpha_beta_domain": "{0,1}^2",
+    "atom_variable_class": "near(k)^alpha * near(k+1)^beta",
+    "chi_A": 1,
+    "chi_B": -1,
+    "classes": [
+      {"alpha": 0, "beta": 0, "neither_global_phase_is_parity": true, "phase_mismatch_witnesses": {"-1": 2, "1": 1}, "representative": "1"},
+      {"alpha": 0, "beta": 1, "neither_global_phase_is_parity": true, "phase_mismatch_witnesses": {"-1": 2, "1": 1}, "representative": "near_k_plus_1"},
+      {"alpha": 1, "beta": 0, "neither_global_phase_is_parity": true, "phase_mismatch_witnesses": {"-1": 1, "1": 3}, "representative": "near_k"},
+      {"alpha": 1, "beta": 1, "neither_global_phase_is_parity": true, "phase_mismatch_witnesses": {"-1": 1, "1": 3}, "representative": "near_k*near_k_plus_1"}
+    ],
+    "finite_products_stay_in_four_classes": true,
+    "near_definition": "near(k)=chi(psi_(n+1)([k]G))=(-1)^k*rho(k)",
+    "rho_definition": "rho(k)=chi(psi_k(G))",
+    "small_exact_values": [
+      {"k": 1, "near": -1, "parity": -1, "rho": 1},
+      {"k": 2, "near": 1, "parity": 1, "rho": 1},
+      {"k": 3, "near": 1, "parity": -1, "rho": -1},
+      {"k": 4, "near": 1, "parity": 1, "rho": 1},
+      {"k": 5, "near": 1, "parity": -1, "rho": -1},
+      {"k": 6, "near": -1, "parity": 1, "rho": -1},
+      {"k": 7, "near": 1, "parity": -1, "rho": -1}
+    ]
+  }
+}
