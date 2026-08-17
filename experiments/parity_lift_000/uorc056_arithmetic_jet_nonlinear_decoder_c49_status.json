@@ -1,0 +1,38 @@
+{
+  "aggregate": {
+    "bases_screened": 2,
+    "curves": 8,
+    "epsilon_zero_rows": 12,
+    "errors": 0,
+    "exact_transferable_decoders": 0,
+    "literal_offsets": 4097,
+    "maximum_weight": 4,
+    "pair_semantics": 1134771,
+    "regular_literal_offsets": 1507,
+    "scalar_rows": 10086,
+    "semantic_atoms": 1507
+  },
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "claim_boundary": [
+    "This is a complete exact search only for the declared bounded grammar.",
+    "It is not a lower bound against unrestricted nonlinear circuits.",
+    "No unknown secp256k1 target is used."
+  ],
+  "decision": {
+    "compact_arithmetic_state_retained": true,
+    "declared_mobius_character_decoder_found": false,
+    "parity_oracle_found": false,
+    "public_glv_carry_evaluator_found": false,
+    "public_ordered_sector_evaluator_found": false,
+    "sub_sqrt_ecdlp_found": false,
+    "transferable_weight_at_most_four_decoder_found": false
+  },
+  "digest": "95061fa4bb25d30401aacc407b006965c3e68a7711ba4d13615939d0291659a0",
+  "profile_id": "UORC-056-ARITHMETIC-JET-NONLINEAR-DECODER-C49",
+  "state": "R_arith(Q)=epsilon_n(Q)/Phi_raw(Q)",
+  "successor": {
+    "id": "ARITHMETIC-JET-RECURRENCE-OR-HIGHER-JET-C50",
+    "reject": "per-curve fitted offsets, dense interpolation tables, and repetition of factors that cancel under quadratic character",
+    "target": "seek a short recurrence or modular-composition decoder for R_arith, or couple it to the second p-adic jet"
+  }
+}
