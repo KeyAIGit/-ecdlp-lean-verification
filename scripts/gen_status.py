@@ -220,6 +220,10 @@ def main() -> int:
 
 Toolchain: {g('toolchain', 'Lean 4 + Mathlib (see lakefile.toml)')}.
 
+Cross-lane result navigation: [`VERIFIED_INDEX.md`](VERIFIED_INDEX.md) indexes both
+canonical ledgers without combining their accounting. The aggregate row total is navigation,
+not an ECDLP security metric.
+
 ## Product state
 - **Category:** {product['category']}.
 - **Current stage:** {product_stage['label']}. {product_stage['summary']}

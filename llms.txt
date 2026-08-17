@@ -1,0 +1,25 @@
+# KeyAI verified research workspace
+
+Scope:
+- This repository does not solve secp256k1 ECDLP and claims no shortcut.
+- A green build means every built, ledgered theorem is accepted with no sorry.
+- VERIFIED.md and VERIFIED_RESEARCHOS.md are separate canonical trust lanes.
+
+Start here:
+- Live canonical snapshot: STATUS.md
+- Cross-lane verified-result navigation: VERIFIED_INDEX.md
+- Machine-readable verified-result navigation: data/verified_index.json
+- ECDLP canonical ledger: VERIFIED.md
+- ResearchOS canonical ledger: VERIFIED_RESEARCHOS.md
+- Repository architecture: REPOSITORY_ARCHITECTURE.md
+- Current work router: tasks/NEXT.md
+- Public result browser: results.html
+- ECDLP route map: explore.html
+
+Current navigation counts:
+- ECDLP ledger rows: 307
+- ResearchOS ledger rows: 172
+- Aggregate navigation rows: 479 (not a security metric)
+- ResearchOS standard-base rows: 172
+- ECDLP audited rows without a committed per-row base label: 203
+- Rows with compiler trust disclosed in ledger metadata: 104

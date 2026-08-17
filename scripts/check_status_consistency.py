@@ -55,6 +55,7 @@ def main() -> int:
             errors.append(message)
 
     stats = read_json("data/stats.json")
+    verified_index = read_json("data/verified_index.json")
     frontier = read_json("data/frontier_map.json")
     graph = read_json("data/knowledge_graph.json")
     decisions = read_json("repo/ECDLP_DECISION_SUBSTRATE.json")
@@ -67,6 +68,7 @@ def main() -> int:
     knowledge_graph_md = read_text("data/knowledge_graph.md")
     decision_view = read_text("repo/ECDLP_DECISION_SUBSTRATE.md")
     index = read_text("index.html")
+    results = read_text("results.html")
     dashboard = read_text("dashboard.html")
     explore = read_text("explore.html")
     pilot = read_text("pilot.html")
@@ -145,6 +147,32 @@ def main() -> int:
         f'data-metric="distinct-results">~{distinct}</div>' in index,
         "index.html distinct-results counter does not match data/stats.json",
     )
+    verified_counts = verified_index.get("counts", {})
+    check(
+        verified_counts.get("ecdlp_rows") == ledger_rows,
+        "verified_index ECDLP rows must match data/stats.json",
+    )
+    check(
+        verified_counts.get("researchos_rows")
+        == read_json("data/researchos_result_registry.json").get("ledger_rows"),
+        "verified_index ResearchOS rows must match its isolated registry",
+    )
+    check(
+        verified_counts.get("navigation_rows_total")
+        == verified_counts.get("ecdlp_rows", 0) + verified_counts.get("researchos_rows", 0),
+        "verified_index navigation total must be the sum of the two isolated lanes",
+    )
+    check(
+        f'{verified_counts.get("navigation_rows_total")} results' in results
+        and 'data-result-list' in results
+        and 'data-result-count aria-live="polite"' in results,
+        "results.html must expose the complete static result list and accessible filters",
+    )
+    check(
+        "One browser, two isolated ledgers" in results
+        and "not an ECDLP security metric" in results,
+        "results.html must expose the cross-lane accounting boundary",
+    )
     check(f"snapshot {ledger_rows} ledger rows / ~{distinct} distinct" in dashboard,
           "dashboard.html snapshot stamp does not match data/stats.json")
     check(
@@ -164,6 +192,7 @@ def main() -> int:
           "dashboard.html Sync Health must link the artifact manifest to its gate")
     check(
         product.get("category") in index
+        and product.get("category") in results
         and product.get("category") in dashboard
         and product.get("category") in explore
         and product.get("category") in pilot,
@@ -176,6 +205,7 @@ def main() -> int:
     )
     check(
         "repo/PRODUCT_MODEL.json" in index
+        and "repo/PRODUCT_MODEL.json" in results
         and "repo/PRODUCT_MODEL.json" in dashboard
         and "repo/PRODUCT_MODEL.json" in explore
         and "repo/PRODUCT_MODEL.json" in pilot,
@@ -183,13 +213,13 @@ def main() -> int:
     )
     check(
         all("assets/site.css" in page and "assets/site.js" in page
-            for page in (index, dashboard, explore, pilot)),
+            for page in (index, results, dashboard, explore, pilot)),
         "all public surfaces must use the shared site assets",
     )
     check(
         all(
             "The Lean kernel checks declared statements and proof terms" in page
-            for page in (index, dashboard, explore, pilot)
+            for page in (index, results, dashboard, explore, pilot)
         ),
         "all public surfaces must expose the verifier-scope caveat",
     )
@@ -214,7 +244,7 @@ def main() -> int:
         and 'data-route-empty role="status" aria-live="polite"' in explore,
         "route result changes must be announced to assistive technology",
     )
-    public_site = (index + dashboard + explore + pilot).lower()
+    public_site = (index + results + dashboard + explore + pilot).lower()
     for retired_claim in (
         "autonomous engine",
         "verified environment for a strong ai",
@@ -691,8 +721,9 @@ def main() -> int:
     check(
         "repo/PILOT_PROTOCOL.json" in architecture
         and "pilot.html" in architecture
-        and "Generate all four pages" in architecture,
-        "repository architecture must map the pilot protocol and all four public surfaces",
+        and "results.html" in architecture
+        and "Generate all five pages" in architecture,
+        "repository architecture must map the pilot protocol and all five public surfaces",
     )
     task_012_match = re.search(
         r"^### TASK-012\b.*?^Status:\s*([^\n]+)",

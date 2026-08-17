@@ -113,6 +113,7 @@ def main() -> int:
         "stats_source",
         "frontier_source",
         "result_source",
+        "verified_index_source",
         "task_source",
     ):
         path = reference.get(key)
@@ -487,7 +488,7 @@ def main() -> int:
     )
 
     surfaces = {item.get("path"): item for item in model.get("site_surfaces", [])}
-    for path in ("index.html", "dashboard.html", "explore.html", "pilot.html"):
+    for path in ("index.html", "results.html", "dashboard.html", "explore.html", "pilot.html"):
         check(path in surfaces, f"site surface is missing: {path}")
 
     if errors:

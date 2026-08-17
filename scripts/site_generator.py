@@ -11,7 +11,7 @@ from pathlib import Path
 from pilot_evidence import primary_dispositions, valid_second_projects
 
 ROOT = Path(__file__).resolve().parent.parent
-ASSET_VERSION = "20260725-1"
+ASSET_VERSION = "20260816-1"
 
 PRODUCT_PATH = ROOT / "repo" / "PRODUCT_MODEL.json"
 PILOT_PATH = ROOT / "repo" / "PILOT_PROTOCOL.json"
@@ -21,6 +21,7 @@ STATS_PATH = ROOT / "data" / "stats.json"
 FRONTIER_PATH = ROOT / "data" / "frontier_map.json"
 GRAPH_PATH = ROOT / "data" / "knowledge_graph.json"
 ENGINE_PATH = ROOT / "data" / "research_engine_state.json"
+VERIFIED_INDEX_PATH = ROOT / "data" / "verified_index.json"
 RESEARCH_TASKS_PATH = ROOT / "tasks" / "ECDLP_RESEARCH.md"
 PRODUCT_TASKS_PATH = ROOT / "tasks" / "KEYAI_PRODUCT.md"
 
@@ -28,6 +29,7 @@ INDEX_PATH = ROOT / "index.html"
 DASHBOARD_PATH = ROOT / "dashboard.html"
 EXPLORE_PATH = ROOT / "explore.html"
 PILOT_OUTPUT_PATH = ROOT / "pilot.html"
+RESULTS_PATH = ROOT / "results.html"
 
 ROUTE_STATUS = {
     "guardrail": ("Guardrail", "guardrail"),
@@ -250,11 +252,10 @@ def site_header(product: dict) -> str:
       <img src="assets/logo-wordmark.png" alt="KeyAI" width="116" height="44">
     </a>
     <nav class="primary-nav" aria-label="Primary navigation">
-      <a data-nav-page="product" href="index.html">Product</a>
-      <a data-nav-page="workspace" href="dashboard.html">Workspace</a>
+      <a data-nav-page="results" href="results.html">Verified results</a>
       <a data-nav-page="routes" href="explore.html">Route map</a>
+      <a data-nav-page="workspace" href="dashboard.html">Workspace</a>
       <a href="{repository}">GitHub</a>
-      <a class="nav-cta" data-nav-page="pilot" href="pilot.html">Join pilot</a>
     </nav>
   </div>
 </header>"""
@@ -269,8 +270,9 @@ def site_footer(product: dict) -> str:
       The Lean kernel checks declared statements and proof terms; semantic, empirical,
       security, and product claims remain separately evidence-gated.</p>
     <nav class="footer-links" aria-label="Footer navigation">
-      <a href="dashboard.html">Reference workspace</a>
+      <a href="results.html">Verified results</a>
       <a href="explore.html">Decision routes</a>
+      <a href="dashboard.html">Reference workspace</a>
       <a href="pilot.html">External pilot</a>
       <a href="{repository}/blob/main/repo/PRODUCT_MODEL.json">Product model</a>
       <a href="{repository}">Repository</a>
@@ -290,6 +292,7 @@ def build_index(
     decisions: dict,
     formal: dict,
     engine: dict,
+    verified_index: dict,
 ) -> str:
     selection = decisions["route_selection"]
     authorization = decisions["bounded_experiment_authorization"]
@@ -298,6 +301,7 @@ def build_index(
     routes = decisions["routes"]
     current_stage = product["current_stage"]
     mvp = product["mvp"]
+    verified_counts = verified_index["counts"]
     pilot_model = product["pilot"]
     completed_discovery = sum(
         record.get("disposition") in {"build", "change", "stop"}
@@ -345,22 +349,31 @@ def build_index(
     <div class="shell hero__inner">
       <div class="hero__copy">
         <p class="eyebrow">{esc(product["category"])}</p>
-        <h1 id="hero-title">Turn AI research into verifier-scoped, reusable state.</h1>
-        <p class="hero__lede">{esc(product["one_liner"])}
-          It keeps claims, evidence, decisions, verifier outcomes, and provenance in one inspectable state.</p>
+        <h1 id="hero-title">A public map of what is proved, blocked, and still open.</h1>
+        <p class="hero__lede">KeyAI keeps formal claims, evidence, decisions, negative results,
+          verifier outcomes, and provenance in one inspectable state. The current reference deployment
+          is ECDLP and curve research, not an ECDLP solution.</p>
+        <div class="hero-boundary" role="note" aria-label="Public claim boundary">
+          <strong>Claim boundary</strong>
+          <span>No secp256k1 shortcut is claimed. The two verified ledgers remain isolated,
+            and compiler-trusted results are labeled separately.</span>
+        </div>
         <div class="actions">
-          <a class="button button--primary" href="pilot.html">Bring a research workflow</a>
-          <a class="button button--on-dark" href="dashboard.html">Open the reference workspace</a>
+          <a class="button button--primary" href="results.html">Browse verified results</a>
+          <a class="button button--on-dark" href="dashboard.html">Open current research state</a>
         </div>
         <p class="stage-note">{status_badge("blue", current_stage["label"])}
           <span>{esc(current_stage["summary"])}</span></p>
       </div>
-      <div class="hero__signal" aria-label="Current reference decision">
-        <span>Live decision graph</span>
-        <strong>{len(routes)} evaluated / {len(selected_structural)} structural completed / {len(promoted_routes)} promoted</strong>
-        <span>{engine["counts"]["selected_explorations"]} native experiments selected /
-          1 exact synthetic-toy run completed</span>
-        <code>{esc(selection["decision_id"])}</code>
+      <div class="hero__signal" aria-label="Verified research index">
+        <span>Verified research index</span>
+        <strong>{verified_counts["navigation_rows_total"]} rows across {verified_counts["lanes"]} isolated ledgers</strong>
+        <span>{verified_counts["ecdlp_rows"]} ECDLP / {verified_counts["researchos_rows"]} ResearchOS /
+          aggregate total is navigation only</span>
+        <code>{stats["sorry_count"]} sorry · {stats["custom_axioms"]} custom axioms</code>
+        <code>{verified_counts["kernel_plus_compiler_rows"]} rows disclose compiler trust in ledger metadata</code>
+        <code>{engine["counts"]["selected_explorations"]} native experiments selected</code>
+        <code>1 exact synthetic-toy run completed</code>
         <code>{esc(authorization["authorization_id"])}</code>
       </div>
     </div>
@@ -370,21 +383,53 @@ def build_index(
   <section class="live-band" aria-label="Live reference environment">
     <div class="shell live-band__inner">
       <div class="live-band__context">
-        <strong>Live reference: secp256k1 ECDLP</strong>
-        <span>{esc(product["reference_environment"]["boundary"])}</span>
+        <strong>Verified results, separated by trust lane</strong>
+        <span>Browse theorem names, source files, proof methods, trust labels, and exact source anchors.</span>
       </div>
       <div class="live-metric"><div class="live-metric__value" data-metric="ledger-rows">{stats["ledger_rows"]}</div>
-        <div class="live-metric__label">verified ledger rows</div></div>
+        <div class="live-metric__label">ECDLP ledger rows</div></div>
       <div class="live-metric"><div class="live-metric__value" data-metric="distinct-results">~{stats["distinct_results"]}</div>
-        <div class="live-metric__label">distinct results</div></div>
-      <div class="live-metric"><div class="live-metric__value">{len(routes)}</div>
-        <div class="live-metric__label">routes evaluated</div></div>
-      <div class="live-metric"><div class="live-metric__value">1</div>
-        <div class="live-metric__label">completed exact toy run</div></div>
+        <div class="live-metric__label">ECDLP distinct results</div></div>
+      <div class="live-metric"><div class="live-metric__value">{verified_counts["researchos_rows"]}</div>
+        <div class="live-metric__label">ResearchOS ledger rows</div></div>
+      <div class="live-metric"><div class="live-metric__value">{stats["sorry_count"]} / {stats["custom_axioms"]}</div>
+        <div class="live-metric__label">sorry / custom axioms</div></div>
     </div>
   </section>
 
-  <section class="band band--white" id="product">
+  <section class="band band--white verified-entry" aria-labelledby="verified-entry-title">
+    <div class="shell">
+      <div class="section-heading">
+        <p class="eyebrow">Evidence first</p>
+        <h2 id="verified-entry-title">Start with the results, their limits, and the open frontier.</h2>
+        <p>The public interface now exposes theorem names and exact source anchors before asking
+          visitors to interpret the product thesis or the research workflow.</p>
+      </div>
+      <div class="evidence-grid">
+        <article class="evidence-card">
+          <h3>Verified result browser</h3>
+          <p>{verified_counts["navigation_rows_total"]} navigation rows across two isolated ledgers,
+            with method and trust metadata.</p>
+          <a class="source-link" href="results.html">Browse verified results</a>
+        </article>
+        <article class="evidence-card">
+          <h3>Decision frontier</h3>
+          <p>{len(routes)} canonical ECDLP routes with explicit dispositions, evidence, blockers,
+            and reconsideration triggers.</p>
+          <a class="source-link" href="explore.html">Inspect the route map</a>
+        </article>
+        <article class="evidence-card">
+          <h3>Canonical repository state</h3>
+          <p>Counts, architecture, and machine-readable provenance remain generated from repository
+            sources rather than copied into marketing prose.</p>
+          <a class="source-link" href="{esc(repo_url(product, 'STATUS.md'))}">Open STATUS.md</a>
+          <a class="source-link" href="{esc(repo_url(product, 'REPOSITORY_ARCHITECTURE.md'))}">Read the architecture map</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="product">
     <div class="shell split">
       <div class="split__lead">
         <p class="eyebrow">The missing layer</p>
@@ -510,6 +555,172 @@ def build_index(
         <p>{esc(mvp["definition"])} A technical MVP still does not establish a repeatable buyer or willingness to pay.</p>
       </div>
       <div class="metric-lines">{metric_html}</div>
+    </div>
+  </section>
+</main>
+{site_footer(product)}"""
+
+
+def build_results(product: dict, verified_index: dict) -> str:
+    counts = verified_index["counts"]
+    results = verified_index["results"]
+    repository = product["repository_url"].rstrip("/")
+
+    def reference_link(reference: dict) -> str:
+        source_file = reference.get("file", "")
+        declaration = reference.get("declaration", "declaration")
+        line = reference.get("line")
+        if not source_file:
+            return f'<code>{esc(declaration)}</code>'
+        anchor = f"#L{line}" if line else ""
+        url = f"{repository}/blob/main/{source_file}{anchor}"
+        line_label = f":{line}" if line else ""
+        return (
+            f'<a class="result-source" href="{esc(url)}">'
+            f'<code>{esc(declaration)}</code>'
+            f'<span>{esc(source_file)}{line_label}</span></a>'
+        )
+
+    cards: list[str] = []
+    for result in results:
+        lane = result["lane"]
+        trust = result["trust_level"]
+        domain = result["domain"]
+        lane_label = "ECDLP" if lane == "ecdlp" else "ResearchOS"
+        trust_label = {
+            "kernel_plus_compiler": "Kernel + compiler",
+            "kernel_standard": "Kernel standard",
+            "kernel_audited": "Kernel audited",
+        }[trust]
+        title = result.get("title") or result["claim_id"]
+        full_claim = result["claim_id"]
+        display = (result.get("display") or "Declaration group").replace("`", "")
+        claim_details = ""
+        if full_claim != title:
+            claim_details = (
+                '<details class="result-card__scope"><summary>Full ledger claim and scope</summary>'
+                f'<p>{esc(full_claim)}</p></details>'
+            )
+        searchable = " ".join(
+            [
+                full_claim,
+                result.get("display", ""),
+                result["method"],
+                domain,
+                " ".join(result["files"]),
+                " ".join(ref.get("declaration", "") for ref in result["references"]),
+            ]
+        )
+        sources = "".join(reference_link(reference) for reference in result["references"])
+        if not sources:
+            sources = "".join(
+                f'<a class="result-source" href="{esc(repo_url(product, source_file))}">'
+                f'<code>{esc(source_file)}</code><span>declared source</span></a>'
+                for source_file in result["files"]
+            )
+        cards.append(
+            f"""<article class="result-card" id="{esc(result['slug'])}"
+  data-result-tags="{esc(f'{lane} {trust} {domain}')}"
+  data-result-searchable="{esc(searchable)}">
+  <div class="result-card__top">
+    <div class="result-card__badges">
+      <span class="lane-badge lane-badge--{esc(lane)}">{lane_label}</span>
+      <span class="trust-badge trust-badge--{esc(trust)}">{trust_label}</span>
+    </div>
+    <a class="result-card__anchor" href="#{esc(result['slug'])}" aria-label="Permanent link to {esc(title)}">#</a>
+  </div>
+  <h2>{esc(title)}</h2>
+  <p class="result-card__display"><code>{esc(display)}</code></p>
+  {claim_details}
+  <dl class="result-card__meta">
+    <div><dt>Domain</dt><dd>{esc(domain)}</dd></div>
+    <div><dt>Method</dt><dd>{esc(result['method'])}</dd></div>
+    <div><dt>Canonical ledger</dt><dd><a href="{esc(repo_url(product, result['source_ledger']))}">{esc(result['source_ledger'])}</a></dd></div>
+  </dl>
+  <div class="result-card__sources">{sources}</div>
+</article>"""
+        )
+
+    filter_buttons = "".join(
+        f'<button class="filter-button" type="button" data-result-filter="{token}" '
+        f'aria-pressed="{str(index == 0).lower()}">{label}</button>'
+        for index, (token, label) in enumerate(
+            [
+                ("all", "All results"),
+                ("ecdlp", f"ECDLP {counts['ecdlp_rows']}"),
+                ("researchos", f"ResearchOS {counts['researchos_rows']}"),
+                ("kernel_standard", f"Kernel standard {counts['kernel_standard_rows']}"),
+                ("kernel_audited", f"Kernel audited {counts['kernel_audited_rows']}"),
+                (
+                    "kernel_plus_compiler",
+                    f"Kernel + compiler {counts['kernel_plus_compiler_rows']}",
+                ),
+            ]
+        )
+    )
+    domain_rows = "".join(
+        f"<li><span>{esc(domain)}</span><strong>{count}</strong></li>"
+        for domain, count in counts["domains"].items()
+    )
+
+    description = (
+        "Browse every ledgered, machine-checked KeyAI result with its source file, "
+        "method, trust label, and canonical ledger boundary."
+    )
+    return f"""{page_head("Verified results | KeyAI", description)}
+<body data-page="results">
+{site_header(product)}
+<main id="main">
+  <section class="results-mast">
+    <div class="shell results-mast__inner">
+      <div>
+        <p class="eyebrow">Inspectable proof surface</p>
+        <h1>Verified results, with the evidence attached.</h1>
+        <p>{description}</p>
+      </div>
+      <dl class="results-summary" aria-label="Verified result counts">
+        <div><dt>ECDLP lane</dt><dd>{counts["ecdlp_rows"]}</dd></div>
+        <div><dt>ResearchOS lane</dt><dd>{counts["researchos_rows"]}</dd></div>
+        <div><dt>Navigation total</dt><dd>{counts["navigation_rows_total"]}</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="results-boundary" aria-labelledby="results-boundary-title">
+    <div class="shell results-boundary__inner">
+      <div>
+        <p class="eyebrow">Trust boundary</p>
+        <h2 id="results-boundary-title">One browser, two isolated ledgers.</h2>
+      </div>
+      <p><strong>VERIFIED.md</strong> remains the canonical ECDLP ledger and alone feeds
+        ECDLP headline statistics. <strong>VERIFIED_RESEARCHOS.md</strong> remains the canonical
+        non-ECDLP ledger. The combined count is navigation only and is not an ECDLP security metric.</p>
+    </div>
+  </section>
+
+  <section class="band band--white">
+    <div class="shell results-layout">
+      <aside class="results-sidebar" aria-label="Result filters">
+        <label class="filter-search">
+          <span>Search results</span>
+          <input type="search" data-result-search placeholder="Claim, theorem, file, method" autocomplete="off">
+        </label>
+        <div class="filter-list" aria-label="Filter verified results">{filter_buttons}</div>
+        <p class="filter-count" data-result-count aria-live="polite">{counts["navigation_rows_total"]} results</p>
+        <div class="results-domain-summary">
+          <h2>Domains</h2>
+          <ul>{domain_rows}</ul>
+        </div>
+        <p class="results-sidebar__note"><strong>Kernel standard</strong> is an exact per-row ResearchOS
+          declaration. <strong>Kernel audited</strong> means the ECDLP declaration passed the allowed-TCB
+          audit, but this navigation index does not infer a standard-only base from missing metadata.
+          <strong>Kernel + compiler</strong> is shown when ledger metadata discloses <code>native_decide</code>
+          or equivalent compiler trust.</p>
+      </aside>
+      <div>
+        <div class="results-list" data-result-list>{''.join(cards)}</div>
+        <p class="empty-state" data-result-empty role="status" aria-live="polite" hidden>No verified results match this filter.</p>
+      </div>
     </div>
   </section>
 </main>
@@ -1163,22 +1374,28 @@ def main() -> int:
     formal = load_json(FORMAL_PATH)
     graph = load_json(GRAPH_PATH)
     engine = load_json(ENGINE_PATH)
+    verified_index = load_json(VERIFIED_INDEX_PATH)
     tasks = parse_tasks()
 
-    index = build_index(product, pilot, stats, frontier, decisions, formal, engine)
+    index = build_index(
+        product, pilot, stats, frontier, decisions, formal, engine, verified_index
+    )
+    results_page = build_results(product, verified_index)
     dashboard = build_dashboard(
         product, stats, frontier, decisions, formal, graph, engine, tasks
     )
     explore = build_explore(product, stats, decisions, engine)
     pilot_page = build_pilot(product, pilot)
     write_text(INDEX_PATH, index)
+    write_text(RESULTS_PATH, results_page)
     write_text(DASHBOARD_PATH, dashboard)
     write_text(EXPLORE_PATH, explore)
     write_text(PILOT_OUTPUT_PATH, pilot_page)
 
     print(
         "wrote KeyAI public site: "
-        f"{stats['ledger_rows']} ledger rows, "
+        f"{stats['ledger_rows']} ECDLP ledger rows, "
+        f"{verified_index['counts']['researchos_rows']} ResearchOS ledger rows, "
         f"{len(decisions['routes'])} decision routes, "
         f"{len(formal['critical_nodes'])} formal nodes, "
         f"{len(tasks)} task contracts, "

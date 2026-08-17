@@ -11,7 +11,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 18339
+        "bytes": 18547
       },
       {
         "path": "domains/riemann-hypothesis/README.md",
@@ -131,7 +131,7 @@
         "path": "repo/PRODUCT_MODEL.json",
         "reason": "product category, current-vs-future boundary, public claims, and MVP evidence gate",
         "exists": true,
-        "bytes": 10448
+        "bytes": 10748
       },
       {
         "path": "repo/PILOT_PROTOCOL.json",
@@ -199,7 +199,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 18339
+        "bytes": 18547
       },
       {
         "path": "domains/riemann-hypothesis/README.md",
@@ -319,7 +319,7 @@
         "path": "repo/PRODUCT_MODEL.json",
         "reason": "product category, current-vs-future boundary, public claims, and MVP evidence gate",
         "exists": true,
-        "bytes": 10448
+        "bytes": 10748
       },
       {
         "path": "repo/PILOT_PROTOCOL.json",
@@ -385,7 +385,7 @@
         "path": "README.md",
         "reason": "the front door: what this is, what it does NOT claim",
         "exists": true,
-        "bytes": 13290
+        "bytes": 13830
       },
       {
         "path": "AGENTS.md",
@@ -603,7 +603,7 @@
         "path": "STATUS.md",
         "reason": "canonical live snapshot — counts, active goal, bottleneck; wins over prose",
         "exists": true,
-        "bytes": 18339
+        "bytes": 18547
       },
       {
         "path": "domains/riemann-hypothesis/README.md",
@@ -723,7 +723,7 @@
         "path": "repo/PRODUCT_MODEL.json",
         "reason": "product category, current-vs-future boundary, public claims, and MVP evidence gate",
         "exists": true,
-        "bytes": 10448
+        "bytes": 10748
       },
       {
         "path": "repo/PILOT_PROTOCOL.json",
@@ -789,7 +789,7 @@
         "path": "README.md",
         "reason": "the front door: what this is, what it does NOT claim",
         "exists": true,
-        "bytes": 13290
+        "bytes": 13830
       },
       {
         "path": "AGENTS.md",
@@ -1011,7 +1011,7 @@
         "path": "REPOSITORY_ARCHITECTURE.md",
         "reason": "whole-repo map: canonical / generated / scratch / archive",
         "exists": true,
-        "bytes": 22115
+        "bytes": 22618
       },
       {
         "path": "PUBLISHABLE_UNITS.md",

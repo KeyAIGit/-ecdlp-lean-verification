@@ -268,7 +268,48 @@
     apply();
   }
 
+
+  function setupResultFilters() {
+    var list = document.querySelector("[data-result-list]");
+    var search = document.querySelector("[data-result-search]");
+    var buttons = Array.prototype.slice.call(document.querySelectorAll("[data-result-filter]"));
+    var counter = document.querySelector("[data-result-count]");
+    var empty = document.querySelector("[data-result-empty]");
+    if (!list || !search || !buttons.length) return;
+
+    var rows = Array.prototype.slice.call(list.querySelectorAll("[data-result-tags]"));
+    var active = "all";
+
+    function apply() {
+      var query = search.value.trim().toLowerCase();
+      var visible = 0;
+      rows.forEach(function (row) {
+        var tags = (row.getAttribute("data-result-tags") || "").split(/\s+/);
+        var haystack = (row.getAttribute("data-result-searchable") || "").toLowerCase();
+        var match = (active === "all" || tags.indexOf(active) >= 0) &&
+          (!query || haystack.indexOf(query) >= 0);
+        row.hidden = !match;
+        if (match) visible += 1;
+      });
+      if (counter) counter.textContent = String(visible) + (visible === 1 ? " result" : " results");
+      if (empty) empty.hidden = visible !== 0;
+    }
+
+    buttons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        active = button.getAttribute("data-result-filter") || "all";
+        buttons.forEach(function (item) {
+          item.setAttribute("aria-pressed", item === button ? "true" : "false");
+        });
+        apply();
+      });
+    });
+    search.addEventListener("input", apply);
+    apply();
+  }
+
   drawRouteCanvas();
   setupTabs();
   setupRouteFilters();
+  setupResultFilters();
 })();

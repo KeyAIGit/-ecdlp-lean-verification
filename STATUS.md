@@ -22,6 +22,10 @@
 
 Toolchain: Lean 4 + Mathlib v4.31.0.
 
+Cross-lane result navigation: [`VERIFIED_INDEX.md`](VERIFIED_INDEX.md) indexes both
+canonical ledgers without combining their accounting. The aggregate row total is navigation,
+not an ECDLP security metric.
+
 ## Product state
 - **Category:** verification workspace for AI research.
 - **Current stage:** Reference deployment. The repository demonstrates the full research-state loop on one difficult domain, but it is not yet a self-serve hosted product.

@@ -18,6 +18,7 @@ GENERATORS = [
     ["scripts/build_frontier_map.py"],
     ["scripts/gen_result_registry.py"],
     ["scripts/gen_researchos_registry.py"],
+    ["scripts/gen_verified_index.py"],
     ["scripts/gen_axiom_audit.py"],
     ["scripts/gen_source_registry.py"],
     [
@@ -48,6 +49,9 @@ PURE_ARTIFACTS = [
     "data/frontier_map.json",
     "data/result_registry.json",
     "data/researchos_result_registry.json",
+    "data/verified_index.json",
+    "VERIFIED_INDEX.md",
+    "llms.txt",
     "Ecdlp/LedgerAxiomAudit.lean",
     "ResearchOS/LedgerAxiomAudit.lean",
     "data/source_registry.json",
@@ -73,7 +77,7 @@ PURE_ARTIFACTS = [
     "bundles/MANIFEST.json",
 ]
 
-SITE_ARTIFACTS = ["dashboard.html", "index.html", "explore.html", "pilot.html"]
+SITE_ARTIFACTS = ["dashboard.html", "index.html", "results.html", "explore.html", "pilot.html"]
 ALL_ARTIFACTS = PURE_ARTIFACTS + SITE_ARTIFACTS
 
 
