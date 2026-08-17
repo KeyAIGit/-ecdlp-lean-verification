@@ -38,7 +38,7 @@ jobs:
           python -m py_compile experiments/parity_lift_000/uorc056_ward_open_transport_c44.py experiments/parity_lift_000/test_uorc056_ward_open_transport_c44.py
           PYTHONPATH=experiments/parity_lift_000 python -m unittest -v experiments/parity_lift_000/test_uorc056_ward_open_transport_c44.py
           PYTHONPATH=experiments/parity_lift_000 python experiments/parity_lift_000/uorc056_ward_open_transport_c44.py --out /tmp/uorc056_ward_open_transport_c44_results.json
-          diff -u experiments/parity_lift_000/uorc056_ward_open_transport_c44_results.json /tmp/uorc056_ward_open_transport_c44_results.json
+          python -c "import json; assert json.load(open('experiments/parity_lift_000/uorc056_ward_open_transport_c44_results.json')) == json.load(open('/tmp/uorc056_ward_open_transport_c44_results.json'))"
       - name: Check machine-readable boundary
         run: |
           python - <<'PY'
