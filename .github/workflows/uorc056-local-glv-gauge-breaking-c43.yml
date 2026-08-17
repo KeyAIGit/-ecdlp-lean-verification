@@ -1,0 +1,78 @@
+name: UORC056 local GLV gauge breaking C43
+
+on:
+  push:
+    paths:
+      - "experiments/parity_lift_000/uorc056_c43_glv_dft_screen.py"
+      - "experiments/parity_lift_000/uorc056_c43_local_glv_branch.py"
+      - "experiments/parity_lift_000/uorc056_local_glv_gauge_breaking_c43.py"
+      - "experiments/parity_lift_000/test_uorc056_local_glv_gauge_breaking_c43.py"
+      - "Ecdlp/Proved/Uorc056LocalGlvGaugeBreaking.lean"
+      - ".github/workflows/uorc056-local-glv-gauge-breaking-c43.yml"
+  pull_request:
+    paths:
+      - "experiments/parity_lift_000/uorc056_c43_glv_dft_screen.py"
+      - "experiments/parity_lift_000/uorc056_c43_local_glv_branch.py"
+      - "experiments/parity_lift_000/uorc056_local_glv_gauge_breaking_c43.py"
+      - "experiments/parity_lift_000/test_uorc056_local_glv_gauge_breaking_c43.py"
+      - "Ecdlp/Proved/Uorc056LocalGlvGaugeBreaking.lean"
+      - ".github/workflows/uorc056-local-glv-gauge-breaking-c43.yml"
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install exact arithmetic dependency
+        run: python -m pip install --disable-pip-version-check sympy
+      - name: Compile, test and replay local GLV C43
+        run: |
+          python -m py_compile \
+            experiments/parity_lift_000/uorc056_c43_glv_dft_screen.py \
+            experiments/parity_lift_000/uorc056_c43_local_glv_branch.py \
+            experiments/parity_lift_000/uorc056_local_glv_gauge_breaking_c43.py \
+            experiments/parity_lift_000/test_uorc056_local_glv_gauge_breaking_c43.py
+          PYTHONPATH=experiments/parity_lift_000 python -m unittest -v \
+            experiments/parity_lift_000/test_uorc056_local_glv_gauge_breaking_c43.py
+          PYTHONPATH=experiments/parity_lift_000 python \
+            experiments/parity_lift_000/uorc056_local_glv_gauge_breaking_c43.py \
+            --out /tmp/uorc056_local_glv_gauge_breaking_c43.json
+      - name: Check machine-readable local GLV boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path("/tmp/uorc056_local_glv_gauge_breaking_c43.json").read_text()
+          )
+          assert data["profile_id"] == "UORC-056-LOCAL-GLV-GAUGE-BREAKING-C43"
+          assert data["aggregate"]["curves"] == 9
+          assert data["aggregate"]["carry_value_checks"] == 1929
+          assert data["aggregate"]["declared_character_atoms"] == 22329
+          assert data["aggregate"]["errors"] == 0
+          decision = data["decision"]
+          assert decision["exact_glv_carry_root_found"] is True
+          assert decision["exact_sector_root_found"] is True
+          assert decision["exact_oriented_root_reconstruction_found"] is True
+          assert decision["residual_klein_four_gauge_survives"] is True
+          assert decision["local_glv_gauge_breaking_evaluator_found"] is False
+          assert decision["cheap_parity_decoder_found"] is False
+          assert decision["parity_oracle_found"] is False
+          assert decision["sub_sqrt_ecdlp_found"] is False
+          PY
+      - name: Install Lean toolchain
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Kernel-check local GLV algebra
+        run: lake env lean Ecdlp/Proved/Uorc056LocalGlvGaugeBreaking.lean
+      - uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-local-glv-gauge-breaking-c43
+          path: /tmp/uorc056_local_glv_gauge_breaking_c43.json
