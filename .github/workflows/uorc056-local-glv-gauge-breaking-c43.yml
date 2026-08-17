@@ -1,20 +1,16 @@
-name: UORC056 local GLV gauge breaking C43
+name: UORC056 local GLV sector factorization C43B
 
 on:
   push:
     paths:
-      - "experiments/parity_lift_000/uorc056_c43_glv_dft_screen.py"
-      - "experiments/parity_lift_000/uorc056_c43_local_glv_branch.py"
-      - "experiments/parity_lift_000/uorc056_local_glv_gauge_breaking_c43.py"
-      - "experiments/parity_lift_000/test_uorc056_local_glv_gauge_breaking_c43.py"
+      - "experiments/parity_lift_000/uorc056_local_glv_sector_factorization_c43b.py"
+      - "experiments/parity_lift_000/test_uorc056_local_glv_sector_factorization_c43b.py"
       - "Ecdlp/Proved/Uorc056LocalGlvGaugeBreaking.lean"
       - ".github/workflows/uorc056-local-glv-gauge-breaking-c43.yml"
   pull_request:
     paths:
-      - "experiments/parity_lift_000/uorc056_c43_glv_dft_screen.py"
-      - "experiments/parity_lift_000/uorc056_c43_local_glv_branch.py"
-      - "experiments/parity_lift_000/uorc056_local_glv_gauge_breaking_c43.py"
-      - "experiments/parity_lift_000/test_uorc056_local_glv_gauge_breaking_c43.py"
+      - "experiments/parity_lift_000/uorc056_local_glv_sector_factorization_c43b.py"
+      - "experiments/parity_lift_000/test_uorc056_local_glv_sector_factorization_c43b.py"
       - "Ecdlp/Proved/Uorc056LocalGlvGaugeBreaking.lean"
       - ".github/workflows/uorc056-local-glv-gauge-breaking-c43.yml"
 
@@ -28,20 +24,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Install exact arithmetic dependency
-        run: python -m pip install --disable-pip-version-check sympy
-      - name: Compile, test and replay local GLV C43
+      - name: Compile, test and replay corrected local GLV C43B
         run: |
           python -m py_compile \
-            experiments/parity_lift_000/uorc056_c43_glv_dft_screen.py \
-            experiments/parity_lift_000/uorc056_c43_local_glv_branch.py \
-            experiments/parity_lift_000/uorc056_local_glv_gauge_breaking_c43.py \
-            experiments/parity_lift_000/test_uorc056_local_glv_gauge_breaking_c43.py
+            experiments/parity_lift_000/uorc056_local_glv_sector_factorization_c43b.py \
+            experiments/parity_lift_000/test_uorc056_local_glv_sector_factorization_c43b.py
           PYTHONPATH=experiments/parity_lift_000 python -m unittest -v \
-            experiments/parity_lift_000/test_uorc056_local_glv_gauge_breaking_c43.py
+            experiments/parity_lift_000/test_uorc056_local_glv_sector_factorization_c43b.py
           PYTHONPATH=experiments/parity_lift_000 python \
-            experiments/parity_lift_000/uorc056_local_glv_gauge_breaking_c43.py \
-            --out /tmp/uorc056_local_glv_gauge_breaking_c43.json
+            experiments/parity_lift_000/uorc056_local_glv_sector_factorization_c43b.py \
+            --out /tmp/uorc056_local_glv_sector_factorization_c43b.json
       - name: Check machine-readable local GLV boundary
         run: |
           python - <<'PY'
@@ -49,19 +41,18 @@ jobs:
           from pathlib import Path
 
           data = json.loads(
-              Path("/tmp/uorc056_local_glv_gauge_breaking_c43.json").read_text()
+              Path("/tmp/uorc056_local_glv_sector_factorization_c43b.json").read_text()
           )
-          assert data["profile_id"] == "UORC-056-LOCAL-GLV-GAUGE-BREAKING-C43"
+          assert data["profile_id"] == "UORC-056-LOCAL-GLV-SECTOR-FACTORIZATION-C43B"
           assert data["aggregate"]["curves"] == 9
-          assert data["aggregate"]["carry_value_checks"] == 1929
-          assert data["aggregate"]["declared_character_atoms"] == 22329
+          assert data["aggregate"]["carry_value_checks"] == 1923
           assert data["aggregate"]["errors"] == 0
           decision = data["decision"]
           assert decision["exact_glv_carry_root_found"] is True
           assert decision["exact_sector_root_found"] is True
           assert decision["exact_oriented_root_reconstruction_found"] is True
           assert decision["residual_klein_four_gauge_survives"] is True
-          assert decision["local_glv_gauge_breaking_evaluator_found"] is False
+          assert decision["ordered_sector_transport_evaluator_found"] is False
           assert decision["cheap_parity_decoder_found"] is False
           assert decision["parity_oracle_found"] is False
           assert decision["sub_sqrt_ecdlp_found"] is False
@@ -74,5 +65,5 @@ jobs:
         run: lake env lean Ecdlp/Proved/Uorc056LocalGlvGaugeBreaking.lean
       - uses: actions/upload-artifact@v4
         with:
-          name: uorc056-local-glv-gauge-breaking-c43
-          path: /tmp/uorc056_local_glv_gauge_breaking_c43.json
+          name: uorc056-local-glv-sector-factorization-c43b
+          path: /tmp/uorc056_local_glv_sector_factorization_c43b.json
