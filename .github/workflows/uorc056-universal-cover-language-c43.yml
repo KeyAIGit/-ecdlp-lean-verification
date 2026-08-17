@@ -1,0 +1,67 @@
+name: UORC056 universal cover language C43
+
+on:
+  push:
+    paths:
+      - "experiments/parity_lift_000/uorc056_universal_cover_language_c43.py"
+      - "experiments/parity_lift_000/test_uorc056_universal_cover_language_c43.py"
+      - "notes/UORC056_UNIVERSAL_COVER_LANGUAGE_C43.md"
+      - "notes/UORC056_UNIVERSAL_COVER_LANGUAGE_C43_CONTRACT.md"
+      - ".github/workflows/uorc056-universal-cover-language-c43.yml"
+  pull_request:
+    paths:
+      - "experiments/parity_lift_000/uorc056_universal_cover_language_c43.py"
+      - "experiments/parity_lift_000/test_uorc056_universal_cover_language_c43.py"
+      - "notes/UORC056_UNIVERSAL_COVER_LANGUAGE_C43.md"
+      - "notes/UORC056_UNIVERSAL_COVER_LANGUAGE_C43_CONTRACT.md"
+      - ".github/workflows/uorc056-universal-cover-language-c43.yml"
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install exact arithmetic dependencies
+        run: python -m pip install --disable-pip-version-check sympy mpmath
+      - name: Compile, test and replay C43
+        run: |
+          python -m py_compile \
+            experiments/parity_lift_000/uorc056_universal_cover_language_c43.py \
+            experiments/parity_lift_000/test_uorc056_universal_cover_language_c43.py
+          PYTHONPATH=experiments/parity_lift_000 python -m unittest -v \
+            experiments/parity_lift_000/test_uorc056_universal_cover_language_c43.py
+          PYTHONPATH=experiments/parity_lift_000 python \
+            experiments/parity_lift_000/uorc056_universal_cover_language_c43.py \
+            --out /tmp/uorc056_universal_cover_language_c43.json
+      - name: Check machine-readable C43 boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path("/tmp/uorc056_universal_cover_language_c43.json").read_text()
+          )
+          assert data["profile_id"] == "UORC-056-UNIVERSAL-COVER-LANGUAGE-C43"
+          assert data["aggregate"]["hypotheses"] == 7
+          assert data["aggregate"]["errors"] == 0
+          assert data["aggregate"]["secp_pair_cycles"] == 32
+          correction = data["secp256k1_doubling_correction"]
+          assert correction["order_of_two_mod_n"] == (correction["n"] - 1) // 64
+          assert correction["order_of_two_mod_p"] == (correction["p"] - 1) // 14
+          assert correction["pair_action_transitive"] is False
+          assert data["secp256k1_trace_boundary"]["required_constant_log2"] > 127.34
+          assert data["gauge_type_system"]["neutral_grammar_can_build_parity_charge"] is False
+          assert data["decision"]["cheap_parity_decoder_found"] is False
+          assert data["decision"]["parity_oracle_found"] is False
+          assert data["decision"]["sub_sqrt_ecdlp_found"] is False
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-universal-cover-language-c43
+          path: /tmp/uorc056_universal_cover_language_c43.json
