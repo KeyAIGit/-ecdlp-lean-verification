@@ -61,7 +61,11 @@ theorem productOnlyCannotDecodeFirst
     (hminus : d 1 = -1) :
     False := by
   have h : (1 : K) = -1 := hplus.symm.trans hminus
-  have hz : (2 : K) = 0 := by linarith
+  have hz : (2 : K) = 0 := by
+    calc
+      (2 : K) = 1 + 1 := by ring
+      _ = -1 + 1 := by rw [h]
+      _ = 0 := by ring
   exact htwo hz
 
 /-- Cyclic-invariant data cannot decode the ordered first component on all sign
@@ -79,7 +83,11 @@ theorem cyclicInvariantCannotDecodeFirst
       (1 : K) = d 1 (-1) (-1) := hfirstA.symm
       _ = d (-1) (-1) 1 := hcyclic
       _ = -1 := hfirstB
-  have hz : (2 : K) = 0 := by linarith
+  have hz : (2 : K) = 0 := by
+    calc
+      (2 : K) = 1 + 1 := by ring
+      _ = -1 + 1 := by rw [h]
+      _ = 0 := by ring
   exact htwo hz
 
 /-- Cross-multiplied carry-sector reconstruction of the oriented root. -/
@@ -90,12 +98,12 @@ theorem carrySectorReconstruction
     (hs2 : s2 ^ 2 = 1) :
     (s0 * y) * (y ^ 2) =
       ((s0 * s1 * s2) * (y ^ 3)) * (s1 * s2) := by
+  have hs : (s0 * s1 * s2) * (s1 * s2) = s0 :=
+    parityEqCarryMulSector s0 s1 s2 hs1 hs2
   calc
     (s0 * y) * (y ^ 2) = s0 * (y ^ 3) := by ring
-    _ = ((s0 * s1 * s2) * (y ^ 3)) * (s1 * s2) := by
-      rw [show (s0 * s1 * s2) * (s1 * s2) = s0 from
-        parityEqCarryMulSector s0 s1 s2 hs1 hs2]
-      ring
+    _ = ((s0 * s1 * s2) * (s1 * s2)) * (y ^ 3) := by rw [hs]
+    _ = ((s0 * s1 * s2) * (y ^ 3)) * (s1 * s2) := by ring
 
 /-- Reversing all three oriented roots negates their cubic product. -/
 theorem tripleReversalNegatesCarry
