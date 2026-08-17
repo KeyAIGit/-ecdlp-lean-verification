@@ -1,0 +1,94 @@
+name: UORC056 local GLV sector factorization C43B
+
+on:
+  push:
+    paths:
+      - "experiments/parity_lift_000/uorc056_local_glv_sector_factorization_c43b.py"
+      - "experiments/parity_lift_000/test_uorc056_local_glv_sector_factorization_c43b.py"
+      - "Ecdlp/Proved/Uorc056LocalGlvGaugeBreaking.lean"
+      - "notes/UORC056_C_TRACK_LINEAGE_C43B.json"
+      - "notes/UORC056_C43_C43B_COMPOSED_AUTHORITY_2026_08_17.md"
+      - "scripts/check_uorc056_c43_composed_authority.py"
+      - "scripts/test_uorc056_c43_composed_authority.py"
+      - "repo/ARTIFACTS.yaml"
+      - ".github/workflows/uorc056-local-glv-gauge-breaking-c43.yml"
+  pull_request:
+    paths:
+      - "experiments/parity_lift_000/uorc056_local_glv_sector_factorization_c43b.py"
+      - "experiments/parity_lift_000/test_uorc056_local_glv_sector_factorization_c43b.py"
+      - "Ecdlp/Proved/Uorc056LocalGlvGaugeBreaking.lean"
+      - "notes/UORC056_C_TRACK_LINEAGE_C43B.json"
+      - "notes/UORC056_C43_C43B_COMPOSED_AUTHORITY_2026_08_17.md"
+      - "scripts/check_uorc056_c43_composed_authority.py"
+      - "scripts/test_uorc056_c43_composed_authority.py"
+      - "repo/ARTIFACTS.yaml"
+      - ".github/workflows/uorc056-local-glv-gauge-breaking-c43.yml"
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compile and replay corrected local GLV C43B
+        run: |
+          python -m py_compile \
+            experiments/parity_lift_000/uorc056_local_glv_sector_factorization_c43b.py \
+            experiments/parity_lift_000/test_uorc056_local_glv_sector_factorization_c43b.py
+          PYTHONPATH=experiments/parity_lift_000 python \
+            experiments/parity_lift_000/uorc056_local_glv_sector_factorization_c43b.py \
+            --out /tmp/uorc056_local_glv_sector_factorization_c43b.json
+      - name: Test the emitted exact certificate
+        env:
+          UORC056_C43B_PAYLOAD: /tmp/uorc056_local_glv_sector_factorization_c43b.json
+        run: |
+          PYTHONPATH=experiments/parity_lift_000 python -m unittest -v \
+            experiments/parity_lift_000/test_uorc056_local_glv_sector_factorization_c43b.py
+      - name: Check machine-readable local GLV boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path("/tmp/uorc056_local_glv_sector_factorization_c43b.json").read_text()
+          )
+          assert data["profile_id"] == "UORC-056-LOCAL-GLV-SECTOR-FACTORIZATION-C43B"
+          assert data["aggregate"]["curves"] == 9
+          assert data["aggregate"]["carry_value_checks"] == 1923
+          assert data["aggregate"]["errors"] == 0
+          assert all(
+              all(curve["identities"].values()) for curve in data["curves"]
+          )
+          decision = data["decision"]
+          assert decision["exact_glv_carry_root_found"] is True
+          assert decision["exact_sector_root_found"] is True
+          assert decision["exact_oriented_root_reconstruction_found"] is True
+          assert decision["residual_klein_four_gauge_survives"] is True
+          assert decision["ordered_sector_transport_evaluator_found"] is False
+          assert decision["cheap_parity_decoder_found"] is False
+          assert decision["parity_oracle_found"] is False
+          assert decision["sub_sqrt_ecdlp_found"] is False
+          PY
+      - name: Check SHA-bound composed C43 authority
+        run: python scripts/check_uorc056_c43_composed_authority.py
+      - name: Test composed-frontier regressions
+        run: PYTHONPATH=scripts python -m unittest -v scripts/test_uorc056_c43_composed_authority.py
+      - name: Install Lean toolchain
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch Mathlib build cache
+        run: lake exe cache get
+      - name: Kernel-check local GLV algebra
+        run: lake env lean Ecdlp/Proved/Uorc056LocalGlvGaugeBreaking.lean
+      - uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-local-glv-sector-factorization-c43b
+          path: /tmp/uorc056_local_glv_sector_factorization_c43b.json

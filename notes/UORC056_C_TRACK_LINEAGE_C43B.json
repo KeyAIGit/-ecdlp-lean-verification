@@ -1,0 +1,246 @@
+{
+  "schema_version": "1.0",
+  "track": "UNIFORM-ORIENTED-ROOT-CIRCUIT-056 / C-track",
+  "package": "C43B",
+  "canonical_id": "UORC-056-LOCAL-GLV-SECTOR-FACTORIZATION-C43B",
+  "branch": "research/uorc056-local-glv-gauge-breaking-c43",
+  "parent_branch": "research/uorc056-oriented-transposed-resultant-c42",
+  "parent_package": "C42 oriented transposed resultant boundary",
+  "central_target": "ORDERED-SECTOR-TRANSPORT-C44: a public unsquared evaluator for J_G(x(Q))",
+  "result": "C43B realizes C42's planned local-GLV route and refines the sole surviving charged transport type from C43 into the exact ordered-sector object J_G. The authoritative frontier is a composed state inheriting both C43 and C43B; neither package supersedes the other.",
+  "successor": null,
+  "status": "composed_exact_boundary_ordered_sector_transport_open_no_parity_oracle",
+  "claim_boundary": "No C44 implementation is authorized by this record. No numerical evaluator for J_G(x(Q)), parity oracle, order-n advice table, root-enumeration shortcut, or sub-square-root ECDLP algorithm is claimed.",
+  "authority": {
+    "schema_version": "uorc056-composed-frontier-authority/v1",
+    "decision_rule": "Resolve the frontier only from typed roles and exact Git identities. Pull-request number, commit count, and timestamps are non-authorizing locators.",
+    "entities": [
+      {
+        "entity_id": "C42-ORIENTED-TRANSPOSED-RESULTANT",
+        "kind": "PACKAGE_HEAD",
+        "canonical_id": "UORC-056-ORIENTED-TRANSPOSED-RESULTANT-C42",
+        "branch": "research/uorc056-oriented-transposed-resultant-c42",
+        "commit_sha": "728d1a7a1c60463cc4546e2bb21fa3eaf3936d58",
+        "authority_status": "AUTHORITATIVE_PARENT",
+        "advisory_pr_number": 412
+      },
+      {
+        "entity_id": "C42-PLANNED-LOCAL-GLV-ROUTE",
+        "kind": "PLANNED_ROUTE",
+        "planned_id": "LOCAL-GLV-GAUGE-BREAKING-C43",
+        "declared_by": "C42-ORIENTED-TRANSPOSED-RESULTANT",
+        "authority_status": "REALIZED"
+      },
+      {
+        "entity_id": "C43-UNIVERSAL-COVER-FRAMEWORK",
+        "kind": "PACKAGE_HEAD",
+        "canonical_id": "UORC-056-UNIVERSAL-COVER-LANGUAGE-C43",
+        "branch": "research/uorc056-universal-cover-language-c43",
+        "commit_sha": "52015c53ce3770268437aac71ee74e0517719834",
+        "authority_status": "AUTHORITATIVE_INHERITED",
+        "frontier_carrier": false,
+        "advisory_pr_number": 418,
+        "claim_locators": [
+          "hypotheses/H1-UNIVERSAL-COVER-SECTION",
+          "hypotheses/H2-MU2-COHOMOLOGY-SPIN",
+          "hypotheses/H3-DOUBLING-SYMBOLIC-DYNAMICS",
+          "hypotheses/H4-P-ADIC-LOG-LIFT",
+          "hypotheses/H5-TROPICAL-SKELETON",
+          "hypotheses/H6-L-ADIC-TRACE-FUNCTION",
+          "hypotheses/H7-GAUGE-TYPED-OPEN-TRANSPORT",
+          "secp256k1_doubling_correction/ord_n(2)=(n-1)/64",
+          "secp256k1_doubling_correction/ord_p(2)=(p-1)/14",
+          "secp256k1_doubling_correction/pair_action_cycles=32"
+        ]
+      },
+      {
+        "entity_id": "C43B-LOCAL-GLV-SPECIALIZATION",
+        "kind": "PACKAGE_HEAD",
+        "canonical_id": "UORC-056-LOCAL-GLV-SECTOR-FACTORIZATION-C43B",
+        "branch": "research/uorc056-local-glv-gauge-breaking-c43",
+        "commit_sha": "acdc7c6ea5d76ac58afb1574d1efa9bbf60c050f",
+        "authority_status": "AUTHORITATIVE_INHERITED",
+        "frontier_carrier": true,
+        "advisory_pr_number": 419,
+        "claim_locators": [
+          "exact_algebra/kernel",
+          "exact_algebra/carry_root",
+          "exact_algebra/carry_square",
+          "exact_algebra/sector_root",
+          "exact_algebra/sector_square",
+          "exact_algebra/reconstruction",
+          "exact_algebra/parity",
+          "secp256k1_frontier/residual_gauge"
+        ]
+      },
+      {
+        "entity_id": "C43-C43B-COMPOSED-FRONTIER",
+        "kind": "COMPOSED_AUTHORITY_STATE",
+        "commit_sha": "1d436cba35b78526e800dae005aa2abce33a9994",
+        "authority_status": "AUTHORITATIVE_FRONTIER",
+        "member_entity_ids": [
+          "C43-UNIVERSAL-COVER-FRAMEWORK",
+          "C43B-LOCAL-GLV-SPECIALIZATION"
+        ],
+        "frontier_carrier_entity_id": "C43B-LOCAL-GLV-SPECIALIZATION",
+        "carrier_branch": "research/uorc056-local-glv-gauge-breaking-c43"
+      },
+      {
+        "entity_id": "C44-ORDERED-SECTOR-TRANSPORT-OPEN",
+        "kind": "OPEN_PROBLEM",
+        "planned_id": "ORDERED-SECTOR-TRANSPORT-C44",
+        "authority_status": "OPEN_NOT_AUTHORIZED",
+        "implementation_authorized": false,
+        "implementation_branch": null,
+        "implementation_commit_sha": null,
+        "target": "public unsquared evaluator for J_G(x(Q))",
+        "gates": [
+          "sensitive to the residual Klein-four sector gauge",
+          "generator-marked and ordered",
+          "does not enumerate the (n-1)/6 GLV quotient roots",
+          "does not hide an order-n table in advice or coefficients",
+          "exposes a circuit, recurrence, transfer law, or local functional equation whose total charged cost is explicit"
+        ]
+      },
+      {
+        "entity_id": "C43-PERIOD-LATTICE-NET-GAUGE-UNTRUSTED",
+        "kind": "EXCLUDED_BRANCH",
+        "branch": "research/uorc056-period-lattice-net-gauge-c43",
+        "commit_sha": "0122f7bbffb85f1240797626fedee7a7ee9c25e1",
+        "authority_status": "NON_AUTHORIZING_NO_PR_LINEAGE_OR_WORKFLOW"
+      }
+    ],
+    "relations": [
+      {
+        "relation": "DECLARED_PARENT",
+        "subject": "C43-UNIVERSAL-COVER-FRAMEWORK",
+        "object": "C42-ORIENTED-TRANSPOSED-RESULTANT"
+      },
+      {
+        "relation": "DECLARED_PARENT",
+        "subject": "C43B-LOCAL-GLV-SPECIALIZATION",
+        "object": "C42-ORIENTED-TRANSPOSED-RESULTANT"
+      },
+      {
+        "relation": "REALIZES",
+        "subject": "C43B-LOCAL-GLV-SPECIALIZATION",
+        "object": "C42-PLANNED-LOCAL-GLV-ROUTE"
+      },
+      {
+        "relation": "REFINES",
+        "subject": "C43B-LOCAL-GLV-SPECIALIZATION",
+        "object": "C43-UNIVERSAL-COVER-FRAMEWORK",
+        "scope": "hypotheses/H7-GAUGE-TYPED-OPEN-TRANSPORT"
+      },
+      {
+        "relation": "COMPOSES",
+        "subject": "C43-C43B-COMPOSED-FRONTIER",
+        "object": "C43-UNIVERSAL-COVER-FRAMEWORK"
+      },
+      {
+        "relation": "COMPOSES",
+        "subject": "C43-C43B-COMPOSED-FRONTIER",
+        "object": "C43B-LOCAL-GLV-SPECIALIZATION"
+      },
+      {
+        "relation": "FRONTIER_CARRIER",
+        "subject": "C43-C43B-COMPOSED-FRONTIER",
+        "object": "C43B-LOCAL-GLV-SPECIALIZATION"
+      },
+      {
+        "relation": "NEXT_OPEN_PROBLEM",
+        "subject": "C43-C43B-COMPOSED-FRONTIER",
+        "object": "C44-ORDERED-SECTOR-TRANSPORT-OPEN"
+      },
+      {
+        "relation": "EXCLUDES_FROM_AUTHORITY",
+        "subject": "C43-C43B-COMPOSED-FRONTIER",
+        "object": "C43-PERIOD-LATTICE-NET-GAUGE-UNTRUSTED"
+      }
+    ],
+    "git_composition": {
+      "merge_commit_sha": "1d436cba35b78526e800dae005aa2abce33a9994",
+      "ordered_parent_shas": [
+        "acdc7c6ea5d76ac58afb1574d1efa9bbf60c050f",
+        "52015c53ce3770268437aac71ee74e0517719834"
+      ],
+      "common_parent_sha": "728d1a7a1c60463cc4546e2bb21fa3eaf3936d58",
+      "integration_rule": "The repair must retain this merge commit. Squash or rebase integration is not authoritative."
+    },
+    "source_bindings": [
+      {
+        "entity_id": "C42-ORIENTED-TRANSPOSED-RESULTANT",
+        "commit_sha": "728d1a7a1c60463cc4546e2bb21fa3eaf3936d58",
+        "path": "experiments/parity_lift_000/uorc056_oriented_transposed_resultant_c42.py",
+        "blob_sha": "2a0b5ea76adb749e877c963dc2ac5ad1717b44f9"
+      },
+      {
+        "entity_id": "C42-ORIENTED-TRANSPOSED-RESULTANT",
+        "commit_sha": "728d1a7a1c60463cc4546e2bb21fa3eaf3936d58",
+        "path": "notes/UORC056_ORIENTED_TRANSPOSED_RESULTANT_C42.md",
+        "blob_sha": "3a9ac5dc1e2e86cb20835fb1e5de5828acb63872"
+      },
+      {
+        "entity_id": "C42-ORIENTED-TRANSPOSED-RESULTANT",
+        "commit_sha": "728d1a7a1c60463cc4546e2bb21fa3eaf3936d58",
+        "path": "notes/UORC056_ORIENTED_TRANSPOSED_RESULTANT_C42_CONTRACT.md",
+        "blob_sha": "4122ff6302aae227c360cc005b03ea5165b5cdeb"
+      },
+      {
+        "entity_id": "C43-UNIVERSAL-COVER-FRAMEWORK",
+        "commit_sha": "52015c53ce3770268437aac71ee74e0517719834",
+        "path": "experiments/parity_lift_000/uorc056_universal_cover_language_c43.py",
+        "blob_sha": "1d394d486b5d3cc343cb49a8e2cb2c436070232c"
+      },
+      {
+        "entity_id": "C43-UNIVERSAL-COVER-FRAMEWORK",
+        "commit_sha": "52015c53ce3770268437aac71ee74e0517719834",
+        "path": "experiments/parity_lift_000/test_uorc056_universal_cover_language_c43.py",
+        "blob_sha": "cd0de291b0ba8de71cdc93c26db6b03ef735615d"
+      },
+      {
+        "entity_id": "C43-UNIVERSAL-COVER-FRAMEWORK",
+        "commit_sha": "52015c53ce3770268437aac71ee74e0517719834",
+        "path": "notes/UORC056_UNIVERSAL_COVER_LANGUAGE_C43.md",
+        "blob_sha": "f5b3c3f43375c1d8622974f6018b3ab95ed2fb68"
+      },
+      {
+        "entity_id": "C43-UNIVERSAL-COVER-FRAMEWORK",
+        "commit_sha": "52015c53ce3770268437aac71ee74e0517719834",
+        "path": "notes/UORC056_UNIVERSAL_COVER_LANGUAGE_C43_CONTRACT.md",
+        "blob_sha": "327072e0cbb492d7d022a335347922fe0d3852a9"
+      },
+      {
+        "entity_id": "C43B-LOCAL-GLV-SPECIALIZATION",
+        "commit_sha": "acdc7c6ea5d76ac58afb1574d1efa9bbf60c050f",
+        "path": "experiments/parity_lift_000/uorc056_local_glv_sector_factorization_c43b.py",
+        "blob_sha": "e081f49e4ae5eb1473cbafe08c027bc1eb2f3724"
+      },
+      {
+        "entity_id": "C43B-LOCAL-GLV-SPECIALIZATION",
+        "commit_sha": "acdc7c6ea5d76ac58afb1574d1efa9bbf60c050f",
+        "path": "experiments/parity_lift_000/test_uorc056_local_glv_sector_factorization_c43b.py",
+        "blob_sha": "8dd29c00641b2180fd642fe3bf117adb2a733f5c"
+      },
+      {
+        "entity_id": "C43B-LOCAL-GLV-SPECIALIZATION",
+        "commit_sha": "acdc7c6ea5d76ac58afb1574d1efa9bbf60c050f",
+        "path": "Ecdlp/Proved/Uorc056LocalGlvGaugeBreaking.lean",
+        "blob_sha": "b75b35ffddbb5b161d81edeacd80078e67524696"
+      },
+      {
+        "entity_id": "C43B-LOCAL-GLV-SPECIALIZATION",
+        "commit_sha": "acdc7c6ea5d76ac58afb1574d1efa9bbf60c050f",
+        "path": "notes/UORC056_LOCAL_GLV_SECTOR_FACTORIZATION_C43B.md",
+        "blob_sha": "3db15ef106b40fb900c4ba66e1ffe5e2ea25f9fe"
+      }
+    ],
+    "integration_disposition": {
+      "package_entity_id": "C43-UNIVERSAL-COVER-FRAMEWORK",
+      "action": "CLOSE_PR_AFTER_COMPOSED_HEAD_IS_LIVE",
+      "status": "INTEGRATED_NOT_SUPERSEDED",
+      "precondition": "52015c53ce3770268437aac71ee74e0517719834 is an ancestor of the live research/uorc056-local-glv-gauge-breaking-c43 head",
+      "retain_branch_and_exact_provenance": true
+    }
+  }
+}
