@@ -252,6 +252,7 @@ classes:
       - repo/AUTOMATION_INVENTORY.json
       - repo/BRANCH_INVENTORY.json
       - repo/FINAL_REVIEW_PACKET.md
+      - notes/UORC056_C_TRACK_LINEAGE_C36.json
       - data/hyp_select_004_raw_100.tsv
       - models/hypothesis_ranker_v0/model.json
       - bundles/README.md
