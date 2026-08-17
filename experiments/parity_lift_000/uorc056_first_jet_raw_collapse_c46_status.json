@@ -1,0 +1,30 @@
+{
+  "profile_id": "UORC-056-FIRST-JET-RAW-COLLAPSE-C46",
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "jet_definition": "J_n(Q)=2*y(Q)*(d/dx psi_n)(Q)",
+  "generator_identity": "J_n(G)=-n*B",
+  "main_identity": "J_n(Q)=-n*Phi_raw(Q)^(-n^2)",
+  "aggregate": {
+    "toy_curves": 8,
+    "secp_fixed_instance": 1,
+    "sampled_scalars": 294,
+    "generator_jet_checks": 9,
+    "raw_collapse_checks": 294,
+    "composition_checks": 294,
+    "character_checks": 294,
+    "errors": 0
+  },
+  "decision": {
+    "geometric_first_jet_publicly_polylog_evaluable": true,
+    "geometric_first_jet_collapses_to_raw_state": true,
+    "geometric_first_jet_is_independent_open_section": false,
+    "p_adic_arithmetic_jet_closed_by_this_package": false,
+    "second_independent_open_section_found": false,
+    "public_ordered_sector_evaluator_found": false,
+    "parity_oracle_found": false,
+    "sub_sqrt_ecdlp_found": false
+  },
+  "successor": "GLV-RAW-TRIPLE-OR-INDEPENDENT-SECTION-C47",
+  "replay_digest": "9d925a9df71339f99f18a1b9547e4d0b429fe338c921ff5e99e05adcd59ee024",
+  "claim_boundary": "Closes the ordinary geometric first jet as an independent section; it does not close the p-adic arithmetic jet, higher jets, GLV triples, or unrestricted nonlinear circuits."
+}
