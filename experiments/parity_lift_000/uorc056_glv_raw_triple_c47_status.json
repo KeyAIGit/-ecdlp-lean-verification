@@ -1,0 +1,35 @@
+{
+  "aggregate": {
+    "errors": 0,
+    "first_rotation_checks": 294,
+    "fourier_checks": 882,
+    "point_action_checks": 588,
+    "product_checks": 294,
+    "ratio_checks": 588,
+    "sampled_scalars": 294,
+    "second_rotation_checks": 294,
+    "secp_fixed_instance": 1,
+    "toy_curves": 8
+  },
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "claim_boundary": "Closes the possibility that the GLV raw triple supplies three independent field coordinates; it does not close arbitrary nonlinear decoding of Phi_raw or non-Ward sections.",
+  "decision": {
+    "cheap_nonlinear_raw_state_decoder_found": false,
+    "glv_fourier_mixed_weight_decoder_found": false,
+    "glv_raw_triple_collapses_to_one_raw_state": true,
+    "glv_raw_triple_has_three_independent_coordinates": false,
+    "glv_raw_triple_publicly_polylog_evaluable": true,
+    "parity_oracle_found": false,
+    "public_ordered_sector_evaluator_found": false,
+    "second_independent_open_section_found": false,
+    "sub_sqrt_ecdlp_found": false
+  },
+  "main_identities": [
+    "Phi_raw(alpha Q)=beta*Phi_raw(Q)",
+    "Phi_raw(alpha^2 Q)=beta^2*Phi_raw(Q)",
+    "(Phi0,Phi1,Phi2)=Phi0*(1,beta,beta^2)"
+  ],
+  "profile_id": "UORC-056-GLV-RAW-TRIPLE-COLLAPSE-C47",
+  "replay_digest": "2dcd16d4ffd33f59cc644500964eb139f71fa3abf447e0a2d5c9c62abef3426f",
+  "successor": "NON-WARD-INDEPENDENT-SECTION-C48"
+}
