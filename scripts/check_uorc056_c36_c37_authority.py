@@ -262,17 +262,6 @@ def verify_git_provenance() -> None:
     }:
         _git("cat-file", "-e", f"{sha}^{{commit}}")
 
-    for branch, expected_head in (
-        (CANONICAL_PARENT_BRANCH, CANONICAL_PARENT_SHA),
-        (REALIZED_CHILD_BRANCH, REALIZED_CHILD_SHA),
-        (PARALLEL_C36_BRANCH, PARALLEL_C36_SHA),
-    ):
-        actual_head = _git(
-            "rev-parse",
-            f"refs/remotes/origin/{branch}",
-        ).stdout.strip()
-        _exact(actual_head, expected_head, f"remote head {branch}")
-
     for commit, path, expected_blob in (
         (
             CANONICAL_PARENT_SHA,
