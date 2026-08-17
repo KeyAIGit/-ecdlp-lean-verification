@@ -66,10 +66,11 @@ theorem fullFieldCollapse
     (hcoefficient : coefficient = (c ^ exponent)⁻¹)
     (hchannel : channel = coefficient ^ q * (w ^ exponent)⁻¹) :
     channel = (raw ^ exponent)⁻¹ := by
+  have hpowers : (c ^ exponent) ^ q = (c ^ q) ^ exponent := by
+    rw [← pow_mul, ← pow_mul, Nat.mul_comm exponent q]
   rw [hchannel, hcoefficient, hraw]
-  simp only [mul_pow, inv_pow, pow_mul, mul_inv_rev]
-  rw [Nat.mul_comm exponent q]
-  ac_rfl
+  simp only [mul_pow, inv_pow, mul_inv_rev]
+  rw [hpowers]
 
 
 def secpP : Nat :=
