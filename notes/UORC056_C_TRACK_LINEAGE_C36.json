@@ -10,7 +10,97 @@
   "closed_class": "Regularized same-subgroup n-Miller translation quotients, constant products, shift ratios, Frobenius norms and norm-one extraction.",
   "main_identity": "f_(n,P)(S+Q)/f_(n,P)(S)=h_(P,Q)(S)^n for P,Q in one cyclic n-subgroup.",
   "twist_collapse": "The unique n-th root of the trace-zero norm-one quotient is a Mobius function of x(Q-P/2).",
-  "successor": "MIXED-INDEX-ELLIPTIC-NET-OR-RESULTANT-C37",
+  "successor": "research/uorc056-half-index-miller-c37",
+  "planned_successor": "MIXED-INDEX-ELLIPTIC-NET-OR-RESULTANT-C37",
+  "authority": {
+    "schema_version": "uorc056-lineage-authority/v1",
+    "decision": "The half-index Miller C37 package realizes the mixed-index C37 successor planned by the canonical regularized-anchor C36 package.",
+    "entities": {
+      "canonical_parent": {
+        "kind": "scientific_package",
+        "package": "C36",
+        "canonical_id": "REGULARIZED-ANCHOR-MILLER-TRANSLATION-084",
+        "branch": "research/uorc056-regularized-anchor-miller-c36",
+        "pr": 407,
+        "scientific_head_sha": "330ea2f084441c0375b2a6c675112b2b2e23bd88",
+        "source_path": "notes/UORC056_C_TRACK_LINEAGE_C36.json",
+        "source_blob_sha": "8d86765d4abd3842dceb71a781d7934032b37e7d"
+      },
+      "planned_successor": {
+        "kind": "planned_identifier",
+        "planned_id": "MIXED-INDEX-ELLIPTIC-NET-OR-RESULTANT-C37",
+        "declared_by": "canonical_parent"
+      },
+      "realized_child": {
+        "kind": "scientific_package",
+        "package": "C37",
+        "canonical_id": "HALF-INDEX-MILLER-QUADRATIC-BRANCH-085",
+        "branch": "research/uorc056-half-index-miller-c37",
+        "pr": 408,
+        "scientific_head_sha": "0b36801d1d413ec595fad87509e85c0368a9ead7",
+        "parent_branch": "research/uorc056-regularized-anchor-miller-c36",
+        "parent_scientific_head_sha": "330ea2f084441c0375b2a6c675112b2b2e23bd88",
+        "source_path": "notes/UORC056_C_TRACK_LINEAGE_C37.json",
+        "source_blob_sha": "df8514d695f703bc5f2acb9bb2b0119f001a4de2"
+      },
+      "parallel_c36": {
+        "kind": "parallel_scientific_package",
+        "package": "C36",
+        "canonical_id": "MULTI-ARGUMENT-MILLER-DECODER-084",
+        "branch": "research/uorc056-multi-argument-miller-decoder-c36",
+        "pr": 406,
+        "scientific_head_sha": "7fc757fa31740e40ec68f8d27b572765fc244a39",
+        "source_path": "archive/untrusted_intake/parity_lift_000/UORC056_C_TRACK_LINEAGE_C36.json",
+        "source_blob_sha": "7291998b654cb37b4bf5812babba343b519757cf",
+        "authorizing": false
+      }
+    },
+    "relations": [
+      {
+        "type": "REALIZES",
+        "source": "realized_child",
+        "target": "planned_successor"
+      },
+      {
+        "type": "SUCCESSOR",
+        "source": "canonical_parent",
+        "target": "realized_child"
+      },
+      {
+        "type": "PARENT",
+        "source": "realized_child",
+        "target": "canonical_parent"
+      },
+      {
+        "type": "PARALLEL",
+        "source": "parallel_c36",
+        "target": "canonical_parent"
+      }
+    ],
+    "supersession_relations": [],
+    "git_provenance": {
+      "audited_at": "2026-08-17",
+      "canonical_parent_pr_base": {
+        "branch": "research/uorc056-anchor-mixed-miller-c35",
+        "observed_head_sha": "7c64cf1acda8569945e7f5298b557571f3585a3a",
+        "merge_base_sha": "a19e137f5a0a06c4a00506141ccb89be053ab8bc",
+        "observed_head_is_ancestor": false
+      },
+      "parallel_c36_pr_base": {
+        "branch": "research/uorc056-anchor-mixed-miller-c35",
+        "observed_head_sha": "7c64cf1acda8569945e7f5298b557571f3585a3a",
+        "merge_base_sha": "7c64cf1acda8569945e7f5298b557571f3585a3a",
+        "observed_head_is_ancestor": true
+      },
+      "realized_child_pr_base": {
+        "branch": "research/uorc056-regularized-anchor-miller-c36",
+        "observed_head_sha": "330ea2f084441c0375b2a6c675112b2b2e23bd88",
+        "merge_base_sha": "330ea2f084441c0375b2a6c675112b2b2e23bd88",
+        "observed_head_is_ancestor": true
+      },
+      "parallel_c36_is_ancestor_of_realized_child": false
+    }
+  },
   "status": "scoped_negative_no_parity_evaluator",
   "claim_boundary": "No unrestricted circuit lower bound, parity oracle, sub-root evaluator, or sub-square-root ECDLP algorithm is claimed."
 }

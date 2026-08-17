@@ -101,3 +101,17 @@ The next mathematical question is no longer whether a high-degree short circuit 
 3. GLV covariance of the full Miller state under `Q -> alpha Q`;
 4. whether the sequence `F_n([k]G)` satisfies a short public recurrence whose branch is exactly parity;
 5. decoder complexity lower bounds if all low-degree relations fail.
+
+## 8. Authority clarification (2026-08-17)
+
+The successor proposal in section 7 is retained as historical planning text.
+The implemented child is C37 package
+`HALF-INDEX-MILLER-QUADRATIC-BRANCH-085`, PR #408, branch
+`research/uorc056-half-index-miller-c37`, at scientific head
+`0b36801d1d413ec595fad87509e85c0368a9ead7`.
+
+The canonical C36 lineage record now types that package as the realization of
+the later planned identifier `MIXED-INDEX-ELLIPTIC-NET-OR-RESULTANT-C37` and
+uses the exact C37 branch as its machine successor. The complete SHA-bound
+authority decision and bounded compatibility audit are recorded in
+`notes/UORC056_C36_C37_AUTHORITY_REPAIR_2026_08_17.md`.
