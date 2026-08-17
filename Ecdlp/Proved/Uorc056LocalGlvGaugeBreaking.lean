@@ -61,11 +61,11 @@ theorem productOnlyCannotDecodeFirst
     (hminus : d 1 = -1) :
     False := by
   have h : (1 : K) = -1 := hplus.symm.trans hminus
+  have hsub : (1 : K) - (-1) = 0 := sub_eq_zero.mpr h
   have hz : (2 : K) = 0 := by
     calc
-      (2 : K) = 1 + 1 := by ring
-      _ = -1 + 1 := by rw [h]
-      _ = 0 := by ring
+      (2 : K) = 1 - (-1) := by ring
+      _ = 0 := hsub
   exact htwo hz
 
 /-- Cyclic-invariant data cannot decode the ordered first component on all sign
@@ -83,11 +83,11 @@ theorem cyclicInvariantCannotDecodeFirst
       (1 : K) = d 1 (-1) (-1) := hfirstA.symm
       _ = d (-1) (-1) 1 := hcyclic
       _ = -1 := hfirstB
+  have hsub : (1 : K) - (-1) = 0 := sub_eq_zero.mpr h
   have hz : (2 : K) = 0 := by
     calc
-      (2 : K) = 1 + 1 := by ring
-      _ = -1 + 1 := by rw [h]
-      _ = 0 := by ring
+      (2 : K) = 1 - (-1) := by ring
+      _ = 0 := hsub
   exact htwo hz
 
 /-- Cross-multiplied carry-sector reconstruction of the oriented root. -/
