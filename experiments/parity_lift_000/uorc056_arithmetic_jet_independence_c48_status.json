@@ -1,0 +1,46 @@
+{
+  "aggregate": {
+    "affine_character_candidates": 819,
+    "affine_character_exact_carry_decoders": 118,
+    "curves": 8,
+    "dense_ratio_interpolants": 8,
+    "errors": 0,
+    "full_degree_ratio_interpolants": 8,
+    "public_jet_checks": 10086,
+    "quotient_roots": 1681,
+    "scalar_rows": 10086,
+    "torsion_digit_relation_checks": 10086,
+    "transferable_affine_character_decoders": 0
+  },
+  "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+  "claim_boundary": [
+    "Exact finite replay on eight public toy curves.",
+    "The full-degree interpolation result is finite representation evidence, not a circuit lower bound.",
+    "No secp256k1 unknown target is used.",
+    "Higher p-adic jets, theta functions, elliptic units, and unrestricted nonlinear circuits remain open."
+  ],
+  "decision": {
+    "arithmetic_jet_adds_nonconstant_quotient_state": true,
+    "arithmetic_jet_publicly_polylog_evaluable": true,
+    "binary_character_pair_decodes_parity": false,
+    "parity_oracle_found": false,
+    "public_ordered_sector_evaluator_found": false,
+    "ratio_directly_equals_ordered_sector": false,
+    "ratio_is_compact_high_degree_low_size_state": true,
+    "ratio_nonconstant_on_all_toys": true,
+    "sub_sqrt_ecdlp_found": false,
+    "tiny_curve_affine_character_fits_exist": true,
+    "transferable_affine_character_carry_decoder_found": false
+  },
+  "digest": "b9f29527e91c50473f9c68d5f453b7c84d243ea93ba5dcc46536c34bcfd2fabe",
+  "digit_relation": "x(Q)*u_x(Q)=-2*y(Q)*n^(-1)*epsilon_n(Q)",
+  "jet_definition": "epsilon_n(Q)=first p-adic failure of [n] applied to a public section, equivalently recovered from the canonical torsion-lift x digit",
+  "main_normal_form": "R_arith(-Q)=R_arith(Q), R_arith(alpha Q)=R_arith(Q), hence R_arith is a public function of T=x(Q)^3 on the marked subgroup",
+  "new_compact_state": "R_arith(Q)=epsilon_n(Q)/Phi_raw(Q)",
+  "profile_id": "UORC-056-ARITHMETIC-JET-INDEPENDENCE-C48",
+  "successor": {
+    "id": "ARITHMETIC-JET-NONLINEAR-DECODER-C49",
+    "reject": "lookup tables, dense interpolation coefficients, or claims that degree alone implies circuit size",
+    "target": "use the compact high-degree state R_arith(T), together with Phi_raw or the arithmetic jet, in a charged nonlinear decoder for the GLV carry or ordered sector"
+  }
+}
