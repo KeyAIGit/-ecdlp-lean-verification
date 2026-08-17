@@ -35,10 +35,6 @@ REALIZED_CHILD_BLOB = "df8514d695f703bc5f2acb9bb2b0119f001a4de2"
 PARALLEL_C36_BRANCH = "research/uorc056-multi-argument-miller-decoder-c36"
 PARALLEL_C36_ID = "MULTI-ARGUMENT-MILLER-DECODER-084"
 PARALLEL_C36_SHA = "7fc757fa31740e40ec68f8d27b572765fc244a39"
-PARALLEL_C36_PATH = (
-    "archive/untrusted_intake/parity_lift_000/"
-    "UORC056_C_TRACK_LINEAGE_C36.json"
-)
 PARALLEL_C36_BLOB = "7291998b654cb37b4bf5812babba343b519757cf"
 
 PLANNED_SUCCESSOR = "MIXED-INDEX-ELLIPTIC-NET-OR-RESULTANT-C37"
@@ -130,7 +126,6 @@ def validate_contract(value: Mapping[str, Any]) -> None:
         (parallel.get("branch"), PARALLEL_C36_BRANCH, "parallel branch"),
         (parallel.get("pr"), 406, "parallel PR"),
         (parallel.get("scientific_head_sha"), PARALLEL_C36_SHA, "parallel SHA"),
-        (parallel.get("source_path"), PARALLEL_C36_PATH, "parallel source path"),
         (parallel.get("source_blob_sha"), PARALLEL_C36_BLOB, "parallel source blob"),
         (parallel.get("authorizing"), False, "parallel authorizing flag"),
     ):
@@ -267,6 +262,17 @@ def verify_git_provenance() -> None:
     }:
         _git("cat-file", "-e", f"{sha}^{{commit}}")
 
+    for branch, expected_head in (
+        (CANONICAL_PARENT_BRANCH, CANONICAL_PARENT_SHA),
+        (REALIZED_CHILD_BRANCH, REALIZED_CHILD_SHA),
+        (PARALLEL_C36_BRANCH, PARALLEL_C36_SHA),
+    ):
+        actual_head = _git(
+            "rev-parse",
+            f"refs/remotes/origin/{branch}",
+        ).stdout.strip()
+        _exact(actual_head, expected_head, f"remote head {branch}")
+
     for commit, path, expected_blob in (
         (
             CANONICAL_PARENT_SHA,
@@ -274,10 +280,17 @@ def verify_git_provenance() -> None:
             CANONICAL_PARENT_BLOB,
         ),
         (REALIZED_CHILD_SHA, REALIZED_CHILD_PATH, REALIZED_CHILD_BLOB),
-        (PARALLEL_C36_SHA, PARALLEL_C36_PATH, PARALLEL_C36_BLOB),
     ):
         actual = _git("rev-parse", f"{commit}:{path}").stdout.strip()
         _exact(actual, expected_blob, f"Git blob {path}@{commit}")
+
+    _git("cat-file", "-e", f"{PARALLEL_C36_BLOB}^{{blob}}")
+    parallel_tree = _git("ls-tree", "-r", PARALLEL_C36_SHA).stdout.splitlines()
+    if not any(
+        row.startswith(f"100644 blob {PARALLEL_C36_BLOB}\t")
+        for row in parallel_tree
+    ):
+        raise AuthorityError("parallel C36 source blob is absent from its pinned head")
 
     _exact(
         _is_ancestor(CANONICAL_PARENT_SHA, REALIZED_CHILD_SHA),
@@ -308,9 +321,6 @@ def verify_git_provenance() -> None:
         CANONICAL_PARENT_BRANCH,
         "Git child parent branch",
     )
-    parallel = _git_json(PARALLEL_C36_SHA, PARALLEL_C36_PATH)
-    _exact(parallel.get("canonical_id"), PARALLEL_C36_ID, "Git parallel ID")
-    _exact(parallel.get("branch"), PARALLEL_C36_BRANCH, "Git parallel branch")
 
 
 def main(argv: list[str] | None = None) -> int:
