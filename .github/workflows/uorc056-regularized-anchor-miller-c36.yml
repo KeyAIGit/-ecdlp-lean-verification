@@ -1,0 +1,44 @@
+name: UORC056 regularized anchor Miller C36
+
+on:
+  push:
+    branches: [research/uorc056-regularized-anchor-miller-c36]
+  pull_request:
+    branches:
+      - research/uorc056-anchor-mixed-miller-c35
+      - research/uorc056-regularized-anchor-miller-c36
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify authoritative C36 to C37 lineage
+        run: |
+          git fetch --no-tags origin \
+            +refs/heads/research/uorc056-anchor-mixed-miller-c35:refs/remotes/origin/research/uorc056-anchor-mixed-miller-c35 \
+            +refs/heads/research/uorc056-multi-argument-miller-decoder-c36:refs/remotes/origin/research/uorc056-multi-argument-miller-decoder-c36 \
+            +refs/heads/research/uorc056-regularized-anchor-miller-c36:refs/remotes/origin/research/uorc056-regularized-anchor-miller-c36 \
+            +refs/heads/research/uorc056-half-index-miller-c37:refs/remotes/origin/research/uorc056-half-index-miller-c37
+          python -m py_compile \
+            scripts/check_uorc056_c36_c37_authority.py \
+            scripts/test_uorc056_c36_c37_authority.py
+          python scripts/test_uorc056_c36_c37_authority.py
+          python scripts/check_uorc056_c36_c37_authority.py --verify-git
+      - name: Compile and replay C36
+        run: |
+          python -m py_compile experiments/parity_lift_000/uorc056_regularized_anchor_miller_c36.py
+          python experiments/parity_lift_000/uorc056_regularized_anchor_miller_c36.py | tee /tmp/c36.txt
+          grep -q UORC056_REGULARIZED_ANCHOR_MILLER_C36_OK /tmp/c36.txt
+          grep -q 'Fn_F3_pair_separates_curves= 5' /tmp/c36.txt
+          grep -q 'affine_character_decoder_failures= 5' /tmp/c36.txt
