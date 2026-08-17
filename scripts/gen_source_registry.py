@@ -36,7 +36,7 @@ OUT = ROOT / "data" / "source_registry.json"
 # provenance map is computed only from hand-authored source-of-truth prose. (data/ holds generated
 # views like knowledge_graph.md; platform/ is the Node app; node_modules/.lake are deps/build.)
 EXCLUDE_DIR_PARTS = {".git", ".lake", "node_modules", "data", "platform", "archive"}
-EXCLUDE_FILES = {"repo/ECDLP_DECISION_SUBSTRATE.md"}
+EXCLUDE_FILES = {"repo/ECDLP_DECISION_SUBSTRATE.md", "VERIFIED_INDEX.md"}
 
 # The canonical bibliography. `aliases` are the surname/acronym tokens the works are cited by in the
 # prose; the scan matches them on word boundaries to compute `where_used`. Keep aliases specific

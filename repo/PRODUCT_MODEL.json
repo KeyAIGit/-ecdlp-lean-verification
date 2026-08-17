@@ -93,7 +93,8 @@
     "frontier_source": "data/frontier_map.json",
     "result_source": "data/result_registry.json",
     "task_source": "tasks/ECDLP_RESEARCH.md",
-    "boundary": "The environment maps and verifies the research boundary. It does not solve the plain secp256k1 discrete logarithm problem."
+    "boundary": "The environment maps and verifies the research boundary. It does not solve the plain secp256k1 discrete logarithm problem.",
+    "verified_index_source": "data/verified_index.json"
   },
   "current_stage": {
     "id": "reference-deployment",
@@ -106,7 +107,9 @@
         "evidence": [
           "VERIFIED.md",
           "data/result_registry.json",
-          "Ecdlp/LedgerAxiomAudit.lean"
+          "Ecdlp/LedgerAxiomAudit.lean",
+          "VERIFIED_INDEX.md",
+          "data/verified_index.json"
         ]
       },
       {
@@ -222,6 +225,10 @@
     {
       "path": "index.html",
       "role": "Product thesis, current stage, reference evidence, and MVP boundary"
+    },
+    {
+      "path": "results.html",
+      "role": "Cross-lane verified-result browser with source anchors, proof methods, trust labels, and explicit ledger isolation"
     },
     {
       "path": "dashboard.html",

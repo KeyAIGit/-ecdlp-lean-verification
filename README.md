@@ -24,8 +24,9 @@ MVP evidence gate live in `repo/PRODUCT_MODEL.json`; agents start at `AGENTS.md`
 
 ## The one invariant (never violate)
 
-**A green build means every built theorem is fully proved.** The Lean kernel is the only
-judge of correctness. Never `sorry`/`admit`, weaken/delete a proof to pass CI, or add an
+**A green build means every built theorem is fully proved.** The Lean kernel is the primary
+proof authority. Rows using `native_decide` additionally trust the Lean compiler and are
+disclosed separately. Never `sorry`/`admit`, weaken/delete a proof to pass CI, or add an
 axiom. Open conjecture stems live in `Ecdlp/Targets/` (one `sorry` each) and are
 intentionally never built or imported, so the invariant holds.
 
@@ -41,6 +42,11 @@ Engine generation, gate, and outcome counts come from
 Do not quote a count from any
 other doc — prose may be stale; if in doubt, cite STATUS.md. Machine-readable:
 `data/stats.json` · badge endpoint `badges/theorems.json`.
+
+For cross-lane discovery, use generated **`VERIFIED_INDEX.md`** or
+`data/verified_index.json`. They index both canonical ledgers without merging their
+accounting: `VERIFIED.md` remains ECDLP-only and `VERIFIED_RESEARCHOS.md` remains
+ResearchOS-only. The aggregate row total is navigation, not a security metric.
 
 **Current research decision.** `RS-2026-07-24-001` is current and supersedes
 `RS-2026-07-22-001`, while explicitly carrying forward its zero-promotion
@@ -136,7 +142,7 @@ concrete 256-bit facts) **additionally trust the Lean compiler** via `Lean.ofRed
 | `Ecdlp/Proved/*.lean`, `Ecdlp/Secp256k1Verified.lean`, … | the built, gated proof base (see `VERIFIED.md` for the row-per-theorem ledger) |
 | `Ecdlp/Targets/` + `targets/*.json` | open conjecture stems + the prover-loop registry (never imported/built) |
 | `ResearchOS/` | second lake target: the non-ECC portability instance (elementary number theory) |
-| `STATUS.md` · `data/` | generated truth layer: stats, frontier map, knowledge graph, registries |
+| `STATUS.md` · `VERIFIED_INDEX.md` · `data/` | canonical live snapshot plus generated cross-lane result navigation, frontier map, graph, and registries |
 | `BARRIERS.md` · `TRUST_REPORT.md` · `ABSTRACT_SCOPE.md` | the no-go map and the exact trust/scope boundaries |
 | `ROADMAP.md` | the one strategy document (position, north star, program) |
 | `AGENTS.md` · `CLAUDE.md` · `tasks/` | agent orientation, conventions, queue router, separate research/product queues |
@@ -148,7 +154,7 @@ concrete 256-bit facts) **additionally trust the Lean compiler** via `Lean.ofRed
 | `repo/HYPOTHESIS_SPACE_V2.json` · `data/hypothesis_space_map.json` | million-cell typed screening policy and aggregate evidence-bounded hot/warm/cold map; cells are questions, not independent hypotheses |
 | `repo/HYPOTHESIS_SPACE_CAMPAIGN_V1.json` / `data/hypothesis_space_campaign_state.json` | resumable unique-coverage protocol and immutable exhaustion memory; repeated roots are operational replay, not new research coverage |
 | `repo/PRODUCT_MODEL.json` | product category, current stage, public claim boundary, and MVP evidence gate |
-| `scripts/site_generator.py` | generates the product site, operator workspace, and canonical route explorer |
+| `scripts/site_generator.py` | generates the homepage, verified-result browser, operator workspace, route explorer, and pilot surface |
 | `experiments/framework/` · `experiments/engine/` | candidate-neutral validation, generated-proposal intake, adversarial reviews, and append-only outcomes |
 | `experiments/` · `domains/` · `notes/` (`notes/INDEX.md`) | validated experiments, domain registry, curated research memory |
 | `archive/` | frozen history: superseded docs, raw traces, the undeployed platform scaffold |
@@ -186,7 +192,7 @@ not authorship. License and the final author list are set by the maintainer.
 `repo/RESEARCH_ENGINE_V0.json` (bounded exploration policy) ·
 `data/research_engine_state.json` (generated engine state) ·
 `data/hypothesis_space_map.json` (aggregate million-cell screening map) ·
-`ROADMAP.md` (strategy & program) · `VERIFIED.md`
-(the ledger) · `BARRIERS.md` (the no-go map) · `TRUST_REPORT.md` (what "verified" rests
+`ROADMAP.md` (strategy & program) · `VERIFIED_INDEX.md` (cross-lane navigation) · `VERIFIED.md`
+(the ECDLP ledger) · `BARRIERS.md` (the no-go map) · `TRUST_REPORT.md` (what "verified" rests
 on) · `PUBLISHABLE_UNITS.md` (the 3 standalone results) · `notes/INDEX.md` (research
 memory) · `SETUP.md` (build + CI + regen) · `tasks/NEXT.md` (queue router).

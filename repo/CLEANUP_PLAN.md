@@ -100,7 +100,7 @@ Before movement:
 
 ## Phase 4: Consolidate Orientation Docs
 
-Proposed follow-up PR.
+Status: implemented through link-and-slim navigation; no bulk source movement.
 
 Actions:
 
@@ -110,7 +110,7 @@ Actions:
 3. Keep `STATUS.md` as the live snapshot and `REPOSITORY_ARCHITECTURE.md` as
    the repository map.
 4. Add "where to start" routes for three audiences: proof reviewer, public
-   reader, and agent.
+   reader, and agent. Done through `VERIFIED_INDEX.md`, `results.html`, and `llms.txt`.
 
 Risks:
 

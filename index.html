@@ -12,7 +12,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="assets/site.css?v=20260725-1">
+  <link rel="stylesheet" href="assets/site.css?v=20260816-1">
 </head>
 <body data-page="product">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -22,11 +22,10 @@
       <img src="assets/logo-wordmark.png" alt="KeyAI" width="116" height="44">
     </a>
     <nav class="primary-nav" aria-label="Primary navigation">
-      <a data-nav-page="product" href="index.html">Product</a>
-      <a data-nav-page="workspace" href="dashboard.html">Workspace</a>
+      <a data-nav-page="results" href="results.html">Verified results</a>
       <a data-nav-page="routes" href="explore.html">Route map</a>
+      <a data-nav-page="workspace" href="dashboard.html">Workspace</a>
       <a href="https://github.com/KeyAIGit/-ecdlp-lean-verification">GitHub</a>
-      <a class="nav-cta" data-nav-page="pilot" href="pilot.html">Join pilot</a>
     </nav>
   </div>
 </header>
@@ -36,22 +35,31 @@
     <div class="shell hero__inner">
       <div class="hero__copy">
         <p class="eyebrow">verification workspace for AI research</p>
-        <h1 id="hero-title">Turn AI research into verifier-scoped, reusable state.</h1>
-        <p class="hero__lede">KeyAI turns model-generated research into evidence-linked, verifier-scoped assets.
-          It keeps claims, evidence, decisions, verifier outcomes, and provenance in one inspectable state.</p>
+        <h1 id="hero-title">A public map of what is proved, blocked, and still open.</h1>
+        <p class="hero__lede">KeyAI keeps formal claims, evidence, decisions, negative results,
+          verifier outcomes, and provenance in one inspectable state. The current reference deployment
+          is ECDLP and curve research, not an ECDLP solution.</p>
+        <div class="hero-boundary" role="note" aria-label="Public claim boundary">
+          <strong>Claim boundary</strong>
+          <span>No secp256k1 shortcut is claimed. The two verified ledgers remain isolated,
+            and compiler-trusted results are labeled separately.</span>
+        </div>
         <div class="actions">
-          <a class="button button--primary" href="pilot.html">Bring a research workflow</a>
-          <a class="button button--on-dark" href="dashboard.html">Open the reference workspace</a>
+          <a class="button button--primary" href="results.html">Browse verified results</a>
+          <a class="button button--on-dark" href="dashboard.html">Open current research state</a>
         </div>
         <p class="stage-note"><span class="status status--blue">Reference deployment</span>
           <span>The repository demonstrates the full research-state loop on one difficult domain, but it is not yet a self-serve hosted product.</span></p>
       </div>
-      <div class="hero__signal" aria-label="Current reference decision">
-        <span>Live decision graph</span>
-        <strong>17 evaluated / 1 structural completed / 0 promoted</strong>
-        <span>0 native experiments selected /
-          1 exact synthetic-toy run completed</span>
-        <code>RS-2026-07-24-001</code>
+      <div class="hero__signal" aria-label="Verified research index">
+        <span>Verified research index</span>
+        <strong>479 rows across 2 isolated ledgers</strong>
+        <span>307 ECDLP / 172 ResearchOS /
+          aggregate total is navigation only</span>
+        <code>0 sorry · 0 custom axioms</code>
+        <code>104 rows disclose compiler trust in ledger metadata</code>
+        <code>0 native experiments selected</code>
+        <code>1 exact synthetic-toy run completed</code>
         <code>AUTH-HYP-M16-FIXED-TARGET-YIELD-001-20260730-01</code>
       </div>
     </div>
@@ -61,21 +69,53 @@
   <section class="live-band" aria-label="Live reference environment">
     <div class="shell live-band__inner">
       <div class="live-band__context">
-        <strong>Live reference: secp256k1 ECDLP</strong>
-        <span>The environment maps and verifies the research boundary. It does not solve the plain secp256k1 discrete logarithm problem.</span>
+        <strong>Verified results, separated by trust lane</strong>
+        <span>Browse theorem names, source files, proof methods, trust labels, and exact source anchors.</span>
       </div>
       <div class="live-metric"><div class="live-metric__value" data-metric="ledger-rows">307</div>
-        <div class="live-metric__label">verified ledger rows</div></div>
+        <div class="live-metric__label">ECDLP ledger rows</div></div>
       <div class="live-metric"><div class="live-metric__value" data-metric="distinct-results">~268</div>
-        <div class="live-metric__label">distinct results</div></div>
-      <div class="live-metric"><div class="live-metric__value">17</div>
-        <div class="live-metric__label">routes evaluated</div></div>
-      <div class="live-metric"><div class="live-metric__value">1</div>
-        <div class="live-metric__label">completed exact toy run</div></div>
+        <div class="live-metric__label">ECDLP distinct results</div></div>
+      <div class="live-metric"><div class="live-metric__value">172</div>
+        <div class="live-metric__label">ResearchOS ledger rows</div></div>
+      <div class="live-metric"><div class="live-metric__value">0 / 0</div>
+        <div class="live-metric__label">sorry / custom axioms</div></div>
     </div>
   </section>
 
-  <section class="band band--white" id="product">
+  <section class="band band--white verified-entry" aria-labelledby="verified-entry-title">
+    <div class="shell">
+      <div class="section-heading">
+        <p class="eyebrow">Evidence first</p>
+        <h2 id="verified-entry-title">Start with the results, their limits, and the open frontier.</h2>
+        <p>The public interface now exposes theorem names and exact source anchors before asking
+          visitors to interpret the product thesis or the research workflow.</p>
+      </div>
+      <div class="evidence-grid">
+        <article class="evidence-card">
+          <h3>Verified result browser</h3>
+          <p>479 navigation rows across two isolated ledgers,
+            with method and trust metadata.</p>
+          <a class="source-link" href="results.html">Browse verified results</a>
+        </article>
+        <article class="evidence-card">
+          <h3>Decision frontier</h3>
+          <p>17 canonical ECDLP routes with explicit dispositions, evidence, blockers,
+            and reconsideration triggers.</p>
+          <a class="source-link" href="explore.html">Inspect the route map</a>
+        </article>
+        <article class="evidence-card">
+          <h3>Canonical repository state</h3>
+          <p>Counts, architecture, and machine-readable provenance remain generated from repository
+            sources rather than copied into marketing prose.</p>
+          <a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/STATUS.md">Open STATUS.md</a>
+          <a class="source-link" href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/REPOSITORY_ARCHITECTURE.md">Read the architecture map</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="product">
     <div class="shell split">
       <div class="split__lead">
         <p class="eyebrow">The missing layer</p>
@@ -263,14 +303,15 @@
       The Lean kernel checks declared statements and proof terms; semantic, empirical,
       security, and product claims remain separately evidence-gated.</p>
     <nav class="footer-links" aria-label="Footer navigation">
-      <a href="dashboard.html">Reference workspace</a>
+      <a href="results.html">Verified results</a>
       <a href="explore.html">Decision routes</a>
+      <a href="dashboard.html">Reference workspace</a>
       <a href="pilot.html">External pilot</a>
       <a href="https://github.com/KeyAIGit/-ecdlp-lean-verification/blob/main/repo/PRODUCT_MODEL.json">Product model</a>
       <a href="https://github.com/KeyAIGit/-ecdlp-lean-verification">Repository</a>
     </nav>
   </div>
 </footer>
-<script src="assets/site.js?v=20260725-1"></script>
+<script src="assets/site.js?v=20260816-1"></script>
 </body>
 </html>

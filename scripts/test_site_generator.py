@@ -113,6 +113,7 @@ Inputs:
         formal = site_generator.load_json(site_generator.FORMAL_PATH)
         graph = site_generator.load_json(site_generator.GRAPH_PATH)
         engine = site_generator.load_json(site_generator.ENGINE_PATH)
+        verified_index = site_generator.load_json(site_generator.VERIFIED_INDEX_PATH)
         authorization_id = decisions[
             "bounded_experiment_authorization"
         ]["authorization_id"]
@@ -125,7 +126,9 @@ Inputs:
             decisions,
             formal,
             engine,
+            verified_index,
         )
+        results_page = site_generator.build_results(product, verified_index)
         dashboard = site_generator.build_dashboard(
             product,
             stats,
@@ -140,7 +143,10 @@ Inputs:
             product, stats, decisions, engine
         )
 
-        self.assertIn(authorization_id, index)
+        self.assertIn("Browse verified results", index)
+        self.assertIn("One browser, two isolated ledgers", results_page)
+        self.assertIn(str(verified_index["counts"]["navigation_rows_total"]), results_page)
+        self.assertIn("data-result-list", results_page)
         self.assertIn(authorization_id, dashboard)
         self.assertIn(authorization_id, explore)
         self.assertIn("1 exact synthetic-toy run completed", index)

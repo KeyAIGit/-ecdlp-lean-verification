@@ -108,6 +108,7 @@ classes:
       - COVERAGE.md
       - index.html
       - dashboard.html
+      - results.html
       - explore.html
       - pilot.html
       - bundles/MANIFEST.json
@@ -128,6 +129,10 @@ classes:
       - repo/ECDLP_DECISION_SUBSTRATE.md
       - Ecdlp/LedgerAxiomAudit.lean
       - data/researchos_result_registry.json
+      - data/verified_index.json
+      - VERIFIED_INDEX.md
+      - llms.txt
+      - results.html
       - ResearchOS/LedgerAxiomAudit.lean
     owner: generators
     hand_edit: false
@@ -157,6 +162,7 @@ classes:
       - scripts/build_ecdlp_decision_view.py
       - scripts/gen_axiom_audit.py
       - scripts/gen_researchos_registry.py
+      - scripts/gen_verified_index.py
     gates:
       - scripts/check_status_consistency.py
       - scripts/check_counts.py
@@ -164,6 +170,8 @@ classes:
       - scripts/export_agent_bundle.py --check
       - scripts/gen_result_registry.py --check
       - scripts/gen_researchos_registry.py --check
+      - scripts/gen_verified_index.py --check
+      - scripts/test_gen_verified_index.py
       - scripts/check_ledger_isolation.py
       - scripts/build_ecdlp_decision_view.py --check
       - scripts/build_research_engine_state.py --check
@@ -199,10 +207,12 @@ classes:
     paths:
       - index.html
       - dashboard.html
+      - results.html
       - explore.html
       - pilot.html
       - assets/
       - fonts/
+      - llms.txt
       - CNAME
     owner: site
     hand_edit: mixed
@@ -393,8 +403,10 @@ classes:
 allowed_overlap_paths:
   - index.html
   - dashboard.html
+  - results.html
   - explore.html
   - pilot.html
+  - llms.txt
   - Ecdlp/LedgerAxiomAudit.lean
   - ResearchOS/LedgerAxiomAudit.lean
   - experiments/HYPOTHESES.yaml
