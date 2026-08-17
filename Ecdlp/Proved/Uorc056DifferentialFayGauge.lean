@@ -38,7 +38,10 @@ theorem etaCoefficient_eq_zero (a b r s n k : ℤ) :
 theorem highIndexCoefficients (n : ℤ) :
     firstCoefficient 1 0 0 1 n = n - 1 ∧
       secondCoefficient 1 0 0 1 n = 1 := by
-  constructor <;> simp [firstCoefficient, secondCoefficient]
+  constructor
+  · simp [firstCoefficient]
+    ring
+  · simp [secondCoefficient]
 
 /-- The same specialization has no residual quasiperiod for any scalar `k`. -/
 theorem highIndexEtaCancels (n k : ℤ) :
