@@ -1,0 +1,45 @@
+{
+  "profile_id": "UORC-056-POLY-COMPRESSION-EXISTENCE",
+  "status": "open_hypothesis",
+  "central_target": "exact canonical parity for Q=[k]G",
+  "hypothesis": {
+    "name": "H-PCX",
+    "claim": "parity factors through a uniformly constructible public state of dimension and total cost polynomial in log(n)",
+    "uniform": true,
+    "exact": true,
+    "hidden_advice_allowed": false
+  },
+  "proof_obligations": [
+    "compression_bound",
+    "public_constructibility",
+    "exact_containment",
+    "efficient_dynamics",
+    "exact_decoding",
+    "full_cost_gate"
+  ],
+  "recoverability_extension": {
+    "name": "H-RPCX",
+    "claim": "the compact state is spanned by an effectively enumerable public feature family with polynomial descriptions and exact full-rank recoverability"
+  },
+  "invalid_shortcuts": [
+    "exponential_lookup_table",
+    "hidden_large_advice",
+    "finite_interpolation_only",
+    "toy_fit_without_uniform_theorem",
+    "statistical_correlation_only",
+    "degree_only_argument"
+  ],
+  "engine_tasks": [
+    "discover_low_rank_state_spaces",
+    "discover_stable_modules",
+    "discover_short_recurrences",
+    "discover_representation_decompositions",
+    "discover_short_slp_or_modular_composition",
+    "prove_or_refute_declared_classes",
+    "exact_toy_replay",
+    "held_out_transfer",
+    "lean_kernel_formalization",
+    "full_cost_accounting"
+  ],
+  "promotion_rule": "Do not promote to theorem until all proof obligations are discharged."
+}
