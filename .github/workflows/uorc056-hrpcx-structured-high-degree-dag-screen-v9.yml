@@ -1,0 +1,64 @@
+name: UORC056 H-RPCX structured high-degree DAG screen V9
+
+on:
+  push:
+    branches: [research/uorc056-hrpcx-linear-shift-barrier]
+    paths:
+      - 'experiments/parity_lift_000/uorc056_hrpcx_structured_high_degree_dag_screen_v9.py'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_structured_high_degree_dag_screen_v9_status.json'
+      - 'notes/reviews/UORC056_HRPCX_STRUCTURED_HIGH_DEGREE_DAG_SCREEN_V9.md'
+      - '.github/workflows/uorc056-hrpcx-structured-high-degree-dag-screen-v9.yml'
+  pull_request:
+    branches: [research/uorc056-poly-compression-existence]
+    paths:
+      - 'experiments/parity_lift_000/uorc056_hrpcx_structured_high_degree_dag_screen_v9.py'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_structured_high_degree_dag_screen_v9_status.json'
+      - 'notes/reviews/UORC056_HRPCX_STRUCTURED_HIGH_DEGREE_DAG_SCREEN_V9.md'
+      - '.github/workflows/uorc056-hrpcx-structured-high-degree-dag-screen-v9.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Replay structured high-degree screen
+        run: |
+          python -m py_compile experiments/parity_lift_000/uorc056_hrpcx_structured_high_degree_dag_screen_v9.py
+          python experiments/parity_lift_000/uorc056_hrpcx_structured_high_degree_dag_screen_v9.py --out /tmp/uorc056_hrpcx_structured_high_degree_dag_screen_v9.json
+      - name: Check deterministic counts and honest boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = json.loads(Path('/tmp/uorc056_hrpcx_structured_high_degree_dag_screen_v9.json').read_text())
+          status = json.loads(Path('experiments/parity_lift_000/uorc056_hrpcx_structured_high_degree_dag_screen_v9_status.json').read_text())
+
+          assert result['profile_id'] == status['profile_id']
+          assert result['status'] == status['status']
+          assert result['corpus']['nonzero_points'] == 438
+          assert result['grammar']['base_states'] == 22
+          assert result['grammar']['unary_macros'] == 43
+          assert result['grammar']['largest_single_macro_cost'] == 254
+          assert [layer['raw_new_semantics'] for layer in result['layers']] == status['expected_replay']['raw_new_semantics_by_depth']
+          assert result['search_statistics']['retained_semantics'] == status['expected_replay']['retained_semantics_total']
+          assert result['result']['best_retained_errors'] == status['expected_replay']['best_error_count']
+          assert result['result']['exact_unary_candidate'] is None
+          assert result['result']['exact_binary_join_candidate'] is None
+          assert result['decision']['parity_algorithm_found'] is False
+          assert result['decision']['declared_class_exhaustively_closed'] is False
+          assert result['decision']['negative_result_is_heuristic'] is True
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-hrpcx-structured-high-degree-dag-screen-v9
+          path: /tmp/uorc056_hrpcx_structured_high_degree_dag_screen_v9.json
+          retention-days: 90

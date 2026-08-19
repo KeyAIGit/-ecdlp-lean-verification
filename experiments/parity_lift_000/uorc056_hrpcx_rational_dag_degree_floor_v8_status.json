@@ -1,0 +1,22 @@
+{
+  "profile_id": "UORC-056-HRPCX-RATIONAL-DAG-DEGREE-FLOOR-V8",
+  "status": "proved_paper_theorem_with_exact_secp_arithmetic",
+  "scope": {
+    "inputs": "public constants plus x and y",
+    "unary_gate": "inversion",
+    "binary_gates": ["addition", "subtraction", "multiplication"],
+    "cost_model": "DAG nodes; shared intermediates charged once",
+    "target": "one rational function regular on all nonzero subgroup points and equal to exact parity"
+  },
+  "theorem": {
+    "target_pole_degree": "at least (n-1)/2",
+    "DAG_pole_degree_upper_bound": "at most 3*2^g",
+    "secp256k1_minimum_binary_gates": 254
+  },
+  "decision": {
+    "rational_DAG_with_at_most_253_binary_gates_can_decode_exact_parity": false,
+    "rational_DAG_with_254_or_more_binary_gates_exists": "open",
+    "polynomial_time_parity_algorithm_proved": false,
+    "general_arithmetic_circuit_lower_bound_proved": false
+  }
+}

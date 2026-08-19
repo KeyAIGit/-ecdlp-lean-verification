@@ -1,0 +1,18 @@
+{
+  "profile_id": "UORC-056-HRPCX-COMPACT-SPECIFICATION-GAP-V4",
+  "status": "proved_elementary_implicit_characterization",
+  "theorem": {
+    "public_equation": "(I+T)f=2*delta_O",
+    "unique_solution": "f([k]G)=(-1)^k"
+  },
+  "decision": {
+    "constant_size_implicit_equation_exists": true,
+    "equation_is_an_elementary_restatement_of_canonical_parity": true,
+    "algorithmic_compression_proved": false,
+    "polynomial_time_parity_algorithm_proved": false,
+    "polylog_random_access_evaluator_found": false,
+    "direct_local_propagation_cost": "Theta(n) worst case",
+    "specification_is_hrpcx_solution": false,
+    "standalone_algorithmic_significance": "none without a random-access solver"
+  }
+}

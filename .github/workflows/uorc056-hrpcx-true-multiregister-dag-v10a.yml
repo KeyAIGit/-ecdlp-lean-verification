@@ -1,0 +1,82 @@
+name: UORC056 H-RPCX true DAG selection audit V10A
+
+on:
+  push:
+    branches: [research/uorc056-hrpcx-linear-shift-barrier]
+    paths:
+      - 'experiments/parity_lift_000/uorc056_hrpcx_structured_high_degree_dag_screen_v9.py'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_true_multiregister_dag_cegis_v10.py'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_true_multiregister_dag_cegis_v10a.py'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_true_multiregister_dag_cegis_v10a_status.json'
+      - '.github/workflows/uorc056-hrpcx-true-multiregister-dag-v10a.yml'
+  pull_request:
+    branches: [research/uorc056-poly-compression-existence]
+    paths:
+      - 'experiments/parity_lift_000/uorc056_hrpcx_structured_high_degree_dag_screen_v9.py'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_true_multiregister_dag_cegis_v10.py'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_true_multiregister_dag_cegis_v10a.py'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_true_multiregister_dag_cegis_v10a_status.json'
+      - '.github/workflows/uorc056-hrpcx-true-multiregister-dag-v10a.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile audited DAG engine
+        run: |
+          python -m py_compile experiments/parity_lift_000/uorc056_hrpcx_structured_high_degree_dag_screen_v9.py
+          python -m py_compile experiments/parity_lift_000/uorc056_hrpcx_true_multiregister_dag_cegis_v10.py
+          python -m py_compile experiments/parity_lift_000/uorc056_hrpcx_true_multiregister_dag_cegis_v10a.py
+      - name: Replay selection-audited synthesis
+        run: |
+          cd experiments/parity_lift_000
+          python uorc056_hrpcx_true_multiregister_dag_cegis_v10a.py --out /tmp/uorc056_hrpcx_true_multiregister_dag_v10a_results.json
+      - name: Check selection and claim boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          result=json.loads(Path('/tmp/uorc056_hrpcx_true_multiregister_dag_v10a_results.json').read_text())
+          status=json.loads(Path('experiments/parity_lift_000/uorc056_hrpcx_true_multiregister_dag_cegis_v10a_status.json').read_text())
+          assert result['profile_id']==status['profile_id']
+          assert result['status']=='selection_audited_true_DAG_screen_not_exhaustive'
+          assert status['status']=='selection_audited_true_DAG_screen_completed_no_candidate'
+          assert not result['selection_rule']['holdout_used_for_selection']
+          assert result['sharing_self_test']['true_register_reuse_verified']
+          assert result['sharing_self_test']['dag_cost']==2
+          assert result['sharing_self_test']['expanded_tree_cost']==3
+          sharing=result['sharing_statistics_in_best_round']
+          assert sharing['nodes_with_positive_DAG_savings']==status['audited_result']['nodes_with_positive_DAG_savings_in_best_round']
+          assert sharing['nodes_with_positive_DAG_savings'] > 0
+          best=result['best_training_candidate']
+          audited=status['audited_result']
+          assert best['training_errors']==audited['best_training_errors']
+          assert best['expanded_cost']==audited['best_expanded_cost']
+          assert best['frozen_holdout_errors']==audited['best_frozen_holdout_errors']
+          assert (best['external_holdout_errors'] is not None)==audited['best_external_holdout_regular']
+          decision=result['decision']
+          expected=(
+              best['training_errors']==0
+              and best['frozen_holdout_errors']==0
+              and best['external_holdout_errors']==0
+          )
+          assert decision['parity_algorithm_found']==expected
+          assert not decision['negative_result_is_exhaustive']
+          assert decision['holdouts_remained_unseen_during_selection']
+          assert best['dag']['expanded_arithmetic_cost'] <= best['dag']['expanded_formula_tree_cost']
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-hrpcx-true-multiregister-dag-v10a
+          path: /tmp/uorc056_hrpcx_true_multiregister_dag_v10a_results.json
+          retention-days: 90

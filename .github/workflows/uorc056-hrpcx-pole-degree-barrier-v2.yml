@@ -1,0 +1,59 @@
+name: UORC056 H-RPCX pole degree barrier V2
+
+on:
+  push:
+    branches: [research/uorc056-hrpcx-linear-shift-barrier]
+    paths:
+      - 'experiments/parity_lift_000/uorc056_hrpcx_pole_degree_barrier_v2.py'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_pole_degree_barrier_v2_status.json'
+      - 'notes/reviews/UORC056_HRPCX_POLE_DEGREE_BARRIER_V2.md'
+      - '.github/workflows/uorc056-hrpcx-pole-degree-barrier-v2.yml'
+  pull_request:
+    branches: [research/uorc056-poly-compression-existence]
+    paths:
+      - 'experiments/parity_lift_000/uorc056_hrpcx_pole_degree_barrier_v2.py'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_pole_degree_barrier_v2_status.json'
+      - 'notes/reviews/UORC056_HRPCX_POLE_DEGREE_BARRIER_V2.md'
+      - '.github/workflows/uorc056-hrpcx-pole-degree-barrier-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Replay exact pole-degree profile
+        run: |
+          python -m py_compile experiments/parity_lift_000/uorc056_hrpcx_pole_degree_barrier_v2.py
+          python experiments/parity_lift_000/uorc056_hrpcx_pole_degree_barrier_v2.py --out /tmp/uorc056_hrpcx_pole_degree_barrier_v2_results.json
+      - name: Check machine-readable boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = json.loads(Path('/tmp/uorc056_hrpcx_pole_degree_barrier_v2_results.json').read_text())
+          status = json.loads(Path('experiments/parity_lift_000/uorc056_hrpcx_pole_degree_barrier_v2_status.json').read_text())
+
+          assert result['profile_id'] == status['profile_id']
+          assert result['decision'] == status['decision']
+          assert result['aggregate']['curves'] == 5
+          assert result['aggregate']['points'] == 438
+          assert result['aggregate']['lower_bound_violations'] == 0
+          assert all(
+              item['exact_minimum_pole_budget_in_L_D_O'] >= item['theorem_lower_bound']
+              for item in result['checks']
+          )
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-hrpcx-pole-degree-barrier-v2
+          path: /tmp/uorc056_hrpcx_pole_degree_barrier_v2_results.json
+          retention-days: 90

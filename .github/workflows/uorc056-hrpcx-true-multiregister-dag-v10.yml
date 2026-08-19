@@ -1,0 +1,80 @@
+name: UORC056 H-RPCX true multiregister DAG CEGIS V10
+
+on:
+  push:
+    branches: [research/uorc056-hrpcx-linear-shift-barrier]
+    paths:
+      - 'experiments/parity_lift_000/uorc056_hrpcx_structured_high_degree_dag_screen_v9.py'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_true_multiregister_dag_cegis_v10.py'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_true_multiregister_dag_cegis_v10_status.json'
+      - 'notes/reviews/UORC056_HRPCX_TRUE_MULTIREGISTER_DAG_CEGIS_V10.md'
+      - '.github/workflows/uorc056-hrpcx-true-multiregister-dag-v10.yml'
+  pull_request:
+    branches: [research/uorc056-poly-compression-existence]
+    paths:
+      - 'experiments/parity_lift_000/uorc056_hrpcx_structured_high_degree_dag_screen_v9.py'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_true_multiregister_dag_cegis_v10.py'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_true_multiregister_dag_cegis_v10_status.json'
+      - 'notes/reviews/UORC056_HRPCX_TRUE_MULTIREGISTER_DAG_CEGIS_V10.md'
+      - '.github/workflows/uorc056-hrpcx-true-multiregister-dag-v10.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile V9 dependency and V10 engine
+        run: |
+          python -m py_compile experiments/parity_lift_000/uorc056_hrpcx_structured_high_degree_dag_screen_v9.py
+          python -m py_compile experiments/parity_lift_000/uorc056_hrpcx_true_multiregister_dag_cegis_v10.py
+      - name: Replay true multiregister DAG synthesis
+        run: |
+          cd experiments/parity_lift_000
+          python uorc056_hrpcx_true_multiregister_dag_cegis_v10.py --out /tmp/uorc056_hrpcx_true_multiregister_dag_v10_results.json
+      - name: Check DAG accounting and honest claim boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          result=json.loads(Path('/tmp/uorc056_hrpcx_true_multiregister_dag_v10_results.json').read_text())
+          status=json.loads(Path('experiments/parity_lift_000/uorc056_hrpcx_true_multiregister_dag_cegis_v10_status.json').read_text())
+
+          assert result['profile_id']==status['profile_id']
+          assert result['status']==status['status']
+          assert result['sharing_self_test']=={
+              'dag_cost': 2,
+              'expanded_tree_cost': 3,
+              'saved_gates': 1,
+              'true_register_reuse_verified': True,
+          }
+          assert result['search_contract']['true_multiregister_DAG']
+          assert result['search_contract']['shared_ancestry_charged_once']
+          assert result['search_contract']['square_ladders_expose_intermediate_registers']
+          assert not result['search_contract']['search_is_exhaustive']
+          assert result['corpus']['training_points']==300
+          assert result['corpus']['frozen_holdout_points']==138
+          assert result['corpus']['external_holdout_points']==60
+          assert 1 <= len(result['cegis_history']) <= 4
+
+          best=result['best_candidate']
+          decision=result['decision']
+          assert decision['parity_algorithm_found']==best['exact_all_declared_curves']
+          assert not decision['negative_result_is_exhaustive']
+          assert not decision['general_arithmetic_circuit_lower_bound_proved']
+          assert decision['true_DAG_infrastructure_completed']
+          assert best['dag']['expanded_arithmetic_cost'] <= best['dag']['expanded_formula_tree_cost']
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-hrpcx-true-multiregister-dag-v10
+          path: /tmp/uorc056_hrpcx_true_multiregister_dag_v10_results.json
+          retention-days: 90

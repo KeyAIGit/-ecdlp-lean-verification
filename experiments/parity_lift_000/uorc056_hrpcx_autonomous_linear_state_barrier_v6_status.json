@@ -1,0 +1,38 @@
+{
+  "profile_id": "UORC-056-HRPCX-AUTONOMOUS-LINEAR-STATE-BARRIER-V6",
+  "status": "proved_paper_theorem_with_exact_secp_order_certificate",
+  "scope": {
+    "target": "exact canonical parity on an odd prime-order cycle",
+    "state_update": "one fixed linear or affine map over F_(p^d)",
+    "decoder": "arbitrary deterministic decoder",
+    "secp_condition": "p != n"
+  },
+  "theorem": {
+    "K": "ord_n(p)",
+    "linear_bound": "d*r >= K",
+    "affine_bound": "d*(r+1) >= K",
+    "mobius_bound": "2*d >= K"
+  },
+  "secp256k1": {
+    "embedding_degree": 19298681539552699237261830834781317975472927379845817397100860523586360249056,
+    "embedding_degree_bit_length": 254,
+    "linear_state_over_Fp_dimension_at_least": 19298681539552699237261830834781317975472927379845817397100860523586360249056,
+    "affine_state_over_Fp_dimension_at_least": 19298681539552699237261830834781317975472927379845817397100860523586360249055,
+    "mobius_state_extension_degree_at_least": 9649340769776349618630915417390658987736463689922908698550430261793180124528
+  },
+  "decision": {
+    "polylog_dimension_fixed_linear_update_state_possible_for_secp256k1": false,
+    "polylog_dimension_fixed_affine_update_state_possible_for_secp256k1": false,
+    "arbitrary_nonlinear_decoder_changes_this_boundary": false,
+    "nonlinear_coordinate_dependent_update_closed": false,
+    "query_dependent_update_closed": false,
+    "high_degree_low_DAG_size_direct_evaluator_closed": false,
+    "general_HPCX_refuted": false
+  },
+  "formalization": {
+    "paper_theorem": true,
+    "exact_order_certificate": true,
+    "finite_replay": true,
+    "end_to_end_lean_formalization": false
+  }
+}

@@ -1,0 +1,57 @@
+name: UORC056 H-RPCX compact specification gap V4
+
+on:
+  push:
+    branches: [research/uorc056-hrpcx-linear-shift-barrier]
+    paths:
+      - 'experiments/parity_lift_000/uorc056_hrpcx_compact_specification_gap_v4.py'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_compact_specification_gap_v4_status.json'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_pole_degree_barrier_v2.py'
+      - 'notes/reviews/UORC056_HRPCX_COMPACT_SPECIFICATION_GAP_V4.md'
+      - '.github/workflows/uorc056-hrpcx-compact-specification-gap-v4.yml'
+  pull_request:
+    branches: [research/uorc056-poly-compression-existence]
+    paths:
+      - 'experiments/parity_lift_000/uorc056_hrpcx_compact_specification_gap_v4.py'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_compact_specification_gap_v4_status.json'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_pole_degree_barrier_v2.py'
+      - 'notes/reviews/UORC056_HRPCX_COMPACT_SPECIFICATION_GAP_V4.md'
+      - '.github/workflows/uorc056-hrpcx-compact-specification-gap-v4.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Replay public local specification
+        run: |
+          python -m py_compile experiments/parity_lift_000/uorc056_hrpcx_compact_specification_gap_v4.py
+          PYTHONPATH=experiments/parity_lift_000 python experiments/parity_lift_000/uorc056_hrpcx_compact_specification_gap_v4.py --out /tmp/uorc056_hrpcx_compact_specification_gap_v4_results.json
+      - name: Check machine-readable boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = json.loads(Path('/tmp/uorc056_hrpcx_compact_specification_gap_v4_results.json').read_text())
+          status = json.loads(Path('experiments/parity_lift_000/uorc056_hrpcx_compact_specification_gap_v4_status.json').read_text())
+
+          assert result['profile_id'] == status['profile_id']
+          assert result['decision'] == status['decision']
+          assert result['aggregate']['curves'] == 5
+          assert result['aggregate']['equations'] == 443
+          assert result['aggregate']['uniqueness_failures'] == 0
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-hrpcx-compact-specification-gap-v4
+          path: /tmp/uorc056_hrpcx_compact_specification_gap_v4_results.json
+          retention-days: 90

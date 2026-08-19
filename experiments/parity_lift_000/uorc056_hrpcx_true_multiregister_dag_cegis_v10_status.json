@@ -1,0 +1,28 @@
+{
+  "profile_id": "UORC-056-HRPCX-TRUE-MULTIREGISTER-DAG-CEGIS-V10",
+  "status": "deterministic_true_DAG_CEGIS_screen_not_exhaustive",
+  "model": {
+    "registers": "public base states plus computed field-valued registers",
+    "binary_gates": ["add", "sub", "mul", "div when total on the declared corpus"],
+    "shared_intermediates": "computed once and reusable by arbitrary later retained gates",
+    "square_ladders": "primitive one-gate squarings with every intermediate register exposed through depth 254",
+    "readout_macros": ["chi2", "chi3", "chi6", "inv", "neg"],
+    "macro_cost": "expanded arithmetic cost charged once when the macro output is reused"
+  },
+  "search_boundary": {
+    "true_DAG_costing": true,
+    "counterexample_guided_refinement": true,
+    "held_out_transfer": true,
+    "global_exhaustiveness": false,
+    "retained_pool_pruning": true,
+    "semantic_deduplication_may_remove_overlap_useful_variants": true,
+    "readout_macro_internal_registers_exposed": false
+  },
+  "decision": {
+    "claim_parity_algorithm_only_if_exact_on_training_and_both_holdouts": true,
+    "symbolic_proof_required_before_secp256k1_claim": true,
+    "negative_result_is_exhaustive": false,
+    "general_circuit_lower_bound_proved": false,
+    "infrastructure_target": "replace formula-tree counting by genuine shared-register DAG accounting"
+  }
+}

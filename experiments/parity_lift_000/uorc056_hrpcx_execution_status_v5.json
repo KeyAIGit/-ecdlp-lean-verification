@@ -1,0 +1,38 @@
+{
+  "profile_id": "UORC-056-HRPCX-EXECUTION-CHECKPOINT-V5",
+  "audit_status": "corrected_after_claim_review",
+  "central_hypothesis": "a public uniform poly(log n) exact parity evaluator exists",
+  "central_status": "open_and_unproved",
+  "proved_elementary_or_logical_facts": [
+    "canonical parity is the unique solution of the local odd-cycle equation (I+T)f=2*delta_O",
+    "this equation is only an implicit characterization and has no standalone algorithmic consequence",
+    "a uniform polynomial-time H-RPCX evaluator is polynomial-time equivalent to exact parity and ECDLP"
+  ],
+  "proved_scoped_barriers": [
+    "translation-stable linear modules containing parity have dimension n",
+    "exact cyclic parity has linear recurrence width n in that linear translation model",
+    "a low-pole rational state followed by a low-degree polynomial decoder needs composite pole budget at least (n-1)/2",
+    "an r-mode translation-spectral state with degree-d polynomial readout must satisfy binomial(r+d,d)>=n",
+    "the declared joint coordinate-rational formula-tree grammar has no exact parity formula with at most four internal gates on the five-curve toy corpus"
+  ],
+  "withdrawn_claims": [
+    "V4 as meaningful evidence for polynomial-time compression",
+    "an exhaustive eight-gate SLP or arithmetic-circuit census",
+    "a certified negative result for formula sizes five through eight"
+  ],
+  "not_proved": [
+    "existence of a classical polynomial-time parity algorithm",
+    "existence of a practically fast parity algorithm",
+    "nonexistence of a classical polynomial-time parity algorithm",
+    "a general arithmetic-circuit lower bound for Y_G or parity",
+    "existence of a high-degree low-size public decoder",
+    "a public coherent branch transport"
+  ],
+  "remaining_problem": "find an actual public random-access evaluator at Q, or prove a scoped theorem for a precisely declared representation class",
+  "admitted_next_classes": [
+    "high-degree low-size arithmetic circuits with genuine DAG sharing",
+    "modular-composition evaluators with fully counted preprocessing",
+    "nonlinear coherent Miller/theta/CM branch transport",
+    "coordinate-sensitive algorithms outside the generic-group model"
+  ]
+}
