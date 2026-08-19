@@ -1,128 +1,259 @@
-from __future__ import annotations
-from dataclasses import dataclass
-from uorc056_c52_deformation_core import Curve
+#!/usr/bin/env python3
+"""Exact arithmetic core for UORC-056 C53.
 
-class Series:
-    __slots__=("c","p","L")
-    def __init__(self,coeffs,p,L):
-        z=list(coeffs)+[0]*L;self.c=tuple(v%p for v in z[:L]);self.p=p;self.L=L
-    @classmethod
-    def const(cls,v,p,L):return cls([v],p,L)
-    def coerce(self,o):
-        if isinstance(o,Series):
-            if (o.p,o.L)!=(self.p,self.L):raise ValueError
-            return o
-        return Series.const(o,self.p,self.L)
-    def __add__(self,o):o=self.coerce(o);return Series([a+b for a,b in zip(self.c,o.c)],self.p,self.L)
-    __radd__=__add__
-    def __neg__(self):return Series([-a for a in self.c],self.p,self.L)
-    def __sub__(self,o):return self+(-self.coerce(o))
-    def __rsub__(self,o):return self.coerce(o)-self
-    def __mul__(self,o):
-        o=self.coerce(o);r=[0]*self.L;p=self.p
-        for i,a in enumerate(self.c):
-            if not a:continue
-            for j,b in enumerate(o.c[:self.L-i]):
-                if b:r[i+j]=(r[i+j]+a*b)%p
-        return Series(r,p,self.L)
-    __rmul__=__mul__
-    def inv(self):
-        if not self.c[0]:raise ZeroDivisionError
-        p=self.p;r=[0]*self.L;r[0]=pow(self.c[0],-1,p)
-        for m in range(1,self.L):r[m]=(-r[0]*sum(self.c[i]*r[m-i] for i in range(1,m+1)))%p
-        return Series(r,p,self.L)
-    def __truediv__(self,o):return self*self.coerce(o).inv()
-    def __rtruediv__(self,o):return self.coerce(o)*self.inv()
-    def __pow__(self,e):
-        if e<0:return self.inv()**(-e)
-        r=Series.const(1,self.p,self.L);b=self
-        while e:
-            if e&1:r=r*b
-            b=b*b;e//=2
-        return r
-    def der(self):return Series([(i+1)*self.c[i+1] for i in range(self.L-1)],self.p,self.L)
+Only public synthetic curves and public scalar labels used for replay are
+accepted.  No external target, private key, wallet, or hidden tangent advice is
+read.
+"""
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Any
+
+from uorc056_c52_deformation_core import (
+    ALL_CURVES as C52_CURVES,
+    Curve,
+    quadratic_character,
+    point_count,
+    is_prime,
+    torsion_lift_basis,
+)
+
+NEW_HELD_OUT = (
+    (1051, 1093, (3, 385), 180, 941),
+    (1237, 1279, (4, 599), 300, 504),
+    (1249, 1303, (1, 100), 93, 1207),
+    (1669, 1663, (2, 286), 248, 1344),
+)
+ALL_CURVES = C52_CURVES + NEW_HELD_OUT
+
+SECP_P = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F
+SECP_N = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141
+SECP_G = (
+    55066263022277343669578718895168534326250603453777594175500187360389116729240,
+    32670510020758816978083085130507043184471273380659243275938904335757337482424,
+)
+SECP_BETA = int(
+    "7AE96A2B657C07106E64479EAC3434E99CF0497512F58995C1396C28719501EE", 16
+)
+SECP_LAMBDA = int(
+    "5363AD4CC05C30E0A5261C028812645A122E22EA20816678DF02967C1B23BD72", 16
+)
+
+
+def defect(connection_at_image: int, multiplier: int, connection_at_source: int, p: int) -> int:
+    """Vertical scalar of Delta_m^nabla(P)=c([m]P)-m c(P)."""
+    return (connection_at_image - multiplier * connection_at_source) % p
+
+
+def recover_multiplier_from_defect(
+    connection_at_image: int,
+    defect_value: int,
+    connection_at_source: int,
+    p: int,
+) -> int:
+    if connection_at_source % p == 0:
+        raise ZeroDivisionError("zero anchor connection does not reveal multiplier")
+    return (
+        (connection_at_image - defect_value)
+        * pow(connection_at_source, -1, p)
+    ) % p
+
+
+def gauge_difference(
+    gauge_at_image: int,
+    multiplier: int,
+    gauge_at_source: int,
+    p: int,
+) -> int:
+    return defect(gauge_at_image, multiplier, gauge_at_source, p)
+
+
+def connection_cocycle_rhs(
+    delta_a_at_bP: int,
+    a: int,
+    delta_b_at_P: int,
+    p: int,
+) -> int:
+    return (delta_a_at_bP + a * delta_b_at_P) % p
+
 
 @dataclass(frozen=True)
-class DualSeries:
-    f:Series;e:Series
-    def coerce(self,o):
-        if isinstance(o,DualSeries):return o
-        return DualSeries(self.f.coerce(o),Series.const(0,self.f.p,self.f.L))
-    def __add__(self,o):o=self.coerce(o);return DualSeries(self.f+o.f,self.e+o.e)
-    __radd__=__add__
-    def __neg__(self):return DualSeries(-self.f,-self.e)
-    def __sub__(self,o):return self+(-self.coerce(o))
-    def __rsub__(self,o):return self.coerce(o)-self
-    def __mul__(self,o):o=self.coerce(o);return DualSeries(self.f*o.f,self.f*o.e+self.e*o.f)
-    __rmul__=__mul__
-    def inv(self):q=self.f.inv();return DualSeries(q,-self.e*q*q)
-    def __truediv__(self,o):return self*self.coerce(o).inv()
-    def __rtruediv__(self,o):return self.coerce(o)*self.inv()
-    def __pow__(self,e):
-        if e<0:return self.inv()**(-e)
-        r=self.coerce(1);b=self
-        while e:
-            if e&1:r=r*b
-            b=b*b;e//=2
-        return r
+class StateRow:
+    k: int
+    point: tuple[int, int]
+    ua: int
+    va: int
+    ub: int
+    vb: int
+    omega_a: int
+    omega_b: int
+    det_ab: int
+    position_a: int
+    cm_t: int
+    cm_r: int
+    cm_s: int
 
-def sqrt_series(rhs,y0):
-    p,L=rhs.p,rhs.L;r=[0]*L;r[0]=y0%p;i2=pow(2*y0,-1,p)
-    for m in range(1,L):r[m]=((rhs.c[m]-sum(r[i]*r[m-i] for i in range(1,m)))*i2)%p
-    return Series(r,p,L)
 
-class DivisionDualSeries:
-    def __init__(self,E:Curve,P,L=7):
-        p=E.p;x0,y0=P;zero=Series.const(0,p,L);xb=Series([x0,1],p,L)
-        self.x=DualSeries(xb,zero);self.a=DualSeries(Series.const(E.a,p,L),Series.const(1,p,L));self.b=DualSeries(Series.const(E.b,p,L),zero)
-        yb=sqrt_series(xb**3+E.a*xb+E.b,y0);ye=xb/(2*yb);self.y=DualSeries(yb,ye);self.i2y=(2*self.y).inv()
-        x,a,b,y=self.x,self.a,self.b,self.y;self.cache={0:self.c(0),1:self.c(1),2:2*y}
-        self.cache[3]=3*x**4+6*a*x**2+12*b*x-a**2
-        self.cache[4]=4*y*(x**6+5*a*x**4+20*b*x**3-5*a**2*x**2-4*a*b*x-8*b**2-a**3)
-    def c(self,v):return DualSeries(Series.const(v,self.x.f.p,self.x.f.L),Series.const(0,self.x.f.p,self.x.f.L))
-    def psi(self,n):
-        if n<0:return -self.psi(-n)
-        if n in self.cache:return self.cache[n]
-        if n&1:
-            m=(n-1)//2;v=self.psi(m+2)*self.psi(m)**3-self.psi(m-1)*self.psi(m+1)**3
+def verify_fixture(row: tuple[int, int, tuple[int, int], int, int]) -> None:
+    p, n, generator, beta, lam = row
+    curve = Curve(p)
+    if not is_prime(p) or not is_prime(n):
+        raise AssertionError("fixture moduli are not prime")
+    if point_count(curve) != n:
+        raise AssertionError("curve order mismatch")
+    if curve.mul(n, generator) is not None:
+        raise AssertionError("generator order mismatch")
+    if pow(beta, 3, p) != 1 or beta == 1:
+        raise AssertionError("beta is not a primitive cubic root")
+    if (lam * lam + lam + 1) % n:
+        raise AssertionError("lambda is not a primitive cubic root")
+    if curve.mul(lam, generator, n) != (beta * generator[0] % p, generator[1]):
+        raise AssertionError("GLV action mismatch")
+
+
+def curve_rows(row: tuple[int, int, tuple[int, int], int, int]) -> tuple[list[StateRow], dict[str, int]]:
+    verify_fixture(row)
+    p, n, generator, beta, lam = row
+    curve = Curve(p)
+    rows: list[StateRow] = []
+    for k in range(1, n):
+        point = curve.mul(k, generator, n)
+        if point is None:
+            raise AssertionError("identity in nonzero scalar chart")
+        (ua, va), (ub, vb), _ = torsion_lift_basis(curve, n, point)
+        x, y = point
+        inverse_2y = pow(2 * y, -1, p)
+        omega_a = ua * inverse_2y % p
+        omega_b = ub * inverse_2y % p
+        det_ab = (ua * vb - ub * va) % p
+        position_a = (x * va - y * ua) % p
+        cm_t = x**3 % p
+        cm_r = x * ua % p
+        cm_s = x * x % p * va % p * pow(y, -1, p) % p
+        if (2 * (cm_t + 7) * cm_s - cm_t * (3 * cm_r + 1)) % p:
+            raise AssertionError("CM tangent quotient relation failed")
+        rows.append(StateRow(
+            k, point, ua, va, ub, vb, omega_a, omega_b,
+            det_ab, position_a, cm_t, cm_r, cm_s,
+        ))
+    anchor = rows[0]
+    anchor_values = {
+        "ua": anchor.ua,
+        "va": anchor.va,
+        "ub": anchor.ub,
+        "vb": anchor.vb,
+        "omega_a": anchor.omega_a,
+        "omega_b": anchor.omega_b,
+        "det_ab": anchor.det_ab,
+        "position_a": anchor.position_a,
+    }
+    if any(value == 0 for value in anchor_values.values()):
+        raise AssertionError("zero anchor in charged-state chart")
+    return rows, {
+        "p": p, "n": n, "xG": generator[0], "yG": generator[1],
+        "beta": beta, "beta2": beta * beta % p, "lambda": lam,
+        **{name + "G": value for name, value in anchor_values.items()},
+    }
+
+
+def normalized(value: int, anchor: int, p: int) -> int:
+    return value * pow(anchor, -1, p) % p
+
+
+def charged_columns(rows: list[StateRow], context: dict[str, int]) -> dict[str, list[int]]:
+    p = context["p"]
+    out = {
+        "U": [normalized(row.ua, context["uaG"], p) for row in rows],
+        "V": [normalized(row.va, context["vaG"], p) for row in rows],
+        "OA": [normalized(row.omega_a, context["omega_aG"], p) for row in rows],
+        "OB": [normalized(row.omega_b, context["omega_bG"], p) for row in rows],
+        "D": [normalized(row.det_ab, context["det_abG"], p) for row in rows],
+        "P": [normalized(row.position_a, context["position_aG"], p) for row in rows],
+        "R": [row.cm_r for row in rows],
+        "S": [row.cm_s for row in rows],
+        "T": [row.cm_t for row in rows],
+    }
+    out["UV"] = [u * v % p for u, v in zip(out["U"], out["V"])]
+    out["V3"] = [pow(v, 3, p) for v in out["V"]]
+    out["U3"] = [pow(u, 3, p) for u in out["U"]]
+    out["U2V"] = [u * u % p * v % p for u, v in zip(out["U"], out["V"])]
+    return out
+
+
+def mixed_parity_collisions(values: list[int], rows: list[StateRow]) -> int:
+    seen: dict[int, int] = {}
+    mixed: set[int] = set()
+    for value, row in zip(values, rows):
+        parity = row.k & 1
+        old = seen.get(value)
+        if old is not None and old != parity:
+            mixed.add(value)
         else:
-            m=n//2;v=self.psi(m)*self.i2y*(self.psi(m+2)*self.psi(m-1)**2-self.psi(m-2)*self.psi(m+1)**2)
-        self.cache[n]=v;return v
-
-def moduli_covariant_derivatives(E:Curve,n:int,P,L=7):
-    lab=DivisionDualSeries(E,P,L);f=lab.psi(n)
-    if f.f.c[0] or not f.f.c[1]:raise AssertionError('torsion series')
-    ua=-f.e/f.f.der();R=lab.x.f*ua
-    values=[];current=R
-    for _ in range(4):
-        values.append(current.c[0]);current=2*lab.y.f*current.der()
-    return tuple(values),ua.c[0]
+            seen[value] = parity
+    return len(mixed)
 
 
-def connection_defect(connection_at_query: int, scalar: int, connection_at_anchor: int, prime: int) -> int:
-    """Scalar model of Delta_k^nabla(G)."""
-    return (connection_at_query - scalar * connection_at_anchor) % prime
+class XorBasis:
+    def __init__(self) -> None:
+        self.rows: dict[int, int] = {}
+
+    def add(self, vector: int) -> None:
+        value = vector
+        while value:
+            pivot = value.bit_length() - 1
+            if pivot in self.rows:
+                value ^= self.rows[pivot]
+            else:
+                self.rows[pivot] = value
+                return
+
+    def contains(self, vector: int) -> bool:
+        value = vector
+        while value:
+            pivot = value.bit_length() - 1
+            if pivot not in self.rows:
+                return False
+            value ^= self.rows[pivot]
+        return True
+
+    @property
+    def rank(self) -> int:
+        return len(self.rows)
 
 
-def gauge_changed_defect(
-    old_defect: int,
-    gauge_at_query: int,
-    scalar: int,
-    gauge_at_anchor: int,
-    prime: int,
-) -> int:
-    return (old_defect + gauge_at_query - scalar * gauge_at_anchor) % prime
+def bit_vector(signs: list[int]) -> int:
+    base = signs[0]
+    value = 0
+    for index, sign in enumerate(signs[1:]):
+        if sign != base:
+            value |= 1 << index
+    return value
 
 
-def recover_scalar_from_known_defect(
-    connection_at_query: int,
-    defect: int,
-    connection_at_anchor: int,
-    prime: int,
-) -> int:
-    if connection_at_anchor % prime == 0:
-        raise ZeroDivisionError("anchor connection scalar is zero")
-    return (
-        (connection_at_query - defect)
-        * pow(connection_at_anchor, -1, prime)
-    ) % prime
+def structural_constants(context: dict[str, int]) -> dict[str, int]:
+    p = context["p"]
+    raw = {
+        "zero": 0,
+        "one": 1,
+        "minus_one": -1,
+        "seven": 7,
+        "minus_seven": -7,
+        "xG": context["xG"],
+        "minus_xG": -context["xG"],
+        "yG": context["yG"],
+        "minus_yG": -context["yG"],
+        "beta": context["beta"],
+        "beta2": context["beta2"],
+        "lambda": context["lambda"],
+        "n": context["n"],
+        "half": (context["n"] - 1) // 2,
+        "inv2": pow(2, -1, p),
+        "inv3": pow(3, -1, p),
+        "uaG": context["uaG"],
+        "vaG": context["vaG"],
+        "omega_aG": context["omega_aG"],
+        "omega_bG": context["omega_bG"],
+        "det_abG": context["det_abG"],
+    }
+    return {name: value % p for name, value in raw.items()}
