@@ -77,7 +77,27 @@ Therefore
 
 `C^(-1) = (I+T)/2`.
 
-So the full-span statement is not merely existential: the inverse of the parity-shift circulant is a local two-term operator.
+So the full-span statement is not merely existential: the inverse of the parity-shift circulant is a local two-term operator. In particular, over characteristic different from `2`, the circulant is invertible and its determinant has absolute value `2^(n-1)`.
+
+## Corollary 1: no short cyclic linear recurrence
+
+Suppose exact parity satisfied a nonzero constant-coefficient cyclic linear recurrence of order `r<n`:
+
+`a_0 f + a_1 T f + ... + a_r T^r f = 0`.
+
+This would be a linear dependence among fewer than `n` members of the shifted-parity basis, contradicting the full-span theorem.
+
+Therefore the minimal constant-coefficient cyclic linear recurrence order is `n`. A recurrence of width `poly(log n)` cannot generate exact parity under fixed translation.
+
+## Corollary 2: full additive Fourier support
+
+Over a splitting field containing the `n`-th roots of unity, translation is diagonalized by the additive characters of the cyclic group.
+
+If any Fourier coefficient of parity were zero, the cyclic span would omit that character eigenspace and have dimension smaller than `n`. Since the cyclic span is complete, every one of the `n` additive Fourier coefficients is nonzero.
+
+Equivalently, exact canonical parity cannot be expressed as a sum of only `poly(log n)` additive group characters. All `n` characters are required in this linear representation.
+
+The coefficient at frequency `j` can also be evaluated directly as a finite geometric sum. Its numerator is `2`, and its denominator cannot vanish because an odd-order group has no character value equal to `-1`.
 
 ## Consequence for H-PCX
 
@@ -92,7 +112,8 @@ Thus the following candidate proof strategies are closed:
 
 - a low-rank matrix built from every additive translate of exact parity;
 - a small linear module containing parity and closed under addition of `G`;
-- a bounded-dimensional linear recurrence state whose fixed translation action generates the exact parity orbit.
+- a bounded-dimensional constant-coefficient linear recurrence generating exact parity;
+- a sparse decomposition into additive group characters.
 
 ## What remains open
 
