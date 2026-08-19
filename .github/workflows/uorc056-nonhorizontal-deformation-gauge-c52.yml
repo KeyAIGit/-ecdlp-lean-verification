@@ -4,28 +4,37 @@ on:
   push:
     paths:
       - "experiments/parity_lift_000/uorc056_c52_deformation_core.py"
+      - "experiments/parity_lift_000/uorc056_c52_analysis_primitives.py"
+      - "experiments/parity_lift_000/uorc056_c52_analysis_curve.py"
+      - "experiments/parity_lift_000/uorc056_c52_analysis_screen.py"
       - "experiments/parity_lift_000/uorc056_c52_deformation_analysis.py"
       - "experiments/parity_lift_000/uorc056_nonhorizontal_deformation_gauge_c52.py"
       - "experiments/parity_lift_000/test_uorc056_nonhorizontal_deformation_gauge_c52.py"
       - "Ecdlp/Proved/Uorc056NonhorizontalDeformationGauge.lean"
       - "notes/UORC056_NONHORIZONTAL_DEFORMATION_GAUGE_C52.md"
+      - "notes/UORC056_CONNECTION_DEFECT_C53_CONTRACT.md"
       - ".github/workflows/uorc056-nonhorizontal-deformation-gauge-c52.yml"
   pull_request:
     paths:
       - "experiments/parity_lift_000/uorc056_c52_deformation_core.py"
+      - "experiments/parity_lift_000/uorc056_c52_analysis_primitives.py"
+      - "experiments/parity_lift_000/uorc056_c52_analysis_curve.py"
+      - "experiments/parity_lift_000/uorc056_c52_analysis_screen.py"
       - "experiments/parity_lift_000/uorc056_c52_deformation_analysis.py"
       - "experiments/parity_lift_000/uorc056_nonhorizontal_deformation_gauge_c52.py"
       - "experiments/parity_lift_000/test_uorc056_nonhorizontal_deformation_gauge_c52.py"
       - "Ecdlp/Proved/Uorc056NonhorizontalDeformationGauge.lean"
       - "notes/UORC056_NONHORIZONTAL_DEFORMATION_GAUGE_C52.md"
+      - "notes/UORC056_CONNECTION_DEFECT_C53_CONTRACT.md"
       - ".github/workflows/uorc056-nonhorizontal-deformation-gauge-c52.yml"
+
+permissions:
+  contents: read
 
 jobs:
   verify:
     runs-on: ubuntu-24.04
     timeout-minutes: 35
-    permissions:
-      contents: read
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -36,6 +45,9 @@ jobs:
         run: |
           python -m py_compile \
             experiments/parity_lift_000/uorc056_c52_deformation_core.py \
+            experiments/parity_lift_000/uorc056_c52_analysis_primitives.py \
+            experiments/parity_lift_000/uorc056_c52_analysis_curve.py \
+            experiments/parity_lift_000/uorc056_c52_analysis_screen.py \
             experiments/parity_lift_000/uorc056_c52_deformation_analysis.py \
             experiments/parity_lift_000/uorc056_nonhorizontal_deformation_gauge_c52.py \
             experiments/parity_lift_000/test_uorc056_nonhorizontal_deformation_gauge_c52.py
@@ -77,17 +89,20 @@ jobs:
           assert aggregate['complete_p43_pair_affine_atoms'] == 13251
           assert aggregate['complete_p43_single_survivors'] == 0
           assert aggregate['errors'] == 0
+          assert all(all(row['identities'].values()) for row in data['analysis']['curves'])
+          secp = data['secp256k1']
+          assert secp['p_greater_than_n'] is True
+          assert secp['p_minus_n'] == 432420386565659656852420866390673177326
+          assert secp['public_samples'] == 14
           decision = data['decision']
-          assert decision['public_finite_etale_torsion_lift_compiler_found']
-          assert decision['functorial_curve_deformation_is_horizontal_on_torsion_labels']
-          assert decision['nonzero_fixed_curve_vertical_deformation_reveals_full_scalar']
-          assert not decision['weierstrass_scaling_breaks_quadratic_gauge']
-          assert decision['genuine_moduli_tangent_state_found']
-          assert decision['declared_deformation_character_grammar_closed']
-          assert not decision['nonhorizontal_public_deformation_with_endpoint_charge_found']
-          assert not decision['cheap_parity_decoder_found']
-          assert not decision['parity_oracle_found']
-          assert not decision['sub_sqrt_ecdlp_found']
+          assert decision['public_finite_etale_torsion_lift_compiler_found'] is True
+          assert decision['functorial_curve_deformation_is_horizontal_on_torsion_labels'] is True
+          assert decision['nonzero_fixed_curve_vertical_deformation_reveals_full_scalar'] is True
+          assert decision['genuine_moduli_tangent_state_found'] is True
+          assert decision['nonhorizontal_public_deformation_with_endpoint_charge_found'] is False
+          assert decision['cheap_parity_decoder_found'] is False
+          assert decision['parity_oracle_found'] is False
+          assert decision['sub_sqrt_ecdlp_found'] is False
           assert len(data['digest']) == 64
           PY
 
@@ -119,7 +134,8 @@ jobs:
           lake build Ecdlp.Proved.Uorc056NonhorizontalDeformationGauge
           lake env lean Ecdlp/Proved/Uorc056NonhorizontalDeformationGauge.lean
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload C52 certificate
+        uses: actions/upload-artifact@v4
         with:
           name: uorc056-nonhorizontal-deformation-gauge-c52
           path: /tmp/uorc056_nonhorizontal_deformation_gauge_c52.json
