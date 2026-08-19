@@ -1,0 +1,27 @@
+{
+  "profile_id": "UORC-056-HRPCX-STRUCTURED-HIGH-DEGREE-DAG-SCREEN-V9",
+  "status": "deterministic_discovery_screen_not_exhaustive_beyond_depth_one",
+  "scope": {
+    "curves": 5,
+    "nonzero_points": 438,
+    "base_states": 22,
+    "unary_macros": 43,
+    "max_macro_depth": 4,
+    "beam_width": 4000,
+    "largest_single_expanded_macro_cost": 254,
+    "final_binary_join": ["+", "-", "*", "/"]
+  },
+  "expected_replay": {
+    "raw_new_semantics_by_depth": [787, 20475, 95690, 90931],
+    "retained_semantics_total": 12809,
+    "best_error_count": 195,
+    "exact_unary_candidate": null,
+    "exact_binary_join_candidate": null
+  },
+  "decision": {
+    "parity_algorithm_found": false,
+    "declared_class_exhaustively_closed": false,
+    "negative_result_is_heuristic": true,
+    "continue_with_multiregister_DAG_templates": true
+  }
+}
