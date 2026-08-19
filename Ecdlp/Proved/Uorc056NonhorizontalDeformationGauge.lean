@@ -87,7 +87,7 @@ theorem connectionGaugeDifference
     {R : Type*} [Ring R]
     (d q gauge : R) :
     (d + q * gauge) - d = q * gauge := by
-  ring
+  abel
 
 
 def secpP : Nat :=
