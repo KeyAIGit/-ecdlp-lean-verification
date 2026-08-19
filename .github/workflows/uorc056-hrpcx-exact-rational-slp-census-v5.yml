@@ -1,4 +1,4 @@
-name: UORC056 H-RPCX exact rational SLP census V5
+name: UORC056 H-RPCX bounded rational formula-tree census V5
 
 on:
   push:
@@ -29,11 +29,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Run exhaustive joint semantic census
+      - name: Run exhaustive joint formula-tree census through four gates
         run: |
           python -m py_compile experiments/parity_lift_000/uorc056_hrpcx_exact_rational_slp_census_v5.py
-          python experiments/parity_lift_000/uorc056_hrpcx_exact_rational_slp_census_v5.py --max-gates 8 --out /tmp/uorc056_hrpcx_exact_rational_slp_census_v5_results.json
-      - name: Check exact negative boundary
+          python experiments/parity_lift_000/uorc056_hrpcx_exact_rational_slp_census_v5.py --max-gates 4 --out /tmp/uorc056_hrpcx_exact_rational_slp_census_v5_results.json
+      - name: Check corrected negative boundary
         run: |
           python - <<'PY'
           import json
@@ -44,7 +44,8 @@ jobs:
 
           assert result['profile_id'] == status['profile_id']
           assert result['decision'] == status['decision']
-          assert result['grammar']['max_gates'] == 8
+          assert result['grammar']['max_gates'] == 4
+          assert status['scope']['cost_model'] == 'expression-tree internal-node count; no DAG sharing'
           assert len(result['curves']) == 5
           assert not result['result']['exact_parity_circuit_found']
           assert result['result']['minimum_gate_cost_if_found'] is None
@@ -52,6 +53,6 @@ jobs:
           PY
       - uses: actions/upload-artifact@v4
         with:
-          name: uorc056-hrpcx-exact-rational-slp-census-v5
+          name: uorc056-hrpcx-bounded-rational-formula-tree-v5
           path: /tmp/uorc056_hrpcx_exact_rational_slp_census_v5_results.json
           retention-days: 90
