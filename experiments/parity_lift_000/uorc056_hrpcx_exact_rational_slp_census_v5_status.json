@@ -1,15 +1,32 @@
 {
   "profile_id": "UORC-056-HRPCX-EXACT-RATIONAL-SLP-CENSUS-V5",
+  "status": "corrected_bounded_formula_tree_result",
+  "audit": {
+    "previous_eight_gate_claim_withdrawn": true,
+    "reason": "the eight-gate CI run aborted at cost 5 after exceeding the semantic cap",
+    "previous_run_counts": [8, 82, 959, 13073, 193404, 2991347],
+    "slp_or_dag_census_performed": false
+  },
   "scope": {
     "leaves": ["0", "1", "-1", "7", "gx", "gy", "x", "y"],
     "gates": ["+", "-", "*", "inv(total-on-corpus)"],
-    "max_gates": 8,
-    "transfer": "one unchanged expression on five deterministic curves"
+    "max_gates": 4,
+    "cost_model": "expression-tree internal-node count; no DAG sharing",
+    "transfer": "one unchanged expression on five deterministic toy curves"
   },
   "decision": {
     "exact_circuit_exists_within_declared_grammar_and_gate_bound": false,
     "negative_result_is_exhaustive_for_declared_class": true,
     "general_arithmetic_circuit_lower_bound_proved": false,
     "larger_or_richer_circuit_search_open": true
+  },
+  "interpretation": {
+    "certified_statement": "no formula tree of size at most 4 in the declared grammar matches parity on the joint toy corpus",
+    "not_certified": [
+      "no formula tree of size 5 through 8",
+      "no straight-line program or DAG circuit of size at most 8",
+      "no secp256k1-specific circuit",
+      "any general circuit lower bound"
+    ]
   }
 }
