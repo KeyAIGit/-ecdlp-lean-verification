@@ -1,0 +1,23 @@
+{
+  "profile_id": "UORC-056-HRPCX-LINEAR-SHIFT-BARRIER-V1",
+  "scope": {
+    "state_class": "linear feature modules stable under Q -> Q + G",
+    "readout": "linear",
+    "target": "exact canonical parity on an odd cyclic group",
+    "field_condition": "2 != 0"
+  },
+  "theorem": {
+    "minimum_dimension": "n",
+    "proof_identity": "(1+z)(1-z+...+z^(n-1)) = 2 mod (z^n-1)",
+    "explicit_inverse": "(1+z)/2"
+  },
+  "decision": {
+    "polylog_dim_translation_stable_linear_module_contains_parity": false,
+    "linear_recurrence_width_polylog_generates_exact_cyclic_parity": false,
+    "minimum_linear_dimension": "n",
+    "general_hrpcx_refuted": false,
+    "nonlinear_state_update_open": true,
+    "nonlinear_readout_open": true,
+    "high_degree_low_circuit_open": true
+  }
+}
