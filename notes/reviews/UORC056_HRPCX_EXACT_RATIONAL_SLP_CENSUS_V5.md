@@ -1,53 +1,67 @@
-# UORC-056 H-RPCX exact rational SLP census V5
+# UORC-056 H-RPCX bounded rational formula-tree census V5 — audit correction
 
-## Purpose
+## Corrected status
 
-V1-V3 prove structural barriers. V5 performs the first exact nonlinear circuit census under the H-RPCX track.
+The previous claim of an exhaustive eight-gate straight-line-program census is withdrawn.
 
-## Grammar
+Two independent problems were found during audit:
 
-The same expression is evaluated without coefficient retraining on five deterministically selected small prime-subgroup instances of
+1. the GitHub Actions run did not complete the requested eight-gate search; it stopped after constructing the cost-5 level because the semantic cap was exceeded;
+2. the enumerator measures expression-tree size, not straight-line-program or DAG circuit size, because repeated subexpressions are charged again rather than shared.
 
-`y^2 = x^3 + 7`.
+Therefore the old statement
+
+> no parity circuit with at most eight gates exists in the declared grammar
+
+was not established.
+
+## What the failed run actually showed
+
+The aborted run reported semantic counts
+
+`[8, 82, 959, 13073, 193404, 2991347]`
+
+for costs zero through five and then raised a `semantic cap exceeded` exception. No result artifact was produced and levels six through eight were never searched.
+
+Because the run aborted, the repository must not use it as an eight-gate certificate.
+
+## Corrected certified class
+
+The CI workflow now performs a complete census only through **four expression-tree gates**.
 
 Public leaves are:
 
-- `0`, `1`, `-1`, and the curve constant `7`;
-- generator coordinates `x(G)` and `y(G)`;
-- query coordinates `x(Q)` and `y(Q)`.
+- `0`, `1`, `-1`, and `7`;
+- `x(G)` and `y(G)`;
+- `x(Q)` and `y(Q)`.
 
-Allowed gates are:
+Allowed internal nodes are:
 
 - addition;
 - subtraction;
 - multiplication;
-- inversion, only when the operand is nonzero at every tested nonzero subgroup point on every curve.
+- inversion when the denominator is nonzero on the complete joint toy corpus.
 
-The target is exact canonical parity on every nonzero subgroup point.
+The same formula tree is evaluated without coefficient retraining on five deterministic small prime-subgroup instances of `y^2=x^3+7`.
 
-## Search method
+Semantic merging is sound for this finite corpus: expressions with identical joint value vectors are interchangeable under all declared pointwise operations. Dynamic programming by increasing tree size therefore gives an exhaustive result for the stated formula-tree class and size bound.
 
-The search is exhaustive up to eight arithmetic gates.
+## Corrected result
 
-Every expression is evaluated semantically on the full joint corpus. Expressions with identical joint value vectors are merged, keeping only the smallest circuit. Commutative gates are canonicalized. No beam, random sampling, correlation threshold, or learned coefficient is used.
+No formula tree with at most four internal arithmetic nodes in this declared grammar equals exact canonical parity on the full five-curve toy corpus.
 
-Therefore a negative result is exact for the declared grammar and gate budget.
+This is a very small bounded negative result. It does not materially constrain a realistic parity algorithm.
 
-## Result
+## What is not proved
 
-No single expression with at most eight allowed gates equals exact parity on the full five-curve corpus.
+- no formula of size five through eight;
+- no straight-line program with shared subexpressions;
+- no DAG arithmetic circuit;
+- no formula using coordinates of `[s]Q`;
+- no GLV, CM, Miller, theta, division-polynomial, pairing, or p-adic state;
+- no circuit specialized to secp256k1;
+- no general arithmetic-circuit lower bound.
 
-This closes only the declared coordinate-rational grammar at that size. It does not prove a general arithmetic-circuit lower bound.
+## Terminology rule
 
-## What remains open
-
-- circuits with more than eight gates;
-- group-operation leaves such as coordinates of `[s]Q`;
-- GLV, CM, Miller, theta, division-polynomial, p-adic, or pairing states;
-- inversion with explicit exceptional-branch handling;
-- high-degree recurrences and modular-composition circuits;
-- circuits specialized to secp256k1 through additional public constants, provided their total description cost is counted.
-
-## Engine consequence
-
-The H-RPCX engine must not spend additional runs enumerating syntactic variants of this exact grammar below the certified gate bound. Expansion must add a genuinely new primitive or raise the proven size frontier.
+Until a search engine explicitly supports shared intermediate values and charges each computed gate once, its result must be called a **formula-tree census**, not an SLP or circuit census.
