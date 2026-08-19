@@ -1,0 +1,19 @@
+{
+  "profile_id": "UORC-056-HRPCX-POLE-DEGREE-BARRIER-V2",
+  "scope": {
+    "state": "rational coordinates with a common bounded pole divisor",
+    "decoder": "polynomial readout of bounded total degree",
+    "target": "exact nonconstant +/-1 classification on all nonzero subgroup points"
+  },
+  "theorem": {
+    "required_composite_pole_budget": "at least (n-1)/2",
+    "proof": "f^2-1 has n-1 zeros and at most twice the pole degree of f"
+  },
+  "decision": {
+    "low_pole_state_low_degree_decoder_can_realize_exact_parity": false,
+    "required_composite_pole_budget": "at least (n-1)/2",
+    "general_arithmetic_circuit_lower_bound_proved": false,
+    "high_degree_low_size_circuit_open": true,
+    "nonrational_branch_transport_open": true
+  }
+}
