@@ -1,0 +1,29 @@
+{
+  "profile_id": "UORC-056-PARITY-SHIFT-FULL-SPAN",
+  "status": "proved",
+  "setting": {
+    "group": "cyclic group of odd order n",
+    "target": "canonical parity sign f(k)=(-1)^k for 0<=k<n",
+    "translation": "(T f)(k)=f(k-1 mod n)",
+    "coefficients": "any field or module where 2 is invertible"
+  },
+  "theorems": {
+    "seam_identity": "(I+T)f = 2 delta_0",
+    "cyclic_shift_span": "span{T^j f : 0<=j<n} is the complete n-dimensional function space",
+    "explicit_inverse": "the shifted-parity circulant C satisfies C^{-1}=(I+T)/2",
+    "stable_module_boundary": "every T-invariant linear subspace containing f has dimension n"
+  },
+  "closed_classes": [
+    "poly(log n)-dimensional linear function spaces containing exact parity and invariant under Q -> Q+G",
+    "low-rank all-translate parity matrices",
+    "bounded-dimensional linear translation recurrences generating exact parity"
+  ],
+  "not_closed": [
+    "nonlinear state spaces",
+    "nonlinear decoders",
+    "representations not invariant under Q -> Q+G",
+    "short arithmetic circuits outside one small linear translation module",
+    "coordinate-specific CM/theta/p-adic/modular-composition evaluators"
+  ],
+  "impact_on_hpcx": "refutes the most direct linear stable-module proof strategy but does not decide general H-PCX or H-RPCX"
+}

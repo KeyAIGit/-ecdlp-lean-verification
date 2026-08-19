@@ -1,0 +1,113 @@
+{
+  "profile_id": "UORC-056-POLY-COMPRESSION-EXISTENCE",
+  "status": "open_breakthrough_target_with_proved_boundaries",
+  "central_target": "exact canonical parity for Q=[k]G",
+  "logical_classification": {
+    "hpcx_equivalence": "H-PCX iff classical polynomial-time exact parity iff classical polynomial-time ECDLP for the declared family",
+    "hrpcx_strength": "H-RPCX implies H-PCX and additionally requires recovery in a fixed effective feature language",
+    "effectivity_dichotomy": "representation-free existential compression is tautological; fully effective compression is already the target algorithm",
+    "canonical_cut_equivalence": "after public division by two, parity is exactly lower-half versus upper-half classification of the canonical scalar"
+  },
+  "hypothesis": {
+    "name": "H-PCX",
+    "claim": "parity factors through a uniformly constructible public state of dimension and total cost polynomial in log(n)",
+    "uniform": true,
+    "exact": true,
+    "hidden_advice_allowed": false
+  },
+  "proof_obligations": [
+    "compression_bound",
+    "public_constructibility",
+    "exact_containment",
+    "efficient_dynamics",
+    "exact_decoding",
+    "polylog_random_access",
+    "full_cost_gate"
+  ],
+  "recoverability_extension": {
+    "name": "H-RPCX",
+    "claim": "the compact state is spanned by a fixed effectively enumerable public feature family with polynomial descriptions and exact full-rank recoverability"
+  },
+  "proved_boundaries": [
+    {
+      "id": "PARITY-SHIFT-FULL-SPAN",
+      "claim": "exact parity on every odd cycle has full n-dimensional cyclic shift span",
+      "consequences": [
+        "no proper linear translation-invariant subspace contains exact parity",
+        "no cyclic constant-coefficient linear recurrence of order less than n",
+        "all n additive Fourier characters are required"
+      ]
+    },
+    {
+      "id": "AUTONOMOUS-PHASE-STATE-LOWER-BOUND",
+      "claim": "every autonomous deterministic exact parity transport state is injective and has at least n states",
+      "consequences": [
+        "two-, three-, and six-phase autonomous transports are impossible",
+        "constant or poly(log n)-cardinality phase automata are impossible"
+      ]
+    },
+    {
+      "id": "CHARACTER-RATIONAL-DEGREE-EXACT",
+      "claim": "in one primitive character coordinate the minimum rational parity degree is exactly (n+1)/2",
+      "consequences": [
+        "poly(log n)-degree one-character rational decoders are impossible",
+        "the exact representation is controlled by even and odd half-cycle products"
+      ]
+    },
+    {
+      "id": "FINITE-IMAGE-RATIONAL-DEGREE-BOUND",
+      "claim": "a degree-d rational map taking at most s values on N target points satisfies N<=s*d unless constant",
+      "consequences": [
+        "direct rational parity degree is at least n/2",
+        "direct four-state W_G degree is at least n/4",
+        "polylog-degree finite-image rational states are impossible"
+      ]
+    },
+    {
+      "id": "SHORT-RECURRENCE-RANDOM-ACCESS-GATE",
+      "claim": "small recurrence width does not imply compression without a poly(log n) jump-ahead evaluator",
+      "consequences": [
+        "local transition cost and state width must be separated from total target-index work",
+        "every recurrence candidate must prove polylog random access"
+      ]
+    },
+    {
+      "id": "PARITY-HALF-CYCLE-CUT-EQUIVALENCE",
+      "claim": "parity equals detection of the canonical lower or upper half after public halving",
+      "consequences": [
+        "the missing information is a global ordering cut",
+        "local invariants without a public orientation mechanism are insufficient"
+      ]
+    }
+  ],
+  "closed_engine_tasks": [
+    "discover_low_rank_state_spaces_invariant_under_Q_plus_G_and_linearly_containing_parity",
+    "discover_short_constant_coefficient_cyclic_recurrence_for_parity",
+    "discover_sparse_additive_character_decomposition_of_parity",
+    "discover_autonomous_small_phase_transport_for_parity",
+    "discover_polylog_degree_direct_finite_image_rational_decoder",
+    "promote_small_recurrence_without_jump_ahead"
+  ],
+  "remaining_engine_tasks": [
+    "discover_nonlinear_coordinate_dependent_states",
+    "discover_short_arithmetic_circuits_outside_one_linear_translation_module",
+    "discover_query_dependent_CM_Miller_theta_or_p_adic_transport",
+    "discover_high_degree_low_SLP_or_modular_composition",
+    "discover_polylog_jump_ahead_for_half_cycle_or_elliptic_segment_products",
+    "prove_or_refute_each_declared_nonlinear_class",
+    "lean_kernel_formalization",
+    "full_cost_accounting"
+  ],
+  "invalid_shortcuts": [
+    "tautological_state_equal_to_parity",
+    "exponential_lookup_table",
+    "hidden_large_advice",
+    "finite_interpolation_only",
+    "toy_fit_without_uniform_theorem",
+    "statistical_correlation_only",
+    "degree_only_argument_presented_as_circuit_lower_bound",
+    "short_recurrence_without_random_access_bound",
+    "fixed_instance_polynomial_wordplay_without_uniform_family_or_explicit_numeric_bound"
+  ],
+  "promotion_rule": "Do not promote H-PCX to theorem until all full-cost obligations are discharged; restricted closure theorems must remain scoped to their declared representation class."
+}

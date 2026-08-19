@@ -1,0 +1,23 @@
+{
+  "profile_id": "UORC-056-FINITE-IMAGE-RATIONAL-DEGREE-BOUND",
+  "status": "proved",
+  "theorem": "a nonconstant rational map of degree d taking values in a set of size s on N distinct finite target points satisfies N <= s*d",
+  "applications": {
+    "direct_parity_sign": "degree >= n/2",
+    "joint_four_state_WG": "degree >= n/4",
+    "polylog_state_alphabet": "degree >= n/poly(log n)"
+  },
+  "proof_kernel": "the product over output values of (R-a) has N zeros and pole degree at most s*d",
+  "closed_classes": [
+    "poly(log n)-degree direct rational parity decoder",
+    "poly(log n)-degree direct rational W_G decoder",
+    "poly(log n)-degree finite-image rational state with poly(log n) output values"
+  ],
+  "not_closed": [
+    "high-degree low-arithmetic-circuit functions",
+    "field-valued states with exponentially many values",
+    "character or branch decoding",
+    "modular composition",
+    "CM Miller theta p-adic query-dependent states"
+  ]
+}
