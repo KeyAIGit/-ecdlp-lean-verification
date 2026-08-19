@@ -1,0 +1,20 @@
+{
+  "profile_id": "UORC-056-HRPCX-FOURIER-SUPPORT-BARRIER-V3",
+  "scope": {
+    "state": "r translation eigenmodes",
+    "decoder": "polynomial of total degree d",
+    "target": "exact canonical parity on an odd cyclic group"
+  },
+  "theorem": {
+    "target_support": "n",
+    "decoder_support_upper_bound": "binomial(r+d,d)",
+    "necessary_condition": "binomial(r+d,d) >= n"
+  },
+  "decision": {
+    "constant_mode_constant_degree_decoder_can_scale": false,
+    "necessary_binomial_budget_enforced": true,
+    "polylog_degree_decoder_refuted_in_full_generality": false,
+    "nonlinear_non_spectral_state_open": true,
+    "high_formal_degree_low_circuit_open": true
+  }
+}
