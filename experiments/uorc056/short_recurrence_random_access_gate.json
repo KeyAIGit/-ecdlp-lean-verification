@@ -1,0 +1,19 @@
+{
+  "profile_id": "UORC-056-SHORT-RECURRENCE-RANDOM-ACCESS-GATE",
+  "status": "proved_admission_rule",
+  "counterexample": {
+    "state": "P_m(z)=product_{j=0}^{m-1}(z-q^j)",
+    "recurrence": "P_{m+1}=(z-q^m)P_m",
+    "width": 1,
+    "sequential_cost": "Theta(m)",
+    "known_generic_acceleration": "quasi-linear in sqrt(m)",
+    "hpcx_result": false
+  },
+  "required_for_promotion": [
+    "poly(log n) random-access or jump-ahead evaluator",
+    "poly(log n) total transition-product cost",
+    "poly(log n) memory and advice",
+    "public exact coefficient and branch generation"
+  ],
+  "decision": "small recurrence width without a jump-ahead theorem does not support H-PCX"
+}
