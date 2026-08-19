@@ -15,24 +15,27 @@ def connectionDefect {R : Type*} [Ring R]
     (cImage multiplier cSource : R) : R :=
   cImage - multiplier * cSource
 
-/-- Connection defects form the expected multiplier cocycle. -/
+/-- Connection defects form the expected multiplier cocycle.  C53 uses this
+    identity only over commutative base fields. -/
 theorem connectionDefect_cocycle
-    {R : Type*} [Ring R]
+    {R : Type*} [CommRing R]
     (cAB cB cP a b : R) :
     connectionDefect cAB (a * b) cP
       = connectionDefect cAB a cB
         + a * connectionDefect cB b cP := by
-  simp [connectionDefect]
+  simp only [connectionDefect]
+  ring
 
 /-- Changing the connection by a vertical gauge changes the defect by the
     corresponding coboundary. -/
 theorem connectionDefect_gauge
-    {R : Type*} [Ring R]
+    {R : Type*} [CommRing R]
     (cQ cG fQ fG k : R) :
     connectionDefect (cQ + fQ) k (cG + fG)
       - connectionDefect cQ k cG
       = fQ - k * fG := by
-  simp [connectionDefect]
+  simp only [connectionDefect]
+  ring
 
 /-- With an anchor-zero gauge, the defect is just the direct query state. -/
 theorem anchorZeroDefect
@@ -69,8 +72,8 @@ theorem chargedNeutralFactorization
 theorem chargedNeutralCurveForm
     {K : Type*} [Field K]
     (rq rg tq tg yq yg b : K)
-    (hrg : rg ≠ 0) (hyq : yq ≠ 0)
-    (hyg : yg ≠ 0)
+    (_hrg : rg ≠ 0) (_hyq : yq ≠ 0)
+    (_hyg : yg ≠ 0)
     (hq : yq ^ 2 = tq + b)
     (hg : yg ^ 2 = tg + b) :
     (rq / rg) * (yg ^ 2 / yq ^ 2)
