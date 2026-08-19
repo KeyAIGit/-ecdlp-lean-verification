@@ -1,0 +1,15 @@
+{
+  "profile_id": "UORC-056-HRPCX-COMPACT-SPECIFICATION-GAP-V4",
+  "theorem": {
+    "public_equation": "(I+T)f=2*delta_O",
+    "unique_solution": "f([k]G)=(-1)^k"
+  },
+  "decision": {
+    "constant_size_public_specification_exists": true,
+    "specification_mentions_hidden_scalar": false,
+    "polylog_random_access_evaluator_found": false,
+    "direct_local_propagation_cost": "Theta(n) worst case",
+    "specification_is_hrpcx_solution": false,
+    "nonlinear_preconditioner_search_open": true
+  }
+}
