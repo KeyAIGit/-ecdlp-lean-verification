@@ -1,0 +1,124 @@
+name: UORC056 connection defect moduli decoder C53
+
+on:
+  push:
+    paths:
+      - "experiments/parity_lift_000/uorc056_c53_connection_core.py"
+      - "experiments/parity_lift_000/uorc056_c53_analysis.py"
+      - "experiments/parity_lift_000/uorc056_connection_defect_moduli_decoder_c53.py"
+      - "experiments/parity_lift_000/test_uorc056_connection_defect_moduli_decoder_c53.py"
+      - "Ecdlp/Proved/Uorc056ConnectionDefectModuliDecoder.lean"
+      - "notes/UORC056_CONNECTION_DEFECT_MODULI_DECODER_C53.md"
+      - "notes/UORC056_CHARGED_MODULI_TANGENT_TRANSFER_C54_CONTRACT.md"
+      - ".github/workflows/uorc056-connection-defect-moduli-decoder-c53.yml"
+  pull_request:
+    paths:
+      - "experiments/parity_lift_000/uorc056_c53_connection_core.py"
+      - "experiments/parity_lift_000/uorc056_c53_analysis.py"
+      - "experiments/parity_lift_000/uorc056_connection_defect_moduli_decoder_c53.py"
+      - "experiments/parity_lift_000/test_uorc056_connection_defect_moduli_decoder_c53.py"
+      - "Ecdlp/Proved/Uorc056ConnectionDefectModuliDecoder.lean"
+      - "notes/UORC056_CONNECTION_DEFECT_MODULI_DECODER_C53.md"
+      - "notes/UORC056_CHARGED_MODULI_TANGENT_TRANSFER_C54_CONTRACT.md"
+      - ".github/workflows/uorc056-connection-defect-moduli-decoder-c53.yml"
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Compile and replay C53 once
+        run: |
+          python -m py_compile \
+            experiments/parity_lift_000/uorc056_c53_connection_core.py \
+            experiments/parity_lift_000/uorc056_c53_analysis.py \
+            experiments/parity_lift_000/uorc056_connection_defect_moduli_decoder_c53.py \
+            experiments/parity_lift_000/test_uorc056_connection_defect_moduli_decoder_c53.py
+          PYTHONPATH=experiments/parity_lift_000 python \
+            experiments/parity_lift_000/uorc056_connection_defect_moduli_decoder_c53.py \
+            --out /tmp/uorc056_connection_defect_moduli_decoder_c53.json
+
+      - name: Test emitted exact certificate
+        env:
+          UORC056_C53_PAYLOAD: /tmp/uorc056_connection_defect_moduli_decoder_c53.json
+        run: |
+          PYTHONPATH=experiments/parity_lift_000 python -m unittest -v \
+            experiments/parity_lift_000/test_uorc056_connection_defect_moduli_decoder_c53.py
+
+      - name: Check machine-readable C53 boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/uorc056_connection_defect_moduli_decoder_c53.json').read_text()
+          )
+          assert data['profile_id'] == 'UORC-056-CONNECTION-DEFECT-MODULI-DECODER-C53'
+          a = data['aggregate']
+          assert a['curves'] == 16
+          assert a['rows'] == 9726
+          assert a['connection_recovery_checks'] == 9726
+          assert a['anchor_zero_checks'] == 9726
+          assert a['gauge_coboundary_checks'] == 9726
+          assert a['connection_cocycle_checks'] == 29178
+          assert a['quotient_invariance_checks'] == 29178
+          assert a['charged_neutral_factorization_checks'] == 19452
+          assert a['all_quotient_states_have_opposite_parity_collisions']
+          assert a['complete_p43_nonlinear_atoms'] == 569800
+          assert a['complete_p43_exact_single_survivors'] == 0
+          assert a['errors'] == 0
+          d = data['decision']
+          assert not d['connection_defect_is_independent_parity_mechanism']
+          assert d['functorial_connection_defect_zero']
+          assert d['anchor_zero_defect_is_direct_public_state']
+          assert d['nonzero_anchor_defect_oracle_reveals_full_scalar']
+          assert not d['arbitrary_decoder_from_glv_quotient_state_possible']
+          assert d['charged_neutral_factorization_found']
+          assert d['declared_bounded_nonlinear_grammar_closed']
+          assert not d['cheap_parity_decoder_found']
+          assert not d['parity_oracle_found']
+          assert not d['sub_sqrt_ecdlp_found']
+          assert len(data['digest']) == 64
+          PY
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check C53 algebra
+        run: |
+          lake build Ecdlp.Proved.Uorc056ConnectionDefectModuliDecoder
+          lake env lean Ecdlp/Proved/Uorc056ConnectionDefectModuliDecoder.lean
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-connection-defect-moduli-decoder-c53
+          path: /tmp/uorc056_connection_defect_moduli_decoder_c53.json
+          retention-days: 90
