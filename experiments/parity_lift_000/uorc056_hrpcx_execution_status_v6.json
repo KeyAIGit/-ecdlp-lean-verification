@@ -1,0 +1,26 @@
+{
+  "profile_id": "UORC-056-HRPCX-EXECUTION-CHECKPOINT-V6",
+  "central_hypothesis": "a public uniform poly(log n) exact parity evaluator exists",
+  "central_status": "open_and_unproved",
+  "audited_results": {
+    "V1": "linear translation-stable modules with linear readout require dimension n",
+    "V2": "low-pole rational state plus low-degree polynomial readout needs composite pole budget at least (n-1)/2",
+    "V3": "an r-mode translation-spectral state with degree-d polynomial readout requires binomial(r+d,d)>=n",
+    "V4": "the local odd-cycle equation is only an elementary implicit characterization, not algorithmic compression",
+    "V5": "no formula tree of size at most four in the tiny declared coordinate-rational grammar matches parity on the five-curve toy corpus",
+    "V6": "any exact state with one fixed linear or affine update over F_(p^d), even with an arbitrary decoder, requires d*r>=ord_n(p) or d*(r+1)>=ord_n(p)"
+  },
+  "secp256k1_V6": {
+    "ord_n_p": 19298681539552699237261830834781317975472927379845817397100860523586360249056,
+    "bit_length": 254,
+    "consequence": "fixed autonomous linear, affine, and Mobius state transports cannot have poly(log n) base-field dimension"
+  },
+  "not_proved": [
+    "existence of a classical polynomial-time parity algorithm",
+    "existence of a practically fast parity algorithm",
+    "nonexistence of a classical polynomial-time parity algorithm",
+    "a general arithmetic-circuit lower bound",
+    "a public coherent branch transport"
+  ],
+  "next_admitted_class": "nonlinear coordinate-dependent or query-dependent random-access state evolution, including high-degree low-DAG-size circuits and modular-composition jump-ahead mechanisms"
+}
