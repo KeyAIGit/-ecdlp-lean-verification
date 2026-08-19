@@ -1,4 +1,4 @@
-# UORC-056 H-RPCX true multiregister DAG CEGIS V10
+# UORC-056 H-RPCX true multiregister DAG CEGIS V10/V10A
 
 ## Purpose
 
@@ -36,7 +36,7 @@ The binary gate set is
 
 `+,-,*,/`,
 
-where division is admitted only when its denominator is nonzero on the complete declared corpus.
+where division is admitted only when its denominator is nonzero on the complete declared training corpus.
 
 Public readout macros `chi2`, `chi3`, `chi6`, inversion and negation are charged by expanded arithmetic cost. Their internal exponentiation registers are not exposed to other gates in V10; this is a declared remaining limitation rather than hidden sharing.
 
@@ -51,7 +51,7 @@ Every generated node stores:
 
 When two parents share an ancestor, set union counts the ancestor once. Thus the reported cost is the size of the constructed DAG, not the size of a recursively expanded formula.
 
-A formula-tree cost is also computed for the final witness, allowing the output certificate to report the exact savings caused by sharing.
+V10A independently audits the selection rule and computes formula-tree expansion with memoized node costs. Duplicate parent occurrences remain duplicated in the formula-tree comparison, but a 254-step square ladder is audited in linear rather than exponential runtime.
 
 ## Counterexample-guided search
 
@@ -61,9 +61,49 @@ Four frozen curves are used for synthesis. The fifth frozen curve and the indepe
 
 are held out from candidate selection.
 
-The active constraint set begins with two scalar positions from each training curve. After each deterministic synthesis pass, the current best candidate is checked against the complete training corpus. Exact failing positions are added round-robin across training curves, and the search is rerun.
+The active constraint set begins with two scalar positions from each training curve. After each deterministic synthesis pass, the CEGIS-guiding candidate is checked against the complete training corpus. Exact failing positions are added round-robin across training curves, and the search is rerun.
 
-This is counterexample-guided refinement. It does not make the retained-library search exhaustive.
+V10A separates two roles that V10 originally conflated:
+
+- the CEGIS candidate is used only to generate new counterexamples;
+- the reported best training candidate is selected independently over every discovered node by complete training error and charged DAG cost.
+
+Neither holdout contributes to selection.
+
+## Audited replay result
+
+The completed V10A replay used:
+
+- 300 training points on four curves;
+- 138 points on one frozen holdout curve;
+- 60 points on the independent `(61,61)` holdout curve;
+- four counterexample-refinement rounds;
+- two binary synthesis layers per round;
+- 254 exposed squaring registers on each declared ladder;
+- a retained pool of 128 nodes and 384 retained binary results per layer.
+
+No exact parity candidate was found.
+
+The best node selected solely by training error had:
+
+- `115 / 300` training errors;
+- charged expanded cost `32`;
+- `63 / 138` errors on the frozen holdout;
+- a zero denominator on the independent holdout, so it was not even regular on the full transferred corpus.
+
+Its five computed outputs were three quadratic-character readouts separated by one subtraction and one division. It had no shared-subgraph savings and therefore is not evidence for the central high-degree DAG hypothesis.
+
+The best discovered node that actually used nontrivial DAG sharing had:
+
+- charged DAG cost `30`;
+- expanded formula-tree cost `2066`;
+- `126 / 300` training errors;
+- `81 / 138` frozen-holdout errors;
+- `29 / 60` independent-holdout errors.
+
+Thus the engine genuinely constructed and evaluated shared high-degree DAGs, but the sharing did not reveal parity.
+
+In the best synthesis round, 3,839 retained nodes had positive savings relative to their expanded formula trees. The maximum formal saving was enormous because repeated squaring creates exponentially large expression trees. This validates the accounting implementation; it is not evidence of predictive value.
 
 ## Search pruning
 
@@ -83,8 +123,24 @@ Even then it is only a transferable toy candidate. A secp256k1 claim additionall
 
 ## Claim boundary
 
-V10 is infrastructure plus a deterministic discovery screen.
+V10/V10A provides working infrastructure plus a deterministic discovery screen.
 
 It does not prove a circuit lower bound, and failure to find a candidate does not imply that no multiregister parity DAG exists.
 
-Its scientific value is narrower and concrete: future searches can now use shared intermediate values without accidentally charging formula-tree cost or calling a unary macro chain a multiregister circuit.
+Its scientific value is concrete but limited:
+
+- shared intermediate values are now represented and charged correctly;
+- 254-step high-degree ladders expose all intermediate registers;
+- CEGIS guidance is separated from unbiased training selection;
+- holdout curves remain untouched until evaluation;
+- no exact or near-transferable parity evaluator emerged from the declared search.
+
+## Next target
+
+The next expansion should add genuinely new public state families rather than merely widen the same coordinate grammar:
+
+- compact Miller values and their exact defects;
+- ordered GLV-sector states;
+- CM-coupled multiregister templates;
+- modular-composition jump nodes with fully expanded cost;
+- ancestry-aware Pareto retention so semantically identical nodes with different sharing structure are not prematurely merged.
