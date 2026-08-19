@@ -1,0 +1,71 @@
+name: UORC056 H-RPCX rational DAG degree floor V8
+
+on:
+  push:
+    branches: [research/uorc056-hrpcx-linear-shift-barrier]
+    paths:
+      - 'experiments/parity_lift_000/uorc056_hrpcx_rational_dag_degree_floor_v8.py'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_rational_dag_degree_floor_v8_status.json'
+      - 'notes/reviews/UORC056_HRPCX_RATIONAL_DAG_DEGREE_FLOOR_V8.md'
+      - 'Ecdlp/Proved/Uorc056HrpcxRationalDagDegreeFloorV8.lean'
+      - '.github/workflows/uorc056-hrpcx-rational-dag-degree-floor-v8.yml'
+  pull_request:
+    branches: [research/uorc056-poly-compression-existence]
+    paths:
+      - 'experiments/parity_lift_000/uorc056_hrpcx_rational_dag_degree_floor_v8.py'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_rational_dag_degree_floor_v8_status.json'
+      - 'notes/reviews/UORC056_HRPCX_RATIONAL_DAG_DEGREE_FLOOR_V8.md'
+      - 'Ecdlp/Proved/Uorc056HrpcxRationalDagDegreeFloorV8.lean'
+      - '.github/workflows/uorc056-hrpcx-rational-dag-degree-floor-v8.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Replay exact secp gate floor
+        run: |
+          python -m py_compile experiments/parity_lift_000/uorc056_hrpcx_rational_dag_degree_floor_v8.py
+          python experiments/parity_lift_000/uorc056_hrpcx_rational_dag_degree_floor_v8.py --out /tmp/uorc056_hrpcx_rational_dag_degree_floor_v8.json
+      - name: Check machine-readable claim boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = json.loads(Path('/tmp/uorc056_hrpcx_rational_dag_degree_floor_v8.json').read_text())
+          status = json.loads(Path('experiments/parity_lift_000/uorc056_hrpcx_rational_dag_degree_floor_v8_status.json').read_text())
+
+          assert result['profile_id'] == status['profile_id']
+          assert result['status'] == status['status']
+          assert result['secp256k1']['minimum_binary_DAG_gates'] == 254
+          assert result['decision']['rational_DAG_with_at_most_253_binary_gates_can_decode_exact_parity'] is False
+          assert result['decision']['rational_DAG_with_254_or_more_binary_gates_exists'] == 'open'
+          assert result['decision']['polynomial_time_parity_algorithm_proved'] is False
+          PY
+      - name: Install Lean toolchain
+        run: |
+          curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Kernel-check exact numeric endpoint
+        run: |
+          lake exe cache get
+          lake build Ecdlp.Proved.Uorc056HrpcxRationalDagDegreeFloorV8
+          lake env lean Ecdlp/Proved/Uorc056HrpcxRationalDagDegreeFloorV8.lean
+      - name: Reject proof holes
+        run: |
+          ! grep -RInE '\b(sorry|admit)\b' Ecdlp/Proved/Uorc056HrpcxRationalDagDegreeFloorV8.lean
+      - uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-hrpcx-rational-dag-degree-floor-v8
+          path: /tmp/uorc056_hrpcx_rational_dag_degree_floor_v8.json
+          retention-days: 90
