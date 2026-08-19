@@ -1,0 +1,142 @@
+name: UORC056 nonhorizontal deformation gauge C52
+
+on:
+  push:
+    paths:
+      - "experiments/parity_lift_000/uorc056_c52_deformation_core.py"
+      - "experiments/parity_lift_000/uorc056_c52_analysis_primitives.py"
+      - "experiments/parity_lift_000/uorc056_c52_analysis_curve.py"
+      - "experiments/parity_lift_000/uorc056_c52_analysis_screen.py"
+      - "experiments/parity_lift_000/uorc056_c52_deformation_analysis.py"
+      - "experiments/parity_lift_000/uorc056_nonhorizontal_deformation_gauge_c52.py"
+      - "experiments/parity_lift_000/test_uorc056_nonhorizontal_deformation_gauge_c52.py"
+      - "Ecdlp/Proved/Uorc056NonhorizontalDeformationGauge.lean"
+      - "notes/UORC056_NONHORIZONTAL_DEFORMATION_GAUGE_C52.md"
+      - "notes/UORC056_CONNECTION_DEFECT_C53_CONTRACT.md"
+      - ".github/workflows/uorc056-nonhorizontal-deformation-gauge-c52.yml"
+  pull_request:
+    paths:
+      - "experiments/parity_lift_000/uorc056_c52_deformation_core.py"
+      - "experiments/parity_lift_000/uorc056_c52_analysis_primitives.py"
+      - "experiments/parity_lift_000/uorc056_c52_analysis_curve.py"
+      - "experiments/parity_lift_000/uorc056_c52_analysis_screen.py"
+      - "experiments/parity_lift_000/uorc056_c52_deformation_analysis.py"
+      - "experiments/parity_lift_000/uorc056_nonhorizontal_deformation_gauge_c52.py"
+      - "experiments/parity_lift_000/test_uorc056_nonhorizontal_deformation_gauge_c52.py"
+      - "Ecdlp/Proved/Uorc056NonhorizontalDeformationGauge.lean"
+      - "notes/UORC056_NONHORIZONTAL_DEFORMATION_GAUGE_C52.md"
+      - "notes/UORC056_CONNECTION_DEFECT_C53_CONTRACT.md"
+      - ".github/workflows/uorc056-nonhorizontal-deformation-gauge-c52.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Compile and replay C52 once
+        run: |
+          python -m py_compile \
+            experiments/parity_lift_000/uorc056_c52_deformation_core.py \
+            experiments/parity_lift_000/uorc056_c52_analysis_primitives.py \
+            experiments/parity_lift_000/uorc056_c52_analysis_curve.py \
+            experiments/parity_lift_000/uorc056_c52_analysis_screen.py \
+            experiments/parity_lift_000/uorc056_c52_deformation_analysis.py \
+            experiments/parity_lift_000/uorc056_nonhorizontal_deformation_gauge_c52.py \
+            experiments/parity_lift_000/test_uorc056_nonhorizontal_deformation_gauge_c52.py
+          PYTHONPATH=experiments/parity_lift_000 python \
+            experiments/parity_lift_000/uorc056_nonhorizontal_deformation_gauge_c52.py \
+            --out /tmp/uorc056_nonhorizontal_deformation_gauge_c52.json
+
+      - name: Test emitted exact certificate
+        env:
+          UORC056_C52_PAYLOAD: /tmp/uorc056_nonhorizontal_deformation_gauge_c52.json
+        run: |
+          PYTHONPATH=experiments/parity_lift_000 python -m unittest -v \
+            experiments/parity_lift_000/test_uorc056_nonhorizontal_deformation_gauge_c52.py
+
+      - name: Check machine-readable C52 boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/uorc056_nonhorizontal_deformation_gauge_c52.json').read_text()
+          )
+          assert data['profile_id'] == 'UORC-056-NONHORIZONTAL-DEFORMATION-GAUGE-C52'
+          aggregate = data['aggregate']
+          assert aggregate['curves'] == 12
+          assert aggregate['frozen'] == 4
+          assert aggregate['heldout'] == 8
+          assert aggregate['torsion_rows'] == 4392
+          assert aggregate['horizontal_transport_checks'] == 13176
+          assert aggregate['weierstrass_scaling_checks'] == 8784
+          assert aggregate['vertical_scalar_recovery_checks'] == 4392
+          assert aggregate['negation_covariance_checks'] == 4392
+          assert aggregate['cm_covariance_checks'] == 4392
+          assert aggregate['uniform_structural_atoms'] == 3872
+          assert aggregate['uniform_structural_valid_atoms'] == 89
+          assert aggregate['uniform_structural_span_rank'] == 83
+          assert aggregate['uniform_structural_target_in_span'] is False
+          assert aggregate['complete_p43_pair_affine_atoms'] == 13251
+          assert aggregate['complete_p43_single_survivors'] == 0
+          assert aggregate['errors'] == 0
+          assert all(all(row['identities'].values()) for row in data['analysis']['curves'])
+          secp = data['secp256k1']
+          assert secp['p_greater_than_n'] is True
+          assert secp['p_minus_n'] == 432420386565659656852420866390673177326
+          assert secp['public_samples'] == 14
+          decision = data['decision']
+          assert decision['public_finite_etale_torsion_lift_compiler_found'] is True
+          assert decision['functorial_curve_deformation_is_horizontal_on_torsion_labels'] is True
+          assert decision['nonzero_fixed_curve_vertical_deformation_reveals_full_scalar'] is True
+          assert decision['genuine_moduli_tangent_state_found'] is True
+          assert decision['nonhorizontal_public_deformation_with_endpoint_charge_found'] is False
+          assert decision['cheap_parity_decoder_found'] is False
+          assert decision['parity_oracle_found'] is False
+          assert decision['sub_sqrt_ecdlp_found'] is False
+          assert len(data['digest']) == 64
+          PY
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check C52 algebra
+        run: |
+          lake build Ecdlp.Proved.Uorc056NonhorizontalDeformationGauge
+          lake env lean Ecdlp/Proved/Uorc056NonhorizontalDeformationGauge.lean
+
+      - name: Upload C52 certificate
+        uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-nonhorizontal-deformation-gauge-c52
+          path: /tmp/uorc056_nonhorizontal_deformation_gauge_c52.json
+          retention-days: 90
