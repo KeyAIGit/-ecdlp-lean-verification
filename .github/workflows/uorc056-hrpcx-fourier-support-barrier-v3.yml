@@ -1,0 +1,56 @@
+name: UORC056 H-RPCX Fourier support barrier V3
+
+on:
+  push:
+    branches: [research/uorc056-hrpcx-linear-shift-barrier]
+    paths:
+      - 'experiments/parity_lift_000/uorc056_hrpcx_fourier_support_barrier_v3.py'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_fourier_support_barrier_v3_status.json'
+      - 'notes/reviews/UORC056_HRPCX_FOURIER_SUPPORT_BARRIER_V3.md'
+      - '.github/workflows/uorc056-hrpcx-fourier-support-barrier-v3.yml'
+  pull_request:
+    branches: [research/uorc056-poly-compression-existence]
+    paths:
+      - 'experiments/parity_lift_000/uorc056_hrpcx_fourier_support_barrier_v3.py'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_fourier_support_barrier_v3_status.json'
+      - 'notes/reviews/UORC056_HRPCX_FOURIER_SUPPORT_BARRIER_V3.md'
+      - '.github/workflows/uorc056-hrpcx-fourier-support-barrier-v3.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Replay exact Fourier profiles
+        run: |
+          python -m py_compile experiments/parity_lift_000/uorc056_hrpcx_fourier_support_barrier_v3.py
+          python experiments/parity_lift_000/uorc056_hrpcx_fourier_support_barrier_v3.py --out /tmp/uorc056_hrpcx_fourier_support_barrier_v3_results.json
+      - name: Check machine-readable boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = json.loads(Path('/tmp/uorc056_hrpcx_fourier_support_barrier_v3_results.json').read_text())
+          status = json.loads(Path('experiments/parity_lift_000/uorc056_hrpcx_fourier_support_barrier_v3_status.json').read_text())
+
+          assert result['profile_id'] == status['profile_id']
+          assert result['decision'] == status['decision']
+          assert result['aggregate']['orders'] == 5
+          assert result['aggregate']['frequencies_checked'] == 443
+          assert result['aggregate']['support_defects'] == 0
+          assert all(profile['nonzero_fourier_coefficients'] == profile['n'] for profile in result['toy_profiles'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-hrpcx-fourier-support-barrier-v3
+          path: /tmp/uorc056_hrpcx_fourier_support_barrier_v3_results.json
+          retention-days: 90
