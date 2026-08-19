@@ -1,0 +1,15 @@
+{
+  "profile_id": "UORC-056-HRPCX-EXACT-RATIONAL-SLP-CENSUS-V5",
+  "scope": {
+    "leaves": ["0", "1", "-1", "7", "gx", "gy", "x", "y"],
+    "gates": ["+", "-", "*", "inv(total-on-corpus)"],
+    "max_gates": 8,
+    "transfer": "one unchanged expression on five deterministic curves"
+  },
+  "decision": {
+    "exact_circuit_exists_within_declared_grammar_and_gate_bound": false,
+    "negative_result_is_exhaustive_for_declared_class": true,
+    "general_arithmetic_circuit_lower_bound_proved": false,
+    "larger_or_richer_circuit_search_open": true
+  }
+}
