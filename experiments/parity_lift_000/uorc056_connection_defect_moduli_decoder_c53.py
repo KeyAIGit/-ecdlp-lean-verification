@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """UORC-056 C53 decision package.
 
-Only fixed public test curves and public secp256k1 constants are used.  No
-external target, unknown scalar, private key, wallet or scalar-dependent tangent
-advice is accepted.
+C53 classifies connection defects and attacks nonlinear decoders of the public
+moduli-tangent state.  It accepts no external target, hidden scalar, private
+key, wallet, tangent advice, or signed branch table.
 """
 from __future__ import annotations
 
@@ -13,221 +13,268 @@ import json
 from pathlib import Path
 from typing import Any
 
-from uorc056_c52_deformation_core import (
-    Curve, SECP_G, SECP_N, SECP_P, torsion_lift_basis,
-)
+from uorc056_c52_deformation_core import Curve, torsion_lift_basis
 from uorc056_c53_connection_core import (
-    connection_defect,
-    gauge_changed_defect,
-    moduli_covariant_derivatives,
-    recover_scalar_from_known_defect,
+    ALL_CURVES, C52_CURVES, NEW_HELD_OUT, SECP_G, SECP_N, SECP_P,
+    defect, normalized, recover_multiplier_from_defect,
 )
-from uorc056_c53_moduli_analysis import build_analysis_payload
+from uorc056_c53_analysis import (
+    analyze_curve, complete_p43_nonlinear_screen, public_curve_result,
+    uniform_character_screen,
+)
 
-SECP_BETA = 0x7AE96A2B657C07106E64479EAC3434E99CF0497512F58995C1396C28719501EE
-SECP_LAMBDA = 0x5363AD4CC05C30E0A5261C028812645A122E22EA20816678DF02967C1B23BD72
-
-
-def connection_classification_certificate() -> dict[str, Any]:
-    p = 101
-    checks = 0
-    for scalar in range(1, 29):
-        anchor = 7
-        query = scalar * anchor % p
-        functorial = connection_defect(query, scalar, anchor, p)
-        if functorial != 0:
-            raise AssertionError("functorial defect did not vanish")
-        checks += 1
-
-        old = (11 * scalar + 3) % p
-        gauge_anchor = 13
-        gauge_query = (17 * scalar + 5) % p
-        changed = gauge_changed_defect(
-            old, gauge_query, scalar, gauge_anchor, p
-        )
-        if changed != (old + gauge_query - scalar * gauge_anchor) % p:
-            raise AssertionError("gauge coboundary identity failed")
-        checks += 1
-
-        desired = (scalar * scalar + 9) % p
-        endpoint_gauge = (desired - old) % p
-        if gauge_changed_defect(old, endpoint_gauge, scalar, 0, p) != desired:
-            raise AssertionError("anchor-zero gauge freedom failed")
-        checks += 1
-
-        defect = (19 * scalar + 4) % p
-        connection_query = (scalar * anchor + defect) % p
-        if recover_scalar_from_known_defect(
-            connection_query, defect, anchor, p
-        ) != scalar:
-            raise AssertionError("known defect did not recover scalar")
-        checks += 1
-    return {
-        "field_prime": p,
-        "scalars": 28,
-        "checks": checks,
-        "functorial_defect_zero": True,
-        "gauge_change_is_endpoint_coboundary": True,
-        "one_anchor_does_not_fix_componentwise_gauge": True,
-        "known_defect_with_nonzero_anchor_reveals_scalar": True,
-    }
+SECP_BETA = int(
+    "7AE96A2B657C07106E64479EAC3434E99CF0497512F58995C1396C28719501EE",
+    16,
+)
+SECP_LAMBDA = int(
+    "5363AD4CC05C30E0A5261C028812645A122E22EA20816678DF02967C1B23BD72",
+    16,
+)
 
 
 def secp256k1_certificate() -> dict[str, Any]:
     curve = Curve(SECP_P)
     if curve.mul(SECP_N, SECP_G) is not None:
-        raise AssertionError("bad secp generator")
-    samples = (1, 2, 3, 5, 7, 17, 127, (SECP_N - 1) // 2)
-    scalar_set = set(samples)
-    scalar_set.update(SECP_N - scalar for scalar in samples)
-    scalar_set.update(SECP_LAMBDA * scalar % SECP_N for scalar in samples)
-    values = {}
-    cross_checks = 0
-    for scalar in sorted(scalar_set):
-        point = curve.mul(scalar, SECP_G, SECP_N)
-        if point is None:
-            raise AssertionError("unexpected secp identity")
-        derivatives, ua = moduli_covariant_derivatives(
-            curve, SECP_N, point, 7
-        )
-        tangent_a, _tangent_b, _jet = torsion_lift_basis(
-            curve, SECP_N, point
-        )
-        if ua != tangent_a[0] or derivatives[0] != point[0] * ua % SECP_P:
-            raise AssertionError("secp first-jet cross-check failed")
-        values[scalar] = (point, derivatives)
-        cross_checks += 1
+        raise AssertionError("secp generator order mismatch")
+    if pow(SECP_BETA, 3, SECP_P) != 1 or SECP_BETA == 1:
+        raise AssertionError("secp beta mismatch")
+    if (SECP_LAMBDA * SECP_LAMBDA + SECP_LAMBDA + 1) % SECP_N:
+        raise AssertionError("secp lambda mismatch")
+    if curve.mul(SECP_LAMBDA, SECP_G, SECP_N) != (
+        SECP_BETA * SECP_G[0] % SECP_P,
+        SECP_G[1],
+    ):
+        raise AssertionError("secp GLV action mismatch")
 
-    negation = glv = 0
-    for scalar in samples:
-        point, derivatives = values[scalar]
-        opposite_point, opposite = values[SECP_N - scalar]
-        image_point, image = values[SECP_LAMBDA * scalar % SECP_N]
-        if opposite_point != curve.neg(point):
-            raise AssertionError("secp negation point mismatch")
-        expected_negation = (
-            derivatives[0], -derivatives[1] % SECP_P,
-            derivatives[2], -derivatives[3] % SECP_P,
+    (ua_g, va_g), (ub_g, vb_g), _ = torsion_lift_basis(curve, SECP_N, SECP_G)
+    xg, yg = SECP_G
+    omega_a_g = ua_g * pow(2 * yg, -1, SECP_P) % SECP_P
+    omega_b_g = ub_g * pow(2 * yg, -1, SECP_P) % SECP_P
+    r_g = xg * ua_g % SECP_P
+    if not all((omega_a_g, omega_b_g, r_g)):
+        raise AssertionError("singular secp anchor chart")
+
+    public_scalars = (
+        1, 2, 3, 5, 7, 8, 17, 31, 127, 255,
+        (SECP_N - 1) // 2,
+        (SECP_N + 1) // 2,
+        SECP_N - 2,
+        SECP_N - 1,
+    )
+    recovery_checks = factorization_checks = cm_checks = 0
+    samples = []
+    for scalar in public_scalars:
+        query = curve.mul(scalar, SECP_G, SECP_N)
+        if query is None:
+            raise AssertionError("unexpected secp identity")
+        (ua, va), (ub, vb), _ = torsion_lift_basis(curve, SECP_N, query)
+        x, y = query
+        omega_a = ua * pow(2 * y, -1, SECP_P) % SECP_P
+        omega_b = ub * pow(2 * y, -1, SECP_P) % SECP_P
+        delta = defect(omega_a, scalar, omega_a_g, SECP_P)
+        recovered = recover_multiplier_from_defect(
+            omega_a, delta, omega_a_g, SECP_P
         )
-        if opposite != expected_negation:
-            raise AssertionError("secp derivative negation mismatch")
-        negation += 1
-        if image_point != (SECP_BETA * point[0] % SECP_P, point[1]):
+        if recovered != scalar:
+            raise AssertionError("secp connection defect did not recover full scalar")
+        recovery_checks += 1
+
+        oa = normalized(omega_a, omega_a_g, SECP_P)
+        ob = normalized(omega_b, omega_b_g, SECP_P)
+        t = x**3 % SECP_P
+        r = x * ua % SECP_P
+        neutral = (
+            r * pow(r_g, -1, SECP_P)
+            * (pow(xg, 3, SECP_P) + 7)
+            * pow(t + 7, -1, SECP_P)
+        ) % SECP_P
+        if oa * ob % SECP_P != neutral:
+            raise AssertionError("secp charged-neutral factorization failed")
+        factorization_checks += 1
+
+        phi_query = curve.mul(SECP_LAMBDA * scalar, SECP_G, SECP_N)
+        if phi_query != (SECP_BETA * x % SECP_P, y):
             raise AssertionError("secp GLV point mismatch")
-        expected_image = (
-            derivatives[0],
-            SECP_BETA * SECP_BETA % SECP_P * derivatives[1] % SECP_P,
-            SECP_BETA * derivatives[2] % SECP_P,
-            derivatives[3],
-        )
-        if image != expected_image:
-            raise AssertionError("secp derivative GLV mismatch")
-        glv += 1
+        (ua_phi, va_phi), _, _ = torsion_lift_basis(curve, SECP_N, phi_query)
+        if (ua_phi, va_phi) != (
+            SECP_BETA * SECP_BETA * ua % SECP_P,
+            SECP_BETA * va % SECP_P,
+        ):
+            raise AssertionError("secp GLV tangent mismatch")
+        cm_checks += 1
+        samples.append({
+            "scalar": scalar,
+            "connection_defect": delta,
+            "charged_OA": oa,
+            "charged_OB": ob,
+            "neutral_product": neutral,
+        })
+
     return {
         "p": SECP_P,
         "n": SECP_N,
-        "samples": len(samples),
-        "distinct_evaluations": len(values),
-        "first_jet_cross_checks": cross_checks,
-        "negation_checks": negation,
-        "glv_checks": glv,
-        "builder_index_cost": "O(log n) for fixed derivative order",
+        "p_greater_than_n": SECP_P > SECP_N,
+        "public_samples": len(public_scalars),
+        "full_scalar_connection_recovery_checks": recovery_checks,
+        "charged_neutral_factorization_checks": factorization_checks,
+        "cm_covariance_checks": cm_checks,
+        "classification": (
+            "an exact public nonzero-anchor defect oracle yields the full scalar; "
+            "the public torsion lift alone does not provide that defect"
+        ),
+        "samples": samples,
     }
 
 
 def build_payload() -> dict[str, Any]:
-    analysis = build_analysis_payload()
-    connection = connection_classification_certificate()
+    curve_data = []
+    for index, row in enumerate(ALL_CURVES):
+        if index < 4:
+            label = f"frozen-{index + 1}"
+        elif index < len(C52_CURVES):
+            label = f"heldout-c52-{index - 3}"
+        else:
+            label = f"heldout-c53-{index - len(C52_CURVES) + 1}"
+        degree_bound = 16 if row[1] <= 400 else 10
+        curve_data.append(analyze_curve(row, label, degree_bound))
+
+    uniform = uniform_character_screen(curve_data)
+    complete = complete_p43_nonlinear_screen(
+        curve_data[0]["rows"], curve_data[0]["context"], curve_data[0]["columns"]
+    )
     secp = secp256k1_certificate()
-    aggregate = dict(analysis["aggregate"])
-    aggregate.update({
-        "connection_classification_checks": connection["checks"],
-        "secp_samples": secp["samples"],
-        "secp_distinct_evaluations": secp["distinct_evaluations"],
-        "secp_negation_checks": secp["negation_checks"],
-        "secp_glv_checks": secp["glv_checks"],
-    })
+    public_curves = [public_curve_result(data) for data in curve_data]
+
+    aggregate = {
+        "curves": len(curve_data),
+        "frozen": 4,
+        "c52_heldout": len(C52_CURVES) - 4,
+        "new_c53_heldout": len(NEW_HELD_OUT),
+        "rows": sum(len(data["rows"]) for data in curve_data),
+        "connection_recovery_checks": sum(
+            data["connection"]["nonzero_anchor_recovery_checks"]
+            for data in curve_data
+        ),
+        "anchor_zero_checks": sum(
+            data["connection"]["anchor_zero_direct_state_checks"]
+            for data in curve_data
+        ),
+        "gauge_coboundary_checks": sum(
+            data["connection"]["gauge_coboundary_checks"]
+            for data in curve_data
+        ),
+        "connection_cocycle_checks": sum(
+            data["connection"]["multiplier_cocycle_checks"]
+            for data in curve_data
+        ),
+        "quotient_invariance_checks": sum(
+            data["covariance"]["quotient_invariance_checks"]
+            for data in curve_data
+        ),
+        "charged_neutral_factorization_checks": sum(
+            data["covariance"]["charged_neutral_factorization_checks"]
+            for data in curve_data
+        ),
+        "all_quotient_states_have_opposite_parity_collisions": all(
+            data["covariance"][
+                "quotient_state_has_exact_opposite_parity_collision"
+            ]
+            for data in curve_data
+        ),
+        "uniform_character_atoms": uniform["declared_atoms"],
+        "uniform_valid_character_atoms": uniform["valid_atoms"],
+        "uniform_character_span_rank": uniform["span_rank"],
+        "uniform_target_in_span": uniform[
+            "target_in_arbitrary_product_span"
+        ],
+        "complete_p43_nonlinear_atoms": complete["declared_atoms"],
+        "complete_p43_exact_single_survivors": len(
+            complete["exact_single_survivors"]
+        ),
+        "errors": sum(data["errors"] for data in curve_data),
+    }
 
     payload: dict[str, Any] = {
         "profile_id": "UORC-056-CONNECTION-DEFECT-MODULI-DECODER-C53",
         "schema_version": "1.0",
-        "central_target": "Y_G(x([k]G))/y([k]G)=(-1)^k",
+        "central_target": "Q=[k]G -> (-1)^k",
         "predecessor": "C52 nonhorizontal deformation gauge boundary",
-        "connection_defect_normal_form": {
-            "definition": "Delta_k^nabla(G)=nabla([k]G)-k*nabla(G) in invariant-tangent scalar coordinates",
-            "functorial_connection": "Delta=0",
-            "gauge_change": "Delta^(nabla+h)=Delta^nabla+h(Q)-k*h(G)",
-            "anchor_zero_freedom": "if h(G)=0, h(Q) can shift the endpoint defect arbitrarily",
-            "known_defect_leakage": "if nabla(G)!=0 and Delta is known, k=(nabla(Q)-Delta)/nabla(G)",
-        },
-        "new_differential_orbit_state": {
-            "base_state": "R(P)=x(P)*dot x_a(P)",
-            "derivative_operator": "D_omega=2y*d/dx",
-            "U": "U(P)=D_omega R(P)/x(P)^2",
-            "V": "V(P)=D_omega^2 R(P)/x(P)",
-            "symmetry": {
-                "U_negation": "U(-P)=-U(P)",
-                "V_negation": "V(-P)=V(P)",
-                "U_GLV": "U(phi P)=U(P)",
-                "V_GLV": "V(phi P)=V(P)",
-            },
-            "set_theoretic_result": (
-                "(U,V) identifies the target GLV orbit on every declared curve; "
-                "anchor/query (U,V) identifies g_G on every marked-generator frozen replay"
+        "exact_connection_classification": {
+            "defect": "delta_m^c(P)=c([m]P)-m c(P)",
+            "multiplier_cocycle": (
+                "delta_ab(P)=delta_a([b]P)+a delta_b(P)"
             ),
-            "not_a_compressed_decoder": (
-                "the first exact polynomial and rational decoders appear at the generic interpolation threshold"
+            "gauge_change": (
+                "delta_m^(c+f)-delta_m^c=f([m]P)-m f(P)"
+            ),
+            "functorial_connection": "delta=0",
+            "anchor_zero": (
+                "c(G)=0 implies delta_k(G)=c(Q); the connection wrapper adds no information"
+            ),
+            "nonzero_anchor": (
+                "c(G)!=0 and exact delta_k(G) imply k=(c(Q)-delta_k(G))/c(G)"
             ),
         },
-        "carry_root_reduction": {
-            "assume": "R(P)=F(T), T=x(P)^3, U=6yF'(T), C_G(T)=g_G(P)y(P)^3",
-            "cross_multiplied_identity": "U*C_G(T)=6*g_G(P)*(T+7)^2*F'(T)",
-            "consequence": (
-                "decoding g from the public differential state still requires the generator-marked carry-root section C_G, up to public normalization"
+        "charged_neutral_normal_form": {
+            "OA": "omega_a(Q)/omega_a(G)",
+            "OB": "omega_b(Q)/omega_b(G)=x(Q)y(G)/(x(G)y(Q))",
+            "neutral_product": (
+                "OA*OB=(R(Q)/R(G))*((T(G)+7)/(T(Q)+7))"
+            ),
+            "interpretation": (
+                "the moduli tangent contributes a sign-neutral factor; endpoint charge is carried by the ordinary x/y coordinate ratio"
             ),
         },
-        "analysis": analysis,
-        "connection_certificate": connection,
+        "arbitrary_decoder_no_go": {
+            "state": "(T,R,S) with 2(T+7)S=T(3R+1)",
+            "reason": (
+                "the state is identical at Q and -Q while parity changes sign"
+            ),
+            "glv_triple": (
+                "R(Q)=R(phi Q)=R(phi^2 Q), and likewise for S,T"
+            ),
+        },
+        "curves": public_curves,
+        "uniform_nonlinear_character_screen": uniform,
+        "complete_p43_nonlinear_screen": complete,
         "secp256k1": secp,
         "aggregate": aggregate,
-        "claim_boundary": {
-            "proved_or_replayed": [
-                "the connection-defect gauge and scalar-leakage normal forms",
-                "a public fixed-order O(log n) covariant-derivative compiler",
-                "negation and GLV covariance through the third derivative",
-                "set-theoretic determination of g by anchor/query (U,V) on every marked frozen generator",
-                "generic-threshold polynomial and rational interpolation degrees on twelve curves",
-                "declared character, field-carry, representation-bit, mu6 and bounded determinant screens",
-                "public secp256k1 covariance samples",
-            ],
-            "not_claimed": [
-                "an unrestricted connection or nonlinear-circuit lower bound",
-                "a cheap g decoder",
-                "a cheap J decoder",
-                "a parity oracle",
-                "a sub-square-root ECDLP algorithm",
-            ],
-        },
         "decision": {
-            "functorial_connection_defect_is_zero": True,
-            "connection_defect_is_gauge_coboundary_without_extra_normalization": True,
-            "known_nonzero_anchor_defect_reveals_full_scalar": True,
-            "public_covariant_derivative_state_found": True,
-            "anchor_query_uv_state_determines_g_set_theoretically": True,
-            "bounded_declared_decoder_grammars_closed": True,
-            "cheap_g_decoder_found": False,
-            "cheap_J_decoder_found": False,
+            "connection_defect_is_independent_parity_mechanism": False,
+            "functorial_connection_defect_zero": True,
+            "anchor_zero_defect_is_direct_public_state": True,
+            "nonzero_anchor_defect_oracle_reveals_full_scalar": True,
+            "arbitrary_decoder_from_glv_quotient_state_possible": False,
+            "charged_neutral_factorization_found": True,
+            "declared_bounded_nonlinear_grammar_closed": True,
             "cheap_parity_decoder_found": False,
             "parity_oracle_found": False,
             "sub_sqrt_ecdlp_found": False,
         },
+        "claim_boundary": {
+            "proved_or_replayed": [
+                "the exact connection-defect cocycle and gauge formulas",
+                "the zero/direct-state/full-scalar trichotomy",
+                "arbitrary-decoder impossibility for the GLV quotient state by Q/-Q collision",
+                "the exact charged-neutral factorization of OA and OB",
+                "bounded polynomial and nonlinear character screens on 16 curves",
+                "four held-out curves not used by C52",
+            ],
+            "not_claimed": [
+                "an unrestricted lower bound for every nonlinear function of the charged pair",
+                "an unrestricted arithmetic-circuit lower bound",
+                "a parity oracle",
+                "a sub-square-root ECDLP algorithm",
+            ],
+        },
         "successor": {
-            "id": "DIFFERENTIAL-ORBIT-CARRY-ROOT-COMPILER-C54",
+            "id": "CHARGED-MODULI-TANGENT-TRANSFER-C54",
             "target": (
-                "construct or exclude a short generator-marked compiler for the normalization converting U(P) into g_G(P), equivalently the carry-root section C_G(T)"
+                "analyze the addition, orbit-factor, and short-resultant complexity of the surviving charged pair (OA,OB), after quotienting the exact neutral factor"
             ),
             "mandatory_gate": (
-                "must beat generic interpolation, work for all marked generators, and include all preprocessing, advice, representation, memory and online cost"
+                "a candidate must add numerical endpoint charge beyond the public x/y ratio and may not use a scalar-labelled connection defect"
             ),
         },
     }
