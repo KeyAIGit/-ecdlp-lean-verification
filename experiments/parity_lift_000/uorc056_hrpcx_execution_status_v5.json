@@ -1,0 +1,29 @@
+{
+  "profile_id": "UORC-056-HRPCX-EXECUTION-CHECKPOINT-V5",
+  "central_hypothesis": "a public uniform poly(log n) exact parity evaluator exists",
+  "central_status": "open",
+  "proved_positive": [
+    "canonical parity has a constant-size public unique local specification (I+T)f=2*delta_O",
+    "a uniform polynomial-time H-RPCX evaluator is polynomial-time equivalent to exact parity and ECDLP"
+  ],
+  "proved_barriers": [
+    "translation-stable linear modules containing parity have dimension n",
+    "exact cyclic parity has linear recurrence width n",
+    "a low-pole algebraic state followed by a low-degree polynomial decoder needs composite pole budget at least (n-1)/2",
+    "an r-mode spectral state with degree-d polynomial readout must satisfy binomial(r+d,d)>=n",
+    "the declared joint coordinate-rational SLP grammar has no exact parity circuit with at most eight gates"
+  ],
+  "not_proved": [
+    "nonexistence of a classical polynomial-time parity algorithm",
+    "a general arithmetic-circuit lower bound for Y_G or parity",
+    "existence of a high-degree low-size public decoder",
+    "a public coherent branch transport"
+  ],
+  "single_remaining_gap": "poly(log n) random-access evaluation of the unique global solution at a point Q encoded by elliptic-curve coordinates rather than by its scalar index",
+  "admitted_next_classes": [
+    "high-degree low-size arithmetic circuits",
+    "modular-composition or product-tree evaluators with fully counted preprocessing",
+    "nonlinear coherent Miller/theta/CM branch transport",
+    "coordinate-sensitive algorithms outside the generic-group model"
+  ]
+}
