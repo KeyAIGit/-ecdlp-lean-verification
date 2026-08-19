@@ -23,7 +23,6 @@ theorem connectionDefect_cocycle
       = connectionDefect cAB a cB
         + a * connectionDefect cB b cP := by
   simp [connectionDefect]
-  ring
 
 /-- Changing the connection by a vertical gauge changes the defect by the
     corresponding coboundary. -/
@@ -34,7 +33,6 @@ theorem connectionDefect_gauge
       - connectionDefect cQ k cG
       = fQ - k * fG := by
   simp [connectionDefect]
-  ring
 
 /-- With an anchor-zero gauge, the defect is just the direct query state. -/
 theorem anchorZeroDefect
@@ -53,7 +51,6 @@ theorem nonzeroAnchorDefectRevealsMultiplier
   apply (div_eq_iff hcG).2
   rw [hdelta]
   simp [connectionDefect]
-  ring
 
 /-- The charged tangent pair factors into an ordinary endpoint coordinate
     ratio and a sign-neutral moduli factor. -/
@@ -66,7 +63,6 @@ theorem chargedNeutralFactorization
         * ((xq / yq) / (xg / yg))
       = (rq / rg) * (yg ^ 2 / yq ^ 2) := by
   field_simp
-  ring
 
 /-- Substituting the curve equations turns the neutral factor into the C53
     `T,R` normal form. -/
