@@ -1,0 +1,15 @@
+{
+  "profile_id": "UORC-056-HRPCX-TRUE-MULTIREGISTER-DAG-CEGIS-V10A",
+  "status": "selection_audited_true_DAG_screen_not_exhaustive",
+  "correction": {
+    "cegis_candidate_and_best_training_candidate_are_distinct_roles": true,
+    "holdouts_are_not_used_for_candidate_selection": true,
+    "best_candidate_is_selected_over_all_discovered_nodes": true
+  },
+  "decision": {
+    "claim_algorithm_only_after_exact_training_and_two_unchanged_holdouts": true,
+    "negative_result_is_exhaustive": false,
+    "true_DAG_accounting_required": true,
+    "symbolic_proof_required_before_secp256k1_claim": true
+  }
+}
