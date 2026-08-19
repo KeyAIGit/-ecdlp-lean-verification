@@ -1,0 +1,26 @@
+{
+  "profile_id": "UORC-056-CHARACTER-RATIONAL-DEGREE-EXACT",
+  "status": "proved",
+  "setting": {
+    "order": "odd n",
+    "coordinate": "z_k=omega^k for a primitive n-th root omega",
+    "decoder": "R=A/B with B nonzero on all z_k",
+    "target": "R(z_k)=(-1)^k"
+  },
+  "theorem": {
+    "minimum_max_degree": "(n+1)/2",
+    "lower_bound_reason": "A-B has every even z_k as a root",
+    "matching_construction": "R=(O-E)/(O+E), with E and O the even and odd root products"
+  },
+  "closed_classes": [
+    "poly(log n)-degree one-character rational decoders",
+    "low-degree rational interpolation of exact canonical parity"
+  ],
+  "not_closed": [
+    "high-degree low-straight-line-complexity decoders",
+    "compressed half-orbit product evaluation",
+    "multi-state nonlinear decoders",
+    "public secp256k1 coordinate-specific constructions"
+  ],
+  "remaining_primitive": "compute the ratio of even/odd half-orbit products or an equivalent object without materializing n/2 factors"
+}
