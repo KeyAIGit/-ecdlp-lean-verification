@@ -3,13 +3,18 @@
 
 V10 correctly implements shared-register DAG accounting, but its original final
 summary selected among the CEGIS-guiding candidates rather than independently
-selecting the lowest-error node discovered in every synthesis run.  V10A keeps
+selecting the lowest-error node discovered in every synthesis run. V10A keeps
 those roles separate:
 
 * `cegis_candidate` supplies counterexamples for the next round;
 * `best_training_candidate` is selected only by complete training error and
   charged DAG cost;
 * neither frozen nor external holdout data participates in selection.
+
+The audit also computes formula-tree expansion with memoized node costs. This
+preserves duplicate parent contributions, so `(x*y)+(x*y)` has tree cost three
+and DAG cost two, while avoiding exponential recomputation on 254-step square
+ladders.
 """
 from __future__ import annotations
 
@@ -21,6 +26,43 @@ import uorc056_hrpcx_true_multiregister_dag_cegis_v10 as v10
 
 
 PROFILE_ID = "UORC-056-HRPCX-TRUE-MULTIREGISTER-DAG-CEGIS-V10A"
+
+
+def memo_formula_tree_cost(
+    state: v10.SearchState, node_id: int, cache: dict[int, int]
+) -> int:
+    """Return expanded formula-tree cost in O(number of DAG nodes).
+
+    A cached child cost is still added once for every parent occurrence. Thus
+    common subexpressions are duplicated in the formula-tree comparison but are
+    charged only once in the DAG support ledger.
+    """
+    if node_id in cache:
+        return cache[node_id]
+    node = state.nodes[node_id]
+    if node.operation == "base":
+        value = 0
+    else:
+        value = node.gate_weight + sum(
+            memo_formula_tree_cost(state, parent, cache) for parent in node.parents
+        )
+    cache[node_id] = value
+    return value
+
+
+def serialized_dag_with_memo(
+    output: int, state: v10.SearchState
+) -> dict[str, object]:
+    """Reuse V10 serialization while replacing its recursive cost query."""
+    cache: dict[int, int] = {}
+    original = state.formula_tree_cost
+    state.formula_tree_cost = lambda node_id: memo_formula_tree_cost(  # type: ignore[method-assign]
+        state, node_id, cache
+    )
+    try:
+        return state.serialize_dag(output)
+    finally:
+        state.formula_tree_cost = original  # type: ignore[method-assign]
 
 
 def holdout_metrics(output: int, state: v10.SearchState) -> dict[str, object]:
@@ -50,7 +92,7 @@ def describe(output: int, state: v10.SearchState) -> dict[str, object]:
         "training_errors": node.train_errors,
         "expanded_cost": node.expanded_cost,
         **metrics,
-        "dag": state.serialize_dag(output),
+        "dag": serialized_dag_with_memo(output, state),
     }
 
 
@@ -111,19 +153,22 @@ def run() -> dict[str, object]:
         and best["external_holdout_errors"] == 0
     )
 
+    tree_cost_cache: dict[int, int] = {}
     nodes_with_sharing = 0
     best_shared: tuple[int, int, int] | None = None
     best_shared_output: int | None = None
+    maximum_sharing_savings = 0
     for node_id, node in enumerate(best_state.nodes):
         if node.operation == "base":
             continue
-        tree_cost = best_state.formula_tree_cost(node_id)
+        tree_cost = memo_formula_tree_cost(best_state, node_id, tree_cost_cache)
         savings = tree_cost - node.expanded_cost
+        maximum_sharing_savings = max(maximum_sharing_savings, savings)
         if savings > 0:
             nodes_with_sharing += 1
-            key = (node.train_errors, node.expanded_cost, node_id)
-            if best_shared is None or key < best_shared:
-                best_shared = key
+            shared_key = (node.train_errors, node.expanded_cost, node_id)
+            if best_shared is None or shared_key < best_shared:
+                best_shared = shared_key
                 best_shared_output = node_id
 
     return {
@@ -139,6 +184,7 @@ def run() -> dict[str, object]:
         "best_training_candidate": best,
         "sharing_statistics_in_best_round": {
             "nodes_with_positive_DAG_savings": nodes_with_sharing,
+            "maximum_formula_tree_minus_DAG_cost": maximum_sharing_savings,
             "best_shared_node": (
                 describe(best_shared_output, best_state)
                 if best_shared_output is not None
