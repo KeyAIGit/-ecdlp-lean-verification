@@ -1,0 +1,13 @@
+{
+  "profile_id": "UORC-056-PARITY-HALF-CYCLE-CUT-EQUIVALENCE",
+  "status": "proved",
+  "setting": "odd-order cyclic group, Q=[k]G with 0<=k<n",
+  "public_transform": "R=[2^{-1} mod n]Q=[r]G",
+  "theorem": {
+    "even_case": "k even iff r=k/2 and 0<=r<=(n-1)/2",
+    "odd_case": "k odd iff r=(k+n)/2 and (n+1)/2<=r<n",
+    "equivalence": "exact parity iff exact lower-half versus upper-half classification of the halved point"
+  },
+  "interpretation": "the missing information is the side of the canonical global cut in the odd scalar cycle",
+  "research_target": "construct a public coordinate-dependent poly(log n) detector for this cut without first recovering k"
+}
