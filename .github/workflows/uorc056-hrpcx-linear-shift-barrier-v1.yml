@@ -1,0 +1,69 @@
+name: UORC056 H-RPCX linear shift barrier V1
+
+on:
+  push:
+    branches: [research/uorc056-hrpcx-linear-shift-barrier]
+    paths:
+      - 'experiments/parity_lift_000/uorc056_hrpcx_linear_shift_barrier_v1.py'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_linear_shift_barrier_v1_status.json'
+      - 'Ecdlp/Proved/Uorc056HrpcxLinearShiftBarrierV1.lean'
+      - 'notes/reviews/UORC056_HRPCX_LINEAR_SHIFT_BARRIER_V1.md'
+      - '.github/workflows/uorc056-hrpcx-linear-shift-barrier-v1.yml'
+  pull_request:
+    branches: [research/uorc056-poly-compression-existence]
+    paths:
+      - 'experiments/parity_lift_000/uorc056_hrpcx_linear_shift_barrier_v1.py'
+      - 'experiments/parity_lift_000/uorc056_hrpcx_linear_shift_barrier_v1_status.json'
+      - 'Ecdlp/Proved/Uorc056HrpcxLinearShiftBarrierV1.lean'
+      - 'notes/reviews/UORC056_HRPCX_LINEAR_SHIFT_BARRIER_V1.md'
+      - '.github/workflows/uorc056-hrpcx-linear-shift-barrier-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Replay exact circulant barrier
+        run: |
+          python -m py_compile experiments/parity_lift_000/uorc056_hrpcx_linear_shift_barrier_v1.py
+          python experiments/parity_lift_000/uorc056_hrpcx_linear_shift_barrier_v1.py --out /tmp/uorc056_hrpcx_linear_shift_barrier_v1_results.json
+      - name: Check machine-readable decision
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          result = json.loads(Path('/tmp/uorc056_hrpcx_linear_shift_barrier_v1_results.json').read_text())
+          status = json.loads(Path('experiments/parity_lift_000/uorc056_hrpcx_linear_shift_barrier_v1_status.json').read_text())
+
+          assert result['profile_id'] == status['profile_id']
+          assert result['decision'] == status['decision']
+          assert result['aggregate']['instances'] == 14
+          assert result['aggregate']['rank_defects'] == 0
+          assert result['aggregate']['inverse_failures'] == 0
+          assert result['aggregate']['largest_order'] == 139
+          assert all(item['rank'] == item['n'] for item in result['checks'])
+          PY
+      - name: Install Lean toolchain
+        run: |
+          curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Kernel-check theorem core
+        run: |
+          lake exe cache get
+          lake build Ecdlp.Proved.Uorc056HrpcxLinearShiftBarrierV1
+          lake env lean Ecdlp/Proved/Uorc056HrpcxLinearShiftBarrierV1.lean
+      - uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-hrpcx-linear-shift-barrier-v1
+          path: /tmp/uorc056_hrpcx_linear_shift_barrier_v1_results.json
+          retention-days: 90
