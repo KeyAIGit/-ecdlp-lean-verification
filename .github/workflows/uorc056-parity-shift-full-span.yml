@@ -1,0 +1,53 @@
+name: UORC056 parity shift full span
+
+on:
+  push:
+    branches: [research/uorc056-poly-compression-existence]
+    paths:
+      - 'Ecdlp/Proved/ParityShiftFullSpan.lean'
+      - 'notes/reviews/UORC056_PARITY_SHIFT_FULL_SPAN.md'
+      - 'experiments/uorc056/parity_shift_full_span.json'
+      - '.github/workflows/uorc056-parity-shift-full-span.yml'
+  pull_request:
+    branches: [research/parity-lift-000]
+    paths:
+      - 'Ecdlp/Proved/ParityShiftFullSpan.lean'
+      - 'notes/reviews/UORC056_PARITY_SHIFT_FULL_SPAN.md'
+      - 'experiments/uorc056/parity_shift_full_span.json'
+      - '.github/workflows/uorc056-parity-shift-full-span.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check machine-readable boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('experiments/uorc056/parity_shift_full_span.json')
+          data = json.loads(p.read_text())
+          assert data['profile_id'] == 'UORC-056-PARITY-SHIFT-FULL-SPAN'
+          assert data['status'] == 'proved'
+          assert data['theorems']['seam_identity'] == '(I+T)f = 2 delta_0'
+          assert 'nonlinear state spaces' in data['not_closed']
+          PY
+      - name: Install Lean toolchain
+        run: |
+          curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Kernel-check full-span theorem
+        run: |
+          lake exe cache get
+          lake build Ecdlp.Proved.ParityShiftFullSpan
+          lake env lean Ecdlp/Proved/ParityShiftFullSpan.lean
+      - name: Reject proof holes
+        run: |
+          ! grep -RInE '\b(sorry|admit)\b' Ecdlp/Proved/ParityShiftFullSpan.lean
