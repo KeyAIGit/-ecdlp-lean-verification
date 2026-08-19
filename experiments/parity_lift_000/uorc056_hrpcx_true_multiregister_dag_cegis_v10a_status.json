@@ -1,15 +1,42 @@
 {
   "profile_id": "UORC-056-HRPCX-TRUE-MULTIREGISTER-DAG-CEGIS-V10A",
-  "status": "selection_audited_true_DAG_screen_not_exhaustive",
+  "status": "selection_audited_true_DAG_screen_completed_no_candidate",
   "correction": {
     "cegis_candidate_and_best_training_candidate_are_distinct_roles": true,
     "holdouts_are_not_used_for_candidate_selection": true,
-    "best_candidate_is_selected_over_all_discovered_nodes": true
+    "best_candidate_is_selected_over_all_discovered_nodes": true,
+    "formula_tree_audit_is_memoized_without_removing_duplicate_parent_cost": true
+  },
+  "corpus": {
+    "training_points": 300,
+    "frozen_holdout_points": 138,
+    "external_holdout_points": 60
+  },
+  "audited_result": {
+    "exact_training_candidate_found": false,
+    "parity_algorithm_found": false,
+    "best_training_errors": 115,
+    "best_training_total": 300,
+    "best_expanded_cost": 32,
+    "best_frozen_holdout_errors": 63,
+    "best_frozen_holdout_total": 138,
+    "best_external_holdout_regular": false,
+    "best_external_holdout_failure": "zero denominator",
+    "best_shared_candidate": {
+      "expanded_DAG_cost": 30,
+      "expanded_formula_tree_cost": 2066,
+      "training_errors": 126,
+      "frozen_holdout_errors": 81,
+      "external_holdout_errors": 29
+    },
+    "nodes_with_positive_DAG_savings_in_best_round": 3839
   },
   "decision": {
     "claim_algorithm_only_after_exact_training_and_two_unchanged_holdouts": true,
     "negative_result_is_exhaustive": false,
-    "true_DAG_accounting_required": true,
-    "symbolic_proof_required_before_secp256k1_claim": true
+    "true_DAG_accounting_verified": true,
+    "shared_high_degree_DAGs_were_actually_constructed": true,
+    "symbolic_proof_required_before_secp256k1_claim": true,
+    "next_step": "add Miller, ordered-GLV-sector, CM-coupled and modular-composition multiregister states with ancestry-aware Pareto retention"
   }
 }
