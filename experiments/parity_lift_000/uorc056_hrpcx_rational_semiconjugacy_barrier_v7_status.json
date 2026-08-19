@@ -1,0 +1,36 @@
+{
+  "profile_id": "UORC-056-HRPCX-RATIONAL-SEMICONJUGACY-BARRIER-V7",
+  "status": "proved_paper_theorem_with_exact_secp_instantiation",
+  "scope": {
+    "state": "one nonconstant morphism S:E->P^1 over F_(p^d)",
+    "update": "one fixed rational map F:P^1->P^1 of degree D",
+    "relation": "S(P+G)=F(S(P)) on all n subgroup points",
+    "decoder": "arbitrary deterministic decoder"
+  },
+  "theorem": {
+    "finite_to_global_threshold": "n>(D+1)*delta",
+    "global_consequence": "D=1",
+    "nonlinear_tradeoff": "D>=2 implies (D+1)*delta>=n",
+    "mobius_tradeoff": "D=1 implies 2*d>=ord_n(p)"
+  },
+  "secp256k1": {
+    "n": 115792089237316195423570985008687907852837564279074904382605163141518161494337,
+    "ord_n_p": 19298681539552699237261830834781317975472927379845817397100860523586360249056,
+    "degree_two_minimum_delta": 38597363079105398474523661669562635950945854759691634794201721047172720498113,
+    "degree_three_minimum_delta": 28948022309329048855892746252171976963209391069768726095651290785379540373585,
+    "mobius_extension_degree_at_least": 9649340769776349618630915417390658987736463689922908698550430261793180124528
+  },
+  "decision": {
+    "one_coordinate_rational_autonomous_state_with_polylog_delta_and_polylog_D_possible": false,
+    "degree_one_mobius_over_polylog_extension_possible": false,
+    "high_degree_low_DAG_size_state_closed": false,
+    "multicoordinate_nonlinear_state_closed": false,
+    "query_dependent_random_access_closed": false,
+    "general_HPCX_refuted": false
+  },
+  "formalization": {
+    "paper_theorem": true,
+    "exact_numeric_replay": true,
+    "end_to_end_lean_formalization": false
+  }
+}
