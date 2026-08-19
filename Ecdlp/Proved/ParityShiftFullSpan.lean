@@ -29,7 +29,8 @@ theorem parity_seam {n k : ℕ} (hn : Odd n) :
     subst n
     norm_num [cyclicPrev, pow_add, pow_mul]
   · have hsucc : k = (k - 1) + 1 := by omega
-    have hpow : (-1 : ℚ) ^ k = (-1 : ℚ) ^ ((k - 1) + 1) := by rw [hsucc]
+    have hpow : (-1 : ℚ) ^ k = (-1 : ℚ) ^ ((k - 1) + 1) :=
+      congrArg (fun t : ℕ => (-1 : ℚ) ^ t) hsucc
     simp only [cyclicPrev, hk, if_false]
     rw [hpow, pow_succ]
     ring
