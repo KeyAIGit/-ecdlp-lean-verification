@@ -29,8 +29,9 @@ theorem parity_seam {n k : ℕ} (hn : Odd n) :
     subst n
     norm_num [cyclicPrev, pow_add, pow_mul]
   · have hsucc : k = (k - 1) + 1 := by omega
+    have hpow : (-1 : ℚ) ^ k = (-1 : ℚ) ^ ((k - 1) + 1) := by rw [hsucc]
     simp only [cyclicPrev, hk, if_false]
-    rw [hsucc, pow_succ]
+    rw [hpow, pow_succ]
     ring
 
 /-- If every standard basis vector is a scalar multiple of the sum of two members of a
