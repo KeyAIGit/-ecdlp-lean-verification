@@ -1,0 +1,134 @@
+name: UORC056 charged moduli tangent transfer C54
+
+on:
+  push:
+    paths:
+      - "experiments/parity_lift_000/uorc056_c54_transfer_core.py"
+      - "experiments/parity_lift_000/uorc056_c54_curve_analysis.py"
+      - "experiments/parity_lift_000/uorc056_c54_transfer_analysis.py"
+      - "experiments/parity_lift_000/uorc056_charged_moduli_tangent_transfer_c54.py"
+      - "experiments/parity_lift_000/test_uorc056_charged_moduli_tangent_transfer_c54.py"
+      - "Ecdlp/Proved/Uorc056ChargedModuliTangentTransfer.lean"
+      - "notes/UORC056_CHARGED_MODULI_TANGENT_TRANSFER_C54.md"
+      - ".github/workflows/uorc056-charged-moduli-tangent-transfer-c54.yml"
+  pull_request:
+    paths:
+      - "experiments/parity_lift_000/uorc056_c54_transfer_core.py"
+      - "experiments/parity_lift_000/uorc056_c54_curve_analysis.py"
+      - "experiments/parity_lift_000/uorc056_c54_transfer_analysis.py"
+      - "experiments/parity_lift_000/uorc056_charged_moduli_tangent_transfer_c54.py"
+      - "experiments/parity_lift_000/test_uorc056_charged_moduli_tangent_transfer_c54.py"
+      - "Ecdlp/Proved/Uorc056ChargedModuliTangentTransfer.lean"
+      - "notes/UORC056_CHARGED_MODULI_TANGENT_TRANSFER_C54.md"
+      - ".github/workflows/uorc056-charged-moduli-tangent-transfer-c54.yml"
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Compile and replay C54 once
+        run: |
+          python -m py_compile \
+            experiments/parity_lift_000/uorc056_c54_transfer_core.py \
+            experiments/parity_lift_000/uorc056_c54_curve_analysis.py \
+            experiments/parity_lift_000/uorc056_c54_transfer_analysis.py \
+            experiments/parity_lift_000/uorc056_charged_moduli_tangent_transfer_c54.py \
+            experiments/parity_lift_000/test_uorc056_charged_moduli_tangent_transfer_c54.py
+          PYTHONPATH=experiments/parity_lift_000 python \
+            experiments/parity_lift_000/uorc056_charged_moduli_tangent_transfer_c54.py \
+            --out /tmp/uorc056_charged_moduli_tangent_transfer_c54.json
+
+      - name: Test emitted exact certificate
+        env:
+          UORC056_C54_PAYLOAD: /tmp/uorc056_charged_moduli_tangent_transfer_c54.json
+        run: |
+          PYTHONPATH=experiments/parity_lift_000 python -m unittest -v \
+            experiments/parity_lift_000/test_uorc056_charged_moduli_tangent_transfer_c54.py
+
+      - name: Check machine-readable C54 boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/uorc056_charged_moduli_tangent_transfer_c54.json').read_text()
+          )
+          assert data['profile_id'] == 'UORC-056-CHARGED-MODULI-TANGENT-TRANSFER-C54'
+          a = data['aggregate']
+          assert a['curves'] == 16
+          assert a['rows'] == 13128
+          assert a['doubling_transfer_checks'] == 13098
+          assert a['addition_transfer_checks'] == 13112
+          assert a['tangent_addition_checks'] == 52480
+          assert a['charged_module_checks'] == 13128
+          assert a['covariance_checks'] == 13128
+          assert a['secp_public_samples'] == 14
+          assert a['uniform_declared_character_atoms'] == 157
+          assert a['uniform_valid_character_atoms'] == 25
+          assert a['uniform_character_span_rank'] == 12
+          assert a['uniform_target_in_span'] is False
+          assert a['complete_p43_affine_atoms'] == 39753
+          assert a['complete_p43_survivors'] == 0
+          assert a['p43_power_affine_atoms'] == 5418
+          assert a['p43_power_affine_survivors'] == 0
+          assert a['p43_power_representation_survivors'] == 0
+          assert a['all_orbit_sign_relations'] is True
+          assert a['errors'] == 0
+          secp = data['secp256k1_cycle_certificate']
+          assert secp['pair_quotient_cycles'] == 32
+          assert secp['independent_pair_cycle_signs_after_one_anchor'] == 31
+          d = data['decision']
+          assert d['exact_differentiated_group_law_found'] is True
+          assert d['exact_addition_transfer_found'] is True
+          assert d['exact_doubling_transfer_found'] is True
+          assert d['charged_state_module_rank_one_over_neutral_field'] is True
+          assert d['moduli_tangent_adds_new_charge_generator'] is False
+          assert d['declared_transfer_character_grammar_closed'] is True
+          assert d['cheap_parity_decoder_found'] is False
+          assert d['parity_oracle_found'] is False
+          assert d['sub_sqrt_ecdlp_found'] is False
+          assert len(data['digest']) == 64
+          PY
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check C54 algebra
+        run: |
+          lake build Ecdlp.Proved.Uorc056ChargedModuliTangentTransfer
+          lake env lean Ecdlp/Proved/Uorc056ChargedModuliTangentTransfer.lean
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-charged-moduli-tangent-transfer-c54
+          path: /tmp/uorc056_charged_moduli_tangent_transfer_c54.json
+          retention-days: 90
