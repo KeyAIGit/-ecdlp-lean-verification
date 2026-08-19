@@ -1,0 +1,130 @@
+name: UORC056 cycle label open translation C55
+
+on:
+  push:
+    paths:
+      - "experiments/parity_lift_000/uorc056_c55_cycle_core.py"
+      - "experiments/parity_lift_000/uorc056_c55_cycle_analysis.py"
+      - "experiments/parity_lift_000/uorc056_cycle_label_open_translation_c55.py"
+      - "experiments/parity_lift_000/test_uorc056_cycle_label_open_translation_c55.py"
+      - "Ecdlp/Proved/Uorc056CycleLabelOpenTranslation.lean"
+      - "notes/UORC056_CYCLE_LABEL_OPEN_TRANSLATION_C55.md"
+      - ".github/workflows/uorc056-cycle-label-open-translation-c55.yml"
+  pull_request:
+    paths:
+      - "experiments/parity_lift_000/uorc056_c55_cycle_core.py"
+      - "experiments/parity_lift_000/uorc056_c55_cycle_analysis.py"
+      - "experiments/parity_lift_000/uorc056_cycle_label_open_translation_c55.py"
+      - "experiments/parity_lift_000/test_uorc056_cycle_label_open_translation_c55.py"
+      - "Ecdlp/Proved/Uorc056CycleLabelOpenTranslation.lean"
+      - "notes/UORC056_CYCLE_LABEL_OPEN_TRANSLATION_C55.md"
+      - ".github/workflows/uorc056-cycle-label-open-translation-c55.yml"
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Compile and replay C55 once
+        run: |
+          python -m py_compile \
+            experiments/parity_lift_000/uorc056_c55_cycle_core.py \
+            experiments/parity_lift_000/uorc056_c55_cycle_analysis.py \
+            experiments/parity_lift_000/uorc056_cycle_label_open_translation_c55.py \
+            experiments/parity_lift_000/test_uorc056_cycle_label_open_translation_c55.py
+          PYTHONPATH=experiments/parity_lift_000 python \
+            experiments/parity_lift_000/uorc056_cycle_label_open_translation_c55.py \
+            --out /tmp/uorc056_cycle_label_open_translation_c55.json
+
+      - name: Test emitted exact certificate
+        env:
+          UORC056_C55_PAYLOAD: /tmp/uorc056_cycle_label_open_translation_c55.json
+        run: |
+          PYTHONPATH=experiments/parity_lift_000 python -m unittest -v \
+            experiments/parity_lift_000/test_uorc056_cycle_label_open_translation_c55.py
+
+      - name: Check machine-readable C55 boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(
+              Path('/tmp/uorc056_cycle_label_open_translation_c55.json').read_text()
+          )
+          assert data['profile_id'] == 'UORC-056-CYCLE-LABEL-OPEN-TRANSLATION-C55'
+          a = data['aggregate']
+          assert a['curves'] == 10
+          assert a['scalar_rows'] == 19194
+          assert a['cycles'] == 238
+          assert a['pair_cycles'] == 119
+          assert a['carry_checks'] == 19194
+          assert a['parity_word_checks'] == 19194
+          assert a['label_checks'] == 19194
+          assert a['all_cycles_mixed_parity'] is True
+          assert a['all_cycle_labels_have_correct_image_size'] is True
+          assert a['universal_cycle_affine_character_survivors'] == []
+          assert a['universal_cycle_representation_survivors'] == []
+          assert a['universal_within_cycle_affine_character_survivors'] == []
+          assert a['universal_within_cycle_representation_survivors'] == []
+          assert a['errors'] == 0
+          secp = data['secp256k1']
+          assert secp['full_cycle_count'] == 64
+          assert secp['pair_cycle_count'] == 32
+          assert secp['ord_n_2_is_odd'] is True
+          assert secp['lambda_in_doubling_subgroup'] is True
+          assert secp['rational_cycle_invariant_pole_degree_lower_bound_bits'] == 254
+          d = data['decision']
+          assert d['exact_64_state_secp_cycle_label_found'] is True
+          assert d['cycle_label_is_publicly_evaluable_from_Q'] is False
+          assert d['cycle_label_alone_can_decode_parity'] is False
+          assert d['exact_cycle_orientation_norm_found'] is True
+          assert d['cycle_orientation_norm_alone_can_decode_point_parity'] is False
+          assert d['declared_cycle_and_phase_character_grammars_closed'] is True
+          assert d['compressed_unsquared_open_translation_found'] is False
+          assert d['cheap_parity_decoder_found'] is False
+          assert d['parity_oracle_found'] is False
+          assert d['sub_sqrt_ecdlp_found'] is False
+          assert len(data['digest']) == 64
+          PY
+
+      - name: Install Lean toolchain
+        run: |
+          installed=0
+          if curl --retry 5 --retry-delay 2 --retry-all-errors -fsSL \
+              https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+              -o /tmp/elan-init.sh; then
+            if sh /tmp/elan-init.sh -y --default-toolchain none; then
+              installed=1
+              echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+          if [ "$installed" = 0 ]; then
+            curl --retry 8 --retry-delay 3 --retry-all-errors -fsSL \
+              https://releases.lean-lang.org/lean4/v4.31.0/lean-4.31.0-linux.tar.zst \
+              -o /tmp/lean.tar.zst
+            mkdir -p /tmp/lean-dist
+            tar --zstd -xf /tmp/lean.tar.zst -C /tmp/lean-dist
+            echo "/tmp/lean-dist/lean-4.31.0-linux/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Kernel-check C55 algebra
+        run: |
+          lake build Ecdlp.Proved.Uorc056CycleLabelOpenTranslation
+          lake env lean Ecdlp/Proved/Uorc056CycleLabelOpenTranslation.lean
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: uorc056-cycle-label-open-translation-c55
+          path: /tmp/uorc056_cycle_label_open_translation_c55.json
+          retention-days: 90
